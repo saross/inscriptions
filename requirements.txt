@@ -4,5 +4,5 @@ numpy
 matplotlib
 fastparquet
 tempun
-sklearn
+scikit-learn
 scipy
