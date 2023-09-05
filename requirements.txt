@@ -6,3 +6,4 @@ fastparquet
 tempun
 scikit-learn
 scipy
+pyarrow
