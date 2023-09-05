@@ -1,0 +1,9 @@
+pandas
+geopandas
+numpy
+matplotlib.pyplot
+fastparquet
+tempun
+random
+sklearn.metrics
+scipy.ndimage
