@@ -1,9 +1,9 @@
 pandas
 geopandas
 numpy
-matplotlib.pyplot
+matplotlib
 fastparquet
 tempun
-random
-sklearn.metrics
-scipy.ndimage
+scikit-learn
+scipy
+pyarrow
