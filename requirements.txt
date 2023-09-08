@@ -7,3 +7,6 @@ tempun
 scikit-learn
 scipy
 pyarrow
+os
+re
+hashlib
