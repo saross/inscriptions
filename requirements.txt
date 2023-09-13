@@ -10,3 +10,4 @@ pyarrow
 os
 re
 hashlib
+tqdm
