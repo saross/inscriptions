@@ -9,3 +9,4 @@ dependencies:
   - matplotlib
   - fastparquet
   - tqdm
+  - pyarrow
