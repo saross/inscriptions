@@ -1,5 +1,3 @@
-torch==2.3.1 
-pyro-ppl==1.9.1
 anyio==4.3.0
 argon2-cffi==23.1.0
 argon2-cffi-bindings==21.2.0
@@ -91,6 +89,7 @@ Pygments==2.18.0
 pymc==5.15.1
 pyparsing==3.1.2
 pyproj==3.6.1
+pyro-ppl==1.9.1
 python-dateutil==2.9.0.post0
 python-json-logger==2.0.7
 pytz==2024.1
@@ -119,6 +118,7 @@ tensorflow==2.16.1
 terminado==0.18.1
 threadpoolctl==3.5.0
 tinycss2==1.3.0
+torch==2.3.1 
 tornado==6.4
 tqdm==4.66.4
 traitlets==5.14.3
