@@ -1,0 +1,312 @@
+LIST-ID,EDCS-ID,EDH-ID,urban_context_city,pleiades_id,province_edcs,province_edh,province,most_common_province,most_common_count
+279280,EDCS-77500090,,Acmonia,,Pontus et Bithynia,,Bithynia et Pontus,Asia,3.0
+516764,EDCS-20601007,HD014009,Albintimilium,157802,Roma,Liguria (Regio IX),Roma,Liguria / Regio IX,71.0
+436316,EDCS-04500066,,Albona,,Venetia et Histria / Regio X,,Venetia et Histria / Regio X,Dalmatia,44.0
+464046,EDCS-07600433,HD006478,Amasia,857018,Cappadocia,Bithynia et Pontus,Cappadocia,Bithynia et Pontus,8.0
+464048,EDCS-60300418,HD006469,Amasia,857018,Cappadocia,Bithynia et Pontus,Cappadocia,Bithynia et Pontus,8.0
+464082,EDCS-07600443,HD006466,Amasia,857018,Cappadocia,Bithynia et Pontus,Cappadocia,Bithynia et Pontus,8.0
+453673,EDCS-16200832,HD025390,Apamea (Syria) (1),668335,Arabia,Iudaea,Arabia,Syria,21.0
+495169,EDCS-29600060,HD045825,Apamea (Syria) (1),668335,Macedonia,Macedonia,Macedonia,Syria,21.0
+495172,EDCS-29601133,HD051484,Apamea (Syria) (1),668335,Macedonia,Macedonia,Macedonia,Syria,21.0
+505747,EDCS-03300868,HD051014,Apamea (Syria) (1),668335,Palaestina,Iudaea,Palaestina,Syria,21.0
+497402,EDCS-30100822,HD038305,Apulum (2),206927,Moesia inferior,Dacia,Moesia Inferior,Dacia,854.0
+500063,EDCS-10100441,HD033654,Aquae Balissae,,Moesia superior,Moesia superior,Moesia Superior,Pannonia Superior,22.0
+237890,EDCS-69800205,,Aquae Tarbellicae,,Lugudunensis,,Lugdunensis,Aquitani(c)a,23.0
+516726,EDCS-20403341,HD023936,Aricia,197099,Roma,Latium et Campania (Regio I),Roma,Latium et Campania / Regio I,394.0
+409770,EDCS-24700073,,Asisium,,Samnium / Regio IV,,Samnium / Regio IV,Umbria / Regio VI,331.0
+463784,EDCS-11400428,HD015655,Atina,442481,Bruttium et Lucania / Regio III,Latium et Campania (Regio I),Bruttium et Lucania / Regio III,Latium et Campania / Regio I,50.0
+463785,EDCS-06600039,HD024784,Atina,442481,Bruttium et Lucania / Regio III,Bruttium et Lucania (Regio III),Bruttium et Lucania / Regio III,Latium et Campania / Regio I,50.0
+463787,EDCS-06600037,HD013150,Atina,442481,Bruttium et Lucania / Regio III,Bruttium et Lucania (Regio III),Bruttium et Lucania / Regio III,Latium et Campania / Regio I,50.0
+463788,EDCS-06600038,HD013153,Atina,442481,Bruttium et Lucania / Regio III,Bruttium et Lucania (Regio III),Bruttium et Lucania / Regio III,Latium et Campania / Regio I,50.0
+463790,EDCS-10700926,HD008195,Atina,442481,Bruttium et Lucania / Regio III,Bruttium et Lucania (Regio III),Bruttium et Lucania / Regio III,Latium et Campania / Regio I,50.0
+463792,EDCS-10700928,HD008201,Atina,442481,Bruttium et Lucania / Regio III,Bruttium et Lucania (Regio III),Bruttium et Lucania / Regio III,Latium et Campania / Regio I,50.0
+492529,EDCS-04900704,HD053537,Augusta Auscorum,167657,Lugudunensis,Lugdunensis,Lugdunensis,Aquitani(c)a,85.0
+456201,EDCS-05501043,HD000362,Augusta Emerita,256155,Baetica,Lusitania,Baetica,Lusitania,553.0
+456792,EDCS-10001256,HD045464,Augusta Emerita,256155,Baetica,Baetica,Baetica,Lusitania,553.0
+456979,EDCS-11701246,HD052651,Augusta Emerita,256155,Baetica,Lusitania,Baetica,Lusitania,553.0
+487196,EDCS-08500423,HD000125,Augusta Emerita,256155,Hispania citerior,Lusitania,Hispania Citerior,Lusitania,553.0
+520267,EDCS-27800826,HD049181,Beroea (Macedonia),658409,Syria,Syria,Syria,Macedonia,14.0
+520269,EDCS-07400684,HD012881,Beroea (Macedonia),658409,Syria,Syria,Syria,Macedonia,14.0
+497560,EDCS-08900612,HD006842,Beroea (Thracia),216731,Moesia inferior,Moesia inferior,Moesia Inferior,Thracia,19.0
+242077,EDCS-72600197,,Bracara,,Lusitania,,Lusitania,Hispania Citerior,24.0
+242078,EDCS-72600198,,Bracara,,Lusitania,,Lusitania,Hispania Citerior,24.0
+246468,EDCS-81200177,,Bracara,,Lusitania,,Lusitania,Hispania Citerior,24.0
+246561,EDCS-81200178,,Bracara,,Lusitania,,Lusitania,Hispania Citerior,24.0
+246562,EDCS-72600200,,Bracara,,Lusitania,,Lusitania,Hispania Citerior,24.0
+246572,EDCS-58800010,,Bracara,,Lusitania,,Lusitania,Hispania Citerior,24.0
+445033,EDCS-78700060,,Brixellum,,Venetia et Histria / Regio X,,Venetia et Histria / Regio X,Aemilia / Regio VIII,26.0
+516483,EDCS-12000966,HD071437,Camulodunum,79393,Roma,Britannia,Roma,Britannia,42.0
+478585,EDCS-11100668,HD075007,Carnuntum (1),128376,Germania inferior,Pannonia superior,Germania Inferior,Pannonia Superior,1646.0
+506603,EDCS-31001225,HD074769,Carnuntum (1),128376,Pannonia inferior,Pannonia superior,Pannonia Inferior,Pannonia Superior,1646.0
+491949,EDCS-09701721,HD015611,Carthago,314921,Latium et Campania / Regio I,Africa Proconsularis,Latium et Campania / Regio I,Africa Proconsularis,441.0
+515244,EDCS-71200400,HD010586,Casinum,432764,Roma,Latium et Campania (Regio I),Roma,Latium et Campania / Regio I,113.0
+520480,EDCS-03300859,HD051006,Celaenae,609330,Syria,Asia,Syria,Asia,4.0
+509962,EDCS-09200405,HD013950,Celeia,197206,Pannonia superior,Noricum,Pannonia Superior,Noricum,363.0
+510399,EDCS-14400609,HD066960,Celeia,197206,Pannonia superior,Noricum,Pannonia Superior,Noricum,363.0
+510476,EDCS-11300941,HD067363,Celeia,197206,Pannonia superior,Noricum,Pannonia Superior,Noricum,363.0
+512274,EDCS-14500604,HD066819,Celeia,197206,Pannonia superior,Noricum,Pannonia Superior,Noricum,363.0
+512275,EDCS-14500605,HD066818,Celeia,197206,Pannonia superior,Noricum,Pannonia Superior,Noricum,363.0
+512276,EDCS-14500606,HD001842,Celeia,197206,Pannonia superior,Noricum,Pannonia Superior,Noricum,363.0
+512277,EDCS-14500607,HD066817,Celeia,197206,Pannonia superior,Noricum,Pannonia Superior,Noricum,363.0
+512278,EDCS-14400648,HD004738,Celeia,197206,Pannonia superior,Noricum,Pannonia Superior,Noricum,363.0
+512279,EDCS-14400649,HD004792,Celeia,197206,Pannonia superior,Noricum,Pannonia Superior,Noricum,363.0
+512280,EDCS-14400650,HD024513,Celeia,197206,Pannonia superior,Noricum,Pannonia Superior,Noricum,363.0
+496232,EDCS-25001083,HD030943,Cirta,305064,Mauretania Caesariensis,Africa Proconsularis,Mauretania Caesariensis,Numidia,1019.0
+4008,EDCS-47900026,,Clusium,,Aemilia / Regio VIII,,Aemilia / Regio VIII,Etruria / Regio VII,331.0
+453375,EDCS-08500468,HD000638,Condevicnum,138533,Aquitani(c)a,Aquitania,Aquitani(c)a,Lugdunensis,5.0
+174863,EDCS-74700520,,Corduba,,Hispania citerior,,Hispania Citerior,Baetica,514.0
+493444,EDCS-14700028,HD048277,Corstopitum,89152,Lusitania,Lusitania,Lusitania,Britannia,124.0
+493445,EDCS-14700029,HD048278,Corstopitum,89152,Lusitania,Lusitania,Lusitania,Britannia,124.0
+493450,EDCS-05000414,HD006503,Corstopitum,89152,Lusitania,Lusitania,Lusitania,Britannia,124.0
+493452,EDCS-09400459,HD010615,Corstopitum,89152,Lusitania,Lusitania,Lusitania,Britannia,124.0
+493453,EDCS-09400457,HD010609,Corstopitum,89152,Lusitania,Lusitania,Lusitania,Britannia,124.0
+493454,EDCS-05000413,HD054968,Corstopitum,89152,Lusitania,Lusitania,Lusitania,Britannia,124.0
+493455,EDCS-08300393,HD006506,Corstopitum,89152,Lusitania,Lusitania,Lusitania,Britannia,124.0
+493456,EDCS-15300360,HD022243,Corstopitum,89152,Lusitania,Lusitania,Lusitania,Britannia,124.0
+493457,EDCS-09300264,HD006162,Corstopitum,89152,Lusitania,Lusitania,Lusitania,Britannia,124.0
+493459,EDCS-09400456,HD010606,Corstopitum,89152,Lusitania,Lusitania,Lusitania,Britannia,124.0
+492487,EDCS-19800289,HD048239,Dibio,177489,Lugudunensis,Germania superior,Lugdunensis,Germania Superior,187.0
+516106,EDCS-09001074,HD015703,Dibio,177489,Roma,Germania superior,Roma,Germania Superior,187.0
+500236,EDCS-10100405,HD019220,Dierna,207078,Moesia superior,Dacia,Moesia Superior,Dacia,12.0
+499350,EDCS-09300005,HD011991,Drobeta,,Moesia superior,Moesia superior,Moesia Superior,Dacia,110.0
+499354,EDCS-08901136,HD002784,Drobeta,,Moesia superior,Moesia superior,Moesia Superior,Dacia,110.0
+511286,EDCS-25900588,HD074244,Durostorum,216800,Pannonia superior,Moesia inferior,Pannonia Superior,Moesia Inferior,60.0
+501396,EDCS-11301657,HD018372,Emona,197259,Noricum,Noricum,Noricum,Pannonia Superior,166.0
+191501,EDCS-54900647,,Falerii Novi,,Latium et Campania / Regio I,,Latium et Campania / Regio I,Etruria / Regio VII,58.0
+475993,EDCS-09701452,HD013916,Fidenae,,Etruria / Regio VII,Etruria (Regio VII),Etruria / Regio VII,Latium et Campania / Regio I,39.0
+117560,EDCS-52200592,,Fidenae,,Etruria / Regio VII,,Etruria / Regio VII,Latium et Campania / Regio I,39.0
+117561,EDCS-52200593,,Fidenae,,Etruria / Regio VII,,Etruria / Regio VII,Latium et Campania / Regio I,39.0
+117565,EDCS-22700798,,Fidenae,,Etruria / Regio VII,,Etruria / Regio VII,Latium et Campania / Regio I,39.0
+117566,EDCS-22700799,,Fidenae,,Etruria / Regio VII,,Etruria / Regio VII,Latium et Campania / Regio I,39.0
+117567,EDCS-22700800,,Fidenae,,Etruria / Regio VII,,Etruria / Regio VII,Latium et Campania / Regio I,39.0
+117568,EDCS-22700801,,Fidenae,,Etruria / Regio VII,,Etruria / Regio VII,Latium et Campania / Regio I,39.0
+117569,EDCS-22700802,,Fidenae,,Etruria / Regio VII,,Etruria / Regio VII,Latium et Campania / Regio I,39.0
+117570,EDCS-22700803,,Fidenae,,Etruria / Regio VII,,Etruria / Regio VII,Latium et Campania / Regio I,39.0
+117571,EDCS-22700804,,Fidenae,,Etruria / Regio VII,,Etruria / Regio VII,Latium et Campania / Regio I,39.0
+117572,EDCS-22700805,,Fidenae,,Etruria / Regio VII,,Etruria / Regio VII,Latium et Campania / Regio I,39.0
+117573,EDCS-22700806,,Fidenae,,Etruria / Regio VII,,Etruria / Regio VII,Latium et Campania / Regio I,39.0
+117574,EDCS-22700807,,Fidenae,,Etruria / Regio VII,,Etruria / Regio VII,Latium et Campania / Regio I,39.0
+476666,EDCS-11801006,HD048994,Forum Iulii (X Venetia et Histria),187386,Gallia Narbonensis,Narbonensis,Gallia Narbonensis,Venetia et Histria / Regio X,63.0
+476865,EDCS-04900650,HD053334,Forum Iulii (X Venetia et Histria),187386,Gallia Narbonensis,Narbonensis,Gallia Narbonensis,Venetia et Histria / Regio X,63.0
+476866,EDCS-04900651,HD053335,Forum Iulii (X Venetia et Histria),187386,Gallia Narbonensis,Narbonensis,Gallia Narbonensis,Venetia et Histria / Regio X,63.0
+476867,EDCS-04900652,HD053336,Forum Iulii (X Venetia et Histria),187386,Gallia Narbonensis,Narbonensis,Gallia Narbonensis,Venetia et Histria / Regio X,63.0
+476868,EDCS-04900653,HD053337,Forum Iulii (X Venetia et Histria),187386,Gallia Narbonensis,Narbonensis,Gallia Narbonensis,Venetia et Histria / Regio X,63.0
+476871,EDCS-20500239,HD047618,Forum Iulii (X Venetia et Histria),187386,Gallia Narbonensis,Narbonensis,Gallia Narbonensis,Venetia et Histria / Regio X,63.0
+476875,EDCS-37700205,HD063876,Forum Iulii (X Venetia et Histria),187386,Gallia Narbonensis,Narbonensis,Gallia Narbonensis,Venetia et Histria / Regio X,63.0
+476876,EDCS-37700206,HD063877,Forum Iulii (X Venetia et Histria),187386,Gallia Narbonensis,Narbonensis,Gallia Narbonensis,Venetia et Histria / Regio X,63.0
+476877,EDCS-11801005,HD048993,Forum Iulii (X Venetia et Histria),187386,Gallia Narbonensis,Narbonensis,Gallia Narbonensis,Venetia et Histria / Regio X,63.0
+477552,EDCS-11700350,HD004042,Forum Iulii (X Venetia et Histria),187386,Gallia Narbonensis,Narbonensis,Gallia Narbonensis,Venetia et Histria / Regio X,63.0
+477553,EDCS-11700351,HD004039,Forum Iulii (X Venetia et Histria),187386,Gallia Narbonensis,Narbonensis,Gallia Narbonensis,Venetia et Histria / Regio X,63.0
+477777,EDCS-28701412,HD046051,Forum Iulii (X Venetia et Histria),187386,Gallia Narbonensis,Narbonensis,Gallia Narbonensis,Venetia et Histria / Regio X,63.0
+446750,EDCS-07400181,HD008436,Forum Popili (Italia (I Latium and Campania)),442586,Aemilia / Regio VIII,Latium et Campania (Regio I),Aemilia / Regio VIII,Latium et Campania / Regio I,17.0
+446751,EDCS-20402005,HD022810,Forum Popili (Italia (I Latium and Campania)),442586,Aemilia / Regio VIII,Aemilia (Regio VIII),Aemilia / Regio VIII,Latium et Campania / Regio I,17.0
+51498,EDCS-12400075,,Forum Segusiavorum,,Aquitani(c)a,,Aquitani(c)a,Lugdunensis,6.0
+516458,EDCS-19301233,HD008321,Fulginiae,413151,Roma,Umbria (Regio VI),Roma,Umbria / Regio VI,195.0
+483868,EDCS-10800409,HD080084,Genava,177528,Germania superior,Narbonensis,Germania Superior,Gallia Narbonensis,11.0
+483870,EDCS-10800411,HD080086,Genava,177528,Germania superior,Germania superior,Germania Superior,Gallia Narbonensis,11.0
+483874,EDCS-10800415,HD080096,Genava,177528,Germania superior,Germania superior,Germania Superior,Gallia Narbonensis,11.0
+513341,EDCS-31200771,HD009593,Gerasa,678158,Pontus et Bithynia,Arabia,Bithynia et Pontus,Arabia,37.0
+463817,EDCS-05200090,HD016287,Herculaneum,432873,Bruttium et Lucania / Regio III,Bruttium et Lucania (Regio III),Bruttium et Lucania / Regio III,Latium et Campania / Regio I,527.0
+505698,EDCS-05000825,HD055538,Icosium,,Numidia,Numidia,Numidia,Mauretania Caesariensis,2.0
+493179,EDCS-05500371,HD039278,Ilici,265922,Lusitania,Hispania citerior,Lusitania,Hispania Citerior,46.0
+487856,EDCS-24601049,HD041202,Iliturgi,,Hispania citerior,Hispania citerior,Hispania Citerior,Baetica,23.0
+520900,EDCS-05100490,HD050941,Interamna Lirenas,432884,Transpadana / Regio XI,Latium et Campania (Regio I),Transpadana / Regio XI,Latium et Campania / Regio I,74.0
+406564,EDCS-14805828,,Interamna Nahars,,Samnium / Regio IV,,Samnium / Regio IV,Umbria / Regio VI,135.0
+406565,EDCS-14805829,,Interamna Nahars,,Samnium / Regio IV,,Samnium / Regio IV,Umbria / Regio VI,135.0
+406566,EDCS-14805831,,Interamna Nahars,,Samnium / Regio IV,,Samnium / Regio IV,Umbria / Regio VI,135.0
+406568,EDCS-14805837,,Interamna Nahars,,Samnium / Regio IV,,Samnium / Regio IV,Umbria / Regio VI,135.0
+448122,EDCS-16100218,HD025090,Lambaesis,334570,Africa proconsularis,Numidia,Africa Proconsularis,Numidia,379.0
+446812,EDCS-19800581,HD067543,Lauriacum,118802,Aemilia / Regio VIII,Aemilia (Regio VIII),Aemilia / Regio VIII,Noricum,134.0
+446816,EDCS-27300217,HD050967,Lauriacum,118802,Aemilia / Regio VIII,Aemilia (Regio VIII),Aemilia / Regio VIII,Noricum,134.0
+505866,EDCS-15200173,HD021735,Lebedus,599754,Palaestina,Iudaea,Palaestina,Creta et Cyrenaica,2.0
+59520,EDCS-72700143,,Lebedus,,Asia,,Asia,Creta et Cyrenaica,2.0
+491750,EDCS-11400912,HD001898,Luceria,442640,Latium et Campania / Regio I,Apulia et Calabria (Regio II),Latium et Campania / Regio I,Apulia et Calabria / Regio II,206.0
+488208,EDCS-05601376,HD017322,Mantua,236534,Hispania citerior,Hispania citerior,Hispania Citerior,Venetia et Histria / Regio X,29.0
+520940,EDCS-00380656,HD062117,Mediolanum (Gallia Lugdunensis) (2),177578,Transpadana / Regio XI,Germania superior,Transpadana / Regio XI,Lugdunensis,17.0
+525857,,HD082269,Mediolanum (Gallia Lugdunensis) (2),177578,,Germania superior,Germania Superior,Lugdunensis,17.0
+453266,EDCS-11801043,HD049036,Mediolanum (Italia (XI Transpadana)),138459,Aquitani(c)a,Aquitania,Aquitani(c)a,Transpadana / Regio XI,638.0
+450006,EDCS-25000981,HD031021,Meninx,,Africa proconsularis,Africa Proconsularis,Africa Proconsularis,Numidia,7.0
+62151,EDCS-80400019,,Metellinum,,Baetica,,Baetica,Lusitania,17.0
+516442,EDCS-18600518,HD016059,Misenum,432941,Roma,Latium et Campania (Regio I),Roma,Latium et Campania / Regio I,592.0
+477877,EDCS-11100930,HD082679,Mogontiacum,109169,Germania inferior,Germania superior,Germania Inferior,Germania Superior,2969.0
+513552,EDCS-36300061,HD082425,Mogontiacum,109169,Provincia incerta,Germania superior,Provincia incerta,Germania Superior,2969.0
+490892,EDCS-16600429,HD030561,Neapolis (Macedonia),894133,Latium et Campania / Regio I,Latium et Campania (Regio I),Latium et Campania / Regio I,Macedonia,23.0
+490893,EDCS-16600430,HD030564,Neapolis (Macedonia),894133,Latium et Campania / Regio I,Latium et Campania (Regio I),Latium et Campania / Regio I,Macedonia,23.0
+490894,EDCS-13600367,HD017853,Neapolis (Macedonia),894133,Latium et Campania / Regio I,Latium et Campania (Regio I),Latium et Campania / Regio I,Macedonia,23.0
+490896,EDCS-09400178,HD009240,Neapolis (Macedonia),894133,Latium et Campania / Regio I,Latium et Campania (Regio I),Latium et Campania / Regio I,Macedonia,23.0
+490900,EDCS-09400179,HD009243,Neapolis (Macedonia),894133,Latium et Campania / Regio I,Latium et Campania (Regio I),Latium et Campania / Regio I,Macedonia,23.0
+490902,EDCS-17100160,HD023330,Neapolis (Macedonia),894133,Latium et Campania / Regio I,Latium et Campania (Regio I),Latium et Campania / Regio I,Macedonia,23.0
+490904,EDCS-10701676,HD015140,Neapolis (Macedonia),894133,Latium et Campania / Regio I,Latium et Campania (Regio I),Latium et Campania / Regio I,Macedonia,23.0
+490906,EDCS-16800359,HD032508,Neapolis (Macedonia),894133,Latium et Campania / Regio I,Latium et Campania (Regio I),Latium et Campania / Regio I,Macedonia,23.0
+490908,EDCS-16200786,HD025297,Neapolis (Macedonia),894133,Latium et Campania / Regio I,Latium et Campania (Regio I),Latium et Campania / Regio I,Macedonia,23.0
+490909,EDCS-08900871,HD007774,Neapolis (Macedonia),894133,Latium et Campania / Regio I,Latium et Campania (Regio I),Latium et Campania / Regio I,Macedonia,23.0
+491919,EDCS-46500051,HD017856,Neapolis (Macedonia),894133,Latium et Campania / Regio I,Latium et Campania (Regio I),Latium et Campania / Regio I,Macedonia,23.0
+505862,EDCS-16800213,HD031737,Neapolis (Macedonia),894133,Palaestina,Iudaea,Palaestina,Macedonia,23.0
+505863,EDCS-16200831,HD025384,Neapolis (Macedonia),894133,Palaestina,Iudaea,Palaestina,Macedonia,23.0
+505864,EDCS-15200172,HD021753,Neapolis (Macedonia),894133,Palaestina,Iudaea,Palaestina,Macedonia,23.0
+520067,EDCS-30000452,HD053543,Neapolis (Macedonia),894133,Sardinia,Sardinia,Sardinia,Macedonia,23.0
+521938,EDCS-10701745,HD015323,Neapolis (Macedonia),894133,Venetia et Histria / Regio X,Venetia et Histria (Regio X),Venetia et Histria / Regio X,Macedonia,23.0
+522101,EDCS-10000465,HD015320,Neapolis (Macedonia),894133,Venetia et Histria / Regio X,Venetia et Histria (Regio X),Venetia et Histria / Regio X,Macedonia,23.0
+522103,EDCS-10000467,HD015329,Neapolis (Macedonia),894133,Venetia et Histria / Regio X,Venetia et Histria (Regio X),Venetia et Histria / Regio X,Macedonia,23.0
+522104,EDCS-10000468,HD015326,Neapolis (Macedonia),894133,Venetia et Histria / Regio X,Venetia et Histria (Regio X),Venetia et Histria / Regio X,Macedonia,23.0
+522107,EDCS-10900082,HD015332,Neapolis (Macedonia),894133,Venetia et Histria / Regio X,Venetia et Histria (Regio X),Venetia et Histria / Regio X,Macedonia,23.0
+522420,EDCS-10900075,HD006521,Neapolis (Macedonia),894133,Venetia et Histria / Regio X,Venetia et Histria (Regio X),Venetia et Histria / Regio X,Macedonia,23.0
+453315,EDCS-56100866,HD055324,Nemausus,148142,Aquitani(c)a,Narbonensis,Aquitani(c)a,Gallia Narbonensis,61.0
+453316,EDCS-56100867,HD055326,Nemausus,148142,Aquitani(c)a,Narbonensis,Aquitani(c)a,Gallia Narbonensis,61.0
+523236,,HD064522,Nicopolis (Achaea),531013,,Epirus,Epirus,Achaia,9.0
+518639,EDCS-08300082,HD002351,Nomentum,422986,Roma,Latium et Campania (Regio I),Roma,Latium et Campania / Regio I,159.0
+476765,EDCS-09500305,HD081959,Noviodunum (Germania Superior),109216,Gallia Narbonensis,Germania superior,Gallia Narbonensis,Germania Superior,49.0
+478449,EDCS-11100896,HD068221,Noviomagus (Britannia (Inferior et Superior)),79622,Germania inferior,Germania inferior,Germania Inferior,Britannia,19.0
+516406,EDCS-18100943,HD066433,Noviomagus (Germania Inferior),98921,Roma,Germania inferior,Roma,Germania Inferior,160.0
+457728,EDCS-10601147,HD046978,Noviomagus (Germania Superior),109224,Belgica,Belgica,Belgica,Germania Superior,48.0
+518079,EDCS-10800157,HD014757,Nursia,413229,Roma,Samnium (Regio IV),Roma,Samnium / Regio IV,174.0
+518875,EDCS-07000401,HD008291,Nursia,413229,Roma,Samnium (Regio IV),Roma,Samnium / Regio IV,174.0
+491241,EDCS-11900020,HD019854,Ocriculum,413231,Latium et Campania / Regio I,Umbria (Regio VI),Latium et Campania / Regio I,Umbria / Regio VI,85.0
+518081,EDCS-21500025,HD000586,Ocriculum,413231,Roma,Umbria (Regio VI),Roma,Umbria / Regio VI,85.0
+465578,EDCS-11200791,HD019564,Oescus,216907,Dacia,Moesia inferior,Dacia,Moesia Inferior,127.0
+487618,EDCS-05600299,HD017488,Ossigi,265994,Hispania citerior,Baetica,Hispania Citerior,Baetica,30.0
+447858,EDCS-14400007,HD021555,Ostia,422995,Africa proconsularis,Latium et Campania (Regio I),Africa Proconsularis,Latium et Campania / Regio I,2644.0
+516320,EDCS-24701280,HD027424,Ostia,422995,Roma,Latium et Campania (Regio I),Roma,Latium et Campania / Regio I,2644.0
+516523,EDCS-17201707,HD002508,Ostia,422995,Roma,Latium et Campania (Regio I),Roma,Latium et Campania / Regio I,2644.0
+494598,EDCS-03300861,HD051008,Parlais,256453,Lycia et Pamphylia,Lycia et Pamphylia,Lycia et Pamphylia,Baetica,54.0
+502467,EDCS-10000404,HD068790,Poetovio,197446,Noricum,Pannonia superior,Noricum,Pannonia Superior,381.0
+516460,EDCS-19600320,HD014703,Pompeii,433032,Roma,Latium et Campania (Regio I),Roma,Latium et Campania / Regio I,4510.0
+516731,EDCS-20403351,HD021896,Praeneste,423013,Roma,Latium et Campania (Regio I),Roma,Latium et Campania / Regio I,345.0
+465608,EDCS-11300135,HD019597,Ratiaria,511234,Dacia,Dacia,Dacia,Moesia Superior,109.0
+520998,EDCS-05400151,HD016944,Regium Lepidum,,Transpadana / Regio XI,Transpadana (Regio XI),Transpadana / Regio XI,Aemilia / Regio VIII,49.0
+446578,EDCS-21300235,HD016234,Roma,423025,Aegyptus,Roma,Aegyptus,Roma,65399.0
+446663,EDCS-09300221,HD007300,Roma,423025,Aemilia / Regio VIII,Roma,Aemilia / Regio VIII,Roma,65399.0
+446734,EDCS-09300905,HD006780,Roma,423025,Aemilia / Regio VIII,Roma,Aemilia / Regio VIII,Roma,65399.0
+459947,EDCS-09301077,HD006831,Roma,423025,Britannia,Roma,Britannia,Roma,65399.0
+467427,EDCS-67400460,HD049289,Roma,423025,Dacia,Roma,Dacia,Roma,65399.0
+475389,EDCS-05200211,HD016689,Roma,423025,Etruria / Regio VII,Roma,Etruria / Regio VII,Roma,65399.0
+475401,EDCS-08400233,HD002764,Roma,423025,Etruria / Regio VII,Roma,Etruria / Regio VII,Roma,65399.0
+475402,EDCS-08400234,HD002767,Roma,423025,Etruria / Regio VII,Roma,Etruria / Regio VII,Roma,65399.0
+475404,EDCS-08400236,HD002773,Roma,423025,Etruria / Regio VII,Roma,Etruria / Regio VII,Roma,65399.0
+475405,EDCS-08400237,HD002782,Roma,423025,Etruria / Regio VII,Roma,Etruria / Regio VII,Roma,65399.0
+475545,EDCS-09701457,HD013934,Roma,423025,Etruria / Regio VII,Etruria (Regio VII),Etruria / Regio VII,Roma,65399.0
+475546,EDCS-09701458,HD013937,Roma,423025,Etruria / Regio VII,Etruria (Regio VII),Etruria / Regio VII,Roma,65399.0
+475549,EDCS-09701464,HD013955,Roma,423025,Etruria / Regio VII,Etruria (Regio VII),Etruria / Regio VII,Roma,65399.0
+475557,EDCS-22700893,HD007444,Roma,423025,Etruria / Regio VII,Roma,Etruria / Regio VII,Roma,65399.0
+475613,EDCS-21100645,HD026940,Roma,423025,Etruria / Regio VII,Roma,Etruria / Regio VII,Roma,65399.0
+475694,EDCS-07400279,HD003629,Roma,423025,Etruria / Regio VII,Roma,Etruria / Regio VII,Roma,65399.0
+476250,EDCS-22300170,HD032961,Roma,423025,Etruria / Regio VII,Roma,Etruria / Regio VII,Roma,65399.0
+489845,EDCS-05200652,HD025128,Roma,423025,Italia,Roma,Italia,Roma,65399.0
+490192,EDCS-09400960,HD010569,Roma,423025,Latium et Campania / Regio I,Roma,Latium et Campania / Regio I,Roma,65399.0
+490197,EDCS-09400929,HD010479,Roma,423025,Latium et Campania / Regio I,Latium et Campania (Regio I),Latium et Campania / Regio I,Roma,65399.0
+490261,EDCS-09400883,HD010332,Roma,423025,Latium et Campania / Regio I,Latium et Campania (Regio I),Latium et Campania / Regio I,Roma,65399.0
+490310,EDCS-05802013,HD015835,Roma,423025,Latium et Campania / Regio I,Roma,Latium et Campania / Regio I,Roma,65399.0
+490484,EDCS-28100005,HD065007,Roma,423025,Latium et Campania / Regio I,Roma,Latium et Campania / Regio I,Roma,65399.0
+490641,EDCS-09001169,HD005037,Roma,423025,Latium et Campania / Regio I,Roma,Latium et Campania / Regio I,Roma,65399.0
+490714,EDCS-08900804,HD007612,Roma,423025,Latium et Campania / Regio I,Roma,Latium et Campania / Regio I,Roma,65399.0
+490762,EDCS-07600091,HD006232,Roma,423025,Latium et Campania / Regio I,Roma,Latium et Campania / Regio I,Roma,65399.0
+491094,EDCS-38702045,HD033234,Roma,423025,Latium et Campania / Regio I,Roma,Latium et Campania / Regio I,Roma,65399.0
+491229,EDCS-05702017,HD010360,Roma,423025,Latium et Campania / Regio I,Roma,Latium et Campania / Regio I,Roma,65399.0
+491462,EDCS-05200653,HD025131,Roma,423025,Latium et Campania / Regio I,Roma,Latium et Campania / Regio I,Roma,65399.0
+492107,EDCS-07400149,HD008358,Roma,423025,Latium et Campania / Regio I,Roma,Latium et Campania / Regio I,Roma,65399.0
+492108,EDCS-09300827,HD007152,Roma,423025,Latium et Campania / Regio I,Roma,Latium et Campania / Regio I,Roma,65399.0
+492221,EDCS-08500091,HD000565,Roma,423025,Latium et Campania / Regio I,Roma,Latium et Campania / Regio I,Roma,65399.0
+492282,EDCS-05800667,HD013984,Roma,423025,Latium et Campania / Regio I,Roma,Latium et Campania / Regio I,Roma,65399.0
+492306,EDCS-10700780,HD030573,Roma,423025,Latium et Campania / Regio I,Roma,Latium et Campania / Regio I,Roma,65399.0
+513163,EDCS-10900143,HD004554,Roma,423025,Picenum / Regio V,Roma,Picenum / Regio V,Roma,65399.0
+513465,EDCS-08400571,HD002308,Roma,423025,Provincia incerta,Roma,Provincia incerta,Roma,65399.0
+513539,EDCS-67300017,HD039388,Roma,423025,Provincia incerta,Roma,Provincia incerta,Roma,65399.0
+513560,EDCS-07000777,HD009170,Roma,423025,Provincia incerta,Roma,Provincia incerta,Roma,65399.0
+513561,EDCS-07000778,HD009173,Roma,423025,Provincia incerta,Roma,Provincia incerta,Roma,65399.0
+513562,EDCS-07000779,HD009176,Roma,423025,Provincia incerta,Roma,Provincia incerta,Roma,65399.0
+513563,EDCS-07000780,HD009179,Roma,423025,Provincia incerta,Roma,Provincia incerta,Roma,65399.0
+513564,EDCS-07000781,HD009182,Roma,423025,Provincia incerta,Roma,Provincia incerta,Roma,65399.0
+513565,EDCS-07000782,HD009185,Roma,423025,Provincia incerta,Roma,Provincia incerta,Roma,65399.0
+513566,EDCS-07000783,HD009188,Roma,423025,Provincia incerta,Roma,Provincia incerta,Roma,65399.0
+513567,EDCS-07000784,HD009191,Roma,423025,Provincia incerta,Roma,Provincia incerta,Roma,65399.0
+513790,EDCS-07000919,HD009686,Roma,423025,Provincia incerta,Roma,Provincia incerta,Roma,65399.0
+519487,EDCS-00900381,HD026990,Roma,423025,Samnium / Regio IV,Roma,Samnium / Regio IV,Roma,65399.0
+519681,EDCS-10801456,HD003784,Roma,423025,Samnium / Regio IV,Roma,Samnium / Regio IV,Roma,65399.0
+519766,EDCS-10701050,HD014379,Roma,423025,Samnium / Regio IV,Roma,Samnium / Regio IV,Roma,65399.0
+519770,EDCS-08500098,HD000571,Roma,423025,Samnium / Regio IV,Roma,Samnium / Regio IV,Roma,65399.0
+520135,EDCS-32701122,HD014229,Roma,423025,Sicilia,Roma,Sicilia,Roma,65399.0
+520178,EDCS-21900478,HD014232,Roma,423025,Sicilia,Roma,Sicilia,Roma,65399.0
+521209,EDCS-08500235,HD000254,Roma,423025,Umbria / Regio VI,Roma,Umbria / Regio VI,Roma,65399.0
+516471,EDCS-17201420,HD006282,Romula,203154,Roma,Dacia,Roma,Dacia,54.0
+446811,EDCS-24600965,HD062044,Salona,197488,Aemilia / Regio VIII,Dalmatia,Aemilia / Regio VIII,Dalmatia,3470.0
+446813,EDCS-24600963,HD062045,Salona,197488,Aemilia / Regio VIII,Dalmatia,Aemilia / Regio VIII,Dalmatia,3470.0
+514390,EDCS-32300327,HD074842,Scarbantia,197501,Raetia,Pannonia superior,Raetia,Pannonia Superior,149.0
+455610,EDCS-08701372,HD032192,Segovia,236658,Baetica,Baetica,Baetica,Hispania Citerior,26.0
+455611,EDCS-08701373,HD032195,Segovia,236658,Baetica,Baetica,Baetica,Hispania Citerior,26.0
+455612,EDCS-08701374,HD032198,Segovia,236658,Baetica,Baetica,Baetica,Hispania Citerior,26.0
+464080,EDCS-07600439,HD006442,Sinope,857321,Cappadocia,Bithynia et Pontus,Cappadocia,Bithynia et Pontus,19.0
+512441,EDCS-09100891,HD003484,Sirmium,207447,Pannonia superior,Pannonia inferior,Pannonia Superior,Pannonia Inferior,277.0
+512442,EDCS-09100892,HD003487,Sirmium,207447,Pannonia superior,Pannonia inferior,Pannonia Superior,Pannonia Inferior,277.0
+463783,EDCS-11400419,HD006592,Tarracina,433143,Bruttium et Lucania / Regio III,Latium et Campania (Regio I),Bruttium et Lucania / Regio III,Latium et Campania / Regio I,258.0
+521639,EDCS-01600521,HD057332,Tarsatica,197541,Venetia et Histria / Regio X,Dalmatia,Venetia et Histria / Regio X,Dalmatia,5.0
+521651,EDCS-01601304,HD057307,Tarsatica,197541,Venetia et Histria / Regio X,Dalmatia,Venetia et Histria / Regio X,Dalmatia,5.0
+464035,EDCS-05300147,HD010464,Tegianum,446234,Cappadocia,Latium et Campania (Regio I),Cappadocia,Bruttium et Lucania / Regio III,38.0
+490173,EDCS-09400905,HD010404,Tegianum,446234,Latium et Campania / Regio I,Latium et Campania (Regio I),Latium et Campania / Regio I,Bruttium et Lucania / Regio III,38.0
+490174,EDCS-09400907,HD010410,Tegianum,446234,Latium et Campania / Regio I,Latium et Campania (Regio I),Latium et Campania / Regio I,Bruttium et Lucania / Regio III,38.0
+490175,EDCS-09400910,HD010419,Tegianum,446234,Latium et Campania / Regio I,Latium et Campania (Regio I),Latium et Campania / Regio I,Bruttium et Lucania / Regio III,38.0
+490181,EDCS-09400946,HD010527,Tegianum,446234,Latium et Campania / Regio I,Latium et Campania (Regio I),Latium et Campania / Regio I,Bruttium et Lucania / Regio III,38.0
+490182,EDCS-09400948,HD010533,Tegianum,446234,Latium et Campania / Regio I,Latium et Campania (Regio I),Latium et Campania / Regio I,Bruttium et Lucania / Regio III,38.0
+490183,EDCS-09400947,HD010530,Tegianum,446234,Latium et Campania / Regio I,Latium et Campania (Regio I),Latium et Campania / Regio I,Bruttium et Lucania / Regio III,38.0
+490184,EDCS-09400949,HD010539,Tegianum,446234,Latium et Campania / Regio I,Latium et Campania (Regio I),Latium et Campania / Regio I,Bruttium et Lucania / Regio III,38.0
+490185,EDCS-09400950,HD010542,Tegianum,446234,Latium et Campania / Regio I,Latium et Campania (Regio I),Latium et Campania / Regio I,Bruttium et Lucania / Regio III,38.0
+490187,EDCS-09400953,HD010551,Tegianum,446234,Latium et Campania / Regio I,Latium et Campania (Regio I),Latium et Campania / Regio I,Bruttium et Lucania / Regio III,38.0
+490188,EDCS-09400954,HD010554,Tegianum,446234,Latium et Campania / Regio I,Latium et Campania (Regio I),Latium et Campania / Regio I,Bruttium et Lucania / Regio III,38.0
+490190,EDCS-09400956,HD010560,Tegianum,446234,Latium et Campania / Regio I,Latium et Campania (Regio I),Latium et Campania / Regio I,Bruttium et Lucania / Regio III,38.0
+490191,EDCS-09400957,HD010563,Tegianum,446234,Latium et Campania / Regio I,Latium et Campania (Regio I),Latium et Campania / Regio I,Bruttium et Lucania / Regio III,38.0
+490194,EDCS-09400902,HD010392,Tegianum,446234,Latium et Campania / Regio I,Latium et Campania (Regio I),Latium et Campania / Regio I,Bruttium et Lucania / Regio III,38.0
+490196,EDCS-09400911,HD010422,Tegianum,446234,Latium et Campania / Regio I,Latium et Campania (Regio I),Latium et Campania / Regio I,Bruttium et Lucania / Regio III,38.0
+492269,EDCS-09400898,HD010374,Tegianum,446234,Latium et Campania / Regio I,Latium et Campania (Regio I),Latium et Campania / Regio I,Bruttium et Lucania / Regio III,38.0
+516480,EDCS-09600350,HD010566,Tegianum,446234,Roma,Latium et Campania (Regio I),Roma,Bruttium et Lucania / Regio III,38.0
+516590,EDCS-23801350,HD010386,Tegianum,446234,Roma,Latium et Campania (Regio I),Roma,Bruttium et Lucania / Regio III,38.0
+517498,EDCS-00900620,HD010380,Tegianum,446234,Roma,Roma,Roma,Bruttium et Lucania / Regio III,38.0
+517872,EDCS-01000371,HD010377,Tegianum,446234,Roma,Roma,Roma,Bruttium et Lucania / Regio III,38.0
+517914,EDCS-01000416,HD010371,Tegianum,446234,Roma,Roma,Roma,Bruttium et Lucania / Regio III,38.0
+518089,EDCS-09400923,HD010458,Tegianum,446234,Roma,Latium et Campania (Regio I),Roma,Bruttium et Lucania / Regio III,38.0
+518158,EDCS-09400930,HD010482,Tegianum,446234,Roma,Latium et Campania (Regio I),Roma,Bruttium et Lucania / Regio III,38.0
+518159,EDCS-09400901,HD010389,Tegianum,446234,Roma,Latium et Campania (Regio I),Roma,Bruttium et Lucania / Regio III,38.0
+518160,EDCS-09400906,HD010407,Tegianum,446234,Roma,Latium et Campania (Regio I),Roma,Bruttium et Lucania / Regio III,38.0
+518161,EDCS-09400908,HD010413,Tegianum,446234,Roma,Latium et Campania (Regio I),Roma,Bruttium et Lucania / Regio III,38.0
+518163,EDCS-09400912,HD010425,Tegianum,446234,Roma,Latium et Campania (Regio I),Roma,Bruttium et Lucania / Regio III,38.0
+518164,EDCS-09400913,HD010428,Tegianum,446234,Roma,Latium et Campania (Regio I),Roma,Bruttium et Lucania / Regio III,38.0
+518165,EDCS-09400914,HD010431,Tegianum,446234,Roma,Latium et Campania (Regio I),Roma,Bruttium et Lucania / Regio III,38.0
+518166,EDCS-09400915,HD010434,Tegianum,446234,Roma,Latium et Campania (Regio I),Roma,Bruttium et Lucania / Regio III,38.0
+518167,EDCS-09400916,HD010437,Tegianum,446234,Roma,Latium et Campania (Regio I),Roma,Bruttium et Lucania / Regio III,38.0
+518168,EDCS-09400917,HD010440,Tegianum,446234,Roma,Latium et Campania (Regio I),Roma,Bruttium et Lucania / Regio III,38.0
+518169,EDCS-09400918,HD010443,Tegianum,446234,Roma,Latium et Campania (Regio I),Roma,Bruttium et Lucania / Regio III,38.0
+518170,EDCS-09400919,HD010446,Tegianum,446234,Roma,Latium et Campania (Regio I),Roma,Bruttium et Lucania / Regio III,38.0
+518171,EDCS-09400920,HD010449,Tegianum,446234,Roma,Latium et Campania (Regio I),Roma,Bruttium et Lucania / Regio III,38.0
+518179,EDCS-09400931,HD010485,Tegianum,446234,Roma,Latium et Campania (Regio I),Roma,Bruttium et Lucania / Regio III,38.0
+518187,EDCS-09400951,HD010545,Tegianum,446234,Roma,Latium et Campania (Regio I),Roma,Bruttium et Lucania / Regio III,38.0
+518890,EDCS-20700056,HD010368,Tegianum,446234,Roma,Latium et Campania (Regio I),Roma,Bruttium et Lucania / Regio III,38.0
+504857,EDCS-04001494,HD031168,Theveste,324831,Numidia,Africa Proconsularis,Numidia,Africa Proconsularis,286.0
+518177,EDCS-08500112,HD000968,Tibur,423081,Roma,Latium et Campania (Regio I),Roma,Latium et Campania / Regio I,264.0
+519364,EDCS-05801900,HD030904,Tibur,423081,Samnium / Regio IV,Latium et Campania (Regio I),Samnium / Regio IV,Latium et Campania / Regio I,264.0
+519365,EDCS-05801902,HD030907,Tibur,423081,Samnium / Regio IV,Latium et Campania (Regio I),Samnium / Regio IV,Latium et Campania / Regio I,264.0
+496326,EDCS-13003605,HD041723,Tiddis,305167,Mauretania Caesariensis,Numidia,Mauretania Caesariensis,Numidia,30.0
+496327,EDCS-13003606,HD041726,Tiddis,305167,Mauretania Caesariensis,Numidia,Mauretania Caesariensis,Numidia,30.0
+496328,EDCS-13003607,HD041729,Tiddis,305167,Mauretania Caesariensis,Numidia,Mauretania Caesariensis,Numidia,30.0
+496685,EDCS-08600667,HD000576,Tipasa,344519,Mauretania Caesariensis,Mauretania Caesariensis,Mauretania Caesariensis,Africa Proconsularis,25.0
+496686,EDCS-08600669,HD000582,Tipasa,344519,Mauretania Caesariensis,Mauretania Caesariensis,Mauretania Caesariensis,Africa Proconsularis,25.0
+496687,EDCS-08600670,HD000585,Tipasa,344519,Mauretania Caesariensis,Mauretania Caesariensis,Mauretania Caesariensis,Africa Proconsularis,25.0
+496688,EDCS-28200123,HD046479,Tipasa,344519,Mauretania Caesariensis,Mauretania Caesariensis,Mauretania Caesariensis,Africa Proconsularis,25.0
+252519,EDCS-26300071,,Tipasa,,Mauretania Caesariensis,,Mauretania Caesariensis,Africa Proconsularis,25.0
+252520,EDCS-26500005,,Tipasa,,Mauretania Caesariensis,,Mauretania Caesariensis,Africa Proconsularis,25.0
+192067,EDCS-05801422,,Trebula Suffenas,,Latium et Campania / Regio I,,Latium et Campania / Regio I,Samnium / Regio IV,84.0
+192068,EDCS-05801423,,Trebula Suffenas,,Latium et Campania / Regio I,,Latium et Campania / Regio I,Samnium / Regio IV,84.0
+516346,EDCS-13302413,HD018661,Tusculum,423108,Roma,Latium et Campania (Regio I),Roma,Latium et Campania / Regio I,237.0
+477756,EDCS-20500252,HD047642,Valentia (Hispania Tarraconensis) (1),442845,Gallia Narbonensis,Narbonensis,Gallia Narbonensis,Hispania Citerior,151.0
+477768,EDCS-33800096,HD052072,Valentia (Hispania Tarraconensis) (1),442845,Gallia Narbonensis,Narbonensis,Gallia Narbonensis,Hispania Citerior,151.0
+515883,EDCS-15300609,HD022636,Verona,383816,Roma,Venetia et Histria (Regio X),Roma,Venetia et Histria / Regio X,369.0
+515901,EDCS-15300613,HD022648,Verona,383816,Roma,Venetia et Histria (Regio X),Roma,Venetia et Histria / Regio X,369.0
+515902,EDCS-15300614,HD022651,Verona,383816,Roma,Venetia et Histria (Regio X),Roma,Venetia et Histria / Regio X,369.0
+518781,EDCS-15300616,HD022657,Verona,383816,Roma,Venetia et Histria (Regio X),Roma,Venetia et Histria / Regio X,369.0
+518278,EDCS-48300001,HD015817,Verulae,138648,Roma,Latium et Campania (Regio I),Roma,Latium et Campania / Regio I,11.0
+519638,EDCS-07000353,HD003728,Verulae,,Samnium / Regio IV,Samnium (Regio IV),Samnium / Regio IV,Latium et Campania / Regio I,11.0
+522399,EDCS-04600158,HD027751,Vettona,416767,Venetia et Histria / Regio X,Venetia et Histria (Regio X),Venetia et Histria / Regio X,Umbria / Regio VI,40.0
+505245,EDCS-13001908,HD000859,Vicetia,40091,Numidia,Numidia,Numidia,Venetia et Histria / Regio X,44.0
+513548,EDCS-48800482,HD071435,Viroconium,79741,Provincia incerta,Britannia,Provincia incerta,Britannia,28.0
+519720,EDCS-14804089,HD001726,Volturnum,438694,Samnium / Regio IV,Samnium (Regio IV),Samnium / Regio IV,Latium et Campania / Regio I,12.0
+519739,EDCS-10701094,HD001723,Volturnum,438694,Samnium / Regio IV,Samnium (Regio IV),Samnium / Regio IV,Latium et Campania / Regio I,12.0
+482911,EDCS-11800764,HD018373,Volubilis,275740,Germania superior,Mauretania Tingitana,Germania Superior,Mauretania Tingitana,81.0
+482912,EDCS-11800765,HD018376,Volubilis,275740,Germania superior,Mauretania Tingitana,Germania Superior,Mauretania Tingitana,81.0
+482916,EDCS-11800769,HD018388,Volubilis,275740,Germania superior,Mauretania Tingitana,Germania Superior,Mauretania Tingitana,81.0
