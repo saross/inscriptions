@@ -74,6 +74,50 @@ just a paper. Design the session around the following learning goals:
 pair-programming because it feels more controlled. If you notice this
 happening, name it.
 
+### Shawn's starting skill level (do not re-teach the basics)
+
+Shawn has already been through the **basic agents tutorial** in earlier
+CC sessions (2026-04-16 / 2026-04-17). Assume he knows:
+
+- What agents are, when to spawn them, foreground vs. background vs.
+  headless modes.
+- The built-in agent types (`lit-scout`, `prior-art-scout`, `Explore`,
+  `Plan`, general-purpose) and their basic affordances.
+- How to define a custom agent in `personal-assistant/agents/`.
+- The proposer/verifier pattern and why adversarial verification beats
+  same-context self-check.
+
+The next escalation — and what this project is meant to build — is
+**engineering for long-running, large, and complex tasks**: scheduling
+routines, orchestrating multi-agent pipelines, capturing agent sessions
+for publication, and specifying at a level high enough that the
+main-thread CC never touches a line of analysis code itself. Do not
+re-cover the basics; start above them.
+
+### Required reading before proposing a plan
+
+The following files in `~/personal-assistant/notes/` distil what Shawn
+has already learned about LLM craft and agent orchestration. Read
+them before §10's plan proposal — they are more current and more
+specific than anything this brief restates.
+
+- `notes/llm-craft.md` — rolling craft log. Especially the
+  **2026-04-18 / 2026-04-19 entries** on agent orchestration:
+  *Agent definitions are specifications, not personas*;
+  *Orchestration patterns are a 2×2, not a menu*;
+  *Subagents are context management, not just delegation*;
+  *Trust-but-verify structural vs. narrative fields*;
+  *Adversarial verifier beats same-context self-check*;
+  *Primary-plus-verifier pattern for fact-heavy outputs*;
+  *Prior-art search before building*;
+  *Externalise deferred items or lose them*.
+  Also **2026-04-21 / 2026-04-22** on planning capture:
+  *Abstract todos complete by producing their descendants*;
+  *Capture everything at plan time — "obvious" dies in three weeks*.
+- `notes/lit-scout-case-study.md` — the multi-version refinement run
+  from which the primary-plus-verifier architecture emerged. Worked
+  example of iterating on an agent spec rather than on the analysis.
+
 ### Open-science dimension of the upskilling work
 
 Shawn is a co-proposer of a Research Data Alliance working group on AI
