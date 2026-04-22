@@ -18,9 +18,10 @@ proposing a plan; then propose the plan.
 
 The prior LIRE-based notebook has been archived at
 `archive/2026-04-22-inscriptions-spa.ipynb` along with its data and error
-CSVs. Root infrastructure (`environment.yml`, `requirements.txt`,
-`runtime.txt`, `.envrc`, `LICENSE`, `.gitignore`) has been retained but
-may need updating.
+CSVs. The old environment specs (`environment.yml`, `requirements.txt`,
+`runtime.txt`, `.envrc`) should **also be archived** — this time the
+environment is to be set up properly from scratch in a **Python venv**,
+not inherited. `LICENSE`, `.gitignore`, and `README.md` stay at root.
 
 ---
 
@@ -36,7 +37,7 @@ may need updating.
    what the paper argues.
 
 The audience for the Saturday deliverable is **Adela Sobotkova**, co-author,
-who is physically in Canberra through Sunday 2026-04-26 and thereafter
+who is physically in Sydney through Sunday 2026-04-26 and thereafter
 available by email. The Saturday output should be sufficient to convince
 her that the paper is viable for the May conference.
 
@@ -178,9 +179,13 @@ relevant papers to Zotero, read the code, decide what to reuse.
 
 ## 5. Research programme
 
-Same structural research questions as the archived notebook, but this
-time the statistics must actually work. The previous attempt failed on
-the minimum-count step (§5.3). Sequence:
+Same structural research questions as the archived notebook. The
+previous attempt **did produce SPAs**, but Shawn is not convinced they
+were produced optimally, robustly, or in accordance with current good
+practice — independent of the minimum-count and significance-testing
+gaps flagged in §5.3, this time the methodology itself must be
+re-evaluated against the current literature (see §5.4 and
+Hermankova/Voitek prior art in §4). Sequence:
 
 ### 5.1 Baseline descriptive statistics
 
@@ -192,23 +197,33 @@ geographical distribution, metadata completeness profile.
 Partition by **province** and by **urban area**. Report descriptive
 statistics for each.
 
-### 5.3 Minimum-count determination (the crucial blocker from last time)
+### 5.3 Minimum-count determination and significance testing (the blocker from last time)
 
-Rigorous determination of the **minimum inscription/letter count**
-required for a meaningful SPA analysis at a given level:
+Two things Shawn could not get working in the previous attempt, both
+required this time:
 
-- How many inscriptions/letters do we need at the **city** level to
-  distinguish signal from noise?
-- How many per **decade** to justify including that decade?
+1. **Minimum-count thresholds.** Rigorous determination of the
+   minimum inscription/letter count required for a meaningful SPA
+   analysis at a given level:
+   - How many inscriptions/letters do we need at the **city** level to
+     distinguish signal from noise?
+   - How many per **decade** to justify including that decade?
+2. **Formal tests of statistical significance** on the SPAs themselves
+   — is the signal in a given curve, or a difference between two curves,
+   distinguishable from what a null model would produce?
 
-This step failed last time. **A prior-art assessment is required before
-implementing.** Methods to investigate include but are not limited to:
+**A prior-art assessment is required before implementing.** Methods to
+investigate include but are not limited to:
 
 - The summed-probability-distribution (SPD) methods literature on
-  radiocarbon analogues — see Williams (2012) below.
-- Permutation / bootstrap approaches.
+  radiocarbon analogues — see Williams (2012) below — which has
+  well-developed permutation-test machinery for exactly these two
+  problems in an adjacent domain.
+- Permutation / bootstrap approaches generally.
 - Null-model comparison (e.g., taphonomic or sampling null models from
   the SPD literature).
+- Whatever the Hermankova/Voitek aoristic code (§4) does, and how
+  their paper justifies it.
 
 ### 5.4 SPA across levels and subsets
 
@@ -223,14 +238,25 @@ sub-analyses:
 And on **both** measures:
 
 - Inscription count.
-- Letter count. (One of the sources recommended this; citation
-  currently lost — **follow up to identify and record it**.)
+- Letter count. (Shawn believes the recommendation originated in
+  **Hanson 2021** — verify by re-reading on entry to the project.)
 
 ### 5.5 Demographic vs. cultural/economic/informational signal
 
-Compare inscription/letter counts against the **population proxies
-presented in Hanson (2021)** to decompose how much of the SPA signal is
-demographic versus economic, cultural, "complexity", or informational.
+Compare inscription/letter counts against **population proxies** to
+decompose how much of the SPA signal is demographic versus economic,
+cultural, "complexity", or informational.
+
+- The **demographic proxies** Shawn wants to use come from a **Hanson
+  monograph** (not the 2021 paper — the paper points at it). The
+  citation is currently missing; **identifying and adding it is a
+  first-session task.** Candidate: Hanson, J. W. *An Urban Geography
+  of the Roman World, 100 BC to AD 300* (Archaeopress, 2016) — verify.
+- **LIRE is known to contain a bottom-line population-estimate column**
+  at the urban-area level; **LIST may inherit it**. Check the LIST
+  schema on first contact — if the column is there, Hanson's proxies
+  are already joined to the inscriptions and the demographic
+  comparison is substantially cheaper than it first looks.
 
 ### 5.6 Interpretation
 
@@ -269,7 +295,7 @@ preliminary results.
 
 ### Adela Sobotkova — co-author, visiting
 
-- **In Canberra until Sunday 2026-04-26.** Afterwards available by email.
+- **In Sydney until Sunday 2026-04-26.** Afterwards available by email.
 - Member of the LIST/LIRE team; **geospatial specialist in archaeology**.
 - Receives the Saturday deliverable (§2). Pitch it as: is this paper
   viable for the May conference?
@@ -295,8 +321,9 @@ In rough priority order:
 1. **Zenodo API** — for reproducible dataset pulls (LIST, LIRE docs).
 2. **Zotero integration** — this machine's Zotero is already wired into
    the personal-assistant commands (`/read`, `/cite-new`, `/synthesise`,
-   `/gaps`). Add Hanson 2021, Williams 2012, and the
-   Hermankova/Voitek papers as a first pass.
+   `/gaps`). Add Hanson 2021, the Hanson monograph (§5.5, citation
+   TBC), Williams 2012, and the Hermankova/Voitek papers as a first
+   pass.
 3. **Agent session capture** — see §3. The approach used should be
    defensible for publishing alongside the paper.
 4. **Conda/pip environment** — `environment.yml` and `requirements.txt`
@@ -375,11 +402,14 @@ upskilling frame and should be corrected, not tolerated.
 Flagged so the first session knows to resolve rather than assume:
 
 - Voitek's surname and affiliation.
-- Which source recommended letter count as a complement to inscription
-  count (§5.4).
+- Full citation for the Hanson monograph that supplies the demographic
+  proxies used in §5.5 (candidate: Hanson 2016, *An Urban Geography of
+  the Roman World, 100 BC to AD 300*, Archaeopress — verify).
+- Whether LIST carries a bottom-line population-estimate column (LIRE
+  does; LIST likely inherits) — first-contact schema check.
+- Confirmation that Hanson 2021 is the source for the letter-count
+  recommendation (Shawn's best recollection — verify on re-read).
 - The May 2026 conference — venue, exact date, abstract deadline, length
   (20-minute talk confirmed; paper format unknown).
 - Whether the AD 600 chronological cap is the final choice or a starting
   point for sensitivity analysis.
-- Whether `environment.yml` or `requirements.txt` is the canonical env
-  spec going forward (both are retained; pick one).
