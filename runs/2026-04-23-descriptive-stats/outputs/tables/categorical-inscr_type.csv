@@ -1,0 +1,21 @@
+category,count,share
+tituli sepulcrales,60456,0.330626240750767
+"inscriptiones christianae, tituli sepulcrales",34846,0.19056838006486085
+__missing__,34583,0.18913006622806297
+tituli sacri,15243,0.08336204492133024
+tituli fabricationis,9826,0.05373715498241757
+tituli possessionis,5767,0.03153899580537371
+tituli honorarii,3966,0.021689553903955636
+tituli operum,2388,0.013059670883168447
+miliaria,2277,0.01245262587980509
+"tituli operum, tituli sepulcrales",2064,0.011287755738215943
+"tituli operum, tituli sacri",1713,0.009368180997850733
+"tituli honorarii, tituli sacri",1436,0.007853302926394426
+"carmina, tituli sepulcrales",713,0.0038993070936763413
+"miliaria, tituli sacri",661,0.0036149256506592727
+inscriptiones christianae,470,0.002570370734961964
+"tituli sacri, tituli sepulcrales",467,0.002553964113249441
+termini,396,0.002165674066053059
+"tituli honorarii, tituli operum",381,0.002083640957490443
+leges,336,0.0018375416318025955
+"tituli fabricationis, tituli possessionis",300,0.0016406621712523174

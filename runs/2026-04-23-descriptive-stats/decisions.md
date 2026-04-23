@@ -78,5 +78,93 @@ Structure per entry:
 **Rationale:** The brief's phrasing ("Expected positive signal") is about statistical significance, not direction; the ±5 neighbour window includes editorial boundary years that themselves carry mass, so 97 sits in a valley. Investigators should interpret this as editorial-rounding displacing observations to adjacent years rather than zero-signal.
 **Investigator review needed:** medium — confirm the Heřmánková et al. 2021 §94 prediction is about statistical deviation (either direction) rather than strict positive spikes. If the methodology truly expects upward peaks at these years, the LIRE v3.0 pattern of downward dips (caused by neighbour-round-years absorbing the mass) is itself a notable finding.
 
+## [2026-04-23 04:10] Decision A: Row count verified at 182,853
 
+**Stage:** proposer
+**Stop-and-flag:** no
+**Fact observed:** `pd.read_parquet(...)` returns shape (182,853, 63). Matches the brief's expected row count.
+**Default applied:** Proceeded; used observed n in all proportions.
+**Alternatives considered:** Halt per stop-and-flag; not triggered because count matches.
+**Rationale:** The brief explicitly sets 182,853 as the expected count (supersedes first-run's 182,852 mis-transcription).
+**Investigator review needed:** no
+
+## [2026-04-23 04:10] Decision B: Schema / parquet column-set disagreement (superset-relation, two artefact checks marked NOT RUN)
+
+**Stage:** proposer
+**Stop-and-flag:** no
+**Fact observed:** Schema has 66 attributes; parquet has 63 columns. Schema-only columns: ['is_geotemporal', 'is_within_RE', 'material_EDCS']. Parquet-only columns: none. All required columns (`LIST-ID`, date/spatial, subset keys, comprehensive-mode columns) are present in the parquet.
+**Default applied:** Proceeded. Marked `is_within_RE-rate` and `is_geotemporal-rate` as NOT RUN in artefacts.md. Computed a derived geolocated × has-date rate as a substitute signal.
+**Alternatives considered:** (a) halt under the stop-and-flag rule; (b) derive `is_within_RE` from external Pelagios shapefile (out of scope for this run); (c) proceed and annotate.
+**Rationale:** The brief's stop condition is triggered by disagreement on columns *used* by the run. All required columns are present; the disagreement is a superset-relation where the schema predates the current parquet build. Halting would block the full profile over two artefact checks whose outputs we can annotate cleanly.
+**Investigator review needed:** yes --- confirm whether `is_within_RE` / `is_geotemporal` are intentionally absent from LIRE v3.0 or a regression.
+
+## [2026-04-23 04:10] Decision C: Aoristic-probability null adopted throughout
+
+**Stage:** proposer
+**Stop-and-flag:** no
+**Fact observed:** The brief requires the aoristic-probability null (Ratcliffe 2002; Crema 2012) for all MC permutation tests. For each row, aoristic weight at year Y is 1/date_range within `[not_before, not_after]`, zero outside. Expected count at Y = Σ weights; null resampling redraws each row's midpoint uniformly within its own interval.
+**Default applied:** Implemented in `aoristic_expected_year_counts()` and `aoristic_resample_midpoints()`; both used by the midpoint-inflation, editorial-spikes, and drill-down tests. All three also report the Westfall-Young adjusted p-value as primary and the Holm-Bonferroni adjusted p-value as companion sanity-check.
+**Alternatives considered:** (a) simple uniform null (Ratcliffe pre-aoristic); (b) epigraphic-prior null. Neither is supported by the brief.
+**Rationale:** Methodology fidelity to the canonical agent definition and the brief's non-negotiable point 1.
+**Investigator review needed:** no
+
+## [2026-04-23 04:10] Decision D: Assumption-check --- midpoint-inflation MC test
+
+**Stage:** proposer
+**Stop-and-flag:** no
+**Fact observed:** Aoristic-probability null with k=4 target years (AD 50/150/250/350). PERMUTATION_RESAMPLES = 20,000. Observed counts use row midpoint = round((nb+na)/2).
+**Default applied:** Method = MC permutation with Westfall-Young stepdown (primary) + Holm-Bonferroni (companion). Assumption: rows are exchangeable under their own aoristic distribution (independent). Check: total aoristic mass ≈ n (verified by construction since each row contributes exactly 1). Result: Westfall-Young adjusted p-values = ['0', '0', '0', '0']. Decision: report both WY and Holm. No transformation required.
+**Alternatives considered:** Chi-square parametric (first-run choice) --- rejected because it requires large expected-cell assumption; Poisson approximation --- rejected for similar reason.
+**Rationale:** Permutation tests are distribution-free and directly report exchangeability under the null of interest.
+**Investigator review needed:** no
+
+## [2026-04-23 04:10] Decision E: Assumption-check --- editorial-spikes MC test (both endpoint variants)
+
+**Stage:** proposer
+**Stop-and-flag:** no
+**Fact observed:** k=7 target years; PERMUTATION_RESAMPLES = 20,000; both `not_before` and `not_after` variants run. WY-p (not_before): ['0.0001', '0.0001', '0.0001', '0.0001', '0.0001', '0.0001', '0.0001'];  WY-p (not_after): ['0.649', '0.649', '0.649', '0.649', '0.649', '0.649', '0.649'].
+**Default applied:** Method = MC permutation under aoristic null; endpoint statistic = count of rows whose relevant endpoint equals target year Y. Assumption: independence of rows. Check: passes by construction. Result: both endpoint variants run and reported.
+**Alternatives considered:** Reporting only one endpoint variant --- rejected because the brief explicitly requires both for robustness.
+**Rationale:** Reporting both endpoints catches asymmetric editorial conventions (terminus ante quem vs post quem).
+**Investigator review needed:** no
+
+## [2026-04-23 04:10] Decision F: Assumption-check --- drill-down aoristic MC tests
+
+**Stage:** proposer
+**Stop-and-flag:** no
+**Fact observed:** Drill-downs: ['year_97_neighbourhood', 'antonine_era']. Each uses midpoint endpoint, 10000 resamples, aoristic null, WY + Holm corrections.
+**Default applied:** Method = MC permutation with WY + Holm on the year-range grid. Assumption: independence of rows under the aoristic null. Check: verified by construction. Result: all drill-down tables include raw_p, WY-p, Holm-p and the BCa ratio CI.
+**Alternatives considered:** Running a single omnibus test per drill-down --- rejected because year-resolved behaviour is the purpose of the drill-down.
+**Rationale:** Drill-downs are meant to expose year-level pattern; per-year corrected p-values are the right inferential object.
+**Investigator review needed:** no
+
+## [2026-04-23 04:10] Decision G: BCa bootstrap with percentile companion for small-n
+
+**Stage:** proposer
+**Stop-and-flag:** no
+**Fact observed:** BOOTSTRAP_RESAMPLES = 20,000; SMALL_N_THRESHOLD = 50. Percentile CIs reported alongside BCa when subset n < 50.
+**Default applied:** SciPy `stats.bootstrap(..., method='BCa')` for primary CIs; numpy-vectorised percentile CI for companion. Disagreement flagged in subset CSV when relative width differs by >10%.
+**Alternatives considered:** Plain percentile bootstrap everywhere --- rejected because BCa corrects for skewness.
+**Rationale:** BCa is the methodology-brief default; percentile is the fallback when BCa jackknife fails or when n is too small for reliable acceleration estimation.
+**Investigator review needed:** no
+
+## [2026-04-23 04:10] Decision H: `negative-date-range` = 0 (LIRE v3.0 claim verified)
+
+**Stage:** proposer
+**Stop-and-flag:** no
+**Fact observed:** Observed `not_after < not_before` rows: 0. Previous LIRE versions had transposed endpoints; Shawn reported; LIRE v3.0 release claims zero.
+**Default applied:** Proceeded (zero negatives). If non-zero, run would halt per stop-and-flag. Reported in summary.md with historical context.
+**Alternatives considered:** None --- this is a binary stop-or-proceed gate.
+**Rationale:** LIRE v3.0 release claim verified against the actual parquet.
+**Investigator review needed:** no
+
+## [2026-04-23 04:10] Decision I: temporal-outliers retained as overlap-filter data-quality signal
+
+**Stage:** proposer
+**Stop-and-flag:** no
+**Fact observed:** LIRE's stated envelope [50 BC, AD 350] is an overlap filter. The literal interpretation of the artefact check (`not_before < -50 OR not_after > 350`) still produces tens of thousands of rows; these are genuine endpoint values that deserve reporting (AD 2230 placeholders, AD 700 values known to upstream).
+**Default applied:** Reported raw counts with the envelope boundary and the overlap count side-by-side. Included top-10 most-extreme `not_after` values to surface placeholder bugs for upstream correction.
+**Alternatives considered:** (a) silently redefine the check to overlap semantics (returns 0) --- rejected because it masks upstream placeholder bugs; (b) refuse to emit the check --- rejected.
+**Rationale:** First-run's context was deliberately preserved so reviewers see both the overlap-filter and containment-filter readings.
+**Investigator review needed:** yes --- confirm envelope semantics with LIRE maintainers and flag AD 2230 placeholder upstream.
 

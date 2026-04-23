@@ -1,0 +1,9 @@
+province,urban_context_city,n,mean_date_range,mean_date_range_bca_lo,mean_date_range_bca_hi,mean_date_range_pct_lo,mean_date_range_pct_hi,median_date_range,median_date_range_bca_lo,median_date_range_bca_hi,median_date_range_pct_lo,median_date_range_pct_hi,latitude_null_rate,longitude_null_rate,not_before_null_rate,not_after_null_rate
+Roma,Roma,65382,107.388822611728,106.8730831880334,107.9056089596525,,,100.0,100.0,100.0,,,0.0,0.0,0.0,0.0
+Latium et Campania / Regio I,Pompeii,4507,48.639227867761264,47.59031014678723,49.65257690516346,,,79.0,,,,,0.0,0.0,0.0,0.0
+Hispania citerior,,3555,103.64135021097046,100.9210225551764,106.42056236077687,,,100.0,,,,,0.0,0.0,0.0,0.0
+Britannia,,3525,129.95602836879434,126.72895680570603,132.88454690156038,,,140.0,125.0,150.0,,,0.0,0.0,0.0,0.0
+Dalmatia,Salona,3463,185.5102512272596,181.95924253437542,189.02713964063594,,,150.0,,,,,0.0,0.0,0.0,0.0
+Germania inferior,,2854,119.1885073580939,116.05166911065287,122.02861375296924,,,100.0,,,,,0.0,0.0,0.0,0.0
+Latium et Campania / Regio I,Ostia,2641,74.11170011359333,72.15976474369717,76.20321153910618,,,80.0,,,,,0.0,0.0,0.0,0.0
+Pannonia inferior,,2614,84.4150726855394,81.65226323245015,87.4796700138606,,,60.0,,,,,0.0,0.0,0.0,0.0

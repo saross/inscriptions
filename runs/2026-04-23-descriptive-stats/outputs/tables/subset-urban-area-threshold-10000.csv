@@ -1,0 +1,3 @@
+urban_context_city,n,mean_date_range,mean_date_range_bca_lo,mean_date_range_bca_hi,mean_date_range_pct_lo,mean_date_range_pct_hi,median_date_range,median_date_range_bca_lo,median_date_range_bca_hi,median_date_range_pct_lo,median_date_range_pct_hi,latitude_null_rate,longitude_null_rate,not_before_null_rate,not_after_null_rate
+Roma,65452,107.35129560594024,106.84799776935769,107.87529410865977,,,100.0,100.0,100.0,,,0.0,0.0,0.0,0.0
+,40944,104.47521004298554,103.58889031359907,105.31004420672137,,,100.0,100.0,100.0,,,0.0,0.0,0.0,0.0

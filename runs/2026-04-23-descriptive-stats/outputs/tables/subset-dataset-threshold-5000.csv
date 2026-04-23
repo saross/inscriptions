@@ -1,0 +1,2 @@
+group,n,mean_date_range,mean_date_range_bca_lo,mean_date_range_bca_hi,mean_date_range_pct_lo,mean_date_range_pct_hi,median_date_range,median_date_range_bca_lo,median_date_range_bca_hi,median_date_range_pct_lo,median_date_range_pct_hi,latitude_null_rate,longitude_null_rate,not_before_null_rate,not_after_null_rate
+__dataset__,182853,102.28689712501298,101.93865577813872,102.62706477334252,,,100.0,100.0,100.0,,,0.0,0.0,0.0,0.0

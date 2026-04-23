@@ -1,0 +1,2 @@
+column,n,n_missing,letter_count_mean,letter_count_median,letter_count_sd,letter_count_q25,letter_count_q75,letter_count_q95,letter_count_q99,letter_count_max,letter_count_zero
+clean_text_conservative,182853,3997,43.409230365375464,24.0,168.15300062936842,9.0,51.0,125.0,277.0,35537,10255

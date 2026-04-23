@@ -1,0 +1,2 @@
+province,urban_context_city,n,mean_date_range,mean_date_range_bca_lo,mean_date_range_bca_hi,mean_date_range_pct_lo,mean_date_range_pct_hi,median_date_range,median_date_range_bca_lo,median_date_range_bca_hi,median_date_range_pct_lo,median_date_range_pct_hi,latitude_null_rate,longitude_null_rate,not_before_null_rate,not_after_null_rate
+Roma,Roma,65382,107.388822611728,106.8730831880334,107.9056089596525,,,100.0,100.0,100.0,,,0.0,0.0,0.0,0.0

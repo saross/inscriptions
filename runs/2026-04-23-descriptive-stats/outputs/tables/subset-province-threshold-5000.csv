@@ -1,0 +1,7 @@
+province,n,mean_date_range,mean_date_range_bca_lo,mean_date_range_bca_hi,mean_date_range_pct_lo,mean_date_range_pct_hi,median_date_range,median_date_range_bca_lo,median_date_range_bca_hi,median_date_range_pct_lo,median_date_range_pct_hi,latitude_null_rate,longitude_null_rate,not_before_null_rate,not_after_null_rate
+Roma,65457,107.37271796752066,106.8937737751501,107.86484485998442,,,100.0,100.0,100.0,,,0.0,0.0,0.0,0.0
+Latium et Campania / Regio I,18512,75.30477528089888,74.55617302290406,76.0622069468453,,,79.0,79.0,79.0,,,0.0,0.0,0.0,0.0
+Dalmatia,7088,171.38205417607224,168.7746578724605,173.93514037810382,,,150.0,150.0,150.0,,,0.0,0.0,0.0,0.0
+Hispania citerior,6312,104.27550697084918,102.33791191381496,106.30990573510773,,,100.0,100.0,100.0,,,0.0,0.0,0.0,0.0
+Germania superior,5874,86.10980592441267,84.01450459652708,88.13172880490296,,,57.0,50.0,60.0,,,0.0,0.0,0.0,0.0
+Venetia et Histria / Regio X,5872,86.74625340599455,85.47491485013624,88.04182135558582,,,100.0,100.0,100.0,,,0.0,0.0,0.0,0.0
