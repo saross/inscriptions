@@ -1,0 +1,8 @@
+category,count,pct_of_non_null_date_range,pct_of_total_rows
+eq_0,8279,4.5277,4.5277
+eq_25,172,0.0941,0.0941
+eq_50,631,0.3451,0.3451
+99_to_101 (century),48436,26.489,26.489
+199_to_201 (bicentury),28422,15.5436,15.5436
+"other_round_values (10,20,30,...500)",3971,2.1717,2.1717
+irregular,92942,50.8288,50.8288

@@ -1,0 +1,23 @@
+[2026-04-23 11:59:39] environment OK (pandas=3.0.2, numpy=2.4.4, scipy=1.17.1, pyarrow=24.0.0)
+[2026-04-23 11:59:39] loading dataset from /home/shawn/Code/inscriptions/archive/data-2026-04-22/LIRE_v3-0.parquet
+[2026-04-23 11:59:39] dataset shape = (182853, 63)
+[2026-04-23 11:59:39] running dataset-level profile
+[2026-04-23 11:59:40] wrote tables/null_and_unique_by_column.csv
+[2026-04-23 11:59:40] subset profile: province
+[2026-04-23 11:59:40] wrote tables/top20_province.csv
+[2026-04-23 11:59:40] wrote tables/threshold_qualifying_province.csv
+[2026-04-23 11:59:41] wrote tables/detail_threshold100_province.csv
+[2026-04-23 11:59:41] subset profile: urban-area
+[2026-04-23 11:59:41] wrote tables/top20_urban-area.csv
+[2026-04-23 11:59:41] wrote tables/threshold_qualifying_urban-area.csv
+[2026-04-23 11:59:45] wrote tables/detail_threshold100_urban-area.csv
+[2026-04-23 11:59:45] wrote profile-dataset.md
+[2026-04-23 11:59:45] wrote profile-province.md
+[2026-04-23 11:59:45] wrote profile-urban-area.md
+[2026-04-23 11:59:45] running artefact checks
+[2026-04-23 11:59:51] wrote tables/granularity_histogram.csv
+[2026-04-23 11:59:51] wrote tables/broad_date_range_histogram.csv
+[2026-04-23 11:59:51] wrote artefacts.md
+[2026-04-23 11:59:51] wrote summary.md
+[2026-04-23 11:59:51] wrote /home/shawn/Code/inscriptions/runs/2026-04-23-descriptive-stats/outputs/claims.jsonl (223 claims)
+[2026-04-23 11:59:51] run complete in 11.4s

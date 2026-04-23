@@ -1,0 +1,61 @@
+# Verifier tool-use trace — 2026-04-23
+
+Methodology: data-profile-verifier (canonical at ~/personal-assistant/agents/data-profile-verifier.md).
+Dataset: /home/shawn/Code/inscriptions/archive/data-2026-04-22/LIRE_v3-0.parquet
+Claims file: /home/shawn/Code/inscriptions/runs/2026-04-23-descriptive-stats/outputs/claims.jsonl
+Schema file: /home/shawn/Code/inscriptions/runs/2026-04-23-descriptive-stats/seed/LI_metadata.csv
+
+## Environment
+
+- Interpreter: /home/shawn/personal-assistant/venv/bin/python3
+- pandas 3.0.2
+- numpy 2.4.4
+- scipy 1.17.1
+- pyarrow 24.0.0
+
+## Steps
+
+1. Read verifier brief and canonical agent definition.
+2. Inspected scout outputs (summary.md, profile-*.md, artefacts.md, decisions.md, claims.jsonl).
+3. Loaded parquet independently: shape (182853, 63). Confirmed scout's row/column counts.
+4. Built dispatch-based verification script (`verifier-work/verify.py`) covering all 223 claims.
+   - Independent re-computation from the parquet for each claim; no consumption of scout CSVs.
+   - First run surfaced three implementation bugs in verifier (schema path, editorial claim_id
+     zero-padding off-by-one, granularity other_round set). Fixed and re-ran.
+   - Final run: 223/223 claims reproduce within tolerance.
+5. Built adversarial spot-check script (`verifier-work/spot_checks.py`) with distinct code path
+   (numpy frequency dictionaries rather than pandas boolean masks) for:
+   - Random dataset null-rate (inscr_process: 93.8683 % — match)
+   - Random top-20 province detail (Roma: count 65,457, lat_null 0 %, nb_null 0 % — match)
+   - Random top-20 urban-area detail (Cirta: count 1,020, lat_null 0 %, nb_null 0 % — match)
+   - Granularity histogram (all 7 categories — match)
+   - Broad date-range histogram (all 7 buckets — match)
+   - Midpoint-inflation (4 target years × 3 metrics — match)
+   - Editorial-spikes (14 year/column combinations × 3 metrics — match)
+   - Decision-4 overlap hypothesis: 182,853 / 182,853 rows overlap 50 BC – AD 350 (confirms
+     proposer's interpretation).
+6. Rendered `corrections.md` (full 223-row audit table + semantic-dependencies section).
+7. Wrote `verdict.md` with PASS verdict.
+
+## Outputs
+
+- /home/shawn/Code/inscriptions/runs/2026-04-23-descriptive-stats/outputs/corrections.md
+- /home/shawn/Code/inscriptions/runs/2026-04-23-descriptive-stats/outputs/verdict.md
+- /home/shawn/Code/inscriptions/runs/2026-04-23-descriptive-stats/outputs/verifier.log
+- /home/shawn/Code/inscriptions/runs/2026-04-23-descriptive-stats/verifier-work/verify.py (source)
+- /home/shawn/Code/inscriptions/runs/2026-04-23-descriptive-stats/verifier-work/spot_checks.py (source)
+- /home/shawn/Code/inscriptions/runs/2026-04-23-descriptive-stats/verifier-work/verified_values.jsonl (raw match data)
+
+## Adversarial discipline applied
+
+- Did not consume scout's CSV tables; re-derived every number from the parquet.
+- Used an independent code path (numpy frequency dictionaries) for all mandatory re-runs.
+- Re-checked proposer's six decisions against the parquet; confirmed each is internally
+  consistent with the number claimed.
+- Spot-checked dataset, province, and urban-area subsets with a seeded random pick.
+
+## Verdict
+
+PASS. 223/223 claims reproduce within tolerance. Zero numerical corrections.
+One documentation issue (description of the `other_round_values` granularity bucket is
+misleading — see corrections.md).
