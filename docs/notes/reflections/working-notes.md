@@ -197,6 +197,72 @@ side-question #1 both flagged UNVERIFIED.
 
 ---
 
+## Obs 11 — 2026-04-23 [PATTERN]: editorial-convention hierarchy hypothesis — round-number attractors compete with reign boundaries by distance
+
+Across seven editorial-boundary years tested in the 2026-04-23 rerun,
+the dip-vs-spike outcome appears to depend on distance to the nearest
+round-number attractor (round century / half-century / quarter-century)
+rather than on whether the year is a dynastic transition per se:
+
+| Year | Nearest round | Distance | Observed |
+|------|---------------|----------|----------|
+| AD 97 | AD 100 | 3 y | **DIP** (ratio 0.25) |
+| AD 192 | AD 200 | 8 y | DIP |
+| AD 193 | AD 200 | 7 y | DIP |
+| 14 BC | 15 BC (¼) | 1 y | DIP |
+| AD 27 | AD 25 (¼) | 2 y | DIP |
+| AD 212 | AD 200 / 225 | 12 / 13 y | **SPIKE** (ratio 1.46) |
+| AD 235 | AD 225 / 250 | 10 / 15 y | **SPIKE** (ratio 1.86) |
+
+**Tentative hypothesis.** Editorial anchoring follows a hierarchy —
+round century > round half-century > round quarter-century > reign
+boundary. When a reign-boundary year is within ~8 years of a strong
+round-number attractor, the mass is absorbed by the round number and
+the reign-boundary year appears as a dip. When the reign-boundary year
+is >10 years from the nearest round number, the reign-boundary
+convention wins and the year appears as a spike.
+
+**Why this matters.**
+
+1. **Informs the deconvolution-mixture `convention_SPA` shape.** The
+   current mixture-model plan (Decision 7) treats convention as uniform
+   century slabs. If the hierarchy hypothesis holds, a weighted
+   multi-tier convention (more mass at centuries, less at half-centuries,
+   less again at quarter-centuries, residual at reign-boundaries only
+   when far from rounds) is a better generative model → sharper
+   deconvolution.
+2. **Potentially publishable as a methodological finding in its own
+   right**: "Quantifying the editorial-convention hierarchy in Latin
+   epigraphic databases." Could be a subsection of the main paper or
+   headline content for the FS-0 methods-paper split.
+3. **Generalisable beyond inscriptions.** Any editor-mediated aoristic
+   corpus (historical medical records, court records, cultural-heritage
+   objects) potentially exhibits an analogous hierarchy-of-anchors
+   behaviour, assuming editors default to round-number dates when
+   uncertain. Promotion candidate for
+   `~/personal-assistant/notes/llm-craft.md` if the pattern reproduces
+   on a second corpus.
+
+**Planned test (Thursday 2026-04-24).** Extend the editorial-spikes
+check to seven additional dynastic transitions: AD 68, AD 69, AD 96,
+AD 117, AD 138, AD 161, AD 180. Holm-Bonferroni across an expanded
+family of 14. Prediction: AD 96 and AD 180 (near round attractors)
+should dip; AD 138 and AD 161 (far from rounds) should spike; AD 68,
+AD 69, AD 117 (mid-range) are ambiguous.
+
+**Post-LIST-swap extension.** LIST covers late antiquity where LIRE
+does not. At that point, add late-antique dynastic transitions
+(Diocletian → Tetrarchy → Constantine → Valentinian → Theodosius,
+specific years TBD when LIST envelope is in hand) to test whether the
+hierarchy hypothesis holds beyond the third century.
+
+*Source:* 2026-04-23 comprehensive profile rerun outputs
+(`runs/2026-04-23-descriptive-stats/outputs/artefacts.md`,
+`drill-downs/year_97_neighbourhood.md`). Discussion with Shawn
+2026-04-23 during wind-down.
+
+---
+
 ## Obs 10 — 2026-04-23 [PATTERN]: seed lit-scout across both clusters when a topic has a computational sibling
 
 The verified 25-row bibliography produced by `lit-scout` on 2026-04-22
