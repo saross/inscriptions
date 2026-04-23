@@ -1,0 +1,44 @@
+{
+  "@context": "https://w3id.org/ro/crate/1.1/context",
+  "@graph": [
+    {
+      "@type": "CreativeWork",
+      "@id": "ro-crate-metadata.json",
+      "conformsTo": {"@id": "https://w3id.org/ro/crate/1.1"},
+      "about": {"@id": "./"}
+    },
+    {
+      "@id": "./",
+      "@type": "Dataset",
+      "name": "LIRE descriptive profile + data-artefact audit (2026-04-23)",
+      "description": "Reproducible descriptive profile of the LIRE v3.0 Latin inscription corpus at dataset, province, and urban-area subset levels, with data-artefact audit against documented EDH/EDCS inheritance issues. Produced by a serial data-profile-scout (proposer) + data-profile-verifier (adversarial verifier) agent chain under the saross/inscriptions project.",
+      "datePublished": "2026-04-23",
+      "license": "TBD — to be set when the conference paper's supplementary material is deposited on Zenodo",
+      "creator": [
+        {"@id": "#shawn-ross", "@type": "Person", "name": "Shawn Ross"}
+      ],
+      "hasPart": [
+        {"@id": "spec.md"},
+        {"@id": "seed.md"},
+        {"@id": "agents.md"},
+        {"@id": "decisions.md"},
+        {"@id": "briefs/"},
+        {"@id": "seed/"},
+        {"@id": "outputs/"}
+      ]
+    },
+    {"@id": "spec.md", "@type": "File", "name": "Run specification", "description": "Inputs, configurations, expected outputs, decision-points, and success criteria for this run."},
+    {"@id": "seed.md", "@type": "File", "name": "Dataset and environment provenance", "description": "Source dataset DOI, schema source, interpreter, parameters, and session context at invocation."},
+    {"@id": "agents.md", "@type": "File", "name": "Agents used", "description": "Canonical agent definitions (proposer and verifier), execution vehicle for this session, and dispatch pattern."},
+    {"@id": "decisions.md", "@type": "File", "name": "Decisions encountered", "description": "Judgement calls logged by agents during execution."},
+    {"@id": "briefs/", "@type": "Dataset", "name": "Agent invocation briefs", "description": "Exact prompts sent to proposer and verifier for this run."},
+    {"@id": "seed/", "@type": "Dataset", "name": "Seed artefacts", "description": "Supporting files inherited at invocation time (e.g., the LIST/LIRE schema dictionary)."},
+    {"@id": "outputs/", "@type": "Dataset", "name": "Agent outputs", "description": "Profile reports, CSV tables, artefact checks, corrections, and verdict — populated by the agent chain."},
+    {
+      "@id": "#shawn-ross",
+      "@type": "Person",
+      "name": "Shawn Ross",
+      "affiliation": {"@type": "Organization", "name": "Macquarie University"}
+    }
+  ]
+}
