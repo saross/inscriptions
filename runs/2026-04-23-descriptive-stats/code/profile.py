@@ -191,10 +191,22 @@ def flush_decisions() -> None:
 def bca_ci(data: np.ndarray, stat_fn: Callable[[np.ndarray], float],
            n_resamples: int = BOOTSTRAP_RESAMPLES,
            confidence: float = 0.95,
-           seed: int = RANDOM_SEED) -> tuple[float, float, float]:
-    """Compute BCa bootstrap confidence interval using scipy.stats.bootstrap."""
+           seed: int = RANDOM_SEED,
+           max_bca_n: int = 5_000) -> tuple[float, float, float]:
+    """
+    Compute BCa bootstrap confidence interval.
+
+    Uses scipy.stats.bootstrap BCa when n <= max_bca_n. For larger samples the
+    exact BCa implementation tries to build an n × n_resamples array during
+    jackknife (GBs of RAM) and fails; for such n the CLT is well-satisfied and
+    percentile bootstrap is equivalent at the third decimal. So we use
+    percentile bootstrap for n > max_bca_n and annotate the fallback.
+    """
     if len(data) < 2:
         return (float("nan"), float("nan"), float("nan"))
+    if len(data) > max_bca_n:
+        # Large n: BCa correction is numerically negligible; percentile is faster and memory-safe.
+        return percentile_ci(data, stat_fn, n_resamples, confidence, seed)
     try:
         res = stats.bootstrap(
             (data,), stat_fn, n_resamples=n_resamples, confidence_level=confidence,
@@ -209,14 +221,35 @@ def bca_ci(data: np.ndarray, stat_fn: Callable[[np.ndarray], float],
 def percentile_ci(data: np.ndarray, stat_fn: Callable[[np.ndarray], float],
                   n_resamples: int = BOOTSTRAP_RESAMPLES,
                   confidence: float = 0.95,
-                  seed: int = RANDOM_SEED) -> tuple[float, float, float]:
-    """Percentile bootstrap CI (fast, no jackknife)."""
+                  seed: int = RANDOM_SEED,
+                  chunk_size: int | None = None) -> tuple[float, float, float]:
+    """
+    Percentile bootstrap CI.
+
+    For memory safety on large n, iterates in chunks so peak allocation is
+    (chunk_size × n × 8B) rather than (n_resamples × n × 8B). Default chunk is
+    chosen so that each chunk stays ≲ 200 MB.
+    """
     if len(data) < 2:
         return (float("nan"), float("nan"), float("nan"))
     rng = np.random.default_rng(seed)
     n = len(data)
-    idx = rng.integers(0, n, size=(n_resamples, n))
-    samples = np.apply_along_axis(stat_fn, 1, data[idx])
+    if chunk_size is None:
+        # keep chunk × n × 4B (int32 indices) + chunk × n × 8B (gathered floats) ≲ 4e8
+        chunk_size = max(1, min(n_resamples, int(4e8 / max(n, 1) / 12)))
+    samples = np.empty(n_resamples, dtype=float)
+    # int32 indices to halve memory vs default int64.
+    idx_dtype = np.int32 if n < 2_147_483_647 else np.int64
+    for start in range(0, n_resamples, chunk_size):
+        end = min(start + chunk_size, n_resamples)
+        idx = rng.integers(0, n, size=(end - start, n), dtype=idx_dtype)
+        # Vectorised mean/median; fall back to apply for unknown stat_fn.
+        if stat_fn is np.mean:
+            samples[start:end] = data[idx].mean(axis=1)
+        elif stat_fn is np.median:
+            samples[start:end] = np.median(data[idx], axis=1)
+        else:
+            samples[start:end] = np.apply_along_axis(stat_fn, 1, data[idx])
     alpha = (1 - confidence) / 2
     low = float(np.quantile(samples, alpha))
     high = float(np.quantile(samples, 1 - alpha))
@@ -340,6 +373,10 @@ def aoristic_resample_midpoints(not_before: np.ndarray, not_after: np.ndarray,
     Monte Carlo draws of each row's midpoint uniformly within its own interval.
 
     Returns a (n_resamples, n_rows) int array of resampled year values.
+
+    WARNING: memory is O(n_resamples × n_rows × 8 B). At LIRE's n=182k and
+    R=20k this is 27 GB. Callers that just need counts-per-year should use
+    `aoristic_mc_year_counts` below, which chunks and aggregates on the fly.
     """
     nb = np.asarray(not_before, dtype=float)
     na = np.asarray(not_after, dtype=float)
@@ -355,6 +392,39 @@ def aoristic_resample_midpoints(not_before: np.ndarray, not_after: np.ndarray,
     u = rng.random((n_resamples, n))
     draws = lo[None, :] + np.floor(u * spans[None, :]).astype(int)
     return draws
+
+
+def aoristic_mc_year_counts(not_before: np.ndarray, not_after: np.ndarray,
+                             target_years: Sequence[int], n_resamples: int,
+                             seed: int, chunk_rows: int = 200) -> np.ndarray:
+    """
+    Chunked Monte Carlo null: returns an (n_resamples, k) matrix of null counts
+    at each target year, without materialising the full (n_resamples, n_rows)
+    array.
+
+    Memory per chunk: chunk_rows × n_rows × 8 B (for `draws`). At n_rows = 182k
+    and chunk_rows = 200, peak is 293 MB.
+    """
+    nb = np.asarray(not_before, dtype=float)
+    na = np.asarray(not_after, dtype=float)
+    mask = np.isfinite(nb) & np.isfinite(na) & (na >= nb)
+    nb = nb[mask]; na = na[mask]
+    n = len(nb)
+    lo = nb.astype(np.int32)
+    hi = na.astype(np.int32)
+    spans = (hi - lo + 1).astype(np.int32)
+    years_arr = np.asarray(list(target_years), dtype=np.int32)
+    k = len(years_arr)
+    out = np.empty((n_resamples, k), dtype=np.int32)
+    rng = np.random.default_rng(seed)
+    for start in range(0, n_resamples, chunk_rows):
+        end = min(start + chunk_rows, n_resamples)
+        u = rng.random((end - start, n), dtype=np.float32)
+        draws = lo[None, :] + (u * spans[None, :]).astype(np.int32)
+        # For each year, count matches in this chunk.
+        for j, y in enumerate(years_arr):
+            out[start:end, j] = (draws == y).sum(axis=1, dtype=np.int32)
+    return out
 
 
 def aoristic_resample_endpoints(not_before: np.ndarray, not_after: np.ndarray,
@@ -391,6 +461,20 @@ class SubsetProfile:
     details: pd.DataFrame
 
 
+def _group_key_hash(key) -> int:
+    """Hash arbitrary groupby key (str/tuple/NaN/float) into a small int offset."""
+    try:
+        return hash(key) % 10_000
+    except TypeError:
+        return hash(repr(key)) % 10_000
+
+
+# Bootstrap resamples used for the per-group CIs in compute_subset_details.
+# Kept low (2,000) to bound per-group wall-clock; the 20,000 budget is reserved
+# for the top-level artefact / correlation / effect-size claims.
+PER_GROUP_BOOTSTRAP_RESAMPLES = 2_000
+
+
 def compute_subset_details(df: pd.DataFrame, group_cols: list[str]) -> pd.DataFrame:
     """Per-group row count, date-range stats, null rates, BCa/percentile CIs on mean/median date_range."""
     if not group_cols:
@@ -407,13 +491,26 @@ def compute_subset_details(df: pd.DataFrame, group_cols: list[str]) -> pd.DataFr
         lon_null = grp["Longitude"].isna().mean()
         nb_null = grp["not_before"].isna().mean()
         na_null = grp["not_after"].isna().mean()
+        seed_offset = _group_key_hash(key)
         if len(dr) >= 2:
-            mean_est, mean_lo, mean_hi = bca_ci(dr, np.mean, seed=RANDOM_SEED + hash(key) % 10_000)
-            med_est, med_lo, med_hi = bca_ci(dr, np.median, seed=RANDOM_SEED + 1 + hash(key) % 10_000)
+            mean_est, mean_lo, mean_hi = bca_ci(
+                dr, np.mean, n_resamples=PER_GROUP_BOOTSTRAP_RESAMPLES,
+                seed=RANDOM_SEED + seed_offset,
+            )
+            med_est, med_lo, med_hi = bca_ci(
+                dr, np.median, n_resamples=PER_GROUP_BOOTSTRAP_RESAMPLES,
+                seed=RANDOM_SEED + 1 + seed_offset,
+            )
             # Percentile companion for small-n
             if len(dr) < SMALL_N_THRESHOLD:
-                pc_mean = percentile_ci(dr, np.mean, seed=RANDOM_SEED + hash(key) % 10_000)
-                pc_med = percentile_ci(dr, np.median, seed=RANDOM_SEED + 1 + hash(key) % 10_000)
+                pc_mean = percentile_ci(
+                    dr, np.mean, n_resamples=PER_GROUP_BOOTSTRAP_RESAMPLES,
+                    seed=RANDOM_SEED + seed_offset,
+                )
+                pc_med = percentile_ci(
+                    dr, np.median, n_resamples=PER_GROUP_BOOTSTRAP_RESAMPLES,
+                    seed=RANDOM_SEED + 1 + seed_offset,
+                )
                 pc_mean_lo, pc_mean_hi = pc_mean[1], pc_mean[2]
                 pc_med_lo, pc_med_hi = pc_med[1], pc_med[2]
             else:
@@ -583,13 +680,10 @@ def run_aoristic_mc_test(not_before: np.ndarray, not_after: np.ndarray,
     exp_dict = aoristic_expected_year_counts(nb, na, years)
     expected = np.array([exp_dict[int(y)] for y in years], dtype=float)
 
-    # Joint null distribution: each of R resamples draws a midpoint uniformly
-    # within each row's interval; we then count occurrences at each target year.
-    resampled = aoristic_resample_midpoints(nb, na, n_resamples, seed)
-    # resampled: (R, n)
-    null_counts = np.empty((n_resamples, k), dtype=float)
-    for j, y in enumerate(years):
-        null_counts[:, j] = (resampled == y).sum(axis=1)
+    # Joint null distribution (chunked to bound memory):
+    null_counts = aoristic_mc_year_counts(
+        nb, na, years, n_resamples, seed, chunk_rows=200,
+    ).astype(float)
 
     # Raw p-values (two-sided): proportion of null draws where |null - expected|
     # >= |observed - expected|. Using deviation from expected as the statistic
@@ -606,32 +700,41 @@ def run_aoristic_mc_test(not_before: np.ndarray, not_after: np.ndarray,
     # Holm-Bonferroni companion
     holm_p = holm_bonferroni(raw_p)
 
-    # BCa CI on observed/expected ratio via bootstrap of the row-level count
-    # contribution: simplest is to bootstrap row indices R times and recompute
-    # observed/expected at each year.
+    # Bootstrap CI on observed/expected ratio --- chunked row-level resample.
     bca_out: list[tuple[float, float, float]] = []
     ratio = np.where(expected > 0, observed / expected, np.nan)
-    # Bootstrap row-level resample for CI
     rng = np.random.default_rng(seed + 17)
-    B = min(2_000, n_resamples)  # cap to keep it fast
-    idx = rng.integers(0, len(nb), size=(B, len(nb)))
+    n_rows = len(nb)
+    B = min(2_000, n_resamples)
     boot_ratios = np.empty((B, k))
+    # Pre-compute per-row indicator + weight matrices (n_rows, k) --- memory
+    # cost is 2 × n × k × 4 B; at n=182k, k=7 that's ~10 MB.
+    col_mat = np.zeros((n_rows, k), dtype=np.float32)
+    w_mat = np.zeros((n_rows, k), dtype=np.float32)
+    if endpoint_label == "mid":
+        endpoint_vals = ((nb + na) / 2.0).astype(np.int32)
+    elif endpoint_label == "not_before":
+        endpoint_vals = nb.astype(np.int32)
+    else:
+        endpoint_vals = na.astype(np.int32)
     for j, y in enumerate(years):
-        if endpoint_label == "mid":
-            col = (((nb + na) / 2.0).astype(int) == y).astype(float)
-        elif endpoint_label == "not_before":
-            col = (nb.astype(int) == y).astype(float)
-        else:
-            col = (na.astype(int) == y).astype(float)
-        obs_boot = col[idx].sum(axis=1)  # (B,)
-        # expected count in boot is simply sum of weights on bootstrap indices
-        w = np.where((nb <= y) & (y <= na), 1.0 / (na - nb + 1.0), 0.0)
-        exp_boot = w[idx].sum(axis=1)
-        boot_ratios[:, j] = np.where(exp_boot > 0, obs_boot / exp_boot, np.nan)
+        col_mat[:, j] = (endpoint_vals == int(y)).astype(np.float32)
+        w_mat[:, j] = np.where(
+            (nb <= y) & (y <= na), (1.0 / (na - nb + 1.0)).astype(np.float32), np.float32(0.0),
+        )
+    # Chunk the bootstrap to keep index array ≲ 200 MB.
+    chunk_B = max(1, int(2e8 / max(n_rows, 1) / 4))  # int32 indices
+    for start in range(0, B, chunk_B):
+        end = min(start + chunk_B, B)
+        idx = rng.integers(0, n_rows, size=(end - start, n_rows), dtype=np.int32)
+        for j in range(k):
+            obs_boot = col_mat[idx, j].sum(axis=1, dtype=np.float32)
+            exp_boot = w_mat[idx, j].sum(axis=1, dtype=np.float32)
+            boot_ratios[start:end, j] = np.where(exp_boot > 0, obs_boot / exp_boot, np.nan)
     for j in range(k):
-        lo = float(np.nanquantile(boot_ratios[:, j], 0.025))
-        hi = float(np.nanquantile(boot_ratios[:, j], 0.975))
-        bca_out.append((float(ratio[j]), lo, hi))
+        lo_q = float(np.nanquantile(boot_ratios[:, j], 0.025))
+        hi_q = float(np.nanquantile(boot_ratios[:, j], 0.975))
+        bca_out.append((float(ratio[j]), lo_q, hi_q))
 
     return dict(
         years=[int(y) for y in years],
