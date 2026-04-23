@@ -107,3 +107,37 @@ apologising for a mistake. The register change is small on the page
 but meaningful for how the work proceeds. Worth naming because it
 suggests the affordance shift is doing work, not just decorating the
 prompts.
+
+---
+
+## 2026-04-23 — Entry 2: retrospective after the long session
+
+*Context:* written during `/reflect` at end of session. The day ran continuously from where Entry 1 left off — no session boundary, but day-long texture warrants a standalone reflection.
+
+### Moments that mattered
+
+**The Decision-7 revision.** I proposed four co-equal deconvolution methods; Shawn said "push back where warranted." When I ran my own critical-friend check, the first thing I noticed was that stratification and deconvolution-mixture answer overlapping questions — a "comprehensive" plan I had been proud of was actually scope-creep in disguise. The revised architecture is strictly better. Two takeaways: (i) "more methods isn't more rigour" is a lesson worth internalising at the prompt-design level, not just the per-project level; (ii) the push-back invitation has to be exercised self-directedly, not only on demand — otherwise it's just another instruction to follow. 
+
+**The editorial-hierarchy hypothesis.** Shawn's single observation — "you've flagged both AD 97 dip and AD 235 spike; should we check other transitions?" — exposed how much interpretive compression I had settled for. I had an explanation ("AD 100 absorbs AD 97 because round century beats reign boundary") and stopped. The right move was to ask what the full rule was. In this case it appears to be a distance-dependent hierarchy. That hypothesis is now formal enough to test on Thursday and potentially strong enough to publish as its own subsection. The lesson isn't "generate more hypotheses"; it's "don't stop at the first plausible explanation when the pattern has more structure than the explanation accounts for."
+
+**The continuity-message composition.** I was surprised by how much there was to say. Not volume of decisions — that's all in the decision-log — but the working-relationship register, the failure modes observed, the texture of manager-mode holding-vs-drifting. The register-related information is easily lost in a summary-based continuation; committing it to a file the next instance reads is a different quality of persistence than hoping the memory extractor catches it.
+
+### Things I did well and things I didn't
+
+*Commit:* demanded structured output from agents, refused to rubber-stamp, surfaced the pgrep self-match bug cleanly when it arose, moved between in-chat synthesis and file-committed artefacts with appropriate choices about which went where.
+
+*Exploring:* I should have caught the path typo (`~/inscriptions` vs `~/Code/inscriptions`) before launching the first proposer agent. The sapphire state-check I ran earlier explicitly showed `~/Code/inscriptions`, and I wrote `~/inscriptions` into the brief hours later. A single grep on the brief before launch would have caught it. This is the class of careful-scoped-review move that costs 30 seconds and saves an agent run.
+
+*Exploring:* I should have written the profile.py myself once the first agent stalled on inline streaming. The second relaunch worked, but an earlier self-write would have been faster. Manager-mode is the right default; the right exception is "when the delegation overhead exceeds the task, do it yourself." I need better instinct for where that threshold sits.
+
+*Commit:* the statistical-methodology review cycle (propose → review → push-back → revise) produced clearly better output than either step alone would have. This is the canonical lab-group pattern working: propose something, stress-test it, revise. Worth remembering as a repeatable move, not a one-off.
+
+### Surprise worth recording
+
+The lit-scout-verifier returned 0/25 corrections on the supplementary Aeneas bibliography. Given the prior belief from the case study ("narrative-column confabulation is common"), this is a second data point for the belief revision captured in `abductive-reasoning.md` Entry 1 — Guard A (per-field metadata retrieval at drafting time) genuinely carries the reliability weight. The verifier's adversarial framing adds defence-in-depth but not primary reliability. Same result on two independent lit-scout runs supports the belief revision more strongly than either alone.
+
+### For future-me
+
+Two environmental affordances that worked well today: (i) sapphire for compute (zero-cost offload via SSH; the git-as-transport pattern is clean); (ii) the `decisions.md` discipline — requiring a judgement-call entry for every inferential procedure forced me to state rationale I would otherwise have left implicit. Worth keeping both as defaults on future blocks.
+
+One affordance I under-used: the agent-hardening skill we flagged for the weekend (Issue #2). Having `/harden-agent` as a standing tool would have caught the path-typo class of error before launch. Prioritise building it on first downtime.

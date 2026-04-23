@@ -133,3 +133,62 @@ Today's lit-scout + lit-scout-verifier run for the inscriptions SPA
 bibliography. Draft: `/tmp/inscriptions-lit-scout-draft-2026-04-22.md`.
 Verified report: `planning/bibliography-2026-04-22.md`. Case-study
 comparison: `~/personal-assistant/notes/lit-scout-case-study.md`.
+
+---
+
+## Entry 2 — 2026-04-23: editorial-convention hierarchy — one-factor explanation revised to distance-dependent hierarchy
+
+### Surprising fact
+
+The comprehensive profile rerun found what appeared to be a clean one-factor explanation for the AD 97 editorial-spikes dip: the Antonine-era editorial convention anchors on AD 100 (round century) rather than on the reign boundary (AD 96/98); round-century beats reign-boundary. I was ready to commit to this reading and move on.
+
+Then Shawn asked: "You've compared the Flavian/Antonine boundary (96/98) to the round century (100), but you've also flagged 235 (end of Severans) as a major peak. Should we check the other dynastic transitions?"
+
+The question exposed that AD 235 is a **spike, not a dip** — contradicting the one-factor "round century beats reign boundary" rule. Both findings are real in the data; the one-factor rule can't account for both.
+
+### Probe
+
+Sorting the seven tested editorial-boundary years by distance to the nearest round-number attractor (round century, half-century, quarter-century):
+
+| Year | Nearest round | Distance | Result |
+|------|---------------|----------|--------|
+| AD 97 | AD 100 | 3 y | DIP (ratio 0.25) |
+| AD 192 | AD 200 | 8 y | DIP |
+| AD 193 | AD 200 | 7 y | DIP |
+| 14 BC | 15 BC (¼) | 1 y | DIP |
+| AD 27 | AD 25 (¼) | 2 y | DIP |
+| AD 212 | AD 200 / 225 | 12 / 13 y | SPIKE (ratio 1.46) |
+| AD 235 | AD 225 / 250 | 10 / 15 y | SPIKE (ratio 1.86) |
+
+The data pattern is cleaner than the one-factor rule: distance-to-nearest-round-attractor (≤ 8 years = dip, > 10 years = spike) matches all seven observations, whereas "round century beats reign boundary" fails on AD 212 and AD 235.
+
+### Belief revision
+
+Old belief: *Editorial convention in Latin epigraphic corpora is a two-option choice — editors default to the round century when close to one, otherwise use the reign-boundary year.*
+
+Revised belief: *Editorial anchoring is a distance-dependent hierarchy. The convention prefers round-number attractors in order: round century > round half-century > round quarter-century > reign boundary. The closest attractor wins, and reign-boundary years appear as spikes only when no round-number attractor is close (> 10 years distant).*
+
+The revised belief is strictly stronger — it has prediction content. For seven additional dynastic transitions scheduled for Thursday's test:
+
+- **Near a round attractor (predict DIP)**: AD 96 (4 y from AD 100), AD 180 (5 y from AD 175).
+- **Far from a round attractor (predict SPIKE)**: AD 138 (12 y from AD 150 and 13 y from AD 125), AD 161 (11 y from AD 150 and 14 y from AD 175).
+- **Mid-range (ambiguous)**: AD 68, AD 69, AD 117.
+
+### Implications
+
+1. Informs the shape of `convention_SPA` in the main paper's deconvolution-mixture model (Decision 7). Was modelling it as uniform century slabs; a hierarchical weighted attractor profile (more mass at centuries, less at half-centuries, less again at quarter-centuries, residual on reign-boundaries only when far from rounds) is a better generative model → sharper deconvolution.
+2. Potentially publishable as a standalone methodological subsection or as headline content for the FS-0 methods-paper split.
+3. Generalisable beyond inscriptions — any editor-mediated aoristic corpus could exhibit analogous hierarchy-of-anchors behaviour. Promotion candidate for `~/personal-assistant/notes/llm-craft.md` if reproduces on a second corpus.
+
+### What would change this belief
+
+- Thursday's test on the seven new transitions produces results contrary to the distance-dependent prediction (e.g., AD 138 dips rather than spikes; AD 96 spikes rather than dips). Would suggest the hierarchy is not the right frame, or is dataset-specific, or is moderated by other factors (reign length? frequency of inscriptions to that reign? regional variation?).
+- Replication on LIST's late-antique extension fails to reproduce the pattern for Diocletian / Constantinian / Theodosian transitions.
+
+### How I noticed
+
+Shawn's question. I was ready to commit to the one-factor reading. The prompt to "check the other dynastic transitions" wasn't a challenge to my interpretation — it was a request for more cases — but framing the pattern-across-cases test revealed the incompleteness of the one-factor rule. Worth capturing as a lesson for future similar situations: when I've reached a clean interpretation, stress-test it against the broadest available evidence, not just the cases that motivated it.
+
+### Source
+
+Session discussion 2026-04-23 with Shawn after the comprehensive profile rerun returned. Editorial-spikes test results at `runs/2026-04-23-descriptive-stats/outputs/artefacts.md`; drill-down at `drill-downs/year_97_neighbourhood.md`. Hypothesis + test plan captured as Obs 11 in `working-notes.md`; Thursday test and post-LIST extension in `planning/backlog-2026-04-22.md`.
