@@ -1,15 +1,45 @@
-# Verdict — LIRE v3.0 descriptive profile (2026-04-23)
+# Verification verdict: **PARTIAL**
 
-## Verdict: **PASS**
+Claims reviewed: 1330 (claims.jsonl contains 1305; plus spot-check / method-check entries).
+- pass: 1303
+- fail: 27
+- skip: 0
 
-All 223 claims enumerated in `claims.jsonl` reproduce within the tolerances specified in the verifier brief (exact match for counts and rankings; ±0.1 pp for percentages; ±0.5 % relative for chi-square and p-values; ±0.1 % relative for mean/median/stddev). Independent adversarial spot-checks against the source parquet — using a distinct numpy-frequency-dictionary code path rather than the scout's pandas-boolean code path — also reproduce exactly for the unexpected-pattern diagnostic (granularity histogram + broad date-range histogram), the two load-bearing artefact checks (midpoint-inflation at AD 50/150/250/350 and editorial-spikes at the seven `not_before` and seven `not_after` boundary years), and random per-subset details at dataset (`inscr_process` null rate = 93.8683 %), province (`Roma` count = 65,457), and urban-area (`Cirta` count = 1,020) levels.
+Severity tally (failures only):
+- critical: 0
+- major: 27
+- minor: 0
 
-No numerical corrections are required. The six judgement calls the proposer recorded in `decisions.md` are semantic, not numerical: the verifier confirms each of them reproduces the claimed figure and, for Decision 4, independently confirms the proposer's overlap-vs-containment interpretation — all 182,853 rows have date intervals that overlap 50 BC – AD 350, so the reported "34,562 temporal outliers" figure is correct under the scout's stated literal-endpoint semantics and 0 under an overlap interpretation. See `corrections.md` §"Semantic dependencies" for per-claim notes.
+## Verifier random seed
 
-One minor documentation issue worth flagging (not a numerical correction): claims c0213–c0214 describe the `other_round_values` bucket as "10, 20, 30, ..., 500" (implying every multiple of 10), but the scout's source code hardcodes a discrete set `{10, 20, 30, 40, 60, 70, 75, 80, 90, 125, 150, 175, 250, 300, 400, 500}`. The reported count (3,971) is correct relative to the code, and the description should be updated to enumerate the actual set so future verifiers and readers are not misled.
+The verifier used seed `21260423` (proposer used 20260423). Stochastic
+claims (permutation_pvalue, corrected_pvalue, ci_lower, ci_upper) were re-run
+with the different seed and compared under the stochastic tolerance
+(+-1 pp on p-values, +-5% relative on CI bounds).
 
-## Files
+## Method-as-implemented
 
-- `/home/shawn/Code/inscriptions/runs/2026-04-23-descriptive-stats/outputs/corrections.md`
-- `/home/shawn/Code/inscriptions/runs/2026-04-23-descriptive-stats/outputs/verdict.md` (this file)
-- `/home/shawn/Code/inscriptions/runs/2026-04-23-descriptive-stats/outputs/verifier.log`
+- method-check::aoristic_weight_formulation --- pass (info); Weight = 1/date_range inside interval, 0 outside (searched for `1.0 / dr` and `(nb <= y) & (y <= na)`).
+- method-check::aoristic_expected_sigma_weights --- pass (info); Expected count at Y = sum of per-row weights (searched for `weights.sum()` inside aoristic_expected_year_counts).
+- method-check::aoristic_null_resample_uniform_mid --- pass (info); Null resampling draws mid ~ DiscreteUniform(nb, na) per row per resample.
+- method-check::no_chi_square_vs_uniform_null --- pass (info); profile.py does not use scipy chi-square on uniform as the permutation null (checked for stats.chisquare / chi2_contingency).
+- method-check::westfall_young_joint_not_marginal --- pass (info); WY stepdown uses joint null distribution (cumulative max across tail of nulls, not marginal p-values).
+- method-check::holm_bonferroni_companion --- pass (info); Holm-Bonferroni companion correction implemented.
+- method-check::decisions_entry_midpoint_inflation --- pass (info); decisions.md has an assumption-check entry for inferential claim family `midpoint_inflation`.
+- method-check::decisions_entry_editorial_spikes --- pass (info); decisions.md has an assumption-check entry for inferential claim family `editorial_spikes`.
+- method-check::decisions_entry_drill_down --- pass (info); decisions.md has an assumption-check entry for inferential claim family `drill_down`.
+- method-check::decisions_entry_aoristic_null --- pass (info); decisions.md has an assumption-check entry for inferential claim family `aoristic_null`.
+- method-check::decisions_entry_BCa_bootstrap --- pass (info); decisions.md has an assumption-check entry for inferential claim family `BCa_bootstrap`.
+
+## Interpretive flags for investigator
+
+- The Westfall-Young-adjusted p on `editorial-spikes` `not_after` family
+  is 0.6488 (marginal), because the AD 235 spike absorbs correction mass in the
+  joint-null distribution. Holm-adjusted p remains small for individual years
+  (e.g. AD 212 Holm-p = 0.00035). This is a genuine WY vs Holm trade-off and
+  warrants investigator discussion: WY controls FWER under joint null and is
+  appropriate for inflation-style null-distribution comparisons; Holm is
+  marginal and cheaper but does not condition on the joint distribution. For
+  the `not_after` family in particular, the scout's honest self-critique
+  stands.
+
