@@ -1,9 +1,10 @@
-# Run spec: LIRE descriptive profile + data-artefact audit
+# Run spec: LIRE comprehensive descriptive profile + data-artefact audit (revised rerun)
 
-**Date:** 2026-04-23
-**Block:** data-setup + §5.1–5.2 descriptive statistics + data-artefact audit
+**Date:** 2026-04-23 (revised)
+**Block:** data-setup + §5.1–5.2 descriptive statistics + data-artefact audit (comprehensive mode)
 **Project:** inscriptions SPA (~/Code/inscriptions/)
-**Orchestration:** main-thread CC → serial proposer/verifier chain via `data-profile-scout` + `data-profile-verifier` (agent definitions at `~/personal-assistant/agents/`; today executed via `general-purpose` shell because the named agents are not yet in this session's routing).
+**Orchestration:** main-thread CC (amd-tower) → serial proposer/verifier chain via `data-profile-scout` + `data-profile-verifier` (agent definitions at `~/personal-assistant/agents/`; executed via `general-purpose` shell because the named agents are not yet in this session's routing). **Compute runs on sapphire via SSH** per FAIR4RS posture + compute-offload convention.
+**Relationship to first run** (commit `f254c4f`): this rerun supersedes the first-run outputs. Motivation: (a) project-local venv instead of personal-assistant venv; (b) comprehensive-mode stats Shawn's notebook uses; (c) best-practice statistical tests replacing chi-square / log-Cohen's-d / BH-FDR with MC permutation (two-stage null) / Cliff's delta / Holm-Bonferroni per post-review self-critique.
 
 ## Goal
 
@@ -21,10 +22,12 @@ Produce a clean, reproducible, adversarially-verified descriptive profile of LIR
 - **Schema:** `runs/2026-04-23-descriptive-stats/seed/LI_metadata.csv` — full 65-attribute dictionary, inherited from LIST.
 - **Date columns:** `["not_before", "not_after"]`.
 - **Spatial columns:** `["Latitude", "Longitude"]`.
-- **Subset levels:**
+- **Subset levels (revised thresholds + bivariate):**
   - `dataset` — roll-up, `columns: []`.
-  - `province` — `columns: ["province"]`, `threshold_candidates: [10, 30, 100, 300]`.
-  - `urban-area` — `columns: ["urban_context_city"], threshold_candidates: [10, 30, 100, 300]`.
+  - `province` — `columns: ["province"]`, `threshold_candidates: [10, 25, 50, 100, 250, 500, 1000, 2500, 5000, 10000]`.
+  - `urban-area` — `columns: ["urban_context_city"]`, same thresholds.
+  - `province-x-urban-area` — `columns: ["province", "urban_context_city"]`, same thresholds. Bivariate grouping added this rerun.
+- **Per-group detail produced at EVERY threshold** (not only highest), per comprehensive mode.
 
 ## Artefact checks
 
@@ -44,9 +47,28 @@ From the catalogue at `~/personal-assistant/agents/data-profile-scout.md`:
 
 ## Configurations
 
-- `venv_python`: `/home/shawn/personal-assistant/venv/bin/python3` (confirmed to have pandas + numpy + scipy + pyarrow via existing lit-search.py usage).
-- `output_dir`: `/home/shawn/Code/inscriptions/runs/2026-04-23-descriptive-stats/outputs/`
-- `max_runtime_minutes`: 30 for proposer, 20 for verifier.
+- `comprehensive_mode`: `true` (this rerun activates the extended statistics, bootstrap CIs, MC permutation tests, drill-down, and sensitivity sweep).
+- `remote_exec`: `{host: sapphire, workdir: ~/inscriptions, venv_python: .venv/bin/python3}` — compute on sapphire via SSH; orchestration on amd-tower.
+- `output_dir` (on sapphire): `runs/2026-04-23-descriptive-stats/outputs/` under the repo root.
+- `categorical_columns`: `["province", "urban_context_city", "urban_context", "inscr_type", "type_of_inscription_auto", "language_EDCS", "material_clean"]`.
+- `text_columns`: `["clean_text_conservative"]` — letter-count using Latin alphabet filter per 2026-04-22 notebook cell 63.
+- `numeric_columns`: `["date_range", "Latitude", "Longitude", "letter_count", "urban_context_pop_est"]`.
+- `temporal_envelope`: `[-50, 350]`.
+- `primary_key`: `LIST-ID`.
+- `drill_downs`: year_97_neighbourhood (AD 94–100), antonine_era (AD 96–192).
+- `sensitivity_thresholds`: `[0.01, 0.05, 0.10]`.
+- `bootstrap_resamples` / `permutation_resamples`: 20 000.
+- `n_jobs`: `-1` (exploit all sapphire cores for resample loops).
+- `small_n_threshold`: 50 (subsets at/below this get percentile-bootstrap CI alongside BCa).
+- `test_family_sizes`: midpoint_inflation=4, editorial_spikes=7, drill_down_year_97=7 → **Westfall-Young stepdown** as primary correction (permutation-based; exploits joint distribution from MC already being run), **Holm-Bonferroni** reported as companion.
+- Null model for MC permutation: **aoristic-probability null** (Ratcliffe 2002; Crema 2012).
+- `max_runtime_minutes`: 60 for proposer (comprehensive mode + 20k resamples + Westfall-Young companion), 45 for verifier.
+
+## Preregistration status
+
+This run is **exploratory data analysis** — initial descriptive profile of a dataset, not a confirmatory inferential study. Preregistration is not required and would be theatre for this scope. Findings-driven drill-downs (AD 97 neighbourhood, Antonine era) are explicitly exploratory.
+
+Preregistration applies to later stages: (a) Friday minimum-thresholds simulation — OSF preregistration drafted tomorrow before simulation launch; (b) Week-1-to-3 SPA analyses on LIRE/LIST — expanded OSF preregistration before first SPA run. See `planning/decision-log.md` (Decision 7, pending) for scope.
 
 ## Expected outputs
 
