@@ -197,6 +197,46 @@ side-question #1 both flagged UNVERIFIED.
 
 ---
 
+## Obs 10 — 2026-04-23 [PATTERN]: seed lit-scout across both clusters when a topic has a computational sibling
+
+The verified 25-row bibliography produced by `lit-scout` on 2026-04-22
+missed **Aeneas** (DeepMind + University of Nottingham, *Nature* July
+2025) — a model trained on ~176,000 Latin inscriptions, directly
+adjacent to this project's corpus. A prior-art-scout run on 2026-04-23
+surfaced it within minutes.
+
+**Why lit-scout missed it.** The seed list chained through SDAM
+epigraphy, Crema/Bevan SPD methodology, and the Hanson urban-demography
+cluster. Aeneas lives in a different citation cluster —
+NeurIPS / Nature-ML / DH-NLP — that shares vocabulary only thinly with
+the epigraphic-methodology cluster we seeded. Backward chaining from
+an archaeology-SPD seed doesn't reach Aeneas; forward chaining
+doesn't either, because Aeneas's citers are ML and digital humanities
+rather than archaeology-methodology.
+
+**The pattern.** When running systematic literature discovery on a
+topic that has a **computational sibling** (ML/NLP/AI applied to the
+same substantive domain), seed both clusters explicitly — one seed
+set from the target-discipline methodology literature, one seed set
+from the computational-sibling literature. Chain each independently.
+Merge. Otherwise you'll return a bibliography that looks complete
+within one cluster and has a blind spot across clusters.
+
+**Implication for this project.** A supplementary `lit-scout` chain
+seeded on Aeneas + ML-for-inscriptions + NLP4DH adjacent literature
+runs today (2026-04-23) to close the gap before Friday.
+
+**Generalisation candidate for `~/personal-assistant/notes/llm-craft.md`**
+if the pattern reproduces on a second project. The convention for this
+project: `[PATTERN]` tag in a working-note heading marks a promotion
+candidate; promote when the pattern is confirmed outside a single
+domain.
+
+*Source:* prior-art-scout report 2026-04-23 (Area 1, Aeneas finding);
+lit-scout draft 2026-04-22 (gap analysis, no ML-for-classics rows).
+
+---
+
 ## Obs 9 — 2026-04-22: Kaše affiliation update
 
 As of 2024–2025, Vojtěch Kaše's primary affiliation is University of
