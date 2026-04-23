@@ -66,7 +66,7 @@ Run the full catalogue from the canonical agent definition:
 
 ### Output contract
 
-Write to `runs/2026-04-23-descriptive-stats/outputs/` on sapphire (which is `~/inscriptions/runs/2026-04-23-descriptive-stats/outputs/`).
+Write to `runs/2026-04-23-descriptive-stats/outputs/` on sapphire (which is `~/Code/inscriptions/runs/2026-04-23-descriptive-stats/outputs/`).
 
 Per the canonical output contract plus the comprehensive-mode extensions:
 
@@ -86,7 +86,7 @@ Per the canonical output contract plus the comprehensive-mode extensions:
 
 ```
 host: sapphire
-workdir: ~/inscriptions          (Shawn's home on sapphire — the cloned repo root)
+workdir: ~/Code/inscriptions          (Shawn's home on sapphire — the cloned repo root)
 venv_python: .venv/bin/python3   (relative to workdir; created via `uv sync`)
 ```
 

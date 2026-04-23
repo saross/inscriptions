@@ -368,6 +368,64 @@ goes into resolving finer deviations.
 
 ---
 
+## Decision 7 — 2026-04-23: Main-paper deconvolution architecture + scope-commitment path
+
+**Status:** committed
+**Decided by:** Shawn (after Claude's critical-friend push-back on an earlier four-co-equal-approaches plan)
+
+### Context
+
+The 2026-04-23 comprehensive rerun of the descriptive profile quantified substantial editorial-convention artefacts in LIRE v3.0 (midpoint-inflation observed/expected ratios of 22.8× / 41.5× / 18.8× / 39.7× at century midpoints AD 50/150/250/350; Westfall-Young adjusted p ≈ 0 on all four). The main paper's SPA methodology needs to address this artefact credibly. Multiple deconvolution approaches were discussed; the architecture and the scope commitment needed to be settled.
+
+### Options considered
+
+- **A — Four co-equal primary approaches** (thresholded / stratified / baorista Bayesian / explicit mixture): comprehensive but risks redundancy, scope creep, and reviewer confusion about which is the headline method.
+- **B — One primary correction + robustness checks** (single headline method, related approaches as supporting evidence): cleaner narrative, clearer contribution claim.
+- **C — Split into methods paper (JAMT) + results paper (JAS) upfront**: highest-commitment path; generates two papers but doubles submission effort and requires the methodology to stand alone as a publication.
+
+### Decision
+
+**Option B, with this architecture:**
+
+- **Primary correction — explicit editorial-convention deconvolution mixture model.** Observed SPA decomposed as `observed = α · convention_SPA + (1 − α) · genuine_SPA`; α estimated from data; `genuine_SPA` recovered by deconvolution. Novel methodology + clean counterfactual + better narrative than the stratification alternative.
+- **Robustness in body — thresholded SPAs** (Shawn's 2024 practice). Runs SPA at `date_range ≤ 25 / 50 / 100 / 200 / 300 / all`; agreement across thresholds rules out wide-range-row dominance. Established method, reviewer-familiar.
+- **Robustness in appendix — stratified SPAs by convention-vs-precision classification.** Hard classification of each row; per-stratum SPAs. Cross-check that agrees with the mixture's deconvolved SPA validates the mixture without demanding its own in-body narrative space.
+- **Bayesian comparison — baorista** (Crema 2025). Install properly on sapphire; run on a representative LIRE subset (provinces with n ≥ 1000 — likely ~7–10 provinces); appendix figure + paragraph-to-page integration. Not "a throwaway paragraph"; run and report properly.
+- **Aeneas-partition** remains a separate follow-up paper (FS-1).
+
+### Scope commitment path
+
+Default: **single combined paper targeting JAMT** (methods-heavy) or JAS (balanced). Commit to single-vs-split **by end of Week 1 of the paper sprint** (no later). Trigger conditions that would favour splitting per FS-0:
+
+- Methodology content exceeds ~3,000–4,000 words of novel material during drafting.
+- Deconvolution + baorista produce substantively different results (methodology story becomes interesting enough to publish on its own).
+- Aeneas-partition outline suggests a natural companion submission with a dedicated methods paper.
+
+If none of the above trigger by end-of-Week-1, single paper.
+
+### Consequences
+
+- Sunday / Monday: baorista install on sapphire. Pilot run.
+- Thursday (this week): run the deconvolution mixture on LIRE pilot (one province) alongside the descriptive-profile-rerun outputs.
+- Friday OSF preregistration covers the deconvolution-mixture approach as preregistered primary methodology.
+- Week-1 checkpoint (Sunday 2026-05-03): methodology word-count + baorista-comparison results reviewed; scope committed.
+
+### Preliminaries to watch for
+
+These would surface scope signal earlier and reduce risk of late-cycle indecision:
+
+- **Literature prior art for single-vs-split structure**: how did Timpson/Crema structure their Neolithic Europe SPA work — methods-first, results-first, combined? Quick lit-scout could reveal the field's convention.
+- **Deconvolution-mixture pilot quality**: if the pilot run produces clean interpretable results at first attempt, methodology section stays compact; if substantial tuning is needed, it expands toward the split threshold.
+- **baorista install cost**: if installing on sapphire is non-trivial (C++ compilation fails, NIMBLE setup issues), the baorista-run-properly plan may need to become citation-with-rationale.
+
+### Revisit triggers
+
+- Week-1 checkpoint (Sunday 2026-05-03).
+- Any of the three preliminary signals above tipping clearly.
+- Methodology content growing unexpectedly during drafting — flag for re-evaluation.
+
+---
+
 ## Decision 6 — 2026-04-22: Tooling-routinisation triggers — commit-to-run defaults
 
 **Status:** committed

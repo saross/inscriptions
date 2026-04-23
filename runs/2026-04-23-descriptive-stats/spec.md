@@ -48,7 +48,7 @@ From the catalogue at `~/personal-assistant/agents/data-profile-scout.md`:
 ## Configurations
 
 - `comprehensive_mode`: `true` (this rerun activates the extended statistics, bootstrap CIs, MC permutation tests, drill-down, and sensitivity sweep).
-- `remote_exec`: `{host: sapphire, workdir: ~/inscriptions, venv_python: .venv/bin/python3}` — compute on sapphire via SSH; orchestration on amd-tower.
+- `remote_exec`: `{host: sapphire, workdir: ~/Code/inscriptions, venv_python: .venv/bin/python3}` — compute on sapphire via SSH; orchestration on amd-tower.
 - `output_dir` (on sapphire): `runs/2026-04-23-descriptive-stats/outputs/` under the repo root.
 - `categorical_columns`: `["province", "urban_context_city", "urban_context", "inscr_type", "type_of_inscription_auto", "language_EDCS", "material_clean"]`.
 - `text_columns`: `["clean_text_conservative"]` — letter-count using Latin alphabet filter per 2026-04-22 notebook cell 63.

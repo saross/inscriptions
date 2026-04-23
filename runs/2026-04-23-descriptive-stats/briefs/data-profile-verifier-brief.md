@@ -9,9 +9,9 @@ Adversarial re-check of the `data-profile-scout` comprehensive-mode report. Fres
 ## Inputs
 
 - `claims_file` (primary input): `runs/2026-04-23-descriptive-stats/outputs/claims.jsonl` (expect ≥ 150 claims; comprehensive mode expands beyond the first run's 223).
-- `profile_report_dir`: `runs/2026-04-23-descriptive-stats/outputs/` on sapphire (`~/inscriptions/runs/...`).
+- `profile_report_dir`: `runs/2026-04-23-descriptive-stats/outputs/` on sapphire (`~/Code/inscriptions/runs/...`).
 - `dataset_path`: `archive/data-2026-04-22/LIRE_v3-0.parquet` (relative to sapphire workdir).
-- `remote_exec`: `{host: sapphire, workdir: ~/inscriptions, venv_python: .venv/bin/python3}`.
+- `remote_exec`: `{host: sapphire, workdir: ~/Code/inscriptions, venv_python: .venv/bin/python3}`.
 - `output_dir`: `runs/2026-04-23-descriptive-stats/outputs/` on sapphire (write alongside proposer, do not overwrite).
 - `bootstrap_resamples`: 10 000.
 - `permutation_resamples`: 10 000.
