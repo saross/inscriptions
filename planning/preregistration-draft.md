@@ -52,7 +52,7 @@ H2.4 (appendix cross-check): stratified-by-convention-class SPA (hard classifica
 
 **H3 — Population signal.**
 H3a (variance-explained, primary quantitative result): mixture-corrected SPA values at urban-area and province levels correlate with Hanson (2016) urban population estimates, with Bayesian R² ≥ 0.25 at urban-area level and Bayesian R² ≥ 0.50 at province level.
-H3b (deviation-detection): mixture-corrected SPAs show permutation-envelope departures matching at least one Decision 5 effect-size target — 50 % sustained deviation over ≥ 50 y, doubling over ≥ 25 y, or 20 % over ≥ 25 y — with an explicit Antonine-anchored test targeting the AD 165–180 window.
+H3b (deviation-detection): mixture-corrected SPAs show permutation-envelope departures matching at least one Decision 5 effect-size target — 50 % sustained deviation over ≥ 50 y, doubling over ≥ 25 y, or 20 % over ≥ 25 y — at one or more preregistered (subset × temporal-window) combinations, Holm-Bonferroni corrected across the family. An **Antonine-specific test at AD 165–180** is preregistered as exploratory replication of Glomb, Kaše & Heřmánková (2022; N = 210 Asclepius-cult inscriptions, KS *p* = 0.20, null) and Duncan-Jones (2018; military diplomas, step-down at AD 167, ~85 % magnitude) — reported against Decision 5 brackets but not pre-committed to a specific effect-size expectation, because the empirical prior is a null at smaller N and an extreme reduction in a material-specific subcorpus.
 H3c (urban-area residuals): residuals from the H3a Bayesian NBR reproduce Hanson (2021) patterns: (i) provincial capitals have higher mean residual than non-capitals (one-sided *t*-test on posterior residuals, *p* < 0.05); (ii) residuals are spatially clustered (Moran's I > 0 at *p* < 0.05).
 
 ---
@@ -92,7 +92,7 @@ Date-range filtering thresholds examined for H2 robustness: `date_range` ≤ 25,
 
 **Phase 1 — H1 min-thresholds simulation protocol (to run first).**
 
-For each combination of (subset level ∈ {empire, province, urban-area}; effect-size target ∈ {Decision 5 a/b/c + Antonine-anchored}; sample size n ∈ logarithmic sweep):
+For each combination of (subset level ∈ {empire, province, urban-area}; effect-size target ∈ {Decision 5 a/b/c + zero-effect calibration check}; sample size n ∈ logarithmic sweep):
 
 1. Simulate a synthetic SPA under the null (fitted model of the corresponding real-world subset).
 2. Inject an effect of the target magnitude and duration.
@@ -100,11 +100,11 @@ For each combination of (subset level ∈ {empire, province, urban-area}; effect
 4. Record detection / non-detection.
 5. Repeat 1,000 times per cell.
 
-Detection rate per cell = fraction detecting at *p* < 0.05. **Preregistered threshold per level = smallest n at which detection rate ≥ 0.80** for the Antonine-anchored target, additionally reported for the Decision 5 a/b/c targets. Detection-rate curves at 0.70 / 0.80 / 0.90 reported for transparency.
+Detection rate per cell = fraction detecting at *p* < 0.05. **Preregistered threshold per level = smallest n at which detection rate ≥ 0.80** for each of the Decision 5 a/b/c targets; the most conservative (50 % / ≥ 50 y) is the binding threshold for downstream H2 and H3 subset-eligibility decisions. Detection-rate curves at 0.70 / 0.80 / 0.90 reported for transparency. Zero-effect cell must return false-positive rate ≤ 0.05 as a calibration check.
 
 **Null model:** both **exponential (primary, per rcarbon / Timpson et al. 2014)** and **continuous piecewise-linear (CPL, secondary, per Timpson et al. 2021)** fitted; results compared. Rationale: CPL is more flexible but has more parameters; running both lets us check whether null-model choice materially affects the min-threshold conclusions.
 
-**Antonine-anchored effect shape:** to be fixed before simulation runs after re-reading Glomb, Kaše & Heřmánková (2022) Figure 2 to extract empirical profile. Default pending that re-read: smooth dip, FWHM ≈ 25 years, 50 % magnitude.
+**Effect shape for injection:** smooth (Gaussian-tapered) dip with FWHM matching each Decision 5 bracket's stated duration and magnitude at nadir matching the bracket's stated deviation. The Gaussian-taper choice (rather than step-function) is deliberately conservative: smooth effects are harder to detect via permutation-envelope methods, so thresholds set on smooth effects are upper bounds on the sample size needed for sharper effects.
 
 Adapts the Carleton, Campbell & Collard (2018, *PLOS ONE* 13:e0191055; code CC-BY) PEWMA power-simulation framework for cross-sectional SPA × covariate analysis.
 
@@ -115,7 +115,7 @@ Run the mixture-model fit on empire-level LIRE. Report α̂ and 95 % CI; report 
 **Phase 3 — H3 substantive analyses.**
 
 - H3a: Bayesian NBR as specified in §3 above. Report β, posterior R² (median + 95 % CI), comparison with OLS log-log (reported alongside as direct comparator to Hanson, Ortman & Lobo 2017).
-- H3b: Permutation-envelope SPAs at every preregistered subset × effect-size combination. Holm-Bonferroni correction across the full family. Explicit Antonine test at AD 165–180 is declared the primary substantive-target test.
+- H3b: Permutation-envelope SPAs at every preregistered subset × effect-size combination. Holm-Bonferroni correction across the full family. **Antonine-specific test is preregistered as exploratory replication of Glomb, Kaše & Heřmánková (2022) and Duncan-Jones (2018)**: at AD 165–180, test for deviation in mixture-corrected SPA at empire level, at Asclepius-cult subset (replicates Glomb et al.'s design at larger N and on corrected data), and at military-administration subset (replicates Duncan-Jones-style severe-effect prediction), conditional on per-subset sample-size thresholds being met. Results reported against Decision 5 brackets; no specific effect size preregistered for the Antonine test itself. Subset-filtering feasibility depends on LIRE type / category / deity fields — confirmed as part of this preregistration (see §9 Software & data).
 - H3c: Residual classification + Moran's I + provincial-capital *t*-test as listed in H3.
 
 ### 5. Exploratory analyses (explicitly flagged as non-confirmatory)
@@ -132,7 +132,7 @@ Run the mixture-model fit on empire-level LIRE. Report α̂ and 95 % CI; report 
 
 | Hypothesis | Quantity | Preregistered target |
 |---|---|---|
-| H1 power floor | Detection rate | ≥ 0.80 at p < 0.05 for Antonine-anchored effect |
+| H1 power floor | Detection rate | ≥ 0.80 at p < 0.05 per Decision 5 bracket; zero-effect false-positive rate ≤ 0.05 |
 | H2.1 | α̂ | Posterior CI excludes 0; point estimate > 0.1 |
 | H2.2 | Corrected century-midpoint O/E | Within 1.5× of local neighbourhood mean |
 | H2.3 | Pairwise Pearson *r* across threshold variants | ≥ 0.9 |
@@ -166,6 +166,7 @@ Run the mixture-model fit on empire-level LIRE. Report α̂ and 95 % CI; report 
 - **Environment:** `uv`-managed venv at `~/Code/inscriptions/.venv/`; `requirements.txt` pinned.
 - **Core dependencies:** `tempun` (SDAM, MIT), `numpy`, `scipy`, `pandas`, `pyarrow`, `pymc` or `brms` (TBD), `pyzotero`.
 - **Data:** LIRE v3.0 (Zenodo DOI 10.5281/zenodo.8147298; CC-BY-4.0). Hanson (2016) OXREP Roman Cities Dataset (tDAR record 448563) as ground-truth cross-check for `urban_context_pop_est`.
+- **Subset-filter feasibility (confirmed 2026-04-24 on LIRE v3.0).** Military-administration subset: `type_of_inscription_clean == 'military diploma'` yields 285 rows (66.4 % null in that field; the ML-classified `type_of_inscription_auto` yields 442 rows at 13.8 % null and is a valid alternative). Asclepius-cult subset: regex `[Aa]esculap|[Aa]sclep` on the `inscription` free-text field yields 358 rows — substantially above Glomb, Kaše & Heřmánková's (2022) N = 210, suggesting their filter was stricter. The preregistered Glomb-replication test will either adopt their exact filter (if recoverable from their Methods) or use the broader keyword match and report both N values.
 - **Code:** repository at `github.com/TBD` (Shawn to create public mirror before submission).
 - **Run artefacts:** per-stage `runs/<YYYY-MM-DD>-<description>/` directories, capturing spec, briefs, seed, code, outputs, decisions (project convention established 2026-04-23).
 - **Research record:** agent-session-capture infrastructure operational (2026-04-24; captured in project memory). Individual AI-agent prompts and outputs preserved per open-science requirements.
