@@ -192,3 +192,99 @@ Shawn's question. I was ready to commit to the one-factor reading. The prompt to
 ### Source
 
 Session discussion 2026-04-23 with Shawn after the comprehensive profile rerun returned. Editorial-spikes test results at `runs/2026-04-23-descriptive-stats/outputs/artefacts.md`; drill-down at `drill-downs/year_97_neighbourhood.md`. Hypothesis + test plan captured as Obs 11 in `working-notes.md`; Thursday test and post-LIST extension in `planning/backlog-2026-04-22.md`.
+
+---
+
+## Entry 3 — 2026-04-24: Glomb, Kaše & Heřmánková (2022) is a null, not a template
+
+### Surprising fact
+
+I had scheduled a PDF re-read of Glomb, Kaše & Heřmánková (2022) "Popularity of the cult of Asclepius in the times of the Antonine Plague" to extract the empirical Antonine-Plague signature profile — magnitude, FWHM, onset character — for use as the fourth effect-size anchor (Antonine-anchored) in the preregistered H1 simulation. The expected artefact was a shape: "50 % dip, FWHM ≈ 25 y, smooth onset" or similar.
+
+The re-read agent returned the opposite. The paper reports **no detected signal** for Asclepius-cult inscriptions around the Antonine Plague. Two-sample Kolmogorov-Smirnov test: KS = 0.11, *p* = 0.20 on N = 210 Asclepius-cult inscriptions vs a composition-matched random-LIRE control. The authors explicitly note that KS power is inversely proportional to sample size, so "no detected signal at N = 210" is either a true null or an N-limited null — either way, there is no empirical profile to anchor on from this paper.
+
+The only empirical Antonine effect-templates the paper cites (Duncan-Jones 2018 on military diplomas; Romanowska et al. 2021 on Palmyra portraits) are both drawn from material cultures too narrow to generalise to the broad inscription-production distribution our analysis is built around.
+
+### Probe
+
+Verified by: (a) the Explore agent's systematic extraction of Figure 1 and Table summary values from the PDF, showing no distinguishable dip; (b) direct quotation from p. 6: *"there is no statistically significant rise in the number of inscriptions simulated for the cult of Asclepius either in the time of the Antonine Plague (ca 165–180 CE) or in the short time horizon after"*; (c) the 25-year time-block analysis (Figure 4) that shows the 151–175 CE block indistinguishable from adjacent blocks.
+
+Cross-checked against my prior expectation: Glomb is cited in the project's prior-art scout (Scout 3) as "closest published template" for the Antonine signature. That framing — "template" — is what I'd internalised. It's wrong in the important direction: Glomb is methodologically adjacent (aoristic dating + Monte Carlo comparison against baseline) but substantively a null. My mental shortcut conflated "near in method" with "near in finding".
+
+### Belief revision
+
+Old belief: *Glomb, Kaše & Heřmánková (2022) provides an empirical Antonine-plague inscription-rate profile that can serve as the effect-size template for a preregistered power analysis. The "Antonine-anchored" effect-size target is distinct from and more concrete than the generic Decision 5 brackets.*
+
+Revised belief: *Glomb et al. (2022) is a null result at N = 210. No empirical Antonine-plague signature in inscription data has been detected at publishable confidence. The correct preregistration strategy is (a) drop "Antonine-anchored" as a privileged H1 effect-size target — use only Decision 5's three generic brackets + a zero-effect calibration check; (b) demote the Antonine-specific H3b test from "confirmatory primary" to "preregistered exploratory replication of Glomb et al. 2022 and Duncan-Jones 2018 at larger N and on mixture-corrected data"; (c) re-cast Glomb as motivating prior — "at what sample size would a Glomb-type test become informative?" — rather than effect-size template.*
+
+The revised belief is strictly stronger. It removes an unwarranted privilege, sharpens the preregistration's claims to what the evidence supports, and uses the Glomb null as a feature (motivation for the power analysis) rather than a bug (template that doesn't exist).
+
+### What would change this belief
+
+- A new paper detecting an Antonine signature in general Latin inscription data at publishable confidence. Would allow re-anchoring on a real template.
+- Discovery that Glomb's N = 210 is the power floor, and our mixture-corrected full-corpus analysis detects a signal post-correction at larger N. Would mean the effect is real but was masked by noise and editorial-convention artefacts at Glomb's resolution — in which case Antonine-specific H3b becomes a confirmatory (not exploratory) test in follow-up work.
+- Verification that the Duncan-Jones military-diplomas or Romanowska Palmyra-portraits profile generalises to broader inscription categories. Would restore a usable empirical template, probably at Romanowska's 30–50 % magnitude over ~15 y rather than Duncan-Jones's extreme military-administrative collapse.
+
+### How I noticed
+
+I didn't. The Explore agent's output contradicted the framing I'd given it. I had written the brief as "extract the Glomb et al. Antonine-Plague signature profile" — assuming there was one — and the agent correctly reported that no such profile exists in the paper. Credit to the agent's brief-following discipline (it didn't fabricate a profile just because the brief asked for one) and to the brief's "quote verbatim; if a number is absent from the paper, say 'not reported' rather than inferring" instruction.
+
+This is a second data point for the pattern Entry 1 flagged around Guard A (per-field metadata re-query at drafting time) being the load-bearing reliability mechanism: I had *inferred* Glomb had a detected signal from a secondary summary (Scout 3's "closest published template" framing), not from the paper itself. Primary-source verification caught it.
+
+### Implications
+
+Applied immediately to the preregistration:
+
+1. §4 Phase 1 H1 simulation: effect-size targets reduced to Decision 5 a/b/c + zero-effect calibration check; smooth Gaussian-tapered dip shapes matching each bracket's magnitude and FWHM.
+2. §3 H3b hypothesis: Antonine-specific test reframed as exploratory replication, no committed effect-size expectation, reported against Decision 5 brackets.
+3. §4 Phase 3 H3b: Antonine test at AD 165–180 runs on empire level, Asclepius subset (Glomb replication), military-administration subset (Duncan-Jones replication), conditional on per-subset n thresholds being met.
+4. §9 adds the subset-filter-feasibility confirmation: LIRE text regex on `[Aa]esculap|[Aa]sclep` yields 358 rows (vs Glomb's N = 210; their filter was stricter — we either match exactly or report both).
+
+### Source
+
+Explore-agent PDF extraction 2026-04-24 (`a7d8aa16d878e56a1`). Commit `c901aae` applied the reframing to `planning/preregistration-draft.md`. Original Scout 3 report at `runs/2026-04-23-prior-art-scouts/scout-3-epigraphic-habit-proxies.md`.
+
+---
+
+## Entry 4 — 2026-04-24: pyzotero `q=DOI` semantic trap creates silent duplicates
+
+### Surprising fact
+
+`scripts/zotero_batch_add.py` created a duplicate of Carleton, Campbell & Collard 2018 PLOS ONE in the SDAM Zotero group library despite an explicit idempotency-by-DOI check. Both item keys (`T95BHV43` from the test run; `GF82TVAB` from the full batch run) have the PDF correctly attached and are correctly linked to the SPA collection. The agent correctly logged the second run as `created` rather than `already_complete`, and the duplicate was only noticed in post-run verification.
+
+The cause, diagnosed by the agent after the run: **Zotero's `q=` FTS parameter does not index the DOI field.** `zot.items(q='10.1371/journal.pone.0191055', qmode='everything', limit=25)` returns zero hits even when that DOI is present on an item. Zotero's FTS indexes title, creator names, notes, tags, and attachment filenames, but not DOI. The idempotency check was therefore structurally blind.
+
+### Probe
+
+Agent's post-run diagnostic: ran a `zot.items(q='<doi>')` call against a DOI known to be present (the duplicate existed, so both item keys carried that DOI) and observed zero hits. Confirmed against a title-word query against the same item, which returned both items as expected.
+
+This wasn't a bug in pyzotero — the library forwards `q=` to Zotero's REST API verbatim, and the API-side FTS is what's limited. The documentation at pyzotero.readthedocs.io lists `qmode` values but doesn't enumerate which fields FTS covers for each mode; the Zotero Web API documentation at [www.zotero.org/support/dev/web_api/v3/basics](https://www.zotero.org/support/dev/web_api/v3/basics) is where the field list lives, and even there it's not prominently surfaced.
+
+### Belief revision
+
+Old belief: *For idempotent writes via a search-before-create pattern, any reasonable "search by canonical identifier" query will work. DOI is a canonical identifier; `q=<doi>` should return matching items.*
+
+Revised belief: *Search APIs differ in which fields they index. Before trusting a search-based idempotency check at scale, verify the query semantics on a known-positive case. For Zotero specifically, idempotency must use either (a) a locally-built index over all group items' `data.DOI` fields, or (b) the API's filter-based search if supported, not `q=` FTS.*
+
+The revised belief was implemented immediately in the batch-add script: after the empirical failure, the agent added a `_build_doi_index()` function that pages through all items in the group once, extracts DOIs into a normalised dict, and checks new additions against that index. This pattern is now the project's default for any Zotero idempotency check.
+
+### What would change this belief
+
+A future Zotero API version that indexes DOI in FTS. Would let the simpler `q=<doi>` pattern work. Unlikely near-term; the Zotero API v3 has been stable for years.
+
+A different archival-bibliography tool (e.g., Mendeley, EndNote Web, BibTeX-plus-git) with different query semantics. Same pattern would apply — verify before trusting.
+
+### How I noticed
+
+I didn't in advance. The agent caught it empirically after the duplicate was created, diagnosed the cause, fixed the script, and flagged the duplicate for manual UI-level merge in its final report. The catch was entirely post-hoc. The pre-launch review of the agent's brief specified "idempotency via DOI search before create" without specifying *which* search mechanism — I'd assumed `q=DOI` would work because DOI is a first-class field in Zotero. That assumption was untested.
+
+### Implications
+
+1. Immediate: one duplicate in the SDAM library awaiting manual merge (Shawn flagged this as his to handle).
+2. Script-level fix already in place (`_build_doi_index` in `scripts/zotero_batch_add.py` commit `e26278e`, extended/reviewed in `6e8355b`). Safe to re-run.
+3. Added to the project's failure-mode list in `continuity.md` under "Zotero FTS does not index DOI field" — documented as a gotcha for future instances.
+4. Generalisable principle for pre-launch agent-brief review: when specifying a safety check, commit to a specific implementation pattern, not just the check's goal. "Search by DOI before create" allows many implementations, not all of which work; "DOI-index-lookup before create" is unambiguous.
+
+### Source
+
+Agent `a050742b9dd16db93` batch-add run 2026-04-24. Commits `e26278e` (initial script), `f820afb` (run log), `0822157` (follow-up script), `6e8355b` (follow-up fix with Europe PMC fallback and attachment-return parsing).
