@@ -84,7 +84,31 @@ Date-range filtering thresholds examined for H2 robustness: `date_range` ≤ 25,
 - **SPA construction:** sum of per-inscription probability mass across bins; optional weighting by `letter_count` for the secondary letter-count analyses (see §5 Exploratory).
 - **Permutation envelope:** rcarbon-style `modelTest()` algorithm (Crema & Bevan 2021) ported to Python using `scipy.stats.permutation_test` as the primitive, `tempun` for aoristic replicates. Implementation ~200 LOC (Obs 3). Null model: exponential or piecewise-linear fitted growth (per Timpson et al. 2014); 1,000 Monte Carlo replicates; two-sided 95 % envelopes.
 - **Deconvolution-mixture model:** `observed_SPA = α · convention_SPA + (1 − α) · genuine_SPA`. α estimated by maximum-likelihood or mixture-model fit on the convention-vs-precision row classification; `genuine_SPA` recovered by linear deconvolution with non-negativity constraints. `convention_SPA` shape: uniform century slabs per Decision 7 default, OR hierarchical (century > half-century > quarter-century > reign-boundary) if the Obs 11 editorial-convention-hierarchy test (Thursday 2026-04-24) confirms. Defaults to uniform if hierarchy test is inconclusive at 14-boundary sample.
-- **Bayesian NBR for H3a:** `log(E[inscriptions_city]) = α_0 + α_province + β · log(population_city) + ε`, fitted with weakly informative priors, negative-binomial family, log link, provincial random intercepts. **Primary implementation in `pymc`** (Python; stays in the project venv). **Secondary `brms`-via-R cross-validation shadow** (~50 lines, committed as `scripts/h3a_brms_shadow.R`): refits the same model in R+Stan via brms' formula syntax (`count ~ log_pop + (1|province)`, `family = negbinomial()`), providing (i) cross-language validation that pymc and brms agree on the posterior within MC noise and (ii) legibility for R-native co-authors (Adela Sobotková and others) who read brms syntax more fluently than pymc code. Outputs (posterior draws, summary tables, figures) exchanged as CSV / parquet / PNG — language-neutral. Bayesian R² reported per Gelman, Goodrich, Gabry & Vehtari (2019) via `pymc`-native computation and cross-checked against `brms::bayes_R2()`. Full posterior distributions retained for downstream residual analysis.
+- **Bayesian NBR for H3a:** `log(E[inscriptions_city]) = α_0 + α_province + β · log(population_city) + ε`, with:
+
+  ```text
+  y_c ~ NegativeBinomial(mu_c, alpha)
+  log(mu_c) = α_0 + α_province[c] + β · log(pop_c)
+
+  Priors (preregistered):
+    α_0        ~ Normal(0, 5)         # intercept on log-count scale
+    β          ~ Normal(0, 2.5)       # agnostic; wide enough that likelihood dominates
+    α_province ~ Normal(0, σ_prov)    # random intercepts
+    σ_prov     ~ HalfNormal(1)        # provincial heterogeneity
+    1/alpha    ~ HalfNormal(1)        # overdispersion
+  ```
+
+  β prior chosen **agnostic** (not centred on the ~0.5 literature value) to avoid any appearance of the preregistration loading the dice toward the sublinear result; with n = 816 cities with Hanson estimates, the likelihood dominates a Normal(0, 2.5) prior comfortably.
+
+  **Primary implementation in `pymc`** (Python; stays in the project venv). **Secondary `brms`-via-R cross-validation shadow** (~50 lines, committed as `scripts/h3a_brms_shadow.R`): refits the same model in R+Stan via brms' formula syntax (`count ~ log_pop + (1|province)`, `family = negbinomial()`), providing (i) cross-language validation that pymc and brms agree on the posterior within MC noise and (ii) legibility for R-native co-authors (Adela Sobotková and others) who read brms syntax more fluently than pymc code. Outputs (posterior draws, summary tables, figures) exchanged as CSV / parquet / PNG — language-neutral. Bayesian R² reported per Gelman, Goodrich, Gabry & Vehtari (2019) via `pymc`-native computation and cross-checked against `brms::bayes_R2()`. Full posterior distributions retained for downstream residual analysis.
+
+  **Posterior predictive checks (preregistered; routine per Gelman, Vehtari, Simpson, Betancourt et al. 2020 "Bayesian Workflow", arXiv:2011.01808):**
+
+  1. **Density overlay** (`arviz.plot_ppc`): posterior-predictive inscription-count distribution overlaid against the observed count distribution.
+  2. **Test statistics** — observed vs posterior-predictive: proportion of zeros (NBR sanity check — triggers zero-inflation consideration if divergent), mean, standard deviation, 95th percentile, mean-variance ratio (dispersion adequacy).
+  3. **Residual structure** — standardised Pearson residuals vs fitted values and vs key predictors (`log_pop`, province); looks for remaining structure indicating model mis-specification.
+
+  Any failed check triggers an OSF amendment and model revision before moving to H3b / H3c.
 - **Residual analysis (H3c):** per-city residuals extracted from H3a posterior; classified as over-producing, under-producing, or typical (±95 % credible interval from predicted).
 - **Spatial clustering:** Moran's I with row-standardised spatial weights (*k*-nearest-neighbours with *k* = 5, or distance-based within 500 km — TBD; pick to match Hanson 2021's approach after PDF re-read).
 
@@ -155,7 +179,7 @@ Run the mixture-model fit on empire-level LIRE. Report α̂ and 95 % CI; report 
 
 - Final preregistered sample-size thresholds from the H1 simulation.
 - ~~Bayesian-NBR software choice~~ **Resolved 2026-04-24:** primary `pymc`; secondary `brms`-via-R shadow (~50-line script) for the H3a model only, as cross-validation + R-team legibility. Carleton et al. 2025's provincial posterior effects consumed as data, not code.
-- Exact priors on α_0, α_province, β, dispersion — weakly informative, specifics after Adela consults.
+- ~~Exact priors on α_0, α_province, β, dispersion~~ **Resolved 2026-04-24:** `α_0 ~ Normal(0, 5)`; `β ~ Normal(0, 2.5)` (agnostic); `σ_prov ~ HalfNormal(1)`; `1/alpha ~ HalfNormal(1)`. PPC suite: density overlay + test statistics (zero-count, mean, SD, 95th, M/V ratio) + Pearson-residual structure. Adela amendment path preserved: any substantive revision of priors or PPCs triggers an OSF amendment before execution.
 - Spatial-weights construction for Moran's I: *k*-NN (*k* = 5) vs distance-based (500 km cut-off) — match Hanson (2021) when local PDF is read in detail.
 - Multiple-comparison family for H3b: exact Holm-Bonferroni family after H1 fixes the subset × effect-size grid.
 - Decision-log reference for the target venue (JAMT methods-heavy vs JAS balanced) — committed at end of Week 1 paper sprint (2026-05-03) per Decision 7.
