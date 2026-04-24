@@ -317,3 +317,67 @@ reflect the West Bohemia / Aarhus dual affiliation for Kaše.
 #2. OpenAlex LIST metadata + Kaše's own profile pages. Verifier
 could not independently confirm via metadata endpoint alone; flagged
 for user-side confirmation if load-bearing for acknowledgements.
+
+---
+
+## Obs 12 — 2026-04-24: Turchin et al. 2018's "single latent dimension of complexity" is at polity × century scale and does not usefully apply at this paper's city × decade scale
+
+Turchin, Currie, Whitehouse et al. 2018 (*PNAS* 115:E144–E151, DOI
+10.1073/pnas.1708800115; Zotero 4QJ9UWLD; also in the SDAM group's
+`quantifying_human_activity` subcollection) apply principal components
+analysis to nine "complexity characteristics" aggregated from 51
+Seshat-coded variables across 414 polities covering ~10,000 years. PC1
+explains ~77 % of variance; all nine CCs — polity population, polity
+territory, capital population, four tiers of hierarchy (settlement /
+administrative / religious / military), government variables,
+infrastructure, information variables (writing / records), and economy
+— load strongly and positively. Interpreted as "cultural complexity is
+effectively one-dimensional."
+
+**Why the 77 % headline overstates.** (i) The nine CCs were
+pre-selected *because* they are expected to covary — PCA inevitably
+concentrates variance on PC1 for such inputs. (ii) Seshat imputes
+missing values using rules that smooth across variables, propagating
+correlation between CCs. (iii) Several CCs are ordinal or categorical;
+PCA assumes continuous metric data. (iv) Seshat oversamples
+well-documented polities, which are typically complex and literate —
+the "complexity" axis partly reflects "how much was written down about
+this society." Follow-up work in the same research programme has been
+more cautious about the strongest version of the claim.
+
+**Why it does not give what the paper needs.** Seshat codes the Roman
+Empire as roughly five polity-stages (Republic → Early Principate →
+High Principate → Crisis → Dominate) at ~century resolution. No
+province-level and no decadal variation. For a mixture-corrected SPA
+that operates at city/province scale and decadal resolution, Seshat's
+PC1 is too coarse in both spatial and temporal dimensions. Building a
+Roman-Empire complexity PC1 at useful granularity from independent
+time-resolved proxies (coin mint output, shipwreck frequency, building
+dedications, army strength, monumental construction) would be a
+substantial independent project, not a citation.
+
+**Relationship to this paper's five-dimensional decomposition.**
+Different scales of analysis. Turchin's claim is at polity × century;
+this paper analyses city/province × decade. The paper's binding
+identifiability constraint is already internal — five decomposition
+dimensions, one observable (inscription count), one external covariate
+(Hanson population) — and is stated explicitly in
+`planning/research-intent.md`. Turchin 2018 is a theoretical
+positioning in the comparative-historical literature, not an empirical
+rebuttal of the city-scale decomposition. Whether the non-population
+dimensions collapse onto a single latent factor at city scale is
+empirically testable with external covariates for each dimension
+(FS-A–D), but out of scope for the current paper.
+
+**Treatment in the paper.** Three sentences in the discussion: cite
+Turchin 2018 as the strongest "complexity is effectively scalar"
+position in the comparative-historical literature; note that the
+finding operates at polity × century scale while this paper analyses
+city/province × decadal variation; flag that scale-collapse at the
+city level is testable but deferred. Not a research-design constraint.
+
+*Source:* discussion with Shawn 2026-04-24 after inspection of the
+SDAM group's `quantifying_human_activity` subcollection
+(key `AF78R8XB`, 12 items). The subcollection is Shawn's earlier
+scan for complexity-proxy literature; most items are theoretical /
+methodological rather than direct per-dimension proxies for FS-A–G.
