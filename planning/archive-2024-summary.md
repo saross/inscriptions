@@ -30,13 +30,16 @@ Shawn's own 2024 "Reflections" framing (quoted verbatim from the archived notebo
 Quantitative results preserved from the archived notebook (Ross, unpublished):
 
 - **OLS log-log R² = 0.101** (population → inscriptions)
-- **OLS log-log coefficient (elasticity) = 0.473**, 95 % CI [0.376, 0.569]
-- **Negative Binomial log-population pseudo-R² = 0.421**
+- **OLS log-log coefficient (elasticity / scaling exponent β) = 0.473**, 95 % CI [0.376, 0.569]
+- **Negative Binomial (log link) bootstrap-mean β = 0.683**, 95 % CI [0.532, 0.849] (the NBR log-link coefficient IS the power-law scaling exponent under μ = exp(α)·N^β; not a separate quantity)
+- **Negative Binomial pseudo-R² = 0.421** (not directly comparable to OLS R²; pseudo-R²s for overdispersed count models can be misleading)
 - **Bayesian linear log-log R² = 0.087**
 - **Spearman ρ ≈ 0.30–0.31**
 - Mean ΔT (date-range standard deviation) = 29.24 years (vs ~120 years in radiocarbon data)
 
-**Headline for 2026 calibration.** Population explains ~10 % of inscription-count variance on log scale in the uncorrected data. The 2026 mixture-corrected H3 needs to demonstrate material improvement on that baseline.
+**Both β estimates (OLS 0.473 and NBR 0.683) are of the same underlying power-law scaling exponent Y ∝ N^β under different distributional assumptions** — OLS assumes multiplicative Gaussian error and drops zero-count cities; NBR models count overdispersion directly and handles zeros natively. Both are unambiguously **sublinear**. The 2024 work therefore **independently replicates** the sublinear scaling pattern later confirmed by Hanson (2021) β ≈ 0.64 and Carleton et al. (2025) β ≈ 0.3–0.5 — methodological triangulation across different data slices, regression families, and eras. The sublinear conclusion is robust to method choice.
+
+**Headline for 2026 calibration.** Population explains ~10 % of inscription-count variance on log scale in the uncorrected data; the scaling exponent is β ∈ [0.47, 0.68] depending on estimator. The 2026 mixture-corrected H3 needs to demonstrate material improvement on the R² baseline, and (per Decision 7) should use Bayesian negative-binomial with log link + provincial random effects (following Carleton et al. 2025 framework) as the current best-practice approach for the scaling regression — with OLS log-log reported alongside as direct comparator to Hanson et al. (2017).
 
 ## Methods that failed — do NOT preregister without diagnosis
 

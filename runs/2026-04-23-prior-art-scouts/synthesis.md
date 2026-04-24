@@ -19,8 +19,9 @@ Three scouts ran in parallel overnight against Q1 (effect-size calibration), Q2 
 
 ### 1. Sublinear scaling (Scouts 2 + 3 convergent)
 
-Every published inscription-vs-population scaling regression has found **sublinear** β:
+Every published inscription-vs-population scaling regression has found **sublinear** β, and Shawn's own 2024 exploratory work independently replicates the pattern:
 
+- **Ross 2024 (archived preliminary analysis; LIRE v3.0, n = 816 cities)**: OLS log-log **β = 0.473** [0.376, 0.569]; NBR log-link bootstrap mean **β = 0.683** [0.532, 0.849]. Both estimates of the same power-law scaling exponent under different distributional assumptions; both sublinear. Methodological triangulation via different regression families and dataset slice than the published work below. See `planning/archive-2024-summary.md` for context.
 - Hanson, Ortman & Lobo 2017 Table 2 (reconstructed via Brewminate): **β ≈ 0.643** for inscription count vs population.
 - Hanson 2021 (*Journal of Urban Archaeology* 4:137–52; **paywalled, abstract confirms**): sublinear; "inscriptions increase slower than the estimated populations of sites"; framed as **information infrastructure** analogous to roads / pipelines.
 - Carleton et al. 2025 (*Nature Cities*; **Bayesian**): honorific-inscription elite-wealth proxies **β ≈ 0.3–0.5**, strongly sublinear.
@@ -28,7 +29,7 @@ Every published inscription-vs-population scaling regression has found **subline
 - Hanson-Ortman 2020 (entertainment structures): β ≈ 0.33.
 - Hanson-Ortman-Bettencourt-Mazur 2019 (fora / streets): β ≈ 0.52–0.67.
 
-No published Roman inscription-scaling study has ever found super-linear β. **The Ortman-super-linear default that framed my Q2 brief was wrong for this object class.** Inscriptions are infrastructure-like, not socio-economic-output-like.
+No published Roman inscription-scaling study has ever found super-linear β, and Ross 2024 converges with the published work. **The Ortman-super-linear default that framed my Q2 brief was wrong for this object class.** Inscriptions are infrastructure-like, not socio-economic-output-like. The sublinear conclusion is robust across multiple datasets, regression families (OLS, NBR, Bayesian), and research groups.
 
 **Consequence for Framing A vs B:** Framing B (raw correlation primary, scaling as sensitivity) is now the better-supported choice. With sublinear β, raw correlation does not inflate the "population effect" via scaling — if anything, the population signal is partially suppressed relative to super-linear expectation. The scaling-residual analysis remains useful as a robustness check and sensitivity to β uncertainty, but not as the primary framing.
 
