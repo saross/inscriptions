@@ -110,7 +110,7 @@ Date-range filtering thresholds examined for H2 robustness: `date_range` ≤ 25,
 
   Any failed check triggers an OSF amendment and model revision before moving to H3b / H3c.
 - **Residual analysis (H3c):** per-city residuals extracted from H3a posterior; classified as over-producing, under-producing, or typical (±95 % credible interval from predicted).
-- **Spatial clustering:** Moran's I with row-standardised spatial weights (*k*-nearest-neighbours with *k* = 5, or distance-based within 500 km — TBD; pick to match Hanson 2021's approach after PDF re-read).
+- **Spatial clustering (H3c):** Moran's I with row-standardised spatial weights via *k*-nearest-neighbours (`libpysal.weights.KNN.from_dataframe`). **Primary k = 8** (standard practice for point data per Cliff & Ord 1981; robust to the Empire's uneven site density). **Sensitivity at k = 5 and k = 10** reported alongside. Hanson (2021) used ArcGIS's default Spatial Autocorrelation (Global Moran's I) tool (p. 145); the paper does not specify his weights construction, so exact-numerical-match is not feasible. His Moran's I = 0.046 (z = 4.571, *p* < 0.0001 for residuals; I = −0.006, *p* = 0.282 for raw counts, confirming random) is the **qualitative replication target**: we declare H3c spatial-clustering successful if **Moran's I > 0 at *p* < 0.05 in at least two of {k = 5, k = 8, k = 10}** and the qualitative pattern matches Hanson's map (over-production concentrated in Italy and along the Rhine / Danube frontier; under-production scattered in Britannia, Gaul peripheries, and other western edges of the Empire).
 
 ### 4. Pre-specified confirmatory analyses
 
@@ -165,7 +165,7 @@ Run the mixture-model fit on empire-level LIRE. Report α̂ and 95 % CI; report 
 | H3b primary | Antonine signature | ≥ 50 % dip sustained ≥ 50 y at AD 165–180 |
 | H3b secondary | Other targets | Decision 5 a/b/c effect-sizes, Holm-Bonferroni corrected |
 | H3c provincial-capital | Mean residual difference | One-sided *t*-test *p* < 0.05 |
-| H3c spatial clustering | Moran's I | > 0, *p* < 0.05 |
+| H3c spatial clustering | Moran's I | > 0 at *p* < 0.05 in ≥ 2 of {k = 5, 8, 10} k-NN weights; qualitative pattern matches Hanson (2021) map |
 
 ### 7. Planned deviations and contingencies
 
@@ -180,7 +180,7 @@ Run the mixture-model fit on empire-level LIRE. Report α̂ and 95 % CI; report 
 - Final preregistered sample-size thresholds from the H1 simulation.
 - ~~Bayesian-NBR software choice~~ **Resolved 2026-04-24:** primary `pymc`; secondary `brms`-via-R shadow (~50-line script) for the H3a model only, as cross-validation + R-team legibility. Carleton et al. 2025's provincial posterior effects consumed as data, not code.
 - ~~Exact priors on α_0, α_province, β, dispersion~~ **Resolved 2026-04-24:** `α_0 ~ Normal(0, 5)`; `β ~ Normal(0, 2.5)` (agnostic); `σ_prov ~ HalfNormal(1)`; `1/alpha ~ HalfNormal(1)`. PPC suite: density overlay + test statistics (zero-count, mean, SD, 95th, M/V ratio) + Pearson-residual structure. Adela amendment path preserved: any substantive revision of priors or PPCs triggers an OSF amendment before execution.
-- Spatial-weights construction for Moran's I: *k*-NN (*k* = 5) vs distance-based (500 km cut-off) — match Hanson (2021) when local PDF is read in detail.
+- ~~Spatial-weights construction for Moran's I~~ **Resolved 2026-04-24:** k-NN k = 8 primary (row-standardised, `libpysal.weights.KNN`), k = 5 and k = 10 as sensitivity; three-way pattern (≥ 2 of 3 significant + qualitative Hanson-map match) is the H3c spatial-clustering success criterion. Hanson 2021 weights construction is unspecified in his paper (ArcGIS default), so exact-numerical-match is not feasible and not attempted.
 - Multiple-comparison family for H3b: exact Holm-Bonferroni family after H1 fixes the subset × effect-size grid.
 - Decision-log reference for the target venue (JAMT methods-heavy vs JAS balanced) — committed at end of Week 1 paper sprint (2026-05-03) per Decision 7.
 
