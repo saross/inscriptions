@@ -141,3 +141,67 @@ The lit-scout-verifier returned 0/25 corrections on the supplementary Aeneas bib
 Two environmental affordances that worked well today: (i) sapphire for compute (zero-cost offload via SSH; the git-as-transport pattern is clean); (ii) the `decisions.md` discipline — requiring a judgement-call entry for every inferential procedure forced me to state rationale I would otherwise have left implicit. Worth keeping both as defaults on future blocks.
 
 One affordance I under-used: the agent-hardening skill we flagged for the weekend (Issue #2). Having `/harden-agent` as a standing tool would have caught the path-typo class of error before launch. Prioritise building it on first downtime.
+
+---
+
+## 2026-04-24 — Entry 3: preregistration TBDs walked, a null reframed, infrastructure hardened
+
+*Context:* continuation of the 2026-04-23 session, same session ID, no compaction. Morning Sydney-time after an overnight of agent-assisted work while Shawn was AFK. Primary goal: close out the `planning/preregistration-draft.md` by walking its six TBDs one at a time.
+
+### The Glomb re-read that wasn't what I expected
+
+*Surprise:* Glomb et al. 2022's paper is a null result for the Antonine Plague in Asclepius-cult inscriptions (KS = 0.11, *p* = 0.20 on N = 210), not a detected-signal template as I had staged it. The Explore agent brief was written on the assumption that Fig 2 contained an empirical dip profile (magnitude, FWHM, onset/recovery) — I was going to use it as the fourth effect-size anchor in the H1 simulation. The report came back reporting that the paper is an *absence* finding, and that the two dip-templates Glomb cite (Duncan-Jones 2018 military diplomas; Romanowska 2021 Palmyra portraits) come from elsewhere and are both too material-specific to generalise.
+
+*Commit:* drop Antonine-anchored as a privileged H1 target; H1 uses Decision 5 brackets + zero-effect calibration only. Demote Antonine-specific H3b test from confirmatory-primary to exploratory replication-of-Glomb (empire + Asclepius-subset + military-administration-subset). Glomb becomes *motivating prior* — our H1 simulation answers "at what N would a Glomb-type test become informative?" rather than "can we detect a specific Glomb-template?" This reframing is strictly cleaner and more honest about what we can claim.
+
+*Memo to Shawn:* the re-read justified itself several times over. If we'd preregistered the original "Antonine-anchored at Glomb-magnitude" plan, the first sentence of the first reviewer's first comment would have been "the authors appear to have misread their source." Catching it in a 5-minute agent run before the preregistration hit OSF is exactly the anti-confabulation rule working as designed.
+
+### TBD 2: the R / Python / Stan triangle
+
+*Exploring:* this was the TBD with the most real tension. The three factors didn't all point the same way — Shawn Python-strong, Adela R-only, nobody Stan-experienced. Pure pymc loses R-team code-audit legibility; pure brms adds an R-and-Stan install burden to sapphire and the paper's critical path; pure rstanarm has the same R dependency with less flexibility than brms.
+
+*Commit:* pymc primary + `scripts/h3a_brms_shadow.R` as a ~50-line shadow implementation for cross-validation and R-team legibility. The shadow is genuinely cheap insurance — one commit, probably rarely touched, but serves two real purposes (cross-language validation that priors and posteriors agree; a readable-to-R-native-readers model specification). The alternative of "Shawn reads pymc code but Adela can't modify it" is fragile; the alternative of "Adela drives all Bayesian code" doesn't fit observed workflow either. Hybrid wins.
+
+### TBD 3: the β prior choice that's actually about reviewer trust
+
+*Exploring:* the β-prior question is subtle. Literature-informed `Normal(0.5, 1)` is more principled Bayesianly — it uses prior information. Agnostic `Normal(0, 2.5)` is defensively reviewer-facing — it removes any appearance of baking the answer in. With n = 816 cities, the likelihood dominates either prior; inference is essentially unchanged.
+
+*Commit:* agnostic, explicitly because the preregistration is a commitment-to-reviewers document, not only a likelihood-fitting document. The "this prior was chosen to avoid loading the dice" language in the prereg is doing real work — it signals to a sceptical reviewer that the analysis is not self-confirming. For the same likelihood + posterior, the agnostic-prior version of the paper is easier to defend.
+
+### TBD 4: the ArcGIS-default trap
+
+*Surprise:* small but worth capturing. When I proposed to match Hanson (2021)'s Moran's I weights construction, I assumed the paper would specify it. It doesn't — he used "a standard tool in ArcGIS" (p. 145) and reports only the output. ArcGIS's default for Spatial Autocorrelation is inverse-distance-with-auto-bandwidth, which varies by dataset extent. There's no reproducible match from a paper that cites "the default".
+
+*Commit:* don't try to exact-match. Use k-NN k = 8 primary + k = 5/10 sensitivity as the standard spatial-statistics default (Cliff & Ord 1981; `libpysal`). Report the qualitative replication target (clustered, not random; Italy/Rhine-Danube over-production) rather than a numerical Moran's I value. This is honest about what the prior literature supports — and it tightens the preregistered success criterion (2 of 3 k values significant + qualitative pattern match) rather than loosening it.
+
+*Memo:* if the prior-art cites a "standard tool" without parameters, that's a signal to adopt your own explicit defaults, not to chase their unspecified configuration. Same pattern that came up with Timpson et al.'s null-model choice earlier in the project.
+
+### The LIRE schema question I should have asked upfront
+
+*Exploring:* I deferred "can we filter LIRE by Asclepius-cult or military diploma?" to a TBD-1 side-check. When I actually queried the parquet, the answer was trivial: `type_of_inscription_clean` has 23 values including "military diploma" (285 rows, 66 % null) and "votive inscription" (broader cultic category); the ML-classified `type_of_inscription_auto` is 86 % populated. Asclepius filtering is via inscription-text regex (358 rows matching `[Aa]esculap|[Aa]sclep` — more than Glomb's N = 210, so their filter was stricter). Five minutes of investigation up front would have let me preregister the subset-filter specifics with confidence rather than as a deferred item. Worth a reflex-check: when a feasibility question comes up, **read the data first** before writing it up as a TBD.
+
+### The Zotero idempotency bug
+
+*Surprise:* `scripts/zotero_batch_add.py` created a duplicate of Carleton 2018 PLOS ONE despite an idempotency-by-DOI check. Root cause: pyzotero's `zot.items(q=doi, qmode='everything')` does FTS across title, creator, notes, tags, and attachment filenames — **not** the DOI field itself. A DOI string in `q=` returns zero hits even when the DOI is present on an item. The agent caught it empirically after creating the duplicate and fixed the script to use a locally-built DOI index across the full group. One Carleton 2018 entry is now an orphan waiting for manual merge in the Zotero UI.
+
+*Commit:* for any API-based idempotency check, verify the API's query semantics against a known-positive case before trusting it at scale. "DOI search" is not a universal — many library APIs use FTS across a specific field set, and DOI may or may not be in it. The 5-second sanity check (search for a DOI you know is present; check if it returns) would have flagged this before the batch run.
+
+### What I did well
+
+*Commit:* the TBD-walkthrough structure — one decision at a time, options + recommendation + push-back invitation — converted what could have been a diffuse design conversation into four clean commits in under an hour. Worth using again for similar decision-batches.
+
+*Commit:* launched the Glomb re-read agent in background in parallel with applying TBD 1's other four knobs. Parallel-where-possible is cheap and saved a roundtrip; would have been worse if I'd sequenced it as "finish TBD 1 → launch Glomb → wait → revise TBD 1."
+
+*Commit:* the batch-add agent's report was substantive enough to let me diagnose the idempotency bug without re-running anything. Good agent brief + good agent output + post-hoc verification script (`has_pdf_attachment` + item fetch) caught what the primary check missed.
+
+### What I'd do differently
+
+*Exploring:* read the LIRE parquet schema at session start, not as a TBD side-check. The subset-filter feasibility question should have been answered in the first five minutes once the question came up.
+
+*Exploring:* the agent brief for the batch-add was specific about idempotency but didn't specify *which* idempotency pattern. If I'd said "verify via a locally-built DOI index, not via `zot.items(q=DOI)`, because the Zotero FTS semantics are unclear", the duplicate wouldn't have happened. Pre-launch brief review should include a "does the brief commit to a specific implementation of the safety check?" line — not just "is there a safety check?"
+
+*Exploring:* the PDF retry with Europe PMC drops connections from this sandbox environment in a way that's almost certainly network/firewall-related, not a script bug. I spent some minutes debugging something that won't reproduce elsewhere. Worth trying Unpaywall as primary source from the start (which I did) and treating Europe PMC fallback as "try it, log if it works, shrug if it doesn't."
+
+### For future-me
+
+The continuity-doc-canonicalisation (replacing dated continuity snapshots with a single living `continuity.md`) is a small design decision that should pay off over the next several sessions. The question it answers — "where is the current priority queue and current state of play?" — now has one answer, not "depends on which dated snapshot is newest." Keep it tight and honest; prune aggressively when items resolve; date each session's done-items. The alternative — re-writing a full continuity snapshot at every /reflect — would duplicate session-log content and eventually go stale.

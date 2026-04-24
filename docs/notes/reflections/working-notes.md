@@ -381,3 +381,115 @@ SDAM group's `quantifying_human_activity` subcollection
 (key `AF78R8XB`, 12 items). The subcollection is Shawn's earlier
 scan for complexity-proxy literature; most items are theoretical /
 methodological rather than direct per-dimension proxies for FS-A–G.
+
+---
+
+## Obs 13 — 2026-04-24: Four-way convergence on sublinear β — robust methodological triangulation
+
+The inscription-to-urban-population scaling exponent is **robustly sublinear
+across four independent tests** using different datasets, regression
+families, and research groups. None finds super-linear β; all fall within
+a tight window [0.3, 0.7].
+
+| Source | Dataset | Method | β | 95 % CI |
+|---|---|---|---|---|
+| Hanson 2021 *JUA* Table 7.3 | EDCS, 554 sites empire-wide, Rome excl. | OLS log-log, 8 pop-bins | **0.672** (mean) | [0.588, 0.756] |
+| Hanson 2021 *JUA* Table 7.3 | as above | OLS log-log, 8 pop-bins | 0.654 (median) | [0.514, 0.774] |
+| Hanson, Ortman & Lobo 2017 *JRS Interface* | same | OLS log-log | 0.686 (functional diversity vs pop — inscriptions as sampling frame) | SE = 0.078 |
+| Carleton et al. 2025 *Nature Cities* | elite-honorific inscription proxies | Bayesian scaling | 0.3–0.5 | credible intervals |
+| Ross 2024 (archived unpublished notebook) | LIRE v3.0, 816 cities with Hanson estimates | OLS log-log | 0.473 | [0.376, 0.569] |
+| Ross 2024 | as above | NBR with log link, 1000-bootstrap | 0.683 | [0.532, 0.849] |
+
+**Implication.** The sublinear pattern is robust enough that the paper
+should treat it as an established empirical fact rather than a finding
+to be re-established. The *explanation* of sublinearity (complexity-
+markers with saturation at scale, vs Hanson's information-infrastructure
+framing) remains open and is the theoretical-frame decision deferred
+to RAC-TRAC 2026 audience response. The four-way convergence across
+OLS, Negative Binomial, and Bayesian regression families also moots
+the methodological worry that any one regression family's artefacts
+drive the sublinear finding — the conclusion survives re-estimation
+under different distributional assumptions.
+
+**Critical-friend caveat.** One leg of the four-way convergence (HOL
+2017 β = 0.686) is measured on **functional diversity** as the output
+variable, not inscription count directly. Inscriptions are the sampling
+frame for the diversity index. The finding is still sublinear and
+relevant, but it is not strictly a fifth independent estimate of
+"inscription count ∝ population^β" — it is a β for a related quantity
+that inherits sample structure from inscriptions. The four-way framing
+is supported; a hypothetical "five-way" framing would be over-counting.
+
+*Source:* Explore-agent direct PDF verification of Hanson 2021
+(`scripts/zotero.py::get_pdf_path('GHPTNHBI')` → Table 7.3 and Figures
+7.4, 7.5, 7.6); Scout 2 scout-2-urban-scaling-inscriptions.md;
+Ross 2024 archived notebook summarised at `planning/archive-2024-summary.md`.
+Committed as theoretical-frame paragraph in
+`planning/research-intent.md` (commits `d01a702`, `3e4a6f4`) and
+`runs/2026-04-23-prior-art-scouts/synthesis.md`.
+
+---
+
+## Obs 14 — 2026-04-24 [GOTCHA]: Zotero FTS (`q=` parameter) does not index the DOI field
+
+Discovered empirically during the 2026-04-24 batch-add of 23 papers to
+the SDAM SPA collection via pyzotero (`scripts/zotero_batch_add.py`,
+agent `a050742b9dd16db93`).
+
+**Symptom.** An explicit DOI-based idempotency check (`zot.items(q=doi,
+qmode='everything', limit=25)`) returned zero hits for DOIs known to be
+present in the group library. The batch-add consequently created a
+duplicate for Carleton, Campbell & Collard 2018 PLOS ONE — one item
+(`T95BHV43`) from the single-paper test run, another (`GF82TVAB`) from
+the full-batch run of the same DOI.
+
+**Cause.** Zotero's full-text search indexes title, creator names, note
+body, tag names, and attachment filenames — but **not the structured
+DOI field**. A DOI string as `q=` therefore returns zero hits unless
+that DOI literal appears in one of the indexed text fields. This is
+the Zotero REST API's behaviour; pyzotero forwards it verbatim.
+
+**Fix pattern.** Build a local DOI index once per operation by paging
+through all items in the target library:
+
+```python
+def _build_doi_index(zot) -> dict[str, dict]:
+    index = {}
+    start = 0
+    while True:
+        batch = zot.items(start=start, limit=100)
+        if not batch:
+            break
+        for item in batch:
+            doi = item.get('data', {}).get('DOI', '').strip().lower()
+            if doi:
+                index[doi] = item
+        start += 100
+    return index
+```
+
+Then check candidate DOIs against the in-memory index before creating.
+Committed in `scripts/zotero_batch_add.py` at commit `e26278e` and
+extended at `6e8355b`.
+
+**Implication for future work.** Any API-based idempotency check must
+verify the API's query semantics on a known-positive case before being
+trusted at scale. "Search by canonical identifier" is not a universal
+pattern — different archival APIs (Zotero, Mendeley, EndNote, etc.)
+index different field sets, and identifier fields are not necessarily
+included. Before committing to a search-based idempotency pattern,
+test it: insert (or find) a known item, query for it, verify the
+result contains it.
+
+**Why it wasn't caught in pre-launch review.** The agent brief
+specified "idempotency via DOI search before create" but did not
+commit to a *specific implementation pattern* for the search. The
+agent picked `zot.items(q=doi)` as the obvious choice; the pre-launch
+review didn't push back because the pattern name sounded correct. For
+future agent briefs that rely on a safety check, specify the exact
+mechanism, not just the check's goal.
+
+*Source:* agent `a050742b9dd16db93` batch-add run 2026-04-24; root-
+cause diagnosis in the agent's final report; fix committed at
+`e26278e` and extended at `6e8355b`. Documented in `continuity.md`
+under "Failure modes observed" and here for future reference.
