@@ -72,8 +72,8 @@ H3c (urban-area residuals): residuals from the H3a Bayesian NBR reproduce Hanson
 Subsets analysed at three levels, each with a preregistered minimum-inscription-count threshold (to be fixed after H1 simulation):
 
 - **Empire-wide:** all inscriptions meeting filters; primary level for temporal analyses.
-- **Province:** ~50 provinces in LIRE. Threshold candidate values tested by simulation: 100, 250, 500, 1000, 2500, 5000, 10000 inscriptions.
-- **Urban area:** ~816 cities with Hanson population estimates. Threshold candidate values tested by simulation: 25, 50, 100, 250, 500, 750 inscriptions.
+- **Province:** ~50 provinces in LIRE. Threshold candidate values tested by simulation: 100, 250, 500, 1000, 2500, 5000, 10000, 25000 inscriptions.
+- **Urban area:** ~816 cities with Hanson population estimates. Threshold candidate values tested by simulation: 25, 50, 100, 250, 500, 1000, 2500 inscriptions.
 
 Date-range filtering thresholds examined for H2 robustness: `date_range` ≤ 25, 50, 100, 200, 300 years (matching 2024 exploratory-notebook sweeps).
 
@@ -98,9 +98,13 @@ For each combination of (subset level ∈ {empire, province, urban-area}; effect
 2. Inject an effect of the target magnitude and duration.
 3. Apply the permutation-envelope test.
 4. Record detection / non-detection.
-5. Repeat 500 times per cell.
+5. Repeat 1,000 times per cell.
 
-Detection rate per cell = fraction detecting at *p* < 0.05. **Preregistered threshold per level = smallest n at which detection rate ≥ 0.80** for the Antonine-anchored target, additionally reported for the Decision 5 a/b/c targets.
+Detection rate per cell = fraction detecting at *p* < 0.05. **Preregistered threshold per level = smallest n at which detection rate ≥ 0.80** for the Antonine-anchored target, additionally reported for the Decision 5 a/b/c targets. Detection-rate curves at 0.70 / 0.80 / 0.90 reported for transparency.
+
+**Null model:** both **exponential (primary, per rcarbon / Timpson et al. 2014)** and **continuous piecewise-linear (CPL, secondary, per Timpson et al. 2021)** fitted; results compared. Rationale: CPL is more flexible but has more parameters; running both lets us check whether null-model choice materially affects the min-threshold conclusions.
+
+**Antonine-anchored effect shape:** to be fixed before simulation runs after re-reading Glomb, Kaše & Heřmánková (2022) Figure 2 to extract empirical profile. Default pending that re-read: smooth dip, FWHM ≈ 25 years, 50 % magnitude.
 
 Adapts the Carleton, Campbell & Collard (2018, *PLOS ONE* 13:e0191055; code CC-BY) PEWMA power-simulation framework for cross-sectional SPA × covariate analysis.
 
