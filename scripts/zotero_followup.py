@@ -97,6 +97,40 @@ def unpaywall_pdf_url(doi: str) -> str | None:
         return None
 
 
+def europepmc_pdf_url(doi: str) -> str | None:
+    """Resolve DOI → PubMed Central ID → Europe PMC direct-PDF URL.
+
+    Europe PMC's ``ptpmcrender.fcgi`` endpoint serves PDFs without the
+    Cloudflare bot-detection that blocks the publisher-side PMC mirror.
+    """
+    try:
+        r = requests.get(
+            "https://www.ncbi.nlm.nih.gov/pmc/utils/idconv/v1.0/",
+            params={
+                "tool": "inscriptions_project",
+                "email": MAILTO,
+                "ids": doi,
+                "idtype": "doi",
+                "format": "json",
+            },
+            timeout=30,
+        )
+        if r.status_code != 200:
+            return None
+        records = r.json().get("records") or []
+        if not records:
+            return None
+        pmcid = records[0].get("pmcid")
+        if not pmcid:
+            return None
+        return (
+            f"https://europepmc.org/backend/ptpmcrender.fcgi"
+            f"?accid={pmcid}&blobtype=pdf"
+        )
+    except requests.RequestException:
+        return None
+
+
 def download_pdf_with_ua(url: str) -> bytes | None:
     """GET the URL with a browser UA; return bytes only if magic bytes match."""
     try:
@@ -140,28 +174,53 @@ def retry_pdf(item_key: str, short_cite: str, doi: str) -> dict[str, Any]:
     if has_pdf_attachment(item_key):
         out["status"] = "already_has_pdf"
         return out
+
+    # Try Unpaywall first; on miss, fall back to Europe PMC.
     url = unpaywall_pdf_url(doi)
-    if not url:
-        out["status"] = "no_oa_url_found"
-        return out
-    out["pdf_url"] = url
-    content = download_pdf_with_ua(url)
+    source = "unpaywall"
+    content = download_pdf_with_ua(url) if url else None
     if not content:
-        out["status"] = "download_failed_or_invalid_pdf"
+        url = europepmc_pdf_url(doi)
+        if url:
+            source = "europe_pmc"
+            content = download_pdf_with_ua(url)
+
+    if not content:
+        out["status"] = "no_oa_pdf_available"
         return out
+
+    out["pdf_url"] = url
+    out["pdf_source"] = source
     tmp_path = pathlib.Path(f"/tmp/zotero_{short_cite}.pdf")
     tmp_path.write_bytes(content)
     try:
         attach = zot.attachment_simple([str(tmp_path)], item_key)
-        out["status"] = "attached"
         out["size_bytes"] = len(content)
-        # attachment_simple returns a dict with success/failure info
+        # pyzotero's attachment_simple returns a dict whose ``success`` /
+        # ``successful`` entries can be either a dict of {idx: {key: ...}}
+        # or a list of item keys — normalise both forms defensively.
         successful = attach.get("success") or attach.get("successful") or {}
-        if successful:
-            first = next(iter(successful.values()))
-            if isinstance(first, dict):
-                out["attachment_key"] = first.get("key")
-    except Exception as e:
+        attachment_key: str | None = None
+        if isinstance(successful, dict):
+            for v in successful.values():
+                if isinstance(v, dict) and v.get("key"):
+                    attachment_key = v["key"]
+                    break
+                if isinstance(v, str):
+                    attachment_key = v
+                    break
+        elif isinstance(successful, list):
+            for v in successful:
+                if isinstance(v, str):
+                    attachment_key = v
+                    break
+                if isinstance(v, dict) and v.get("key"):
+                    attachment_key = v["key"]
+                    break
+        out["status"] = "attached"
+        if attachment_key:
+            out["attachment_key"] = attachment_key
+    except Exception as e:  # noqa: BLE001 — agent-facing report
         out["status"] = "attach_failed"
         out["error"] = f"{type(e).__name__}: {e}"
     finally:

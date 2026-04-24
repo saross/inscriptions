@@ -1,0 +1,16 @@
+{"event": "run_start", "script": "zotero_followup.py", "timestamp": "2026-04-24T04:05:04+00:00"}
+{"op": "retry_pdf", "short_cite": "ortman_lobo_2024_sci_adv", "item_key": "K9NHZPDT", "doi": "10.1126/sciadv.adk5517", "pdf_url": "https://knowledge.uchicago.edu/record/12884/files/sciadv.adk5517_sm.pdf", "status": "attach_failed", "size_bytes": 1044091, "error": "AttributeError: 'list' object has no attribute 'values'", "timestamp": "2026-04-24T04:05:15+00:00"}
+{"op": "retry_pdf", "short_cite": "bevan_2017_pnas", "item_key": "GM82BQQI", "doi": "10.1073/pnas.1709190114", "pdf_url": "http://hdl.handle.net/10026.1/10583", "status": "download_failed_or_invalid_pdf", "timestamp": "2026-04-24T04:05:17+00:00"}
+{"op": "retry_pdf", "short_cite": "carleton_groucutt_2020_holocene", "item_key": "4QMRBWB6", "doi": "10.1177/0959683620981700", "status": "no_oa_url_found", "timestamp": "2026-04-24T04:05:19+00:00"}
+{"op": "retry_pdf", "short_cite": "glomb_kase_hermankova_2022_jasrep", "item_key": "PMVKIVN8", "doi": "10.1016/j.jasrep.2022.103466", "pdf_url": "https://dspace.zcu.cz/bitstreams/79cb50c6-c964-44b0-a456-d2bba311aac9/download", "status": "attached", "size_bytes": 2141438, "timestamp": "2026-04-24T04:05:57+00:00"}
+{"op": "manual_add", "short_cite": "beltran_lloris_2015_ohre_chapter", "status": "created", "item_key": "5P6SIHDP", "timestamp": "2026-04-24T04:06:00+00:00"}
+{"op": "manual_add", "short_cite": "benefiel_keesling_2024_brill_volume", "status": "created", "item_key": "FATTZZ4X", "timestamp": "2026-04-24T04:06:01+00:00"}
+{"event": "run_end", "summary": {"created": 2, "attached": 1, "already": 0, "failed": 3}, "timestamp": "2026-04-24T04:06:01+00:00"}
+{"event": "run_start", "script": "zotero_followup.py", "timestamp": "2026-04-24T04:07:50+00:00"}
+{"op": "retry_pdf", "short_cite": "ortman_lobo_2024_sci_adv", "item_key": "K9NHZPDT", "doi": "10.1126/sciadv.adk5517", "status": "already_has_pdf", "timestamp": "2026-04-24T04:07:51+00:00"}
+{"op": "retry_pdf", "short_cite": "bevan_2017_pnas", "item_key": "GM82BQQI", "doi": "10.1073/pnas.1709190114", "status": "no_oa_pdf_available", "timestamp": "2026-04-24T04:07:56+00:00"}
+{"op": "retry_pdf", "short_cite": "carleton_groucutt_2020_holocene", "item_key": "4QMRBWB6", "doi": "10.1177/0959683620981700", "status": "no_oa_pdf_available", "timestamp": "2026-04-24T04:07:59+00:00"}
+{"op": "retry_pdf", "short_cite": "glomb_kase_hermankova_2022_jasrep", "item_key": "PMVKIVN8", "doi": "10.1016/j.jasrep.2022.103466", "status": "already_has_pdf", "timestamp": "2026-04-24T04:08:01+00:00"}
+{"op": "manual_add", "short_cite": "beltran_lloris_2015_ohre_chapter", "status": "already_present", "item_key": "5P6SIHDP", "timestamp": "2026-04-24T04:08:02+00:00"}
+{"op": "manual_add", "short_cite": "benefiel_keesling_2024_brill_volume", "status": "already_present", "item_key": "FATTZZ4X", "timestamp": "2026-04-24T04:08:03+00:00"}
+{"event": "run_end", "summary": {"created": 0, "attached": 0, "already": 4, "failed": 2}, "timestamp": "2026-04-24T04:08:03+00:00"}
