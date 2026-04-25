@@ -43,15 +43,19 @@
 # parameterises negbinomial() with `shape`, which is the *same* α (i.e. brms'
 # `shape` IS the dispersion, not its reciprocal — confirmed via brms docs and
 # stancode inspection). Therefore the pymc HalfNormal(1) on `inv_alpha = 1/α`
-# does NOT map onto a normal(0, 1) on brms `shape`; it maps onto a
-# HalfNormal(1) on `1/shape`. brms does not expose that reparameterisation
-# directly in a one-line prior() call, so here we place `normal(0, 1)` on
-# `shape` (with the default non-negativity constraint via class = "shape") as
-# a *pragmatically close* weakly-informative prior and flag this in the audit:
-# posterior-level agreement between pymc and brms should be checked on
-# μ-scale quantities (fitted counts, Bayesian R², PPC statistics) rather than
-# on the raw dispersion parameter, and any residual disagreement in the tail
-# of the shape posterior is expected.
+# does NOT map onto a normal(0, 1) on brms `shape`; it would, in fact,
+# regularise in the opposite direction.
+#
+# The pymc HalfNormal(1) on `inv_alpha = 1/α` is matched exactly via stanvar:
+# we add `target += normal_lpdf(1.0 / shape | 0, 1) - 2 * log(shape);` in the
+# model block. The Jacobian (`-2 * log(shape)`) corrects for the
+# reparameterisation. Posterior agreement between pymc and brms is now
+# expected on all quantities including raw dispersion.
+#
+# Jacobian derivation (recorded for the audit trail): if y = 1/x, then
+# |dy/dx| = 1/x², so the implied prior on x in log-density form is
+# log p_y(1/x) + log|dy/dx| = log p_y(1/x) − 2 log x. Stan samples on
+# `shape` (= x), so we increment `target` by exactly that quantity.
 # ------------------------------------------------------------------------------
 
 # ---- DEPENDENCIES ------------------------------------------------------------
@@ -100,11 +104,24 @@ if (!is.integer(dat$count) || any(dat$count < 0)) stop("count must be non-negati
 message("Loaded ", nrow(dat), " rows across ", length(unique(dat$province)), " provinces.")
 
 # ---- PRIORS (pymc-primary correspondence; see header note on `shape`) -------
+# Three prior() lines below match pymc on Intercept, log_pop slope, and
+# province SD. The dispersion prior is added separately via stanvar (see
+# below) so that HalfNormal(1) is placed on `1/shape`, exactly mirroring
+# pymc's HalfNormal(1) on inv_alpha.
 priors <- c(
   prior(normal(0, 5),   class = "Intercept"),
   prior(normal(0, 2.5), class = "b", coef = "log_pop"),
-  prior(normal(0, 1),   class = "sd", group = "province"),
-  prior(normal(0, 1),   class = "shape")
+  prior(normal(0, 1),   class = "sd", group = "province")
+)
+
+# Custom Stan code: place HalfNormal(1) on 1/shape, matching pymc HalfNormal(1)
+# on inv_alpha = 1/α. brms' shape parameter IS dispersion α; we need a prior
+# on its reciprocal. The Jacobian correction (-2 * log(shape)) is required
+# because we are transforming the parameter (1/shape) under which the prior
+# is specified back to the original parameter (shape) on which Stan samples.
+inv_shape_prior <- stanvar(
+  scode = "target += normal_lpdf(1.0 / shape | 0, 1) - 2 * log(shape);",
+  block = "model"
 )
 
 # ---- FIT --------------------------------------------------------------------
@@ -112,6 +129,7 @@ fit <- brm(
   count ~ log_pop + (1 | province),
   data = dat, family = negbinomial(),
   prior = priors,
+  stanvars = inv_shape_prior,
   chains = 4, iter = 2000, warmup = 1000,
   cores = 4, seed = SEED,
   backend = BACKEND,

@@ -109,8 +109,27 @@ compilation; subsequent runs reuse the cached compiled object.
 
 Priors mirror the `pymc` primary exactly on scale and family (see
 `plan.md` §5 for the side-by-side table). The one subtle translation
-point — the `shape` prior — is documented verbatim in the script header;
-see "Prior-correspondence note" there.
+point — the dispersion prior — is documented verbatim in the script
+header; see "Prior-correspondence note" there.
+
+### Why a Stan snippet appears in the script
+
+`brms` parameterises `negbinomial()` with a `shape` parameter that *is*
+the dispersion α (Var = μ + μ²/α), whereas the preregistered `pymc`
+primary places `HalfNormal(1)` on `inv_alpha = 1/α`. A naïve
+`prior(normal(0, 1), class = "shape")` would regularise in the opposite
+direction. To match exactly, the script uses `stanvar()` to inject a
+single line of Stan into the model block:
+
+```stan
+target += normal_lpdf(1.0 / shape | 0, 1) - 2 * log(shape);
+```
+
+The `-2 * log(shape)` term is the Jacobian for the
+`shape → 1/shape` reparameterisation (since |d(1/x)/dx| = 1/x², its log
+is `−2 log x`). With this in place, posterior agreement between the
+`pymc` primary and the `brms` shadow is expected on all quantities,
+including the raw dispersion parameter.
 
 ## Audit verdict
 
