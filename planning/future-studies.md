@@ -2,6 +2,39 @@
 
 **Purpose.** Ideas identified during the current project that could warrant separate papers or follow-up work. Kept alive per the externalise-or-lose-them rule. Each entry has: origin (when/where raised), contributor attribution (who proposed), current status, trigger for revisit.
 
+## FS-3 — Aoristic-shape sensitivity for Roman epigraphic SPA
+
+**Origin.** 2026-04-25, during methodological-pivot discussion on H1 envelope-test FP control. Shawn raised: "Crema's other work suggests ceramic dates follow trapezoidal distributions rather than uniform — should we test other shapes too?"
+
+**Proposed by.** Shawn (research question); Claude (initial framing of how it integrates with our pipeline).
+
+**Idea.** Aoristic methodology assumes a date-density shape over each row's `[not_before, not_after]` interval. The current paper uses **Uniform** aoristic per Decision 4 (with **trapezoidal** preregistered as a narrow Decision 4 sensitivity for selected subsets). Crema 2012 (*J. Archaeol. Method Theory* 19(3)) argues the appropriate shape depends on the artefact-class production curve: ceramics typically follow a trapezoidal curve (gradual ramp-up, plateau, ramp-down of production); coinage follows different shapes (issue-event spikes); inscriptions of different types may have different curves still. Crema 2025 (*Archaeometry*; baorista) handles arbitrary shapes within a Bayesian framework.
+
+**For Roman epigraphy specifically.** No published study has systematically estimated the right shape for Latin epigraphic SPA. Reasonable hypotheses: military diplomas (sharp, one-off issuance dates) ⇒ near-uniform across narrow ranges; funerary / dedicatory inscriptions (palaeographic / formulaic dating) ⇒ possibly peaked or skewed; certain chronologically-constrained types (e.g., honorific inscriptions to specific emperors) ⇒ may peak at the relevant reign with ramps either side.
+
+**Why it matters for our work.** Aoristic shape is upstream of every SPA result. If the true shape is trapezoidal but we use uniform, our SPAs are systematically distorted (peaks broadened, edges over-smoothed). Substantive conclusions on temporal patterns depend on this assumption being approximately right. Independent of the FP-control issue we're resolving in H1 v2 (forward-fit / non-parametric envelope methods).
+
+**Standalone-paper potential.** Yes. Methodological + empirical. Outline:
+1. Prior-art-scout sub-task: confirm the absence of published systematic shape-estimation for Latin epigraphic SPA.
+2. Theoretical: derive the SPA expectation under different per-row shapes (uniform, trapezoidal, peaked-at-centre, edge-skewed).
+3. Empirical: estimate per-inscription-type shape priors from external evidence (LIRE's `type_of_inscription_clean` × external archaeological / palaeographic dating studies).
+4. Application: re-run the current paper's main analyses under (i) uniform [primary], (ii) per-type-empirical shape, (iii) trapezoidal [Crema-default]. Quantify how thresholds, mixture-corrected SPAs, and population-scaling β change under each.
+5. Could integrate with FS-1 (Aeneas-partition): high-content-signal inscriptions may require different shape priors than editorially-anchored ones.
+
+Target venues: *Journal of Archaeological Method and Theory* (where Crema 2012 lives), *Archaeometry*, *Journal of Computer Applications in Archaeology*. Length: 6–8k words.
+
+**Prerequisites.**
+- Main SPA paper submitted or in press (so the aoristic-shape question can be motivated by reference to a working pipeline).
+- Or: integrated as a more substantial Decision 4 sensitivity in the current paper if scope permits (low priority — main paper already has H2 mixture as the substantive methodological contribution).
+
+**Revisit trigger.** After main paper submitted; could be 2026 Q4 / 2027 Q1. Or earlier if reviewers of the main paper specifically push on the uniform-aoristic assumption.
+
+**Risk that would change recommendation.** External-evidence shape priors prove unrecoverable for Latin inscriptions (no reliable per-type chronological independent data), reducing the empirical contribution to a thought-experiment.
+
+**Cross-link.** Current paper's narrow trapezoidal sensitivity (prereg §3, Decision 4) is the seed for this future work; FS-3 expands the systematic comparison.
+
+---
+
 ## FS-1 — Aeneas predictive-distribution-variance as corpus-partitioning tool
 
 **Origin.** 2026-04-23, during discussion of how to correct for editorial-convention artefacts in SPA on LIRE.
