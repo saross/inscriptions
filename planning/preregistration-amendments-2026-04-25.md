@@ -180,6 +180,57 @@ non-confirmatory status, consistent with §5's existing treatment.
 
 ---
 
+## Amendment 5 — LIRE filter columns derived, not native (prereg §1)
+
+**Affected section:** Preregistration-draft §1 "Dataset and corpus" → first
+paragraph (LIRE primary).
+
+**Current text:**
+
+> **Primary:** LIRE v3.0 (Kaše, Heřmánková & Sobotková, Zenodo DOI
+> 10.5281/zenodo.8147298, 11 October 2023). 182,853 rows; 65 attributes.
+> Filtered to `is_within_RE == True`, `is_geotemporal == True`, and a
+> 50 BC – AD 350 date-interval intersect. Pre-joined Hanson (2016)
+> urban-population estimates available as the `urban_context_pop_est`
+> attribute at row level (joining rule: ancient toponym of the largest city
+> within a 5-km buffer of the inscription findspot).
+
+**Proposed replacement:**
+
+> **Primary:** LIRE v3.0 (Kaše, Heřmánková & Sobotková, Zenodo DOI
+> 10.5281/zenodo.8147298, 11 October 2023). 182,853 rows; 63 attributes
+> in the released parquet (the prereg's earlier 65-attribute count
+> conflated derived flags with native columns). The `is_within_RE` and
+> `is_geotemporal` flags referenced in earlier prereg revisions are
+> **derived** at filter time, not native to the released parquet:
+> `is_geotemporal := Lat IS NOT NULL AND Lon IS NOT NULL AND not_before IS
+> NOT NULL AND not_after IS NOT NULL AND not_before ≤ not_after` (i.e., a
+> row has a usable geographic and temporal locus); `is_within_RE :=
+> province IS NOT NULL` (i.e., a row is geo-located within a Roman
+> province). Filtering with these derived flags plus a 50 BC – AD 350
+> date-interval intersect yields **180,609 rows** (≈ 98.8 % of the
+> pre-filter total). Derivation rules are consistent with the
+> 2026-04-23 descriptive-stats run (see `runs/2026-04-23-descriptive-stats/
+> decisions.md`). Pre-joined Hanson (2016) urban-population estimates
+> available as the `urban_context_pop_est` attribute at row level
+> (joining rule: ancient toponym of the largest city within a 5-km buffer
+> of the inscription findspot).
+
+**Rationale:**
+
+The released LIRE v3.0 parquet does not contain `is_within_RE` or
+`is_geotemporal` as native columns. The prereg's earlier wording assumed
+they were native. This amendment makes the derivation rules explicit and
+preregisters them — so any reviewer, replicator, or downstream pipeline
+applies the same filter. Derivation is conservative (excludes rows with
+missing geo or temporal locus, or with reversed date intervals).
+
+**Methodological impact:** none; the filter intent is unchanged. Row-count
+delta is small (~ 1.2 %); the empire-level n = 50,000 calibration cell is
+still well under the 180,609-row floor.
+
+---
+
 ## Amendment 4 — Tempun dependency → direct reimplementation (prereg §9)
 
 **Affected section:** Preregistration-draft §9 "Software, reproducibility,
