@@ -1,0 +1,14 @@
+2026-04-25 08:30:43,811 INFO Loading LIRE from archive/data-2026-04-22/LIRE_v3-0.parquet
+2026-04-25 08:30:43,954 INFO Filtered LIRE: 180609 rows (from 182853)
+2026-04-25 08:30:43,954 INFO Filtered LIRE: 180609 rows
+2026-04-25 08:30:43,954 INFO Grid: 80 cells x 200 iter x 500 MC = 16000 envelope tests
+2026-04-25 08:30:43,954 INFO Expected parquet rows: 16000
+2026-04-25 08:30:43,955 INFO Dispatching 80 cells with n_jobs=-1 (loky)
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 24 concurrent workers.
+[Parallel(n_jobs=-1)]: Done  24 tasks      | elapsed:   30.2s
+[Parallel(n_jobs=-1)]: Done  50 out of  80 | elapsed:  1.3min remaining:   47.0s
+[Parallel(n_jobs=-1)]: Done  67 out of  80 | elapsed:  2.3min remaining:   26.6s
+[Parallel(n_jobs=-1)]: Done  80 out of  80 | elapsed:  3.9min finished
+2026-04-25 08:34:39,066 INFO All cells complete in 235.1 s (3.9 min)
+2026-04-25 08:34:39,105 INFO Wrote runs/2026-04-25-h1-simulation/outputs/option-c-validation/results.parquet (16000 rows)
+2026-04-25 08:34:39,120 INFO Wrote runs/2026-04-25-h1-simulation/outputs/option-c-validation/summary.json
