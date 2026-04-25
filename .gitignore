@@ -2,6 +2,13 @@
 .virtual_documents/
 data/LIST_v1-2.parquet
 
+# Per-iteration raw simulation results (>100 MB, exceeds GitHub limit).
+# Reconstructable deterministically from seed_hex; live copies on sapphire +
+# archive to Zenodo at paper submission per GH issue #3 (Phase 2 reproducibility).
+# Summary parquets (cell-summary, thresholds, power-curves) ARE committed.
+runs/**/outputs/cell-results.parquet
+runs/**/outputs/run.pid
+
 # Python / uv venv
 .venv/
 __pycache__/
