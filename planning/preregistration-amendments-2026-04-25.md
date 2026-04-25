@@ -3,7 +3,7 @@ priority: 1
 scope: in-stream
 title: "Preregistration amendments arising from H1 plan review (2026-04-25)"
 audience: "Shawn (edit + apply), Adela (co-author review), OSF reviewers"
-status: draft; not yet applied to preregistration-draft.md
+status: applied 2026-04-25 (Shawn-approved); preregistration-draft.md updated
 date: 2026-04-25
 ---
 
