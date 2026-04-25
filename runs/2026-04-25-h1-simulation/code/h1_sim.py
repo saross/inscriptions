@@ -226,9 +226,11 @@ def run_cell(
     for iter_idx, iter_ss in enumerate(iter_seeds):
         t0 = time.perf_counter()
         rng = np.random.default_rng(iter_ss)
-        seed_hex = iter_ss.entropy.to_bytes(
-            (iter_ss.entropy.bit_length() + 7) // 8, "big",
-        ).hex() if iter_ss.entropy else f"{iter_idx:08x}"
+        # Derive a per-iteration seed_hex from the SeedSequence's *full* state
+        # (entropy + spawn_key path). ``iter_ss.entropy`` alone is identical
+        # across spawned children, so we use ``generate_state`` to obtain a
+        # 128-bit deterministic fingerprint that varies per iter_idx.
+        seed_hex = iter_ss.generate_state(4, dtype=np.uint32).tobytes().hex()
 
         # 1. Draw bootstrap sample and build observed SPA.
         nb = source_df["not_before"].to_numpy(dtype=float)

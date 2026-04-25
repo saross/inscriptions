@@ -607,6 +607,12 @@ def permutation_envelope_test(
     var = mc_array.var(axis=0)
     keep = var >= variance_floor
     n_bins_skipped = int((~keep).sum())
+    if n_bins_skipped > 0:
+        logger.debug(
+            "permutation_envelope_test: skipped %d zero-variance bins "
+            "(variance_floor=%.1e)",
+            n_bins_skipped, variance_floor,
+        )
 
     # Observed: how many kept bins outside pointwise envelope.
     obs_outside_mask = (observed_spa < lo_env) | (observed_spa > hi_env)
