@@ -1,0 +1,15 @@
+2026-04-26 00:50:00,600 INFO Loading LIRE from archive/data-2026-04-22/LIRE_v3-0.parquet
+2026-04-26 00:50:00,729 INFO Filtered LIRE: 180609 rows (from 182853)
+2026-04-26 00:50:00,730 INFO Filtered LIRE: 180609 rows
+2026-04-26 00:50:00,731 INFO Width pool: 172330 non-degenerate rows; min=1.0 median=99.0 max=2059.0 y
+2026-04-26 00:50:00,732 INFO Grid: 30 cells (A=0, A.cpl=27, B=0, C=3) x 100 iter x 500 MC
+2026-04-26 00:50:00,732 INFO Dispatching 30 cells with n_jobs=-1 (loky)
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 24 concurrent workers.
+[Parallel(n_jobs=-1)]: Done   4 out of  30 | elapsed:  1.6min remaining: 10.4min
+[Parallel(n_jobs=-1)]: Done  11 out of  30 | elapsed:  2.2min remaining:  3.8min
+[Parallel(n_jobs=-1)]: Done  18 out of  30 | elapsed:  2.5min remaining:  1.7min
+[Parallel(n_jobs=-1)]: Done  25 out of  30 | elapsed:  4.0min remaining:   48.5s
+[Parallel(n_jobs=-1)]: Done  30 out of  30 | elapsed:  4.5min finished
+2026-04-26 00:54:28,430 INFO All cells complete in 267.7 s (4.5 min)
+2026-04-26 00:54:28,461 INFO Wrote runs/2026-04-25-h1-simulation/outputs/forward-fit-pilot/results-cpl.parquet (3000 rows)
+2026-04-26 00:54:28,472 INFO Wrote runs/2026-04-25-h1-simulation/outputs/forward-fit-pilot/summary-cpl.json
