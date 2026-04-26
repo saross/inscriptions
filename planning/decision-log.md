@@ -540,3 +540,102 @@ A non-parametric row-bootstrap MC (Option C; `sample_mc_nonparametric`) controll
 - `runs/2026-04-25-h1-simulation/outputs/option-c-validation/SUMMARY.md` (Option C validation; demonstrates non-parametric path is FP-clean but wrong-null for H3b).
 - `runs/2026-04-25-h1-simulation/outputs/forward-fit-pilot/SUMMARY.md` (exp forward-fit pilot — the gate-passing evidence).
 - `planning/prior-art-scout-2026-04-25-aoristic-envelope.md` (literature scan; §8 empirical addendum on why scout-recommended Option A failed).
+
+---
+
+## Decision 9 — 2026-04-26: H1 v2 precision and compute envelope (drop CPL k=2; optimise forward-fit; rerun at full preregistered precision)
+
+**Status:** committed
+**Decided by:** Shawn 2026-04-26 (after critical-friend review of agent-shipped preliminary v2)
+**Supersedes:** Decision 6's H1 wall-time estimate (~20 min on sapphire). Forward-fit CPL is ~8 × slower per iteration than v1's smeared-space CPL because per-row interval-likelihood scales with `n_obs` rather than `n_bins`.
+
+### Context
+
+The CPL forward-fit + H1 v2 agent (commits `9b37e1b`–`1ded896`, 2026-04-26) shipped a preliminary v2 at **n_iter = 100, n_mc = 200** — silently reduced from the preregistered 1000/1000 to fit a 60-min hard cap. Wilson 95 % CI on a 0.80 detection rate at n_iter = 100 is [0.715, 0.866] (width 0.151) — too wide for confident threshold-setting at the 0.80 boundary. The shipped v2 is preliminary, not prereg-ready.
+
+Three cost lines compound: (i) forward-fit CPL is ~8 × slower than the smeared-space v1 baseline; (ii) k ∈ {2, 3, 4} sweep triples the CPL-side compute; (iii) preregistered 1000/1000 precision multiplies vs the agent's 100/200 by 100 ×. Naive full 1000/1000 at current speed: ≈ 94 hours sapphire.
+
+Separately, Stage 3 / Stage 5 evidence shows **CPL k = 2 systematically biases to FP = 1.0 at high n** (province ≥ 10 000, all empire) on a 3-knot ground truth. k = 2 is structurally underfit; cannot represent LIRE's empirical shape. Carrying k = 2 into the primary cell grid wastes ~33 % of CPL compute on cells that the validation has already shown are misspecified.
+
+### Options considered
+
+- **A — Accept the preliminary 100/200 v2 with documented deviation.** Reject. CI width 0.151 makes threshold determination at 0.80 statistically meaningless for binding cells.
+- **B — Run full 1000/1000 with k ∈ {2, 3, 4} at current code speed.** Reject. ~94 h sapphire; not feasible in any reasonable timeframe; wastes compute on known-broken k = 2.
+- **C — Reduce parameters to a documented-deviation level (e.g. n_iter = 500, n_mc = 500) and ship.** Reject. Still a deviation; statistical precision (CI width 0.071) is borderline; sets a precedent of soft-shipping.
+- **D — Drop k = 2 from the primary grid + optimise CPL fit + rerun at full 1000/1000.** Accept. Drops ~33 % of CPL compute outright. Optimisation (group-by-interval, vectorise, JIT) targets ≥ 5 × speedup. Combined: ~12 × reduction → ~7 h sapphire at full precision. Aggressive parallelisation (target 80 % machine utilisation) closes any remaining gap.
+
+### Decision
+
+**Option D.** Three coupled changes:
+
+1. **Drop CPL k = 2 from the primary cell grid.** k = 3 primary, k = 4 exploratory upper bound, k = 2 referenced in the prereg as "documented underfit; tested in pilot, excluded from primary because it cannot represent the LIRE 3-knot AIC-best truth." H1 v2's k-sensitivity narrows to k ∈ {3, 4}.
+2. **Engineer the CPL forward-fit code for performance.** Profile first, then apply targeted optimisations:
+   - Group rows by `(nb, na)` intervals — many inscriptions share dating bands; compute integral once per unique interval, multiply by row count.
+   - Vectorise per-row integration across all rows in a single numpy operation (broadcast over segments × rows).
+   - Pre-compute segment-overlap masks given fixed knot positions; reuse across L-BFGS-B evaluations within a single fit.
+   - Numba `@njit` on the inner integration loop if numpy alone doesn't reach the speedup target.
+   - Aggressive joblib parallelisation; saturate sapphire's 24 cores at ≥ 80 % utilisation.
+   Target: ≥ 5 × speedup vs the agent-shipped implementation. Re-validate via Stage 1 unit tests + a re-run of the 30-cell Stage 3 grid; results must match the pilot's PASS verdict within MC noise.
+3. **Rerun H1 v2 at full preregistered precision.** n_iter = 1000, n_mc = 1000 per cell. **No wall-time cap.** Cells: 3 levels × 4 brackets × 2 shapes × n-sweep × 2 nulls (exp + CPL k = 3) plus CPL k = 4 stored per iteration for k-sensitivity. Total ≈ 192 cells. Estimated wall: ~6–10 h on sapphire post-optimisation.
+
+### Consequences
+
+- **What this makes easier.** Prereg-ready threshold determination with CI width ~0.025 at the 0.80 boundary. Prereg amendment language can use precise numerical thresholds rather than "preliminary" qualifiers. CPL k-sensitivity narrows but is honestly characterised.
+- **What this makes harder.** Engineering time for optimisation (~4–8 h focused). Slightly longer overall sprint. Drops the lowest-flexibility null model (k = 2) from primary, which a reviewer might query — answered by referencing the validation-grid evidence that k = 2 is structurally underfit on a 3-knot truth.
+- **What this commits us to downstream.** Optimised forward-fit primitives become the canonical H2 / H3 fit machinery. H2 mixture and H3a NBR will use these.
+- **What we accept.** Larger compute investment up front; one less k-sensitivity data point (k ∈ {3, 4} instead of {2, 3, 4}); possible engineering-side risk if optimisation hits unexpected pathologies.
+
+### Revisit triggers
+
+- Optimisation fails to deliver ≥ 5 × speedup → escalate to numba JIT + cython if needed; or accept a documented n_iter / n_mc reduction (e.g. 500/500) with widened CIs flagged in REPORT.md.
+- CPL k = 4 also shows underfit issues at high n on revalidated grid → reduce to k = 3-only primary; document.
+- Re-run reveals materially different threshold structure from the preliminary 100/200 (beyond expected CI narrowing) → triggers diagnostic review.
+- Memory pressure during full 1000/1000 run on sapphire → chunk by cell or reduce parallel workers.
+
+### References
+
+- `runs/2026-04-25-h1-simulation/outputs/h1-v2/REPORT-v2.md` — preliminary v2; relabel as `h1-v2-preliminary/` and tag `PRELIMINARY — NOT PREREG-READY` in the header.
+- `runs/2026-04-25-h1-simulation/outputs/forward-fit-pilot/SUMMARY-CPL.md` — Stage 3 PASS validation; basis for trusting the methodology.
+- `runs/2026-04-25-h1-simulation/code/forward_fit_cpl.py` — current implementation; target of optimisation.
+- Decision 6 — superseded on H1 wall-time estimate; the rest stands.
+- Decision 8 — the methodological pivot to forward-fit; this Decision 9 is the precision-and-compute companion.
+
+---
+
+## Decision 10 — 2026-04-26: c_20pc_25y bracket — preregistered hard-test boundary; retired from H3b confirmatory eligibility list
+
+**Status:** committed
+**Decided by:** Shawn 2026-04-26
+
+### Context
+
+The H1 v2 preliminary results show **all `c_20pc_25y / step` cells unreachable across all (level × null × k)** combinations and `c_20pc_25y / gaussian` unreachable across all province cells and most urban-area cells. Detection at n = 10 000 / 20 % / 25 y (the smallest effect-size bracket per Decision 5) sits at 0.24–0.40 across CPL truths in the synthetic-data grid. The pattern is robust at low statistical precision and consistent with the underlying difficulty: a 20 % multiplicative deviation over a 25 y window is at the noise floor of permutation-envelope methods on aoristic SPA at any feasible inscription corpus size.
+
+Two distinct uses of this bracket in the prereg:
+1. **H1 power-calibration boundary.** "What is the smallest detectable effect at preregistered n?" — anchors the bottom of the power curve.
+2. **H3b confirmatory eligibility.** "Which (level × bracket) cells enter confirmatory testing?" — gated on H1 detection ≥ 0.80 at the cell's n.
+
+The two roles are separable: a bracket can be *preregistered as a hard test* without being *preregistered as confirmatory-eligible*.
+
+### Decision
+
+**Keep `c_20pc_25y` in H1 v2 as a preregistered hard-test boundary; remove from H3b confirmatory eligibility list.**
+
+The H1 framework continues to test detection at this magnitude × duration; cells where detection < 0.80 at n_max are tagged `min_n_unreachable: True` in the v2 schema rather than imputing a fictitious extrapolated threshold. The bracket appears in the prereg's effect-size table (§6) with explicit "preregistered as hard-test boundary; not in H3b confirmatory family" annotation. The H3b confirmatory family (Holm–Bonferroni corrected) reduces to `a_50pc_50y` and `b_double_25y` at preregistered (level × shape) cells where H1 yields a finite min-n threshold.
+
+### Consequences
+
+- **What this makes easier.** Honest power-curve reporting with the lower boundary preserved. Reviewer-facing answer to "could you have detected smaller effects?" is preregistered: "no, here's the 20 %-25 y validation showing detection rate caps at 0.40 at n = 10 000, even with optimised methodology." H3b confirmatory family is statistically tractable (smaller, well-powered, Holm–Bonferroni manageable).
+- **What this makes harder.** None substantively. The bracket's compute is already in the H1 grid; running it costs nothing extra.
+- **What we accept.** Honest narrowing of H3b confirmatory scope to brackets that the methodology can detect.
+
+### Revisit triggers
+
+- Optimised H1 v2 changes the unreachable-cell map materially (e.g. some province `c_20pc_25y / gaussian` cells become reachable at high n). Reconsider including specific reachable cells in the H3b confirmatory family.
+- A future methodological development (e.g. baorista posterior predictive, ADMUR likelihood ratio) gives a different power profile for small-magnitude effects. Re-evaluate the bracket's confirmatory eligibility under the new methodology.
+
+### References
+
+- `runs/2026-04-25-h1-simulation/outputs/h1-v2/REPORT-v2.md` — preliminary unreachable-cell map (to be confirmed by full-precision rerun per Decision 9).
+- Decision 5 — original effect-size bracket selection (a/b/c).
+- Prereg §4 H3b — confirmatory family definition; will be amended to limit family to `a_50pc_50y` and `b_double_25y` at H1-reachable cells.
