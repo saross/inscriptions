@@ -102,8 +102,32 @@ in the agent brief said "stop at numba"; we did.
 
 Stage 3 30-cell synthetic-from-null grid was rerun on sapphire after
 the optimisation to confirm the FP rates still match the original
-PASS verdict. See `revalidation/` and the matched section of
-`SUMMARY-CPL.md` for the comparison.
+PASS verdict. See `revalidation/SUMMARY.txt` for the full output.
+
+Side-by-side vs the original Stage 3 (which generated
+`forward-fit-pilot/SUMMARY-CPL.md`):
+
+| Metric                                        | Original Stage 3 | Revalidation |
+|-----------------------------------------------|------------------|--------------|
+| Part A.cpl FP mean                            | 0.034            | 0.027        |
+| Part A.cpl FP max                             | 0.070            | 0.070        |
+| Part A.cpl FP range                           | 0.010–0.070      | 0.000–0.070  |
+| Cells > 0.10 (gate criterion)                 | 0 / 9            | 0 / 9        |
+| Detection at n = 2500, 50 % / 50 y            | 1.00             | 1.00         |
+| Detection at n = 10000, 50 % / 50 y           | 1.00             | 1.00         |
+| Part C real-LIRE FP n = 500                   | 0.170            | 0.180        |
+| Part C real-LIRE FP n = 2500                  | 0.990            | 0.990        |
+| Part C real-LIRE FP n = 10000                 | 1.000            | 1.000        |
+| Wall-time (full 60-cell grid)                 | ~4.5 min         | 1.7 min      |
+
+All FP rates fall within the Wilson 95 % CI of the original
+(n_iter = 100 → CI half-width ≈ ±0.05 around 0.05 → 0.000–0.107).
+End-to-end wall-time including exp parts dropped 2.6× (the exp parts
+were already fast). For CPL-only cells the speedup is ~5× per fit,
+matching the headline benchmark above.
+
+**Verdict: PASS.** Optimisation introduces no observable bias in FP
+control; binding-bracket detection unchanged.
 
 ## Files
 

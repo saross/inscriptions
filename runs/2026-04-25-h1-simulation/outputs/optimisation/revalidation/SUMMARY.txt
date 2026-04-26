@@ -1,0 +1,57 @@
+Total rows: 6000
+
+=== Part A.cpl synthetic, zero bracket (FP gate) ===
+ cpl_truth     n  FP_rate
+ cpl_asymm   500     0.05
+ cpl_asymm  2500     0.00
+ cpl_asymm 10000     0.03
+ cpl_const   500     0.02
+ cpl_const  2500     0.02
+ cpl_const 10000     0.07
+cpl_peaked   500     0.01
+cpl_peaked  2500     0.02
+cpl_peaked 10000     0.02
+
+FP range: [0.000, 0.070]; mean 0.027
+Cells > 0.05: 1 / 9
+Cells > 0.10: 0 / 9
+
+=== Part A.cpl detection on a_50pc_50y at n>=2500 (gate) ===
+ cpl_truth     n  detection_rate
+ cpl_asymm  2500             1.0
+ cpl_asymm 10000             1.0
+ cpl_const  2500             1.0
+ cpl_const 10000             1.0
+cpl_peaked  2500             1.0
+cpl_peaked 10000             1.0
+
+Min detection at n>=2500: 1.000
+
+=== Part A exp synthetic, zero bracket (exp FP) ===
+ b_null     n  FP_rate
+ -0.005   500     0.03
+ -0.005  2500     0.09
+ -0.005 10000     0.03
+  0.000   500     0.03
+  0.000  2500     0.05
+  0.000 10000     0.05
+  0.005   500     0.02
+  0.005  2500     0.04
+  0.005 10000     0.02
+
+FP range: [0.020, 0.090]; mean 0.040
+
+=== Part C real-LIRE bootstrap CPL FP (diagnostic) ===
+    n  FP_rate
+  500     0.18
+ 2500     0.99
+10000     1.00
+
+Wall-time: 104.3s = 1.7m
+
+=== Gate check ===
+CPL FP mean 0.027 (target <= 0.054 = 0.034 + 0.02): PASS
+CPL FP max  0.070 (target <= 0.10): PASS
+Min binding-bracket detection at n>=2500 1.000 (target >= 0.95): PASS
+
+Overall verdict: PASS
