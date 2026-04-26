@@ -1,0 +1,50 @@
+# k=3 n_obs=2500 converged=True
+# log_lik=-4351.148
+         475321 function calls (469596 primitive calls) in 0.368 seconds
+
+   Ordered by: cumulative time
+   List reduced from 1501 to 40 due to restriction <40>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.000    0.000    0.368    0.368 /home/shawn/Code/inscriptions/runs/2026-04-25-h1-simulation/code/forward_fit_cpl.py:442(fit_null_cpl_forward)
+        8    0.000    0.000    0.367    0.046 /home/shawn/Code/inscriptions/.venv/lib/python3.13/site-packages/scipy/optimize/_minimize.py:54(minimize)
+        8    0.002    0.000    0.366    0.046 /home/shawn/Code/inscriptions/.venv/lib/python3.13/site-packages/scipy/optimize/_lbfgsb_py.py:294(_minimize_lbfgsb)
+     4077    0.006    0.000    0.271    0.000 /home/shawn/Code/inscriptions/.venv/lib/python3.13/site-packages/scipy/_lib/_util.py:600(__call__)
+     4077    0.060    0.000    0.261    0.000 /home/shawn/Code/inscriptions/runs/2026-04-25-h1-simulation/code/forward_fit_cpl.py:423(_neg_log_likelihood_fast)
+      914    0.000    0.000    0.209    0.000 /home/shawn/Code/inscriptions/.venv/lib/python3.13/site-packages/scipy/optimize/_differentiable_functions.py:360(_update_fun)
+        8    0.000    0.000    0.204    0.025 /home/shawn/Code/inscriptions/.venv/lib/python3.13/site-packages/scipy/optimize/_optimize.py:204(_prepare_scalar_function)
+        8    0.000    0.000    0.204    0.025 /home/shawn/Code/inscriptions/.venv/lib/python3.13/site-packages/scipy/optimize/_differentiable_functions.py:218(__init__)
+        1    0.000    0.000    0.200    0.200 /home/shawn/Code/inscriptions/.venv/lib/python3.13/site-packages/numba/core/dispatcher.py:344(_compile_for_args)
+        1    0.000    0.000    0.195    0.195 /home/shawn/Code/inscriptions/.venv/lib/python3.13/site-packages/numba/core/dispatcher.py:862(compile)
+        1    0.000    0.000    0.195    0.195 /home/shawn/Code/inscriptions/.venv/lib/python3.13/site-packages/numba/core/caching.py:713(load_overload)
+    247/1    0.000    0.000    0.190    0.190 /home/shawn/Code/inscriptions/.venv/lib/python3.13/site-packages/numba/core/base.py:261(refresh)
+      453    0.001    0.000    0.156    0.000 /home/shawn/Code/inscriptions/.venv/lib/python3.13/site-packages/scipy/optimize/_differentiable_functions.py:409(fun_and_grad)
+      247    0.002    0.000    0.149    0.001 /home/shawn/Code/inscriptions/.venv/lib/python3.13/site-packages/numba/core/cpu.py:97(load_additional_registries)
+      461    0.001    0.000    0.142    0.000 /home/shawn/Code/inscriptions/.venv/lib/python3.13/site-packages/scipy/optimize/_differentiable_functions.py:371(_update_grad)
+      453    0.001    0.000    0.141    0.000 /home/shawn/Code/inscriptions/.venv/lib/python3.13/site-packages/scipy/optimize/_differentiable_functions.py:35(__call__)
+      453    0.011    0.000    0.140    0.000 /home/shawn/Code/inscriptions/.venv/lib/python3.13/site-packages/scipy/optimize/_numdiff.py:278(approx_derivative)
+4668/4466    0.003    0.000    0.117    0.000 <frozen importlib._bootstrap>:1390(_handle_fromlist)
+    77/47    0.000    0.000    0.114    0.002 <frozen importlib._bootstrap>:1349(_find_and_load)
+    69/39    0.000    0.000    0.113    0.003 <frozen importlib._bootstrap>:1304(_find_and_load_unlocked)
+   186/44    0.000    0.000    0.112    0.003 <frozen importlib._bootstrap>:480(_call_with_frames_removed)
+    68/39    0.000    0.000    0.110    0.003 <frozen importlib._bootstrap>:911(_load_unlocked)
+    68/39    0.000    0.000    0.109    0.003 <frozen importlib._bootstrap_external>:1020(exec_module)
+      453    0.011    0.000    0.107    0.000 /home/shawn/Code/inscriptions/.venv/lib/python3.13/site-packages/scipy/optimize/_numdiff.py:663(_dense_difference)
+    49/34    0.000    0.000    0.101    0.003 {built-in method builtins.__import__}
+    68/39    0.000    0.000    0.101    0.003 {built-in method builtins.exec}
+     3624    0.007    0.000    0.089    0.000 /home/shawn/Code/inscriptions/.venv/lib/python3.13/site-packages/scipy/optimize/_numdiff.py:871(__call__)
+     1013    0.002    0.000    0.062    0.000 /home/shawn/Code/inscriptions/.venv/lib/python3.13/site-packages/numba/core/extending.py:137(decorate)
+    247/1    0.000    0.000    0.062    0.062 /home/shawn/Code/inscriptions/.venv/lib/python3.13/site-packages/numba/core/typing/context.py:232(refresh)
+    247/1    0.000    0.000    0.057    0.057 /home/shawn/Code/inscriptions/.venv/lib/python3.13/site-packages/numba/core/typing/context.py:482(_load_builtins)
+   2223/9    0.006    0.000    0.055    0.006 /home/shawn/Code/inscriptions/.venv/lib/python3.13/site-packages/numba/core/typing/context.py:495(install_registry)
+     1013    0.005    0.000    0.052    0.000 /home/shawn/Code/inscriptions/.venv/lib/python3.13/site-packages/numba/core/typing/templates.py:887(make_overload_template)
+      246    0.000    0.000    0.050    0.000 /home/shawn/Code/inscriptions/.venv/lib/python3.13/site-packages/numba/core/typing/templates.py:1054(__init__)
+     1324    0.039    0.000    0.050    0.000 <frozen abc>:105(__new__)
+      239    0.001    0.000    0.048    0.000 /home/shawn/Code/inscriptions/.venv/lib/python3.13/site-packages/numba/core/typing/templates.py:1100(_init_once)
+      246    0.001    0.000    0.047    0.000 /home/shawn/Code/inscriptions/.venv/lib/python3.13/site-packages/numba/core/typing/templates.py:907(_get_target_registry)
+        1    0.000    0.000    0.037    0.037 /home/shawn/Code/inscriptions/.venv/lib/python3.13/site-packages/numba/misc/literal.py:1(<module>)
+      247    0.000    0.000    0.022    0.000 /home/shawn/Code/inscriptions/.venv/lib/python3.13/site-packages/numba/core/compiler_lock.py:32(_acquire_compile_lock)
+      247    0.000    0.000    0.020    0.000 /home/shawn/Code/inscriptions/.venv/lib/python3.13/site-packages/numba/core/runtime/nrt.py:19(initialize)
+        1    0.000    0.000    0.019    0.019 /home/shawn/Code/inscriptions/.venv/lib/python3.13/site-packages/numba/core/runtime/nrtdynmod.py:205(compile_nrt_functions)
+
+

@@ -1,0 +1,101 @@
+# k=3 n_obs=2500 converged=True
+# log_lik=-4351.148
+         398560 function calls (398416 primitive calls) in 0.872 seconds
+
+   Ordered by: cumulative time
+   List reduced from 189 to 40 due to restriction <40>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.000    0.000    0.872    0.872 /home/shawn/Code/inscriptions/runs/2026-04-25-h1-simulation/code/forward_fit_cpl.py:277(fit_null_cpl_forward)
+        8    0.000    0.000    0.871    0.109 /home/shawn/Code/inscriptions/.venv/lib/python3.13/site-packages/scipy/optimize/_minimize.py:54(minimize)
+        8    0.002    0.000    0.870    0.109 /home/shawn/Code/inscriptions/.venv/lib/python3.13/site-packages/scipy/optimize/_lbfgsb_py.py:294(_minimize_lbfgsb)
+      438    0.001    0.000    0.845    0.002 /home/shawn/Code/inscriptions/.venv/lib/python3.13/site-packages/scipy/optimize/_differentiable_functions.py:409(fun_and_grad)
+      446    0.001    0.000    0.765    0.002 /home/shawn/Code/inscriptions/.venv/lib/python3.13/site-packages/scipy/optimize/_differentiable_functions.py:371(_update_grad)
+      438    0.002    0.000    0.764    0.002 /home/shawn/Code/inscriptions/.venv/lib/python3.13/site-packages/scipy/optimize/_differentiable_functions.py:35(__call__)
+      438    0.013    0.000    0.763    0.002 /home/shawn/Code/inscriptions/.venv/lib/python3.13/site-packages/scipy/optimize/_numdiff.py:278(approx_derivative)
+     3942    0.009    0.000    0.748    0.000 /home/shawn/Code/inscriptions/.venv/lib/python3.13/site-packages/scipy/_lib/_util.py:600(__call__)
+     3942    0.080    0.000    0.733    0.000 /home/shawn/Code/inscriptions/runs/2026-04-25-h1-simulation/code/forward_fit_cpl.py:248(_neg_log_likelihood)
+      438    0.013    0.000    0.725    0.002 /home/shawn/Code/inscriptions/.venv/lib/python3.13/site-packages/scipy/optimize/_numdiff.py:663(_dense_difference)
+     3504    0.010    0.000    0.701    0.000 /home/shawn/Code/inscriptions/.venv/lib/python3.13/site-packages/scipy/optimize/_numdiff.py:871(__call__)
+     3942    0.428    0.000    0.507    0.000 /home/shawn/Code/inscriptions/runs/2026-04-25-h1-simulation/code/forward_fit_cpl.py:193(_interval_integrals)
+      884    0.001    0.000    0.087    0.000 /home/shawn/Code/inscriptions/.venv/lib/python3.13/site-packages/scipy/optimize/_differentiable_functions.py:360(_update_fun)
+     3943    0.044    0.000    0.071    0.000 /home/shawn/Code/inscriptions/runs/2026-04-25-h1-simulation/code/forward_fit_cpl.py:131(_unpack_params)
+    16223    0.011    0.000    0.062    0.000 /home/shawn/Code/inscriptions/.venv/lib/python3.13/site-packages/numpy/_core/fromnumeric.py:2436(any)
+     3943    0.017    0.000    0.056    0.000 /home/shawn/Code/inscriptions/runs/2026-04-25-h1-simulation/code/forward_fit_cpl.py:178(_normaliser)
+    28954    0.056    0.000    0.056    0.000 {method 'reduce' of 'numpy.ufunc' objects}
+    16669    0.018    0.000    0.052    0.000 /home/shawn/Code/inscriptions/.venv/lib/python3.13/site-packages/numpy/_core/fromnumeric.py:86(_wrapreduction_any_all)
+     7885    0.008    0.000    0.036    0.000 /home/shawn/Code/inscriptions/.venv/lib/python3.13/site-packages/numpy/_core/fromnumeric.py:2304(sum)
+     7885    0.009    0.000    0.027    0.000 /home/shawn/Code/inscriptions/.venv/lib/python3.13/site-packages/numpy/_core/fromnumeric.py:66(_wrapreduction)
+     3944    0.018    0.000    0.021    0.000 /home/shawn/Code/inscriptions/.venv/lib/python3.13/site-packages/numpy/lib/_function_base_impl.py:1402(diff)
+        8    0.000    0.000    0.016    0.002 /home/shawn/Code/inscriptions/.venv/lib/python3.13/site-packages/scipy/optimize/_optimize.py:204(_prepare_scalar_function)
+        8    0.000    0.000    0.016    0.002 /home/shawn/Code/inscriptions/.venv/lib/python3.13/site-packages/scipy/optimize/_differentiable_functions.py:218(__init__)
+     3950    0.006    0.000    0.016    0.000 /home/shawn/Code/inscriptions/.venv/lib/python3.13/site-packages/numpy/_core/numerictypes.py:385(isdtype)
+     3943    0.003    0.000    0.015    0.000 /home/shawn/Code/inscriptions/.venv/lib/python3.13/site-packages/numpy/_core/fromnumeric.py:2838(cumsum)
+     3942    0.012    0.000    0.015    0.000 /home/shawn/Code/inscriptions/.venv/lib/python3.13/site-packages/numpy/_core/numeric.py:97(zeros_like)
+      438    0.010    0.000    0.013    0.000 /home/shawn/Code/inscriptions/.venv/lib/python3.13/site-packages/scipy/optimize/_numdiff.py:14(_adjust_scheme_to_bounds)
+     4015    0.003    0.000    0.013    0.000 /home/shawn/Code/inscriptions/.venv/lib/python3.13/site-packages/numpy/_core/fromnumeric.py:48(_wrapfunc)
+     3945    0.002    0.000    0.010    0.000 {method 'sum' of 'numpy.ndarray' objects}
+     3942    0.005    0.000    0.009    0.000 /home/shawn/Code/inscriptions/.venv/lib/python3.13/site-packages/scipy/optimize/_numdiff.py:670(x_generator2)
+     3943    0.009    0.000    0.009    0.000 {method 'cumsum' of 'numpy.ndarray' objects}
+     4850    0.004    0.000    0.009    0.000 /home/shawn/Code/inscriptions/.venv/lib/python3.13/site-packages/numpy/_core/shape_base.py:19(atleast_1d)
+     3945    0.001    0.000    0.009    0.000 /home/shawn/Code/inscriptions/.venv/lib/python3.13/site-packages/numpy/_core/_methods.py:47(_sum)
+     4380    0.003    0.000    0.008    0.000 /home/shawn/Code/inscriptions/.venv/lib/python3.13/site-packages/scipy/_lib/array_api_compat/numpy/_aliases.py:97(astype)
+     3950    0.005    0.000    0.007    0.000 /home/shawn/Code/inscriptions/.venv/lib/python3.13/site-packages/numpy/_core/numerictypes.py:372(_preprocess_dtype)
+     7454    0.002    0.000    0.007    0.000 /home/shawn/Code/inscriptions/.venv/lib/python3.13/site-packages/numpy/lib/_function_base_impl.py:924(copy)
+     8452    0.006    0.000    0.006    0.000 {built-in method numpy.array}
+      767    0.005    0.000    0.005    0.000 {built-in method scipy.optimize._lbfgsb.setulb}
+    24885    0.005    0.000    0.005    0.000 {built-in method builtins.isinstance}
+      430    0.001    0.000    0.005    0.000 /home/shawn/Code/inscriptions/.venv/lib/python3.13/site-packages/scipy/optimize/_differentiable_functions.py:337(_update_x)
+
+
+
+
+# === sorted by tottime ===
+         398560 function calls (398416 primitive calls) in 0.872 seconds
+
+   Ordered by: internal time
+   List reduced from 189 to 40 due to restriction <40>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+     3942    0.428    0.000    0.507    0.000 /home/shawn/Code/inscriptions/runs/2026-04-25-h1-simulation/code/forward_fit_cpl.py:193(_interval_integrals)
+     3942    0.080    0.000    0.733    0.000 /home/shawn/Code/inscriptions/runs/2026-04-25-h1-simulation/code/forward_fit_cpl.py:248(_neg_log_likelihood)
+    28954    0.056    0.000    0.056    0.000 {method 'reduce' of 'numpy.ufunc' objects}
+     3943    0.044    0.000    0.071    0.000 /home/shawn/Code/inscriptions/runs/2026-04-25-h1-simulation/code/forward_fit_cpl.py:131(_unpack_params)
+    16669    0.018    0.000    0.052    0.000 /home/shawn/Code/inscriptions/.venv/lib/python3.13/site-packages/numpy/_core/fromnumeric.py:86(_wrapreduction_any_all)
+     3944    0.018    0.000    0.021    0.000 /home/shawn/Code/inscriptions/.venv/lib/python3.13/site-packages/numpy/lib/_function_base_impl.py:1402(diff)
+     3943    0.017    0.000    0.056    0.000 /home/shawn/Code/inscriptions/runs/2026-04-25-h1-simulation/code/forward_fit_cpl.py:178(_normaliser)
+      438    0.013    0.000    0.725    0.002 /home/shawn/Code/inscriptions/.venv/lib/python3.13/site-packages/scipy/optimize/_numdiff.py:663(_dense_difference)
+      438    0.013    0.000    0.763    0.002 /home/shawn/Code/inscriptions/.venv/lib/python3.13/site-packages/scipy/optimize/_numdiff.py:278(approx_derivative)
+     3942    0.012    0.000    0.015    0.000 /home/shawn/Code/inscriptions/.venv/lib/python3.13/site-packages/numpy/_core/numeric.py:97(zeros_like)
+    16223    0.011    0.000    0.062    0.000 /home/shawn/Code/inscriptions/.venv/lib/python3.13/site-packages/numpy/_core/fromnumeric.py:2436(any)
+     3504    0.010    0.000    0.701    0.000 /home/shawn/Code/inscriptions/.venv/lib/python3.13/site-packages/scipy/optimize/_numdiff.py:871(__call__)
+      438    0.010    0.000    0.013    0.000 /home/shawn/Code/inscriptions/.venv/lib/python3.13/site-packages/scipy/optimize/_numdiff.py:14(_adjust_scheme_to_bounds)
+     7885    0.009    0.000    0.027    0.000 /home/shawn/Code/inscriptions/.venv/lib/python3.13/site-packages/numpy/_core/fromnumeric.py:66(_wrapreduction)
+     3942    0.009    0.000    0.748    0.000 /home/shawn/Code/inscriptions/.venv/lib/python3.13/site-packages/scipy/_lib/_util.py:600(__call__)
+     3943    0.009    0.000    0.009    0.000 {method 'cumsum' of 'numpy.ndarray' objects}
+     7885    0.008    0.000    0.036    0.000 /home/shawn/Code/inscriptions/.venv/lib/python3.13/site-packages/numpy/_core/fromnumeric.py:2304(sum)
+     3950    0.006    0.000    0.016    0.000 /home/shawn/Code/inscriptions/.venv/lib/python3.13/site-packages/numpy/_core/numerictypes.py:385(isdtype)
+     8452    0.006    0.000    0.006    0.000 {built-in method numpy.array}
+     3942    0.005    0.000    0.009    0.000 /home/shawn/Code/inscriptions/.venv/lib/python3.13/site-packages/scipy/optimize/_numdiff.py:670(x_generator2)
+      767    0.005    0.000    0.005    0.000 {built-in method scipy.optimize._lbfgsb.setulb}
+    24885    0.005    0.000    0.005    0.000 {built-in method builtins.isinstance}
+     3950    0.005    0.000    0.007    0.000 /home/shawn/Code/inscriptions/.venv/lib/python3.13/site-packages/numpy/_core/numerictypes.py:372(_preprocess_dtype)
+     5595    0.004    0.000    0.004    0.000 {method 'astype' of 'numpy.ndarray' objects}
+    24554    0.004    0.000    0.004    0.000 {method 'items' of 'dict' objects}
+     4850    0.004    0.000    0.009    0.000 /home/shawn/Code/inscriptions/.venv/lib/python3.13/site-packages/numpy/_core/shape_base.py:19(atleast_1d)
+     4380    0.003    0.000    0.008    0.000 /home/shawn/Code/inscriptions/.venv/lib/python3.13/site-packages/scipy/_lib/array_api_compat/numpy/_aliases.py:97(astype)
+     4015    0.003    0.000    0.013    0.000 /home/shawn/Code/inscriptions/.venv/lib/python3.13/site-packages/numpy/_core/fromnumeric.py:48(_wrapfunc)
+     3976    0.003    0.000    0.003    0.000 {method 'reshape' of 'numpy.ndarray' objects}
+     3943    0.003    0.000    0.015    0.000 /home/shawn/Code/inscriptions/.venv/lib/python3.13/site-packages/numpy/_core/fromnumeric.py:2838(cumsum)
+    17149    0.003    0.000    0.003    0.000 {built-in method builtins.len}
+     9682    0.002    0.000    0.002    0.000 {built-in method numpy.asanyarray}
+     5256    0.002    0.000    0.003    0.000 /home/shawn/Code/inscriptions/.venv/lib/python3.13/site-packages/scipy/_lib/array_api_compat/common/_helpers.py:683(_check_device)
+        8    0.002    0.000    0.870    0.109 /home/shawn/Code/inscriptions/.venv/lib/python3.13/site-packages/scipy/optimize/_lbfgsb_py.py:294(_minimize_lbfgsb)
+     7454    0.002    0.000    0.007    0.000 /home/shawn/Code/inscriptions/.venv/lib/python3.13/site-packages/numpy/lib/_function_base_impl.py:924(copy)
+     3944    0.002    0.000    0.002    0.000 /home/shawn/Code/inscriptions/.venv/lib/python3.13/site-packages/numpy/_core/numeric.py:1975(isscalar)
+     3945    0.002    0.000    0.010    0.000 {method 'sum' of 'numpy.ndarray' objects}
+     4031    0.002    0.000    0.002    0.000 {built-in method numpy.zeros}
+    16206    0.002    0.000    0.002    0.000 /home/shawn/Code/inscriptions/.venv/lib/python3.13/site-packages/numpy/_core/multiarray.py:403(where)
+    16223    0.002    0.000    0.002    0.000 /home/shawn/Code/inscriptions/.venv/lib/python3.13/site-packages/numpy/_core/fromnumeric.py:2431(_any_dispatcher)
+
+

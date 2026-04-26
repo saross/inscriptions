@@ -1,0 +1,4 @@
+# bench_cpl.py: n_obs=2500 n_runs=5 n_warm=1 n_restarts=8
+# Width pool n=172330, median=99.0
+k=3: median 758.9 ms; mean 732.3 ms; min 610.8 ms; max 821.8 ms; converged: True
+k=4: median 1511.8 ms; mean 1512.6 ms; min 1247.7 ms; max 1860.9 ms; converged: True
