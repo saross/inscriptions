@@ -486,3 +486,57 @@ points rather than ad-hoc triggering.
   the wrong trigger or wrong condition. Tune.
 - A failure occurs that a trigger should have caught but didn't —
   tighten the trigger condition.
+
+---
+
+## Decision 8 — 2026-04-26: Forward-fit nulls in true-date space (supersedes Decision 2's Poisson-on-fit MC)
+
+**Status:** committed
+**Decided by:** Shawn 2026-04-26 (after CC pilot validation)
+**Supersedes:** Decision 2's MC mechanism (the rest of Decision 2 — Python port, ~200 LOC, scipy backbone — stands).
+
+### Context
+
+The H1 v1 simulation ran on 2026-04-25 and discovered catastrophic false-positive-rate inflation in the parametric-null Monte Carlo envelope: exponential null FP=1.000 at empire n=50 000, ≥ 0.95 at province n ≥ 500; CPL-3 well-controlled at small n but degrading to ≥ 0.50 at province / urban-area n ≥ 2 500. 88 of zero-bracket cells exceeded the preregistered 0.05 FP target. Investigation surfaced two compounding root causes:
+
+1. **Variance-structure mismatch.** The MC sampler drew `Poisson(fitted_mean)` per bin, giving variance ≈ `fitted_mean`. The observed SPA carried bootstrap-and-aoristic-resample variance, which is roughly `n × p_eb (1 − p_eb)` summed over events e — typically 5–10× larger than `Poisson(mean)` for inscription widths around 50 y. MC envelopes were too tight; observed routinely fell outside.
+2. **Null fitted in already-smeared SPA space.** `fit_null_exponential` and `fit_null_cpl` in `primitives.py` fit the null to `observed_spa`, which is itself a single aoristic-smeared realisation. Drawing synthetic events from this fit and re-applying empirical widths via aoristic resampling double-smears the MC. Even after attempting an Option A "aoristic-resample-from-fit" port of rcarbon's `calsample` mechanism (`experiment_aoristic_mc.py::sample_null_spa_aoristic`), FP went from 0.535 to 1.000 — worse, not better.
+
+A non-parametric row-bootstrap MC (Option C; `sample_mc_nonparametric`) controlled FP empirically (0.033 mean across 80-cell sapphire validation grid) but failed a deeper test: under the bootstrap principle, observed and MC are exchangeable when both are drawn from the same corpus, so Option C cannot detect features that exist in the corpus (e.g. real Antonine Plague dip, real growth-decline shape). It is the wrong null for H3b's deviation-detection question.
+
+### Options considered
+
+- **A — Status quo (Poisson-on-fit, smeared-space null).** Reject. Confirmed broken at all but the smallest n.
+- **B — rcarbon-port "Option A" (aoristic-resample-from-fit) with fit on smeared-space SPA.** Reject. Double-smear failure mode confirmed empirically.
+- **C — Non-parametric row-bootstrap envelope.** Reject for H3b. Cannot detect features that live in the corpus. Acceptable as H1-only power calibration but not as a unified pipeline.
+- **D — Forward-fit in true-date space (this decision).** Fit `f(t; θ)` by maximum likelihood treating each row's `[nb_i, na_i]` as the observation and integrating density over the interval (no smearing absorbed into the fit). Generate MC by sampling synthetic true dates from the fitted true-date density, drawing widths from the empirical width distribution, applying aoristic resampling once. Variance structures match between observed and MC; null is in true-date space; detection power against real events is preserved.
+- **E — baorista (Crema 2025) Bayesian posterior predictive.** Defer. Decision 3 already keeps baorista as appendix sensitivity. Promoting to primary requires R + NIMBLE + C++ install on sapphire and significant additional integration; not justified when forward-fit works.
+- **F — ADMUR / CPL likelihood ratio test (Timpson 2021).** Defer. A principled alternative to envelope tests; not the same statistical question (likelihood ratio between two specified models, vs envelope deviation from a single null). Worth flagging as a follow-up sensitivity.
+
+### Decision
+
+**Option D — Forward-fit nulls in true-date space.** The fitted density `f(t; θ)` describes the underlying date density; aoristic smearing is forward-applied to MC replicates via `t_synthetic ~ f(t; θ̂)` → empirical width assignment → aoristic-resample → bin. Implementation: `runs/2026-04-25-h1-simulation/code/forward_fit.py` (exponential, pilot-validated 2026-04-26 commit `0974fa3`); `runs/2026-04-25-h1-simulation/code/forward_fit_cpl.py` (CPL k ∈ {2, 3, 4}, in progress).
+
+**Coupled change:** the H1 simulation framework moves from the v1 "bootstrap n rows from real LIRE → aoristic-resample → observed_spa → fit null on observed → MC" loop to a "synthetic data drawn from a specified ground-truth null → aoristic-resample → observed_spa → fit null forward → MC" loop. This matches the prereg's intent ("Simulate a synthetic SPA under the null") which the v1 implementation did not honour, and is required for proper power calibration: under H0, observed must come from the null, otherwise the test asks the wrong question.
+
+### Consequences
+
+- **What this makes easier.** FP control is recoverable in principle (pilot demonstrated mean FP = 0.040 across synthetic Part A grid, 0/9 cells > 0.10). The methodology is documented as a clean port of rcarbon's `calsample` design once the smearing / fitting space is sorted. H3b deviation detection retains power against real events because the null is parametric, not bootstrap-of-self.
+- **What this makes harder.** Implementation is more substantial than v1 (closed-form integral likelihood for exponential is clean; CPL requires per-segment trapezoidal integration and L-BFGS-B with random restarts to handle multimodality). The prereg's H1 framework requires substantive amendment (bootstrap-from-LIRE → synthetic-from-null), and §3 / §4 / §6 / §8 need updating for the v2 numerical thresholds.
+- **What this commits us to downstream.** Forward-fit primitives are now the canonical null-fit machinery for the project. H2 mixture validation and H3 substantive analyses will use them. The original `primitives.py::fit_null_exponential` and `fit_null_cpl` remain in the repo as the v1 record but are no longer in the pipeline.
+- **What we accept.** Slightly more implementation complexity; one additional methodological caveat (the position-uniform-within-interval assumption for synthetic interval construction); a reduced-but-real risk that CPL forward-fit will hit multimodality that random restarts can't tame (mitigated by the L-BFGS-B-with-restarts pattern; differential evolution as fall-back).
+
+### Revisit triggers
+
+- CPL forward-fit validation fails (Part A FP > 0.20). Fall back to exponential-only as primary null with CPL as "future work" sensitivity.
+- baorista becomes practically deployable on sapphire and gives substantively different results from forward-fit. Promote baorista from sensitivity to alternative-primary.
+- Reviewers push hard on the position-uniform-within-interval assumption. Consider adopting a shape-aware position prior (e.g., trapezoidal per FS-3) as a sensitivity.
+- Real LIRE has structure beyond what CPL k = 4 captures (Part C behaviour suggests this is plausible). Consider higher-k CPL or kernel-density nulls as exploratory.
+
+### References
+
+- `runs/2026-04-25-h1-simulation/decisions.md` (Decisions 1–7 of the H1 design; this Decision 8 supersedes the MC mechanism in Decision 2).
+- `runs/2026-04-25-h1-simulation/outputs/REPORT.md` (v1 broken FP table — the empirical motivation).
+- `runs/2026-04-25-h1-simulation/outputs/option-c-validation/SUMMARY.md` (Option C validation; demonstrates non-parametric path is FP-clean but wrong-null for H3b).
+- `runs/2026-04-25-h1-simulation/outputs/forward-fit-pilot/SUMMARY.md` (exp forward-fit pilot — the gate-passing evidence).
+- `planning/prior-art-scout-2026-04-25-aoristic-envelope.md` (literature scan; §8 empirical addendum on why scout-recommended Option A failed).
