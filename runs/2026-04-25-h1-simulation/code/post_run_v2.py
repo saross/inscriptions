@@ -308,7 +308,11 @@ def main() -> int:
     lines.append("")
 
     # 5. CPL k-sensitivity.
-    lines.append("## 5. CPL k-sensitivity (k in {2, 3, 4})")
+    # Per Decision 9, the primary cell grid drops k=2 (structurally
+    # underfit on the LIRE 3-knot AIC-best truth). The k-sensitivity
+    # narrows to k in {3, 4}: k=3 is the primary threshold-setting null;
+    # k=4 is the exploratory upper bound.
+    lines.append("## 5. CPL k-sensitivity (k in {3, 4} per Decision 9)")
     lines.append("")
     k_thresh = thresh[
         (thresh["target"] == DETECTION_TARGET)
@@ -326,32 +330,61 @@ def main() -> int:
                 k_vals: dict[int, float] = {}
                 for _, r in sub.iterrows():
                     k_vals[int(r["cpl_k"])] = r["min_n"]
-                if all(k in k_vals for k in (2, 3, 4)) and \
-                   not any(np.isnan(k_vals[k]) for k in (2, 3, 4)):
-                    spread = max(k_vals.values()) - min(k_vals.values())
+                # Both k=3 and k=4 must be present and non-NaN to summarise.
+                if all(k in k_vals for k in (3, 4)) and \
+                   not any(np.isnan(k_vals[k]) for k in (3, 4)):
+                    spread = max(k_vals[k] for k in (3, 4)) \
+                        - min(k_vals[k] for k in (3, 4))
                     k_summary.append({
                         "key": f"{level}/{bracket}/{shape}",
-                        "k2": int(round(k_vals[2])),
                         "k3": int(round(k_vals[3])),
                         "k4": int(round(k_vals[4])),
                         "spread": int(round(spread)),
                     })
     if k_summary:
-        lines.append("| Level/bracket/shape | k=2 | k=3 | k=4 | spread |")
-        lines.append("|---|---|---|---|---|")
+        lines.append("| Level/bracket/shape | k=3 | k=4 | spread |")
+        lines.append("|---|---|---|---|")
         for r in k_summary[:30]:
             lines.append(
-                f"| {r['key']} | {r['k2']} | {r['k3']} | {r['k4']} | "
-                f"{r['spread']} |"
+                f"| {r['key']} | {r['k3']} | {r['k4']} | {r['spread']} |"
             )
         if len(k_summary) > 30:
-            lines.append(f"| ... ({len(k_summary) - 30} more cells) |  |  |  |  |")
+            lines.append(f"| ... ({len(k_summary) - 30} more cells) |  |  |  |")
     else:
         lines.append(
-            "No reachable cells with all three k values; "
+            "No reachable cells with both k=3 and k=4 thresholds; "
             "k-sensitivity table not constructible."
         )
     lines.append("")
+
+    # AIC-best k distribution (computed from per-iteration cell parquet,
+    # not from the threshold table).
+    aic_best_lines: list[str] = []
+    if "cpl_aic" in cell.columns and "cpl_k" in cell.columns:
+        cpl_iter = cell[cell["null_model"] == "cpl"].copy()
+        # For each (cell_id, iter), find which k has the lowest cpl_aic.
+        if len(cpl_iter) > 0:
+            cpl_iter["cpl_k"] = cpl_iter["cpl_k"].astype(int)
+            best_per_iter = (
+                cpl_iter.sort_values("cpl_aic")
+                .groupby(["cell_id", "iter"])
+                .first()
+                .reset_index()
+            )
+            best_dist = (
+                best_per_iter["cpl_k"].value_counts(normalize=True)
+                .sort_index()
+            )
+            aic_best_lines.append("**AIC-best k distribution** "
+                                  "(across all CPL iterations):")
+            aic_best_lines.append("")
+            aic_best_lines.append("| k | proportion |")
+            aic_best_lines.append("|---|---|")
+            for k_val, prop in best_dist.items():
+                aic_best_lines.append(f"| {int(k_val)} | {prop:.3f} |")
+    if aic_best_lines:
+        lines.extend(aic_best_lines)
+        lines.append("")
 
     # 6. Wall-time and convergence.
     lines.append("## 6. Execution diagnostics")
