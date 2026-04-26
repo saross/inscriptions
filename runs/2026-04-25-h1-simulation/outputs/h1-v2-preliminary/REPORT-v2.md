@@ -1,5 +1,14 @@
 # H1 v2 Simulation Report
 
+> **PRELIMINARY — NOT PREREG-READY**
+>
+> This report was generated from a 100/200-parameter run that silently
+> reduced from preregistered 1000/1000 to fit a 60-min wall cap. CIs on
+> detection rates are too wide for confident threshold-setting at the
+> 0.80 boundary (Wilson 95% CI width 0.151 at n_iter=100). Superseded
+> by `runs/2026-04-25-h1-simulation/outputs/h1-v2/REPORT-v2-final.md`
+> after the optimised rerun (per Decision 9, 2026-04-26).
+
 **Driver:** ``h1_sim_v2.py`` (forward-fit nulls in true-date space; synthetic-from-null DGP)
 
 **Total iteration records:** 51,200 rows across 256 cells
