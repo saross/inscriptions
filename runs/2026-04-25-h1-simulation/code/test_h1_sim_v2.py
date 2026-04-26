@@ -7,7 +7,8 @@ Two tests:
   - test_smoke_two_cells: limit to the first 2 cells, n_iter=2, n_mc=20.
     Verifies the driver runs end-to-end without errors.
   - test_schema_v2: verifies the output parquet has the v2 schema, with
-    correct cpl_k handling (one row for exp cells, three rows for CPL).
+    correct cpl_k handling (one row for exp cells, two rows per CPL
+    iteration for k in {3, 4} per Decision 9).
 
 Run:
   .venv/bin/python3 -m pytest \\
@@ -59,10 +60,10 @@ def test_smoke_two_cells(smoke_outdir: Path) -> None:
 
 
 def test_schema_v2(smoke_outdir: Path) -> None:
-    """Output parquet has all expected v2 columns; CPL emits 3 rows / iter.
+    """Output parquet has all expected v2 columns; CPL emits 2 rows / iter.
 
-    We use a 4-cell smoke run (2 exp + 2 cpl). At n_iter=2, that yields
-    2*2 + 2*2*3 = 16 expected rows.
+    We use a 4-cell smoke run (2 exp + 2 cpl). At n_iter=2 and k in {3, 4}
+    that yields 2*2 + 2*2*2 = 12 expected rows.
     """
     if not LIRE_PATH.exists():
         pytest.skip(f"LIRE parquet not present at {LIRE_PATH}")
@@ -99,17 +100,19 @@ def test_schema_v2(smoke_outdir: Path) -> None:
     n_exp_iters = (df["null_model"] == "exponential").sum()
     n_cpl_iters = (df["null_model"] == "cpl").sum()
     # Exp: 2 cells x 2 iter = 4 rows.
-    # CPL: 2 cells x 2 iter x 3 k-values = 12 rows.
+    # CPL: 2 cells x 2 iter x 2 k-values (k=3, k=4 per Decision 9) = 8 rows.
     assert n_exp_iters == 4, (
         f"Expected 4 exp rows, got {n_exp_iters}"
     )
-    assert n_cpl_iters == 12, (
-        f"Expected 12 CPL rows (2 cells x 2 iter x 3 k), got {n_cpl_iters}"
+    assert n_cpl_iters == 8, (
+        f"Expected 8 CPL rows (2 cells x 2 iter x 2 k = {{3, 4}}), "
+        f"got {n_cpl_iters}"
     )
 
-    # cpl_k sanity: -1/NaN for exp, in {2, 3, 4} for CPL.
+    # cpl_k sanity: NaN for exp, in {3, 4} for CPL (k=2 dropped per
+    # Decision 9).
     cpl_rows = df[df["null_model"] == "cpl"]
-    assert set(cpl_rows["cpl_k"].astype(int).unique()) == {2, 3, 4}
+    assert set(cpl_rows["cpl_k"].astype(int).unique()) == {3, 4}
 
 
 if __name__ == "__main__":

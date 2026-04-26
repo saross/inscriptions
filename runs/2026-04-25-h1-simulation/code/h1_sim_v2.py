@@ -2,25 +2,35 @@
 """
 h1_sim_v2.py --- v2 driver for the H1 min-thresholds simulation.
 
-Replaces ``h1_sim.py`` v1 with two structural changes per the
-forward-fit pilot's findings (commits ``0974fa3``, ``7292807``,
-``d3e0a74``, and ``9b37e1b``):
+Replaces ``h1_sim.py`` v1 per the forward-fit pilot's findings
+(commits ``0974fa3``, ``7292807``, ``d3e0a74``, and ``9b37e1b``)
+and the precision / scope decisions of 2026-04-26.
 
-  1. **Forward-fit nulls in true-date space.** v1 fitted nulls in the
-     already-aoristic-smeared SPA space; this double-smeared the MC
-     replicates and inflated FP. v2 uses ``forward_fit.fit_null_exp_*``
-     and ``forward_fit_cpl.fit_null_cpl_forward`` -- both of which fit
-     the parametric null directly on the per-row interval likelihood,
-     then forward-apply the empirical aoristic mechanism to MC replicates.
+References to the project decision log (``planning/decision-log.md``):
 
-  2. **Synthetic-data-from-null power simulation.** v1 bootstrapped
-     each iteration from the real LIRE corpus, which conflates the
-     "detect a known effect" question with the "deviation from a smooth
-     null" question (real LIRE is not a smooth null). v2 follows the
-     proper power-simulation pattern: the data-generating process for
-     each iteration is *the parametric null with the bracket effect
-     injected*, so the simulation answers "given a smooth null + a known
-     event, what n is needed for >= 0.80 detection?".
+  - **Decision 8 (2026-04-26):** Forward-fit nulls in true-date space
+    (supersedes Decision 2's Poisson-on-fit MC). v1 fitted nulls in
+    already-aoristic-smeared SPA space, which double-smeared the MC
+    replicates and inflated FP to 1.000 at high n. v2 uses
+    ``forward_fit.fit_null_exponential_forward`` and
+    ``forward_fit_cpl.fit_null_cpl_forward`` -- both fit the parametric
+    null directly on the per-row interval likelihood, then forward-apply
+    the empirical aoristic mechanism to MC replicates. The H1
+    simulation framework also moves from "bootstrap n rows from real
+    LIRE" to "synthetic data drawn from a specified ground-truth null"
+    so the simulation answers the proper power-calibration question.
+  - **Decision 9 (2026-04-26):** Drop CPL k=2 from the primary cell
+    grid (k=3 primary, k=4 exploratory upper bound; k=2 is documented
+    as structurally underfit on the LIRE 3-knot AIC-best truth and
+    excluded from primary). Also: optimise the forward-fit CPL
+    objective via numba JIT (~5x speedup); rerun at the full
+    preregistered precision n_iter = 1000, n_mc = 1000 with no
+    wall-time cap.
+  - **Decision 10 (2026-04-26):** Keep the ``c_20pc_25y`` bracket as
+    a preregistered hard-test boundary in H1 but remove it from the
+    H3b confirmatory eligibility list. Cells where detection < 0.80 at
+    the level's maximum n are tagged ``min_n_unreachable: True`` in
+    the post-run report rather than imputing extrapolated thresholds.
 
 For exponential cells: synthetic data come from the truncated exponential
 ``f(t; b_null=0.005)`` -- a moderate growth shape that matches the
@@ -32,8 +42,8 @@ editorial spikes; computed once at module-load time and inlined as
 
 Schema (parquet)
 ----------------
-Per-iteration row, identical-where-possible to v1 Decision 8 with one
-addition (``b_null_or_cpl_truth``) and one new field
+Per-iteration row, identical-where-possible to v1's Decision 8 schema
+with one addition (``b_null_or_cpl_truth``) and one new field
 (``min_n_unreachable``, populated post-run by the report builder):
 
     cell_id, level, bracket, shape, n, null_model, cpl_k, cpl_aic, iter,
@@ -47,15 +57,17 @@ Notable schema changes vs v1:
   - ``b_hat`` added (NaN for CPL cells).
   - ``b_null_or_cpl_truth`` records the synthetic-data ground truth used
     per iteration (``"b={b}"`` for exp, ``"cpl_lire_aicbest"`` for CPL).
-  - For CPL cells, all k in {2, 3, 4} are fit per iteration: 3 rows per
-    iteration, mirroring v1.
+  - For CPL cells, k in {3, 4} are fit per iteration (k=2 dropped per
+    Decision 9): 2 rows per CPL iteration. k=3 is the primary
+    threshold-setting null; k=4 is reported as the k-sensitivity
+    upper bound.
 
-Unreachable-cell handling (per Shawn's 2026-04-26 morning decision):
-keep ``c_20pc_25y`` in the v2 grid as a hard test. Cells that do not
-reach detection >= 0.80 at the maximum n in their level's sweep get
-``min_n_unreachable: True`` in the post-run report, *not* an extrapolated
-threshold. The driver itself only writes the per-iteration parquet; the
-unreachability tag is computed in the report stage from the persisted
+Unreachable-cell handling (per Decision 10): keep ``c_20pc_25y`` in
+the v2 grid as a hard test. Cells that do not reach detection >= 0.80
+at the maximum n in their level's sweep get ``min_n_unreachable: True``
+in the post-run report, *not* an extrapolated threshold. The driver
+itself only writes the per-iteration parquet; the unreachability tag is
+computed in the report stage (``post_run_v2.py``) from the persisted
 parquet.
 
 Usage (from repo root):
@@ -64,7 +76,12 @@ Usage (from repo root):
         --out runs/2026-04-25-h1-simulation/outputs/h1-v2 \\
         --seed 20260425 --n_iter 1000 --n_mc 1000 --n_jobs -1
 
-Author: Claude Code (Opus 4.7) under Shawn Ross's direction, 2026-04-25.
+No wall-time cap is enforced. The run completes when joblib reports
+all cells done. Estimated sapphire wall-time at full precision after
+the Decision 9 optimisation: ~4-7 hours.
+
+Author: Claude Code (Opus 4.7) under Shawn Ross's direction, 2026-04-25
+(initial); updated 2026-04-26 for Decisions 8, 9, 10.
 """
 
 from __future__ import annotations
@@ -111,7 +128,7 @@ T_MAX = 350.0
 CENTRE_YEAR = 150.0
 N_ITERATIONS_DEFAULT = 1_000
 N_MC_DEFAULT = 1_000
-CPL_K_VALUES = (2, 3, 4)
+CPL_K_VALUES = (3, 4)  # k=2 dropped per Decision 9 (structurally underfit)
 
 LEVEL_N_SWEEPS: dict[str, tuple[int, ...]] = {
     "empire":     (50_000,),
