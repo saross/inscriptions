@@ -1,0 +1,9 @@
+2026-04-26 01:10:16,790 INFO primitives: Filtered LIRE: 180609 rows (from 182853)
+2026-04-26 01:10:16,801 INFO h1_sim_v2: Loaded LIRE: 180609 rows; width pool 172330 non-degenerate; median width 99.0 y
+2026-04-26 01:10:16,802 INFO h1_sim_v2: Executing 256 cells; iterations=100 mc=200 n_jobs=-1
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 24 concurrent workers.
+[Parallel(n_jobs=-1)]: Done  24 tasks      | elapsed:  3.1min
+[Parallel(n_jobs=-1)]: Done 114 tasks      | elapsed: 26.1min
+[Parallel(n_jobs=-1)]: Done 256 out of 256 | elapsed: 56.2min finished
+2026-04-26 02:06:28,286 INFO h1_sim_v2: Completed 256 cells in 3371.5 s (56.2 min)
+2026-04-26 02:06:28,409 INFO h1_sim_v2: Writing 51200 rows --> runs/2026-04-25-h1-simulation/outputs/h1-v2/cell-results.parquet
