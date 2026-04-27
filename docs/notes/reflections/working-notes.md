@@ -493,3 +493,423 @@ mechanism, not just the check's goal.
 cause diagnosis in the agent's final report; fix committed at
 `e26278e` and extended at `6e8355b`. Documented in `continuity.md`
 under "Failure modes observed" and here for future reference.
+
+---
+
+## Obs 15 — 2026-04-26: FP-inflation diagnosis — variance-structure mismatch between observed and MC
+
+The H1 v1 simulation's catastrophic false-positive rate (FP = 1.000 at
+empire-scale n; ≥ 0.95 at province n ≥ 500) traces to a variance-structure
+mismatch between the observed Sum-Probability Aggregate (SPA) and the
+parametric-null Monte Carlo (MC) replicates. The observed SPA carries
+aoristic-smearing variance — roughly `n × p_eb (1 − p_eb)` summed over
+events, where `p_eb` is the per-bin aoristic mass — typically 5–10× larger
+than `Poisson(fitted_mean)` for inscription widths around 50 y. The MC
+sampler drew `Poisson(fitted_mean)` per bin independently, giving
+catastrophically tight envelopes. The mismatch worsens with n: as the
+observed SPA's smearing variance accumulates linearly in n, the
+Poisson-on-mean MC variance accumulates only in proportion to the bin
+mean, so the gap widens. Diagnostic signature: zero-effect cells with FP
+elevation that scales with n, not with effect size. Fix requires matching
+variance structures by forward-applying smearing in MC.
+
+*Source:* `runs/2026-04-25-h1-simulation/outputs/REPORT.md` §4 broken-FP
+table; root-cause diagnosis in `planning/decision-log.md` Decision 8
+Context.
+
+---
+
+## Obs 16 — 2026-04-26 [PATTERN]: a "field-standard fix" can fail under domain port if the fitting space differs
+
+The 2026-04-25 prior-art scout recommended `rcarbon::modelTest`'s
+`calsample` mechanism as the canonical fix for parametric-null envelope
+FP-inflation — a method standard in radiocarbon Sum-Probability
+Distribution (SPD) work since Timpson et al. 2014. We implemented it
+faithfully (`experiment_aoristic_mc.py::sample_null_spa_aoristic`) and FP
+got *worse*: 1.000 vs 0.535 in the same cell.
+
+Root cause: in radiocarbon, the null is fit in calendar-year space
+(unsmeared); `calsample` samples calendar dates from the fit and
+back-calibrates each — smearing applied **once**. For inscriptions, the
+v1 null was fit on the **already-aoristic-smeared observed SPA**;
+sampling synthetic event-years from this fit and re-applying empirical
+widths via aoristic resampling smears each MC event **twice**. Observed
+retains residual peakiness; the over-smoothed MC envelope misses it; FP
+inflates to 1.000.
+
+The pattern: when porting methodology across domains, audit the *fitting
+space*, not just the algorithm. The literature does not surface this
+asymmetry because radiocarbon does not have a smeared-vs-unsmeared
+distinction — calibration is the only smearing step, applied once at
+read-time. Promotion candidate to `~/personal-assistant/notes/llm-craft.md`
+once the pattern is observed on a second cross-domain port.
+
+*Source:* `planning/prior-art-scout-2026-04-25-aoristic-envelope.md` §8
+empirical addendum; `planning/decision-log.md` Decision 8 root-cause 2.
+
+---
+
+## Obs 17 — 2026-04-26 [PATTERN]: a bootstrap-of-self envelope cannot detect features that exist in the corpus
+
+The Option C non-parametric MC (row-bootstrap from filtered LIRE) PASSED
+the FP-control gate empirically — mean FP = 0.033 across an 80-cell
+sapphire validation grid; max 0.080; no cell > 0.10. Detection power
+against injected effects on synthetic-from-corpus data was preserved.
+But the test is fundamentally unable to detect features that *exist* in
+the source corpus: under the bootstrap principle, observed and MC are
+exchangeable when both are drawn from the same source, so a real
+Antonine Plague dip or genuine growth-decline shape is, by construction,
+swept into the reference distribution. Power against injected effects
+≠ power against real events.
+
+Critical-friend gate: when validating a methodology, check that the
+test's null hypothesis matches the substantive question. Option C's
+H0 is "is observed extreme relative to other re-bootstraps of itself?",
+not "is observed extreme relative to a parametric growth model?" — fine
+for H1 power calibration on synthetic data, fatal for H3b's real-data
+deviation question.
+
+*Source:* `runs/2026-04-25-h1-simulation/outputs/option-c-validation/SUMMARY.md`;
+`planning/decision-log.md` Decision 8 Options Considered (Option C
+rejection rationale).
+
+---
+
+## Obs 18 — 2026-04-26: forward-fit in true-date space resolves the variance and fitting-space problems simultaneously
+
+The forward-fit methodology fits the parametric density `f(t; θ)` by
+maximum likelihood treating each row's `[nb_i, na_i]` as the integration
+range, integrating the density over the interval — no smearing absorbed
+into the fit. Closed-form interval integral for exponential
+(`(exp(b·na) − exp(b·nb)) / b` with `_log_diff_exp` numerical
+stabilisation); per-segment trapezoidal integration for continuous
+piecewise-linear (CPL). Monte Carlo: sample synthetic events from the
+fitted true-date density, draw widths from the empirical width
+distribution, apply uniform-position aoristic resampling **once**. Both
+observed and MC now carry single-smear variance; the null is in
+true-date space, so the fitting-space asymmetry is dissolved.
+
+Pilot validation (`forward-fit-pilot/SUMMARY.md` and `SUMMARY-CPL.md`):
+Part A synthetic FP mean 0.040 across 9 zero cells (0/9 > 0.10);
+detection at n = 2500, 50%/50y bracket saturates at 0.99–1.00. Part B
+real-LIRE FP elevated as expected (1.000 at n ≥ 2500) because real LIRE
+has structure beyond a smooth exponential — this is the *signal* H3b
+will detect, not a methodology failure.
+
+*Source:* `runs/2026-04-25-h1-simulation/outputs/forward-fit-pilot/SUMMARY.md`,
+`SUMMARY-CPL.md`; `planning/decision-log.md` Decision 8.
+
+---
+
+## Obs 19 — 2026-04-26: power simulation must draw "observed" from the null, not from the empirical corpus
+
+The original H1 v1 implementation simulated "observed" by row-bootstrap
+from real LIRE, then tested for departure from a fitted null. But under
+the real H0 (no effect injected), "observed" should come from the null
+data-generating process, not from the empirical distribution. The v1
+loop was testing detection-of-injected-effect on data that already
+contained real LIRE features (editorial spikes, Severan-era surges,
+plague-period dips), so any iteration's "FP" was a mix of real-data
+deviation and pure noise.
+
+The H1 v2 corrected loop: synthetic data drawn from a specified
+ground-truth null → aoristic-resampled → observed_spa → forward-fit
+null → forward MC. Per Carleton, Campbell & Collard 2018's
+PEWMA-framework convention, this is the only loop structure that yields
+properly calibrated FP rates and unconfounded power estimates.
+
+The v1 framing matched the prereg's English description ("simulate a
+synthetic SPA under the null") but not the prereg's intent. Lesson:
+prereg prose specifying "synthetic data under the null" should be
+operationalised as a specific data-generating-process diagram in the
+simulation code, not left to the implementer's discretion.
+
+*Source:* `planning/decision-log.md` Decision 8 "coupled change"
+paragraph; `runs/2026-04-25-h1-simulation/outputs/REPORT.md` (v1) vs
+`outputs/h1-v2/REPORT-v2-final.md` (v2) comparison.
+
+---
+
+## Obs 20 — 2026-04-27: CPL k = 3 beats exponential on power for inscription SPA; k = 2 is structurally underfit on a 3-knot truth
+
+In the H1 v2 final results, CPL k = 3 thresholds are 12–29 % lower than
+exponential at the binding 50 % / 50 y bracket (median cpl/exp ratio 0.88;
+range [0.71, 1.00]). FP control is comparable on synthetic-from-CPL data
+(both methods FP < 0.05 across the zero-bracket grid). Mechanism: a more
+flexible null absorbs more of LIRE's empirical shape into the null fit,
+leaving cleaner residual signal for the deviation test. Reporting both
+nulls characterises the shape-dependence directly — a reviewer-facing
+benefit.
+
+CPL k = 2 was dropped from the primary grid per Decision 9. Validation
+evidence: k = 2 fits show systematic FP = 1.000 bias at high n on
+simulations from a 3-knot ground truth (LIRE's AIC-best CPL). k = 2
+is structurally underfit because two pieces cannot represent a 3-knot
+shape; the misspecification cascades through the fitted MC.
+
+AIC-select on the H1 v2 CPL iterations converges on k = 3 (73 % of
+iterations) with k = 4 (27 %); the AIC-select threshold tracks the
+k = 3-fixed threshold within ~50 n at H1-relevant cells, confirming that
+k = 3 is the right primary and k = 4 is a useful exploratory upper
+bound that does not change conclusions.
+
+*Source:* `runs/2026-04-25-h1-simulation/outputs/h1-v2/REPORT-v2-final.md`
+§§4–5; `planning/decision-log.md` Decision 9 (k = 2 drop rationale).
+
+---
+
+## Obs 21 — 2026-04-27: step shape is harder to detect than Gaussian shape for narrow-duration peaks (counterintuitive)
+
+Across the H1 v2 grid, narrow-duration step events are systematically
+harder to detect than Gaussian events of the same magnitude × duration.
+The `b_double_25y` step bracket (box-car: +5 events per 5 y bin × 5 bins,
+total +25 events) is unreachable at empire and province scales across
+all (null × k) combinations; the Gaussian variant (concentrated mass at
+peak) is reachable at province / urban-area n ≈ 1900–2200.
+
+Counterintuitive on first inspection: the step distributes the same
+total mass over more bins, so total events are equal. But the SPA
+permutation-envelope test's signal-to-noise ratio scales with **per-bin
+peak height**, not with total mass — a Gaussian concentrates its mass
+at the central bin, producing a sharper peak that exceeds the envelope
+at fewer bins-with-larger-deviations; the step spreads its mass and
+produces smaller per-bin deviations that the envelope can absorb.
+
+Methodology caveat worth flagging in the paper: power statements about
+"detect a doubling event over 25 y" are shape-dependent. Box-car events
+(plague years where production halts then resumes) are statistically
+harder to detect than peaked events (commemorative spikes around a
+specific year) of equal total magnitude.
+
+*Source:* `runs/2026-04-25-h1-simulation/outputs/h1-v2/REPORT-v2-final.md`
+§§1–2 unreachable-cell flags.
+
+---
+
+## Obs 22 — 2026-04-27: `c_20pc_25y` is operationally dead at urban-area scale across all (null × shape × k) combinations
+
+The H1 v2 final results show `c_20pc_25y / urban-area` detection caps at
+0.075–0.113 across all (null × shape × k) combinations even at n = 2500
+(the level's max n). The 20 % / 25 y bracket reaches 0.80 detection only
+in a single marginal cell (empire / cpl-3 / gaussian at n = 50 000). At
+the noise floor of permutation-envelope methods on aoristic SPA at any
+feasible inscription-corpus size — a property of the test, not a
+methodology defect.
+
+Decision 10 retains `c_20pc_25y` as a *preregistered hard-test boundary*
+in H1 (anchors the bottom of the power curve; reviewer-facing answer to
+"could you have detected smaller effects?") but removes it from the H3b
+*confirmatory eligibility list*. The two roles are separable: a bracket
+can be preregistered as a hard test without being preregistered as
+confirmatory-eligible. H3b's confirmatory family (Holm–Bonferroni
+corrected) reduces to `a_50pc_50y` and `b_double_25y` at H1-reachable
+cells.
+
+*Source:* `runs/2026-04-25-h1-simulation/outputs/h1-v2/REPORT-v2-final.md`
+§2 unreachable-cell summary; `planning/decision-log.md` Decision 10.
+
+---
+
+## Obs 23 — 2026-04-27: real LIRE has structure beyond CPL k = 4 — the H3b deviation signal is real
+
+Forward-fit CPL on real-LIRE bootstraps (Part C diagnostic) shows
+saturated FP at n ≥ 2500: 0.990 at n = 2500, 1.000 at n = 10 000, even
+under k = 4. Meaning: LIRE has features beyond what 4-knot piecewise
+linear can absorb — round-century editorial spikes, common-formula
+artefacts, plague-period dips, and so on. This is precisely the
+"deviation against a smooth null" signal that H3b is designed to
+detect; it confirms that the deviation tests will have plenty to detect,
+which de-risks the H3b empirical chapter.
+
+Mechanism interpretation: CPL k ≤ 4 fits LIRE's overall growth-decline
+shape (FP at n = 500 drops from 0.730 under exp to 0.170 under k = 3 —
+the smooth shape is being absorbed correctly), but cannot represent the
+sharper editorial-convention spikes. Going to k > 4 was deferred per
+the working CPL methodology (computational cost; risk of overfitting on
+the editorial spikes themselves).
+
+*Source:* `runs/2026-04-25-h1-simulation/outputs/forward-fit-pilot/SUMMARY-CPL.md`
+§3 Part C; `runs/2026-04-25-h1-simulation/outputs/optimisation/SPEEDUP.md`
+revalidation table.
+
+---
+
+## Obs 24 — 2026-04-26 [PATTERN]: two-stage gating with hard-stop rules works for risky engineering investments
+
+The forward-fit methodology was committed via two-stage gating:
+exponential pilot first (~2–3 h focused effort with closed-form 1-D
+likelihood); CPL extension only after pilot PASS. Pilot hard-stop rule:
+"FP > 0.20 mean across Part A zero cells → FAIL; FP ≤ 0.10 across all
+Part A zero cells AND detection ≥ 0.80 at n = 2500 for 50 %/50 y →
+PASS." Observed FP mean 0.040; detection 0.99–1.00; PASS. Then proceed
+to CPL (~2–3 days work; closed-form interval integrals + L-BFGS-B with
+random restarts). Same hard-stop rule applied to the CPL pilot; PASS.
+
+Pattern: cheap test before expensive commitment; clear PASS/FAIL
+criteria stated *before* running; no "marginal-pass-as-pass"
+negotiation when results come in. Useful for any engineering investment
+> 1 day of focused work, especially when an earlier candidate fix has
+already failed empirically (Option A; cf. Obs 16).
+
+Promotion candidate to `~/personal-assistant/notes/llm-craft.md` once
+the pattern recurs on a second project.
+
+*Source:* `runs/2026-04-25-h1-simulation/outputs/forward-fit-pilot/SUMMARY.md`
+§7 hard-stop check; `SUMMARY-CPL.md` §7 hard-stop check.
+
+---
+
+## Obs 25 — 2026-04-26: numba JIT plus a numpy refactor unlocks ~5× speedup on tight numerical kernels
+
+Before committing to a full preregistered 1000 / 1000 H1 v2 rerun
+(naive ~94 h on sapphire), the forward-fit CPL implementation was
+profile-driven-optimised to 4.78× (k = 3) / 5.44× (k = 4) speedup —
+median per-fit wall-time from 759 ms / 1512 ms to 159 ms / 278 ms.
+Wall-time for the full preregistered run dropped from ~94 h to ~4.7 h.
+
+Two changes carried the win:
+
+1. **Vectorisation, low-temporary form** — pre-allocate `integrals`
+   once; accumulate via `+=`; combine `mean_h` computation into a
+   single expression. Drops 5 temp-array allocations per segment per
+   evaluation.
+2. **Numba `@njit` on the full negative log-likelihood kernel** —
+   collapses ufunc-dispatch overhead. Inner-kernel µs/call: baseline
+   95.1 → numpy-minimal 50.0 → numba 6.3 (k = 3); full-NLL: baseline
+   132.3 → numba 28.8 (4.6×).
+
+Lesson: don't accept "current code speed × parameters = days" without
+profiling first. The optimisation budget was ~4–8 h; the saved compute
+was ~89 h. Hard-stop "stop at numba" prevented Cython / C scope creep.
+Analytical L-BFGS-B gradients (3–5× further speedup) are logged as
+future-work if H1 v3 needs them.
+
+*Source:* `runs/2026-04-25-h1-simulation/outputs/optimisation/SPEEDUP.md`
+headline-result table and "what was changed" section.
+
+---
+
+## Obs 26 — 2026-04-26: group-by-interval optimisation is data-generating-process-dependent
+
+Profiling identified group-by-`(nb, na)` as a candidate optimisation
+for forward-fit CPL: compute the interval integral once per unique
+dating band, then multiply by row count. **Useless for synthetic-from-null
+H1 v2** — all 2500 intervals in a typical iteration have unique
+`(nb, na)` pairs by construction (continuous distributions for
+`t_true`, widths, and position). **Valuable for real-data bootstrap
+H3a / H3b** — real LIRE bootstraps show ~5.6× clustering on
+`(nb, na)` pairs (448 unique pairs out of 2500 in benchmark sampling).
+
+Pattern: the value of a group-by optimisation is determined by the
+DGP's discrete vs continuous structure, not by the method implementation.
+Worth re-checking at each pipeline stage that uses the same primitive
+under different DGPs. Future-work hook for the H3a / H3b real-LIRE
+bootstrap analyses; `bench_quick.py` already counts unique pairs
+ready for the revisit.
+
+*Source:* `runs/2026-04-25-h1-simulation/outputs/optimisation/SPEEDUP.md`
+"what was NOT changed (and why)" §(a).
+
+---
+
+## Obs 27 — 2026-04-26 [PATTERN]: background-agent + Bash-poll-PID handoff for long-running compute
+
+When an agent's expected context budget is shorter than a planned
+compute run's wall-time, the long-run-handoff pattern works: agent
+kicks off `nohup` job on sapphire; captures PID; emits a
+`run-in-progress.md` doc with monitoring commands (PID, expected
+duration, output path, success criteria); exits its own context cleanly.
+Main thread (or a fresh agent) polls the PID with Bash `run_in_background`,
+gets a notification when the process exits, and processes the next
+stage.
+
+Used during the 2026-04-26 H1 v2 production run (~4.7 h sapphire wall);
+allowed the work to span context-window boundaries without losing
+progress. The pattern is general: any compute task whose wall-time
+exceeds a single agent's reliable context envelope should plan the
+handoff explicitly rather than hoping a single session lasts.
+
+Promotion candidate to `~/personal-assistant/notes/llm-craft.md` once
+the pattern recurs on a different project class.
+
+*Source:* H1 v2 production-run handoff pattern, 2026-04-26.
+
+---
+
+## Obs 28 — 2026-04-26 [GOTCHA]: agent silent-parameter-reduction is a critical-friend gate failure pattern
+
+Two instances observed in this sprint:
+
+1. **H1 v1 silent DGP swap.** The v1 simulation silently row-bootstrapped
+   from real LIRE instead of running the preregistered synthetic-from-null
+   DGP. The agent's brief specified "simulate a synthetic SPA under the
+   null"; the implementation operationalised this as bootstrap-from-LIRE
+   without flagging the choice. Consequence: tested injected-effect
+   detection on data already containing real-LIRE features.
+2. **H1 v2 preliminary parameter cut.** The first v2 build silently
+   reduced `n_iter` 1000 → 100 and `n_mc` 1000 → 200 to fit a 60 min
+   wall-time cap; framed as "adequate precision". Wilson 95 % CI on a
+   0.80 detection rate at n_iter = 100 is [0.715, 0.866] (width 0.151) —
+   too wide for confident threshold-setting at the 0.80 boundary.
+
+Fix pattern: agent briefs for prereg-bound work must include explicit
+**HALT, do not negotiate parameters** rules with examples of what NOT
+to do (no silent `n_iter` reduction; no silent DGP substitution; no
+"adequate precision" framing without a CI-width calculation). The
+pre-launch review must specifically check parameter values against the
+prereg, not just the algorithmic structure.
+
+*Source:* `planning/decision-log.md` Decision 8 (v1 DGP), Decision 9
+Context (v2 parameter cut); session reflection 2026-04-26.
+
+---
+
+## Obs 29 — 2026-04-26 [PATTERN]: structured decision-log entries with context, options, decision, consequences, and revisit triggers prevent silent drift
+
+Decisions 8, 9, and 10 — the methodological pivot, the precision-and-compute
+envelope, and the c_20pc_25y disposition — were captured in the
+existing ADR-style decision-log template. The structure forced
+articulation of: what changed to make this a decision now (Context);
+what alternatives were considered and rejected (Options); the chosen
+option with one-paragraph justification (Decision); easier / harder /
+committed-to / accepted (Consequences); reopen conditions (Revisit
+triggers). The result is reviewer-defensible without ambiguity, and
+preserves enough context that a future-Shawn re-reading the log in 18
+months can reconstruct the reasoning.
+
+The discipline is worth maintaining for any methodology choice or scope
+boundary that would be defensible in writing but not obvious from the
+code alone. Skip for "standard practice with no live alternative"; use
+for any pivot, scope-narrowing, or compute / cost commitment.
+
+*Source:* `planning/decision-log.md` Decisions 8, 9, 10 as worked
+examples; template at the head of the file.
+
+---
+
+## Obs 30 — 2026-04-26: direct prereg edit + decision-log capture beats staging-amendment doc once the round has been reviewed
+
+Two rounds of prereg amendment so far. Round 1 (2026-04-25 amendments
+to §3 / §4 / §6 / §8 numerical thresholds) used a **staging document**
+that batched several proposed amendments for review before any prereg
+prose was touched. Round 2 (2026-04-26 forward-fit pivot) went
+**direct-edit** to the prereg + Decisions 8 / 9 / 10 in the log + a
+note in the prereg appendix linking to the decision log.
+
+Both work; the trade-off is review locus.
+
+- **Staging document** is useful for batch review of multiple
+  proposals where the prereg edits are entangled and reviewing them
+  together avoids reviewer thrash. Adds one round-trip.
+- **Direct edit + decision-log capture** is cleaner for a single
+  coherent pivot whose rationale fits in one decision-log entry.
+  Removes the round-trip; the decision log is the durable record.
+
+Preserved as pre-submission flexibility: with the prereg not yet
+locked, both patterns are available. Once the prereg is OSF-locked, all
+amendments will go through OSF's amendment workflow, and the
+staging-document pattern likely becomes the default again.
+
+*Source:* `planning/decision-log.md` Decisions 8 / 9 / 10 commit
+sequence; comparison with the 2026-04-25 staging-document pattern in
+the prereg history.
