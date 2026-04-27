@@ -197,12 +197,19 @@ Run the mixture-model fit on empire-level LIRE. Report α̂ and 95 % CI; report 
 
 ### 8. Open design decisions (TBD markers — resolve before submission)
 
-- Final preregistered sample-size thresholds from the H1 simulation.
+- ~~Final preregistered sample-size thresholds from the H1 simulation~~ **Resolved 2026-04-26 (H1 v2 final):** binding 50%/50y thresholds tabled in §6; b_double_25y/step unreachable at all levels; c_20pc_25y operationally restricted (Decision 10). FP-rate target ≤ 0.05 achieved across all 96 v2-final zero-bracket cells (range [0.007, 0.049]). Full threshold map at `runs/2026-04-25-h1-simulation/outputs/h1-v2/REPORT-v2-final.md` and `thresholds.parquet`.
 - ~~Bayesian-NBR software choice~~ **Resolved 2026-04-24:** primary `pymc`; secondary `brms`-via-R shadow (~50-line script) for the H3a model only, as cross-validation + R-team legibility. Carleton et al. 2025's provincial posterior effects consumed as data, not code.
 - ~~Exact priors on α_0, α_province, β, dispersion~~ **Resolved 2026-04-24:** `α_0 ~ Normal(0, 5)`; `β ~ Normal(0, 2.5)` (agnostic); `σ_prov ~ HalfNormal(1)`; `1/alpha ~ HalfNormal(1)`. PPC suite: density overlay + test statistics (zero-count, mean, SD, 95th, M/V ratio) + Pearson-residual structure. Adela amendment path preserved: any substantive revision of priors or PPCs triggers an OSF amendment before execution.
 - ~~Spatial-weights construction for Moran's I~~ **Resolved 2026-04-24:** k-NN k = 8 primary (row-standardised, `libpysal.weights.KNN`), k = 5 and k = 10 as sensitivity; three-way pattern (≥ 2 of 3 significant + qualitative Hanson-map match) is the H3c spatial-clustering success criterion. Hanson 2021 weights construction is unspecified in his paper (ArcGIS default), so exact-numerical-match is not feasible and not attempted.
-- Multiple-comparison family for H3b: exact Holm-Bonferroni family after H1 fixes the subset × effect-size grid.
+- ~~Multiple-comparison family for H3b: exact Holm-Bonferroni family after H1 fixes the subset × effect-size grid.~~ **Resolved 2026-04-26:** Holm-Bonferroni correction applied across the H1-reachable (level × bracket × shape) cells. Family excludes c_20pc_25y (Decision 10) and step-shape b_double_25y at all levels (unreachable). Effective family size: 6 cells (province + urban-area, exp + cpl-3, a_50pc_50y step + a_50pc_50y gaussian + b_double_25y gaussian = 12 — minus duplicates if any; final family-size count locked when H3 results parquet is built).
 - Decision-log reference for the target venue (JAMT methods-heavy vs JAS balanced) — committed at end of Week 1 paper sprint (2026-05-03) per Decision 7.
+
+**Additional items resolved 2026-04-26 (forward-fit pivot, Decisions 8–10):**
+
+- **MC mechanism**: forward-fit in true-date space (per row interval-likelihood maximisation) + forward-aoristic MC (synthetic true dates → empirical widths → aoristic-resample-once). Documented in §3 and Decision 8. Supersedes Poisson-on-fit MC of v1.
+- **CPL k**: k = 3 primary; k = 4 exploratory upper bound; k = 2 excluded from primary grid (validation evidence: k = 2 systematically underfit at high n on a 3-knot truth, per Decision 9).
+- **H1 simulation framework**: synthetic-data-from-specified-null DGP (per §4 Phase 1 above). Supersedes the v1 bootstrap-from-LIRE deviation.
+- **`c_20pc_25y` disposition**: preregistered hard-test boundary in H1; retired from H3b confirmatory family (Decision 10).
 
 ### 9. Software, reproducibility, and data access
 
