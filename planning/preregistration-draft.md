@@ -3,7 +3,7 @@ priority: 1
 scope: in-stream
 title: "OSF Preregistration (open-ended) — Draft"
 audience: "Shawn (review + edit), Adela (co-author review), OSF reviewers"
-status: draft 2026-04-25 (5 amendments applied: filter-flag derivation, permutation-envelope wording, shape-bracket, CPL-3 + exploratories, tempun substitution); awaiting Adela review
+status: draft 2026-04-26 (round-2 forward-fit pivot applied per Decisions 8–10: §3 forward-fit + brms stanvar; §4 synthetic-from-null DGP + min_n_unreachable convention; §6 H1 v2 numerical thresholds; §8 TBD 1 resolved; round-1 5 amendments retained); awaiting Adela review
 format: OSF open-ended registration (four fields)
 ---
 
@@ -255,6 +255,7 @@ Phase 1 (simulation) → Phase 2 (LIRE) → Phase 3 (LIRE)
 - **Funding, ethics, competing interests:** to be completed by Shawn before OSF submission.
 - **Target conference:** RAC-TRAC 2026 (Roman Archaeology Conference / Theoretical Roman Archaeology Conference), May 2026 — venue confirmed; abstract deadline TBD. Zotero subcollection `RAC-TRAC-2026` (key `U2V6V6YD`, SDAM group 2366083) tracks citations as drafting progresses.
 - **Target journal venue:** JAMT (methods-heavy) or JAS (balanced), final scope commitment at Week-1 sprint checkpoint 2026-05-03 per Decision 7.
+- **Round-2 amendments applied 2026-04-26.** Forward-fit nulls in true-date space (Decision 8); CPL k = 2 dropped from primary grid (Decision 9); `c_20pc_25y` retained as preregistered hard-test boundary, retired from H3b confirmatory family (Decision 10). H1 v2 final results (`runs/2026-04-25-h1-simulation/outputs/h1-v2/REPORT-v2-final.md`, commit `00aceb4`) provide the resolved numerical thresholds and FP-rate validation. Decision-log entries 8–10 carry the rationale; `planning/prior-art-scout-2026-04-25-aoristic-envelope.md` (with §8 empirical addendum) carries the literature scan and the why-Option-A-failed analysis.
 
 ---
 
