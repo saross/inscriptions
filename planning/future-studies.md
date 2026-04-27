@@ -2,6 +2,44 @@
 
 **Purpose.** Ideas identified during the current project that could warrant separate papers or follow-up work. Kept alive per the externalise-or-lose-them rule. Each entry has: origin (when/where raised), contributor attribution (who proposed), current status, trigger for revisit.
 
+## FS-4 — Provincial prosperity reconstruction from inscription trajectories — comparative cross-validation against archaeological + numismatic + historical evidence
+
+**Origin.** 2026-04-27, during discussion of how to handle small-N cities in the H3a confirmatory framework. Shawn raised the parallel question for provinces: "we've got a pretty good idea from literature and archaeology when a province was prosperous and when it wasn't" — could we apply the same trajectory-estimation methodology at province scale, validated against the provincial-prosperity literature?
+
+**Proposed by.** Shawn (research question + framing of provincial-prosperity as ground truth); Claude (scope-discipline assessment recommending the substantive validation be deferred from main paper to follow-up).
+
+**Idea.** Roman provincial-prosperity dynamics are well documented across multiple lines of evidence (archaeology of urbanisation / monumentalisation / villa-density; numismatic circulation patterns; historical accounts of prosperity, decline, and crisis; ceramic exchange patterns; epigraphic-habit shifts). Provinces have been studied with sufficient depth that quantitative or semi-quantitative ground-truth claims about prosperity over time can be assembled — Britannia's rise-and-collapse 1st–early 5th c.; Africa Proconsularis 2nd–4th c. olive / grain prosperity; Pannonian frontier crisis sequence; Hispania's mining cycles; the Greek East's continuity through the 3rd century while the West fragmented; etc.
+
+The current paper (main SPA paper) reports province-level inscription trajectories as a **methodological output** without substantive interpretation against the prosperity literature. This follow-up extends that to:
+
+1. **Ground-truth assembly.** Across ~50 Roman provinces, compile from secondary literature a structured time-series of provincial prosperity indicators (urbanisation index, numismatic circulation, monumental construction rate, archaeological-site activity, historical-account coding). Operationalise "prosperous" as a multi-dimensional construct rather than a single number.
+2. **Methodological validation.** For each province, compare the inscription-derived trajectory (Layer A from main paper) against the literature-derived prosperity composite. Where do they agree? Where do they disagree? What does disagreement tell us — about the methodology, or about the implicit assumption that inscription production tracks prosperity?
+3. **β-inversion at province scale.** Test whether the within-province β-stability assumption (used in Layer B of main paper) holds when validated against a multi-decade prosperity composite, not just point-in-time population estimates.
+4. **Substantive comparative provincial dynamics.** Once methodology is validated, the comparative-provincial story becomes the substantive contribution: which provinces had similar trajectories? Where did the Crisis hit hardest / softest, by inscription evidence vs by other lines? Does the West-East divergence in 3rd–4th c. show up in inscription dynamics?
+
+**Standalone-paper potential.** Yes. Substantive + methodological. Target venues: *Journal of Archaeological Science*, *Journal of Roman Studies*, *Journal of Late Antiquity*, *American Journal of Archaeology*. Length: 8–12k words. The literature-assembly task alone is enough work for a paper section; the methodology cross-validation is another; the comparative-provincial story is a third. Stand-alone viable.
+
+**Why it warrants its own paper rather than main-paper inclusion.**
+
+- Ground-truth assembly is a substantial scholarly task — extracting structured prosperity indicators from secondary literature across ~50 provinces is methodology in its own right (which sources count, inter-source agreement, period demarcation, multi-dimensional coding).
+- Validation against prosperity literature requires room for nuance that the main paper's exploratory-analysis status cannot accommodate.
+- The substantive provincial-dynamics story has audience and venue distinct from the methods-paper main contribution (provincial-archaeology readers are at JRS / AJA / JLA, not JAMT).
+- Splitting cleanly avoids the main paper trying to do both methodology demonstration AND substantive provincial argument.
+
+**Prerequisites.**
+
+- Main paper submitted (so the methodology can be cited rather than reproduced).
+- baorista pipeline operational on sapphire (Decision 3) so the per-province trajectory estimation is in place.
+- Provincial-prosperity ground-truth assembly underway — this is a meaningful scholarly task that should probably begin during the main paper's review cycle rather than after acceptance, given timeline.
+
+**Revisit trigger.** After main paper submitted; could be a 2026 Q4 / 2027 Q1 follow-up. Adela's existing literature breadth on provincial dynamics is a relevant asset here.
+
+**Risk that would change recommendation.** Provincial-prosperity ground truth turns out to be too sparse / too contested in secondary literature to operationalise as quantitative indicators. If the qualitative consensus exists but quantitative coding is impossible, this becomes a more modest descriptive comparative paper rather than a methodology-validation paper. Either is publishable, but the framing differs.
+
+**Cross-link.** Main paper's §5 small-N city trajectory analysis reports province-scale results as methodological output only; FS-4 picks up the substantive provincial-prosperity work where the main paper deliberately stops.
+
+---
+
 ## FS-3 — Aoristic-shape sensitivity for Roman epigraphic SPA
 
 **Origin.** 2026-04-25, during methodological-pivot discussion on H1 envelope-test FP control. Shawn raised: "Crema's other work suggests ceramic dates follow trapezoidal distributions rather than uniform — should we test other shapes too?"
