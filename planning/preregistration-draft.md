@@ -173,14 +173,17 @@ Run the mixture-model fit on empire-level LIRE. Report α̂ and 95 % CI; report 
 
 | Hypothesis | Quantity | Preregistered target |
 |---|---|---|
-| H1 power floor | Detection rate | ≥ 0.80 at p < 0.05 per Decision 5 bracket; zero-effect false-positive rate ≤ 0.05 |
+| H1 power floor | Detection rate | ≥ 0.80 at *p* < 0.05 per Decision 5 bracket; zero-effect false-positive rate ≤ 0.05 (achieved across all 96 v2-final zero cells, range `[0.007, 0.049]`). |
+| H1 binding thresholds (50 % / ≥ 50 y, primary) | min n at detection ≥ 0.80 | **province** exp-step 1938, exp-gauss 1869, cpl-3-step 1385, cpl-3-gauss 1618; **urban-area** exp-step 1923, exp-gauss 1854, cpl-3-step 1409, cpl-3-gauss 1549; **empire** reachable at n = 50 000 (calibration). H1 v2 final 2026-04-26. |
+| H1 b_double_25y thresholds | min n at detection ≥ 0.80 | Gaussian shape: empire reachable at n = 50 000; province exp 2118, cpl-3 1934; urban-area exp 2160, cpl-3 1905. **Step shape unreachable across all levels** (mass spread evenly across 5 bins; SNR per bin marginal). |
+| H1 c_20pc_25y thresholds (hard-test boundary, Decision 10) | min n at detection ≥ 0.80 | Empire/cpl-3/gaussian reachable at n = 50 000 (single marginal-reachable cell); **all other (level × null × shape × k) combinations unreachable**. Bracket retained in H1 as honest-uncertainty anchor; **not in H3b confirmatory family**. |
 | H2.1 | α̂ | Posterior CI excludes 0; point estimate > 0.1 |
 | H2.2 | Corrected century-midpoint O/E | Within 1.5× of local neighbourhood mean |
 | H2.3 | Pairwise Pearson *r* across threshold variants | ≥ 0.9 |
 | H3a urban-area | Bayesian R² | ≥ 0.25 (anchored on Hanson, Ortman & Lobo 2017 R² = 0.267) |
 | H3a province | Bayesian R² | ≥ 0.50 (Palmisano et al. 2021 upper empirical range) |
 | H3b primary | Antonine signature | ≥ 50 % dip sustained ≥ 50 y at AD 165–180 |
-| H3b secondary | Other targets | Decision 5 a/b/c effect-sizes, Holm-Bonferroni corrected |
+| H3b secondary | Other targets | Decision 5 a/b effect-sizes (c retired per Decision 10), Holm-Bonferroni corrected over remaining-eligible (level × bracket × shape) cells per H1 v2 reachability map. |
 | H3c provincial-capital | Mean residual difference | One-sided *t*-test *p* < 0.05 |
 | H3c spatial clustering | Moran's I | > 0 at *p* < 0.05 in ≥ 2 of {k = 5, 8, 10} k-NN weights; qualitative pattern matches Hanson (2021) map |
 
