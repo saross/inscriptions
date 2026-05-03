@@ -1,0 +1,105 @@
+# ------------------------------------------------------------------------------
+# smoke_test.R — baorista tiered benchmark on synthetic aoristic data
+#
+# Author:        Shawn Ross (shawn@faims.edu.au) and Claude Code (Opus 4.7, 1M)
+# Date:          2026-05-03
+# Licence:       MIT
+# Preregistration cross-reference:
+#   - planning/baorista-install-plan.md §6 (Stage 4 validation runs)
+#   - planning/decision-log.md Decision 3 (sensitivity criteria)
+#
+# Purpose
+# -------
+# Tiered benchmark of baorista::expfit() on synthetic aoristic data, to:
+#   (i)  confirm the install works end-to-end at non-trivial scale; and
+#   (ii) characterise wall-time growth before committing to FS-4 follow-up runs
+#        at empire scale.
+#
+# Tiers (per plan §6.2, with the n=50,000 tier deferred to FS-4 timing study):
+#   - n =   100, niter = 4000, nburnin = 2000, nchains = 4 → expect ~5 min
+#   - n =   500, niter = 4000, nburnin = 2000, nchains = 4 → expect ~30 min
+#   - n = 5,000, niter = 4000, nburnin = 2000, nchains = 4 → expect 1.5–3 h
+#
+# Output
+# ------
+# CSV summary at runs/2026-05-03-baorista-install/smoke_results.csv with
+# (n, elapsed_sec, max_rhat, min_ess_bulk, converged) per tier.
+#
+# Convergence criterion: per preregistration §3, all Rhat < 1.05.
+# ------------------------------------------------------------------------------
+
+library(baorista)
+library(posterior)
+set.seed(20260503)
+
+#' Run a single baorista smoke-test tier on synthetic aoristic data.
+#'
+#' Generates n synthetic inscriptions with uniform-random centres in a window
+#' around 100–250 CE (the Roman imperial period the project targets), with
+#' interval widths ~ Exp(mean=99) capped at 300 years, and fits an exponential
+#' growth model via baorista::expfit().
+#'
+#' @param n         Number of synthetic inscriptions.
+#' @param niter     Total MCMC iterations (default 4000).
+#' @param nburnin   Burn-in iterations (default 2000).
+#' @param nchains   Number of MCMC chains (default 4).
+#' @return list with n, elapsed_sec, max_rhat, min_ess_bulk, converged.
+run_tier <- function(n, niter = 4000, nburnin = 2000, nchains = 4) {
+  # Synthetic aoristic intervals. Centres uniform in [-50, 350] (well inside
+  # the Roman-imperial reference window); widths Exp-distributed with mean 99
+  # years, capped at 300 (matches LIRE-like dating-uncertainty distribution).
+  centres <- runif(n, -50, 350)
+  widths  <- pmin(rexp(n, rate = 1 / 99), 300)
+  starts  <- centres - widths / 2
+  ends    <- centres + widths / 2
+
+  df <- data.frame(StartDate = round(starts), EndDate = round(ends))
+  prep <- baorista::createProbMat(df, timeRange = c(-50, 350), resolution = 5)
+
+  t0 <- Sys.time()
+  fit <- baorista::expfit(
+    prep,
+    niter   = niter,
+    nburnin = nburnin,
+    thin    = 1,
+    nchains = nchains
+  )
+  elapsed <- as.numeric(difftime(Sys.time(), t0, units = "secs"))
+
+  # Convergence diagnostics via posterior package (Rhat, ESS).
+  draws <- posterior::as_draws_array(fit$samples)
+  diag  <- posterior::summarise_draws(
+    draws,
+    posterior::default_convergence_measures()
+  )
+
+  list(
+    n            = n,
+    elapsed_sec  = elapsed,
+    max_rhat     = max(diag$rhat, na.rm = TRUE),
+    min_ess_bulk = min(diag$ess_bulk, na.rm = TRUE),
+    converged    = all(diag$rhat < 1.05, na.rm = TRUE)
+  )
+}
+
+# Run tiers and collect results.
+results <- list()
+for (n in c(100, 500, 5000)) {
+  message(sprintf("--- Tier n=%d starting at %s ---",
+                  n, format(Sys.time())))
+  results[[as.character(n)]] <- run_tier(n)
+  r <- results[[as.character(n)]]
+  message(sprintf(
+    "Tier n=%d: wall %.1fs, max Rhat %.3f, min ESS %.0f, converged=%s",
+    n, r$elapsed_sec, r$max_rhat, r$min_ess_bulk, r$converged
+  ))
+}
+
+# Persist results to CSV (the install log will read this back).
+results_df <- do.call(rbind, lapply(results, as.data.frame))
+write.csv(
+  results_df,
+  "runs/2026-05-03-baorista-install/smoke_results.csv",
+  row.names = FALSE
+)
+cat("SMOKE TESTS COMPLETE\n")
