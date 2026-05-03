@@ -5,7 +5,7 @@ title: "Continuity — inscriptions project (living doc)"
 audience: "next CC instance picking up the project; Shawn after any break"
 status: living; updated at end of each session
 started: 2026-04-24
-last-updated: 2026-04-24
+last-updated: 2026-05-03
 ---
 
 # Continuity — inscriptions project
@@ -19,9 +19,9 @@ last-updated: 2026-04-24
 
 ---
 
-## Research state — one-paragraph snapshot
+## Research state — one-paragraph snapshot (2026-05-03)
 
-Preregistration-drafting phase of the RAC-TRAC 2026 (May 2026) / JAMT-or-JAS paper on mixture-corrected summed probability analysis (SPA) of Latin inscriptions against Hanson (2016) urban population. Three-phase design (H1 min-thresholds simulation → H2 mixture-model validation → H3a/b/c population signal) locked in; preregistration draft at `planning/preregistration-draft.md` with 4 of 6 TBDs resolved as of 2026-04-24, 2 deferred by design. Empirical baseline verified: inscription–population scaling is robustly sublinear across four independent tests (Hanson 2021 β ≈ 0.67; HOL 2017 β ≈ 0.69 for functional diversity proxy; Carleton et al. 2025 β ≈ 0.3–0.5 for elite-honorifics; Ross 2024 archived preliminary β ∈ [0.47, 0.68] across OLS + NBR on LIRE v3.0, n = 816).
+Preregistration is at `draft 2026-04-27` after two rounds of amendments — round 1 (2026-04-25) applied 5 amendments; round 2 (2026-04-26 to 2026-04-27) executed the **forward-fit pivot** (Decisions 8 / 9 / 10) plus added Crisis of the Third Century, H3a variance partition, §5 small-N city trajectory estimation (Layers A + B + aggregate diagnostic), and FS-4 follow-up paper. **H1 v2 simulation is COMPLETE** at full preregistered precision (1000 / 1000): FP control achieved (range [0.007, 0.049] across 96 zero cells); binding 50 % / 50 y thresholds in prereg §6. **baorista + brms + cmdstan installed and smoke-validated on sapphire** (commit `bf0d661`, INSTALL-LOG.md). The H2 / H3a / H3b / H3c / §5 substantive analysis pipelines are preregistered, designed, but **not yet implemented** — that's the next major work tranche after Adela's prereg review and OSF lock. Awaiting Adela review.
 
 ---
 
@@ -36,119 +36,131 @@ Preregistration-drafting phase of the RAC-TRAC 2026 (May 2026) / JAMT-or-JAS pap
 - **Invoke skills fully.** If a skill is the right tool, use the Skill tool and work the protocol; don't shortcut.
 - **Commit before each pipeline stage.** Research-record preservation matters.
 - **Push back when warranted.** Explicit standing invitation.
-- **Sapphire for compute.** Any bootstrap sweeps, permutation tests, or CPU-intensive work runs on sapphire via SSH. Workdir is `~/Code/inscriptions` (note: NOT `~/inscriptions` — typo caused an agent stall 2026-04-22).
-- **Agent-session-capture infrastructure is operational** (2026-04-24; `/recall agent-infrastructure`). Use agents liberally for research and context management — the session trail is persistently captured for open-science research-record purposes.
+- **Sapphire for compute.** Any bootstrap sweeps, permutation tests, Bayesian sampling, or CPU-intensive work runs on sapphire via SSH. Workdir is `~/Code/inscriptions` (note: NOT `~/inscriptions` — typo caused an agent stall 2026-04-22). uv at `~/.local/bin/uv` (not in non-interactive PATH).
+- **Hard-stop rules in agent briefs.** Especially: do NOT silently negotiate parameters down to fit time budgets — halt and report. Two prior incidents (H1 v1 silent bootstrap-from-LIRE; preliminary v2 silent 100/200 reduction) make this a learned-lesson.
+- **Agent-session-capture infrastructure operational** (2026-04-24; `/recall agent-infrastructure`). Use agents liberally for research and context management — session trail persistently captured for open-science research-record purposes.
 
 ---
 
-## Priority queue — before OSF preregistration submission
+## Priority queue — Phase 2 substantive work (post-OSF lock)
 
-1. [ ] **Run H1 simulation** (~200 LOC Python; `tempun` + `scipy.stats.permutation_test` per Obs 3 / Decision 2).
-   - Input: LIRE v3.0 at `archive/data-2026-04-22/LIRE_v3-0.parquet`.
-   - Sweeps: city n ∈ {25, 50, 100, 250, 500, 1000, 2500}; province n ∈ {100, 250, 500, 1000, 2500, 5000, 10000, 25000}.
-   - 1,000 iterations per cell; Decision 5 effect-size brackets + zero-effect calibration; exponential null primary + CPL secondary; detection-rate curves at 0.70 / 0.80 / 0.90.
-   - Outputs → `runs/YYYY-MM-DD-h1-simulation/`.
-   - Resolves TBD 1 (numerical thresholds) and enables TBD 5 (Holm-Bonferroni family).
+Detailed in `planning/backlog-2026-05-03.md` §"What's preregistered, designed, but NOT YET IMPLEMENTED". Headlines:
 
-2. [ ] **Write `scripts/h3a_brms_shadow.R`** (~50 LOC R stub).
-   - Same model as pymc primary: `count ~ log_pop + (1|province)`, `family = negbinomial()`, `brms::brm()`.
-   - Not on OSF critical path, but committing it gives Adela a concrete R-vernacular artefact to audit.
+1. [ ] **H2 mixture-model implementation.** Substantive methodological contribution. ~2-3 days. Preregistered §3 + Decision 7. Outputs `data/processed/city_level_for_h3a.parquet` which unblocks Track 2.
+2. [ ] **H3a Bayesian NBR (pymc primary).** Primary quantitative substantive result. ~1-2 days. Awaits H2 output.
+3. [ ] **H3a brms shadow execution.** Script ready (`scripts/h3a_brms_shadow.R`); awaits H2 output. ~30 min.
+4. [ ] **H3b deviation detection** at H1-reachable cells (Holm-Bonferroni). ~1-2 days.
+5. [ ] **H3b Antonine + Crisis-of-Third-Century replication tests.** ~1 day each.
+6. [ ] **H3c residuals + Moran's I + provincial-capital t-test.** ~1 day.
+7. [ ] **§5 H3a variance partition.** ~6 LOC; rolls in with H3a.
+8. [ ] **§5 small-N city trajectory estimation** (Layers A + B + aggregate diagnostic). ~4-7 days incl. Layer B literature ground-truth assembly. Uses baorista (now installed).
+9. [ ] **Decision 3 sensitivity comparison: forward-fit vs baorista.** ~1 day.
+10. [ ] **§5 other exploratories** (stratified-by-class, scaling-residual, α-as-translator, chronological H3c, letter-count). Cheap each, run alongside H2/H3.
 
-3. [ ] **Coherence re-read of `planning/preregistration-draft.md`** end-to-end.
-   - Draft has been edited piece by piece during TBD walkthrough; smooth over internal references and confirm H1 / H2 / H3 flow reads cleanly.
-   - Run before Adela sees it.
-
-4. [ ] **Adela review pass.**
-   - Shawn shares; timing unscheduled.
-   - Any substantive revisions filed as an OSF amendment **before** execution.
-
-5. [ ] **Submit to OSF** (open-ended registration template; mirror map-reader-llm project style).
+Order: H2 → H3a (with brms shadow + variance partition + sensitivities) → H3b (with replications) → H3c → §5 small-N + Decision 3.
 
 ---
 
-## Priority queue — parallel, before paper-sprint Week 1 (2026-05-03)
+## Done — major recent milestones (2026-04-23 → 2026-05-03)
 
-- [ ] **`baorista` install on sapphire** (R + NIMBLE + C++). Sunday / Monday (2026-04-27/28). If install non-trivial, Decision 3 fallback demotes baorista from appendix figure to citation-with-rationale.
-- [ ] **LIST vs LIRE swap decision.** Week-1 checkpoint. LIRE is primary; LIST extends envelope to AD 600 if ready.
-- [ ] **Obs 11 editorial-convention-hierarchy test on 14 boundary years** (originally scheduled Thursday 2026-04-24; may already have run — check `runs/` directory).
-- [ ] **Hanson (2021) letter-count attribution** (Obs 8). PDF is now local (Zotero GHPTNHBI / 9Z7EFZVA); verify the specific letter-count passage before any draft cites Hanson 2021 as letter-count source.
-
----
-
-## 2026-05-03 scope commitment (Decision 7)
-
-- [ ] **Journal venue** — JAMT (methods-heavy) vs JAS (balanced). Resolves TBD 6.
-- [ ] **Single paper vs methods/results split** per FS-0 trigger conditions.
-   - Trigger (a): methodology content exceeds 3,000–4,000 words.
-   - Trigger (b): deconvolution + baorista produce substantively different results.
-   - Trigger (c): Aeneas-partition outline suggests a natural companion submission.
-- [ ] **May 2026 conference details** confirmed — abstract deadline, format (written vs slides), word count if written.
-
----
-
-## Standing open items — not blocking, not timed
-
-- [ ] **AD 2230 placeholder values in LIRE `not_after`** — Shawn to report to LIRE / SDAM team (already may have reported; confirm before nagging).
-- [ ] **RAC-TRAC 2026 conference details** (abstract deadline, format, word count) TBC; RAC-TRAC-2026 Zotero subcollection (key `U2V6V6YD` in SDAM group 2366083) exists and is ready for citation-bucket use.
-- [ ] **Key-scope hygiene** — current Zotero API key has `write: true` on Shawn's user library in addition to SDAM group. Regenerate with tighter scope when convenient. Low severity (personal library + project-scoped key).
-- [ ] **Duplicate Zotero items** to merge in UI:
-  - Hanson 2021 (GHPTNHBI / 9Z7EFZVA)
-  - Hanson-Ortman-Lobo 2017 (PJ829ZHD / G855HU3P)
-  - MacMullen 1982 (UGCEBQWY / P6ENVECW)
-  - Crema 2016 SPD (ZFKYLSQ8 / Z2UKWW4D / BRL8V3RK)
-  - Crema & Bevan 2020 rcarbon (multiple)
-  - Carleton 2018 batch-add duplicate (T95BHV43 / GF82TVAB — safe to delete either; both have PDF attached).
-- [ ] **Two PDFs missing for already-added Zotero items:**
-  - Bevan 2017 PNAS (GM82BQQI) — PMC5724262 bot-blocked from this sandbox; Zotero Connector in a browser will work.
-  - Carleton & Groucutt 2020 *Holocene* (4QMRBWB6) — no OA copy per Unpaywall; SAGE-paywalled. Institutional access or library fetch.
+- [x] **H1 v1 simulation** (2026-04-25). Surfaced FP-inflation problem; informed forward-fit pivot. Now superseded.
+- [x] **Forward-fit pivot** (Decisions 8 / 9 / 10, 2026-04-26 to 04-27). New methodology: forward-fit nulls in true-date space + forward-aoristic MC. CPL k=2 dropped per Decision 9; c_20pc_25y retained as hard-test boundary per Decision 10.
+- [x] **Forward-fit primitives** (`forward_fit.py`, `forward_fit_cpl.py`). Optimised with numba JIT (~5× speedup over baseline); validated FP control on 30-cell synthetic grid (mean FP 0.034).
+- [x] **H1 v2 final simulation** (2026-04-26). 256 cells × 1000 iter × 1000 MC, ~4.7 h on sapphire 24-core. FP control achieved across all 96 zero cells. Headline thresholds locked.
+- [x] **Round 1 prereg amendments** (2026-04-25, 5 amendments applied: filter-flag derivation, permutation-envelope wording, shape-bracket, CPL-3 + exploratories, tempun substitution).
+- [x] **Round 2 prereg amendments** (2026-04-26 to 04-27, direct-edited): forward-fit + brms stanvar (§3); synthetic-from-null DGP + min_n_unreachable convention (§4); v2 numerical thresholds (§6); TBD 1 + multi-comparison resolved (§8); status field + provenance bumped. Plus Crisis of Third Century, H3a variance partition, §5 small-N city trajectory bundle, FS-4 follow-up.
+- [x] **FS-3 trapezoidal aoristic shape** added 2026-04-25.
+- [x] **FS-4 provincial prosperity reconstruction** added 2026-04-27.
+- [x] **Working-notes Obs 15–30** appended (2026-04-27): forward-fit pivot lessons, engineering wins, agent-routing patterns.
+- [x] **baorista + brms + cmdstan install on sapphire** (2026-05-03 to 05-04). All packages working; smoke tests PASS at n=100/500/5000; install script idempotent on fresh R install (user-library bootstrap fix). INSTALL-LOG.md captures all stages + API discoveries + open caveats.
+- [x] **Working backlog 2026-05-03** (`planning/backlog-2026-05-03.md`). Captures all preregistered-but-unimplemented work + open caveats.
 
 ---
 
 ## Priority artefacts (read in this order if context is cold)
 
-1. `planning/research-intent.md` — paper-level what / why. Primary reference for scope and framing.
-2. `planning/preregistration-draft.md` — operationalised research-intent with design choices pre-committed. 4 of 6 TBDs resolved; see §8 for state.
-3. `planning/decision-log.md` — 7 ADRs, especially **Decision 7** (paper architecture + scope-commitment path).
-4. `runs/2026-04-23-prior-art-scouts/synthesis.md` — consolidated Q1 / Q2 / Q3 findings (effect-size calibration, sublinear-scaling four-way convergence, translator-proxy strategy).
-5. `planning/archive-2024-summary.md` — 2024 exploratory notebook distilled; empirical anchors (log-log R² ≈ 0.10 baseline, β ∈ [0.47, 0.68]); failed methods diagnosed (do not preregister without).
-6. `planning/future-studies.md` — FS-A through FS-G disaggregation programme.
-7. `docs/notes/reflections/working-notes.md` — 12 numbered observations (Obs 7 data-quality artefacts; Obs 11 editorial-convention hierarchy; Obs 12 Turchin scale mismatch).
+1. `planning/preregistration-draft.md` — current at `draft 2026-04-27`. Single most important document.
+2. `planning/decision-log.md` — Decisions 1–10. Especially **8 (forward-fit pivot)**, **9 (precision + compute, drop CPL k=2)**, **10 (c_20pc_25y disposition)**.
+3. `planning/backlog-2026-05-03.md` — current working backlog with structured "not yet implemented" + "open caveats" lists.
+4. `runs/2026-04-25-h1-simulation/outputs/h1-v2/REPORT-v2-final.md` — H1 v2 numerical thresholds (the empirical basis for prereg §6).
+5. `runs/2026-05-03-baorista-install/INSTALL-LOG.md` — baorista + brms install record + API discoveries for the main pipeline.
+6. `planning/future-studies.md` — FS-1 through FS-4.
+7. `docs/notes/reflections/working-notes.md` — Obs 1–30 (Obs 15–30 are the H1 forward-fit pivot lessons).
+8. `planning/preregistration-amendments-2026-04-25.md` — round-1 amendments record (round-2 was direct-edit + decision-log).
+9. `planning/prior-art-scout-2026-04-25-aoristic-envelope.md` — literature scan that informed the forward-fit pivot; §8 empirical addendum on why scout-recommended Option A failed.
 
 ---
 
 ## Failure modes observed — avoid
 
 - **Path typos in agent briefs.** Sapphire workdir is `~/Code/inscriptions`, not `~/inscriptions`.
-- **`pgrep -f` self-match.** A regex that matches its own invoking shell command. Use `pgrep -f "[.]venv/bin/python3.*verify.py"` (bracket-escaped first char) or `kill -0 <pid>` on a captured PID.
-- **Agent stalling on inline script streaming.** Long Python scripts pasted as chat text can trigger watchdog timeouts at 600 s. Put script content in the `Write` tool's `content` parameter, not in chat.
+- **`pgrep -f` self-match.** Use bracket-escape: `pgrep -f "[.]venv/bin/python3.*verify.py"` or `kill -0 <pid>` on a captured PID.
+- **Agent stalling on inline script streaming.** Long Python / R scripts pasted as chat text trigger watchdog timeouts at 600 s. Put script content in the Write tool's `content` parameter, not in chat.
 - **Monitor loops tripping on stale files.** File-existence checks fire immediately if stale files from previous runs are present. Prefer mtime comparisons or fresh-run markers.
 - **Zotero FTS does not index DOI field.** Idempotency-by-DOI via `zot.items(q=DOI)` fails silently and creates duplicates; use a locally-built DOI index over all group items instead (see `scripts/zotero_batch_add.py::_build_doi_index`).
-- **Publisher bot-detection blocks Python default User-Agent.** Use browser-like UA for PDF downloads from Science.org, PNAS, SAGE, and NCBI PMC. Some fail even then — Zotero Connector in a real browser is the last-resort path.
+- **Publisher bot-detection blocks Python default User-Agent.** Use browser-like UA for PDF downloads from Science.org, PNAS, SAGE, NCBI PMC.
+- **Agent silent-parameter-reduction is a critical-friend gate failure pattern.** Hard-stop rules in briefs that explicitly forbid renegotiating parameters to fit time budgets.
+- **Background agents that arm a Monitor and exit don't re-fire from monitor events.** For "wait for PID death" patterns, use Bash `run_in_background` with `until ! kill -0 PID` instead.
+- **baorista API gotchas** (from smoke-test iterations 2026-05-03):
+  - `timeRange` must be descending (LARGER first).
+  - `(upper - lower + 1) %% resolution == 0` required.
+  - Per-event col1 > col2 (numeric ordering; NAMES `StartDate`/`EndDate` are conventional only).
+  - Every event must satisfy `lower <= col2 <= col1 <= upper`.
+  - `expfit` returns S3 `fittedExp` with `$rhat` / `$ess` directly — no `$samples` slot.
+- **Sapphire fresh-R-install user-library bootstrap** (from 2026-05-04 install fix): without creating `R_LIBS_USER` and pushing it onto `.libPaths()`, `install.packages()` falls back to root-owned `/usr/local/lib/R/site-library` and crashes within seconds.
 
 ---
 
-## Session history — done items
+## Open caveats (housekeeping; not blocking)
+
+Detailed in `planning/backlog-2026-05-03.md` §"Open caveats / housekeeping". Headlines:
+
+- **Sapphire git state cleanup** — accumulated untracked-but-canonical-on-origin files. Cleanup script in backlog.
+- **Smoke-test simplification** — synthetic widths capped at 100 y; production baorista runs on real LIRE need re-validation with full-distribution widths.
+- **n=50,000 baorista wall-time at default niter=100,000** — extrapolation 5–25 min; direct benchmark deferred to FS-4 launch.
+- **LIST v1.2 swap** — optional; LIRE remains primary.
+- **RAC-TRAC 2026 conference details** — TBC.
+- **TBD 6 target journal venue** — leaning JAMT; soft commitment.
+
+---
+
+## If context feels cold
+
+1. Read `planning/preregistration-draft.md` start to finish (~10 min).
+2. Read `planning/backlog-2026-05-03.md` for what's left to do + caveats (~5 min).
+3. Skim Decisions 8 / 9 / 10 in `planning/decision-log.md` for the methodological pivot rationale (~5 min).
+4. Skim `runs/2026-04-25-h1-simulation/outputs/h1-v2/REPORT-v2-final.md` for current empirical results (~3 min).
+
+That's enough to engage substantively. Deeper context (the scout report, working-notes, amendment trails) reads in another 20-30 min if needed.
+
+---
+
+## Session history — done items (terse)
+
+### 2026-05-03 / 2026-05-04
+
+- baorista + brms + cmdstan installed on sapphire across all 5 stages (commits `066f25d`, `9d72aae`, `a41f394`, `c97d218`, `bf0d661`). Smoke tests PASS at n=100/500/5000.
+- New working backlog `planning/backlog-2026-05-03.md` capturing post-pivot state.
+- This continuity.md updated.
+
+### 2026-04-26 / 2026-04-27
+
+- Forward-fit pivot (Decisions 8 / 9 / 10).
+- H1 v2 final simulation (256 cells × 1000 iter × 1000 MC, ~4.7 h on sapphire). FP control achieved.
+- Round-2 prereg amendments direct-edited.
+- Crisis of Third Century, H3a variance partition, §5 small-N city trajectory bundle, FS-4 added.
+
+### 2026-04-25
+
+- H1 v1 simulation (surfaced FP-inflation problem; superseded by v2).
+- Round-1 5 prereg amendments applied.
+- FS-3 trapezoidal added.
+- Prior-art-scout report committed.
 
 ### 2026-04-24 (Fri)
 
-**Committed on main:**
+Snapshot at this date in `continuity-2026-04-23.md`. Original H1 simulation design phase.
 
-- Captured memory: agent-session-capture infrastructure operational (openness / research-record / open-science / context-management / agent-infrastructure, id 2026-04-24-666890d8ab53).
-- Verified Hanson 2021 β from local PDF (0.672 mean [0.588, 0.756] / 0.654 median [0.514, 0.774]; OLS log-log 8 bins; n = 554; EDCS; Rome excluded); research-intent + synthesis + archive-2024-summary updated (`d01a702`).
-- Corrected Scout 2 misattribution — HOL 2017 β = 0.686 is functional-diversity × population, not inscription-count × population (`d01a702`).
-- Demoted information-infrastructure from "complementary" to "alternative" framing per conference-paper editorial call (`3e4a6f4`).
-- Captured Turchin 2018 scalar-complexity position as **Obs 12** in working-notes — polity × century vs city × decade scale mismatch (`50360ab`).
-- Zotero: env-config + `.gitignore` hardening (`0138972`, `4534584`); SDAM group write-access verified (group 2366083; SPA collection `PZN5ATJK`, 37 pre-existing items).
-- Batch-add of 21 items to SDAM SPA via `scripts/zotero_batch_add.py` + PDFs where OA (`e26278e`, `f820afb`); Carleton 2018 double-add flagged (idempotency gap in `zot.items(q=DOI)` diagnosed and fixed; script now uses `_build_doi_index`).
-- Follow-up pass: 2 manual no-DOI adds (Beltrán Lloris OHRE chapter, Benefiel & Keesling Brill volume); 2 PDF retries succeeded via Unpaywall (Ortman-Lobo 2024 Sci Adv, Glomb 2022 JASRep) — `0822157`, `6e8355b`.
-- `planning/preregistration-draft.md` drafted (monolithic, open-ended OSF format, ~250 lines) — `7ae3e93`.
-- TBD walkthrough (all four actionables resolved; commits in parens):
-  - TBD 1 — H1 protocol knobs + Glomb reframing (Antonine-anchored dropped; Glomb is a null, not a template). `228a8c6`, `c901aae`.
-  - TBD 2 — pymc primary + `scripts/h3a_brms_shadow.R` as shadow for Adela / R-native co-authors. `630fdc4`.
-  - TBD 3 — agnostic β prior `Normal(0, 2.5)` + weakly-informative defaults + Gelman et al. 2020 Bayesian-Workflow PPC suite (density overlay + test statistics + Pearson-residual structure). `f18db5b`.
-  - TBD 4 — Moran's I via k-NN k = 8 primary + k = 5/10 sensitivity; qualitative Hanson-replication target (his weights construction not specified in the paper, so exact-numerical-match not feasible). `378e708`.
-- LIRE subset-filter feasibility confirmed on disk: military diplomas 285 / 442 / 494 rows across `type_of_inscription_clean` / `_auto` / `inscr_type`; Asclepius-cult 358 rows via inscription text regex (vs Glomb et al.'s N = 210, so their filter was stricter).
+### 2026-04-23 (Thu)
 
-### 2026-04-23 (Thu) — summary
-
-Snapshot preserved at `continuity-2026-04-23.md`. High-level: comprehensive LIRE v3.0 descriptive-stats rerun; three parallel prior-art scouts commissioned overnight (effect-size calibration; urban-scaling; epigraphic-habit proxies); research-intent doc created; 2024 archive audit commissioned; 14+ commits across planning, runs, docs.
+Original methodology design + 2024 archive distillation + Hanson β verification + Zotero ingest. See `continuity-2026-04-23.md`.
