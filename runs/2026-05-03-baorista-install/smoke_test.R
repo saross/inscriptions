@@ -53,8 +53,36 @@ run_tier <- function(n, niter = 4000, nburnin = 2000, nchains = 4) {
   starts  <- centres - widths / 2
   ends    <- centres + widths / 2
 
-  df <- data.frame(StartDate = round(starts), EndDate = round(ends))
-  prep <- baorista::createProbMat(df, timeRange = c(-50, 350), resolution = 5)
+  # Clamp bounds inside the timeRange window. baorista's createProbMat()
+  # validator rejects ANY event with a bound outside [lower, upper], so the
+  # tail of the Exponential interval-width distribution must be capped here.
+  # Window upper = 349 (not 350) so that (upper - lower + 1) %% resolution
+  # == 0 — required so createProbMat()'s internal `seq(upper, lower, -res)`
+  # and `seq(upper - res + 1, lower, -res)` produce equal-length sequences.
+  # (Without this, the function stops with "resolution does not break
+  # timeRange in equally sized time blocks".)
+  lower <- -50
+  upper <- 349
+  starts <- pmax(lower, pmin(upper, starts))
+  ends   <- pmax(lower, pmin(upper, ends))
+
+  # baorista convention (read from createProbMat() body, 2026-05-04):
+  #   - timeRange must satisfy timeRange[1] >= timeRange[2] (descending,
+  #     BP-style; the validator literally checks `timeRange[1] < timeRange[2]`
+  #     and stops "Incorrect format of timeRange argument").
+  #   - For each event row, col 1 must be > col 2 (the validator stops
+  #     "Some events have a start point of timespan later than its end
+  #     point" if col1 <= col2). i.e. column 1 holds the LARGER calendar
+  #     year of the interval; column 2 the SMALLER. The column NAMES
+  #     "StartDate" / "EndDate" are conventional only — what matters is
+  #     numeric ordering.
+  # Therefore we put `ends` (the larger calendar year) in column 1 and
+  # `starts` (smaller) in column 2, and pass timeRange = c(upper, lower).
+  df   <- data.frame(StartDate = round(ends), EndDate = round(starts))
+  # Eliminate any zero-width intervals (col1 == col2 fails col1 > col2).
+  zero_width <- df$StartDate == df$EndDate
+  if (any(zero_width)) df$StartDate[zero_width] <- df$StartDate[zero_width] + 1L
+  prep <- baorista::createProbMat(df, timeRange = c(upper, lower), resolution = 5)
 
   t0 <- Sys.time()
   fit <- baorista::expfit(
