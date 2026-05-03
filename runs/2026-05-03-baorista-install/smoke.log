@@ -1,0 +1,91 @@
+Loading required package: nimble
+nimble version 1.4.2 is loaded.
+For more information on NIMBLE and a User Manual,
+please visit https://R-nimble.org.
+
+Attaching package: ‘nimble’
+
+The following object is masked from ‘package:stats’:
+
+    simulate
+
+The following object is masked from ‘package:base’:
+
+    declare
+
+This is posterior version 1.7.0
+
+Attaching package: ‘posterior’
+
+The following objects are masked from ‘package:stats’:
+
+    mad, sd, var
+
+The following objects are masked from ‘package:base’:
+
+    %in%, match
+
+--- Tier n=100 starting at 2026-05-03 14:06:57 ---
+Compiling nimble model...
+===== Monitors =====
+thin = 1: r
+===== Samplers =====
+RW sampler (1)
+  - r
+thin = 1: r
+running chain 1...
+|-------------|-------------|-------------|-------------|
+|-------------------------------------------------------|
+running chain 2...
+|-------------|-------------|-------------|-------------|
+|-------------------------------------------------------|
+running chain 3...
+|-------------|-------------|-------------|-------------|
+|-------------------------------------------------------|
+running chain 4...
+|-------------|-------------|-------------|-------------|
+|-------------------------------------------------------|
+Tier n=100: wall 11.8s, max Rhat 1.001, min ESS 1887, converged=TRUE
+--- Tier n=500 starting at 2026-05-03 14:07:09 ---
+Compiling nimble model...
+===== Monitors =====
+thin = 1: r
+===== Samplers =====
+RW sampler (1)
+  - r
+thin = 1: r
+running chain 1...
+|-------------|-------------|-------------|-------------|
+|-------------------------------------------------------|
+running chain 2...
+|-------------|-------------|-------------|-------------|
+|-------------------------------------------------------|
+running chain 3...
+|-------------|-------------|-------------|-------------|
+|-------------------------------------------------------|
+running chain 4...
+|-------------|-------------|-------------|-------------|
+|-------------------------------------------------------|
+Tier n=500: wall 10.4s, max Rhat 1.001, min ESS 1790, converged=TRUE
+--- Tier n=5000 starting at 2026-05-03 14:07:20 ---
+Compiling nimble model...
+===== Monitors =====
+thin = 1: r
+===== Samplers =====
+RW sampler (1)
+  - r
+thin = 1: r
+running chain 1...
+|-------------|-------------|-------------|-------------|
+|-------------------------------------------------------|
+running chain 2...
+|-------------|-------------|-------------|-------------|
+|-------------------------------------------------------|
+running chain 3...
+|-------------|-------------|-------------|-------------|
+|-------------------------------------------------------|
+running chain 4...
+|-------------|-------------|-------------|-------------|
+|-------------------------------------------------------|
+Tier n=5000: wall 13.5s, max Rhat 1.003, min ESS 1850, converged=TRUE
+SMOKE TESTS COMPLETE

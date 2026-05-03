@@ -9,6 +9,10 @@ data/LIST_v1-2.parquet
 runs/**/outputs/cell-results.parquet
 runs/**/outputs/run.pid
 
+# Compile output from R/Stan/NIMBLE installs — large, noise, reproducible
+# from the install scripts. Live on sapphire as ground truth.
+runs/2026-05-03-baorista-install/install.log
+
 # Python / uv venv
 .venv/
 __pycache__/
