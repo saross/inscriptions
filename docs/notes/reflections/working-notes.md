@@ -913,3 +913,54 @@ staging-document pattern likely becomes the default again.
 *Source:* `planning/decision-log.md` Decisions 8 / 9 / 10 commit
 sequence; comparison with the 2026-04-25 staging-document pattern in
 the prereg history.
+
+---
+
+## Obs 31 — 2026-05-03 [GOTCHA]: `git clean -fd` removes gitignored files inside untracked directories
+
+`.gitignore` protects files only when their directory ancestors are tracked. An untracked directory is opaque to gitignore — `git clean -d` removes it wholesale including any contents that would individually match an ignore pattern. Caught during sapphire git-state cleanup when the dry-run flagged a 119 MB gitignored `cell-results.parquet` for removal alongside its untracked-on-this-machine ancestor directory.
+
+**Mitigation pattern** (preserve as project default before any `git clean -fd` on machines that haven't pulled recently):
+
+```bash
+# 1. ALWAYS dry-run first
+git clean -fdn
+
+# 2. For each untracked dir in the dry-run output, enumerate gitignored content
+find <untracked-dir> -type f
+# Cross-check against .gitignore patterns
+
+# 3. Move precious gitignored files to a safe location BEFORE running clean
+mkdir -p ~/git-clean-archive/
+mv <untracked-dir>/<precious-file> ~/git-clean-archive/
+
+# 4. Run clean
+git clean -fd
+
+# 5. Pull
+git pull --ff-only origin main
+
+# 6. Restore precious files (now under tracked ancestors, so gitignore applies)
+mv ~/git-clean-archive/<precious-file> <restored-tracked-path>/
+```
+
+The full diagnosis is in `abductive-reasoning.md` Entry 5; this Obs is the operational summary. Added to `continuity.md` failure-modes section as "git clean -fd removes gitignored files inside untracked directories".
+
+*Source:* sapphire git-state cleanup 2026-05-03; commits `3256744` (gitignore pattern broadening, applied after the parquet was preserved).
+
+---
+
+## Obs 32 — 2026-05-03: dated-backlog supersession is the right pattern when the project's phase changes substantively
+
+`planning/backlog-2026-04-22.md` was the original working backlog; `planning/backlog-2026-05-03.md` was created today as a *replacement* (the 2026-04-22 file kept as historical record, not updated in-place). This is the same supersession pattern that `continuity-2026-04-23.md` → `continuity.md` used in April.
+
+Decision rule that emerged: **when the project's underlying phase changes substantively (Decisions 8/9/10 forward-fit pivot, plus baorista install + travel-week handoff), supersede the dated working doc rather than amend in place.** When the phase is stable and the work is incremental (e.g., during the original April sprint), update in place.
+
+Two reasons supersession beats in-place amendment for cross-phase changes:
+
+1. **Cognitive load on next-session-CC.** Reading a partially-edited dated backlog mixes "what was true at creation" with "what's true now" without a clean tideline. Reading a fresh dated backlog plus a header pointer to its predecessor preserves the historical record without forcing a parse.
+2. **Audit trail for "why did the priority queue change?"** The supersession event is itself a recoverable signal: a new backlog file dated to a phase boundary has the phase-change rationale in its first paragraph. An in-place amendment loses that.
+
+`continuity.md` is different — that one is genuinely living, updated incrementally each session, because the *register-level* content (standing rules, failure modes, "if context feels cold" reading order) is meant to evolve continuously rather than supersede.
+
+*Source:* `planning/backlog-2026-05-03.md` header + supersession note; comparison with `continuity-2026-04-23.md` → `continuity.md` April supersession.

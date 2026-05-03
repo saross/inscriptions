@@ -288,3 +288,61 @@ I didn't in advance. The agent caught it empirically after the duplicate was cre
 ### Source
 
 Agent `a050742b9dd16db93` batch-add run 2026-04-24. Commits `e26278e` (initial script), `f820afb` (run log), `0822157` (follow-up script), `6e8355b` (follow-up fix with Europe PMC fallback and attachment-return parsing).
+
+---
+
+## Entry 5 — 2026-05-03: `git clean -fd` removes gitignored files inside untracked directories
+
+### Surprising fact
+
+During the sapphire git-state cleanup, `git clean -fdn` (dry-run) flagged the *entire* `runs/2026-04-25-h1-simulation/outputs/h1-v2/` directory for removal — including the gitignored `cell-results.parquet` (119 MB, ~5 h of sapphire compute to regenerate) sitting inside it. This contradicted my prior expectation that `.gitignore` patterns universally protect matching paths, regardless of where in the tree they live. The dry-run output was unambiguous: "Would remove `runs/2026-04-25-h1-simulation/outputs/h1-v2/`" — directory removal is recursive, and gitignore-pattern matching apparently does not interpose.
+
+`git check-ignore -v runs/2026-04-25-h1-simulation/outputs/h1-v2/cell-results.parquet` returned empty — i.e. git did *not* consider this file ignored. The file matched the gitignore pattern `runs/**/cell-results.parquet` syntactically, but the path's directory ancestor (`runs/.../h1-v2/`) was itself untracked, and git's ignore-evaluation short-circuits in that case: it doesn't look inside untracked directories at all.
+
+### Probe
+
+Caught before running `git clean -fd` for real. The dry-run output was the only signal — I'd nearly run `git clean -fd` directly without dry-running first, and was about to delete ~140 MB of irreplaceable-on-this-timescale research artefacts.
+
+Verified the diagnosis post-hoc by reading `man gitignore` more carefully:
+
+> If a parent directory of pattern is itself excluded, the file is not re-included. It is not possible to re-include a file if a parent directory of that file is excluded.
+
+This is for the *exclusion* direction (patterns can't override an excluded ancestor). The mirror behaviour for `git clean` is described in `man git-clean`:
+
+> git-clean removes untracked files from the working tree.
+
+— and the relevant subtlety isn't called out: untracked *directories* are removed wholesale by `-d`, and gitignore patterns *do not protect contents of untracked directories*. The `man` page says `-x` removes ignored files too; without `-x`, it skips files at the top level that are ignored, but still removes untracked directories regardless of what they contain.
+
+### Belief revision
+
+Old belief: *Files matching a `.gitignore` pattern are protected from `git clean` regardless of where they live in the tree. The pattern is the protection.*
+
+Revised belief: *`.gitignore` protects files only when their directory ancestors are tracked. An untracked directory is opaque to gitignore; `git clean -d` removes it wholesale, including any contents that would individually match an ignore pattern.* The protection is **not** the pattern — it's the *combination* of the pattern *and* a tracked-ancestor path. Gitignore is a within-tree mechanism, not an absolute path-based filter.
+
+### What would change this belief
+
+A future git version that extends gitignore's semantics to look inside untracked directories during `clean`. Possible but unlikely; the current behaviour has been stable for many years and reflects a deliberate design choice (untracked directories are treated as a single opaque unit by clean, both for performance and conceptual simplicity).
+
+A configuration option (e.g., a new flag like `git clean --respect-ignore-in-untracked-dirs`) that opts into the protection. Not currently available; if it appeared, the safety pattern below would be obsolete.
+
+### How I noticed
+
+The dry-run output ("Would remove `runs/.../h1-v2/`") combined with my knowledge that `cell-results.parquet` lived inside that path. The path-membership recognition was the trigger; the dry-run *result* alone wouldn't have flagged it (`git clean -fdn` doesn't enumerate the contents of dirs it plans to remove). I had nearly skipped the dry-run.
+
+### Implications
+
+1. **Immediate**: moved both gitignored artefacts (`cell-results.parquet` 119 MB, `install.log` 21 MB) to a sapphire-local archive directory before running clean, then restored after pull. Working tree clean; both artefacts preserved.
+
+2. **Generalisable safety pattern**: before any `git clean -fd` (or `-fdx`) run on a working tree with untracked directories that *might* contain gitignored content:
+
+   - Dry-run first (`git clean -fdn`) — **not optional**, even when you think you know what's there.
+   - For each untracked directory in the dry-run output, list its contents and identify any gitignored files (`find <untracked-dir> -type f` plus knowledge of the project's `.gitignore` patterns).
+   - Move those files to a safe location *before* running the clean. Restore after.
+
+3. **Project failure-mode list**: added to `continuity.md` failure-modes section as "git clean -fd removes gitignored files inside untracked directories — preserve them deliberately first".
+
+4. **Reasoning-pattern link to Entry 4** (pyzotero `q=DOI` trap): both entries record the same family of surprise — *I assumed a tool's documented behaviour applied universally; actually it applies only conditionally, and the conditions weren't surfaced in the docs I'd read*. Entry 4 was on a search-API's index-coverage; Entry 5 is on git's directory-traversal semantics. Different tools, identical reasoning failure. The pattern is: **before trusting a documented protection at scale, verify the precondition.** For Zotero FTS, the precondition was "DOI is indexed" (it isn't). For gitignore-during-clean, the precondition is "directory ancestor is tracked" (often isn't on machines that haven't pulled recently). The principle of **pre-launch verification of tool semantics on a known-positive case** that I derived from Entry 4 applies here verbatim — and I didn't apply it. The documented-but-leaky channel from "lessons learned" to "applied next time" is itself worth flagging (see this session's session-reflection.md Entry 3 texture note).
+
+### Source
+
+Sapphire git-state cleanup, 2026-05-03. Commits `3256744` (gitignore pattern broadening, applied after the parquet was preserved and the cleanup completed). Diagnosis from `git check-ignore -v` output + `man gitignore` re-read.
