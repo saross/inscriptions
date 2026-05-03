@@ -6,8 +6,8 @@ data/LIST_v1-2.parquet
 # Reconstructable deterministically from seed_hex; live copies on sapphire +
 # archive to Zenodo at paper submission per GH issue #3 (Phase 2 reproducibility).
 # Summary parquets (cell-summary, thresholds, power-curves) ARE committed.
-runs/**/outputs/cell-results.parquet
-runs/**/outputs/run.pid
+runs/**/cell-results.parquet
+runs/**/run.pid
 
 # Compile output from R/Stan/NIMBLE installs — large, noise, reproducible
 # from the install scripts. Live on sapphire as ground truth.
