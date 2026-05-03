@@ -41,6 +41,23 @@ cores <- max(1L, parallel::detectCores() - 1L)
 options(Ncpus = cores)
 message(sprintf("Using %d compile cores", cores))
 
+# Ensure the user library exists and is the *first* entry on .libPaths(), so
+# install.packages() does not try to write to /usr/local/lib/R/site-library
+# (root-owned, not writable for the unprivileged install). Per CRAN convention,
+# R_LIBS_USER defaults to ~/R/x86_64-pc-linux-gnu-library/4.4 on Linux but is
+# only auto-created the first time R installs a package interactively; in a
+# non-interactive Rscript run we must do this ourselves.
+user_lib <- Sys.getenv("R_LIBS_USER")
+if (nchar(user_lib) == 0L) {
+  user_lib <- file.path("~", "R", paste0(R.version$platform, "-library"),
+                        paste(R.version$major, sub("\\..*", "",
+                                                    R.version$minor), sep = "."))
+}
+user_lib <- path.expand(user_lib)
+dir.create(user_lib, recursive = TRUE, showWarnings = FALSE)
+.libPaths(c(user_lib, .libPaths()))
+message(sprintf("Installing into user library: %s", user_lib))
+
 # --- 1. cmdstanr from r-universe ----------------------------------------------
 # r-universe tracks Stan releases continuously; CRAN's cmdstanr lags. Per the
 # Track 2 plan §6.3 (cmdstanr-preferred design), this is the approved channel.

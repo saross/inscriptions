@@ -67,7 +67,7 @@ all clean.
 ## Stage 2 — R packages install (PASS)
 
 Script: `runs/2026-05-03-baorista-install/install_r_packages.R` (commit
-`9d72aae`).
+`9d72aae`, plus a user-library bootstrap fix added 2026-05-04, see below).
 
 Run command:
 
@@ -80,6 +80,23 @@ ssh sapphire 'cd ~/Code/inscriptions && CMDSTAN=/home/shawn/.cmdstan/cmdstan-2.3
 NIMBLE compiled cleanly first try (the `Risk #1` flagged in the plan did
 not fire). cmdstanr reused the Stage 0 cmdstan via `set_cmdstan_path()`
 — no second compile cycle.
+
+### User-library bootstrap fix (added 2026-05-04 during re-run)
+
+On a fresh sapphire R install, `R_LIBS_USER`
+(`~/R/x86_64-pc-linux-gnu-library/4.4`) does not yet exist, and
+`install.packages()` falls back to `/usr/local/lib/R/site-library`
+(root-owned, not writable for unprivileged users). The first attempt
+crashed within seconds with `lib = "/usr/local/lib/R/site-library" is
+not writable`. Fix: prepend a user-library bootstrap block at the top
+of `install_r_packages.R` that creates the user library directory if
+needed and pushes it onto `.libPaths()` before any `install.packages()`
+call. With this fix the script is now idempotent on a clean sapphire
+install — no manual library-path setup required.
+
+Wall-time of the re-run (with the fix in place): ~7 min from launch to
+`INSTALL COMPLETE`. The shorter wall-time vs the 30 min plan estimate
+reflects the cmdstan reuse plus parallel compile across 23 cores.
 
 Installed package versions (verbatim from R post-install verification):
 
