@@ -639,3 +639,68 @@ The H1 framework continues to test detection at this magnitude × duration; cell
 - `runs/2026-04-25-h1-simulation/outputs/h1-v2/REPORT-v2.md` — preliminary unreachable-cell map (to be confirmed by full-precision rerun per Decision 9).
 - Decision 5 — original effect-size bracket selection (a/b/c).
 - Prereg §4 H3b — confirmatory family definition; will be amended to limit family to `a_50pc_50y` and `b_double_25y` at H1-reachable cells.
+
+---
+
+## Decision 11 — 2026-05-14: Submission venue — commit to JAMT (resolves Decision 7's open scope-commitment item)
+
+**Status:** committed
+**Decided by:** Shawn 2026-05-14
+**Resolves:** the open submission-venue item carried in Decision 7's
+"scope commitment path" (single combined paper; JAMT methods-heavy
+vs JAS balanced; commit by end of Week 1 of the paper sprint).
+
+### Context
+
+Decision 7 set a single combined paper as the default and named two
+candidate venues — JAMT (*Journal of Archaeological Method and
+Theory*, methods-heavy) and JAS (*Journal of Archaeological Science*,
+balanced) — with the venue commitment due by end of Week 1 of the
+paper sprint. That checkpoint has now arrived. The preregistration is
+being brought to a clean lodgement-ready state and carried an "open
+design decision" placeholder for the venue; that placeholder needs to
+resolve so the preregistration can drop its open-decisions list.
+
+### Options considered
+
+- **A — JAMT** (methods-heavy). The paper's primary contribution is
+  methodological — the deconvolution-mixture correction for
+  editorial-convention artefacts, the forward-fit permutation-envelope
+  machinery, and the small-N trajectory-estimation diagnostic. JAMT's
+  readership and scope match a paper whose headline is a method, with
+  an illustrative substantive finding.
+- **B — JAS** (balanced). Broader archaeological-science readership;
+  would suit a paper weighted more evenly between method and
+  substantive result.
+
+### Decision
+
+**Option A — JAMT.** The paper's centre of gravity is methodological:
+the substantive population-variance decomposition is framed throughout
+as the *illustrative* application, not the headline. JAMT is the
+correct readership for that balance.
+
+This decision is recorded here as the auditable venue commitment. The
+preregistration itself does **not** name a target venue — naming a
+journal in a preregistration is unnecessary and premature, and the
+preregistration is a method-and-hypothesis record, not a submission
+plan. The venue lives in this log.
+
+### Consequences
+
+- The preregistration's "Open design decisions" list can be removed in
+  full (this was its last unresolved item).
+- Drafting can target JAMT's length conventions and methods-forward
+  structure from the outset.
+- If the methodology content grows past the Decision 7 split-trigger
+  thresholds during drafting, the single-vs-split question reopens —
+  but the venue for the methods component would remain JAMT.
+
+### Revisit triggers
+
+- Decision 7's split-trigger conditions fire during drafting (methods
+  content exceeds ~3,000–4,000 words; deconvolution and baorista
+  diverge substantively; the Aeneas-partition outline suggests a
+  natural companion submission).
+- JAMT scope or submission guidelines turn out to be a poor fit on
+  closer reading of recent issues.
