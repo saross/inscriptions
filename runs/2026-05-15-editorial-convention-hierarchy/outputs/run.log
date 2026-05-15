@@ -1,0 +1,161 @@
+Loading LIRE v3.0 from /home/shawn/Code/inscriptions/archive/data-2026-04-22/LIRE_v3-0.parquet
+Filtered corpus: 180,609 rows (expected 180,609 per the preregistration)
+
+=== Test 1: top-N endpoint frequencies ===
+  not_before: top 50 written → /home/shawn/Code/inscriptions/runs/2026-05-15-editorial-convention-hierarchy/outputs/test1-endpoint-frequencies/top50_not_before.csv
+    leaders (year:count [tag]):
+          1 :   34369 [century-incl-start]
+        301 :   29685 [century-incl-start]
+        101 :   24109 [century-incl-start]
+        201 :   10335 [century-incl-start]
+        151 :    9716 [half-century-incl-start]
+         51 :    7588 [half-century-incl-start]
+         71 :    5813 [decade-start]
+        171 :    4669 [decade-start]
+        -30 :    3025 [decade-end]
+        -50 :    2241 [decade-end]
+  not_after: top 50 written → /home/shawn/Code/inscriptions/runs/2026-05-15-editorial-convention-hierarchy/outputs/test1-endpoint-frequencies/top50_not_after.csv
+    leaders (year:count [tag]):
+        300 :   25797 [century-incl-end]
+        200 :   25174 [century-incl-end]
+        500 :   16072 [other]
+        100 :   15136 [century-incl-end]
+        400 :   12680 [other]
+         50 :    8217 [century-midpoint]
+        250 :    7261 [century-midpoint]
+        150 :    6425 [century-midpoint]
+         79 :    4362 [reign-related]
+        230 :    4187 [decade-end]
+  category rollup → /home/shawn/Code/inscriptions/runs/2026-05-15-editorial-convention-hierarchy/outputs/test1-endpoint-frequencies/category_rollup.csv
+
+=== Test 2: hierarchical O/E by tier ===
+  not_before: per-year → /home/shawn/Code/inscriptions/runs/2026-05-15-editorial-convention-hierarchy/outputs/test2-hierarchical-oe/per_year_oe_not_before.csv
+  not_before: tier summary → /home/shawn/Code/inscriptions/runs/2026-05-15-editorial-convention-hierarchy/outputs/test2-hierarchical-oe/tier_summary_not_before.csv
+  not_before: tier ranking at sigma=20 (descending geo-mean O/E):
+    century-incl-start         n=  4  geo-mean O/E = 36.55  median O/E = 38.58
+    half-century-incl-start    n=  4  geo-mean O/E = 4.13  median O/E = 15.08
+    reign-related              n= 39  geo-mean O/E = 0.62  median O/E = 0.67
+    decade-start               n= 32  geo-mean O/E = 0.38  median O/E = 0.36
+    quarter-century-start      n=  8  geo-mean O/E = 0.36  median O/E = 0.43
+    century-midpoint           n=  4  geo-mean O/E = 0.34  median O/E = 0.31
+    decade-end                 n= 33  geo-mean O/E = 0.18  median O/E = 0.19
+    quarter-century-end        n=  8  geo-mean O/E = 0.14  median O/E = 0.16
+    lustrum                    n= 64  geo-mean O/E = 0.10  median O/E = 0.10
+    century-incl-end           n=  4  geo-mean O/E = 0.09  median O/E = 0.07
+  not_after: per-year → /home/shawn/Code/inscriptions/runs/2026-05-15-editorial-convention-hierarchy/outputs/test2-hierarchical-oe/per_year_oe_not_after.csv
+  not_after: tier summary → /home/shawn/Code/inscriptions/runs/2026-05-15-editorial-convention-hierarchy/outputs/test2-hierarchical-oe/tier_summary_not_after.csv
+  not_after: tier ranking at sigma=20 (descending geo-mean O/E):
+    century-incl-end           n=  4  geo-mean O/E = 36.30  median O/E = 33.64
+    century-midpoint           n=  4  geo-mean O/E = 18.20  median O/E = 20.35
+    quarter-century-end        n=  8  geo-mean O/E = 0.67  median O/E = 0.54
+    decade-end                 n= 33  geo-mean O/E = 0.66  median O/E = 0.53
+    reign-related              n= 39  geo-mean O/E = 0.63  median O/E = 0.67
+    half-century-incl-start    n=  4  geo-mean O/E = 0.18  median O/E = 0.16
+    century-incl-start         n=  4  geo-mean O/E = 0.12  median O/E = 0.20
+    lustrum                    n= 64  geo-mean O/E = 0.11  median O/E = 0.10
+    decade-start               n= 32  geo-mean O/E = 0.10  median O/E = 0.09
+    quarter-century-start      n=  8  geo-mean O/E = 0.08  median O/E = 0.09
+  combined: per-year → /home/shawn/Code/inscriptions/runs/2026-05-15-editorial-convention-hierarchy/outputs/test2-hierarchical-oe/per_year_oe_combined.csv
+  combined: tier summary → /home/shawn/Code/inscriptions/runs/2026-05-15-editorial-convention-hierarchy/outputs/test2-hierarchical-oe/tier_summary_combined.csv
+  combined: tier ranking at sigma=20 (descending geo-mean O/E):
+    century-incl-start         n=  4  geo-mean O/E = 20.28  median O/E = 21.55
+    century-incl-end           n=  4  geo-mean O/E = 18.34  median O/E = 16.30
+    century-midpoint           n=  4  geo-mean O/E = 10.16  median O/E = 9.80
+    half-century-incl-start    n=  4  geo-mean O/E = 2.44  median O/E = 6.82
+    reign-related              n= 39  geo-mean O/E = 0.75  median O/E = 0.78
+    quarter-century-end        n=  8  geo-mean O/E = 0.51  median O/E = 0.45
+    decade-end                 n= 33  geo-mean O/E = 0.51  median O/E = 0.34
+    decade-start               n= 32  geo-mean O/E = 0.27  median O/E = 0.20
+    quarter-century-start      n=  8  geo-mean O/E = 0.24  median O/E = 0.23
+    lustrum                    n= 64  geo-mean O/E = 0.10  median O/E = 0.12
+
+=== Test 3: trailing-two-digit histogram ===
+  not_before: top 20 trailing-two-digit residues (uniform-null share = 1 %):
+      1 :  98502  (54.54 %)
+     51 :  19069  (10.56 %)
+     71 :  11015  (6.10 %)
+     31 :   4300  (2.38 %)
+     70 :   3397  (1.88 %)
+     50 :   2612  (1.45 %)
+     91 :   2271  (1.26 %)
+     26 :   2126  (1.18 %)
+     23 :   1429  (0.79 %)
+     22 :   1384  (0.77 %)
+     73 :   1357  (0.75 %)
+     43 :   1315  (0.73 %)
+     17 :   1299  (0.72 %)
+      0 :   1287  (0.71 %)
+     69 :   1243  (0.69 %)
+     38 :   1111  (0.62 %)
+     80 :   1065  (0.59 %)
+     12 :   1057  (0.59 %)
+     14 :   1045  (0.58 %)
+     98 :   1017  (0.56 %)
+  → /home/shawn/Code/inscriptions/runs/2026-05-15-editorial-convention-hierarchy/outputs/test3-trailing-digits/trailing_digits_not_before.csv
+  not_after: top 20 trailing-two-digit residues (uniform-null share = 1 %):
+      0 :  95782  (53.03 %)
+     50 :  24556  (13.60 %)
+     30 :  10823  (5.99 %)
+     70 :   6184  (3.42 %)
+     79 :   4570  (2.53 %)
+     99 :   2792  (1.55 %)
+     75 :   2786  (1.54 %)
+     25 :   2696  (1.49 %)
+     17 :   2067  (1.14 %)
+     14 :   1480  (0.82 %)
+     23 :   1447  (0.80 %)
+     38 :   1332  (0.74 %)
+     61 :    936  (0.52 %)
+     35 :    910  (0.50 %)
+     80 :    852  (0.47 %)
+     69 :    840  (0.47 %)
+     68 :    802  (0.44 %)
+     37 :    764  (0.42 %)
+     20 :    755  (0.42 %)
+     60 :    754  (0.42 %)
+  → /home/shawn/Code/inscriptions/runs/2026-05-15-editorial-convention-hierarchy/outputs/test3-trailing-digits/trailing_digits_not_after.csv
+
+=== Test 4: reign-boundary specific test ===
+  → /home/shawn/Code/inscriptions/runs/2026-05-15-editorial-convention-hierarchy/outputs/test4-reign-boundaries/reign_boundary_oe.csv
+  Significant (Holm p < 0.05): 13 / 39 reign-boundary years
+    AD  -27  obs=  1357  exp=  520.1  O/E=2.61  p_holm=1.11e-202
+    AD   14  obs=  2033  exp=  886.2  O/E=2.29  p_holm=4.68e-236
+    AD   41  obs=   874  exp=  725.0  O/E=1.21  p_holm=1.25e-06
+    AD   69  obs=  1253  exp=  920.0  O/E=1.36  p_holm=4.13e-24
+    AD   79  obs=  4552  exp= 1040.8  O/E=4.37  p_holm=0.00e+00
+    AD  117  obs=  1855  exp= 1043.1  O/E=1.78  p_holm=4.45e-112
+    AD  138  obs=  1860  exp=  795.5  O/E=2.34  p_holm=9.34e-225
+    AD  161  obs=  1584  exp=  724.1  O/E=2.19  p_holm=5.36e-166
+    AD  217  obs=  1337  exp=  869.6  O/E=1.54  p_holm=1.59e-47
+    AD  222  obs=   884  exp=  784.9  O/E=1.13  p_holm=7.41e-03
+    AD  235  obs=   834  exp=  594.0  O/E=1.40  p_holm=2.84e-19
+    AD  251  obs=  1860  exp=  491.9  O/E=3.78  p_holm=0.00e+00
+    AD  270  obs=  1786  exp=  643.6  O/E=2.78  p_holm=1.50e-296
+
+=== Test 5: convention-text labelled subset ===
+  raw_dating non-null rows: 176,416
+  top-50 raw_dating values → /home/shawn/Code/inscriptions/runs/2026-05-15-editorial-convention-hierarchy/outputs/test5-convention-text/top50_raw_dating.csv
+  top 15 raw_dating values + modal endpoints:
+     15863 × '301 to 500'  →  (301, 500) [100% modal]
+     13200 × '101 to 200'  →  (101, 200) [98% modal]
+     10787 × '301 to 400'  →  (301, 400) [99% modal]
+     10590 × '1 to 100'  →  (1, 100) [98% modal]/home/shawn/Code/inscriptions/runs/2026-05-15-editorial-convention-hierarchy/scripts/run_tests.py:511: UserWarning: This pattern is interpreted as a regular expression, and has match groups. To actually get the groups, use str.extract.
+  mask = rd.str.contains(regex)
+
+      6579 × '1 to 50'  →  (1, 50) [98% modal]
+      6505 × '201 to 300'  →  (201, 300) [97% modal]
+      5483 × '101 to 300'  →  (101, 300) [97% modal]
+      4497 × '1 to 200'  →  (1, 200) [97% modal]
+      4253 × '1 to 300'  →  (1, 300) [99% modal]
+      3266 × '151 to 300'  →  (151, 300) [98% modal]
+      3173 × '1 to 79'  →  (1, 79) [100% modal]
+      2308 × '151 to 250'  →  (151, 250) [97% modal]
+      2183 × '51 to 100'  →  (51, 100) [96% modal]
+      2054 × '171 to 230'  →  (171, 230) [97% modal]
+      1978 × '51 to 200'  →  (51, 200) [97% modal]
+  pattern aggregation → /home/shawn/Code/inscriptions/runs/2026-05-15-editorial-convention-hierarchy/outputs/test5-convention-text/pattern_aggregation.csv
+  pattern share of round-number endpoints (00 or 50):
+    numeric_year   n=175893  nb-round=0.02  na-round=0.67  modal=(1, 200)
+
+All five tests complete. Outputs under:
+  /home/shawn/Code/inscriptions/runs/2026-05-15-editorial-convention-hierarchy/outputs

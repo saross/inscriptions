@@ -35,28 +35,73 @@ OUT_DIR.mkdir(parents=True, exist_ok=True)
 # ---------------------------------------------------------------------------
 ENVELOPE_MIN, ENVELOPE_MAX = -50, 350
 
-# Prereg's "century-midpoint" tier — the known editorial artefact.
+# Note on Roman dating conventions surfaced by Test 1:
+# Editors using inclusive-Roman century counting encode date intervals at
+# year-mod-100 = 1 (century start) and year-mod-100 = 0 (century end). So
+# "2nd century AD" -> not_before = 101, not_after = 200. The prereg's prior
+# focus on "century-midpoint inflation" at AD 50, 150, 250, 350 captured a
+# derivative effect (aoristic mass at interval midpoints); endpoint frequency
+# is the more fundamental measure of editorial rounding.
+
+# --- Century-tier years (most-prominent editorial rounding tier) ---
+
+# Inclusive-Roman century-start years (typical not_before for "Xth century").
+CENTURY_INCL_START_YEARS = [
+    y for y in range(ENVELOPE_MIN, ENVELOPE_MAX + 1) if y % 100 == 1
+]  # 1, 101, 201, 301
+
+# Inclusive-Roman century-end years (typical not_after for "Xth century").
+CENTURY_INCL_END_YEARS = [
+    y for y in range(ENVELOPE_MIN, ENVELOPE_MAX + 1) if y % 100 == 0
+]  # 0, 100, 200, 300
+
+# Prereg's original "century-midpoint" tier — AD 50, 150, 250, 350.
+# Often the not_after of "first/second/third half" or the midpoint of
+# half-century intervals.
 CENTURY_MIDPOINT_YEARS = [50, 150, 250, 350]
 
-# Century-boundary tier (the half-century complement to the midpoints).
-CENTURY_BOUNDARY_YEARS = [0, 100, 200, 300]
+# Inclusive-Roman half-century-start years.
+HALF_CENTURY_INCL_START_YEARS = [
+    y for y in range(ENVELOPE_MIN, ENVELOPE_MAX + 1) if y % 100 == 51
+]  # 51, 151, 251
 
-# Quarter-century years in the envelope (excluding overlap with the above).
-QUARTER_CENTURY_YEARS = [
+# --- Sub-century tiers ---
+
+# Quarter-century inclusive-end years (years ending 25 or 75).
+QUARTER_CENTURY_END_YEARS = [
     y for y in range(ENVELOPE_MIN, ENVELOPE_MAX + 1)
     if y % 100 in {25, 75}
 ]
 
-# Decade years (multiples of 10, excluding centuries and half-centuries).
-DECADE_YEARS = [
+# Quarter-century inclusive-start years (years ending 26 or 76).
+QUARTER_CENTURY_START_YEARS = [
     y for y in range(ENVELOPE_MIN, ENVELOPE_MAX + 1)
-    if y % 10 == 0 and y % 50 != 0
+    if y % 100 in {26, 76}
 ]
 
-# Lustrum years (multiples of 5 ending in 5, excluding decades and others).
+# Decade-end years (multiples of 10, excluding overlap with above tiers).
+_century_set = set(CENTURY_INCL_END_YEARS + CENTURY_MIDPOINT_YEARS
+                   + CENTURY_INCL_START_YEARS + HALF_CENTURY_INCL_START_YEARS)
+DECADE_END_YEARS = [
+    y for y in range(ENVELOPE_MIN, ENVELOPE_MAX + 1)
+    if y % 10 == 0 and y not in _century_set
+    and y not in QUARTER_CENTURY_END_YEARS and y not in QUARTER_CENTURY_START_YEARS
+]
+
+# Decade-start years (years ≡ 1 mod 10, excluding above tiers).
+DECADE_START_YEARS = [
+    y for y in range(ENVELOPE_MIN, ENVELOPE_MAX + 1)
+    if y % 10 == 1 and y not in _century_set
+    and y not in QUARTER_CENTURY_END_YEARS and y not in QUARTER_CENTURY_START_YEARS
+]
+
+# Lustrum years (multiples of 5 not in above tiers).
+_decade_set = set(DECADE_END_YEARS + DECADE_START_YEARS)
 LUSTRUM_YEARS = [
     y for y in range(ENVELOPE_MIN, ENVELOPE_MAX + 1)
-    if y % 10 == 5 and y % 25 not in {0, 25}  # exclude *_25 and *_75
+    if (y % 10 == 5 or y % 10 == 6) and y not in _century_set
+    and y not in _decade_set
+    and y not in QUARTER_CENTURY_END_YEARS and y not in QUARTER_CENTURY_START_YEARS
 ]
 
 # Well-attested emperor accession (and notable transition) years.
@@ -107,18 +152,26 @@ REIGN_BOUNDARY_SET = set(REIGN_BOUNDARY_YEARS)
 
 
 def categorise_year(year: int) -> str:
-    """Tag a year by its boundary type. Most-specific tag wins."""
+    """Tag a year by its most-specific boundary type."""
+    if year in CENTURY_INCL_START_YEARS:
+        return "century-incl-start"
+    if year in CENTURY_INCL_END_YEARS:
+        return "century-incl-end"
     if year in CENTURY_MIDPOINT_YEARS:
         return "century-midpoint"
-    if year in CENTURY_BOUNDARY_YEARS:
-        return "century-boundary"
-    if year % 100 in {25, 75}:
-        return "quarter-century"
+    if year in HALF_CENTURY_INCL_START_YEARS:
+        return "half-century-incl-start"
+    if year in QUARTER_CENTURY_END_YEARS:
+        return "quarter-century-end"
+    if year in QUARTER_CENTURY_START_YEARS:
+        return "quarter-century-start"
     if year in REIGN_BOUNDARY_SET:
         return "reign-related"
-    if year % 10 == 0:
-        return "decade"
-    if year % 10 == 5:
+    if year in DECADE_END_YEARS:
+        return "decade-end"
+    if year in DECADE_START_YEARS:
+        return "decade-start"
+    if year in LUSTRUM_YEARS:
         return "lustrum"
     return "other"
 
@@ -190,116 +243,152 @@ def test1_endpoint_frequencies(df: pd.DataFrame) -> None:
 # ---------------------------------------------------------------------------
 # Test 2 — Hierarchical O/E by tier
 # ---------------------------------------------------------------------------
-def _endpoint_counts(df: pd.DataFrame) -> pd.Series:
-    """For every year in the envelope, count (not_before==y) + (not_after==y)."""
+def _endpoint_counts(df: pd.DataFrame, which: str = "combined") -> pd.Series:
+    """For every year in the envelope, count endpoint occurrences.
+
+    which: "not_before", "not_after", or "combined".
+    """
     years = np.arange(ENVELOPE_MIN, ENVELOPE_MAX + 1)
     nb_counts = df["not_before"].value_counts()
     na_counts = df["not_after"].value_counts()
     observed = pd.Series(0, index=years, dtype=int)
     for y in years:
-        observed.loc[y] = int(nb_counts.get(y, 0)) + int(na_counts.get(y, 0))
+        nb = int(nb_counts.get(y, 0))
+        na = int(na_counts.get(y, 0))
+        if which == "not_before":
+            observed.loc[y] = nb
+        elif which == "not_after":
+            observed.loc[y] = na
+        else:
+            observed.loc[y] = nb + na
     return observed
 
 
 def _gaussian_expected(observed: pd.Series, sigma: float) -> pd.Series:
     """Smooth the observed-count curve to get an expected baseline.
 
-    Approach: heavy Gaussian smoothing of the observed counts gives a baseline
-    that approximates "what the curve would look like if editorial rounding
-    weren't present" — sharp boundary spikes are flattened, broad underlying
-    density is preserved.
+    Heavy Gaussian smoothing flattens sharp boundary spikes while preserving
+    broad underlying density.
     """
     arr = observed.to_numpy().astype(float)
     smoothed = ndimage.gaussian_filter1d(arr, sigma=sigma, mode="reflect")
     return pd.Series(smoothed, index=observed.index)
 
 
+def _holm_adjust(p_values: np.ndarray) -> np.ndarray:
+    """Holm-Bonferroni step-down adjustment over a single family."""
+    p = np.asarray(p_values, dtype=float)
+    n = len(p)
+    if n == 0:
+        return p
+    order = np.argsort(p)
+    adj = np.empty(n, dtype=float)
+    for i, idx in enumerate(order):
+        adj[idx] = min(1.0, p[idx] * (n - i))
+    # Step-down monotonicity.
+    ordered_adj = adj[order]
+    for i in range(1, n):
+        ordered_adj[i] = max(ordered_adj[i], ordered_adj[i - 1])
+    adj[order] = ordered_adj
+    return adj
+
+
+def _safe_geo_mean(values: list[float]) -> float:
+    """Geometric mean over positive values; returns nan if no positive values."""
+    pos = [v for v in values if v > 0]
+    if not pos:
+        return float("nan")
+    return float(np.exp(np.mean(np.log(pos))))
+
+
 def test2_hierarchical_oe(df: pd.DataFrame) -> None:
-    """Per-year and per-tier observed/expected at every boundary year."""
+    """Per-year and per-tier observed/expected at every boundary year.
+
+    Runs three parallel analyses: not_before only, not_after only, and
+    combined. Surfaces the inclusive-Roman convention that not_before
+    clusters at years ≡ 1 mod 100 and not_after at years ≡ 0 mod 100.
+    """
     out_dir = OUT_DIR / "test2-hierarchical-oe"
     out_dir.mkdir(exist_ok=True)
     print("\n=== Test 2: hierarchical O/E by tier ===")
 
-    observed = _endpoint_counts(df)
     bandwidths = [5, 10, 20, 30]
-    per_year_rows = []
-    tier_rows = []
 
     tiers = {
-        "century-midpoint": CENTURY_MIDPOINT_YEARS,
-        "century-boundary": CENTURY_BOUNDARY_YEARS,
-        "quarter-century": QUARTER_CENTURY_YEARS,
-        "decade": DECADE_YEARS,
+        "century-incl-start": CENTURY_INCL_START_YEARS,        # 1, 101, 201, 301
+        "century-incl-end": CENTURY_INCL_END_YEARS,            # 0, 100, 200, 300
+        "century-midpoint": CENTURY_MIDPOINT_YEARS,            # 50, 150, 250, 350
+        "half-century-incl-start": HALF_CENTURY_INCL_START_YEARS,  # 51, 151, 251
+        "quarter-century-end": QUARTER_CENTURY_END_YEARS,
+        "quarter-century-start": QUARTER_CENTURY_START_YEARS,
+        "decade-end": DECADE_END_YEARS,
+        "decade-start": DECADE_START_YEARS,
         "lustrum": LUSTRUM_YEARS,
         "reign-related": REIGN_BOUNDARY_YEARS,
     }
 
-    for sigma in bandwidths:
-        expected = _gaussian_expected(observed, sigma=sigma)
-        for tier_name, years in tiers.items():
-            valid_years = [y for y in years
-                           if ENVELOPE_MIN <= y <= ENVELOPE_MAX]
-            for y in valid_years:
-                obs = int(observed.loc[y])
-                exp = float(expected.loc[y])
-                oe = obs / exp if exp > 0 else np.nan
-                # Poisson tail: P(X >= obs | mean = exp).
-                p_raw = float(stats.poisson.sf(obs - 1, exp)) if exp > 0 else np.nan
-                per_year_rows.append({
-                    "sigma": sigma, "tier": tier_name, "year": y,
-                    "observed": obs, "expected": exp, "oe_ratio": oe,
-                    "p_raw": p_raw,
-                })
-            # Tier-level summary: geometric mean of O/E.
-            oes = [int(observed.loc[y]) / float(expected.loc[y])
-                   for y in valid_years if float(expected.loc[y]) > 0]
-            if oes:
-                geo_mean = float(np.exp(np.mean(np.log(oes))))
-                median = float(np.median(oes))
-                mean = float(np.mean(oes))
+    for which in ("not_before", "not_after", "combined"):
+        observed = _endpoint_counts(df, which=which)
+        per_year_rows: list[dict] = []
+        tier_rows: list[dict] = []
+
+        for sigma in bandwidths:
+            expected = _gaussian_expected(observed, sigma=sigma)
+            for tier_name, years in tiers.items():
+                valid_years = [y for y in years if ENVELOPE_MIN <= y <= ENVELOPE_MAX]
+                if not valid_years:
+                    continue
+                tier_p = []
+                tier_rec_idx = []
+                for y in valid_years:
+                    obs = int(observed.loc[y])
+                    exp = float(expected.loc[y])
+                    oe = obs / exp if exp > 0 else float("nan")
+                    p_raw = float(stats.poisson.sf(obs - 1, exp)) if exp > 0 else float("nan")
+                    rec = {
+                        "endpoint": which, "sigma": sigma, "tier": tier_name,
+                        "year": y, "observed": obs, "expected": exp,
+                        "oe_ratio": oe, "p_raw": p_raw,
+                    }
+                    per_year_rows.append(rec)
+                    tier_p.append(p_raw)
+                    tier_rec_idx.append(len(per_year_rows) - 1)
+
+                # Holm-adjust within this (endpoint, sigma, tier).
+                p_arr = np.array([p if not np.isnan(p) else 1.0 for p in tier_p])
+                p_adj = _holm_adjust(p_arr)
+                for adj, ridx in zip(p_adj, tier_rec_idx):
+                    per_year_rows[ridx]["p_holm"] = float(adj)
+
+                oes = [per_year_rows[ridx]["oe_ratio"] for ridx in tier_rec_idx]
                 tier_rows.append({
-                    "sigma": sigma, "tier": tier_name, "n_years": len(valid_years),
-                    "geo_mean_oe": geo_mean, "mean_oe": mean, "median_oe": median,
+                    "endpoint": which, "sigma": sigma, "tier": tier_name,
+                    "n_years": len(valid_years),
+                    "geo_mean_oe": _safe_geo_mean(oes),
+                    "mean_oe": float(np.nanmean(oes)),
+                    "median_oe": float(np.nanmedian(oes)),
                 })
 
-    per_year_df = pd.DataFrame(per_year_rows)
-    # Holm-Bonferroni adjustment within each (sigma, tier) block.
-    def _holm(group: pd.DataFrame) -> pd.DataFrame:
-        p = group["p_raw"].to_numpy()
-        n = len(p)
-        order = np.argsort(p)
-        ranks = np.empty(n, dtype=int)
-        ranks[order] = np.arange(n)
-        adj = np.empty(n, dtype=float)
-        for i, idx in enumerate(order):
-            adj[idx] = min(1.0, p[idx] * (n - i))
-        # Enforce monotonicity in step-down.
-        ordered_adj = adj[order]
-        for i in range(1, n):
-            ordered_adj[i] = max(ordered_adj[i], ordered_adj[i - 1])
-        adj[order] = ordered_adj
-        group = group.copy()
-        group["p_holm"] = adj
-        return group
+        per_year_df = pd.DataFrame(per_year_rows)
+        per_year_df = per_year_df.sort_values(["endpoint", "sigma", "tier", "year"])
+        per_year_df.to_csv(out_dir / f"per_year_oe_{which}.csv", index=False)
 
-    per_year_df = (
-        per_year_df.groupby(["sigma", "tier"], group_keys=False).apply(_holm)
-        .sort_values(["sigma", "tier", "year"])
-    )
-    per_year_df.to_csv(out_dir / "per_year_oe.csv", index=False)
-    print(f"  per-year O/E → {out_dir / 'per_year_oe.csv'}")
+        tier_df = pd.DataFrame(tier_rows).sort_values(
+            ["sigma", "geo_mean_oe"], ascending=[True, False]
+        )
+        tier_df.to_csv(out_dir / f"tier_summary_{which}.csv", index=False)
 
-    tier_df = pd.DataFrame(tier_rows).sort_values(["sigma", "geo_mean_oe"], ascending=[True, False])
-    tier_df.to_csv(out_dir / "tier_summary.csv", index=False)
-    print(f"  tier summary → {out_dir / 'tier_summary.csv'}")
-
-    # Headline: tier ranking at sigma = 20.
-    headline = tier_df[tier_df["sigma"] == 20].copy()
-    print("  tier ranking at sigma=20 (descending geo-mean O/E):")
-    for _, r in headline.iterrows():
-        print(f"    {r['tier']:<20} n={int(r['n_years']):>3}  "
-              f"geo-mean O/E = {r['geo_mean_oe']:.2f}  "
-              f"median O/E = {r['median_oe']:.2f}")
+        print(f"  {which}: per-year → {out_dir / f'per_year_oe_{which}.csv'}")
+        print(f"  {which}: tier summary → {out_dir / f'tier_summary_{which}.csv'}")
+        # Headline: tier ranking at sigma = 20.
+        headline = tier_df[tier_df["sigma"] == 20].copy()
+        print(f"  {which}: tier ranking at sigma=20 (descending geo-mean O/E):")
+        for _, r in headline.iterrows():
+            geo = r["geo_mean_oe"]
+            geo_str = f"{geo:.2f}" if not np.isnan(geo) else " nan"
+            print(f"    {r['tier']:<26} n={int(r['n_years']):>3}  "
+                  f"geo-mean O/E = {geo_str}  "
+                  f"median O/E = {r['median_oe']:.2f}")
 
 
 # ---------------------------------------------------------------------------

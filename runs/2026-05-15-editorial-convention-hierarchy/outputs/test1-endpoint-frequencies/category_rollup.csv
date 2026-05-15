@@ -1,0 +1,16 @@
+endpoint,category,total_count,n_years
+not_after,century-incl-end,66107,3
+not_after,century-midpoint,24406,4
+not_after,decade-end,16087,10
+not_after,lustrum,319,1
+not_after,other,36822,10
+not_after,quarter-century-end,3333,4
+not_after,reign-related,16025,18
+not_before,century-incl-start,98498,4
+not_before,decade-end,5793,3
+not_before,decade-start,17291,8
+not_before,half-century-incl-start,19053,3
+not_before,other,8236,12
+not_before,quarter-century-end,342,1
+not_before,quarter-century-start,2245,2
+not_before,reign-related,10358,17

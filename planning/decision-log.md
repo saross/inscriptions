@@ -1252,3 +1252,147 @@ decisions, not (c)-2:
 - A direct published inscription-residual regional-spatial prior
   surfaces during further reading and is robust enough to ground a
   pre-specified contrast.
+
+---
+
+## Decision 17 — 2026-05-15: Editorial-convention hierarchy is real and structured; fold it into the Bayesian mixture as a flexible convention-shape prior
+
+**Status:** committed
+**Decided by:** Shawn 2026-05-15 (overnight diagnostic run conclusive;
+runs/2026-05-15-editorial-convention-hierarchy/).
+
+### Context
+
+The preregistration's deconvolution-mixture model (now Bayesian per
+Decision 14) specifies a `convention_SPA` shape that defaults to
+"uniform century slabs," with a contingent shift to a weighted
+hierarchical shape gated by an undefined editorial-convention-hierarchy
+test on an unspecified 14-boundary sample. The adversarial review
+flagged this as a researcher degree of freedom and (c)-3 of the
+triage was to either define the gate, drop the hierarchical option,
+or fold the choice into the Bayesian mixture itself.
+
+The 2026-04-23 descriptive-stats run had quantified century-midpoint
+inflation at AD 50/150/250/350 (observed/expected ratios 22.8 / 41.5 /
+18.8 / 39.7) but had not looked at any sub-century structure. An
+audit of the 2023-09 and 2026-04 exploratory notebooks plus the
+descriptive-stats outputs (2026-05-15) confirmed no systematic
+sub-century analysis had been done — but surfaced incidental evidence
+in the existing data (mc_ratio 19.7 at AD 100, 8.1 at AD 125, etc.)
+that strongly suggested a hierarchy was present.
+
+A targeted five-test diagnostic (top-N endpoint frequencies,
+hierarchical O/E by tier, trailing-two-digit histogram, reign-boundary
+specific test, and convention-text labelled-subset analysis) was run
+on the filtered corpus (180,609 rows). The diagnostic produced a
+decisive — and unexpected — answer.
+
+### Empirical findings
+
+The hierarchy is real, large, and structured. Key results (see
+`runs/2026-05-15-editorial-convention-hierarchy/outputs/REPORT.md`
+for the full report):
+
+- 54.5 % of all `not_before` values end in `01`; 53.0 % of all
+  `not_after` values end in `00`. Two-thirds of `not_after` values are
+  `00` or `50`; two-thirds of `not_before` values are `01` or `51`.
+- The dominant editorial convention is **inclusive-Roman century
+  counting**: "Xth century AD" maps to `not_before = (X-1)*100 + 1`
+  and `not_after = X*100`. The convention is *explicit* in the
+  `raw_dating` field (top values are literally "1 to 100",
+  "101 to 200", "301 to 400", with 96–100 % modal endpoint match).
+- Tier-by-tier geometric-mean observed/expected ratios (combined
+  endpoints, σ = 20 baseline):
+  - century-incl-start (year ≡ 1 mod 100): **20.28**
+  - century-incl-end (year ≡ 0 mod 100): **18.34**
+  - century-midpoint (year ≡ 50 mod 100): **10.16**
+  - half-century-incl-start (year ≡ 51 mod 100): **2.44**
+  - reign-related (curated 39-year set): 0.75 overall, with 13 years
+    Holm-significant; strongest signals at AD 79 (Vesuvius / Titus,
+    O/E 4.37), AD 251 (Crisis-era, O/E 3.78), AD 270 (Aurelian,
+    O/E 2.78), 27 BC (Augustus, O/E 2.61), AD 138/14/161
+    (dynastic transitions, O/E ~2.3).
+  - sub-century tiers (quarter-century, decade, lustrum):
+    *below baseline* (O/E < 0.51) — depleted, not enhanced.
+
+The preregistration's prior framing of the artefact as
+"century-midpoint inflation" is **partial**: midpoint inflation is a
+derivative effect of endpoint rounding. An interval like `[1, 100]`
+or `[101, 200]` places aoristic mass at midpoint years AD 50 or 150;
+the underlying editorial action is rounding the endpoints to
+inclusive-Roman century boundaries.
+
+### Options considered
+
+- **A — Commit to uniform century slabs as the convention shape; no
+  hierarchical option.** Rejected: would model the data against
+  visible, strong evidence (half-century layer has O/E 2.44; reign
+  layer has Holm-significant clustering at 13 dynastic/Crisis years).
+- **B — Define a pre-test that gates between uniform-century and
+  weighted-hierarchical shapes.** Rejected: an undefined pre-test
+  was the original problem; replacing it with a defined pre-test
+  adds a binary choice the Bayesian mixture can handle directly.
+- **C — Fold the convention-shape choice into the Bayesian mixture
+  as a flexible prior with explicit tier components.** Accepted:
+  empirically grounded, structurally consistent with Decision 14's
+  Bayesian respecification, and dissolves the contingent-shape pre-test
+  entirely.
+
+### Decision
+
+**Option C.** The `convention_SPA` shape in the Bayesian mixture
+takes a flexible prior with explicit tier components, structured by
+the diagnostic's empirical findings:
+
+- **Century layer (primary).** Mass at inclusive-Roman starts
+  (year ≡ 1 mod 100: AD 1, 101, 201, 301) and inclusive-Roman ends
+  (year ≡ 0 mod 100: AD 0, 100, 200, 300), plus the original
+  "century-midpoint" set (year ≡ 50 mod 100: AD 50, 150, 250, 350)
+  which captures intervals like `[1, 100]` and `[101, 200]` that
+  place mass on midpoint years.
+- **Half-century layer (secondary).** Mass at year ≡ 51 mod 100
+  (AD 51, 151, 251) — half-century inclusive starts. Half-century
+  inclusive ends are already captured in the century-midpoint layer.
+- **Reign-related layer (tertiary).** Mass at a curated set of
+  dynastic-transition and Crisis-era reign years where the
+  diagnostic showed Holm-significant clustering: 27 BC, AD 14, 41,
+  69, 79, 117, 138, 161, 217, 222, 235, 251, 270. (AD 79 in particular
+  is anchored by Vesuvius, not solely by Titus's accession.)
+- **No sub-century tiers** — quarter-century, decade, and lustrum
+  tiers showed below-baseline O/E and do not need a model component.
+
+The relative tier weights are estimated by the Bayesian mixture; the
+prior allows the data to set them within a weakly-informative
+half-Normal range.
+
+### Consequences
+
+- The preregistration's §3 deconvolution-mixture spec rewrites to
+  reflect endpoint-rounding (not midpoint-inflation) as the artefact
+  mechanism, and lists the three tier components above as the
+  convention-shape's structure.
+- The §2 Description should reference endpoint rounding (and quote
+  the trailing-digit statistic — 54.5 % of `not_before` values end
+  in `01`) as the artefact's primary manifestation; the original
+  century-midpoint ratios are kept as the derivative aoristic-mass
+  signal.
+- The §7 contingency on the "editorial-convention-hierarchy test"
+  is removed — the test is now superseded by the diagnostic findings
+  and the model itself.
+- The recovery-simulation grid (Decision 14) must include synthetic
+  observed_SPAs built from the three-tier convention structure
+  identified here, not just uniform century slabs.
+- The diagnostic run record is committed to
+  `runs/2026-05-15-editorial-convention-hierarchy/` per the project's
+  research-record convention.
+
+### Revisit triggers
+
+- The Bayesian mixture's recovery simulation reveals the chosen
+  three-tier convention structure is misspecified (e.g. a tier is
+  redundant or another tier is missing).
+- The statistician consultation (Martin) recommends a different
+  decomposition of the convention shape.
+- A broader anchor-year list (beyond the curated 39 reign-boundary
+  years) reveals additional dating-anchor years not yet in the
+  reign-related layer.
