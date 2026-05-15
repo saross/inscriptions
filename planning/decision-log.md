@@ -704,3 +704,551 @@ plan. The venue lives in this log.
   natural companion submission).
 - JAMT scope or submission guidelines turn out to be a poor fit on
   closer reading of recent issues.
+
+---
+
+## Decision 12 — 2026-05-14: Rescope the primary research question; promote the variance partition to confirmatory via a within–between H3a specification
+
+**Status:** committed
+**Decided by:** Shawn 2026-05-14 (arising from the adversarial
+pre-lodgement review of the preregistration; CC laid out the options,
+Shawn chose Option B + Fix B; external sanity-check with Adela
+Sobotková and a statistician pending before lodgement).
+
+### Context
+
+The adversarial pre-lodgement review of `preregistration-draft.md`
+(two independent fresh-context agents, 2026-05-14) flagged, as a
+consensus BLOCKING finding, that the primary research question —
+"what fraction of the temporal and spatial variation … is accounted
+for by urban population" — was answered only by an analysis filed as
+*exploratory* (the §5 variance partition, "no pre-committed numerical
+target"). The confirmatory hypothesis H3a tested only whether Bayesian
+R² cleared 0.25 / 0.50 thresholds — a "does population correlate at
+all" question, not a "what fraction" question.
+
+Two further problems were bundled in:
+
+- The variance partition as written decomposed `Var(log E[insc])` into
+  `Var(β·log_pop) + Var(α_province) + residual` as if additive, but
+  `log_pop` and `α_province` are correlated (provinces differ
+  systematically in their city-size distributions), so the cross-
+  covariance term `2·Cov(β·log_pop, α_province)` was silently dropped
+  and the three "proportions" do not sum to one.
+- The primary RQ asked about "temporal and spatial" variation, but the
+  variance partition is purely cross-sectional (city-level
+  `log(E[inscriptions_city])`) — the temporal half was decomposed by
+  nothing.
+
+### Options considered
+
+**For the confirmatory-status problem:**
+
+- **A — Narrow the RQ to match the existing confirmatory analyses.**
+  Rewrite the primary RQ to ask only whether population correlates
+  above a threshold. Pro: near-zero new work; honest. Con: a retreat
+  from the more interesting, project-defining "what fraction"
+  question.
+- **B — Promote the variance partition to confirmatory, fix its
+  specification, and pre-commit a falsifiable rule.** Pro: the primary
+  RQ is genuinely answered; stronger paper. Con: requires a model-
+  specification change and a pre-committed decision rule.
+
+**For the variance-partition mis-specification:**
+
+- **Fix A — Report the covariance term explicitly** as a fourth
+  bucket so the components sum to the total. Pro: trivial; fully
+  honest; no model change. Con: a covariance term is not
+  interpretively clean; population's share would have to be reported
+  as a range (unique part, to unique + shared), weakening the
+  confirmatory claim.
+- **Fix B — Within–between ("Mundlak") specification.** Split
+  `log(population)` into a province-mean component and a within-
+  province deviation, with separate coefficients. The within-province
+  deviation is orthogonal to province membership by construction, so
+  its variance component is unambiguous; the between-province
+  component remains entangled with `α_province`, but that entanglement
+  is a named, genuine identification limit rather than a dropped
+  covariance. Standard and citable (Mundlak 1978; Bell & Jones 2015).
+
+### Decision
+
+**Option B, with Fix B.**
+
+- The variance partition is promoted from exploratory to the
+  confirmatory primary quantitative result, replacing the R²-threshold
+  framing of H3a.
+- H3a is respecified as a within–between (Mundlak) negative-binomial
+  regression: `log(population)` split into province-mean and
+  within-province-deviation components with separate coefficients
+  (`β_between`, `β_within`).
+- The confirmatory estimand is the **within-province
+  population-attributable variance fraction** — orthogonal to province
+  membership, hence unambiguous.
+- The decision rule is a **well-defined estimand plus a falsifiable
+  rule**, not a pre-committed point target: the posterior
+  population-attributable variance fraction is reported with its 95 %
+  credible interval, and H3a is "supported" if the CI excludes a low
+  value (to be pinned and justified, e.g. 0.10) — the claim is
+  "population explains a non-trivial share," with the fraction itself
+  as the estimate.
+- The between-province population gradient is reported but explicitly
+  flagged as not fully separable from province-level "everything
+  else," connecting to the existing identifiability limitation in the
+  prereg's Known Limitations section.
+- "Temporal" is dropped from the primary RQ; the primary RQ becomes
+  spatial and within-province. Temporal structure is addressed by a
+  separate, explicitly exploratory analysis (see Decision 13).
+- The estimand *scale* — variance decomposed on the latent/log scale
+  vs the response scale — is to be stated explicitly in the prereg.
+
+### Consequences
+
+- The H3a model specification in the prereg's Analysis Pipeline
+  section must be rewritten (province-mean predictor added; β split
+  into `β_within` and `β_between`).
+- The primary RQ, the H3a hypothesis statement, and the effect-size
+  table all change together; the exploratory variance-partition item
+  is removed and folded up into confirmatory H3a.
+- The confirmatory claim is narrower than the original sweeping
+  "fraction of temporal and spatial variation" — but it is one the
+  analysis can actually defend.
+- A pre-committed low-value threshold for the falsifiable rule still
+  needs to be chosen and justified.
+
+### Revisit triggers
+
+- Adela Sobotková or the external statistician consultation
+  identifies a problem with the within–between specification or
+  recommends a different estimand (e.g. ICC, commonality analysis).
+- Prior-predictive or model-fit checks show the within–between NBR is
+  not well-identified on the data.
+
+---
+
+## Decision 13 — 2026-05-14: Temporal structure addressed by a bounded, exploratory "habit-removed residual trajectory" analysis
+
+**Status:** committed
+**Decided by:** Shawn 2026-05-14 (arising from the adversarial
+pre-lodgement review; follows Decision 12's removal of "temporal"
+from the primary RQ).
+
+### Context
+
+Decision 12 dropped "temporal" from the primary research question
+because the confirmatory variance partition is purely cross-sectional.
+But the temporal dimension is a genuine strength of inscription SPA —
+it yields a time series per city, where Hanson (2016) gives only a
+single maximum-population estimate per city — and the project wants an
+exploratory analysis that uses it.
+
+The naive design (compare a city's raw SPA peak to an independently
+known demographic-peak date) is confounded: the epigraphic habit has
+its own empire-wide temporal shape (the MacMullen / Meyer "rise and
+fall of the epigraphic habit"), so a raw peak-to-peak comparison
+largely measures the habit, not the city.
+
+### Options considered
+
+**Analysis design:**
+
+- **Raw peak-to-peak** — compare each city's raw SPA peak to an
+  independent demographic-peak date. Rejected: confounded by the
+  empire-wide epigraphic-habit curve.
+- **Habit-removed residual trajectory** — decompose each city's SPA
+  trajectory into an empire-wide habit component plus a city-specific
+  residual trajectory, and validate the *residual* against
+  independent temporal evidence. Mirrors the spatial residual logic
+  of H3c; controls for the habit confound.
+
+**Scope of independent temporal anchors:**
+
+- **Comprehensive assembly** — assemble independent dates for as many
+  cities as possible. Rejected: a multi-month deep-research project,
+  beyond this paper's scope.
+- **Foundation dates only** — cheap, abundant, well-attested; a
+  colony founded in AD X should show ~zero SPA mass before AD X.
+- **Bounded case-study set** — foundation dates corpus-wide, plus a
+  deliberately time-boxed set of cities for which richer independent
+  dates can be assembled without open-ended research.
+
+### Decision
+
+A **bounded, exploratory "habit-removed residual trajectory"
+analysis**:
+
+- Each city's SPA trajectory is decomposed into an empire-wide habit
+  component and a city-specific residual trajectory; the residual is
+  what is compared to independent evidence.
+- **Anchor types, by priority:**
+  - **Foundation dates** — applied corpus-wide; weighted most heavily
+    (cheap, abundant, sharp: ~zero SPA mass expected before
+    foundation).
+  - **Independent peak-population dates** — assembled for a bounded
+    case-study set of cities only; compared as posterior-CI
+    calibration (does the independent date fall within the posterior
+    peak-time credible interval), not point-to-point matching.
+  - **Multi-point independent trajectories** — for the few
+    well-studied cities where they exist; full-shape comparison
+    (overlaps and extends the existing Layer B validation gate in the
+    prereg's exploratory section).
+  - **Ordinal flourishing-era rankings** — where absolute dates are
+    unavailable; rank-correlation of SPA-peak order against
+    independent ordinal knowledge.
+- A *systematic* offset between city-specific inscription peaks and
+  independent demographic peaks is reported as a **quantitative
+  estimate of the epigraphic-habit lag** — a methodological finding,
+  not a failure.
+- The analysis is **exploratory throughout** — no pre-committed
+  thresholds; the independent-anchor evidence is too sparse and
+  uncertain to bind.
+- Scope is **explicitly bounded**: foundation dates corpus-wide plus a
+  time-boxed case-study set for richer anchors; comprehensive
+  independent-date assembly is out of scope and deferred.
+
+### Consequences
+
+- Extends and partly absorbs the existing Layer B validation gate in
+  the prereg's exploratory section, which already proposes comparing
+  trajectories to independent estimates for specific cities.
+- Adds an exploratory analysis to the prereg; no confirmatory
+  hypotheses, no effect-size-table rows.
+- Requires a bounded literature task (assembling the case-study
+  anchors) — to be time-boxed, not open-ended.
+- The empire-wide habit-component estimate becomes a reusable
+  intermediate, also relevant to the H3b deviation-detection work.
+
+### Revisit triggers
+
+- The bounded case-study anchor assembly yields too few usable cities
+  to support even an exploratory analysis.
+- The habit-component decomposition proves unstable or ill-defined in
+  practice.
+
+---
+
+## Decision 14 — 2026-05-14: Validate the deconvolution-mixture model with a recovery simulation; respecify it as a Bayesian mixture
+
+**Status:** committed
+**Decided by:** Shawn 2026-05-14 (arising from the adversarial
+pre-lodgement review; external sanity-check with the statistician
+consultation pending before lodgement — this is a primary item for
+that consultation).
+
+### Context
+
+The adversarial pre-lodgement review flagged, as a BLOCKING finding,
+that Phase 2 — described as "H2 mixture-model validation" — does not
+actually validate the deconvolution-mixture model, which is the
+paper's central methodological contribution:
+
+- There is no independent ground truth for what the "genuine" SPA is,
+  so none of H2.1–H2.4 tests whether the deconvolution recovers the
+  *correct* answer.
+- H2.1 ("α > 0") is already known true from the measured 22–41×
+  century-midpoint spikes — a non-hypothesis.
+- H2.2 ("corrected spikes shrink toward the neighbourhood mean") is
+  guaranteed by construction; the deconvolution is built to do
+  exactly that.
+- H2.4 checks the mixture's genuine_SPA against a
+  stratified-by-convention-class SPA — but both use the same
+  convention-vs-precise row classification, so their agreement is
+  internal consistency, not validation. If the classification is
+  wrong, both are wrong together.
+- The Phase 1 simulation validated the permutation envelope, not the
+  mixture model.
+
+The review separately flagged that the deconvolution is
+under-specified and likely ill-posed: linear deconvolution with
+non-negativity constraints is an ill-conditioned inverse problem when
+the convention basis is broad (uniform century slabs overlap heavily
+with any smooth genuine signal); no regulariser or smoothness prior is
+stated; the estimator is left as "ML or mixture-model fit"; and
+α-versus-convention-shape identifiability is not addressed.
+
+### Options considered
+
+**Validation:**
+
+- **1 — Recovery simulation.** Construct synthetic observed_SPA from a
+  known genuine_SPA + known α + known convention_SPA, run the mixture
+  model, check it recovers α and the genuine shape within tolerance
+  across a pre-specified grid. Genuine ground-truth validation;
+  mirrors the Phase 1 structure; forces full specification of the
+  model. Cost: a bounded new build, reusing Phase 1 infrastructure.
+- **2 — Honest relabelling.** Keep H2.2–H2.4 but stop calling them
+  "validation"; relabel as internal-consistency / robustness checks;
+  fix the abstract. Zero new work, but leaves the central
+  contribution with no validation at all — unacceptable for a
+  methods-journal submission.
+- **3 — Hybrid.** Recovery simulation as the actual validation (a new
+  confirmatory hypothesis with a real decision rule, which also
+  dissolves the H2.1 non-hypothesis problem) plus honest relabelling
+  of H2.2–H2.4 as the supporting consistency / robustness layer on
+  real data.
+
+**Model specification:**
+
+- **Linear deconvolution + explicit regulariser** — keep the current
+  approach, add a stated smoothness constraint to stabilise the
+  inverse problem.
+- **Bayesian mixture model** — respecify the deconvolution as a
+  Bayesian mixture with explicit priors on the convention and genuine
+  components. Coherent with the rest of the pipeline (the H3a NBR and
+  baorista are Bayesian); priors regularise the ill-posed inverse
+  problem naturally; yields a proper posterior on α instead of a
+  bootstrap interval.
+
+### Decision
+
+**Option 3, with a Bayesian mixture model.**
+
+- The deconvolution-mixture model is respecified as a **Bayesian
+  mixture** with explicit priors on the convention and genuine
+  components. This pins the estimator (no "ML or mixture-fit"
+  ambiguity), regularises the ill-posed inverse problem via the priors
+  rather than an ad-hoc constraint, and reports α with a posterior
+  credible interval (replacing the bootstrap interval in the
+  uncertainty-quantification table).
+- A **recovery simulation** is added as the genuine validation:
+  synthetic observed_SPA built from known genuine_SPA + known
+  α + known convention_SPA, across a pre-specified grid; the model
+  must recover α and the genuine-SPA shape within a pre-specified
+  tolerance. This becomes a confirmatory hypothesis with a real,
+  falsifiable decision rule, and replaces the H2.1 non-hypothesis.
+- H2.2–H2.4 are retained but **honestly relabelled** as the supporting
+  internal-consistency and robustness layer on real data — not
+  "validation." The abstract is corrected accordingly.
+
+### Consequences
+
+- New bounded work: building the recovery simulation (reuses Phase 1
+  simulation infrastructure) and respecifying the mixture model in a
+  Bayesian framework.
+- The Analysis Pipeline, the H2 hypothesis statements, the abstract,
+  the effect-size table, and the uncertainty-quantification table all
+  change together.
+- The Bayesian mixture is a larger modelling commitment than the
+  within–between tweak of Decision 12; it is a primary item for the
+  statistician consultation.
+- If the recovery simulation shows the deconvolution does not recover
+  known answers well, that is a genuine finding — a characterised
+  limit of the method, like the Phase 1 reachability map — not scope
+  creep, and is reported as such.
+
+### Revisit triggers
+
+- The statistician consultation recommends a different validation
+  design or a different mixture specification.
+- The recovery simulation proves unexpectedly hard to specify, or the
+  Bayesian mixture does not fit stably — in which case the
+  linear-deconvolution-plus-regulariser fallback is reconsidered.
+
+---
+
+## Decision 15 — 2026-05-14: Recast H3b as pre-specified exploratory deviation-detection
+
+**Status:** committed
+**Decided by:** Shawn 2026-05-14 (arising from the adversarial
+pre-lodgement review).
+
+### Context
+
+The adversarial pre-lodgement review flagged, as a consensus BLOCKING
+finding, that H3b's confirmatory decision rule — a departure
+"matching at least one preregistered effect-size bracket … at one or
+more preregistered (subset × temporal-window) combinations" across a
+12-cell grid — is near-unfalsifiable: a 300-year corpus contains some
+real historical structure, so something deviates somewhere. The
+(subset × temporal-window) combinations were also never actually
+enumerated, only described by a generative rule.
+
+Two further consensus blockers were tangled into H3b:
+
+- The Antonine test was listed as "H3b primary" and confirmatory
+  (≥ 50 % dip ≥ 50 y at AD 165–180) in the effect-size table, but as
+  "exploratory … not pre-committed to a specific effect-size
+  expectation" in the hypothesis statement and the confirmatory-
+  analysis section — a direct internal contradiction.
+- The Holm-Bonferroni correction family size (12 cells vs 6) was
+  explicitly deferred to "lock time," an unverifiable later choice —
+  a researcher degree of freedom.
+
+The underlying question: does the project have a genuinely
+pre-committed, specific deviation prediction? The only candidate is
+the Antonine test, and the empirical priors genuinely conflict —
+Glomb, Kaše & Heřmánková (2022) found a null (KS *p* = 0.20,
+N = 210), while Duncan-Jones (2018) found an ~85 % step-down in
+military diplomas. Pre-committing a magnitude would be a coin flip
+between contradictory secondary sources.
+
+### Options considered
+
+- **A — Treat the Antonine test as confirmatory.** Fully enumerate its
+  subsets, window, magnitude, and decision rule; small specified
+  family, so the Holm-Bonferroni family-size problem dissolves.
+  Rejected: it would require pre-committing an effect size the
+  contradictory secondary literature cannot justify.
+- **B — Recast H3b as pre-specified exploratory deviation-detection.**
+  The temporal windows and subsets to be scanned are enumerated in
+  advance (so the analysis is pre-specified, not post-hoc fishing),
+  but no effect sizes are pre-committed. The Antonine and
+  Crisis-of-the-Third-Century tests become the two named
+  pre-specified exploratory probes.
+
+### Decision
+
+**Option B.**
+
+- H3b is recast from confirmatory to **pre-specified exploratory
+  deviation-detection**. The temporal windows and subsets to be
+  scanned are enumerated in advance; no effect-size brackets are
+  pre-committed.
+- The Antonine test (AD 165–180) and the Crisis-of-the-Third-Century
+  test (AD 235–284) are the two named pre-specified exploratory
+  probes; both are reported against the effect-size brackets
+  descriptively, neither pre-commits a magnitude.
+- The "H3b primary | Antonine signature | ≥ 50 % dip" row is removed
+  from the effect-size table; the Antonine confirmatory-versus-
+  exploratory contradiction is resolved by H3b being uniformly
+  exploratory.
+- The Holm-Bonferroni family-size choice (12 vs 6 cells) is moot:
+  there is no confirmatory H3b family to correct. Exploratory
+  deviation results are reported with their multiplicity noted
+  descriptively.
+- Phase 1 (H1) still gates H3b — it determines which subset levels
+  can detect deviations at all, and H3b is run only where H1
+  establishes detection is feasible.
+
+### Consequences
+
+- The paper's confirmatory backbone is now H3a (the variance
+  partition, per Decision 12) and H3c (which has genuine pre-committed
+  predictions replicating Hanson 2021). H3b is exploratory.
+- Field 3, the Phase 3 confirmatory-analysis section, and the
+  effect-size table all change: H3b moves out of the confirmatory
+  hypotheses; the H3b effect-size rows are removed or relabelled
+  exploratory; the multiple-comparison rule is simplified (no H3b
+  confirmatory family).
+- The deviation-detection work loses nothing in substance — it still
+  demonstrates the corrected SPA can detect known historical events —
+  but it is honestly framed as discovery, not confirmation.
+- This single decision resolves three of the review's consensus
+  blockers at once: the H3b unfalsifiability, the Antonine
+  confirmatory/exploratory contradiction, and the deferred
+  Holm-Bonferroni degree of freedom.
+
+### Revisit triggers
+
+- The statistician consultation argues a defensible confirmatory
+  deviation test can be constructed after all.
+- New evidence resolves the Glomb / Duncan-Jones conflict enough to
+  justify a pre-committed Antonine magnitude.
+
+---
+
+## Decision 16 — 2026-05-15: Drop the regional-pattern clause from H3c-spatial; reduce H3c-spatial to Moran's I clustering only
+
+**Status:** committed
+**Decided by:** Shawn 2026-05-15 (arising from the consolidated
+Hanson 2021 re-verification and the SDAM-AU library scan; surfaced a
+confabulated attribution in the original draft).
+
+### Context
+
+The adversarial pre-lodgement review flagged the H3c-spatial
+decision rule's "qualitative pattern matches Hanson's map" clause as
+an unoperationalised researcher degree of freedom. The clause stated:
+"over-production concentrated in Italy and along the Rhine / Danube
+frontier; under-production scattered in Britannia, Gaul peripheries,
+and other western edges of the Empire," attributed to Hanson (2021).
+
+Two independent Explore agents reading the full Hanson 2021 PDF
+found, with page-anchored verbatim quotes, that this attribution is
+**not supported by the paper**. Hanson explicitly states "there does
+not seem to be any obvious pattern in the distribution of residuals"
+(p. 147) and that sites from different regions are "evenly
+scattered" (p. 148). The only spatial-structural claim Hanson does
+make is the Moran's I = 0.046 clustering on residuals (Table 7.4,
+p. 148), without naming regions. The prereg's specific regional
+geography appears to be a confabulation produced in an earlier
+drafting session, attributed to Hanson 2021 with high conviction,
+and never verified against the source until now.
+
+A subsequent library scan — covering all 8 Hanson items in the
+SDAM-AU group and the 22-item `roman_demography` collection, with
+PDF abstracts read for items lacking Zotero `abstractNote` entries
+— also found no Hanson-corpus paper that makes an explicit
+inscription-residual regional claim. Adjacent material exists:
+Hanson 2016 has per-province urban-hierarchy analyses; Wilson 2012
+contrasts empire-wide vs North African temporal patterns of building
+inscriptions; Hanson & Ortman 2020 finds civic-status patterning of
+residuals (entertainment structures, not inscriptions). None of
+these is an inscription-residual regional-spatial prior of the form
+the dropped clause asserted.
+
+### Options considered
+
+- **A — Drop the regional-pattern clause from H3c-spatial.**
+  H3c-spatial reduces to Moran's I clustering in ≥ 2 of
+  {k = 5, 8, 10}, which is a verified Hanson 2021 replication. Any
+  regional pattern observed in the data is treated as descriptive,
+  not confirmatory.
+- **B — Construct a regional contrast from the patched-together
+  Hanson 2016 / Wilson 2012 / Hanson & Ortman 2020 material.**
+  Rejected: this would be interpretive scaffolding rather than a
+  published prior — exactly the kind of post-hoc construction the
+  prereg discipline exists to prevent.
+- **C — Read Hanson 2016 chapters 7–8 to confirm there is no
+  regional inscription-residual claim in the underlying monograph.**
+  Not pursued (Shawn's judgement: not in the book).
+
+### Decision
+
+**Option A.** The H3c-spatial decision rule reduces to:
+
+> Moran's I > 0 at *p* < 0.05 in ≥ 2 of {k = 5, k = 8, k = 10} k-NN
+> weights.
+
+The qualitative-pattern clause is removed entirely from the
+confirmatory rule and from all three locations where it appeared
+(Field 3, §3, §6). Any regional pattern observed in the H3c
+residuals is reported descriptively, not as part of H3c-spatial
+pass/fail.
+
+The literature identified during the search is folded into adjacent
+decisions, not (c)-2:
+
+- **Wilson 2012's** empire-wide vs North African temporal-pattern
+  contrast is recorded as an independent anchor candidate for
+  Decision 13's bounded temporal case-study set.
+- **Hanson 2016's** per-province urban hierarchies inform Decision 13's
+  province scoping.
+- **Hanson & Ortman 2020's** civic-status residual patterning is
+  noted as an additional supporting reference for H3c(i)'s
+  provincial-capitals contrast.
+
+### Consequences
+
+- H3c-spatial's decision rule is unambiguously specified across
+  Field 3, §3, and §6; the existing §6-vs-Field-3 drift on Moran's I
+  is also fixed.
+- The H3c confirmatory family remains two tests (capitals contrast,
+  clustering) — no expansion, simplifying multiple-comparison
+  handling.
+- The dropped clause's history is recorded here as part of the
+  project's research record.
+- A separate concern is raised: this clause's presence in the
+  original draft is a confirmed confabulation. The Hanson 2021
+  re-verification also caught a second mischaracterisation (the SR1
+  "polity × century resolution" wording, which misdescribes
+  Hanson's design — Hanson works at site level with cumulative
+  inscription counts). Two confirmed confabulations in one source
+  warrant a systematic pre-lodgement citation audit of the full
+  preregistration (see task #21).
+
+### Revisit triggers
+
+- A direct published inscription-residual regional-spatial prior
+  surfaces during further reading and is robust enough to ground a
+  pre-specified contrast.
