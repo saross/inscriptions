@@ -5,7 +5,7 @@ title: "Continuity — inscriptions project (living doc)"
 audience: "next CC instance picking up the project; Shawn after any break"
 status: living; updated at end of each session
 started: 2026-04-24
-last-updated: 2026-05-03
+last-updated: 2026-05-17
 ---
 
 # Continuity — inscriptions project
@@ -19,9 +19,9 @@ last-updated: 2026-05-03
 
 ---
 
-## Research state — one-paragraph snapshot (2026-05-03)
+## Research state — one-paragraph snapshot (2026-05-17)
 
-Preregistration is at `draft 2026-04-27` after two rounds of amendments — round 1 (2026-04-25) applied 5 amendments; round 2 (2026-04-26 to 2026-04-27) executed the **forward-fit pivot** (Decisions 8 / 9 / 10) plus added Crisis of the Third Century, H3a variance partition, §5 small-N city trajectory estimation (Layers A + B + aggregate diagnostic), and FS-4 follow-up paper. **H1 v2 simulation is COMPLETE** at full preregistered precision (1000 / 1000): FP control achieved (range [0.007, 0.049] across 96 zero cells); binding 50 % / 50 y thresholds in prereg §6. **baorista + brms + cmdstan installed and smoke-validated on sapphire** (commit `bf0d661`, INSTALL-LOG.md). The H2 / H3a / H3b / H3c / §5 substantive analysis pipelines are preregistered, designed, but **not yet implemented** — that's the next major work tranche after Adela's prereg review and OSF lock. Awaiting Adela review.
+The preregistration has been through a substantial **adversarial-review-driven revision** since the 2026-05-03 baseline. Adela delegated review to Shawn; from 2026-05-14 onward, a dual Claude adversarial review produced 6 consensus blocking findings plus several serious single-agent findings. Triage produced **Decisions 12–17** (logged in `decision-log.md`), eleven smaller calls ("bucket (c)"), and around 20 mechanical fixes ("bucket (d)"). The 2026-05-15 **editorial-convention-hierarchy diagnostic** (`runs/2026-05-15-editorial-convention-hierarchy/`) surfaced a conceptual correction — the artefact's mechanism is endpoint rounding under inclusive-Roman counting (54.5 % of `not_before` end in `01`; 53.0 % of `not_after` end in `00`), with midpoint inflation as a derivative. A 2026-05-16 **comprehensive rewrite** of `preregistration-draft.md` implemented all decisions and resolutions. A **pre-lodgement citation audit** caught **three confabulated factual claims** (Hanson 2021 regional pattern; SR1 "polity × century" wording; Duncan-Jones 2018 "~85 % step-down") plus a paragraph-number error and a few wording-drift items — all corrected. A **ChatGPT 5.5 cross-model adversarial review** was elicited via a custom prompt (`planning/chatgpt-cross-model-review-prompt.md`); the returned review (`planning/cross-model-adversarial-review-preregistration.md`, committed 2026-05-17) is lengthy and asks for changes — triage and corrections are queued for the next session. After ChatGPT-pass corrections, Martin's statistician consultation pack (Task #17) is assembled, then OSF lodgement. H1 v2 thresholds and editorial-convention diagnostic results are committed and reproducible (random seeds, public repo); Rome's filtered count is anchored by a small verification script (`runs/2026-05-16-rome-count-verification/`). The Phase 2 / 3 substantive analysis pipelines remain preregistered-designed but not-yet-implemented — that work tranche begins after OSF lock.
 
 ---
 
@@ -61,7 +61,16 @@ Order: H2 → H3a (with brms shadow + variance partition + sensitivities) → H3
 
 ---
 
-## Done — major recent milestones (2026-04-23 → 2026-05-03)
+## Done — major recent milestones (2026-04-23 → 2026-05-17)
+
+- [x] **Adversarial-review-driven revision of the preregistration** (2026-05-14 → 2026-05-16). Dual fresh-context Opus 4.7 reviewers (one statistical-methodology focus, one domain-legibility focus) applied a shared prereg-failure-mode rubric; produced 6 consensus blockers + serious single-agent findings. Triage closed all of bucket (c) (11 items) and produced Decisions 12–17. See `planning/preregistration-changelog.md` "Adversarial-review-driven revision" section for the full timeline.
+- [x] **Decisions 12–17 logged** (2026-05-14 → 2026-05-16). 12: rescope primary RQ + promote variance partition to confirmatory via within-between (Mundlak) H3a NBR; 13: bounded exploratory temporal "habit-removed residual trajectory" analysis; 14: Bayesian mixture model + recovery-sim validation; 15: H3b recast as pre-specified exploratory deviation-detection; 16: drop H3c regional-pattern clause (Hanson 2021 confabulation); 17: empirically-grounded `convention_SPA` shape with three tier components.
+- [x] **Editorial-convention-hierarchy diagnostic** (2026-05-15). Five-test run on filtered LIRE v3.0 surfaced the inclusive-Roman endpoint-rounding mechanism (conceptual correction to the prereg's prior "midpoint inflation" framing). Runs/2026-05-15-editorial-convention-hierarchy/, fully reproducible.
+- [x] **Preregistration rewrite for lodgement** (2026-05-16, commit `eb189df`). 358 lines changed; implements Decisions 12–17 + bucket (c) + bucket (d).
+- [x] **Pre-lodgement citation audit** (2026-05-16, commit `c322de6`). Three confabulations caught (Hanson 2021 regional pattern; SR1 design wording; Duncan-Jones 2018 ~85 %); paragraph-number error fixed; wording-drift items refined; Rome verification script committed.
+- [x] **ChatGPT 5.5 cross-model adversarial review** (2026-05-17, committed at `planning/cross-model-adversarial-review-preregistration.md`). Engineered via a prereg-failure-mode-rubric-aware prompt (not generic QA). Lengthy; asks for changes; triage queued.
+
+## Done — earlier milestones (2026-04-23 → 2026-05-03)
 
 - [x] **H1 v1 simulation** (2026-04-25). Surfaced FP-inflation problem; informed forward-fit pivot. Now superseded.
 - [x] **Forward-fit pivot** (Decisions 8 / 9 / 10, 2026-04-26 to 04-27). New methodology: forward-fit nulls in true-date space + forward-aoristic MC. CPL k=2 dropped per Decision 9; c_20pc_25y retained as hard-test boundary per Decision 10.
@@ -79,15 +88,18 @@ Order: H2 → H3a (with brms shadow + variance partition + sensitivities) → H3
 
 ## Priority artefacts (read in this order if context is cold)
 
-1. `planning/preregistration-draft.md` — current at `draft 2026-04-27`. Single most important document.
-2. `planning/decision-log.md` — Decisions 1–10. Especially **8 (forward-fit pivot)**, **9 (precision + compute, drop CPL k=2)**, **10 (c_20pc_25y disposition)**.
-3. `planning/backlog-2026-05-03.md` — current working backlog with structured "not yet implemented" + "open caveats" lists.
-4. `runs/2026-04-25-h1-simulation/outputs/h1-v2/REPORT-v2-final.md` — H1 v2 numerical thresholds (the empirical basis for prereg §6).
-5. `runs/2026-05-03-baorista-install/INSTALL-LOG.md` — baorista + brms install record + API discoveries for the main pipeline.
-6. `planning/future-studies.md` — FS-1 through FS-4.
-7. `docs/notes/reflections/working-notes.md` — Obs 1–30 (Obs 15–30 are the H1 forward-fit pivot lessons).
-8. `planning/preregistration-amendments-2026-04-25.md` — round-1 amendments record (round-2 was direct-edit + decision-log).
-9. `planning/prior-art-scout-2026-04-25-aoristic-envelope.md` — literature scan that informed the forward-fit pivot; §8 empirical addendum on why scout-recommended Option A failed.
+1. `planning/preregistration-changelog.md` — full revision history through the 2026-05-16 rewrite, the citation audit corrections, and the ChatGPT pass. **Start here** for the most efficient orientation to current state.
+2. `planning/preregistration-draft.md` — current preregistration (post-rewrite, post-audit). Single most important document.
+3. `planning/decision-log.md` — Decisions 1–17. Especially recent: **12 (within-between H3a + variance partition primary)**, **14 (Bayesian mixture + recovery sim)**, **15 (H3b exploratory)**, **16 (drop H3c regional pattern)**, **17 (convention_SPA tier structure)**.
+4. `planning/cross-model-adversarial-review-preregistration.md` — the ChatGPT 5.5 review awaiting triage (next session's first task).
+5. `planning/chatgpt-cross-model-review-prompt.md` — the prompt the ChatGPT review was elicited against.
+6. `runs/2026-05-15-editorial-convention-hierarchy/outputs/REPORT.md` — diagnostic that grounds Decision 17 and reframes the artefact as endpoint-rounding.
+7. `runs/2026-04-25-h1-simulation/outputs/h1-v2/REPORT-v2-final.md` — H1 v2 thresholds; the empirical basis for prereg §6 (seed 20260425, commit `00aceb4`).
+8. `runs/2026-05-03-baorista-install/INSTALL-LOG.md` — baorista + brms install record.
+9. `planning/backlog-2026-05-03.md` — Phase 2/3 substantive-work backlog (post-OSF-lock work).
+10. `docs/notes/reflections/working-notes.md` — running observations.
+11. `archive/planning/preregistration-amendments-2026-04-25.md` — historical round-1 amendments record.
+12. `planning/prior-art-scout-2026-04-25-aoristic-envelope.md` — literature scan that informed the forward-fit pivot.
 
 ---
 
@@ -136,6 +148,18 @@ That's enough to engage substantively. Deeper context (the scout report, working
 ---
 
 ## Session history — done items (terse)
+
+### 2026-05-14 → 2026-05-17
+
+- Dual Claude adversarial review of the prereg (Opus 4.7, two parallel fresh-context Explore agents); 6 consensus blockers + serious single-agent findings.
+- Bucket-(c) triage completed: 11 smaller decisions resolved with Shawn one-at-a-time, captured inline in the prereg.
+- Decisions 12–17 logged in `decision-log.md`.
+- Hanson 2021 attribution re-verification surfaced the confabulated regional-pattern claim (two independent agents, page-anchored quotes pp. 147–148). Library scan (8 Hanson items in SDAM-AU + 22 `roman_demography` items + PDF abstracts) confirmed no Hanson-corpus paper carries the claim.
+- Editorial-convention-hierarchy five-test diagnostic (`runs/2026-05-15-editorial-convention-hierarchy/`); empirically grounded Decision 17; reframed the artefact mechanism as endpoint rounding (inclusive-Roman counting) with midpoint inflation as derivative.
+- Comprehensive prereg rewrite (commit `eb189df`, 2026-05-16; 358 lines changed).
+- Pre-lodgement citation audit (commit `c322de6`); three confabulations caught and corrected; Rome verification script committed; seven missing references found via web-search agent and added to Zotero by Shawn.
+- ChatGPT 5.5 cross-model review prompt engineered to elicit orthogonal coverage (not parallel); review returned 2026-05-17 (commit `6862031`), lengthy, asks for changes; triage queued for next session.
+- Working tree clean on `origin/main`, head at `6862031`.
 
 ### 2026-05-03 / 2026-05-04
 

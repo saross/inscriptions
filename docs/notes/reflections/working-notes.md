@@ -964,3 +964,36 @@ Two reasons supersession beats in-place amendment for cross-phase changes:
 `continuity.md` is different — that one is genuinely living, updated incrementally each session, because the *register-level* content (standing rules, failure modes, "if context feels cold" reading order) is meant to evolve continuously rather than supersede.
 
 *Source:* `planning/backlog-2026-05-03.md` header + supersession note; comparison with `continuity-2026-04-23.md` → `continuity.md` April supersession.
+
+---
+
+## Obs 33 — 2026-05-15 [PATTERN]: dual fresh-context adversarial review converges on the consensus blockers, which are the high-signal findings
+
+Two parallel Opus 4.7 reviewers (one statistical-methodology focus, one domain-legibility focus), both fresh context, both applying the same prereg-failure-mode rubric (researcher degrees of freedom; hypothesis → test → decision rule; does-it-answer-the-question; logical consistency; clarity), produced reports that independently flagged six identical blocking findings — H1 mis-filed as confirmatory; H3b unfalsifiability; Antonine confirmatory/exploratory contradiction; H3b Holm-Bonferroni family-size deferral; primary RQ answered only by an exploratory analysis; H2.2 "local neighbourhood mean" undefined. Plus several serious single-agent findings.
+
+The convergence is the signal. When two independent rubric-aligned readers flag the same finding, that finding has ~ posterior-probability-1 of being a real problem — not a perspectival quirk, not a model-family bias, not a noisy critique. The six consensus blockers were the ones we triaged most aggressively (decisions 12, 14, 15) and resolved most cleanly. The single-agent findings split between "real but only one reader noticed" (some of which became decisions, some bucket (c) items) and "interesting but lower priority" (some bucket (d) items). The ratio of "consensus blockers vs single-agent findings" is itself diagnostic of how mature the document was going into review.
+
+The framing-by-rubric matters. Earlier review attempts (less structured) tended to produce per-reader noise; the shared-rubric framing aligned the readers on the same target categories, so convergence and divergence were both meaningful. Generic "critically review this" prompts don't get this property.
+
+## Obs 34 — 2026-05-16 [GOTCHA]: three confabulated factual claims in one source document, all caught by adversarial verification
+
+A pre-lodgement citation audit of the preregistration found three confabulated attributions to a single source (Hanson 2021): (i) a fabricated regional spatial pattern attributed to him that the paper explicitly contradicts; (ii) an SR1 wording slip mischaracterising his research design as "polity × century resolution" when it is site-level with cumulative inscription counts; (iii) a "~85 % step-down" paraphrase for the military-diplomas evidence when the paper actually describes complete cessation after AD 167.
+
+All three share a profile: **specific, plausibly-phrased, citation-bearing**. None is a hedge or a vague handwave. Each looks, in isolation, like a careful paraphrase of a real published finding. None survived a fresh-context PDF read with the question "where exactly does Hanson say this?"
+
+Operational implications:
+
+- The CLAUDE.md anti-confabulation rule is load-bearing. The instinct to write specifics with high conviction during drafting is *not* defensible without source re-verification. The cost of re-reading is low; the cost of a confabulation in a lodged preregistration is high.
+- Pre-lodgement (or pre-publication) citation audits should be a standard step, not an optional defence in depth. Three in one source is the *known* incidence after one audit; there is no reason to assume the audit caught everything.
+- The audit caught the third confabulation only after the first two had already been corrected. The pattern is therefore: confabulations cluster (likely the same drafting session under the same conviction-level), so finding one warrants checking the source's other attributions, not just the one flagged.
+- The decision log, working notes, and run reports were not audited. They are public-repo documents (the repo is open). A broader pre-lodgement audit pass is worth it.
+
+## Obs 35 — 2026-05-15 [SURPRISE]: the editorial-convention artefact is endpoint rounding, not midpoint inflation — the prior framing captured a derivative effect
+
+The 2026-04-23 descriptive-stats run had quantified the editorial-convention artefact as midpoint inflation: observed/expected ratios 22.8× / 41.5× / 18.8× / 39.7× at AD 50 / 150 / 250 / 350. The preregistration's prior framing of the artefact (and the original `convention_SPA` shape default of "uniform century slabs") treated those four midpoint years as the fundamental phenomenon.
+
+A targeted five-test diagnostic in 2026-05-15 (run at `runs/2026-05-15-editorial-convention-hierarchy/`) found that the dominant editorial-rounding mechanism is **inclusive-Roman century counting acting on interval endpoints**: 54.5 % of all `not_before` values in the filtered corpus end in `01` and 53.0 % of all `not_after` values end in `00`. Two-thirds of `not_after` values are `00` or `50`; two-thirds of `not_before` values are `01` or `51`. Intervals like `[1, 100]` and `[101, 200]` then deposit aoristic mass on the midpoint years AD 50 and AD 150 — the midpoint inflation is the *aoristic-mass consequence* of the endpoint rounding, not an independent phenomenon. The `raw_dating` field makes the convention explicit: the top values are literally "1 to 100", "101 to 200", "301 to 500" etc., with the modal endpoint pair matching the string 96–100 % of the time.
+
+This was a conceptual correction to the prereg's prior framing, not just an additional finding. The `convention_SPA` shape in the Bayesian mixture (Decision 17) was restructured around inclusive-Roman tier components (century-incl-start, century-incl-end, century-midpoint, half-century-incl-start, reign-related) rather than uniform century slabs. Field 2's description of the artefact was rewritten to reference endpoint rounding with the trailing-digit statistic, with midpoint inflation noted as the derivative aoristic-mass signal.
+
+Lesson: when a strong descriptive pattern is sitting on a derivative quantity (here: aoristic mass at midpoints), the underlying primitive (here: endpoint frequency) may have a different — and more diagnostic — structure. Worth probing one level up the data-generating chain before committing to a model that targets the derivative. The cost of the probe (a few hundred lines of straightforward analysis) was tiny; the prior framing it overturned was central to the paper's headline contribution.
