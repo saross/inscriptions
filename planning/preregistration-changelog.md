@@ -201,6 +201,266 @@ incorporates that review. Changes, each with its rationale:
 
 ---
 
+## Adversarial-review-driven revision (2026-05-14 → 2026-05-16)
+
+A multi-day cycle of structured adversarial review, targeted re-verification
+of factual claims, empirical diagnostics, and a comprehensive rewrite. This
+phase moved the preregistration from "draft for lodgement (2026-05-14)" — the
+editorial-pass state — to the current draft (2026-05-16), incorporating six
+new decisions (Decisions 12–17, recorded in `decision-log.md`), eleven
+smaller calls (bucket (c) of the triage), and around twenty mechanical or
+clarity fixes (bucket (d)).
+
+### Dual adversarial review (2026-05-14)
+
+Two fresh-context Explore agents reviewed the post-editorial-pass
+preregistration in parallel: one with a statistical-methodology focus, the
+other with a domain legibility / output-value focus. Both ran on Opus;
+neither had access to the other's findings; both applied a shared
+preregistration-failure-mode rubric (researcher degrees of freedom;
+hypothesis → test → decision rule; does-the-analysis-answer-the-question;
+logical consistency; clarity). Both concluded *not yet lodgeable, all
+fixable*.
+
+The two reviews converged on six consensus blocking findings:
+
+1. H1 mis-filed as a confirmatory hypothesis (it is a completed methods
+   step with no live decision rule).
+2. H3b's decision rule near-unfalsifiable ("at least one bracket at one or
+   more of 12 cells"); the subset × window family was never enumerated.
+3. The Antonine test labelled confirmatory in §6 ("≥ 50 % dip") but
+   exploratory in Field 3 / §4 — a direct internal contradiction.
+4. H3b's Holm-Bonferroni family-size choice (12 vs 6 cells) deferred to
+   "lock time" — a researcher degree of freedom.
+5. The primary research question answered only by an exploratory analysis
+   (the variance partition was filed under §5 exploratory).
+6. H2.2's "local neighbourhood mean" undefined — controls the H2.2 pass /
+   fail.
+
+Plus serious single-agent findings: the variance partition is statistically
+mis-specified (ignores fixed–random covariance); H3c's capitals test runs
+a frequentist *t*-test on Bayesian posterior quantities and ignores spatial
+autocorrelation; H2.1 is a non-hypothesis (α > 0 is already known from the
+measured spikes); Moran's I decision rule inconsistent across three
+sections; H2 has no ground-truth validation (the "Phase 2 validates the
+mixture model" overclaim).
+
+### Triage and bucket-(c) resolutions (2026-05-15)
+
+Findings were sorted into four buckets: (a) superseded by Decisions 12–17;
+(b) statistician questions for the planned consultation; (c) smaller
+calls needing Shawn's input; (d) mechanical / clarity fixes. Bucket (c)
+— the smaller calls — was worked through one at a time:
+
+1. **H2.2 "local neighbourhood mean" defined.** ±25-year window (5 bins
+   each side), excluding the midpoint bin, computed on the corrected
+   `genuine_SPA` values (not O/E ratios). Bracketing variants reported
+   alongside as a diagnostic (shoulder-excluded; ±15 y and ±35 y widths).
+2. **H3c-spatial qualitative-map clause dropped (Decision 16).** The
+   clause attributed a regional residual pattern to Hanson 2021 that
+   re-verification confirmed is not in the paper (see below). H3c-spatial
+   reduces to Moran's I clustering only.
+3. **Editorial-convention-hierarchy specification empirically grounded
+   (Decision 17).** A five-test diagnostic run (committed at
+   `runs/2026-05-15-editorial-convention-hierarchy/`) established the
+   hierarchy's structure.
+4. **Trapezoidal aoristic sensitivity scoped.** Run on every H3-eligible
+   (level × subset) combination plus the full-empire SPA; convergence
+   criterion Pearson *r* ≥ 0.95.
+5. **Crisis-of-the-Third-Century window arithmetic corrected.** AD 235–284
+   inclusive is 50 years under inclusive-Roman counting (the dominant
+   convention in LIRE's date encoding), not 49 years subtractively. Window
+   reconciles with the ≥ 50-year bracket.
+6. **H3c residual classification clarified as descriptive.** The ±95 %
+   CI labelling is narrative only; the confirmatory H3c tests use
+   continuous posterior residuals (sidesteps the multiple-comparison
+   concern raised in the review).
+7. **Proxy-framing scoping sentence added.** Field 2 (Description) and §5
+   theoretical-framing item now explicitly state that the substantive
+   interpretive question — what inscriptions proxy — is out-of-prereg
+   scope.
+8. **Pre-lodgement state attestation added** (§8). As of lodgement, no
+   confirmatory analysis preregistered here has been executed on LIRE
+   v3.0. Prior exploratory frequentist regressions on v3.0 are documented
+   in the project repository and inform prior expectations but are not
+   confirmatory tests.
+9. **Title shortened.** The longer subtitle form dropped in favour of the
+   shorter form: "Mixture-corrected SPAs of Latin inscriptions against
+   Hanson urban population estimates: a preregistered three-phase
+   analysis."
+10. **H3a sample size clarified.** The Bayesian NBR uses all ~ 815
+    Hanson-matched cities (Rome-excluded); the Phase 1 ≈ 1,549-inscription
+    urban-area threshold gates per-city *time-series* analyses, not the
+    cross-city regression.
+11. **FP-calibration anchor.** The Phase 1 false-positive range
+    `[0.007, 0.049]` across 96 zero-effect cells is anchored generically
+    via a reproducibility statement in §8 of the preregistration (Phase 1
+    code, seed 20260425, and outputs are committed to the public
+    repository) rather than via a specific `runs/...` cross-reference in
+    the prereg body. The specific audit-trail anchor: simulation outputs
+    at `runs/2026-04-25-h1-simulation/outputs/h1-v2/REPORT-v2-final.md`,
+    pipeline code in `runs/2026-04-25-h1-simulation/code/`, commit
+    `00aceb4` ("feat(runs/h1): H1 v2 FINAL — full preregistered precision
+    (1000/1000)"), random seed `20260425`.
+
+### Hanson 2021 attribution re-verification (2026-05-15)
+
+While working through bucket (c) item 2, the H3c qualitative-map clause
+("over-production concentrated in Italy and along the Rhine / Danube
+frontier; under-production scattered in Britannia, Gaul peripheries, and
+other western edges of the Empire") attributed to Hanson 2021 was put to
+a fresh-context Explore agent for verification against the PDF. The
+agent's finding — that Hanson 2021 does *not* claim this regional pattern,
+and on the contrary explicitly states "there does not seem to be any
+obvious pattern" (p. 147) and that sites from different regions are
+"evenly scattered" (p. 148) — was confirmed by a second consolidated
+re-verification (also fresh context).
+
+All other Hanson 2021 attributions in the prereg verified exactly:
+β = 0.672 mean exponent (Table 7.3, p. 146); Moran's I = 0.046 with
+z = 4.571 and *p* < 0.0001 on residuals; Moran's I = −0.006 with
+*p* = 0.282 on raw counts (Table 7.4, p. 148); provincial-capital mean
+residual 0.43 vs ~ 0.06 for *coloniae* / *municipia* (p. 148); Rome
+excluded as extreme outlier (Table 7.3 caption, p. 146); ArcGIS Moran's I
+tool (p. 145); letter-count rationale (p. 142).
+
+A second mischaracterisation was caught by the same re-verification: SR1's
+"polity × century resolution" phrasing for Hanson 2021 — Hanson works at
+*site* level with cumulative inscription counts, not polity × century.
+SR1 rewritten.
+
+A subsequent library scan (all 8 Hanson items in the SDAM-AU group
+library plus the 22-item `roman_demography` collection; PDF abstracts
+read where Zotero metadata was empty) confirmed no Hanson-corpus paper
+makes an explicit inscription-residual regional claim. Decision 16
+commits to dropping the clause from the confirmatory rule.
+
+The discovery of two confabulated Hanson 2021 attributions in one paper
+triggered a scheduled pre-lodgement citation audit of the full
+preregistration (Task #21 in the project task tracker).
+
+### Editorial-convention-hierarchy diagnostic (2026-05-15)
+
+A five-test diagnostic was run to resolve bucket (c) item 3 (the
+undefined "editorial-convention-hierarchy test"). The run is committed
+at `runs/2026-05-15-editorial-convention-hierarchy/`; full report at
+`outputs/REPORT.md`. Five tests across the filtered LIRE v3.0 corpus
+(180,609 rows): top-N endpoint frequencies; hierarchical O/E by tier;
+trailing-two-digit histogram; reign-boundary specific test; convention-
+text labelled subset.
+
+The diagnostic surfaced a *conceptual correction* to the preregistration's
+prior artefact framing. The dominant editorial convention is
+**inclusive-Roman century counting** — 54.5 % of all `not_before` values
+end in `01`, and 53.0 % of all `not_after` values end in `00`. The
+previously-reported century-midpoint inflation at AD 50 / 150 / 250 / 350
+is a *derivative* effect of this endpoint rounding (intervals like
+`[1, 100]` and `[101, 200]` deposit aoristic mass on midpoint years). The
+Bayesian-mixture `convention_SPA` shape is now structured to reflect the
+endpoint-rounding mechanism with three tier components (century,
+half-century, reign-related), recorded as Decision 17.
+
+Tier ranking (combined endpoints, geometric-mean O/E at σ = 20-year
+baseline): century-incl-start 20.28; century-incl-end 18.34;
+century-midpoint 10.16; half-century-incl-start 2.44; reign-related 0.75
+overall (with 13 of 39 reign-boundary years Holm-significant);
+sub-century tiers (quarter-century, decade, lustrum) all below baseline.
+
+### Comprehensive rewrite (2026-05-16)
+
+A single comprehensive rewrite of `preregistration-draft.md` implementing
+Decisions 12–17, all bucket (c) resolutions, and the bucket (d)
+mechanical and clarity fixes. Headline changes:
+
+- **Primary research question rescoped** (Decision 12): spatial only,
+  within-province, focused on the population-attributable variance
+  fraction.
+- **H3a respecified** (Decision 12): Bayesian within-between (Mundlak)
+  negative-binomial regression. Confirmatory estimand is the
+  within-province population-attributable variance fraction; falsifiable
+  rule is "posterior 95 % CI excludes 0.10."
+- **H2 restructured** (Decision 14): Bayesian mixture model, validated by
+  a pre-specified recovery simulation (the new H2.1 confirmatory
+  hypothesis). H2.2 / H2.3 / H2.4 honestly relabelled as supporting
+  consistency / robustness checks on real data, not validation in their
+  own right.
+- **H3b recast as pre-specified exploratory** (Decision 15): Antonine
+  and Crisis windows are the two pre-specified probes; no pre-committed
+  effect-size magnitudes; no Holm-corrected confirmatory family.
+- **H3c-spatial reduced to Moran's I clustering only** (Decision 16):
+  the regional-pattern clause is dropped (its Hanson 2021 attribution did
+  not survive re-verification).
+- **H3c provincial-capital test switched to a posterior contrast on
+  continuous residuals** (resolves Agent A's B8 finding that a
+  frequentist *t*-test on Bayesian posterior quantities is incoherent).
+- **H1 demoted from confirmatory hypothesis to completed groundwork.**
+  Phase 1 thresholds reported in §6 but no longer presented as a
+  confirmatory hypothesis (it is a completed methods step with no live
+  decision rule).
+- **Convention-shape model specified empirically** (Decision 17):
+  century / half-century / reign-related tiers, drawn from the
+  2026-05-15 diagnostic.
+- **Temporal exploratory analysis added** (Decision 13): habit-removed
+  residual trajectory analysis, with foundation dates as the primary
+  anchor type and a bounded case-study set for richer independent
+  anchors.
+- **Plain-English walkthrough rewritten** to introduce all load-bearing
+  terms ("aoristic", "deconvolution", "forward-fit", "random intercepts",
+  "CPL knots", "bins") on first use and to align step-by-step with the
+  technical §3. Re-described the artefact at endpoint level (not just
+  midpoint inflation) to match Decision 17.
+- **§6 effect-size table restructured** to distinguish confirmatory,
+  supporting-consistency, completed-groundwork, and pre-specified-
+  exploratory rows. Removed the contradictory "H3b primary | Antonine
+  | ≥ 50 % dip" row.
+- **Prior predictive checks added** to the Bayesian workflow (alongside
+  the pre-existing posterior predictive checks).
+- **Weakly-informative priors** on β_within and β_between
+  (`Normal(0, 1)`), replacing the previous wide `Normal(0, 2.5)`.
+- **Multiple mechanical fixes** per bucket (d): cmdstanpy dependency
+  clarified as fallback (not on H3a critical path); brms shadow Jacobian
+  block moved out of the binding spec text; "Westfall-Young *p* ≈ 0"
+  given resolution (*p* < 0.001 on 20,000 permutations); cell-count
+  derivation made explicit; SR1 / SR2 stated as descriptive context;
+  §10 structure diagram updated; Hanson city count harmonised throughout;
+  Moran's I decision rule reconciled across Field 3, §3, and §6;
+  pymc / brms disagreement contingency added to §7.
+
+Diff stat: 223 insertions, 135 deletions (358 lines changed; 87-line net
+growth). Substantive rather than purely additive — most changes are
+structural rewrites rather than appends.
+
+---
+
+## Upcoming pre-lodgement steps
+
+The preregistration is not yet ready to lodge. Outstanding work before
+lodgement:
+
+1. **Citation audit** (Task #21). Adversarial fresh-context audit
+   verifying every author-year citation and load-bearing claim in the
+   rewritten preregistration against the cited source. Triggered by the
+   discovery of two confabulated Hanson 2021 attributions in the
+   editorial-pass-state draft. Page-anchored verbatim evidence required
+   for every verification.
+2. **Apply audit corrections** to the preregistration; document them as
+   a further changelog entry.
+3. **ChatGPT 5.5 cross-model adversarial pass** (Task #20). An
+   independent outside view from a different frontier model, as a
+   cross-model check on findings the Claude pipeline may have missed.
+   Driven by Shawn; this CC instance prepares the input pack if useful.
+4. **Apply ChatGPT-pass corrections** to the preregistration; document.
+5. **Statistician consultation pack for Martin** (Task #17). Assembled
+   once the preregistration is in its final pre-lodgement state. Curated
+   extract of the decision log (focused on the Bayesian-mixture
+   specification, the within-between specification, the prior choices,
+   and the multiple-comparison policy); ranked by where Martin's input
+   is most wanted.
+6. **Lodge on OSF.** After Martin's input is incorporated and any
+   remaining issues from the consultation are resolved.
+
+---
+
 ## Archived documents
 
 - `preregistration-amendments-2026-04-25.md` — the round-1 amendment proposals
