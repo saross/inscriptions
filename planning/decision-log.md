@@ -2529,3 +2529,544 @@ Shawn's existing province_language classification.** Specifically:
 - The Western-Empire-subset analysis is destabilised by the
   Moesia / Sicilia frontier-province classifications — would
   trigger a sensitivity excluding those three provinces.
+
+
+---
+
+## Decision 27 — 2026-05-17: Recovery-simulation refinements — replicate-count floor bumped to ≥ 100; Wasserstein-1 supplementary shape metric
+
+**Status:** committed; provisional pending Martin's eventual review (any
+revision filed as OSF amendment)
+**Decided by:** Shawn 2026-05-17 (informed by stand-in cross-model
+statistical review — ChatGPT 5.5 + Gemini 3 Pro, 2026-05-17 —
+undertaken as a hedge against delayed feedback from the planned
+statistician consultation with Martin; both reviewers independently
+flagged the ≥ 50 replicate floor as thin and Pearson r alone as too
+forgiving for localised mass-redistribution failures).
+
+### Context
+
+The Decision 21 H2.1 recovery-simulation grid pre-commits two
+quantities that the stand-in cross-model review flagged as
+under-specified:
+
+1. **Replicate floor.** The prereg-binding floor of ≥ 50 replicates
+   per cell yields a per-cell Wilson 95 % interval on coverage at a
+   true 90 % rate of approximately [0.79, 0.96] — too wide to give a
+   stable pass / fail boundary. A cell observed at 45 / 50 passes and
+   44 / 50 fails; that boundary is brittle, and brittleness
+   propagates into the global ≥ 90 % cells-pass rule.
+2. **Shape-recovery metric.** Pearson r between recovered posterior-
+   median and true genuine SPA is scale- and shift-invariant; it can
+   remain high (≥ 0.95) even when localised mass is mis-allocated by
+   the model. For a recovery-validation context this is precisely
+   the failure mode we want to catch.
+
+### Options considered
+
+- **A — Status quo.** Keep ≥ 50 floor; Pearson r as sole shape
+  metric. Cheapest; under-validated.
+- **B — Bump replicate floor + add a distribution-sensitive
+  supplementary shape metric.** Cost: roughly linear in replicates ×
+  cells; expect O(50–100) cells, so the bump from 50 to 100 doubles
+  compute cost in the recovery stage. Adds Wasserstein-1 (Earth
+  Mover's distance) — the standard distribution-comparison metric
+  for compositional data — alongside Pearson r.
+- **C — More aggressive: ≥ 200 replicates; replace Pearson r with
+  Wasserstein-1.** Higher cost; risks de-emphasising the field-
+  familiar Pearson r continuity check.
+
+### Decision
+
+**Option B.**
+
+- **Replicate floor:** bumped from ≥ 50 to **≥ 100 replicates per
+  cell** as the prereg-binding floor. Design-artefact default
+  pinned at 100 (push to 200 in boundary cells if compute permits;
+  a two-stage variant — 50 across the full grid to identify failure
+  regions, 200 at boundary cells — is also acceptable per the
+  design artefact).
+- **Shape-recovery rule:** Pearson r ≥ 0.95 in ≥ 90 % of cells
+  remains the **binding** rule. **Wasserstein-1 (Earth Mover's
+  distance)** between recovered posterior-median and true genuine
+  SPA is added as a **supplementary** shape-recovery metric,
+  reported per cell with a flagging threshold pinned in the design
+  artefact. The supplementary is descriptive — not part of the
+  binding confirmatory rule — but is reported alongside the Pearson
+  r outcome for every cell.
+
+### Consequences
+
+- §3 (Bayesian deconvolution-mixture model / Validation) — rule
+  updated.
+- §4 (Phase 2 / "Confirmatory recovery simulation (H2.1)") — grid
+  axes table updated (replicates ≥ 100); shape-recovery rule
+  rewritten to include Wasserstein-1 supplementary.
+- §6 (effect-size table) — H2.1 shape-recovery row extended:
+  Pearson r row plus a new Wasserstein-1 supplementary row.
+- Design-artefact spec extended: pin specific Wasserstein-1
+  flagging threshold; pin replicate count (default 100).
+- Decision 21's Revisit triggers list inherits the additional
+  trigger "Martin recommends a different replicate count or a
+  different shape metric."
+
+### Revisit triggers
+
+- Martin's consultation recommends a different replicate count
+  (e.g. ≥ 200) or a different shape metric (Jensen-Shannon
+  divergence; integrated absolute error; KS distance).
+- The pilot fit's recovery simulation reveals systematic localised
+  mass-redistribution failures that Wasserstein-1 also misses — a
+  different distribution-sensitive metric (e.g. KL divergence with
+  a smoothing prior) becomes preferred.
+- Compute cost at ≥ 100 replicates proves prohibitive for the final
+  grid size — would prompt the two-stage variant or reduction in
+  cell count.
+
+---
+
+## Decision 28 — 2026-05-17: Aoristic-Monte-Carlo supplementary mixture fit
+
+**Status:** committed; provisional pending Martin's eventual review
+(any revision filed as OSF amendment)
+**Decided by:** Shawn 2026-05-17 (informed by stand-in cross-model
+statistical review; ChatGPT 5.5 proposed the supplementary fit as a
+direct test of the upstream-aoristic assumption underlying the
+primary mixture model).
+
+### Context
+
+Decision 19's Bayesian mixture observation model absorbs aoristic
+uncertainty upstream in the SPA construction: per-inscription
+uniform-aoristic mass is summed into 5-year bins deterministically,
+and a single empirical SPA enters one mixture fit. The Law-of-Large-
+Numbers expectation is that per-inscription uniform aoristic averages
+out at the 5-year bin level for N_eff ~ 10^5 inscriptions — but this
+is an unverified expectation. Where wide template intervals dominate
+the corpus (the [1, 100] template alone is 26.3 % of LIRE v3.0),
+the LLN argument's premises are weaker than at a more uniform
+interval-width distribution.
+
+A sensitivity is wanted: how much does the posterior on α move under
+per-inscription latent-date variation? Decision 19's Revisit triggers
+already flag aoristic-uncertainty propagation as a candidate for
+revisiting; the stand-in cross-model review surfaces a concrete
+mechanism for testing it cheaply.
+
+### Options considered
+
+- **A — Propagate latent dates into the likelihood directly.** Full
+  Bayesian propagation: each inscription with date range
+  `[nb_i, na_i]` carries a latent `t_i ~ Uniform(nb_i, na_i)` in the
+  model. Parameter space expands by ~ 10^5; sampler convergence
+  becomes a non-trivial engineering problem. Methodologically the
+  purest answer; computationally expensive.
+- **B — Aoristic-Monte-Carlo supplementary fit.** Run the mixture
+  on N_MC independently-sampled aoristic SPA realisations — each
+  realisation built from a different per-inscription latent-date
+  draw within `[nb_i, na_i]` — and report the cross-realisation
+  posterior on α as a sensitivity alongside the primary single-SPA
+  posterior. Compute cost: N_MC extra mixture fits (N_MC ~ 20–50);
+  cheaper than Option A by orders of magnitude; directly tests the
+  LLN expectation without requiring it.
+- **C — Status quo.** Single-SPA fit only; defend the upstream-
+  aoristic choice in prose.
+
+### Decision
+
+**Option B.**
+
+- An **aoristic-Monte-Carlo supplementary fit** is preregistered as
+  a sensitivity analysis on the upstream-aoristic assumption.
+- **Procedure:** N_MC independently-sampled aoristic SPA realisations
+  are constructed (each from a different per-inscription latent-date
+  draw `t_i ~ Uniform(nb_i, na_i)`); each realisation produces a
+  separate mixture fit with the primary multinomial likelihood. The
+  **cross-realisation posterior** of α — the union of all per-
+  realisation posteriors on α, equally weighted across realisations
+  — is reported alongside the primary single-SPA posterior.
+- **N_MC:** pinned in the pre-Phase-2 design artefact, in the range
+  N_MC ∈ [20, 50]. The exact value is pinned before any mixture fit
+  is run.
+- **Divergence flag (preregistered):** if the cross-realisation 95 %
+  range on α exceeds **1.5× the primary single-SPA posterior 95 %
+  CI width**, this is reported as a *material* limitation of the
+  upstream-aoristic primary choice in the paper. Does not trigger
+  an OSF amendment by itself (this is a preregistered sensitivity,
+  not a confirmatory test); the result is reported transparently.
+- The aoristic-MC supplementary is run only on the **primary
+  multinomial fit**; the Dirichlet-multinomial and rescaled NegBin
+  supplementaries of Decision 19 are not separately aoristic-MC'd.
+
+### Consequences
+
+- §3 (Bayesian deconvolution-mixture model) — a new subsection
+  "Aoristic-uncertainty sensitivity (supplementary)" added.
+- §5 (Exploratory analyses) — cross-reference added pointing back
+  to the §3 spec.
+- §6 (effect-size table) — a supplementary row added under H2:
+  reports the cross-realisation posterior of α and the divergence
+  flag.
+- Plain-English walkthrough Step 2: one sentence added noting the
+  aoristic-MC supplementary.
+- Design artefact spec: pin specific N_MC and the divergence-flag
+  threshold (default 1.5× the primary posterior width).
+
+### Revisit triggers
+
+- Cross-realisation posterior on α moves materially (the 1.5×
+  divergence flag is tripped) — consider promoting to full latent-
+  date propagation (Option A) in a follow-up paper or OSF amendment.
+- Pilot fit reveals N_MC mixture fits is computationally infeasible
+  at scale — would force reduction in N_MC or fall-back to Option
+  C (status quo) via OSF amendment before final lodgement.
+- Martin recommends Option A directly, or a different sensitivity
+  design (e.g. importance-resampling within a single fit).
+
+---
+
+## Decision 29 — 2026-05-17: 8th PPC category — posterior-predictive spatial autocorrelation on H3a residuals
+
+**Status:** committed; provisional pending Martin's eventual review
+(any revision filed as OSF amendment)
+**Decided by:** Shawn 2026-05-17 (informed by stand-in cross-model
+statistical review; ChatGPT 5.5 recommended adding a posterior-
+predictive spatial-autocorrelation check as an H3c-specific PPC).
+
+### Context
+
+The current PPC categories (Decision 25, seven categories: prior
+99th-percentile cap; PP mean / std / tail-count / proportion-of-
+zeros; residual-vs-fitted slope; province-level residual dispersion)
+test marginal and conditional moments of the posterior-predictive
+distribution but do not test whether the model can *generate* spatial
+structure in residuals of the magnitude observed.
+
+H3c(ii) (Decision 23) tests whether the H3a residuals exhibit spatial
+clustering (Moran's I > 0). If the H3a posterior-predictive routinely
+*fails* to generate residual spatial structure of the observed
+magnitude, then H3c(ii) is testing something the model is structurally
+incapable of producing — a tautology risk: a "significant Moran's I
+on observed residuals" would mean "observed residuals exhibit a
+structure the model cannot produce," which is a different — weaker —
+finding than "observed residuals exhibit a real spatial pattern."
+
+The model-generates-the-pattern check is a standard Bayesian-workflow
+PPC; absent from the original spec because the seven categories were
+drafted before H3c(ii) was specified in its current Pearson-residual
+form (Decision 23).
+
+### Decision
+
+**An 8th PPC category is added.**
+
+- **Test:** for each H3a posterior draw, compute `y_pred,c` for each
+  city; compute Pearson residuals of `y_pred,c` against
+  `μ_c,s`; compute Moran's I on the resulting posterior-predictive
+  residual surface with the same k-NN spatial weights as H3c(ii)
+  (primary k = 8). Repeat across posterior draws to obtain the
+  posterior-predictive distribution of Moran's I.
+- **Trigger:** observed Moran's I (from H3c(ii)'s posterior-mean
+  Pearson residual computation) lies *outside* the design-artefact-
+  pinned range of the posterior-predictive distribution (default:
+  outside the 5th–95th percentile of posterior-predictive I).
+- **Severity (per Decision 30):** critical if observed I lies
+  outside the 1st–99th percentile range; minor if outside 5th–95th
+  but within 1st–99th.
+- **Interpretation:** a tripped trigger means the model is unable
+  to generate the observed degree of residual spatial structure
+  under its own posterior — H3c(ii) results from such a model
+  must be reported with the tautology caveat ("the model is
+  structurally underspecified for the spatial pattern observed").
+
+### Consequences
+
+- §3 (Posterior predictive checks) — PPC category list extended to
+  eight categories.
+- §3 (Residual analysis / Spatial clustering H3c) — cross-
+  reference: the 8th PPC is run before H3c(ii); the H3c(ii)
+  interpretive language is conditional on the 8th PPC outcome.
+- §4 (Phase 3 description) — added bullet point.
+- §6 (effect-size table) — PPC subsection extended.
+- §7 (contingencies) — PPC-failure trigger language updated to
+  include the new category.
+
+### Revisit triggers
+
+- Martin's consultation recommends a different spatial PPC
+  (e.g. semivariogram instead of Moran's I; geographically-weighted
+  posterior-predictive density).
+- The 8th PPC trips on the pilot fit — would require revisiting
+  H3c(ii)'s decision rule given that the model fails to produce
+  observed spatial structure.
+- The 8th PPC and H3c(ii) together produce an interpretively
+  confused result (e.g. PPC trips on the low side — model under-
+  generates spatial structure — but H3c(ii) is permutation-
+  significant; how to report?).
+
+---
+
+## Decision 30 — 2026-05-17: Two-tier severity scheme for PPC trigger response
+
+**Status:** committed; provisional pending Martin's eventual review
+(any revision filed as OSF amendment)
+**Decided by:** Shawn 2026-05-17 (informed by stand-in cross-model
+statistical review; ChatGPT 5.5 flagged the current uniform "any
+tripped trigger initiates revision" rule as too aggressive).
+
+### Context
+
+Decision 25's PPC failure response is uniform: any tripped trigger
+initiates model revision (priors, link, or structure), reports the
+originally-preregistered model alongside the revised model in the
+paper, and files an OSF amendment before final results are lodged.
+
+This rule treats all numerical PPC failures identically — a mild
+tail discrepancy (e.g. PP mean off by 6 % when the design-artefact
+bound is 5 %) triggers the same response as a critical failure
+(e.g. PP mean off by 50 %; sign-flipped residual-vs-fitted slope).
+For a paper with eight PPC categories per Decision 29's addition,
+this aggregates: a routinely-mild trigger in one category forces
+the full revision + amendment overhead even when the main model is
+substantively adequate.
+
+The amendment-filing overhead is non-trivial (OSF amendments are
+public-record commitments); routinely filing for mild discrepancies
+risks both procedural fatigue and a "noisy" public amendment trail
+that obscures genuinely material revisions.
+
+### Options considered
+
+- **A — Status quo.** Uniform "any tripped trigger" rule. Maximally
+  conservative; high overhead.
+- **B — Two-tier severity scheme.** Critical (significantly tripped
+  — e.g. > 2× the design-artefact bound, or sign-flipped where
+  applicable) retains the full response; minor (marginally tripped
+  — e.g. tripped at > 1× but ≤ 1.5× the bound) is reported as a
+  caveat in the paper without forcing model revision.
+- **C — Three-tier scheme.** Critical / moderate / minor with
+  graded responses. More precise; more parameters to pin.
+
+### Decision
+
+**Option B, two-tier severity scheme.**
+
+- **Critical trigger:** PPC value lies outside the design-artefact
+  bound by > 2× the bound's magnitude (e.g. for "PP mean within X %
+  of observed," critical means PP mean off by > 2X %); or, for
+  trigger categories with directional bounds (residual-vs-fitted
+  slope), the sign is unexpected.
+  - **Response:** model revision (priors, link, or structure);
+    originally-preregistered model reported alongside the revised
+    model; OSF amendment filed before final results are lodged.
+    (Current Decision-25 rule preserved.)
+- **Minor trigger:** PPC value lies outside the design-artefact
+  bound by ≤ 1.5× the bound's magnitude (i.e. tripped, but
+  marginally).
+  - **Response:** reported as a caveat in the paper; no model
+    revision required; no OSF amendment.
+- **Cutoffs (1.5× / 2×):** straw values; pinned in the design
+  artefact for each PPC category. The cutoffs may differ across
+  categories (e.g. proportion-of-zeros may warrant a tighter
+  minor / critical cutoff than tail-count).
+- **The "no trigger used to test a hypothesis" rule is unchanged**
+  — these are diagnostic checks on model fit, not confirmatory
+  tests.
+
+### Consequences
+
+- §3 (PPC failure-response paragraph) rewritten with the severity-
+  conditional response.
+- §7 (contingencies) — "If any numerical PPC threshold is tripped
+  for H3a" bullet rewritten to the severity-conditional form.
+- Design-artefact spec: pin per-category critical / minor cutoffs.
+- Decision 25's uniform "any tripped trigger" wording superseded
+  for the response side; the trigger-category list of Decision 25
+  is preserved (and extended by Decision 29).
+
+### Revisit triggers
+
+- Martin recommends a three-tier scheme or different cutoffs
+  (e.g. critical at > 3×; minor at > 1× ≤ 2×).
+- A pilot fit reveals a trigger category where the 2× cutoff is
+  empirically vacuous (the posterior-predictive distribution is
+  narrow enough that 2× the bound is well within the prior-
+  predictive support) — would prompt revising the design-artefact
+  bound or the severity cutoff for that category.
+- A pilot fit reveals a category where the 1.5× minor cutoff is
+  routinely tripped — would prompt revising the design-artefact
+  bound to a more permissive value before lodgement.
+
+---
+
+## Decision 31 — 2026-05-17: Three-case interpretive guardrail for H3c(ii) Moran's I
+
+**Status:** committed; provisional pending Martin's eventual review
+(any revision filed as OSF amendment)
+**Decided by:** Shawn 2026-05-17 (informed by stand-in cross-model
+statistical review; ChatGPT 5.5 proposed the three-case guardrail to
+prevent over-claiming when the confirmatory rule passes but posterior
+uncertainty is wide).
+
+### Context
+
+Decision 23's H3c(ii) decision rule (Moran's I > 0 at *p* < 0.05 in
+≥ 2 of {k = 5, 8, 10} on posterior-mean Pearson residuals; field-
+standard frequentist conditional permutation inference) is a
+posterior-mean-summarised frequentist test. The supplementary
+posterior distribution of `I_s` across draws is reported (per k) as
+2.5 / 50 / 97.5 percentiles, but does not enter the confirmatory
+verdict.
+
+This creates a reporting risk: a result that is permutation-
+significant on the posterior-mean residual surface but for which the
+posterior distribution of `I_s` straddles zero is, by the literal
+rule, a *supported* H3c(ii) — even though the posterior uncertainty
+is wide enough that the "spatial clustering" claim is not
+substantively robust. Without a pre-committed interpretive
+framework, the paper's prose around this case is a researcher
+degree of freedom.
+
+### Options considered
+
+- **A — Three-case interpretive guardrail.** Preserves the
+  confirmatory rule unchanged; commits to specific interpretive
+  language for the three posterior-distribution cases.
+- **B — Status quo.** Report the supplementary I_s percentiles;
+  let interpretive language be ad hoc.
+- **C — Promote posterior I_s to the binding rule.** Replace the
+  permutation rule with `P(I > 0) ≥ 0.95` (across draws per k).
+  Field-non-standard for spatial autocorrelation tests; departs
+  from the Decision 23 rationale for the asymmetric draw-wise /
+  posterior-mean split.
+
+### Decision
+
+**Option A, three-case interpretive guardrail.**
+
+The **decision rule** (Moran's I > 0 at *p* < 0.05 in ≥ 2 of {k = 5,
+8, 10} on posterior-mean Pearson residuals; field-standard
+conditional permutation inference) is **unchanged**. The guardrail
+governs only the interpretive language used in the paper:
+
+- **Case 1 — clean replication.** Confirmatory rule passes AND the
+  posterior distribution of `I_s` shows ≥ 95 % of draws above 0 at
+  the primary k = 8. Reported as: "the spatial-clustering finding
+  replicates Hanson 2021 robustly, with posterior support."
+- **Case 2 — permutation-significant but posterior-sensitive.**
+  Confirmatory rule passes BUT the 95 % posterior interval of
+  `I_s` at primary k = 8 crosses zero. Reported as: "the spatial-
+  clustering finding is permutation-significant on the posterior-
+  mean residual surface but sensitive to posterior uncertainty —
+  not described as a clean replication of Hanson 2021."
+- **Case 3 — confirmatory rule passes without substantive support.**
+  Confirmatory rule passes AND the posterior distribution of `I_s`
+  is centred near zero (< 50 % of draws above 0 at primary k = 8).
+  Reported as: "the confirmatory rule passes but does not survive
+  posterior-uncertainty diagnostics — H3c(ii) is **not** claimed as
+  substantively supported."
+
+Thresholds (≥ 95 % for Case 1; < 50 % for Case 3) are committed in
+the prereg.
+
+### Consequences
+
+- §3 (Spatial clustering H3c(ii)) extended with the guardrail
+  table.
+- Field 3 H3c(ii) wording extended (one sentence on each case's
+  interpretation).
+- §6 (effect-size table) — H3c(ii) row footnoted with the three-
+  case framework.
+
+### Revisit triggers
+
+- Martin recommends Option C (full draw-wise posterior rule) or
+  different posterior-distribution thresholds.
+- Observed result lands in Case 2 and the "permutation-significant
+  but posterior-sensitive" wording proves contested in peer
+  review.
+- Across k = 5, 8, 10 the three k's land in different cases —
+  would prompt a refinement of the guardrail to a per-k version.
+
+---
+
+## Decision 32 — 2026-05-17: Three-weighting sensitivity for f_within (unweighted primary; population- and inscription-weighted supplementaries)
+
+**Status:** committed; provisional pending Martin's eventual review
+(any revision filed as OSF amendment)
+**Decided by:** Shawn 2026-05-17 (informed by stand-in cross-model
+statistical review; ChatGPT 5.5 flagged the unweighted-variance
+choice as defensible but arbitrary, and recommended a population-
+or inscription-weighted sensitivity).
+
+### Context
+
+The H3a primary estimand `f_within = Var(β_within · within-deviation)
+/ Var(log E[insc_c])` (Decision 12, refined by Decision 18) is
+computed with both numerator and denominator variances **unweighted**
+across cities. Under this choice, every city contributes equally to
+the variance calculation regardless of its population or its
+inscription count — answering the substantive question "what share of
+city-to-city *systematic variation* does within-province population
+explain?"
+
+An alternative reading of the same primary RQ is "what share of
+*inscription-weighted variation*?" or "what share of *population-
+weighted variation*?" — the population-weighted denominator gives
+disproportionate weight to the largest cities (matching the natural
+"this is where most of the demographic action happens" reading), and
+the inscription-weighted denominator gives disproportionate weight
+to inscription-rich cities (matching "this is where most of the
+epigraphic action happens"). The three weightings answer related but
+different questions; the unweighted primary is defensible, but
+arbitrary, and a reviewer may ask why we chose it.
+
+### Decision
+
+**Add a three-weighting sensitivity as a §5 pre-specified
+exploratory.**
+
+- The **unweighted** `f_within` remains the **binding primary
+  confirmatory** estimand (the H3a three-way verdict is computed on
+  this and only this version).
+- Two **supplementary** weighted variants are pre-specified as §5
+  exploratories:
+  1. **Population-weighted** — both numerator and denominator
+     variances computed with city weight `w_c = population_c`,
+     normalised so weights sum to N_cities. Answers "what share of
+     population-weighted log-count variance does within-province
+     population explain?"
+  2. **Inscription-weighted** — same with `w_c = y_c`. Answers "what
+     share of inscription-weighted log-count variance does within-
+     province population explain?"
+- Both supplementaries are reported as full posterior distributions
+  alongside the unweighted primary.
+- **Material divergence:** if the spread across the three weightings
+  exceeds **half the primary unweighted posterior 95 % CI width**,
+  this is flagged as a limitation in the paper (the substantive
+  reading of the primary depends on which variation we're
+  partitioning). Does *not* trigger an OSF amendment (this is a
+  preregistered exploratory sensitivity, not a confirmatory test).
+
+### Consequences
+
+- §5 (Exploratory analyses) gains the three-weighting sensitivity
+  item with the spec above.
+- §3 (H3a confirmatory estimand and decision rule) — one sentence
+  added clarifying that the binding primary is unweighted; the
+  weighted supplementaries are §5 sensitivities, not co-binding.
+- §6 (effect-size table) — H3a row footnoted with the supplementary
+  weightings.
+
+### Revisit triggers
+
+- Spread between the three weightings exceeds the material-
+  divergence threshold — would prompt a discussion of whether the
+  unweighted variant is the appropriate substantive primary, or
+  whether (e.g.) the population-weighted variant better matches
+  the paper's primary substantive question.
+- Martin recommends a different weighting (e.g. inverse-variance
+  weighting; weighting by city `1/SE(log_pop_c)`).
+- A reviewer asks for a fourth weighting variant (e.g. log-
+  population-weighted) — would prompt either an exploratory
+  addition or a justified refusal.
