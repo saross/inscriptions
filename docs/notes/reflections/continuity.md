@@ -5,7 +5,7 @@ title: "Continuity — inscriptions project (living doc)"
 audience: "next CC instance picking up the project; Shawn after any break"
 status: living; updated at end of each session
 started: 2026-04-24
-last-updated: 2026-05-17 (post round-3 saturation)
+last-updated: 2026-05-17 (post stand-in statistical review; D27–32 incorporated; lodgement-ready)
 ---
 
 # Continuity — inscriptions project
@@ -19,9 +19,9 @@ last-updated: 2026-05-17 (post round-3 saturation)
 
 ---
 
-## Research state — one-paragraph snapshot (2026-05-17, post-round-3)
+## Research state — one-paragraph snapshot (2026-05-17, post-stand-in-review; lodgement-ready)
 
-The preregistration has reached **conscious saturation** after three rounds of adversarial review and a structured QA pass. Round 1 (dual Claude Opus 4.7, 2026-05-14) produced six consensus blockers; round 2 (ChatGPT 5.5, 2026-05-16) produced ten substantive findings (bucket b) plus mechanical / verification items; round 3 (cross-model: ChatGPT 5.5 fresh-chat + Gemini 3 Pro fresh-context, 2026-05-17) returned only one cross-model-agreed BLOCKING finding and two single-model SHOULD-FIX items, all addressed. Both round-3 verdicts converge on "ready for Martin after these corrections" — corrections applied. **Decisions 12–26 are logged** in `decision-log.md`; **Decision 20 supersedes Decision 17** (the artefact reframing from "midpoint spikes" to "wide-template-slab editorial encoding + real ancient regnal clustering" was driven by three new diagnostics: `runs/2026-05-17-interval-width-diagnostic/`, `runs/2026-05-17-empirical-spa-shape/`, `runs/2026-05-17-date-range-filtered-spas/`). The 2026-05-17 **comprehensive rewrite** of `preregistration-draft.md` (449 lines, +146 / −78 plus round-3 corrections) implements all of Decisions 18–26. The two pre-Phase-2 design artefacts (the template-dictionary scan at `runs/2026-05-XX-template-dictionary/` and the recovery-grid-design at `runs/2026-05-XX-recovery-grid-design/`) are named in the prereg and pinned procedurally; they are committed before any Phase 2 analysis runs. Four decisions (19 mixture observation model, 21 recovery-grid coverage rule + shape library, 23 H3c residual choice + asymmetric Moran's I, 25 numerical PPC thresholds) are explicitly flagged as **primary items for Martin's consultation**. Next deliverable: **Martin's statistician consultation pack** (Task #17). After Martin's input is incorporated, OSF lodgement. The Phase 2 / 3 substantive analysis pipelines remain preregistered-designed but not-yet-implemented — that work tranche begins after OSF lock.
+The preregistration is **ready for OSF lodgement** after three rounds of adversarial review (round 1: dual Claude Opus 4.7; round 2: ChatGPT 5.5; round 3: cross-model ChatGPT 5.5 + Gemini 3 Pro), a structured QA pass, and a final **stand-in cross-model statistical review** (same two models in different role — "applied econometrician / statistician" — committed at `planning/GPT55-statistical-review.md` and `planning/gemini-statistical-review.md`). The stand-in reviews were a hedge against Martin's potential delay relative to Adela's Friday 2026-05-22 conference presentation; they surfaced two cross-model-agreement items (replicate count floor too thin; Pearson r too forgiving as shape-recovery metric) and five single-model items (aoristic-MC sensitivity; posterior-predictive spatial-autocorrelation PPC; population- / inscription-weighted `f_within` sensitivity; three-case interpretive guardrail for H3c(ii) Moran's I; two-tier PPC severity), all incorporated as **Decisions 27–32** in the decision log and surgically threaded into the prereg (§3, §4, §5, §6, §7, Field 3) by clean methodological statements without provenance markers (provenance lives in the decision log and the changelog). The **statistician consultation pack for Martin** (`planning/martin-consultation-pack-2026-05-17.md`, 863 lines) was completed in parallel and reframed after D27–32 to reflect the incorporated state; it goes to Martin 2026-05-17. **Decisions 1–32 are logged**; key decisions for orientation: 12 (Mundlak NBR + variance partition); 14 (Bayesian mixture + recovery sim); 18 (three-way H3a verdict); 19, 21, 23, 25 (the four Martin-flagged primary items); 20 (template-interval slab structure, supersedes 17); 22 (date-window-filtered counts for H3a / H3c); 27–32 (stand-in-review-driven refinements). The two pre-Phase-2 design artefacts are named in the prereg with `2026-05-XX` placeholder paths pending the actual commit date. **Lodgement target: Tuesday 2026-05-19.** If Martin replies by then, fold his feedback into the prereg before lodgement; otherwise lodge as written and treat subsequent Martin feedback as post-lodgement OSF amendments per §7. Phase 2 / 3 substantive analysis pipelines remain preregistered-designed but not-yet-implemented; that work tranche begins after OSF lock.
 
 ---
 
@@ -39,6 +39,18 @@ The preregistration has reached **conscious saturation** after three rounds of a
 - **Sapphire for compute.** Any bootstrap sweeps, permutation tests, Bayesian sampling, or CPU-intensive work runs on sapphire via SSH. Workdir is `~/Code/inscriptions` (note: NOT `~/inscriptions` — typo caused an agent stall 2026-04-22). uv at `~/.local/bin/uv` (not in non-interactive PATH).
 - **Hard-stop rules in agent briefs.** Especially: do NOT silently negotiate parameters down to fit time budgets — halt and report. Two prior incidents (H1 v1 silent bootstrap-from-LIRE; preliminary v2 silent 100/200 reduction) make this a learned-lesson.
 - **Agent-session-capture infrastructure operational** (2026-04-24; `/recall agent-infrastructure`). Use agents liberally for research and context management — session trail persistently captured for open-science research-record purposes.
+
+---
+
+## Pre-lodgement staging work (in flight, 2026-05-17 → 2026-05-19)
+
+1. [ ] **Shawn's final read-through of the preregistration** — ~30 minutes; the critical gate before lodgement.
+2. [ ] **Build pre-Phase-2 template-dictionary artefact** at `runs/2026-05-19-template-dictionary/` (or whatever date). Empirical scan of LIRE v3.0 for exact-match interval templates; commit code + dictionary CSV + REPORT.md; ~3 hours of focused work, fully bounded.
+3. [ ] **Draft pre-Phase-2 recovery-grid-design artefact** at `runs/2026-05-19-recovery-grid-design/`. Pin concrete numerical values for: the six genuine-shape-library parameterisations; the five tier-weight vectors; sample-size N values from Phase 1 reachability map; replicate count 100; seed policy; Wasserstein-1 flagging threshold straw; severity cutoffs (2× / 1.5×); per-category numerical PPC bounds (with our straws + Gemini's concrete suggestions); aoristic-MC N_MC value and divergence-flag threshold. The α grid axis remains "TBD from pilot fit." ~½ day.
+4. [ ] **Date-stamp the prereg `2026-05-XX` references** once the artefacts are committed (six occurrences across §3, §4, plain-English walkthrough). Trivial sed-style edit.
+5. [ ] **Optional: pymc mixture-model scaffold** — start writing the multinomial primary + Dirichlet-multinomial + rescaled NegBin in pymc, against the slab structure of D20. 2–3 days; could run in parallel after artefacts are committed.
+
+**Lodgement target Tuesday 2026-05-19.** If Martin's feedback arrives by then, fold in pre-lodgement; otherwise lodge as written and treat any subsequent feedback as OSF amendments.
 
 ---
 
@@ -63,6 +75,9 @@ Order: H2 → H3a (with brms shadow + variance partition + sensitivities) → H3
 
 ## Done — major recent milestones (2026-04-23 → 2026-05-17)
 
+- [x] **Decisions 27–32 incorporated into prereg + decision log + changelog + pack** (2026-05-17 later). Six new decisions arising from the stand-in cross-model statistical reviews: D27 (recovery-sim refinements — replicate count ≥ 100; Wasserstein-1 supplementary shape metric); D28 (aoristic-MC supplementary fit); D29 (8th PPC category — posterior-predictive spatial autocorrelation on H3a residuals); D30 (two-tier PPC severity scheme); D31 (three-case interpretive guardrail for H3c(ii) Moran's I); D32 (population- / inscription-weighted `f_within` sensitivity). All threaded into prereg as clean methodological statements without provenance markers (provenance in decision log + changelog). Pack reframed inline-marker state from "proposed pending sign-off" to "incorporated; reversal via OSF amendment if Martin recommends." Five focused commits committed and pushed.
+- [x] **Stand-in cross-model statistical review** (2026-05-17 later). ChatGPT 5.5 + Gemini 3 Pro reviews of the consultation pack, taking an "applied econometrician / statistician" role. Two cross-model-agreement items (replicate count thin; Pearson r too forgiving) plus five single-model items (all GPT5.5). Committed at `planning/GPT55-statistical-review.md` and `planning/gemini-statistical-review.md`. Drove Decisions 27–32 above.
+- [x] **Martin statistician consultation pack** (2026-05-17). `planning/martin-consultation-pack-2026-05-17.md`, 863 lines, structured as exec-summary + 8-question list + deep-dive appendices, tuned for an applied-econometrician audience (Mundlak / identifiability / RDF / FDR-Holm vocabulary). Eight questions: 4 primary (D19 / D21 / D23 / D25) + 4 secondary (D12, D13, multiple-comparison policy, design-artefact contents). Goes to Martin 2026-05-17.
 - [x] **Round-3 saturation check — cross-model ChatGPT 5.5 + Gemini 3 Pro** (2026-05-17). Same prompt to both; ChatGPT in a fresh chat for cross-model orthogonality with Gemini's fresh-context. Strong cross-model agreement on one BLOCKING finding (H3c residual analysis was incorrectly described as receiving mixture correction — H3c residuals are computed from H3a's posterior and inherit H3a's date-filtered-count scope). Two single-model SHOULD-FIX items: ChatGPT (multinomial observation model normalisation precision); Gemini ("year-0" terminology — no year 0 in the Julian / Gregorian calendar). All three findings applied. **Both models' verdicts converge: "ready for Martin after these corrections."** See `planning/saturation-check-prompt-2026-05-17.md`, `planning/prereg-saturation-check-GPT55.md`, `planning/prereg-saturation-check-gemini.md` for the full record. Conscious saturation reached; no further adversarial revision cycles needed before Martin's consultation.
 - [x] **QA pass on the 2026-05-17 rewrite** (2026-05-17, between rounds 2 and 3). Fresh-context Claude agent against a structured QA brief (stale-framing detection; internal consistency; cross-reference correctness; decision-log consequences fulfilled). 1 BLOCKING + 4 SHOULD-FIX + 2 MINOR findings — all internal-consistency / stale-phrase issues. All applied.
 - [x] **2026-05-17 comprehensive rewrite of `preregistration-draft.md`** (+146 / −78; 449 lines pre-QA; ~451 lines post-QA-and-round-3). Implements Decisions 18–26 + bucket (c) mechanical fixes + the QA-pass and round-3 corrections.
@@ -100,6 +115,8 @@ Order: H2 → H3a (with brms shadow + variance partition + sensitivities) → H3
 4. `planning/chatgpt-review-triage.md` — the four-bucket triage of round-2 ChatGPT findings (0a / 10b / 9c / 2d).
 5. `planning/cross-model-adversarial-review-preregistration.md` — the round-2 ChatGPT 5.5 review verbatim.
 6. `planning/saturation-check-prompt-2026-05-17.md` + `planning/prereg-saturation-check-GPT55.md` + `planning/prereg-saturation-check-gemini.md` — round-3 cross-model saturation check prompt and the two model responses.
+6a. `planning/martin-consultation-pack-2026-05-17.md` — the structured consultation pack sent to Martin. 863 lines; exec-summary + 8-question list + deep-dive appendices.
+6b. `planning/GPT55-statistical-review.md` + `planning/gemini-statistical-review.md` — the two stand-in cross-model statistical reviews of the consultation pack (in an applied-statistician role; hedge against Martin's potential delay). Drove Decisions 27–32.
 7. `runs/2026-05-17-interval-width-diagnostic/outputs/REPORT.md`, `runs/2026-05-17-empirical-spa-shape/outputs/REPORT.md`, `runs/2026-05-17-date-range-filtered-spas/outputs/REPORT.md` — the three diagnostics driving Decision 20 (artefact reframe from "midpoint spikes" to "wide-template-slab editorial encoding + real ancient regnal clustering").
 8. `runs/2026-04-25-h1-simulation/outputs/h1-v2/REPORT-v2-final.md` — H1 v2 thresholds; the empirical basis for prereg §6 (seed 20260425, commit `00aceb4`).
 9. `runs/2026-05-15-editorial-convention-hierarchy/outputs/REPORT.md` — historical diagnostic that originally grounded Decision 17. Reinterpreted by the 2026-05-17 diagnostics (the int-truncated-midpoint test statistic this run used conflated mechanisms); data still committed and reproducible.
@@ -156,6 +173,18 @@ That's enough to engage substantively. Deeper context (the scout report, working
 ---
 
 ## Session history — done items (terse)
+
+### 2026-05-17 (later — Martin pack + stand-in statistical review + D27–32)
+
+- Drafted Martin consultation pack (`planning/martin-consultation-pack-2026-05-17.md`, 863 lines, exec-summary + 8-question list + appendices, applied-econometrician framing).
+- Pre-pack-send hedge: ran stand-in cross-model statistical reviews with ChatGPT 5.5 + Gemini 3 Pro in an "applied econometrician / statistician" role. Both committed at `planning/GPT55-statistical-review.md` and `planning/gemini-statistical-review.md`.
+- Two cross-model-agreement items emerged: replicate-count floor too thin (≥ 50 → ≥ 100); Pearson r too forgiving as shape-recovery metric (add Wasserstein-1 supplementary). Five single-model items (all GPT5.5): aoristic-MC sensitivity; 8th PPC category (posterior-predictive spatial autocorrelation on H3a residuals); population- / inscription-weighted `f_within` sensitivity; three-case interpretive guardrail for H3c(ii) Moran's I; two-tier PPC severity scheme.
+- All seven items captured as **Decisions 27–32** in the decision log, each tagged "provisional pending Martin's eventual review; subject to OSF amendment."
+- Prereg surgery to incorporate D27–32 across §3, §4, §5, §6, §7, and Field 3 — clean methodological statements without provenance markers.
+- Changelog updated with a new "2026-05-17 (later) — Stand-in cross-model statistical review; Decisions 27–32" section.
+- Pack `[stand-in update]` markers reframed from "Proposed pending sign-off" to "Incorporated; reversal via OSF amendment if your review recommends it."
+- Five focused commits + push (482cc87, feae7c5, 88de0e5, 4bc67bd, 28fd3f7).
+- Continuity.md + working-notes Obs 40/41 + next-session prompt drafted.
 
 ### 2026-05-17 (round 2 triage → round 3 saturation)
 
