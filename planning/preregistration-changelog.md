@@ -710,24 +710,161 @@ for Martin's pack and, after Martin's input, OSF lodgement.
 
 ---
 
+## 2026-05-17 (later) — Stand-in cross-model statistical review; Decisions 27–32
+
+After the round-3 saturation check (above) returned both models'
+convergent "ready for Martin" verdict, the consultation pack
+`planning/martin-consultation-pack-2026-05-17.md` was drafted (~ 819
+lines). Before sending the pack, the same draft was put through two
+**stand-in cross-model statistical reviews** by ChatGPT 5.5 and Gemini
+3 Pro, both in the role of "applied econometrician/statistician
+giving a targeted review before the actual statistician sees it." The
+two responses are committed at `planning/GPT55-statistical-review.md`
+and `planning/gemini-statistical-review.md`.
+
+**Rationale.** The conference presentation by Adela on Friday
+2026-05-22 imposes a hard deadline: Martin's response to the
+consultation pack may not arrive in time to be incorporated before
+that presentation, and waiting risks losing audience feedback from
+epigraphers / archaeologists / historians that the conference will
+surface. The decision (Shawn 2026-05-17) was to (i) send the pack to
+Martin today; (ii) incorporate his feedback if it arrives by Tuesday
+2026-05-19; (iii) otherwise lodge on OSF with the pack's positions
+as the stand-in-review-informed prereg, and treat any subsequent
+Martin feedback as post-lodgement OSF amendments. The two stand-in
+LLM reviews are an honest substitute, not a pretence at human
+statistical review — they hedge against the timing risk by surfacing
+items that warrant pre-lodgement attention.
+
+**Result.** Seven items, structured as **two cross-model-agreement**
+items (high confidence, both reviewers independently flagged the
+same gap) and **five single-model** items (one reviewer's
+recommendation that addresses a genuine gap). All seven incorporated
+into the prereg as **Decisions 27–32** in the decision log; the
+prereg itself states *what* will be done, without provenance markers
+(the source of each refinement is recorded in the decision log and
+in this changelog only).
+
+### Cross-model-agreement items
+
+- **Decision 27 (recovery-simulation refinements).** Both reviewers
+  flagged the prereg-binding floor of ≥ 50 replicates per cell as
+  thin (true-90 %-coverage Wilson interval at n = 50 is ~ [0.79,
+  0.96]; per-cell pass / fail is brittle) and Pearson r as too
+  forgiving for localised mass-redistribution failures. Floor bumped
+  to ≥ 100 replicates per cell; **Wasserstein-1 (Earth Mover's
+  distance)** added as a supplementary distribution-sensitive
+  shape-recovery metric reported per cell against a design-artefact-
+  pinned flagging threshold. Pearson r ≥ 0.95 in ≥ 90 % of cells
+  remains the binding rule. *§3 mixture / Validation; §4 Phase 2
+  recovery-sim spec; §6 H2.1 row.*
+
+### Single-model items
+
+- **Decision 28 (aoristic-MC supplementary).** GPT5.5 proposed an
+  intermediate alternative to per-inscription latent-date propagation
+  through the likelihood: run the primary multinomial mixture on
+  N_MC ∈ [20, 50] independently-sampled aoristic SPA realisations
+  (each from a different per-inscription latent-date draw within
+  `[nb_i, na_i]`); report the cross-realisation posterior of α
+  alongside the primary single-SPA posterior; flag for divergence if
+  the cross-realisation 95 % range on α exceeds 1.5× the primary
+  posterior's 95 % CI width. Preregistered sensitivity, not a
+  confirmatory test; no OSF amendment trigger. *§3 new "Aoristic-
+  uncertainty sensitivity" subsection in mixture; §4 Phase 2
+  reference; §6 new "Mixture supplementary sensitivities" row.*
+- **Decision 29 (8th PPC category).** GPT5.5 proposed an H3c-
+  specific PPC: posterior-predictive spatial autocorrelation on H3a
+  residuals. For each posterior draw, compute `y_pred,c`; compute
+  Pearson residuals; compute Moran's I on the resulting posterior-
+  predictive residual surface; trigger if observed Moran's I lies
+  outside a design-artefact-pinned range of the posterior-predictive
+  I distribution. A tripped trigger means the model is structurally
+  underspecified for the observed spatial pattern — H3c(ii) is
+  reported with a tautology caveat in that case. *§3 H3a PPC list
+  extended to 8 categories; H3c spatial-clustering subsection
+  conditioned on the new PPC.*
+- **Decision 30 (two-tier severity).** GPT5.5 flagged the uniform
+  "any tripped trigger initiates revision" rule as too aggressive: a
+  mild tail discrepancy could force a formal revision and OSF
+  amendment even when the main model is adequate. Two-tier scheme:
+  *critical* (PPC value > 2× the design-artefact bound, or sign-
+  flipped) initiates revision + amendment; *minor* (≤ 1.5× the
+  bound) reported as caveat without revision. Per-category 2× /
+  1.5× cutoffs pinned in the design artefact. *§3 PPC failure-
+  response paragraph rewritten; §7 contingencies rewritten.*
+- **Decision 31 (three-case Moran's I guardrail).** GPT5.5 proposed
+  a three-case interpretive framework to govern the paper's reporting
+  language when the H3c(ii) confirmatory rule passes. Case 1 (≥ 95 %
+  posterior draws above 0 at k = 8) → clean replication; Case 2
+  (95 % posterior interval crosses zero) → permutation-significant
+  but posterior-sensitive; Case 3 (< 50 % posterior draws above 0
+  at k = 8) → not substantively supported. Decision rule unchanged;
+  guardrail governs interpretive language only. Thresholds (95 % /
+  50 %) committed in the prereg. *§3 H3c spatial-clustering
+  subsection extended; Field 3 H3c(ii) wording extended; §6 H3c(ii)
+  row footnoted.*
+- **Decision 32 (three-weighting `f_within` sensitivity).** GPT5.5
+  flagged the unweighted variance choice in `f_within` as defensible
+  but arbitrary, and recommended a population- or inscription-
+  weighted sensitivity. The unweighted variant remains the binding
+  primary; population-weighted (`w_c = population_c`) and
+  inscription-weighted (`w_c = y_c`) variants are reported as §5
+  pre-specified exploratory sensitivities alongside the primary as
+  full posterior distributions. Material divergence (spread exceeds
+  half the primary 95 % CI width) flagged as a limitation; no
+  amendment trigger. *§3 H3a estimand paragraph extended; §5
+  exploratory list extended; §6 H3a row footnoted.*
+
+**Methodological note on the LLM-stand-in substitution.** Two
+indepedent LLMs in an "applied statistician" role do not substitute
+for a human statistician's review — Martin's eventual feedback may
+recommend reverting any of the changes above, and the prereg's
+contingency rules (§7) accommodate this. The two reviews are
+nevertheless useful: they surfaced one strong cross-model item
+(Decision 27's replicate count + Wasserstein-1) that the human
+authors had not caught on their own across three rounds of
+adversarial review, and several single-model items that address
+genuine gaps. The procedural commitment of Decisions 27–32 is
+*revisable via OSF amendment after Martin's input is incorporated*,
+which is documented in each decision-log entry's Status field.
+
+**Cross-model-agreement and calibration-supportive items not
+incorporated as decisions.** Both reviews independently endorsed
+existing prereg choices: the Mundlak NBR specification; latent-scale
+`f_within`; the 0.10 substantive threshold; including the province
+random intercept in residuals; the asymmetric draw-wise / posterior-
+mean treatment for H3c; no Holm correction across the confirmatory
+hierarchy. No prereg changes follow from these endorsements; the
+calibration is recorded here for the record.
+
+---
+
 ## Upcoming pre-lodgement steps
 
-The preregistration is ready for the planned statistician
-consultation. Outstanding work before lodgement:
+The preregistration is **ready for OSF lodgement** as of 2026-05-17,
+incorporating the stand-in-review-informed Decisions 27–32. The path
+forward depends on Martin's response time:
 
-1. **Statistician consultation pack for Martin** (Task #17). Curated
-   extract of the decision log focused on the four Martin-flagged
-   decisions (19 mixture observation model; 21 recovery-grid
-   coverage rule and shape library; 23 H3c residual choice and
-   asymmetric draw-wise / posterior-mean split for Moran's I; 25
-   numerical PPC thresholds); the original Decisions 12–17 also
-   included where Martin should weigh in (within-between
-   specification, prior choices, multiple-comparison policy).
-2. **Apply Martin's input** to the preregistration; document.
-3. **Lodge on OSF.** After Martin's input is incorporated and any
-   remaining issues from the consultation are resolved. The pre-
-   Phase-2 design artefact (recovery-grid values + numerical PPC
-   thresholds) is committed in parallel with lodgement.
+1. **Consultation pack sent to Martin** today (2026-05-17). Pack
+   reflects the post-Decision-27-to-32 prereg state; each
+   stand-in-derived change is flagged in the pack for Martin's
+   review as "incorporated pending your review; OSF amendment if
+   revision recommended."
+2. **If Martin's response arrives by 2026-05-19 (Tuesday):** his
+   feedback is incorporated into the prereg before lodgement; any
+   reversal of Decisions 27–32 is documented in the decision log
+   and this changelog.
+3. **Otherwise — lodge on OSF** with the current state. Any
+   subsequent Martin feedback (or feedback from Adela's Friday
+   conference presentation) is treated as post-lodgement OSF
+   amendments per the standard §7 contingency rules.
+4. **Pre-Phase-2 design artefact** (recovery-grid specific values
+   + numerical PPC thresholds + Wasserstein-1 flagging threshold +
+   aoristic-MC N_MC and divergence-flag threshold + per-category
+   2× / 1.5× severity cutoffs + posterior-predictive Moran's I
+   bounds + template-dictionary inclusion threshold) is committed
+   in parallel with lodgement, before any Phase 2 analysis runs.
 
 ---
 
