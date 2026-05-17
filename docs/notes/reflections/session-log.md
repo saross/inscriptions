@@ -262,3 +262,46 @@ Direct continuation of Entry 4 — same instance (no compaction) picking up the 
 - The ChatGPT 5.5 round-3 chat was a *new* chat, not a continuation of the round-2 chat. The reasoning (anchoring on prior framing vs fresh document evidence; pairing fresh-context with Gemini's fresh-context for clean cross-model comparison) was a small but consequential design decision made mid-session.
 - The two pre-Phase-2 design artefacts (`runs/2026-05-XX-template-dictionary/` for Decision 20's slab dictionary; `runs/2026-05-XX-recovery-grid-design/` for Decisions 21 + 25's recovery-grid values + numerical PPC thresholds) are named in the prereg but do not yet exist on disk. They are committed-before-Phase-2 commitments; the prereg binds to their commit hashes prospectively.
 - Conscious-saturation state was the felt session-end goal Shawn named at round 3 start ("I'd feel better if we got to the point where we consciously say 'ok, I've seen the feedback, and none of it is worth actioning, the prereg is good'"). The round-3 cross-model convergent verdict ("ready for Martin after these corrections") delivered on that goal.
+
+
+---
+
+## Entry 6 — 2026-05-17 (later): Martin consultation pack, stand-in cross-model statistical reviews, Decisions 27–32, prereg incorporates, lodgement-ready
+
+Direct continuation of Entry 5 — same instance (no compaction), picking up immediately after Entry 5's conscious-saturation handoff. About twelve hours of total work today across the two entries.
+
+**Done**
+
+- **Drafted Martin's statistician consultation pack** at `planning/martin-consultation-pack-2026-05-17.md` (863 lines). Structure: executive summary (with substantive-question lead paragraph at Shawn's request) + 8-question list (4 primary tracking the Martin-flagged decisions D19 / D21 / D23 / D25, plus secondary on D12 Mundlak + D13 trajectory + Field-3 multiplicity + design-artefact contents) + deep-dive appendices (orientation, primary-question, secondary-question, supporting reference material). Tuned for applied-econometrician audience (Mundlak / RDF / FDR-Holm / RoPE vocabulary used directly; Roman-epigraphy context kept brief).
+- **Ran two stand-in cross-model statistical reviews** as a hedge against Martin's potential delay before Adela's Friday 2026-05-22 conference presentation. ChatGPT 5.5 and Gemini 3 Pro, both in an "applied econometrician / statistician giving a targeted review before the actual statistician sees it" role. Committed at `planning/GPT55-statistical-review.md` and `planning/gemini-statistical-review.md`.
+- **Identified two cross-model-agreement items** (replicate-count floor too thin at ≥ 50; Pearson r too forgiving as binding shape-recovery metric) and **five single-model items** (all GPT5.5: aoristic-MC sensitivity; H3c-specific posterior-predictive spatial-autocorrelation PPC; two-tier PPC severity scheme; three-case interpretive guardrail for H3c(ii) Moran's I; population- / inscription-weighted `f_within` sensitivity).
+- **Captured all seven items as Decisions 27–32** in `planning/decision-log.md` (541 lines added). Each decision tagged "provisional pending Martin's eventual review; subject to revision via OSF amendment." Six separate decisions for honesty (matches the project's one-decision-per-substantive-change pattern; merging was an option but rejected).
+- **Edited the preregistration draft** (`planning/preregistration-draft.md`) to incorporate D27–32 across §3 (mixture model + H3a PPC + H3c residuals/Moran's I), §4 (Phase 2 recovery sim), §5 (exploratory three-weighting sensitivity), §6 (effect-size table), §7 (contingencies), and Field 3 H3c(ii) wording. Decision: no provenance markers in the prereg itself — clean methodological statements of *what* will be done; provenance lives in decision log and changelog.
+- **Updated the changelog** (`planning/preregistration-changelog.md`) with a new "2026-05-17 (later) — Stand-in cross-model statistical review; Decisions 27–32" section recording the cross-model-vs-single-model split, the per-decision rationale, the methodological note on LLM-stand-in substitution, and the rewritten "Upcoming pre-lodgement steps" section (lodgement target Tuesday 2026-05-19; pre-Tuesday Martin reply folded in; otherwise lodge as-is and treat subsequent Martin feedback as OSF amendments).
+- **Reframed the consultation pack's `[stand-in update]` markers** from "Proposed pending Martin's sign-off" to "Incorporated [stand-in update — Decision NN]; reversal via OSF amendment if your review recommends it." Top acknowledgement paragraph and Q-summary table footnote rewritten to match.
+- **Five focused commits**: `482cc87` (stand-in review files); `feae7c5` (Decisions 27–32); `88de0e5` (prereg surgical edits); `4bc67bd` (changelog); `28fd3f7` (pack reframing). Pushed to origin/main.
+- **Wrap-up artefacts**: continuity.md updated for the post-D27–32 lodgement-ready state (snapshot rewritten; new "Pre-lodgement staging work" section; Done milestones extended); working-notes Obs 40 (the 2026-05-17 diagnostic triplet's substantive findings — anchor-year intuition falsified, slab structure emerged, regnal spikes are real ancient clustering, +1,159 BC/AD boundary step) and Obs 41 (the stand-in-cross-model-review pattern as transferable methodological technique); next-session prompt at `planning/next-session-prompt-2026-05-18.md` with the lodgement-staging queue. One additional commit (`939d331`) + push for the wrap-up.
+- **Earlier in the session, before the stand-in-review pivot**: drafted the consultation pack including substantive-question lead paragraph; identified the two stand-in reviews' findings; recommended bumping the cross-model-agreement items as straws and incorporating the single-model items as proposed pending Martin; pivoted to "incorporate everything as Decisions 27–32" when Shawn decided to push forward with Tuesday lodgement regardless of Martin's reply timing.
+
+**Decided**
+
+- **Send pack to Martin 2026-05-17 (today)**; lodge on OSF Tuesday 2026-05-19 whether or not Martin replies; any subsequent Martin feedback handled as post-lodgement OSF amendments per §7. Adela's Friday 2026-05-22 conference is the hard deadline.
+- **Six separate decisions (27–32) rather than fewer combined decisions** — preserves the project's one-substantive-change-per-decision pattern; matches the existing 18–26 cadence.
+- **No provenance markers in the prereg itself** — provenance lives in decision log and changelog; prereg is a clean statement of methodology. Pack carries provenance via `[stand-in update]` markers.
+- **Cross-model-agreement items bumped as straws (D27); single-model items incorporated as preregistered methodology (D28–32)** — all subject to OSF amendment if Martin recommends revision. The single-model items are real catches addressing genuine gaps; deferring them indefinitely would be over-cautious.
+- **Wrap up this session ad-hoc rather than try `/handoff`** (which landed after this session launched) — `/handoff` available in the next session; the manual wrap-up uses what's already in context.
+
+**Produced**
+
+- 6 commits, 6 file changes by content: `planning/decision-log.md`, `planning/preregistration-draft.md`, `planning/preregistration-changelog.md`, `planning/martin-consultation-pack-2026-05-17.md` (new), `planning/GPT55-statistical-review.md` + `planning/gemini-statistical-review.md` (new), `planning/next-session-prompt-2026-05-18.md` (new), `docs/notes/reflections/continuity.md`, `docs/notes/reflections/working-notes.md`.
+- 6 new decisions (27–32) totalling ~ 541 lines in the decision log.
+- 1 new section in the changelog (~ 153 lines).
+- Prereg surgical edits totalling +36 / −12 lines (net).
+- Pack additions and reframing totalling +58 / −14 lines (net).
+- Working-notes Obs 40 (~ 80 lines) and Obs 41 (~ 60 lines).
+- Continuity.md updates (+171 / −3 lines).
+- Next-session prompt (~ 100 lines).
+
+**Contextual assumptions.** The Friday 2026-05-22 conference presentation by Adela imposed the hard deadline that drove the "lodge Tuesday regardless of Martin's reply" decision. Without that deadline, the natural workflow would have been: send pack → wait for Martin → incorporate → lodge. With the deadline, the workflow became: send pack and run stand-in review in parallel → incorporate stand-in findings as Decisions 27–32 → lodge Tuesday with the stand-in-derived methodology → treat Martin's eventual reply as post-lodgement amendment work. The trade-off (visible-on-OSF amendment trail vs missed conference feedback opportunity) was discussed explicitly with Shawn; the lodgement-with-amendments choice was the conscious one. The stand-in-review-as-hedge-against-delay is a specific methodological substitution that wouldn't be the default in normal circumstances.
+
+The session ended cleanly with no outstanding edits; all artefacts committed and pushed. The handoff to the next session is well-documented (continuity.md + next-session prompt + working-notes Obs 40/41); the next session can begin staging work (template-dictionary scan; recovery-grid-design draft; date-stamp prereg refs; OSF lodgement) immediately after a brief read of the continuity doc.
