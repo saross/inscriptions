@@ -997,3 +997,53 @@ A targeted five-test diagnostic in 2026-05-15 (run at `runs/2026-05-15-editorial
 This was a conceptual correction to the prereg's prior framing, not just an additional finding. The `convention_SPA` shape in the Bayesian mixture (Decision 17) was restructured around inclusive-Roman tier components (century-incl-start, century-incl-end, century-midpoint, half-century-incl-start, reign-related) rather than uniform century slabs. Field 2's description of the artefact was rewritten to reference endpoint rounding with the trailing-digit statistic, with midpoint inflation noted as the derivative aoristic-mass signal.
 
 Lesson: when a strong descriptive pattern is sitting on a derivative quantity (here: aoristic mass at midpoints), the underlying primitive (here: endpoint frequency) may have a different — and more diagnostic — structure. Worth probing one level up the data-generating chain before committing to a model that targets the derivative. The cost of the probe (a few hundred lines of straightforward analysis) was tiny; the prior framing it overturned was central to the paper's headline contribution.
+
+---
+
+## Obs 36 — 2026-05-17 [SURPRISE]: Obs 35's "midpoint inflation as aoristic-mass consequence" was itself partly a test-statistic artefact
+
+Obs 35 (2026-05-15) treated the 22.8× / 41.5× / 18.8× / 39.7× midpoint O/E ratios at AD 50 / 150 / 250 / 350 as the *aoristic-mass consequence* of inclusive-Roman endpoint rounding — narratively: wide-century intervals like [1, 100] deposit mass on the midpoint year AD 50 by aoristic construction. Three diagnostics on 2026-05-17 (interval-width, empirical-SPA-shape, date-range-filtered) showed this is wrong in two ways. First: under per-year uniform aoristic, the interval [1, 100] deposits *flat* mass across all 100 years — not preferential mass on AD 50. The "deposits mass on midpoints" framing only works under an interval-midpoint test statistic, where the inscription's midpoint (50.5) truncates to AD 50 via `int()`. The 2026-04-23 descriptive-stats run that produced the 22.8× ratios used precisely this `int((nb + na) / 2)` statistic, which conflates wide-template loading with narrow midpoint anchoring. Under the actual 5-year per-year-uniform-aoristic SPA, no anchor-year structure exists at AD 50 / 150 / 250 (local excess −77 / −79 / +22 relative to the surrounding plateau). Second: the SPA *does* show narrow spikes, but at REGNAL years (AD 77.5 Flavian, 122.5 Hadrianic, 212.5 Severan) — driven by real ancient clustering, not editorial artefact. Confirmed by the date-range filter: narrowing to short-precision intervals *amplifies* the regnal spikes (AD 122.5 ratio rises 1.61× → 13.83×) while wide-template plateau-step structure weakens.
+
+Decision 17 (the three-tier anchor-year `convention_SPA` structure) was superseded by Decision 20 (template-interval slab structure: century slabs uniform on [1, 100] etc.; half-century slabs; reign-interval slabs uniform on [117, 138] etc.). Year-precise inscriptions ([123, 123]) stay in `genuine_SPA` as real anchoring, not artefact.
+
+Lesson generalising Obs 35's lesson: probing one level up the data-generating chain is necessary but not sufficient. The *probe itself* needs to use the analysis pipeline's actual computed quantity (per-year aoristic SPA on 5-year bins, as the analysis will compute) rather than a related-but-different statistic (interval-midpoint truncation). When a diagnostic returns "X is the artefact", check whether X is what the analysis sees or what the diagnostic chose to measure. Diagnostic outputs need to be cross-checked against the analysis pipeline's actual quantity before grounding methodology decisions. Practical rule: when commissioning a diagnostic to probe an artefact, include the analysis pipeline's actual SPA computation as a default sanity check.
+
+---
+
+## Obs 37 — 2026-05-17 [PATTERN]: cross-model agreement is the load-bearing signal in adversarial saturation checks
+
+Round-3 saturation check ran the same prompt through ChatGPT 5.5 (fresh chat) and Gemini 3 Pro (fresh context). Both returned BLOCKING + SHOULD-FIX findings; the comparison structure was instructive.
+
+The *cross-model-agreed* BLOCKING finding (H3c described as receiving mixture correction when it should inherit H3a's date-filtered-count scope) was real, structural, and load-bearing — a logical implication of Decision 22 that the rewrite hadn't traced. Both models caught it independently on first read.
+
+The *single-model* SHOULD-FIX findings (ChatGPT: multinomial observation model normalisation precision; Gemini: "year-0" terminology is wrong for the Julian/Gregorian calendar) were real but lower-signal — meaningful catches but not structural blockers. Each model surfaced something the other missed; both findings are valuable; neither was independently load-bearing.
+
+The signal structure: cross-model agreement on a finding = strong evidence it's real and load-bearing. Single-model findings = real but lower priority — the disagreement indicates a model-specific catch, not a load-bearing methodology gap. Use cross-model agreement as the triage filter at saturation: BLOCKING items that both models flag are the must-fix-before-lodgement category; single-model items can be either applied or deferred based on cost.
+
+Generalising: in late-stage adversarial review where the bar is "find what warrants another revision cycle," cross-model orthogonality is more diagnostic than within-model thoroughness. One model thoroughly reviewing is one model's worth of coverage; two models independently reviewing produces N₁ + N₂ findings, of which the (N₁ ∩ N₂) intersection is the high-signal subset and the (N₁ ⊕ N₂) symmetric difference is the lower-signal but still-real catch set.
+
+---
+
+## Obs 38 — 2026-05-17 [GOTCHA]: decision-scope narrowing requires explicitly tracing implications for derivative analyses
+
+Decision 22 (2026-05-17) narrowed H3a from "mixture-corrected counts" to "date-window-filtered counts" because a per-city mixture fit would be unidentified for ~600 of the ~815 cities with N < 100 inscriptions. The decision wording was correct on H3a itself. But H3c — the residual analysis built on H3a's posterior — was not explicitly addressed. The Decision 22 entry's *Mixture's role in the paper* bullet kept the pre-Decision-22 framing where "the mixture corrects H2.1 validation + H3b deviation-detection + the H3c residual analysis where it uses the H3a posterior". After Decision 22, this framing is internally inconsistent: H3a is no longer mixture-corrected; H3c residuals are computed from H3a's posterior; therefore H3c residuals also inherit the date-filtered scope; therefore H3c is not mixture-corrected either. I had followed Decision 22 in letter (changed H3a's scope) but not in spirit (didn't trace the implication for H3c). The 2026-05-17 rewrite carried this error across the prereg's §2 / §3 / §6 / §9; the QA pass didn't catch it because its rubric was "are the decisions' explicit consequences applied?" rather than "have the decisions' logical implications for derivative analyses been traced?"
+
+Both round-3 models (ChatGPT 5.5 and Gemini 3 Pro) caught it independently on first read — the kind of logical-implication error that's invisible to the author inside the rewrite and obvious to a fresh reader.
+
+Lesson for decision-log discipline: when a decision narrows or changes the scope of an analysis, the decision entry's *Consequences* section needs an explicit subsection naming **derivative analyses** that inherit the changed scope. The current Decision 22 entry was clarified inline (with a "round-3 clarification 2026-05-17" marker) to drop H3c from the mixture-corrects list. Future scope-narrowing decisions should list derivative analyses up front.
+
+Lesson for QA brief drafting: QA briefs need to include "trace logical implications for derivative analyses" as a separate target alongside "verify explicit consequences applied." The two are different and the latter doesn't catch the former.
+
+---
+
+## Obs 39 — 2026-05-17 [PATTERN]: saturation-check framing produces cleaner outcomes than comprehensive-review framing in late-stage adversarial cycles
+
+Round 3 was framed as a *saturation check*, not a *comprehensive review*. The prompt explicitly named "find only what warrants another revision cycle" as the rubric and gave the reviewer a verbatim phrase to use when reporting saturation ("Round-3 saturation check returns no findings of magnitude that warrant a further revision cycle"). The "What NOT to do" section was extensive: don't re-find earlier-round items; don't do generic full-document review; don't propose substantive new analyses; don't flag stylistic preferences; don't flag absent items.
+
+Both models calibrated to the framing. ChatGPT returned 1 BLOCKING + 1 SHOULD-FIX; Gemini returned 1 BLOCKING + 1 SHOULD-FIX. Each model independently used near-verbatim variants of the saturation phrase in its overall assessment. The cross-model BLOCKING finding (H3c-scope) was both models' first BLOCKING and only BLOCKING — no extras, no fishing for more findings to look thorough.
+
+Compare to round 2 (ChatGPT, comprehensive review framing): 7 BLOCKING + 6 SHOULD-FIX + 3 MINOR — 16 total findings, some of which were genuinely load-bearing (B3 convention component; B5 H3a mixture scope) and some of which were mechanical (C5 Carleton citation wording; C8 amendment pre/post-lodgement framing). The yield curve flattened toward the end of round 2's findings list; the MINOR category in particular was dominated by stylistic-bordering catches.
+
+The saturation framing did three things well: (i) it set a high bar for what counts as a finding ("warrants another revision cycle"); (ii) it gave the reviewer a clean exit ramp ("no findings" is the desired outcome, stated explicitly); (iii) it eliminated the implicit pressure to manufacture findings to look thorough by explicitly removing the MINOR category. The combination produced higher-signal output per finding than the comprehensive-review framing.
+
+Generalising: in adversarial review cycles, framing the bar at the current state of work matters. Early-stage work benefits from comprehensive-review framing (catch everything, including small things, because the document is still being shaped). Late-stage work — after one or two rounds of revision — benefits from saturation-check framing (only flag what would meaningfully change the document, and explicitly name "no findings" as a valid output). The framing should track the document's maturity.
