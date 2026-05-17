@@ -1257,7 +1257,25 @@ decisions, not (c)-2:
 
 ## Decision 17 — 2026-05-15: Editorial-convention hierarchy is real and structured; fold it into the Bayesian mixture as a flexible convention-shape prior
 
-**Status:** committed
+**Status:** **SUPERSEDED by Decision 20 (2026-05-17).** The empirical
+grounding for Decision 17's three-tier anchor-year structure
+(century-start / end / midpoint, half-century-start, reign-related)
+was the 2026-05-15 editorial-convention-hierarchy diagnostic, which
+used the integer-truncated-midpoint test statistic `int((nb + na) / 2)`.
+Three further diagnostics on 2026-05-17 (interval-width diagnostic;
+empirical-SPA shape; date-range-filtered SPAs) established that
+(i) the test statistic conflated wide-century-template slabs with
+narrow midpoint-anchored intervals, (ii) the actual SPA shows no
+anchor-year structure at AD 50/150/250 (local excess −77/−79/+22),
+(iii) the dominant artefact is wide-century-template slab loading
+(plateau over [1, 100], [101, 200], etc.) and the dominant real
+narrow-precision clustering is at reign intervals (AD 77.5 Flavian,
+122.5 Hadrianic, 212.5 Severan). Decision 20 replaces the three-tier
+anchor-year structure with a template-interval slab structure.
+Retained from Decision 17: the principle that the convention-shape
+is empirically structured (not a single uniform), the inclusive-Roman
+century-counting framing of the artefact, and the use of a
+flexible-prior Bayesian-mixture component to estimate tier weights.
 **Decided by:** Shawn 2026-05-15 (overnight diagnostic run conclusive;
 runs/2026-05-15-editorial-convention-hierarchy/).
 
@@ -1396,3 +1414,1118 @@ half-Normal range.
 - A broader anchor-year list (beyond the curated 39 reign-boundary
   years) reveals additional dating-anchor years not yet in the
   reign-related layer.
+
+---
+
+## Decision 18 — 2026-05-17: H3a confirmatory rule is directional (three-way verdict, with posterior-probability ladder as supplementary reporting)
+
+**Status:** committed
+**Decided by:** Shawn 2026-05-17 (arising from the ChatGPT 5.5
+cross-model adversarial review of the preregistration; ChatGPT
+finding #1, BLOCKING).
+
+### Context
+
+The post-rewrite preregistration (2026-05-16) specifies H3a's
+confirmatory decision rule as: "the posterior 95 % credible interval
+for the within-province population-attributable variance fraction
+`f_within` excludes 0.10." This wording is **symmetric**: a posterior
+interval `[0.01, 0.08]` would count as support under the literal
+reading, despite being evidence *against* the claim "population
+explains a non-trivial share." The wording slipped during the
+comprehensive rewrite implementing Decision 12 — Decision 12's stated
+intent ("population explains a non-trivial share") is clearly
+directional, but the rewrite encoded the symmetric version.
+
+This is a direct hypothesis → decision-rule failure: under the
+current rule, an analysis returning a posterior that is *actually
+evidence against H3a* would be reported as *supporting* H3a.
+
+### Options considered
+
+- **A — Two-way, directional.** Replace "excludes 0.10" with
+  "P(f_within > 0.10) ≥ 0.95" (equivalently, "the posterior 95 % CI
+  lies wholly above 0.10"). Simplest fix; restores Decision 12's
+  intent. A posterior interval wholly below 0.10 is "not supported"
+  but is not formally named as "evidence against."
+- **B — Three-way verdict.** Wholly above 0.10 = supported;
+  wholly below 0.10 = evidence against; straddling 0.10 =
+  inconclusive. Adds a named "evidence against" verdict, forcing the
+  paper to report negative findings as informative rather than as a
+  soft null.
+- **C — Two-way + posterior-probability ladder.** Same as A, plus
+  pre-commit to reporting P(f_within > 0.05), P(f_within > 0.10), and
+  P(f_within > 0.20) as a posterior-probability ladder regardless of
+  the verdict.
+
+### Decision
+
+**B + C's reporting layer.** The H3a decision rule is three-way; the
+posterior-probability ladder of C is added as supplementary reporting
+alongside the verdict.
+
+- **Decision rule (binding):**
+  - **Supported:** posterior 95 % credible interval for `f_within`
+    lies wholly above 0.10.
+  - **Evidence against:** posterior 95 % credible interval lies
+    wholly below 0.10.
+  - **Inconclusive:** posterior 95 % credible interval straddles
+    0.10.
+- **Reporting (supplementary):** the paper reports the full posterior
+  of `f_within`, plus P(f_within > 0.05), P(f_within > 0.10), and
+  P(f_within > 0.20), regardless of the verdict outcome.
+
+Rationale for B over A: a three-way verdict pre-commits to
+falsifiable named outcomes including the negative case. A binary
+verdict with the same ladder still tends to read the negative as a
+soft null; the three-way wording forces the stronger reading "evidence
+against the non-trivial-share claim." The probability ladder is
+reporting only — it neither defines nor influences the verdict.
+
+### Consequences
+
+- §3 H3a "Confirmatory estimand and decision rule" rewritten:
+  three-way verdict replaces the symmetric "excludes 0.10" wording;
+  probability-ladder reporting added.
+- Field 3 H3a hypothesis statement updated to the three-way wording.
+- §6 effect-size table H3a row updated; the probability-ladder
+  reporting added to the same row.
+- §6 / Field 3 confirmatory claim hierarchy (which lands as ChatGPT
+  triage item C3) needs one additional sentence: what happens to the
+  H3 family if H3a returns "evidence against." The natural answer is
+  that H3c is still run (it tests Hanson-replication, which is a
+  separate question), but the paper's headline result is then
+  "H3a evidence against the non-trivial-share claim; H3c results
+  reported as Hanson-replication." This is folded into the C3
+  resolution.
+- The plain-English walkthrough's H3a description (Step 6) needs
+  parallel rewording: the rule is now three-way; the negative case
+  has a name.
+
+### Revisit triggers
+
+- The statistician consultation (Martin) recommends a different
+  threshold than 0.10, or argues that the variance-fraction
+  decomposition on the latent (log) scale is the wrong scale for
+  this rule.
+- Prior-predictive checks suggest the 0.10 threshold is implausible
+  *a priori* under the prior (e.g. the prior predictive places > 50 %
+  mass above 0.10, making the rule near-vacuous).
+
+---
+
+## Decision 19 — 2026-05-17: Bayesian mixture observation model — multinomial primary; Dirichlet-multinomial and rescaled negative-binomial as supplementary
+
+**Status:** committed; primary item for Martin's consultation
+**Decided by:** Shawn 2026-05-17 (arising from ChatGPT 5.5
+cross-model review finding #2, BLOCKING — "the Bayesian mixture is
+not yet a complete statistical model").
+
+### Context
+
+The Bayesian deconvolution-mixture model (Decision 14) specifies the
+deterministic equation `observed_SPA(t) = α · convention_SPA(t) +
+(1 − α) · genuine_SPA(t)` and priors on α (Beta(2, 2)), tier weights
+(Dirichlet), and genuine-component smoothness (Gaussian random walk
+with HalfNormal bandwidth), but the **observation model** is not
+specified. Without a likelihood, the posterior is undefined — the
+priors alone do not pin down the inferential machinery.
+
+Three sub-questions are tangled in the same gap:
+
+1. The likelihood family itself (multinomial, NegBin, etc.).
+2. Whether `convention_SPA` and `genuine_SPA` are normalised densities
+   (compositional shape), count intensities (absolute scale), or
+   posterior latent curves.
+3. Where aoristic uncertainty enters — upstream in the SPA
+   construction or carried explicitly into the likelihood (e.g. via
+   per-inscription latent-date sampling).
+
+This is the central methodological contribution. The gap is real and
+must be closed before lodgement.
+
+### Options considered
+
+- **A — Multinomial on binned aoristic mass.** `y_t ~ Multinomial(N,
+  p_t)` with `p_t = α p_conv,t + (1 − α) p_gen,t` and both component
+  vectors normalised to sum to 1. Compositional shape inference;
+  standard for this problem class; α identifiable as the compositional
+  weight; aoristic uncertainty handled upstream.
+- **B — Negative-binomial on per-bin counts.** `y_t ~ NegBin(λ_t, φ)`
+  with `λ_t = α λ_conv,t + (1 − α) λ_gen,t` on the absolute count
+  scale. As initially specified this has a scale-degeneracy problem
+  (λ_conv, λ_gen, and α cannot be jointly identified without further
+  constraint). **Rescaled form:** `λ_t = N · (α p_conv,t + (1 − α)
+  p_gen,t)` with `p` normalised — this is a NegBin reformulation of
+  the multinomial that adds per-bin overdispersion without breaking
+  identifiability.
+- **C — Dirichlet-multinomial.** As A, plus a concentration parameter
+  κ to handle bin-level overdispersion. Reduces to multinomial as
+  κ → ∞.
+
+### Decision
+
+**Primary (binding confirmatory likelihood): Option A, multinomial.**
+**Supplementary (exploratory model-comparison, both reported alongside
+the primary):**
+
+- **Option C, Dirichlet-multinomial.** Reports the posterior on κ
+  alongside α as a diagnostic of mixture-noise structure. Failure of
+  multinomial posterior-predictive dispersion checks (κ posterior
+  concentrated on small values) is interpreted as motivation for the
+  Dirichlet-multinomial fit being preferred — but the multinomial
+  remains the binding H2.1 result and the abstract's stated
+  contribution.
+- **Option B (rescaled form only), NegBin.** Reports an alternative
+  per-bin overdispersion treatment as a cross-check on Option C.
+  Reported descriptively; not a confirmatory comparator.
+
+The supplementary analyses are not fishing for a preferred answer: the
+H2.1 recovery simulation and the H3 substantive analyses all attach
+to the primary multinomial; the supplementary fits are reported as
+model-comparison evidence informing whether the multinomial choice was
+correct, with revisions (if any) handled via the post-lodgement OSF
+amendment mechanism. Shawn's stated rationale: "in other projects
+we've sometimes found that we didn't always choose the correct
+approach first try; Martin's review should help, but some exploratory
+work is still warranted." This is defensible model-checking, not
+post-hoc selection.
+
+**Resolving sub-questions 2 and 3:**
+
+- **What `convention_SPA` and `genuine_SPA` are:** normalised densities
+  summing to 1 (compositional). Same answer under all three
+  likelihoods (Option B uses N · p_t to recover an intensity).
+- **Where aoristic uncertainty enters:** upstream in the SPA
+  construction. Each mixture fit uses a single per-subset SPA
+  computed under the standard pipeline (per-inscription uniform
+  aoristic mass, summed to 5-year bins). Propagation of aoristic
+  uncertainty through multiple SPA draws into the mixture posterior
+  is **not** preregistered as part of the primary or supplementary
+  analyses; it is a candidate exploratory extension and a
+  statistician question for Martin (whether the loss of upstream
+  aoristic-uncertainty propagation is material for α identifiability).
+
+### Consequences
+
+- §3 "Bayesian deconvolution-mixture model" rewritten to state the
+  multinomial likelihood explicitly; the supplementary Dirichlet-
+  multinomial and rescaled NegBin fits added as named alternative
+  parameterisations.
+- §4 Phase 2 / H2.1 rewritten to specify which fit is the recovery-
+  simulation target (the multinomial); the supplementary fits are
+  also recovered (the recovery simulation is run under all three
+  likelihoods, with the primary verdict attached to the multinomial).
+- §6 effect-size table: H2.1 row updated to clarify the recovery
+  rule applies to the multinomial; supplementary-fit results reported
+  alongside without separate decision rules.
+- Plain-English walkthrough's Step 2 needs a single sentence stating
+  that the model treats the SPA as compositional shape data
+  (proportions in each 5-year bin) and uses the multinomial as the
+  binding likelihood.
+- Listed as **primary item for Martin's consultation pack** — the
+  multinomial-vs-Dirichlet-multinomial-vs-NegBin choice has
+  identifiability and overdispersion consequences that warrant
+  statistician review.
+
+### Revisit triggers
+
+- Martin's consultation recommends a different likelihood family
+  (e.g. a hierarchical multinomial accounting for tier structure
+  explicitly).
+- The recovery simulation (H2.1) under the multinomial fails coverage
+  or shape-recovery while Dirichlet-multinomial or NegBin passes —
+  triggers an OSF amendment promoting the alternative to primary.
+- Posterior predictive dispersion checks on real data show the
+  multinomial is materially under-dispersed (a known failure mode
+  when bin counts have structure the multinomial cannot capture).
+- Propagating aoristic uncertainty into the likelihood is judged
+  necessary for α identifiability after the recovery simulation runs.
+
+---
+
+## Decision 20 — 2026-05-17: Convention component is a template-interval slab structure (supersedes Decision 17)
+
+**Status:** committed; supersedes Decision 17
+**Decided by:** Shawn 2026-05-17 (arising from the ChatGPT 5.5
+cross-model review finding #3 BLOCKING; three diagnostics on
+2026-05-17 driving the supersession).
+
+### Context
+
+ChatGPT 5.5's review finding #3 noted that under Uniform aoristic, a
+wide-century-template interval like `[1, 100]` deposits mass
+*uniformly* across all 100 years rather than preferentially on the
+midpoint year. So the preregistration's claim that "intervals such as
+`[1, 100]` and `[101, 200]` place aoristic mass on midpoint years by
+construction" cannot be right under the project's stated aoristic
+method — yet the descriptive profiling showed clear 22.8× / 41.5× /
+18.8× O/E ratios at AD 50 / 150 / 250. Something is wrong with
+either the mechanism explanation, the test statistic, or both.
+
+Three diagnostics were run to resolve this:
+
+1. **Interval-width diagnostic**
+   (`runs/2026-05-17-interval-width-diagnostic/`). Established that:
+   (i) the corpus is dominated by exact-century-template intervals
+   (`[1, 100]` 26.3% of corpus; `[101, 200]` and `[201, 300]` adding
+   roughly the same magnitude again); (ii) the headline 22.8 ×
+   ratios were generated by `int((nb + na) / 2)` as the observed
+   statistic, which makes wide century-template midpoints (50.5,
+   150.5, 250.5) truncate to round years — conflating wide-slab
+   loading with midpoint-anchored mass; (iii) removing all narrow
+   intervals (width ≤ 25) does *not* collapse the spikes — they
+   intensify to 25.1 × / 48.3 × / 25.2 × (109 % / 117 % / 132 %
+   retention). The dominant artefact is wide-template-slab loading,
+   not midpoint anchors.
+
+2. **Empirical-SPA shape diagnostic**
+   (`runs/2026-05-17-empirical-spa-shape/`). Constructed the actual
+   5-year per-year-uniform-aoristic SPA over 50 BC – AD 350 and
+   visualised the shape directly. Found: (i) no local anchor-year
+   excess at AD 50 / 150 / 250 (excess −77 / −79 / +22 relative to
+   the local plateau); (ii) the largest narrow spikes are at
+   AD 122.5 (Hadrian, [117, 138] = 552 inscriptions plus [123, 123]
+   = 1,304 inscriptions) and AD 77.5 (Flavian, [78, 79] etc.); (iii)
+   the 1 BC / AD 1 boundary is the largest single discontinuity
+   (+1,159); (iv) mid-envelope century-boundary steps are modest
+   (AD 100 / 101: +96; AD 200 / 201: −547; AD 300 / 301: +180); (v)
+   trapezoidal vs uniform aoristic differ quantitatively (per-bin
+   Pearson r = 0.94, max relative diff 47.6%) but not qualitatively.
+
+3. **Date-range-filtered SPA diagnostic**
+   (`runs/2026-05-17-date-range-filtered-spas/`). Recomputed the
+   SPAs under progressive `date_range` thresholds {0, ≤1, ≤10, ≤25,
+   ≤50, ≤75, ≤100, ≤200, all}. The decisive findings: (i) regnal
+   spikes *amplify* under narrow-precision filtering — AD 122.5
+   spike-to-plateau ratio goes 1.61 × → 4.96 × → 13.83 × as we
+   tighten from full → ≤ 25 → == 0; (ii) the century-boundary
+   plateau-step pattern weakens decisively under narrow filtering
+   (Pearson r between SPA( ≤ 25) and SPA( > 100) = 0.34); (iii) a
+   third regnal spike at AD 212.5 (Severan, [212, 217] = 728
+   inscriptions) emerges. The regnal spikes are *real ancient
+   clustering*; the plateau-step pattern is *editorial-encoding
+   artefact*.
+
+The implication: Decision 17's three-tier anchor-year structure is
+targeting a phenomenon that isn't there (no anchor-year structure at
+AD 50 / 150 / 250) while missing the dominant artefact
+(wide-template slabs). The structure must be replaced.
+
+### Conceptual clarification — what the convention component models
+
+The convention component should model only the *editorial-encoding
+artefact*, not real ancient clustering. Two distinct populations
+coexist at AD 122.5:
+
+- **Reign-interval inscriptions** dated `[117, 138]` because the
+  editor knows "Hadrianic" but not the exact year. These deposit
+  *uniform mass over the reign interval*. **This is editorial
+  convention; goes in the convention component.**
+- **Year-precise inscriptions** dated `[123, 123]` because the
+  inscription carries a consular date or regnal-year stamp. These
+  deposit *real point mass at AD 123*. **This is genuine ancient
+  anchoring; stays in the genuine component.**
+
+Same logic for centuries: `[101, 200]` dated by an editor unable to
+pin the date more tightly is convention; `[123, 123]` is real
+history. The two populations are separated by interval width.
+
+### Decision
+
+**Convention component = template-interval slab structure.** A
+dictionary of empirically-supported template intervals; mass uniform
+over each interval; tier-level weight estimated jointly with α.
+
+- **Dictionary scope:** century templates ([1, 100], [101, 200],
+  [201, 300], [301, 400] and BC equivalents), half-century templates
+  ([1, 50], [51, 100], [101, 150], [151, 200], etc., where
+  empirically supported), reign-interval templates (Augustan
+  [27 BC, 14 AD], Tiberian, Flavian, Trajanic, Hadrianic [117, 138],
+  Antonine [161, 180], Severan [212, 217], etc.), and any other
+  empirically-supported template intervals revealed by the scan.
+- **Dictionary-build procedure (pre-Phase-2 implementation step,
+  not preregistration substance):** scan the filtered corpus for
+  exact-match interval templates; include any template with
+  N ≥ a stated threshold (threshold pinned in the implementation
+  scan's run report). The committed empirical scan replaces Decision
+  17's curated 13-year anchor-year list. The procedural commitment
+  is the prereg-binding part; the actual dictionary contents are
+  implementation artefacts.
+- **Tier structure within the slab component:** template intervals
+  are grouped into tiers by template type (century / half-century /
+  reign / BC-AD-boundary) for interpretive reporting; the model
+  estimates a single weight per tier (each tier's individual
+  intervals share weight by total interval-width-normalised mass).
+- **Year-precise inscriptions** ([123, 123], single-year encodings)
+  are *not* in the convention component — they stay in genuine_SPA.
+- **No anchor-year tier.** Mass at AD 50 / 150 / 250 / 350, 51 / 151
+  / 251 (Decision 17's century-midpoint and half-century-start
+  tiers) is *not* in the model. The empirical diagnostic falsified
+  these.
+
+**Aoristic distribution:** uniform aoristic remains primary;
+trapezoidal aoristic remains the existing sensitivity (per H3
+confirmatory-eligible subset). Trapezoidal is not promoted; the
+slab-tier component is a more direct correction for the
+"epigraphers anchor on mid-century" intuition than a reshaping of
+aoristic mass within wide intervals.
+
+**Observation model:** unchanged — multinomial primary (Decision 19),
+Dirichlet-multinomial and rescaled NegBin as supplementary.
+
+### Consequences
+
+- §2 (Description) rewritten: the artefact framing shifts from
+  "century-midpoint inflation" to "wide-template-slab editorial
+  encoding plus real ancient regnal clustering." The "intervals
+  like [1, 100] place aoristic mass on midpoint years" claim is
+  removed entirely; replaced with the slab-loading description.
+  The 22.8 × / 41.5 × / 18.8 × O/E ratios — which were generated by
+  the int-truncated-midpoint test statistic — are reframed as
+  diagnostic outputs of one particular test, not as the artefact's
+  primary signature in the SPA. The 54.5 % / 53.0 % endpoint-
+  rounding statistic remains the primary descriptive evidence.
+- §3 (Analysis pipeline / "Convention component") rewritten:
+  three-tier anchor-year structure replaced with the template-
+  interval slab structure. Dictionary-build procedure named; tier
+  structure described.
+- Plain-English walkthrough Step 2 rewritten: the "convention
+  component" is now described as a wrapper of editorial-template
+  intervals (centuries, half-centuries, reign intervals); the model
+  removes uniform mass deposited by these wrappers, leaving the
+  genuine signal.
+- H2.1 recovery-simulation grid (Decision 14; ChatGPT review B4 /
+  the in-flight Decision 21) must include synthetic SPAs built
+  from the template-interval slab structure, not anchor-year mass.
+  The supersession is consequential for the recovery design.
+- §6 effect-size table — H2.1 row updated as part of the recovery-
+  grid respec.
+- §9 known limitations: add a sentence on the BC / AD boundary
+  step (+1,159 at the 1 BC / AD 1 boundary in the empirical SPA),
+  the single largest discontinuity and not currently modelled as a
+  tier — flagged as a known limitation the genuine_SPA will inherit.
+
+### Revisit triggers
+
+- Martin's consultation recommends a different decomposition (e.g.
+  a single combined "all-templates" tier rather than typed
+  sub-tiers; a hierarchical prior over template types).
+- The pre-Phase-2 dictionary-build scan finds templates that don't
+  fit any of the existing categories (centuries, half-centuries,
+  reigns, BC-AD boundary) — would force a model-structure revision.
+- The recovery simulation (H2.1) shows the slab structure cannot
+  recover known α from synthetic data with this structure —
+  triggers reconsideration of identifiability and possible
+  reintroduction of an anchor-year residual tier.
+- A bounded follow-up empirical analysis surfaces a real
+  anchor-year mass signal previously missed (the existing three
+  diagnostics tested AD 50 / 150 / 250 / 350 specifically; other
+  anchor years remain plausible candidates).
+
+---
+
+## Decision 21 — 2026-05-17: H2.1 recovery-simulation grid pinned procedurally in-prereg; specific values committed to a pre-Phase-2 design artefact
+
+**Status:** committed; primary item for Martin's consultation
+**Decided by:** Shawn 2026-05-17 (arising from ChatGPT 5.5
+cross-model review finding #4, BLOCKING — "H2.1's recovery
+simulation is still under-specified and its 'coverage' criterion is
+statistically muddled").
+
+### Context
+
+The Bayesian deconvolution-mixture model's validation rests on a
+recovery simulation (Decision 14, H2.1): synthetic observed SPAs
+built from a known genuine SPA + known α + known convention
+component, run through the model, with the model judged validated
+if it recovers known parameters within tolerance. ChatGPT's review
+identified two coupled defects in how the simulation is currently
+specified:
+
+1. **Grid not enumerated.** The prereg describes the grid
+   qualitatively (a "pre-specified parametric grid spanning the
+   empirical α range", a "library of plausible shapes", tier weights
+   "from a pilot fit") but pins no values: no α list, no shape
+   library, no tier-weight vectors, no sample sizes, no replicates
+   per cell, no seed policy.
+2. **"Coverage" criterion is statistically muddled.** "≥ 90 % of
+   grid cells have the true α inside the posterior 95 % CI"
+   requires repeated synthetic datasets per cell to be a coverage
+   statement (coverage is a repeated-sampling property). The
+   current spec runs one synthetic dataset per cell, so the
+   criterion tests whether each cell's *single* posterior interval
+   happened to include the truth — not whether the model has
+   nominal coverage.
+
+The grid is now further constrained by Decision 20 (template-interval
+slab convention component): the synthetic convention components in
+the recovery grid must be built from the slab structure, not the
+anchor-year structure of Decision 17.
+
+### Options considered
+
+- **A — Procedural in-prereg + deferred values.** Pre-commit the
+  grid *axes* in the prereg (α coverage range, shape library
+  categories, tier-weight categories, sample-size categories,
+  minimum replicates per cell, seed policy), the coverage rule
+  (≥ 90 % of cells pass; cell passes if ≥ 90 % of replicates per
+  cell produce a 95 % CI on α containing the true α), the cell-wise
+  reporting requirement, and the commitment to a pre-Phase-2 design
+  artefact at a named `runs/...` directory where the specific
+  values are pinned before any recovery simulation runs.
+- **B — Full enumeration in-prereg.** Lock specific α values,
+  specific shape parameters, specific tier-weight vectors, specific
+  sample sizes, and specific replicate counts in the prereg body.
+  Maximally pre-committed; bulky text; locks values without the
+  empirical pilot fit that should inform them.
+- **C — Defer entirely to Martin.** Pre-register only the existence
+  of the grid and the principle of repeated-replicates coverage;
+  pin specifics post-Martin. Honest about the gap; punts resolution.
+
+### Decision
+
+**Option A, procedural pre-commitment + design-artefact deferral.**
+
+- **Prereg-binding grid axes:**
+  - **α grid:** at least 5 values spanning the empirical pilot
+    range; corner cases (α near 0, α near 1) included.
+  - **Genuine-shape library:** at least 6 shapes covering
+    {smooth growth, smooth decline, rise-and-fall, multi-modal,
+    regnal-cluster (mirrors the empirical pattern Decision 20
+    identified), flat-baseline}.
+  - **Tier-weight vectors:** at least 5 vectors covering
+    {uniform across tiers, century-heavy, reign-heavy, half-century-
+    heavy, pilot-posterior-drawn}.
+  - **Sample sizes:** representative N values from empire,
+    province, and urban-area levels (specific N's pinned from the
+    Phase 1 simulation's reachability map).
+  - **Replicates per cell:** ≥ 50.
+  - **Seed policy:** cell-deterministic (seed = base_seed +
+    cell_index) for reproducibility.
+- **Prereg-binding coverage rule:**
+  - A *cell passes* if ≥ 90 % of its replicates produce a posterior
+    95 % CI on α that contains the true α (proper repeated-sampling
+    coverage at the cell level).
+  - The mixture is *validated* if ≥ 90 % of cells pass, AND the
+    posterior-median Pearson r against the true genuine shape is
+    ≥ 0.95 in ≥ 90 % of cells.
+  - **Cell-wise reporting required** (not just the global mean) —
+    the report identifies any cells that fail and characterises the
+    failure mode.
+- **Design artefact:** a pre-Phase-2 `runs/2026-05-XX-recovery-
+  grid-design/` directory committed before any recovery simulation
+  runs, pinning the specific α values, shape parameters, tier-
+  weight vectors, sample sizes, and replicate counts. The prereg
+  names this artefact and binds the grid to its commit hash.
+- The H2.1 confirmatory wording "the posterior α̂ falls within the
+  95 % CI of the true α" is corrected to "the posterior 95 %
+  credible interval for α contains the known true α" (ChatGPT
+  finding #15, bucket (c) item C7 — folded in here because it's the
+  same decision rule).
+
+**Listed as primary item for Martin's consultation:** the 90 %
+coverage threshold, the 50-replicates-per-cell minimum, the shape-
+library completeness, and whether the variance-fraction validation
+should attach to the multinomial likelihood only or also to the
+Dirichlet-multinomial supplementary (Decision 19).
+
+### Consequences
+
+- §4 Phase 2 "Bayesian mixture validation" rewritten: grid-axes
+  procedural spec replaces the qualitative description; coverage
+  rule corrected to use repeated replicates; cell-wise reporting
+  added; design-artefact reference added.
+- §3 "Bayesian deconvolution-mixture model" "Validation" subsection
+  updated to point at the procedural recovery-simulation spec.
+- §6 effect-size table H2.1 rows rewritten: coverage criterion
+  states "per-cell coverage ≥ 90 % across replicates; ≥ 90 % of
+  cells pass"; shape-recovery criterion states "posterior-median
+  Pearson r ≥ 0.95 in ≥ 90 % of cells" (not just the global mean
+  r ≥ 0.95).
+- Field 3 H2.1 hypothesis statement updated to match.
+- The plain-English walkthrough Step 3 needs one extra sentence
+  stating that the recovery simulation runs multiple synthetic
+  datasets per grid cell so the coverage rule is a proper repeated-
+  sampling statement.
+- The recovery-grid design artefact is created as a pre-Phase-2
+  step (not now); the prereg's mention of its `runs/...` location
+  is the cross-reference.
+
+### Revisit triggers
+
+- Martin's consultation recommends a different coverage threshold,
+  a different replicate count, or a different shape library.
+- The pre-Phase-2 design artefact reveals the empirical pilot α
+  range is narrow enough that a coarser α grid is sufficient (or
+  wide enough that a finer α grid is needed).
+- The mixture's identifiability profile (revealed by an early
+  diagnostic on a single cell) shows the planned grid undersamples
+  a key parameter axis.
+
+---
+
+## Decision 22 — 2026-05-17: H3a uses date-window-filtered counts; mixture model corrects temporal analyses only
+
+**Status:** committed
+**Decided by:** Shawn 2026-05-17 (arising from ChatGPT 5.5
+cross-model review finding #5, BLOCKING — "H3a may not actually use
+mixture-corrected data").
+
+### Context
+
+The preregistration's primary research question (Decision 12) reads:
+"After controlling for editorial-convention dating artefacts via a
+Bayesian deconvolution-mixture model, what fraction of the within-
+province spatial variation in Latin inscription production during
+the Roman Empire is accounted for by urban population dynamics?"
+
+But the H3a model as specified is `y_c ~ NegativeBinomial(mu_c, φ)`
+where `y_c` is the per-city inscription count under the 50 BC – AD
+350 date-window filter — *not* a mixture-corrected count. The
+Bayesian deconvolution-mixture model produces a posterior on a
+temporal genuine-SPA shape, not on a per-city corrected count. As
+written, the analysis answers a does-it-answer-the-question failure:
+it tests how raw date-filtered inscription counts scale with
+population, not how mixture-corrected counts scale with population.
+
+The mismatch arises from a real structural distinction:
+
+- **The mixture corrects a temporal aggregate.** Posterior α and
+  posterior `genuine_SPA(t)` are well-identified at corpus / large-
+  subset level where N is in the thousands. The mixture removes
+  editorial-encoding artefacts from the temporal SPA shape — useful
+  for H2.1 validation and H3b deviation-detection.
+- **H3a is cross-sectional.** The estimand is a *spatial* variance
+  fraction across ~ 815 cities at urban-area scale. Roughly 600 of
+  these cities have N < 100 inscriptions, where a within-city
+  mixture fit would be unidentified (the posterior on α_c would
+  collapse to the prior). A city-level mixture correction is not
+  empirically feasible for the bulk of the sample.
+
+ChatGPT flagged two paths through: (i) narrow the claim — H3a uses
+date-window-filtered counts; the mixture corrects temporal analyses
+only; (ii) specify a per-city mixture-corrected response with
+explicit uncertainty propagation. Option (ii) is methodologically
+purer but infeasible for the bulk of the sample.
+
+### Options considered
+
+- **A — Narrow the claim** (ChatGPT's suggestion 1). Primary RQ
+  rephrased so the artefact-protection mechanism for H3a is named
+  honestly: the 50 BC – AD 350 date-window filter constrains the
+  date-attribution artefact at city level; the Bayesian mixture
+  corrects the temporal analyses (H2.1, H3b) but not the cross-
+  sectional H3a regression. Mixture-α is reported as descriptive
+  context.
+- **B — Specify the corrected response** (ChatGPT's suggestion 2).
+  Define `y_c` as a posterior-weighted count from a within-city
+  mixture fit. Identifiability collapse for low-N cities; effectively
+  excludes 75 % of the Hanson-matched sample.
+- **C — Hybrid.** Primary H3a uses date-filtered counts (option A
+  wording); a preregistered exploratory sensitivity re-runs H3a on
+  the ~ 200 cities with N ≥ 100 under the within-city mixture-
+  weighted response (option B). Reports both; disagreement flagged
+  as a limitation, not a confirmatory amendment.
+
+### Decision
+
+**Option A, narrow the claim.**
+
+- **Primary RQ revised:** "After applying a 50 BC – AD 350 date-
+  window filter to constrain the date-attribution artefact, what
+  fraction of the within-province spatial variation in Latin
+  inscription production is accounted for by urban population
+  dynamics?" The mixture-model phrase ("controlling for editorial-
+  convention dating artefacts via a Bayesian deconvolution-mixture
+  model") is removed from the RQ. The cross-sectional artefact
+  protection is the date-window filter, named explicitly.
+- **H3a model:** unchanged in structure — `y_c ~ NegBin(mu_c, φ)`
+  with the within-between (Mundlak) `log(population)` decomposition.
+  `y_c` is the city-level inscription count under the 50 BC – AD 350
+  date-window filter. The mixture is *not* applied to `y_c`.
+- **Mixture's role in the paper:** the mixture corrects the
+  temporal SPA analyses (H2.1 recovery validation; H3b deviation-
+  detection at the Antonine and Crisis-of-the-Third-Century probes).
+  It does *not* correct H3a's cross-sectional count, and (clarified
+  2026-05-17 in response to round-3 cross-model review) it does not
+  correct H3c either: H3c's Pearson residuals are derived from H3a's
+  posterior and therefore inherit H3a's date-filtered-count scope.
+  Both H3a and H3c live in cross-sectional space; the artefact
+  protection for both is the 50 BC – AD 350 date-window filter.
+- **Reporting:** the empire-level posterior α from the mixture fit
+  is reported as descriptive context — "the mixture fit estimates
+  that α % of the corpus-level SPA is editorial-encoding artefact"
+  — but H3a's confirmatory decision rule is not gated on α.
+- The hybrid sensitivity (option C) is *not* preregistered — adding
+  a second H3a fit on a different sample would muddle the
+  confirmatory claim. If a posterior-weighted H3a is desired post-
+  lodgement, it is a follow-up analysis, not a sensitivity on the
+  confirmatory.
+
+### Consequences
+
+- §2 (Description) primary RQ rewritten as above.
+- §3 (Analysis pipeline / "Bayesian NBR for H3a") rewritten to
+  state explicitly that the response variable is date-window-
+  filtered counts, not mixture-corrected counts; the mixture's
+  role in H3a is descriptive context only.
+- §3 ("Bayesian deconvolution-mixture model") scoped explicitly to
+  the temporal SPA analyses (H2.1 validation; H3b deviation-
+  detection); the scope-of-application sentence is added. H3c
+  (cross-sectional, derived from H3a's posterior) is *not* in the
+  mixture-corrects list (round-3 clarification 2026-05-17).
+- Plain-English walkthrough Step 6 (the population question)
+  rewritten to drop the mixture-correction framing for H3a; Step 2
+  (the mixture model) gains a sentence stating it applies to
+  temporal analyses only.
+- Field 3 H3a hypothesis statement: keep the within-between
+  specification and the variance-fraction estimand (Decision 12);
+  remove any implicit claim that `y_c` is mixture-corrected.
+- §9 known limitations: add a sentence clarifying that the
+  cross-sectional H3a regression operates on date-window-filtered
+  counts and does not propagate mixture-posterior uncertainty into
+  the variance-fraction posterior; this is a real scope limit.
+- Decision 12's "what fraction of within-province variance" framing
+  is preserved; only the artefact-protection mechanism wording
+  changes.
+
+### Revisit triggers
+
+- Martin's consultation argues a per-city mixture correction is
+  feasible after all (e.g. via a hierarchical mixture pooling
+  information across cities within a province), in which case
+  option C or B is reconsidered.
+- An exploratory post-lodgement analysis on the ~ 200 highest-N
+  cities under option C's posterior-weighted response shows the
+  variance-fraction estimate shifts materially.
+- The mixture posterior α is so close to 0 (or 1) at corpus level
+  that the artefact protection in H3a via the date-window filter
+  alone looks empirically inadequate or unnecessary.
+
+---
+
+## Decision 23 — 2026-05-17: H3c residuals are Pearson residuals; capitals contrast is draw-wise; Moran's I uses posterior-mean residuals with field-standard permutation inference
+
+**Status:** committed; primary item for Martin's consultation
+**Decided by:** Shawn 2026-05-17 (arising from ChatGPT 5.5
+cross-model review finding #6, BLOCKING — "H3c residuals not
+operationally defined").
+
+### Context
+
+H3c has two confirmatory tests on the H3a posterior: (i) a capitals
+contrast (provincial capitals over-produce inscriptions relative to
+non-capitals; replicating Hanson 2021); (ii) Moran's I clustering on
+the residual surface (replicating Hanson 2021's spatial-
+autocorrelation finding). The current prereg specifies "continuous
+posterior residuals" for both — under-specified in two ways:
+
+- **Which residual.** For a Bayesian negative-binomial regression,
+  plausible residual definitions include raw `y_c − μ_c`, log
+  `log(y_c + 0.5) − log(μ_c)`, Pearson `(y_c − μ_c) /
+  sqrt(μ_c + μ_c²/φ)`, deviance, and posterior-predictive
+  residuals. Each has different distributional properties under the
+  NBR; the choice is a researcher degree of freedom.
+- **How Moran's I treats posterior uncertainty.** Options: (i)
+  compute Moran's I on posterior-mean residuals (one I per k-NN
+  structure; field-standard for spatial tests; uses conditional
+  permutation inference for p-values); (ii) compute Moran's I per
+  posterior draw (yields a posterior distribution of I per k;
+  cleaner Bayesian; loses the standard permutation-based test);
+  (iii) propagate posterior uncertainty into the permutation p-value
+  via a more elaborate scheme. The capitals contrast already
+  implies draw-wise residuals (the existing "posterior contrast"
+  wording) — but the residual *definition* is the underspecified
+  bit.
+
+### Options considered
+
+- **A — Pearson, draw-wise capitals + posterior-mean Moran's I.**
+  Pearson residuals throughout (NBR field-standard; normalises out
+  the mean-variance relationship). Capitals contrast: per posterior
+  draw, compute the capital-vs-non-capital mean residual difference;
+  P(contrast > 0) ≥ 0.95 is the rule. Moran's I: on posterior-mean
+  Pearson residuals per k ∈ {5, 8, 10}; conditional permutation
+  inference per k; rule I > 0 at p < 0.05 in ≥ 2 of 3 k. Supplementary:
+  posterior distribution of Moran's I across draws (per k) reported.
+- **B — Log residuals throughout.** Replace Pearson with log.
+  Closer to Hanson 2021's implicit log-log OLS residual scale; loses
+  the Pearson normalisation for NBR's mean-variance relationship.
+- **C — Posterior distribution of Moran's I as the confirmatory
+  rule.** Compute Moran's I per posterior draw; rule P(I > 0) ≥ 0.95
+  in ≥ 2 of 3 k. More Bayesian; loses the standard permutation
+  inference (field-non-standard for spatial tests).
+- **D — Defer to Martin.** Pre-register Pearson-or-log + frequentist
+  Moran's I; pin specifics post-Martin.
+
+### Decision
+
+**Option A: Pearson residuals throughout; draw-wise capitals contrast;
+posterior-mean residuals for Moran's I with field-standard
+conditional permutation inference; posterior distribution of Moran's
+I across draws reported as supplementary.**
+
+**Residual definition (binding):**
+
+```text
+For posterior draw s and city c:
+  r_c,s = (y_c − μ_c,s) / sqrt(μ_c,s + μ_c,s² / φ_s)
+```
+
+where μ_c,s is the full posterior mean for city c on draw s,
+*including* the province random intercept α_province[c] (so the
+residual is relative to the Mundlak NBR's full city-level mean, not
+the population-only fixed effect). φ_s is the posterior overdispersion
+parameter draw.
+
+**H3c(i) capitals contrast (binding):**
+
+```text
+For posterior draw s:
+  contrast_s = mean(r_c,s | c ∈ provincial_capitals)
+             − mean(r_c,s | c ∉ provincial_capitals)
+Decision rule:
+  P(contrast > 0) ≥ 0.95
+  (posterior probability over draws)
+```
+
+**H3c(ii) Moran's I (binding):**
+
+```text
+r_c = posterior mean residual
+    = (1/S) · Σ_s r_c,s
+For each k ∈ {5, 8, 10}:
+  Compute Moran's I on r_c with k-NN row-
+    standardised spatial weights
+  Conditional permutation inference (999
+    permutations of r_c over fixed weights)
+Decision rule:
+  Moran's I > 0 at p < 0.05 in ≥ 2 of {k = 5, 8, 10}
+```
+
+**Supplementary reporting (binding):**
+
+The posterior distribution of Moran's I across draws (per k) is
+reported alongside — for each posterior draw s, Moran's I_s
+computed on r_·,s with the same k-NN weights. Reported as the 2.5th
+/ median / 97.5th percentiles of I_s per k. This makes the posterior
+uncertainty on the spatial test visible without replacing the
+field-standard permutation rule.
+
+**Rationale for the asymmetric draw-wise / posterior-mean split:**
+
+- Capitals contrast: the question naturally lives in posterior
+  space ("does the contrast exceed 0 with high posterior
+  probability?"); draw-wise computation directly answers this.
+- Moran's I: the field-standard test for spatial autocorrelation
+  is permutation-based. Running it on posterior-mean residuals
+  preserves the field-standard inference for the confirmatory rule
+  while reporting the posterior distribution of I supplementarily.
+- The two tests answer different questions (a categorical contrast
+  vs a spatial-structure test); using the natural inferential
+  framework for each is more defensible than forcing both into the
+  same scheme.
+
+Listed as a Martin-consultation item: whether the asymmetric framing
+is acceptable, whether Pearson is the right residual for an NBR with
+random intercepts (a deviance residual variant may be considered),
+and whether the posterior-mean vs draw-wise choice for Moran's I is
+defensible to spatial statisticians.
+
+### Consequences
+
+- §3 ("Residual analysis (H3c)" and "Spatial clustering (H3c)")
+  rewritten: residual definition pinned; capitals contrast and
+  Moran's I procedural specs added; supplementary draw-wise Moran's
+  I reporting added.
+- Field 3 H3c(i) and H3c(ii) wording updated to match the formal
+  residual definition.
+- §6 effect-size table H3c rows updated.
+- The plain-English walkthrough Step 7 needs a sentence stating
+  that residuals are the Pearson kind (the NBR field standard) and
+  that the spatial test uses posterior-mean residuals with the
+  standard permutation procedure.
+
+### Revisit triggers
+
+- Martin's consultation recommends a different residual (e.g.
+  deviance, log) or a different inferential procedure for Moran's I.
+- The H3a posterior overdispersion parameter φ is so close to 0 (or
+  so close to "Poisson") that the Pearson normalisation is
+  empirically vacuous.
+- The supplementary posterior distribution of Moran's I across
+  draws shows the posterior-mean result is far from the posterior
+  median — suggesting the confirmatory rule's residual averaging
+  is hiding important uncertainty.
+
+---
+
+## Decision 24 — 2026-05-17: Freeze LIRE v3.0 for this OSF lodgement; LIST v1.2 reserved for post-lodgement amendment or follow-up
+
+**Status:** committed
+**Decided by:** Shawn 2026-05-17 (arising from ChatGPT 5.5
+cross-model review finding #7, BLOCKING — "the LIST swap contingency
+leaves a live data / envelope choice").
+
+### Context
+
+The preregistration's §1 (Dataset) and §7 (Planned deviations and
+contingencies) currently allow the analytical envelope to extend
+from AD 350 to AD 600 "if the LIST swap completes during the
+fortnightly paper sprint (11–24 May 2026)." ChatGPT flagged
+"completes" as operationally undefined, and the consequences as
+large: dataset identity, temporal envelope, subset composition,
+mixture model, Phase 3 counts, and Late Antique additions could all
+change.
+
+The contingency is also empirically near-resolved by the calendar:
+today is 2026-05-17; the fortnightly sprint ends 2026-05-24; the
+LIST swap is not done; the swap is not currently expected to land
+within the remaining seven days.
+
+### Options considered
+
+- **A — Freeze LIRE v3.0; LIST is a post-lodgement amendment or
+  follow-up.** Cleanest. Removes the live RDF entirely. The LIST
+  envelope extension (50 BC – AD 600) becomes a candidate for
+  either an OSF amendment after lodgement (if the swap lands soon)
+  or a follow-up paper.
+- **B — Keep the contingency with hard objective criteria + calendar
+  cutoff.** Define "swap completes" operationally (schema check,
+  row-count reconciliation, envelope validation, all by a hard
+  calendar cutoff before any model output is inspected). Honest if
+  the swap is genuinely in flight, but adds prereg complexity for
+  little gain when the calendar is forcing the answer anyway.
+- **C — Delay lodgement; pre-commit to LIST.** Hold OSF lodgement
+  until LIST is ready. Honest about target dataset; indeterminate
+  delay; risks scope creep.
+
+### Decision
+
+**Option A, freeze LIRE v3.0.**
+
+- **§1 Dataset** reads: LIRE v3.0 (Zenodo DOI
+  10.5281/zenodo.8147298, 11 October 2023) is the dataset for this
+  preregistration. No envelope extension is permitted without an
+  OSF amendment.
+- **§7 Contingencies:** the LIST swap contingency clause is
+  removed. Replaced with: "LIST v1.2 (Zenodo DOI
+  10.5281/zenodo.10473706; same released schema as LIRE; extends
+  the temporal envelope to AD 600) is a candidate for either a
+  post-lodgement OSF amendment or a follow-up paper. If the LIST
+  swap is pursued post-lodgement, an OSF amendment is filed before
+  any LIST analysis is run, specifying the revised envelope,
+  subset composition, and any Late Antique additions."
+
+### Consequences
+
+- §1 (Dataset) rewritten to drop the "Possible extension" LIST
+  paragraph; the LIST DOI moved to §7 as a future-amendment marker.
+- §7 (Planned deviations and contingencies) rewritten as above; the
+  "If the LIST swap completes during the fortnightly paper sprint"
+  bullet is removed entirely.
+- §6 effect-size table: Phase 1 thresholds remain pinned to LIRE
+  v3.0 reachability (no change).
+- §9 known limitations: Late Antique and post-AD-350 phenomena
+  remain out of scope (sentence already present; no change).
+- The H1 (Phase 1 completed groundwork) is unaffected — Phase 1 ran
+  on LIRE v3.0.
+
+### Revisit triggers
+
+- The LIST swap completes within weeks of lodgement, making a
+  promptly-filed OSF amendment worthwhile.
+- LIRE v3.0's known limitations (e.g. its envelope cap at AD 350)
+  prevent a co-author or reviewer-requested analysis the LIST
+  envelope would enable.
+
+---
+
+## Decision 25 — 2026-05-17: Prior- and posterior-predictive check failure triggers are numerical; specifics pinned in the pre-Phase-2 design artefact
+
+**Status:** committed; specifics pinned in the pre-Phase-2 design
+artefact (same artefact as Decision 21's recovery-grid spec)
+**Decided by:** Shawn 2026-05-17 (arising from ChatGPT 5.5
+cross-model review finding #8, SHOULD-FIX — "prior and posterior
+predictive failure triggers are too vague").
+
+### Context
+
+The preregistration's PPC section uses narrative triggers — "most
+counts in `[0, 10⁴]`", "no implausibly large counts", "divergent",
+"remaining structure", "beyond Monte Carlo noise" — that are not
+binding criteria. Yet failed checks trigger model revision. ChatGPT
+flagged this as a researcher degree of freedom: workflow-driven
+model revision after seeing diagnostics is reasonable Bayesian
+practice, but preregistration discipline needs to constrain *when*
+that happens and *how* confirmatory status is preserved.
+
+Same structural pattern as the recovery-simulation grid (Decision
+21): the right level of pre-commitment is procedural (categories
+and reporting rule) with specific numerical values pinned in a
+named pre-Phase-2 design artefact.
+
+### Decision
+
+**PPC failure triggers are numerical, not narrative.** Specifics are
+pinned in the same pre-Phase-2 design artefact as the recovery-grid
+spec (Decision 21).
+
+**Prereg-binding (procedural):**
+
+- PPC trigger *categories* (each gets a specific numerical bound
+  pinned in the design artefact):
+  - Prior predictive 99th-percentile count cap.
+  - Posterior-predictive mean: within X % of observed.
+  - Posterior-predictive standard deviation: within Y % of observed.
+  - Posterior-predictive tail-count (95th percentile): within
+    specified bounds of observed.
+  - Posterior-predictive proportion-of-zeros: within specified
+    bounds of observed (NBR sanity check for zero-inflation).
+  - Residual-vs-fitted slope (standardised Pearson residuals over
+    fitted values): absolute slope < threshold.
+  - Province-level residual dispersion: ratio of within-province
+    residual variance to grand residual variance within specified
+    bounds.
+- **Failure response:**
+  - Any tripped trigger initiates model revision (revising priors,
+    link function, or model structure).
+  - The originally-preregistered model result is **reported
+    alongside** the revised model's result in the paper — confirmatory
+    status is preserved for the original; the revised model is
+    reported as a transparent post-hoc revision.
+  - An OSF amendment is filed before the final results are lodged
+    (per the §7 amendment rule).
+- **No PPC trigger is used to test a hypothesis** — these are
+  diagnostic checks on model fit, not confirmatory tests.
+
+**Listed as Martin-consultation item:** the specific numerical
+thresholds in each category. Martin will likely have opinions on:
+the X / Y / tail-count percentages; the residual-slope cutoff; the
+province-level dispersion bounds; whether to add additional checks
+(e.g. autocorrelation in standardised residuals if residuals are
+ordered by population or province).
+
+### Consequences
+
+- §3 ("Posterior predictive checks" and "Prior predictive checks")
+  rewritten: narrative triggers replaced with procedural commitment
+  to numerical thresholds; design-artefact reference added.
+- §7 contingencies: the "if posterior or prior predictive checks
+  fail for H3a" bullet rewritten to specify "any of the numerical
+  PPC triggers tripped" rather than narrative.
+- The H2.1 recovery-simulation design artefact (Decision 21)
+  acquires a second pinning role: it pins both the recovery-grid
+  values and the PPC numerical thresholds. One artefact, two
+  spec-tables.
+- §6 / Field 3: unchanged for confirmatory rules (PPCs are not
+  confirmatory).
+
+### Revisit triggers
+
+- Martin's consultation recommends additional PPC categories (e.g.
+  posterior-predictive spatial-autocorrelation check for the H3a
+  residuals before H3c is run).
+- A specific numerical threshold pinned in the design artefact
+  proves unsupportable at the pilot fit (the pilot fit's posterior
+  systematically violates the proposed threshold) — triggers an
+  amendment to the design artefact before lodgement.
+
+---
+
+## Decision 26 — 2026-05-17: Smaller-substantive ChatGPT-pass adjustments (Hanson-population sensitivity; Western-Empire subset operationalisation)
+
+**Status:** committed
+**Decided by:** Shawn 2026-05-17 (arising from ChatGPT 5.5
+cross-model review findings #9 (partial) and #10 (partial),
+SHOULD-FIX).
+
+### Context
+
+Two smaller adjustments from the ChatGPT-pass triage:
+
+- **B9 — Hanson-population uncertainty sensitivity.** Hanson (2016)
+  urban population estimates are treated as exact in the H3a
+  regression. The estimates are themselves uncertain; treating them
+  as exact understates the posterior on `β_within` and on the
+  within-province population-attributable variance fraction.
+  ChatGPT recommended a lognormal measurement-error sensitivity.
+- **B10 — Western-Empire provincial subset operationalisation.**
+  H3b's "Western-Empire provincial subset" was named but not
+  defined. Shawn's earlier exploratory work
+  (`archive/2026-04-22-inscriptions-spa.ipynb` cell 54) classified
+  60 LIRE province values as Latin / Greek; the operational
+  definition for the Western-Empire subset is "province_language ==
+  'Latin' AND province != 'Roma'", using that classification.
+
+### Decisions
+
+**B9 — Add as a preregistered exploratory sensitivity.** Add to
+§5 a single exploratory sensitivity analysis:
+
+- Re-run H3a with a lognormal measurement-error model on the
+  Hanson population predictor: `log_pop_c ~ Normal(log_pop_observed_c,
+  σ_pop)` for σ_pop ∈ {0.1, 0.2, 0.3} (low / moderate / high
+  measurement uncertainty).
+- Report the posterior on the within-province population-
+  attributable variance fraction `f_within` under each σ_pop.
+- Material divergence from the primary H3a result (posterior 95 %
+  CI on `f_within` shifts by more than 50 % of its primary-result
+  width) is flagged as a limitation in the paper; does *not*
+  trigger an OSF amendment (this is a preregistered exploratory
+  sensitivity, not a confirmatory test).
+
+**B10 — Western-Empire subset defined operationally from
+Shawn's existing province_language classification.** Specifically:
+
+- The Western-Empire provincial subset comprises all LIRE v3.0
+  provinces where the project's `province_language` classification
+  equals `'Latin'`, **excluding** the province `'Roma'`.
+- The classification is taken from
+  `archive/2026-04-22-inscriptions-spa.ipynb` cell 54
+  (`province_language_map`), with one correction: the dictionary
+  entry `'Aquitani(c)a': 'Latin'` is a likely typo — the actual
+  LIRE province field uses either `'Aquitania'` or `'Aquitanica'`.
+  The corrected key will be applied at the data-cleaning stage of
+  the analysis pipeline (not a preregistration commitment).
+- The 41 Latin-classified provinces (Roma excluded) include the
+  Italian core ("Italia" plus the eleven Augustan regions), the
+  Latin West (Gauls, Germanies, Britannia, Hispaniae, African
+  provinces), and the Danube-and-frontier provinces (Noricum,
+  Raetia, Pannoniae, Dalmatia, Dacia, Moesiae). Three frontier
+  classifications (Moesia Inferior, Moesia Superior, Sicilia) are
+  judgement calls — administrative-language Latin but with
+  significant bilingual or Greek-speaking populations; this is
+  flagged in §9 known limitations as a known scope choice.
+
+### Consequences
+
+- **§5** acquires a new exploratory item:
+  "Hanson-population measurement-error sensitivity for H3a" with
+  the spec above.
+- **§4** (or wherever the Western-Empire subset is referenced)
+  acquires the operational definition: "Western-Empire provincial
+  subset: all LIRE v3.0 provinces where
+  `province_language == 'Latin' AND province != 'Roma'`. Specific
+  list reproducible from the project's `province_language_map`
+  classification (committed to the public repository)."
+- **§9 known limitations** acquires a sentence on the three
+  frontier-province classification judgement calls (Moesia
+  Inferior, Moesia Superior, Sicilia).
+- Data-cleaning task added (off-prereg): correct the
+  `Aquitani(c)a` typo in the working `province_language_map` to
+  match LIRE v3.0's actual field value.
+
+### Revisit triggers
+
+- The Hanson-population sensitivity returns σ_pop = 0.3 results
+  that materially differ from the primary — would inform whether
+  σ_pop should be a hyperparameter rather than a fixed sensitivity
+  axis.
+- Martin's consultation recommends an alternative measurement-
+  error model (e.g. a hierarchical prior with σ_pop estimated
+  jointly with the regression).
+- The Western-Empire-subset analysis is destabilised by the
+  Moesia / Sicilia frontier-province classifications — would
+  trigger a sensitivity excluding those three provinces.
