@@ -19,9 +19,9 @@ last-updated: 2026-05-17 (post stand-in statistical review; D27–32 incorporate
 
 ---
 
-## Research state — one-paragraph snapshot (2026-05-17, post-stand-in-review; lodgement-ready)
+## Research state — one-paragraph snapshot (2026-05-20, post-lodgement; conference-talk prep in flight)
 
-The preregistration is **ready for OSF lodgement** after three rounds of adversarial review (round 1: dual Claude Opus 4.7; round 2: ChatGPT 5.5; round 3: cross-model ChatGPT 5.5 + Gemini 3 Pro), a structured QA pass, and a final **stand-in cross-model statistical review** (same two models in different role — "applied econometrician / statistician" — committed at `planning/GPT55-statistical-review.md` and `planning/gemini-statistical-review.md`). The stand-in reviews were a hedge against Martin's potential delay relative to Adela's Friday 2026-05-22 conference presentation; they surfaced two cross-model-agreement items (replicate count floor too thin; Pearson r too forgiving as shape-recovery metric) and five single-model items (aoristic-MC sensitivity; posterior-predictive spatial-autocorrelation PPC; population- / inscription-weighted `f_within` sensitivity; three-case interpretive guardrail for H3c(ii) Moran's I; two-tier PPC severity), all incorporated as **Decisions 27–32** in the decision log and surgically threaded into the prereg (§3, §4, §5, §6, §7, Field 3) by clean methodological statements without provenance markers (provenance lives in the decision log and the changelog). The **statistician consultation pack for Martin** (`planning/martin-consultation-pack-2026-05-17.md`, 863 lines) was completed in parallel and reframed after D27–32 to reflect the incorporated state; it goes to Martin 2026-05-17. **Decisions 1–32 are logged**; key decisions for orientation: 12 (Mundlak NBR + variance partition); 14 (Bayesian mixture + recovery sim); 18 (three-way H3a verdict); 19, 21, 23, 25 (the four Martin-flagged primary items); 20 (template-interval slab structure, supersedes 17); 22 (date-window-filtered counts for H3a / H3c); 27–32 (stand-in-review-driven refinements). The two pre-Phase-2 design artefacts are named in the prereg with `2026-05-XX` placeholder paths pending the actual commit date. **Lodgement target: Tuesday 2026-05-19.** If Martin replies by then, fold his feedback into the prereg before lodgement; otherwise lodge as written and treat subsequent Martin feedback as post-lodgement OSF amendments per §7. Phase 2 / 3 substantive analysis pipelines remain preregistered-designed but not-yet-implemented; that work tranche begins after OSF lock.
+The **OSF preregistration is lodged** (commit `a2e40fd`; git tag `osf-lodgement-2026-05-20`; OSF DOI pending Shawn's confirmation post-submit). The lodged document and supplementary upload PDF reflect three rounds of adversarial review, a stand-in cross-model statistical review (Decisions 27–32), and four rounds of pre-lodgement quality fixes (pipe-in-table-cell escape; ASCII-flowchart sizing; URL-overflow via `pandoc -f markdown+autolink_bare_uris` + `xurl`). Martin's HMM-pivot proposal (his post-statistician-pack response) is logged as a post-lodgement extension on which Decisions 33+ will be drafted once he replies to our seven follow-up questions (sent 2026-05-19); the prior-art scout (`planning/prior-art-scout-2026-05-19-hmm-aoristic.md`) confirms the combination is genuinely novel and identifies baorista as the natural emission-layer foundation. **Decisions 1–32 are logged**; key decisions for orientation: 12 (Mundlak NBR + variance partition); 14 (Bayesian mixture + recovery sim); 18 (three-way H3a verdict); 19, 21, 23, 25 (the four Martin-flagged primary items); 20 (template-interval slab structure, supersedes 17); 22 (date-window-filtered counts for H3a / H3c); 27–32 (stand-in-review-driven refinements). Two pre-Phase-2 design artefacts (template-dictionary + recovery-grid-design) are deferred post-talk. **Current focus**: preliminary results for Shawn's RAC-TRAC 2026 TRAC7 talk on Friday 2026-05-22 14:20 — overnight planning done; implementation begins next session. Phase 2 / 3 substantive analyses (the full preregistered pipeline) remain designed but not-yet-implemented; that work tranche begins after the conference.
 
 ---
 
@@ -42,15 +42,38 @@ The preregistration is **ready for OSF lodgement** after three rounds of adversa
 
 ---
 
-## Pre-lodgement staging work (in flight, 2026-05-17 → 2026-05-19)
+## Conference talk — RAC-TRAC 2026 (in flight, 2026-05-20 overnight → 2026-05-22 14:20 talk)
 
-1. [ ] **Shawn's final read-through of the preregistration** — ~30 minutes; the critical gate before lodgement.
-2. [ ] **Build pre-Phase-2 template-dictionary artefact** at `runs/2026-05-19-template-dictionary/` (or whatever date). Empirical scan of LIRE v3.0 for exact-match interval templates; commit code + dictionary CSV + REPORT.md; ~3 hours of focused work, fully bounded.
-3. [ ] **Draft pre-Phase-2 recovery-grid-design artefact** at `runs/2026-05-19-recovery-grid-design/`. Pin concrete numerical values for: the six genuine-shape-library parameterisations; the five tier-weight vectors; sample-size N values from Phase 1 reachability map; replicate count 100; seed policy; Wasserstein-1 flagging threshold straw; severity cutoffs (2× / 1.5×); per-category numerical PPC bounds (with our straws + Gemini's concrete suggestions); aoristic-MC N_MC value and divergence-flag threshold. The α grid axis remains "TBD from pilot fit." ~½ day.
-4. [ ] **Date-stamp the prereg `2026-05-XX` references** once the artefacts are committed (six occurrences across §3, §4, plain-English walkthrough). Trivial sed-style edit.
-5. [ ] **Optional: pymc mixture-model scaffold** — start writing the multinomial primary + Dirichlet-multinomial + rescaled NegBin in pymc, against the slab structure of D20. 2–3 days; could run in parallel after artefacts are committed.
+**The OSF preregistration was lodged 2026-05-20 (DOI pending Shawn's confirmation).** Immediately following lodgement, the project pivoted to producing preliminary results for **Shawn's TRAC7 talk at RAC-TRAC 2026 in Aarhus, Friday 22 May 2026 14:20, room Preben Hornung**. (See `planning/conference-talk-rac-trac-2026/conference-context.md` for full conference briefing.)
 
-**Lodgement target Tuesday 2026-05-19.** If Martin's feedback arrives by then, fold in pre-lodgement; otherwise lodge as written and treat any subsequent feedback as OSF amendments.
+**Open question to confirm Friday morning:** Shawn originally described the talk as "Adela giving a 12-minute talk." Conference programme shows Shawn delivering the SPA / LIRE paper at 14:20 and Adela delivering her own marriage-ages paper at 12:20 in the same session. Who is presenting which content needs confirmation — for safety, content has been prepared on the assumption that the SPA / LIRE / Hanson-scaling material is delivered (whether by Shawn solo or by Adela on Shawn's behalf).
+
+Scope: **Lean A+ (lean A + synthetic mixture-recovery demo + stretch Bayesian H3a)**, fallback to lean A.
+
+Overnight artefacts produced (2026-05-20):
+
+- [x] `planning/conference-talk-rac-trac-2026/conference-context.md` — full briefing (programme, audience, format)
+- [x] `planning/conference-talk-rac-trac-2026/asset-inventory.md` — what figures / code / data exist that can be reused
+- [x] `planning/conference-talk-rac-trac-2026/slide-outline.qmd` — 7-slide Quarto revealjs skeleton with speaker notes
+- [x] `planning/conference-talk-rac-trac-2026/analysis-roadmap.md` — 36-hour hour-by-hour plan with decision gates
+- [x] `planning/conference-talk-rac-trac-2026/talking-points-feedback.md` — anticipated objections, audience framing, feedback prompts
+- [x] `planning/next-session-prompt-2026-05-21.md` — handoff for the morning session
+
+Implementation plan summary (full detail in `analysis-roadmap.md`):
+
+1. [ ] **Hours 0–4** Filter LIRE corpus (50 BC – AD 350; 180,609 rows); sanity-check counts against prereg figures
+2. [ ] **Hours 4–10** Empire / province / city SPA figures (re-use 2024 notebook cells 134–161)
+3. [ ] **Hours 10–18** Frequentist NBR-GLM Hanson scaling: β + bootstrap 95 % CI; comparison to Hanson 2021 β = 0.672
+4. [ ] **Hours 18–26 (A+ stretch)** Synthetic mixture-recovery demo: one cell with known α + known genuine shape; pymc multinomial mixture; recovered posteriors
+5. [ ] **Hours 26–30 (further stretch)** Bayesian within-between H3a fit (preregistered model) — drop entirely if mixture demo over-runs
+6. [ ] **Hours 26–32** Assemble Quarto deck; speaker notes; render to HTML + PDF
+7. [ ] **Hours 32–36** Speaker briefing for whoever is presenting; final reproducibility check; commit + push
+
+**Key audience facts** (from conference scout):
+- TRAC7 session organisers are Petra Heřmánková, Tomáš Glomb, Vojtěch Kaše — **the LIRE / SDAM creators**. Glomb wrote the Asclepius-cult paper we cite (2022). Be careful with corpus claims; be ready for substantive technical feedback.
+- Adjacent talks: Sommerschield (Aeneas neural-net; 14:00, directly precedes); Bennett (global Roman epitaph patterns; 15:00).
+- Slot is 20 min (Q&A batched at end of block); target 12 min talk leaves buffer.
+- Session theme explicitly welcomes statistical-bias-mitigation + Bayesian work — the room is the right room.
 
 ---
 
