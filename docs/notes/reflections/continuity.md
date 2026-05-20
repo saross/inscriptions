@@ -73,6 +73,14 @@ Order: H2 → H3a (with brms shadow + variance partition + sensitivities) → H3
 
 ---
 
+## Tertiary / future-work analyses (not preregistered)
+
+Logged for later consideration. Not part of the 2026-05-19 OSF lodgement; would be filed as post-lodgement OSF amendments or as follow-up paper material if pursued.
+
+1. [ ] **Max-Hanson-pop vs peak-inscription-window scaling test.** Hanson's urban-area population estimates appear to be *max theoretical* populations (max settlement footprint × estimated population density per Chapter 4 methodology, Hanson 2016 pp. 49–80), not realised peak populations at a single moment — i.e., an envelope / carrying-capacity measure rather than a temporal snapshot. The preregistered H3a uses cumulative date-window-filtered inscription counts vs Hanson max-pop, which dimensionally pairs envelope-against-envelope. A complementary test would substitute the response with the **highest 25-year or 5-year inscription count** per city (sliding-window max), keeping Hanson max-pop as predictor. This pairs theoretical-max against realised-peak rather than envelope-against-envelope, and would reveal whether the scaling relationship holds when the response is a "peak-rate" measure rather than a "total-production" measure. Implementation notes: (a) only applicable to cities with sufficient N to make a peak-window meaningful — likely the Phase 1 urban-area threshold (~1,549 inscriptions) or a lower exploratory threshold; (b) for fairness, both 25-year and 5-year windows should be tested as a sensitivity; (c) Hanson 2016 catalogue (PDF at `~/Zotero/storage/FGM4PVSX/`) does not include per-city peak dates, so no comparable max-pop-date axis is available — the test is one-sided (variation in the response only). Diagnostic-confirmatory framing: report whether the β scaling exponent under peak-window response differs materially from the preregistered cumulative-count β. **Not preregistered now**; logged here so it isn't lost.
+
+---
+
 ## Done — major recent milestones (2026-04-23 → 2026-05-17)
 
 - [x] **Decisions 27–32 incorporated into prereg + decision log + changelog + pack** (2026-05-17 later). Six new decisions arising from the stand-in cross-model statistical reviews: D27 (recovery-sim refinements — replicate count ≥ 100; Wasserstein-1 supplementary shape metric); D28 (aoristic-MC supplementary fit); D29 (8th PPC category — posterior-predictive spatial autocorrelation on H3a residuals); D30 (two-tier PPC severity scheme); D31 (three-case interpretive guardrail for H3c(ii) Moran's I); D32 (population- / inscription-weighted `f_within` sensitivity). All threaded into prereg as clean methodological statements without provenance markers (provenance in decision log + changelog). Pack reframed inline-marker state from "proposed pending sign-off" to "incorporated; reversal via OSF amendment if Martin recommends." Five focused commits committed and pushed.
