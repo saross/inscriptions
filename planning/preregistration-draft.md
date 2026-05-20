@@ -20,7 +20,11 @@ status: draft for lodgement (2026-05-17)
 
 We preregister a three-phase analysis of the spatial distribution of Latin inscriptions in the Roman Empire (50 BC – AD 350), using summed probability analysis (SPA) with a novel Bayesian deconvolution-mixture correction for editorial-template dating artefacts.
 
-The editorial dating artefact in LIRE v3.0 takes its primary form as **wide-template editorial encoding**: epigraphic editors, faced with an inscription they can date only to a broad period, round its date range to inclusive-Roman century templates ("3rd century AD" → [201, 300]), to half-century templates ("mid-3rd century" → [125, 175]), or to reign-interval templates ("Hadrianic" → [117, 138]). The descriptive signature is endpoint rounding: **54.5 % of all `not_before` values in the filtered corpus end in `01`; 53.0 % of all `not_after` values end in `00`**. Under uniform aoristic sampling, these wide-template intervals deposit *flat plateaus* of mass over their templated periods, not preferential mass on midpoint years; the empirical SPA accordingly shows plateau-step structure at century boundaries (a +1,159 step at the 1 BC / AD 1 boundary — the largest single discontinuity in the envelope — plus smaller steps at the AD 100 / 101, AD 200 / 201, and AD 300 / 301 boundaries) and narrow spikes at real ancient regnal clusters (AD 77.5 Flavian, AD 122.5 Hadrianic, AD 212.5 Severan; each driven by reign-interval inscriptions plus year-precise inscriptions encoding consular or imperial-titulature dates). Three diagnostic runs (committed at `runs/2026-05-17-interval-width-diagnostic/`, `runs/2026-05-17-empirical-spa-shape/`, `runs/2026-05-17-date-range-filtered-spas/`) establish that the wide-template plateau structure is editorial-encoding artefact (it is dominated by inscriptions with `date_range > 25` years and weakens decisively under narrow-precision filtering), while the regnal-cluster spikes are real ancient clustering (they *amplify* under narrow-precision filtering — the AD 122.5 spike-to-plateau ratio rises from 1.61× at the full corpus to 13.83× at single-year-precise inscriptions).
+Latin inscriptions from the Roman Empire can serve as source material for a 'dates as data' analysis (Rick 1987), more recently formalised as summed probability analyses (SPAs) of radiocarbon dates (Williams 2012; Timpson et al. 2014; Crema & Bevan 2021). The LIRE dataset contains over 180,000 inscriptions that include a date (usually uncertain) and a findspot. Inscription dates, however, can be difficult to interpret. Some are exact (naming a year or a known event), but most are uncertain. Unlike radiocarbon dates, whose chronological uncertainty has a well-characterised probabilistic structure even when non-Gaussian (a Gaussian laboratory measurement convolved with a calibration curve), chronological uncertainty in inscriptions is more erratic. Inscription dates are sometimes determined by the content of the inscription (offering either 'not before' dates, 'not after' dates, or both), sometimes by the find context of the inscription, and sometimes by various characteristics of the inscription itself (e.g., letter form or other stylistic indicators). When an inscription's date range is wide, it may be associated with a dynasty or with an arbitrary, but usually 'round' period of time such as a century. These editorial dating artefacts complicate meaningful SPA on inscriptions.
+
+The primary editorial dating artefact in LIRE v3.0 is **wide-template editorial encoding**: epigraphic editors, faced with an inscription they can date only to a broad period, round its date range to inclusive-Roman century templates ("3rd century AD" → [201, 300]), to half-century templates ("mid-3rd century" → [125, 175]), or to reign-interval templates ("Hadrianic" → [117, 138]). The descriptive signature is endpoint rounding: **54.5 % of all `not_before` values in the filtered corpus end in `01`; 53.0 % of all `not_after` values end in `00`**. Under uniform aoristic sampling, these wide-template intervals deposit *flat plateaus* of mass over their templated periods, not preferential mass on midpoint years; the empirical SPA accordingly shows plateau-step structure at century boundaries (a +1,159 step at the 1 BC / AD 1 boundary — the largest single discontinuity in the envelope — plus smaller steps at the AD 100 / 101, AD 200 / 201, and AD 300 / 301 boundaries) and narrow spikes at real ancient regnal clusters (AD 77.5 Flavian, AD 122.5 Hadrianic, AD 212.5 Severan; each driven by reign-interval inscriptions plus year-precise inscriptions encoding consular or imperial-titulature dates). Three diagnostic runs (committed at `runs/2026-05-17-interval-width-diagnostic/`, `runs/2026-05-17-empirical-spa-shape/`, `runs/2026-05-17-date-range-filtered-spas/`) establish that the wide-template plateau structure is editorial-encoding artefact (it is dominated by inscriptions with `date_range > 25` years and weakens decisively under narrow-precision filtering), while the regnal-cluster spikes are real ancient clustering (they *amplify* under narrow-precision filtering — the AD 122.5 spike-to-plateau ratio rises from 1.61× at the full corpus to 13.83× at single-year-precise inscriptions).
+
+This research aims to compensate for editorial dataing artefacts to produce a meaningful SPA that can, potentially, be used as a proxy for other phenomena. It further seeks to determine minimum sample sizes, characterise uncertainty, and indicate sensitivity supported by the dataset. Finally, it argues that inscription counts in part reflect population, and seeks to characterise the extent to which urban population accounts for variation in inscription production (while recognising but not exploring what other social, economic, ▎ political, and cultural factors also influenced the production of inscriptions).. 
 
 **Phase 1** establishes methodological readiness via simulation-based minimum-sample-size thresholds for permutation-envelope deviation-detection. Phase 1 is complete and its results are reported in this preregistration as fixed groundwork that gates Phase 2 and Phase 3 testing.
 
@@ -30,7 +34,7 @@ The editorial dating artefact in LIRE v3.0 takes its primary form as **wide-temp
 
 **Scope of the mixture correction.** The Bayesian deconvolution-mixture model corrects the *temporal SPA* analyses: H2.1 validation and H3b deviation-detection. H3a and H3c are cross-sectional analyses operating on date-window-filtered counts — H3a directly, H3c by inheritance (H3c residuals are Pearson residuals from H3a's posterior, so they live in the same date-filtered-count scope). A per-city mixture fit was not pursued because it would be unidentified for ~ 600 of the ~ 815 Hanson-matched cities (those with N < 100 inscriptions). For H3a and H3c, the cross-sectional artefact protection is the 50 BC – AD 350 date-window filter — the mixture's empire-level posterior α is reported as descriptive context, but neither the H3a confirmatory decision rule nor the H3c residual analyses are gated on it, and neither propagates mixture-posterior uncertainty into its credible interval.
 
-The paper's primary contribution is methodological; the illustrative substantive finding is a within-province population-attributable variance fraction at urban-area scale. The substantive interpretive question — what inscription production proxies (urban-information-infrastructure, socio-political complexity, or some combination) — is deliberately scoped out of this preregistration. Confirmatory results test the reproducibility of patterns in the corrected signal, not the validity of any specific proxy model.
+The paper's primary contribution is methodological; the illustrative finding is a within-province population-attributable variance fraction at urban-area scale. The interpretive question — what inscription production proxies (urban-information-infrastructure, socio-political complexity, or some combination) — is deliberately scoped out of this preregistration. Confirmatory results test the reproducibility of patterns in the corrected signal, not the validity of any specific proxy model.
 
 ---
 
@@ -110,7 +114,7 @@ H2.4: stratified-by-convention-class SPA (hard classification: convention-anchor
 
 ### 1. Dataset and corpus
 
-**Primary (and sole) dataset for this preregistration:** LIRE v3.0 (Kaše, Heřmánková & Sobotková, Zenodo DOI 10.5281/zenodo.8147298, 11 October 2023). 182,853 rows; 63 attributes in the released parquet. Two filter flags used below — `is_within_RE` and `is_geotemporal` — are **derived** at filter time rather than being native columns of the released parquet: `is_geotemporal := Latitude IS NOT NULL AND Longitude IS NOT NULL AND not_before IS NOT NULL AND not_after IS NOT NULL AND not_before ≤ not_after` (the row has a usable geographic and temporal locus); `is_within_RE := province IS NOT NULL` (the row is geo-located within a Roman province). Filtering with these derived flags plus a 50 BC – AD 350 date-interval intersect (overlap, not containment) yields **180,609 rows** (≈ 98.8 % of the pre-filter total). Pre-joined Hanson (2016) urban-population estimates are available as the `urban_context_pop_est` attribute at row level (joining rule: ancient toponym of the largest city within a 5-km buffer of the inscription findspot).
+**Primary (and sole) dataset for this preregistration:** LIRE v3.0 (Kaše, Heřmánková & Sobotková, Zenodo DOI 10.5281/zenodo.8431452, 11 October 2023). 182,853 rows; 63 attributes in the released parquet. Two filter flags used below — `is_within_RE` and `is_geotemporal` — are **derived** at filter time rather than being native columns of the released parquet: `is_geotemporal := Latitude IS NOT NULL AND Longitude IS NOT NULL AND not_before IS NOT NULL AND not_after IS NOT NULL AND not_before ≤ not_after` (the row has a usable geographic and temporal locus); `is_within_RE := province IS NOT NULL` (the row is geo-located within a Roman province). Filtering with these derived flags plus a 50 BC – AD 350 date-interval intersect (overlap, not containment) yields **180,609 rows** (≈ 98.8 % of the pre-filter total). Pre-joined Hanson (2016) urban-population estimates are available as the `urban_context_pop_est` attribute at row level (joining rule: ancient toponym of the largest city within a 5-km buffer of the inscription findspot).
 
 No envelope extension to AD 600 is permitted under this preregistration. The LIST v1.2 corpus (same team, Zenodo DOI 10.5281/zenodo.10473706, 9 January 2024) extends the temporal envelope to 50 BC – AD 600 (sparser Late Antique coverage) and is a candidate dataset for either a post-lodgement OSF amendment or a follow-up paper; not part of this preregistration.
 
@@ -128,11 +132,11 @@ The cross-city H3a Bayesian NBR uses *all* ~815 cities with Hanson population es
 
 Date-range filtering thresholds examined for H2.3 robustness: `date_range` ≤ 25, 50, 100, 200, 300 years (matching the 2024 exploratory-notebook sweeps).
 
-**Western-Empire provincial subset (used by H3b's Crisis probe):** all LIRE v3.0 provinces where the project's `province_language` classification equals `'Latin'`, *excluding* the province `'Roma'`. The classification is taken from the project's prior exploratory work (`archive/2026-04-22-inscriptions-spa.ipynb` cell 54) and covers 41 LIRE provinces (after Rome-exclusion), including the Italian core ("Italia" plus the eleven Augustan regions), the Latin West (Gauls, Germanies, Britannia, Hispaniae, African provinces), and the Danube-and-frontier provinces (Noricum, Raetia, Pannoniae, Dalmatia, Dacia, Moesiae). The full list is committed to the public project repository (see §8); the three frontier-province classifications (Moesia Inferior, Moesia Superior, Sicilia) are flagged in §9 as bilingual-frontier judgement calls.
+**Western-Empire ('Latin speaking') provincial subset (used by H3b's Crisis probe):** all LIRE v3.0 provinces where the project's `province_language` classification equals `'Latin'`, *excluding* the province `'Roma'`. The classification is taken from the project's prior exploratory work (`archive/2026-04-22-inscriptions-spa.ipynb` cell 54) and covers 41 LIRE provinces (after Rome-exclusion), including the Italian core ("Italia" plus the eleven Augustan regions), the Latin West (Gauls, Germanies, Britannia, Hispaniae, African provinces), and the Danube-and-frontier provinces (Noricum, Raetia, Pannoniae, Dalmatia, Dacia, Moesiae). The full list is committed to the public project repository (see §8); the three frontier-province classifications (Moesia Inferior, Moesia Superior, Sicilia) are flagged in §9 as bilingual-frontier judgement calls.
 
 ### Analysis pipeline — a plain-English walkthrough
 
-*This subsection explains the analysis in plain terms, for readers — including numerate archaeologists and epigraphers who are not statisticians — who want the intuition before the technical detail. It is explanatory only: §3 below is the binding technical specification, and where the two appear to differ, §3 governs.*
+*This subsection explains the analysis in plain terms. It is explanatory only: §3 below is the binding technical specification, and where the two appear to differ, §3 governs.*
 
 **The problem.** Every Latin inscription in the corpus carries a *date range* — an earliest and a latest plausible year — rather than an exact date. We want to know two things: how inscription production varied across cities, and how far that variation is driven by city population. Two obstacles stand in the way. First, the dates are uncertain. Second, the dates are *systematically distorted* by editorial template encoding: epigraphic editors, faced with an inscription they can date only to a broad period, round its date range to a small set of standard *template intervals* — inclusive-Roman centuries ([1, 100], [101, 200], etc.), half-centuries ([125, 175] for "mid-3rd century"), and reign intervals ([117, 138] for "Hadrianic"). This template encoding is visible directly in the data: over half of all interval starts end in `01` and over half of all interval ends end in `00`. The corpus is dominated by these template intervals (the [1, 100] template alone accounts for 26 % of the corpus).
 
@@ -162,7 +166,7 @@ The headline quantity is the **within-province population-attributable variance 
 
 - **Aoristic sampling:** the Uniform aoristic method — each inscription's probability mass spread uniformly over `[not_before, not_after]` — is the primary treatment. A trapezoidal distribution is run as a sensitivity analysis on **every (level × subset) combination eligible for H3 confirmatory testing** (i.e. every subset that clears the Phase 1 reachability threshold for the binding bracket), plus the full-empire SPA. The trapezoidal parameterisation: `edge_band = min(width / 4, 10 years)`; within the central plateau of width `width − 2·edge_band` the per-year mass is constant at density `1 / (width − edge_band)`; over each edge ramp (length `edge_band`) the per-year mass ramps linearly from 0 at the absolute interval edge to plateau density at distance `edge_band` from the edge. The trapezoid integrates to 1 exactly; for very short intervals (`width < 8`) the trapezoid degenerates to a triangular shape. Convergence between uniform and trapezoidal SPAs is assessed by Pearson *r* per subset; the sensitivity is deemed material in any subset where *r* < 0.95, in which case the trapezoidal SPA is reported alongside the uniform primary. The Uniform method is implemented directly in the project code (≤ 10 lines of numpy) rather than via the SDAM `tempun` package, whose current release (0.2.4) is incompatible with numpy ≥ 2.4; the direct implementation is mathematically equivalent to `tempun`'s Uniform aoristic method.
 
-- **Binning:** 5-year bins across the analysis envelope (matching the 2024 exploratory notebook; reviewer-familiar).
+- **Binning:** 5-year bins across the analysis envelope. 5-year bins across the 50 BC – AD 350 envelope (80 bins). The 5-year resolution is set by the smallest preregistered event window — the Antonine probe (AD 165–180, 15 years) — for which bin width ≤ event-width / 3 is required for reliable Gaussian-tapered shape recovery. 5-year bins also cleanly resolve the editorial-template plateau-step boundaries documented in §2 (steps at AD 1, 101, 201, 301) without aliasing.
 
 - **SPA construction:** sum of per-inscription probability mass across bins; optional weighting by `clean_text_conservative` letter count for the secondary letter-count analyses (see §5).
 
@@ -444,6 +448,7 @@ Before lodgement, this preregistration may be revised; any revision is recorded 
 - **Between-province population effect not separately identifiable.** The H3a within-between specification cleanly identifies the *within-province* population effect (orthogonal to province membership), but the *between-province* component is entangled with `α_province` — i.e. with province-level "everything else." The between-province population gradient is reported but explicitly flagged as not separable from province-level cultural, administrative, and survival-bias variation.
 - **Rome exclusion.** Rome is excluded from scaling regressions as an extreme outlier. Consistent with Hanson (2021) methodology; reported transparently; not tested as a sensitivity.
 - **Hanson population uncertainty.** Hanson (2016) population estimates carry their own uncertainty, treated as exact in the H3a primary regression. A measurement-error sensitivity is preregistered in §5 (σ_pop ∈ {0.1, 0.2, 0.3}) to quantify the impact on `f_within`.
+- **Mismatch between Hanson's population (maxima) and inscription counts (cumulative).** Hanson's population estimates are peak-imperial-era maxima; H3a's cumulative-count response is dimensionally a comparison of integrated inscription output against peak population, not max-against-max. We retain the cumulative-count response for direct replicability with Hanson 2021 and Carleton et al. 2025; a max-to-max analysis would require defining a peak-window operationalisation that cannot be applied to small-N cities and would diverge from the replication target.
 - **Chronological envelope.** 50 BC – AD 350 (LIRE v3.0). Late Antique and post-AD-350 phenomena out of scope for this paper; an envelope extension to AD 600 via LIST v1.2 is a candidate for either a post-lodgement OSF amendment or a follow-up paper (see §1 and §7).
 
 ### 10. Hypothesis-level structure summary
@@ -467,7 +472,7 @@ detection thresholds fixed in §6  →   H2.1 recovery-sim validation  →  H3a 
 
 ### 11. Provenance
 
-- **Preregistration drafted** by Claude Code (Anthropic, Opus 4.7) under Shawn Ross's direction.
+- **Preregistration drafted** by Claude Code (Anthropic, Opus 4.7) under Shawn Ross's direction and with full human review.
 - **Authors and contributions (CRediT taxonomy):**
   - Shawn Ross (Macquarie University) — Conceptualization, Methodology, Investigation, Writing – original draft, Writing – review & editing, Supervision, Project administration.
   - Adela Sobotková (Aarhus University) — Methodology, Validation, Writing – review & editing.
@@ -475,3 +480,49 @@ detection thresholds fixed in §6  →   H2.1 recovery-sim validation  →  H3a 
 - **Funding:** no funding was received for this work.
 - **Competing interests:** the authors declare no competing interests.
 - **Ethics:** this work reanalyses publicly available, published datasets and did not require ethics review.
+
+---
+
+### 12. References
+
+Anselin, L. (1995). Local indicators of spatial association—LISA. *Geographical Analysis*, 27(2), 93–115. https://doi.org/10.1111/j.1538-4632.1995.tb00338.x
+
+Carleton, W. C., Campbell, D., & Collard, M. (2018). Radiocarbon dating uncertainty and the reliability of the PEWMA method of time-series analysis for research on long-term human–environment interaction. *PLOS ONE*, 13(1), e0191055. https://doi.org/10.1371/journal.pone.0191055
+
+Carleton, W. C., Elton, H., Miranda, W., Work, I., Safarik, D., Winkelmann, R., Laubichler, M., Renn, J., & Roberts, P. (2025). Parallel scaling of elite wealth in ancient Roman and modern cities with implications for understanding urban inequality. *Nature Cities*, 2(4), 344–355. https://doi.org/10.1038/s44284-025-00213-1
+
+Cliff, A. D., & Ord, J. K. (1981). *Spatial processes: Models and applications*. Pion.
+
+Crema, E. R., & Bevan, A. (2021). Inference from large sets of radiocarbon dates: Software and methods. *Radiocarbon*, 63(1), 23–39. https://doi.org/10.1017/RDC.2020.95
+
+Crema, E. R. (2025). A Bayesian alternative for aoristic analyses in archaeology. *Archaeometry*, 67(S1), 7–30. https://doi.org/10.1111/arcm.12984
+
+Duncan-Jones, R. (2018). Antonine Plague revisited. *Arctos — Acta Philologica Fennica*, 52, 41–72. https://doi.org/10.71390/arctos.84955
+
+Gelman, A., Goodrich, B., Gabry, J., & Vehtari, A. (2019). R-squared for Bayesian regression models. *The American Statistician*, 73(3), 307–309. https://doi.org/10.1080/00031305.2018.1549100
+
+Glomb, T., Kaše, V., & Heřmánková, P. (2022). Popularity of the cult of Asclepius in the times of the Antonine Plague: Temporal modeling of epigraphic evidence. *Journal of Archaeological Science: Reports*, 43, 103466. https://doi.org/10.1016/j.jasrep.2022.103466
+
+Hanson, J. W. (2016). *An urban geography of the Roman world, 100 BC to AD 300*. Archaeopress.
+
+Hanson, J. W., Ortman, S. G., & Lobo, J. (2017). Urbanism and the division of labour in the Roman Empire. *Journal of the Royal Society Interface*, 14(136), 20170367. https://doi.org/10.1098/rsif.2017.0367
+
+Hanson, J. W. (2021). Cities, information, and the epigraphic habit: Re-evaluating the links between the numbers of inscriptions and the sizes of sites. *Journal of Urban Archaeology*, 4, 137–152. https://doi.org/10.1484/J.JUA.5.126597
+
+Heřmánková, P., Kaše, V., & Sobotková, A. (2021). Inscriptions as data: Digital epigraphy in macro-historical perspective. *Journal of Digital History*, 1(1). https://doi.org/10.1515/JDH.2021.1004.R1
+
+Kaše, V., Heřmánková, P., & Sobotková, A. (2023). *LIRE: Latin Inscriptions of the Roman Empire* (Version v3.0) [Dataset]. Zenodo. https://doi.org/10.5281/zenodo.8431452
+
+Kaše, V., Heřmánková, P., & Sobotková, A. (2024). *LIST* (Version v1.2) [Dataset]. Zenodo. https://doi.org/10.5281/zenodo.10473706
+
+Mundlak, Y. (1978). On the pooling of time series and cross section data. *Econometrica*, 46(1), 69–85. https://doi.org/10.2307/1913646
+
+Rick, J. W. (1987). Dates as data: An examination of the Peruvian preceramic radiocarbon record. *American Antiquity*, 52(1), 55–73. https://doi.org/10.2307/281060
+
+Timpson, A., Colledge, S., Crema, E., Edinborough, K., Kerig, T., Manning, K., Thomas, M. G., & Shennan, S. (2014). Reconstructing regional population fluctuations in the European Neolithic using radiocarbon dates: A new case-study using an improved method. *Journal of Archaeological Science*, 52, 549–557. https://doi.org/10.1016/j.jas.2014.08.011
+
+Timpson, A., Barberena, R., Thomas, M. G., Méndez, C., & Manning, K. (2021). Directly modelling population dynamics in the South American Arid Diagonal using ¹⁴C dates. *Philosophical Transactions of the Royal Society B*, 376(1816), 20190723. https://doi.org/10.1098/rstb.2019.0723
+
+Turchin, P., Currie, T. E., Whitehouse, H., François, P., Feeney, K., Mullins, D., Hoyer, D., Collins, C., et al. (2018). Quantitative historical analysis uncovers a single dimension of complexity that structures global variation in human social organization. *Proceedings of the National Academy of Sciences*, 115(2), E144–E151. https://doi.org/10.1073/pnas.1708800115
+
+Williams, A. N. (2012). The use of summed radiocarbon probability distributions in archaeology: A review of methods. *Journal of Archaeological Science*, 39(3), 578–589. https://doi.org/10.1016/j.jas.2011.07.014
