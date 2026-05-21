@@ -305,3 +305,54 @@ Direct continuation of Entry 5 — same instance (no compaction), picking up imm
 **Contextual assumptions.** The Friday 2026-05-22 conference presentation by Adela imposed the hard deadline that drove the "lodge Tuesday regardless of Martin's reply" decision. Without that deadline, the natural workflow would have been: send pack → wait for Martin → incorporate → lodge. With the deadline, the workflow became: send pack and run stand-in review in parallel → incorporate stand-in findings as Decisions 27–32 → lodge Tuesday with the stand-in-derived methodology → treat Martin's eventual reply as post-lodgement amendment work. The trade-off (visible-on-OSF amendment trail vs missed conference feedback opportunity) was discussed explicitly with Shawn; the lodgement-with-amendments choice was the conscious one. The stand-in-review-as-hedge-against-delay is a specific methodological substitution that wouldn't be the default in normal circumstances.
 
 The session ended cleanly with no outstanding edits; all artefacts committed and pushed. The handoff to the next session is well-documented (continuity.md + next-session prompt + working-notes Obs 40/41); the next session can begin staging work (template-dictionary scan; recovery-grid-design draft; date-stamp prereg refs; OSF lodgement) immediately after a brief read of the continuity doc.
+
+---
+
+## Entry 7 — 2026-05-20 → 2026-05-21: OSF lodgement (with four-iteration PDF) and overnight conference-talk planning
+
+Two calendar days of operational work that closed the OSF lodgement and opened the RAC-TRAC 2026 conference-talk implementation phase.
+
+**OSF lodgement workflow (2026-05-20).**
+
+- **Pre-lodgement final fixes** to `planning/preregistration-draft.md`: radiocarbon-SPA lineage framing rewritten (Rick 1987 → Williams 2012 → Timpson et al. 2014 → Crema & Bevan 2021) per Shawn's added Field-2 paragraph; 5-year-bin rationale rewritten with empirical justification (the Antonine probe's 15-year window forces bin ≤ 5 y); typo fixes in the goals paragraph; LIRE v3.0 DOI corrected (was `8147298` = v2.3; now `8431452` = v3.0); duplicate DOI bug at §8 Data line caught and fixed by the second pre-lodgement pass; pipe-in-table-cell escape applied to §7 H3c(i) row in both `preregistration-draft.md` and the OSF supplementary `osf-supplementary-2026-05-20.md`.
+- **OSF supplementary file** built as `planning/osf-supplementary-2026-05-20.md` (498 lines): YAML frontmatter / format note / Field 1 / Field 2 stripped (those go into OSF form fields directly); Field-wrapper labels dropped; Field 3 renumbered to §1; Field 4 subsections § 1–12 renumbered to §2–13; 42 internal `§N` cross-references systematically incremented by +1; paper-internal `§29 / §45 / §60` references (in the Heřmánková 2021 citation) correctly preserved. A new "Preregistration — supplementary detail" title block and one-paragraph lede prepended for self-containment.
+- **§12 References list** compiled: 21 entries; APA-7-ish author-date format with sentence case in titles and DOI URLs; alphabetical by first-author surname with same-author entries chronological; Mundlak 1978 included as eponym-source for the within-between specification.
+- **Bibliography verification**: 18 of 20 catalogued citations confirmed present in Shawn's Zotero (item IDs in the bibliography commit message); 3 added via `/cite-new` (Rick 1987; LIRE v3.0 dataset; LIST v1.2 dataset). The LIRE Zenodo DOI mismatch (v2.3 at `8147298` vs v3.0 at `8431452`) caught at this stage via DataCite API verification.
+- **PDF iteration v1 → v4** via pandoc 3.6.3 + xelatex. v1 (1 in margins, default mono; URL truncation present but not flagged yet). v2 (pipe-in-cell fix; 0.8 in margins; monofont Scale=0.78 to fit the ASCII flowchart and the H3a NBR formula). v3 (`xurl` package added — ineffective alone because pandoc rendered bare URLs as plain text). v4 (`-f markdown+autolink_bare_uris` + `xurl` together — finally produced clean wrapping). Each iteration committed and the OSF lodgement tag re-pointed.
+- **Adversarial verifier** dispatched after PDF v2 against the supplementary file. Verdict: PARTIAL → PASS after the pipe-in-cell fix. Verifier caught the truncation bug that author-side review had missed; without the verifier the lodged artefact would have contained a corrupted decision rule in §7.
+- **Lodgement tag chain**: `acf7263` (initial v2) → `dca8d99` (pipe-fix v2) → `9d12ce9` (v3 with xurl-only) → final at `dca8d99...→ a2e40fd` post v4 (autolink + xurl). Each move via `git tag -d` + `git push --delete` + `git tag -a` + `git push origin`, with annotation updated each time.
+- **OSF deposit completed** by Shawn 2026-05-20 evening at `https://osf.io/uycs6/`. Embargoed pending decision on submission to a journal requiring double-blind review.
+
+**Overnight conference-talk planning (2026-05-20 evening into 2026-05-21).**
+
+- **Conference scout** dispatched in background (RAC-TRAC 2026 Aarhus details, audience profile, programme parsing). Returned mid-foreground-work with the critical finding that Shawn — not Adela — has the SPA paper at 14:20 Friday, with Adela's own marriage-ages paper at 12:20 the same session. Flagged in handoff for morning resolution.
+- **Asset inventory** (`planning/conference-talk-rac-trac-2026/asset-inventory.md`): catalogued the 2024 exploratory notebook's pipeline (empire/province/city SPAs; frequentist NBR-with-bootstrap; Hanson-pop join already done) and the three 2026-05-17 diagnostic runs as the figure substrate for the talk. Main work for next session: apply the prereg date-window filter + re-render at slide aspect.
+- **Slide outline** (`planning/conference-talk-rac-trac-2026/slide-outline.qmd`): 7-slide Quarto revealjs skeleton with speaker notes embedded as HTML comments; placeholders for figures; footer + slides #5/#7 reference the OSF URL.
+- **Analysis roadmap** (`analysis-roadmap.md`): 36-hour hour-by-hour plan with two explicit decision gates (hour 18 for A+ go/no-go; hour 26 for Bayesian H3a stretch). Per Shawn's "A+ if possible with fallback to lean A" framing.
+- **Talking points** (`talking-points-feedback.md`): 7 anticipated audience objections with prepared responses (epigraphic-habit-only critique; Hanson-pop uncertainty; Rome exclusion; frequentist-vs-Bayesian justification; editorial-template handling; subgroup nominations; survival-bias). 5 feedback prompts for the closing slide.
+- **Conference context** (`conference-context.md`): full briefing from the scout — RAC/TRAC identity, dates, venue, TRAC7 session details with running order, audience profile (Roman archaeologists, classicists, digital humanists; LIRE creators are session organisers), format expectations, past editions, practical info.
+- **Continuity update**: research-state snapshot rewritten for post-lodgement state; new "Conference talk — RAC-TRAC 2026" in-flight section replacing the (completed) pre-lodgement staging work.
+- **Next-session handoff prompt** (`planning/next-session-prompt-2026-05-21.md`): briefs the new CC instance with the resolved-questions section at the top, decision-gate framing, risk register, audience reality (LIRE creators in the room), and out-of-scope clarifications.
+
+**Morning resolution (2026-05-21).**
+
+- **Speaker confirmed**: Adela reads Shawn's paper at the 14:20 slot. Shawn can't travel; remote presentation not supported. Adela's own 12:20 marriage-ages paper is separate work.
+- **OSF URL confirmed**: `https://osf.io/uycs6/`, embargoed. Folded into prereg §11 Provenance (post-lodgement amendment trail); slide deck footer + slides #5/#7; README.md (previously single-line; now a proper project landing page).
+- **`/handoff` invoked**: continuity session-log entry appended; working-notes Obs 42–45 added (pandoc URL handling; markdown pipe escape; Zenodo concept-DOI confusion; adversarial-verifier pattern); five wiki candidates flagged in personal-assistant `notes/_inbox.md`; new file `docs/notes/user-observations.md` seeded with four observations Shawn accepted.
+
+**Artefacts touched (this session).**
+
+- 14 commits across the inscriptions repo (`3da5711` to `848edfa`) covering bibliography compilation, four PDF iterations with tag-moves, OSF supplementary file creation + clean-up, continuity updates, conference-talk planning bundle, morning resolution, and `/handoff` close.
+- 1 commit in personal-assistant `notes/` repo (`8098985`) — `_inbox.md` additions for weekly-review curation.
+- New planning directory `planning/conference-talk-rac-trac-2026/` (5 files: conference-context, asset-inventory, slide-outline.qmd, analysis-roadmap, talking-points-feedback).
+- New `planning/next-session-prompt-2026-05-21.md`.
+- New `planning/osf-supplementary-2026-05-20.md` + `.pdf` (the lodged supplementary artefact).
+- New `planning/prior-art-scout-2026-05-19-hmm-aoristic.md` (already from 2026-05-19 but committed during today's work).
+- New `docs/notes/user-observations.md` (4 entries seeded at /handoff).
+- Updated `README.md` from single-line to full project landing page.
+- Updated `planning/preregistration-draft.md` (§11 Provenance OSF-URL amendment trail; multiple pre-lodgement fixes; §12 References added; §8 Data DOI corrected).
+- Updated `docs/notes/reflections/continuity.md` (research-state snapshot post-lodgement; in-flight section updated; session-log entry appended).
+- Updated `docs/notes/reflections/working-notes.md` (Obs 42–45 appended).
+- Lodgement tag `osf-lodgement-2026-05-20` created and re-pointed four times, settling at commit `a2e40fd` post v4 PDF.
+
+**Contextual assumptions.** The Friday 2026-05-22 conference deadline is now a *hard* deadline — Adela needs the slide deck and speaker notes by Friday morning Aarhus time. The 36-hour analysis roadmap is built around her arrival; the decision gates exist because the implementation work is genuinely time-bounded. The OSF embargo on the prereg is a "in case we go double-blind" hedge, not a settled decision; the URL is publicly visible (unblockable) but the deposit contents are gated. The lodgement tag NOT including the OSF-URL amendment (the amendment lives in post-tag commits) is the deliberate convention — anyone needing the "as lodged" version clones at the tag, not at main. The next-session implementation work has been deliberately kept out of this session because the cleaner handoff is starting fresh with the roadmap in hand rather than mid-debugging-cycle.

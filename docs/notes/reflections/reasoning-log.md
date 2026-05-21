@@ -205,3 +205,21 @@ One affordance I under-used: the agent-hardening skill we flagged for the weeken
 ### For future-me
 
 The continuity-doc-canonicalisation (replacing dated continuity snapshots with a single living `continuity.md`) is a small design decision that should pay off over the next several sessions. The question it answers — "where is the current priority queue and current state of play?" — now has one answer, not "depends on which dated snapshot is newest." Keep it tight and honest; prune aggressively when items resolve; date each session's done-items. The alternative — re-writing a full continuity snapshot at every /reflect — would duplicate session-log content and eventually go stale.
+
+---
+
+## 2026-05-20 → 2026-05-21 — Entry 4: lodgement-day in-stream notes
+
+The session-reflection and abductive-reasoning entries carry the structured account. This is the messy in-flight register — the half-thoughts and unresolved tensions that don't fit either format cleanly.
+
+*Surprise:* I committed v3 of the OSF supplementary PDF confidently with the xurl include — "fixed, sent, ready." Shawn opened the PDF and immediately saw URLs still overflowing. The 15-minute diagnostic that followed (inspect the LaTeX intermediate; find zero `\href` instances; realise pandoc wasn't autolinking bare URLs; add `+autolink_bare_uris`) was the kind of thing I should have done *before* the v3 commit, not after. Visual confidence from spot-checks (pdftotext extracts; isolated page renders) is structurally insufficient for layout issues at page edges. The full visual scan of every page is the test.
+
+*Memo:* The verifier-after-binary-artefact pattern (working-notes Obs 45) should be the default for any PDF / slide / chart Shawn will see externally. Cost of one agent dispatch is trivial relative to the cost of a wrong artefact in a permanent deposit. Worth flagging at the next `/weekly-review` for elevation to a project-level workflow rule.
+
+*Exploring:* Adela reading Shawn's paper is interesting from a working-relationship angle — the work I prepare for this session has to be deliverable by someone other than Shawn (the technical-detail level needs to be calibrated for an Aarhus-resident archaeologist reading content authored from a Sydney-based digital-classicist's framing). The slide deck's speaker-notes are doing more work than usual: they're not just memory aids for the author, they're a *partial substitute* for the author being present. Worth carrying this care into the 36-hour implementation: every speaker-note should be readable cold by Adela without prior context.
+
+*Commit:* Going forward in this project, "ready" for any binary artefact means **(a)** I have inspected the rendered output, **(b)** Shawn has visually scanned it, AND **(c)** an adversarial verifier has compared source-to-render for any high-stakes deposits. Not (a) alone. The PDF iteration cycle cost ~3 hours that this rule would have shortened to ~1 hour.
+
+*Exploring:* The conference-talk planning produced six artefacts overnight, all externalised before sleep. The shape of the work — externalise everything, sleep, hand off to next session — feels qualitatively different from the lodgement work earlier in the day (which was operational: produce → verify → fix → push). Overnight planning is *anticipatory*: I'm constructing a context for a future session that doesn't exist yet. The decision-gate framing (lean A+ → fallback A; hour-18 gate; hour-26 gate) is the load-bearing structure that makes the externalisation usable rather than a wall of text. Worth a `/weekly-review` candidate as a transferable pattern.
+
+*Memo to Shawn:* the prereg's §11 Provenance now carries the OSF URL via post-lodgement amendment. The lodgement tag does NOT include this amendment (it stays at `a2e40fd`); subsequent amendments live in subsequent main commits. If you ever need the "as lodged" version to share blinded for double-blind submission, clone at the tag, not at main.
