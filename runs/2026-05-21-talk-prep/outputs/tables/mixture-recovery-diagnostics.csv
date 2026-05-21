@@ -1,0 +1,2 @@
+alpha_true,alpha_median,alpha_ci_lo,alpha_ci_hi,alpha_covered_95ci,pearson_r_pgen,max_rhat,min_ess_bulk,n_total,n_warmup,n_sample,n_chains
+0.5,0.47735145413409746,0.41391325975332965,0.5414544997613078,True,0.9999401572243025,1.0,2567.0,5000,1000,2000,4

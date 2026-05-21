@@ -9,6 +9,11 @@ data/LIST_v1-2.parquet
 runs/**/cell-results.parquet
 runs/**/run.pid
 
+# Intermediate filtered LIRE corpora (~ 60 MB each). Reconstructable from the
+# original LIRE_v3-0.parquet via the run's filter script. Live on sapphire too
+# when blocks run there; pulled back as needed.
+runs/**/data/lire-filtered.parquet
+
 # Compile output from R/Stan/NIMBLE installs — large, noise, reproducible
 # from the install scripts. Live on sapphire as ground truth.
 runs/2026-05-03-baorista-install/install.log

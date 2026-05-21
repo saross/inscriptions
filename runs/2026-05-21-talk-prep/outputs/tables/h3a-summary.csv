@@ -1,0 +1,2 @@
+max_rhat,min_ess_bulk,n_divergences,f_within_median,f_within_ci_lo,f_within_ci_hi,p_f_gt_005,p_f_gt_010,p_f_gt_020,verdict,n_cities,n_provinces,n_chains,n_warmup,n_sample
+1.0,861.0,0,0.29946829441425976,0.24027579456235504,0.3663843213036655,1.0,1.0,0.99975,supported,1044,56,4,3000,2000

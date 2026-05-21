@@ -1,0 +1,5 @@
+metric,prereg_target,observed,delta,rel_delta
+total_filtered,180609,180609,0,0.0
+rome_only,65435,65435,0,0.0
+rome_excluded,115174,115174,0,0.0
+hanson_city_assigned_filtered,140575,140575,0,0.0
