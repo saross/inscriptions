@@ -37,48 +37,55 @@ City-grain diagnostics already logged: 1044 / 913 / 729 / 606 / 169 cities
 under N≥1 / 2 / 5 / 10 / 100 inscription thresholds, none of which is exactly
 815.
 
-## Block 2 — Empire / province / city SPAs (pending)
+## Block 2 — Empire / province / city SPAs (complete)
 
-- [ ] `code/02-empire-spa.py`
-- [ ] `code/03-province-spa.py`
-- [ ] `code/04-city-spa.py`
-- [ ] Save figures to `outputs/figures/` and mirror high-DPI to
-      `planning/conference-talk-rac-trac-2026/figures/`
+- [x] `code/02-empire-province-city-spas.py` (single file covering all three)
+- [x] Empire SPA / 8-province SPA / 8-city SPA at 16:9, mirrored to talk dir
 
-## Block 3 — Frequentist Hanson NBR (pending)
+## Block 3 — Frequentist Hanson NBR (complete)
 
-- [ ] `code/05-hanson-nbr-bootstrap.py`
-- [ ] Save β + bootstrap CI to `outputs/tables/nbr-summary.csv`
-- [ ] Save log–log scatter figure
+- [x] `code/03-hanson-nbr-bootstrap.py`
+- [x] β = 0.566, bootstrap 95% CI [0.543, 0.574]; OLS log-log β = 0.284 (R² = 0.036)
 
-## Gate 1 — Hour 18
+## Gate 1 — Hour 18 (passed)
 
-A vs A+ decision (see spec.md).
+A+ green-light: Blocks 1–3 complete; proceeded to Block 4.
 
-## Block 4 — Mixture-recovery demo (A+ stretch)
+## Block 4 — Mixture-recovery demo (complete on sapphire)
 
-- [ ] `code/06-mixture-recovery-synthetic.py`
-- [ ] Save recovery figure + diagnostics
+- [x] `code/04-mixture-recovery-synthetic.py`
+- [x] α posterior covers truth (median 0.477, 95% CI [0.414, 0.541]); Pearson r = 1.000 vs truth; R̂ = 1.0000; ESS ≥ 2,567; all prereg gates pass.
+- Sampled in 2s on sapphire (native-C pytensor); local lacks python3-dev.
 
-## Gate 2 — Hour 26
+## Gate 2 — Hour 26 (passed)
 
-Bayesian H3a stretch decision.
+Bayesian H3a stretch green-light.
 
-## Block 4b — Bayesian H3a (further stretch)
+## Block 4b — Bayesian H3a (complete on sapphire)
 
-- [ ] `code/07-h3a-bayesian-mundlak.py`
-- [ ] Save f_within posterior summary
+- [x] `code/05-h3a-bayesian-mundlak.py`
+- [x] β_within = 0.587 (close to Carleton 2025 no-zeros 0.68); β_between ≈ −0.26 with wide CI (not separately identifiable).
+- [x] **f_within = 0.299, 95% CI [0.240, 0.366]; verdict SUPPORTED.** P(f > 0.20) ≈ 1.000.
+- [x] Refit with tune=3,000 (initial tune=1,000 yielded R-hat = 1.0100 exactly at gate); refit gives R-hat = 1.0000.
 
-## Block 5 — Slide assembly
+## Block 5 — Slide assembly (complete)
 
-- [ ] Populate `planning/conference-talk-rac-trac-2026/slide-outline.qmd`
-- [ ] Render revealjs HTML + PDF
+- [x] Populated `planning/conference-talk-rac-trac-2026/slide-outline.qmd` with all 6 new figures + numerical β / f_within
+- [x] Added new slide 6b for the Mundlak f_within result (8 main slides + 6 backups now)
+- [x] Wired in slide-2 figures (`fig-02a-empirical-spa.png`, `fig-02b-width-histogram.png`) from `runs/2026-05-17-*/` and slide-3 figure (`fig-03-phase1-heatmap.png`) from `runs/2026-04-25-h1-simulation/`
+- [x] Rendered Quarto revealjs HTML (`slide-outline.html`, 6.7 MB self-contained)
+- [x] Rendered slide-format PDF via Decktape + Brave (`slide-outline-slides.pdf`, 2.1 MB, 10 landscape pages)
+- [x] Rendered LaTeX paper-document PDF (`slide-outline.pdf`, 1.8 MB, 11 letter pages) as text-content backup
+- [x] Iteratively QA'd all 10 slides; applied `smaller: true` globally + per-slide content trims to fit content
+- [x] Fixed title-slide "Invalid Date" (ISO + date-format: long) and empty-slide-from-orphan-comment bug
 
-## Block 6 — Adela briefing
+## Block 6 — Adela briefing (complete)
 
-- [ ] `planning/conference-talk-rac-trac-2026/adela-briefing.md`
+- [x] `planning/conference-talk-rac-trac-2026/adela-briefing.md` — slide-by-slide cheat sheet + 9 anticipated Q&A + backup-slide map + tone-framing + escape-pattern for unknown questions
 
-## Block 7 — Reproducibility check + commit
+## Block 7 — Reproducibility check + commit (in progress)
 
-- [ ] End-to-end clean-run
-- [ ] Final commit batch
+- [x] All scripts ran end-to-end against the cached parquet (Blocks 1-4b)
+- [x] Sapphire venv reproducible from pyproject.toml
+- [x] Decktape tool at `~/tools/decktape/` (outside repo; PUPPETEER_EXECUTABLE_PATH=/usr/bin/brave-browser)
+- [ ] Final commit + push pending

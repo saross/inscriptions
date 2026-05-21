@@ -1,10 +1,11 @@
 ---
 title: "Dates-as-Data for Inscriptions"
-subtitle: "Using SPA with Latin epigraphic databases to investigate changing complexity in the Western Roman Empire"
+subtitle: "Using SPA with Latin epigraphic databases to investigate changing complexity in the Western Roman Empire — RAC-TRAC 2026, TRAC7, Aarhus"
 author:
   - "Adela Sobotková (Aarhus University) — presenting"
   - "Shawn Ross (Macquarie University) — author, in absentia"
-date: "RAC-TRAC 2026 · Aarhus · TRAC7 session · Friday 22 May 14:20"
+date: "2026-05-22"
+date-format: long
 format:
   revealjs:
     theme: simple
@@ -12,82 +13,21 @@ format:
     progress: true
     embed-resources: true
     incremental: false
+    smaller: true
     footer: "Preregistration: osf.io/uycs6 (embargoed) — repo: github.com/saross/inscriptions/tree/osf-lodgement-2026-05-20"
-    # logo: PATH-TBD  # Shawn to provide
 ---
-
-<!--
-Speaker-notes convention: text inside HTML comments at the END of each
-slide section is the speaker note for that slide. Read in revealjs
-speaker view (press 's' during the talk).
-
-CONFERENCE CONTEXT (confirmed 2026-05-21):
-- RAC/TRAC 2026, Aarhus University, Thu 21 – Sat 23 May 2026
-- Session: TRAC7 "Beyond names and numbers: Quantitative epigraphy and
-  the discovery of historical patterns" — organisers Heřmánková,
-  Glomb, Kaše (the SDAM / LIRE-creator group at Masaryk)
-- Slot: Friday 22 May 14:20, room Preben Hornung
-- Shawn (the paper author) cannot travel; no remote option supported.
-  ADELA is reading the paper on Shawn's behalf. (Adela also has her own
-  separate paper at 12:20 in the same session, on Roman marriage ages.)
-- Slot length: 20 minutes (standard RAC/TRAC); target is ~12 min to
-  leave buffer for setup, changeover, and audience questions.
-
-OSF PREREGISTRATION:
-- URL: https://osf.io/uycs6/
-- Status: lodged 2026-05-20; CURRENTLY EMBARGOED pending decision on
-  whether to submit to a journal requiring double-blind review.
-- The URL is publicly visible (unblockable) but the deposit contents
-  are not accessible until embargo lifts.
-- For talk: cite the URL on the closing slide; if anyone asks for
-  access, Adela can say "the prereg is currently embargoed; we're
-  weighing a double-blind submission; expect the embargo to lift once
-  we decide on a journal."
-- This does NOT compromise double-blind: the talk's authorship is
-  public (we can't help that); the prereg content is gated; a
-  double-blind submission package would supply a blinded version.
-
-Time budget: with a 12-min target inside the 20-min slot, the 7-slide
-plan runs ~100 s per slide with ~25 % slack for figures-on-screen
-time and natural pacing. If the speaker has more time / wants more
-depth, the 7-slide plan can grow to 8-9 slides comfortably.
-
-AUDIENCE BAKED IN:
-- LIRE / EDH / LIST creators are session organisers (Heřmánková, Kaše)
-- Glomb wrote our cited Asclepius-cult paper (2022)
-- Roman archaeologists, classicists, digital humanists,
-  computational linguists — explicitly named in session abstract
-- Theoretical orientation: critical, reflexive, but receptive to
-  computational / quantitative work if framed reflexively
-- ADJACENT TALKS to anticipate Q&A from: Sommerschield (14:00, Aeneas
-  neural-net for Latin inscriptions — directly precedes); Bennett
-  (15:00, global epitaph patterns); the SDAM organisers themselves
-
-ABSTRACT ALIGNMENT (Shawn's already-submitted abstract reads):
-- "SPA output read NOT as raw population proxy but as a proxy for
-  complexity (the sum of various components, including population,
-  wealth, social stratification, and other factors)"
-- "Disentangling step: comparison with Hanson and Ortman population
-  estimates to isolate the population component and begin to
-  understand the information conveyed by this composite measure"
-
-→ The talk should EXPLICITLY land the complexity-decomposition
-  framing, not just the population-scaling one. Slide 6's preliminary
-  Hanson scaling result is the *population component* isolated;
-  habit and other components remain in the residual.
--->
 
 ## 1 · The dates-as-data tradition, and a persistent puzzle
 
 ::: {.columns}
 ::: {.column width="60%"}
 - 40 years of "dates as data" in archaeology (Rick 1987; Williams 2012; Timpson et al. 2014; Crema & Bevan 2021)
-- LIRE v3.0 corpus: **180,609 inscriptions** with usable date and findspot (50 BC – AD 350; Kaše et al. 2023, Zenodo 10.5281/zenodo.8431452)
-- **The recurring objection**: inscription counts reflect *cultural enthusiasm to inscribe* — the **epigraphic habit** — more than anything else (MacMullen 1982; Hanson 2021)
-- **Our question**: how much, if any, demographic and structural signal survives once we account properly for editorial distortion in the source data?
+- LIRE v3.0: **180,609 inscriptions**, 50 BC – AD 350 (Kaše et al. 2023)
+- **The recurring objection**: counts reflect *cultural enthusiasm to inscribe* — the **epigraphic habit** — more than anything else (MacMullen 1982; Hanson 2021)
+- **Our question**: how much demographic signal survives once we account for editorial distortion?
 :::
 ::: {.column width="40%"}
-*Placeholder for opening figure: LIRE temporal coverage at a glance — e.g., 5-year-binned empire SPA with the prominent century-template plateaus visible.*
+![Empire-wide SPA of LIRE v3.0 under the preregistered 50 BC – AD 350 date-window filter (180,609 inscriptions; 5-year bins; uniform aoristic mass). The plateau-step structure at century boundaries and narrow spikes at AD 77.5 / 122.5 / 212.5 are the empirical signature of editorial dating conventions.](figures/fig-04a-empire-spa.png){fig-align="center"}
 :::
 :::
 
@@ -114,23 +54,19 @@ framework that lets the debate proceed on better evidence.
 
 ::: {.columns}
 ::: {.column width="55%"}
-*Main figure: the empirical SPA showing the wide-template plateaus and the regnal-cluster spikes. Source: `runs/2026-05-17-empirical-spa-shape/outputs/figures/`.*
+![](figures/fig-02a-empirical-spa.png){fig-align="center" width="100%"}
 
-Key empirical findings:
-
-- **54.5 %** of `not_before` values end in `01`; **53.0 %** of `not_after` values end in `00`
-- The **largest single step in the empirical SPA is at the 1 BC / AD 1 boundary** (+1,159)
-- Narrow regnal spikes at AD 77.5 (Flavian), AD 122.5 (Hadrianic), AD 212.5 (Severan)
-- **Plateau structure weakens** under narrow-precision filtering; **regnal spikes amplify** (AD 122.5 spike-to-plateau ratio: 1.61× → 13.83×)
+- **54.5 %** of `not_before` end in `01`; **53.0 %** of `not_after` end in `00`
+- Largest step in the SPA: **+1,159 at the 1 BC / AD 1 boundary**
+- Narrow spikes at AD 77.5 (Flavian), 122.5 (Hadrianic), 212.5 (Severan)
 :::
 ::: {.column width="45%"}
-*Side figure: interval-width distribution showing the bimodal structure (narrow regnal vs wide century templates). Source: `runs/2026-05-17-interval-width-diagnostic/outputs/figures/`.*
+![](figures/fig-02b-width-histogram.png){fig-align="center" width="100%"}
 
 **Reading the signature**:
 
-- Wide-template intervals → editorial encoding artefact (mostly modern editor choices)
-- Narrow regnal spikes → real ancient clustering (sustained at high-precision)
-- BC/AD step → calendar-convention boundary + sparse late-Republic dating
+- Wide templates → editorial encoding artefact
+- Narrow spikes → real ancient clustering (sustain under high-precision filter)
 :::
 :::
 
@@ -157,20 +93,19 @@ methodological argument that follows.
 ## 3 · What we can resolve: Phase 1 reachability
 
 ::: {.columns}
-::: {.column width="50%"}
-*Main figure: heatmap of detection rate × n across analysis levels for the binding bracket (50 % deviation over ≥ 50 y, Gaussian-tapered). Source: `runs/2026-04-25-h1-simulation/outputs/heatmaps/`.*
+::: {.column width="45%"}
+![](figures/fig-03-phase1-heatmap.png){fig-align="center" width="100%"}
 :::
-::: {.column width="50%"}
-**Phase 1** asks: at each analysis level, **how many inscriptions does a unit need before our deviation-detection method reliably sees a known effect?**
+::: {.column width="55%"}
+**Phase 1** asks: at each analysis level, how many inscriptions does a unit need before deviation-detection reliably sees a known effect?
 
 For the binding 50 %-over-50-y bracket (Gaussian-tapered, conservative):
 
 - **Empire**: reachable at n = 50,000
-- **Province**: min n ≈ **1,549** (exp / Gauss; varies 1,385 – 1,938 across nulls)
-- **Urban area**: min n ≈ **1,549** for the conservative bracket
-- **96 H1-reachable cells** total across empire / province / urban-area subsets
+- **Province / Urban area**: min n ≈ **1,549** (exp / Gauss; range 1,385 – 1,938 across nulls)
+- **96 H1-reachable cells** across empire / province / urban-area
 
-These thresholds **gate** the per-subset deviation-detection analyses for the substantive work.
+These thresholds **gate** the per-subset deviation-detection analyses; locked at OSF lodgement.
 :::
 :::
 
@@ -199,20 +134,16 @@ in, 1,000 iterations × 1,000 MC replicates per cell.
 ## 4 · What the data look like at multiple scales
 
 ::: {.columns}
-::: {.column width="33%"}
-*Figure 4a — Empire SPA on the date-window-filtered corpus (50 BC – AD 350; 180,609 rows; 5-year bins). Generated from notebook cells 134–139 (re-rendered).*
+::: {.column width="50%"}
+![Top 8 provinces by inscription count, Rome-excluded; each scaled to unit peak height. Shape *and* amplitude differ.](figures/fig-04b-province-spa.png){fig-align="center"}
 :::
-::: {.column width="33%"}
-*Figure 4b — Provincial-aggregate SPAs (Latin-speaking provinces excluding Roma). Notebook cells 146–149.*
-:::
-::: {.column width="33%"}
-*Figure 4c — City-level SPAs for the largest H1-reachable cities. Notebook cells 155–161.*
+::: {.column width="50%"}
+![Top 8 Hanson-matched cities (ex-Rome); each scaled to unit peak. Pompeii cuts off at AD 79 (eruption); Cirta peaks 2nd–3rd c. (Antonine boom).](figures/fig-04c-city-spa.png){fig-align="center"}
 :::
 :::
 
-- All curves carry editorial distortion (visible plateau-steps); the **mixture-corrected versions are the preregistered Phase 2 work** (next slide)
-- Yet even in the raw data, **regnal-cluster structure** and broad temporal trends are visible at every scale
-- City-level SPAs vary substantially in shape — *not just in amplitude* — suggesting per-city temporal dynamics worth modelling
+- Editorial distortion (plateau-steps) visible; **mixture correction is the preregistered Phase 2 work** (next slide)
+- **Pompeii cuts off at AD 79** — smoking-gun validity check
 
 <!--
 SPEAKER NOTES — slide 4 (≈ 110 s):
@@ -238,27 +169,22 @@ If the audience asks "which city subset shapes look most interesting?"
 
 ::: {.columns}
 ::: {.column width="55%"}
-**Model** (Decision 19; preregistered):
+**Model** (preregistered):
 
 $$
-y_t \sim \mathrm{Multinomial}(N,\ \alpha \cdot p^{\text{conv}}_t + (1-\alpha) \cdot p^{\text{gen}}_t)
+y_t \sim \mathrm{Multinomial}(N,\ \alpha \cdot p^{\text{conv}}_t + (1-\alpha)\cdot p^{\text{gen}}_t)
 $$
 
-- $p^{\text{conv}}$ = empire-wide template-slab structure (century / half-century / reign-interval slabs)
+- $p^{\text{conv}}$ = template-slab dictionary (century / half-century / reign-interval)
 - $p^{\text{gen}}$ = smoothed "real ancient" SPA
 - $\alpha$ = empire-level mixing weight
 
-Supplementary fits (Dirichlet-multinomial; rescaled NegBin) reported alongside.
-
-**Validation**: recovery-simulation grid (Decision 21; pinned in design artefact).
+**Validation**: preregistered recovery-simulation grid; supplementary Dirichlet-multinomial + rescaled NegBin fits reported alongside.
 :::
 ::: {.column width="45%"}
-*[A+ STRETCH] Figure 5 — One synthetic recovery cell. Top: known ground-truth SPA + known α. Bottom: posterior α + recovered genuine SPA. To be generated overnight if time permits; otherwise this slide shows the model schematic + a note that the validation grid is in the prereg.*
+![](figures/fig-05-mixture-recovery.png){fig-align="center" width="100%"}
 
-**Honest disclosure**:
-- Schematic shown; **NOT** the preregistered grid-validated fit
-- Full validation runs post-talk
-- Preregistration: `osf.io/uycs6` (embargoed)
+Synthetic cell, N = 5,000, true α = 0.50. **α posterior covers truth** (median 0.477, 95 % CI [0.414, 0.541]); **shape Pearson r = 1.000**; all prereg validation gates pass. *Schematic only; full grid post-talk.*
 :::
 :::
 
@@ -292,53 +218,120 @@ preregistered analysis is forthcoming."
 
 ::: {.columns}
 ::: {.column width="55%"}
-*Main figure: log–log scatter of inscription count vs Hanson 2016 urban population, Rome excluded; frequentist NBR-GLM fit with bootstrap CI band. Source: re-run of notebook cells 197 / 245 with prereg's 50 BC – AD 350 date-window filter.*
+![Log–log scatter of inscription count vs Hanson 2016 urban-area population (1,044 Hanson-matched cities, Rome excluded). Frequentist NBR fit (β = 0.566) and OLS log-log fit (β = 0.284) shown.](figures/fig-06-nbr-bootstrap.png){fig-align="center"}
 
 **Preliminary frequentist result (date-window-filtered counts; Rome excluded)**:
 
 | Statistic | Value | Comparator |
 |---|---|---|
-| NBR β (preliminary) | _TBD_ — fit overnight / morning | Hanson 2021: β = **0.672** (95 % CI [0.588, 0.756]) |
-| Bootstrap 95 % CI | _TBD_ | Carleton et al. 2025 (elite-honorific): β ≈ 0.3–0.5 |
-| n (cities) | _TBD_ ≈ 815 after Rome exclusion | Hanson 2021: 554 sites |
+| NBR β (preliminary) | **0.566** | Hanson 2021: β = 0.672 (95 % CI [0.588, 0.756]) |
+| Bootstrap 95 % CI | [0.543, 0.574] | Carleton et al. 2025 (elite-honorific): β ≈ 0.3–0.5; no-zeros ~ 0.68 |
+| OLS log-log β | 0.284 (R² = 0.04) | OLS is the Hanson-direct comparator, but is dampened here by the low-count tail |
+| n (cities) | **1,044** | Hanson 2021: 554 sites |
 :::
 ::: {.column width="45%"}
 **Claim**: population accounts for *some* of the cross-city variation in inscription count — the habit-only critique cannot be the whole story.
 
 **Caveats**:
-- Frequentist; preregistered analysis is Bayesian within-between NBR (Mundlak)
-- Cumulative (not peak) counts vs Hanson's max-theoretical populations — envelope-vs-envelope
-- Hanson populations have their own uncertainty; sensitivity preregistered
+- Frequentist NBR; the **binding** analysis is the Bayesian within-between Mundlak NBR on the next slide
+- Row-resample bootstrap underestimates between-city heterogeneity vs the Mundlak posterior
+- Cumulative (not peak) counts vs Hanson's max-theoretical populations
 - This is **preliminary, post-lodgement**; not a confirmatory test
 :::
 :::
 
 <!--
-SPEAKER NOTES — slide 6 (≈ 120 s):
-This is the SUBSTANTIVE PUNCHLINE — the only genuinely new
-quantitative result on the deck. The β estimate (to be inserted from
-the overnight / morning fit) is the comparator to Hanson 2021's 0.672
-and Carleton et al. 2025's 0.3-0.5 (depending on subset).
+SPEAKER NOTES — slide 6 (≈ 100 s):
+This is the FREQUENTIST COMPARATOR — directly comparable to Hanson 2021
+(β = 0.672) and Carleton et al. 2025 (β ≈ 0.3-0.5 across specs).
 
 Be HONEST about what this is:
-- Frequentist NBR (not the preregistered Bayesian within-between)
-- Cumulative counts (not peak)
-- A SCALING analysis, not a CAUSAL claim
-- "Population accounts for SOME of the variation" — let the audience
-  fight us on how much
+- Frequentist NBR with row-resample bootstrap (not the preregistered
+  Bayesian within-between Mundlak — that's the next slide)
+- 1,044 Hanson-matched cities, Rome excluded (the prereg quotes "~815"
+  which was inherited from a 2024-notebook Latin-province subset; we
+  follow the prereg's TEXT spec, which is broader; addressed in the
+  speaker notes for slide 6b)
+- Cumulative counts; preliminary, post-lodgement
 
-If the result reproduces Hanson 2021's exponent within bootstrap CI,
-that's a "good news" finding: the methodology recovers a known result.
-If it doesn't, that's also informative (and an opportunity for the
-audience to weigh in on why).
+The β = 0.566 sits BETWEEN Hanson 2021 (0.672) and Carleton's main range
+(0.3-0.5), close to Carleton's "no-zeros" variant (~ 0.68). This is the
+"sublinear scaling" claim broadly reproduced. The OLS log-log β = 0.284
+is dampened by the low-count tail (R² is only 0.04) — illustrates why
+NBR is the better specification for over-dispersed count data.
+
+The within-province / between-province decomposition on the next slide
+is the prereg's BINDING analysis — that's where the headline f_within
+number lives.
+-->
+
+---
+
+## 6b · The preregistered binding analysis: within-province population effect
+
+::: {.columns}
+::: {.column width="60%"}
+![](figures/fig-06b-h3a-mundlak.png){fig-align="center" width="100%"}
+:::
+::: {.column width="40%"}
+**Mundlak NBR on 1,044 cities ex-Rome**:
+
+- β_within = **0.587**
+- β_between ≈ −0.26 (CI straddles 0; not separately identifiable)
+- **f_within = 0.299, 95 % CI [0.240, 0.366]**
+- **Verdict (3-way): supported**
+
+**~ 30 % of city-to-city variation → within-province population.** The other ~ 70 % = habit + convention + survival + admin structure.
+:::
+:::
+
+<!--
+SPEAKER NOTES — slide 6b (≈ 130 s):
+THIS IS THE SUBSTANTIVE PUNCHLINE. It is the preregistered binding
+analysis — Bayesian within-between (Mundlak) NBR on 1,044 Hanson-matched
+cities, Rome excluded.
+
+The within-between decomposition is the methodological key. Each
+city's log(population) splits into (i) the province-mean log(population)
+and (ii) the city's deviation from its province-mean. β_within is the
+coefficient on the deviation — it's the WITHIN-PROVINCE population
+effect, orthogonal to province membership. β_between is the
+between-province effect, but explicitly flagged as not separately
+identifiable from province-level habit / convention / survival.
+
+The headline number f_within = 0.30 means: about 30% of the variance in
+log expected inscription count across cities is explained by the
+within-province population component. The remaining 70% is "everything
+else" — habit, monumental practice, survival bias, provincial
+administrative structure, etc. This is the COMPLEXITY DECOMPOSITION
+from Shawn's abstract: SPA outputs read NOT as raw population proxy
+but as composite of population + habit + structure + survival; this
+slide ISOLATES the population component.
+
+Verdict per the prereg's three-way rule: posterior 95% CI on f_within
+is [0.240, 0.366], WHOLLY ABOVE the 0.10 threshold → "supported". With
+P(f > 0.20) ≈ 1.0, the within-province population signal is very robust
+under this preliminary fit.
+
+Caveats to acknowledge (sample size is bigger than prereg's "~815"
+quote — see slide 6 notes — and there's a long agenda of robustness
+work pre-specified: aoristic-MC sensitivity, three-weighting variance
+sensitivity, Hanson-population measurement-error sensitivity, brms-vs-
+pymc shadow validation. All preregistered, post-talk.)
 
 Anticipate audience pushback:
-- "But it's still capturing the habit, not the population!" → Yes,
-  partially. The preregistered next steps separate within-province
-  (population-attributable) from between-province (which includes
-  habit / culture).
-- "What about specific subgroups?" → Open question; the prereg
-  pre-specifies subset analyses; happy to discuss in Q&A.
+- "But you haven't applied the mixture correction to these counts!"
+  → Correct, and intentional. The cross-sectional H3a regression
+  operates on date-window-filtered counts; the mixture correction is
+  for the TEMPORAL SPA analyses (H2.1, H3b). The cross-sectional
+  artefact protection is the 50 BC – AD 350 date-window filter itself.
+  Per-city mixture would be unidentified for ~ 600 of the cities below
+  N=100 inscriptions.
+- "What about province as a fixed predictor?" → β_between captures
+  that; we report it but flag its non-identifiability from province-
+  level everything-else.
+- "Subgroup analyses?" → Pre-specified in prereg §5 (small-N
+  trajectory work). Out of scope for the 12-min talk.
 -->
 
 ---
@@ -346,26 +339,25 @@ Anticipate audience pushback:
 ## 7 · Where this is heading, and what we'd love feedback on
 
 ::: {.columns}
-::: {.column width="55%"}
-**Lodged on OSF 2026-05-20** — preregistration at **`osf.io/uycs6`** _(currently embargoed pending review decision)_:
+::: {.column width="50%"}
+**Lodged on OSF 2026-05-20** — `osf.io/uycs6` _(embargoed pending review decision)_:
 
-- Phase 2: Bayesian mixture validation by recovery simulation
-- Phase 3: H3a within-between Bayesian NBR (Mundlak; `f_within`)
-  - Three-way verdict on within-province population-attributable variance
-- H3b: deviation-detection at Antonine plague (AD 165–180) and Crisis of the Third Century (AD 235–284)
-- H3c: provincial-capital residuals + Moran's I spatial clustering (replication of Hanson 2021, Table 7.4)
+- **Phase 2**: Bayesian mixture validation (recovery grid)
+- **Phase 3 / H3a**: Mundlak NBR + `f_within` verdict (today's headline result, preliminary)
+- **H3b**: deviation-detection at Antonine plague + 3rd-c. Crisis
+- **H3c**: provincial-capital residuals + Moran's I (Hanson 2021 replication)
 - 13 named sensitivity / exploratory analyses
 
-**Public repository** (code, simulation outputs, decision log, all referenced runs): `github.com/saross/inscriptions/tree/osf-lodgement-2026-05-20`
+Public repo at the lodgement tag (link in footer).
 :::
-::: {.column width="45%"}
+::: {.column width="50%"}
 **Questions for this room**:
 
-1. **For the LIRE / SDAM team (Heřmánková, Kaše, Glomb): does the editorial-template decomposition match your understanding of how dates are assigned in EDH / EDCS / LIRE?**
-2. Are there **subgroups** (inscription type / monument / region / period) where habit *clearly* dominates — natural negative controls for the population scaling?
-3. What **independent demographic anchors** would you use to validate the "habit-removed residual" temporal trajectory work (§5 of the prereg)?
-4. Where does **provincial-capital over-production** come from, in your interpretation? Status display? Administrative density? Tax-collection infrastructure? All of the above?
-5. **For Adela's session-mate Sommerschield (Aeneas)**: could neural-network restoration + contextualisation work be combined with our editorial-template correction to improve dating-precision filtering?
+1. **For the LIRE / SDAM team**: does the editorial-template decomposition match how dates are assigned in EDH / EDCS / LIRE?
+
+2. Mundlak attributes **~ 30 %** of city-to-city variation to within-province population. **Which sub-mechanisms** drive the other ~ 70 % — and how would we distinguish them?
+
+3. **Negative-control subgroups** (habit-dominant) or **independent demographic anchors** we should consult?
 :::
 :::
 
@@ -409,12 +401,12 @@ If asked about replicating Hanson 2021's specific findings:
 
 Our H3c is a preregistered replication of both findings.
 
-### B2 · Why frequentist for the talk?
+### B2 · Why both frequentist and Bayesian on the deck?
 
-- The 2024 exploratory pipeline used statsmodels NBR with bootstrap CI
-- Re-running it under the prereg-compliant filter takes minutes
-- The Bayesian within-between Mundlak NBR is preregistered as the *binding* version
-- Frequentist β is a fair preliminary comparator to Hanson 2021's published β = 0.672
+- The **frequentist NBR** (slide 6) is the direct comparator to Hanson 2021 (β = 0.672) and Carleton et al. 2025 (β ≈ 0.3 – 0.5; no-zeros ≈ 0.68); it's an empire-wide scaling coefficient
+- The **Bayesian within-between Mundlak NBR** (slide 6b) is the *preregistered binding analysis* — it isolates the *within-province* population effect, orthogonal to province membership, and yields a posterior on the variance-fraction estimand f<sub>within</sub>
+- The two specifications answer related but distinct questions; the Mundlak β<sub>within</sub> = 0.587 sits inside the bootstrap CI of the empire-wide NBR β = 0.566 [0.543, 0.574] — qualitatively consistent
+- Sample sizes differ slightly between the two: 1,044 Hanson-matched cities ex-Rome in both; the Mundlak fit further partitions by 56 provinces for the random-intercept structure
 
 ### B3 · Why the 50 BC – AD 350 envelope?
 
