@@ -46,7 +46,9 @@ The **OSF preregistration is lodged** (commit `a2e40fd`; git tag `osf-lodgement-
 
 **The OSF preregistration was lodged 2026-05-20 (DOI pending Shawn's confirmation).** Immediately following lodgement, the project pivoted to producing preliminary results for **Shawn's TRAC7 talk at RAC-TRAC 2026 in Aarhus, Friday 22 May 2026 14:20, room Preben Hornung**. (See `planning/conference-talk-rac-trac-2026/conference-context.md` for full conference briefing.)
 
-**Open question to confirm Friday morning:** Shawn originally described the talk as "Adela giving a 12-minute talk." Conference programme shows Shawn delivering the SPA / LIRE paper at 14:20 and Adela delivering her own marriage-ages paper at 12:20 in the same session. Who is presenting which content needs confirmation — for safety, content has been prepared on the assumption that the SPA / LIRE / Hanson-scaling material is delivered (whether by Shawn solo or by Adela on Shawn's behalf).
+**Speaker confirmed (2026-05-21)**: **Adela reads the paper on Shawn's behalf** at the 14:20 Friday TRAC7 slot. Shawn cannot travel to Denmark; RAC-TRAC does not support remote presentations. Adela also has her own separate paper at 12:20 in the same session (Roman marriage ages); the 14:20 slot delivers Shawn's SPA / LIRE / Hanson-scaling content.
+
+**OSF preregistration confirmed (2026-05-21)**: `https://osf.io/uycs6/`, lodged 2026-05-20; **currently embargoed** pending the project's decision on whether to submit to a journal requiring double-blind review. The URL is publicly visible (unblockable); the deposit contents are gated. Embargo will lift once a venue is chosen. URL folded into: prereg §11 Provenance (post-lodgement amendment trail); slide deck footer + slides #5 and #7; project README.md.
 
 Scope: **Lean A+ (lean A + synthetic mixture-recovery demo + stretch Bayesian H3a)**, fallback to lean A.
 

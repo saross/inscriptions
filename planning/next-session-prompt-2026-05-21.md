@@ -13,15 +13,17 @@ Paste the block below into the new CC session as the first message.
 
 Picking up the inscriptions project from end-of-session 2026-05-20. **The OSF preregistration was lodged that day** (git tag `osf-lodgement-2026-05-20`, commit `a2e40fd`; OSF DOI pending Shawn's confirmation). Immediately after lodgement, the project pivoted to producing preliminary results for **a TRAC7 conference talk on Friday 2026-05-22 14:20 Aarhus time**, with overnight planning already externalised.
 
-## ⚠️ TWO OPEN QUESTIONS TO CONFIRM WITH SHAWN AT START OF SESSION
+## Resolved questions (both confirmed 2026-05-21 morning)
 
-1. **Who is presenting which talk?** Shawn originally framed this as "Adela giving a 12-minute talk." The conference programme (confirmed by overnight scout) shows:
-   - **Adela's slot: Friday 12:20, room Preben Hornung — _Roman Marriage Ages…_ (a totally different topic from LIRE / SPA / Hanson-scaling)**
-   - **Shawn's slot: Friday 14:20, same room — _Dates-as-Data for Inscriptions: Using SPA with Latin Epigraphic Databases…_ (THIS is the LIRE / SPA / Hanson content)**
-   - Most likely interpretation: Shawn is delivering the 14:20 slot himself, and the user's "co-author Adela" wording was a teaming-of-the-project reference rather than a "she gives the slot" statement. But this needs confirmation. **Ask Shawn explicitly before any further work**: "I want to confirm before we proceed — is it correct that you are presenting at 14:20 Friday, or is Adela presenting your slot in your stead?"
-2. **OSF DOI.** Shawn intended to lodge 2026-05-20 evening. Confirm the DOI was obtained (likely format `10.17605/OSF.IO/XXXXX`); if yes, fold it into slide #7 footer + slide #5 caveats and update `planning/preregistration-draft.md` §11 Provenance + the project README as a post-lodgement amendment-trail entry.
+1. **Presenter**: **Adela** is reading the paper on Shawn's behalf at the 14:20 Friday TRAC7 slot. Shawn cannot travel to Denmark, and remote presentations are not supported by RAC-TRAC. Adela also has her own paper at 12:20 (marriage ages); the 14:20 slot delivers the LIRE / SPA / Hanson-scaling content prepared in this planning.
+2. **OSF preregistration URL**: `https://osf.io/uycs6/` — lodged 2026-05-20; currently **embargoed pending decision on submission to a journal requiring double-blind review**. The URL is publicly visible; the deposit contents are gated. Already folded into:
+   - `planning/conference-talk-rac-trac-2026/slide-outline.qmd` (footer, slide #5, slide #7)
+   - `planning/preregistration-draft.md` §11 Provenance (post-lodgement amendment trail)
+   - `README.md` (project landing page)
 
-Until question 1 is resolved, **proceed under the working assumption that Shawn is presenter and the LIRE / SPA / Hanson content is the deck content** — that's what the overnight planning prepared for.
+The lodgement tag `osf-lodgement-2026-05-20` remains at its original commit; post-lodgement amendments live in subsequent `main` commits.
+
+**Embargo handling for the talk**: cite the URL on the closing slide; if anyone asks for access, Adela can say "the prereg is currently embargoed pending a journal-submission decision; the embargo will lift when we choose a venue." Authorship is public (Adela is delivering on Shawn's behalf); content is gated; a double-blind submission package would supply a blinded version. No conflict.
 
 ## Read in this order to get oriented
 

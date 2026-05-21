@@ -2,8 +2,8 @@
 title: "Dates-as-Data for Inscriptions"
 subtitle: "Using SPA with Latin epigraphic databases to investigate changing complexity in the Western Roman Empire"
 author:
-  - Shawn Ross (Macquarie University)
-  - Adela Sobotková (Aarhus University)
+  - "Adela Sobotková (Aarhus University) — presenting"
+  - "Shawn Ross (Macquarie University) — author, in absentia"
 date: "RAC-TRAC 2026 · Aarhus · TRAC7 session · Friday 22 May 14:20"
 format:
   revealjs:
@@ -12,7 +12,7 @@ format:
     progress: true
     embed-resources: true
     incremental: false
-    footer: "OSF: 10.17605/OSF.IO/XXXXX (insert post-lodgement) — repo: github.com/saross/inscriptions/tree/osf-lodgement-2026-05-20"
+    footer: "Preregistration: osf.io/uycs6 (embargoed) — repo: github.com/saross/inscriptions/tree/osf-lodgement-2026-05-20"
     # logo: PATH-TBD  # Shawn to provide
 ---
 
@@ -21,17 +21,31 @@ Speaker-notes convention: text inside HTML comments at the END of each
 slide section is the speaker note for that slide. Read in revealjs
 speaker view (press 's' during the talk).
 
-CONFERENCE CONTEXT (confirmed by scout 2026-05-20):
+CONFERENCE CONTEXT (confirmed 2026-05-21):
 - RAC/TRAC 2026, Aarhus University, Thu 21 – Sat 23 May 2026
 - Session: TRAC7 "Beyond names and numbers: Quantitative epigraphy and
   the discovery of historical patterns" — organisers Heřmánková,
   Glomb, Kaše (the SDAM / LIRE-creator group at Masaryk)
-- Shawn's slot: Friday 22 May 14:20, room Preben Hornung
-- Slot length: 20 minutes (standard RAC/TRAC); user target is ~12 min
-  to leave buffer for setup, changeover, and one or two questions
-- Adela has her OWN paper in the same session (12:20, on marriage
-  ages) — TBC whether she is co-presenting Shawn's slot or only
-  her own. Flag this with Shawn morning of 2026-05-21.
+- Slot: Friday 22 May 14:20, room Preben Hornung
+- Shawn (the paper author) cannot travel; no remote option supported.
+  ADELA is reading the paper on Shawn's behalf. (Adela also has her own
+  separate paper at 12:20 in the same session, on Roman marriage ages.)
+- Slot length: 20 minutes (standard RAC/TRAC); target is ~12 min to
+  leave buffer for setup, changeover, and audience questions.
+
+OSF PREREGISTRATION:
+- URL: https://osf.io/uycs6/
+- Status: lodged 2026-05-20; CURRENTLY EMBARGOED pending decision on
+  whether to submit to a journal requiring double-blind review.
+- The URL is publicly visible (unblockable) but the deposit contents
+  are not accessible until embargo lifts.
+- For talk: cite the URL on the closing slide; if anyone asks for
+  access, Adela can say "the prereg is currently embargoed; we're
+  weighing a double-blind submission; expect the embargo to lift once
+  we decide on a journal."
+- This does NOT compromise double-blind: the talk's authorship is
+  public (we can't help that); the prereg content is gated; a
+  double-blind submission package would supply a blinded version.
 
 Time budget: with a 12-min target inside the 20-min slot, the 7-slide
 plan runs ~100 s per slide with ~25 % slack for figures-on-screen
@@ -244,7 +258,7 @@ Supplementary fits (Dirichlet-multinomial; rescaled NegBin) reported alongside.
 **Honest disclosure**:
 - Schematic shown; **NOT** the preregistered grid-validated fit
 - Full validation runs post-talk
-- Prereg DOI: _insert when available_
+- Preregistration: `osf.io/uycs6` (embargoed)
 :::
 :::
 
@@ -333,7 +347,7 @@ Anticipate audience pushback:
 
 ::: {.columns}
 ::: {.column width="55%"}
-**Lodged on OSF 2026-05-20** _(insert DOI)_:
+**Lodged on OSF 2026-05-20** — preregistration at **`osf.io/uycs6`** _(currently embargoed pending review decision)_:
 
 - Phase 2: Bayesian mixture validation by recovery simulation
 - Phase 3: H3a within-between Bayesian NBR (Mundlak; `f_within`)
@@ -342,7 +356,7 @@ Anticipate audience pushback:
 - H3c: provincial-capital residuals + Moran's I spatial clustering (replication of Hanson 2021, Table 7.4)
 - 13 named sensitivity / exploratory analyses
 
-**Repository**: `github.com/saross/inscriptions/tree/osf-lodgement-2026-05-20`
+**Public repository** (code, simulation outputs, decision log, all referenced runs): `github.com/saross/inscriptions/tree/osf-lodgement-2026-05-20`
 :::
 ::: {.column width="45%"}
 **Questions for this room**:

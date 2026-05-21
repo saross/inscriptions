@@ -481,6 +481,7 @@ detection thresholds fixed in §6  →   H2.1 recovery-sim validation  →  H3a 
 - **Funding:** no funding was received for this work.
 - **Competing interests:** the authors declare no competing interests.
 - **Ethics:** this work reanalyses publicly available, published datasets and did not require ethics review.
+- **OSF deposit (post-lodgement amendment trail):** preregistration record at <https://osf.io/uycs6/>, lodged 2026-05-20. Currently embargoed pending the project's decision on whether to submit to a journal requiring double-blind review; embargo will lift once that decision is made. The repository state at lodgement remains pinned at git tag `osf-lodgement-2026-05-20` for reproducibility regardless of embargo status.
 
 ---
 
