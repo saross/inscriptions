@@ -720,3 +720,125 @@ substantive contribution (slide 6b). They land in the same ballpark,
 which validates the methodology; the Mundlak split is the genuine new
 information.
 -->
+
+---
+
+## Methods glossary (for the stats-curious) {.section-title}
+
+Plain-English explanations of the statistical operations in this talk, aimed at intelligent undergraduates from any humanities discipline. Adela should jump to whichever slide answers an audience question (press `o` for overview).
+
+---
+
+## G1 · What is a Summed Probability Analysis (SPA)?
+
+When we ask "how many inscriptions were produced per decade across the Empire?", most inscriptions don't have a single-year date — they're dated to a *range* like "AD 50–100" or "the reign of Hadrian". So we can't just count inscriptions per year.
+
+An SPA treats each inscription's date as a **probability distribution** over the range it could fall in. An inscription dated AD 50–100 contributes 1/50 of a unit of evidence to each year from 50 to 99. Add up the contributions across all inscriptions and you get a "summed probability" curve — the expected number of inscriptions per year.
+
+The *shape* of the SPA tells you how production varied over time.
+
+---
+
+## G2 · What is "aoristic" dating?
+
+"Aoristic" means a date is known to be within a range rather than at a point. An inscription with `not_before = AD 50, not_after = AD 99` is aoristic — produced somewhere in that 50-year window.
+
+**Uniform aoristic** is the simplest treatment: spread an inscription's "1 unit of evidence" *evenly* across its range — 1/50 per year for a 50-year interval. **Trapezoidal aoristic** is an alternative: more mass at the middle, less at the ends (closer to how editors might mentally anchor).
+
+The project uses uniform aoristic as the primary specification and preregistered a trapezoidal sensitivity check. Pilot diagnostics show Pearson r ≈ 0.94 between the two — quantitatively consequential, not qualitatively decisive.
+
+---
+
+## G3 · What is a power simulation?
+
+A power simulation asks: *if a real effect existed in the data, would my analysis method detect it?*
+
+The procedure:
+
+1. **Construct synthetic data** where you *know* the answer in advance (e.g., plant a 50 %-over-50-year bump in inscription production)
+2. **Run your method** on the synthetic data and see whether it detects the planted effect
+3. **Repeat 1,000 times per scenario** and measure the detection rate
+
+If detection rate is high (> 80 %), the method is *reachable* at that sample size. If detection rate is low, the method can't reliably see real effects of that size — you'd be claiming "no effect" even when the effect IS there. Phase 1 (slide 3) is this exercise across 96 combinations of analysis level × subset × effect size.
+
+---
+
+## G4 · What is a Bayesian mixture decomposition?
+
+A **mixture model** says the observed data is a *weighted sum* of two (or more) underlying components. For our analysis:
+
+  observed SPA = α × editorial encoding + (1−α) × real ancient production
+
+The model's job is to figure out α (the mixing weight) and the shape of each underlying component from the observed total.
+
+**Bayesian** means we get a *probability distribution* over plausible values of α and the underlying shapes — not just a single best guess but a full description of the uncertainty.
+
+The trick that makes this work is that the editorial-encoding component isn't a free shape — it's built from a small dictionary of known editorial templates (century slabs, half-century slabs, reign-interval templates). That constraint makes the decomposition *identifiable*: there's only one way to split the data that fits well.
+
+---
+
+## G5 · What is Negative Binomial Regression (NBR)?
+
+NBR is a regression model for **count data** — like inscription counts per city. It's the right tool when:
+
+- The outcome is a non-negative integer (0, 1, 2, …)
+- The data is **over-dispersed**: variance grows faster than the mean
+
+For inscription counts, both apply. A typical Roman city might produce 50 inscriptions on average, but the variability across cities is much higher than 50 (which is what a simple Poisson model would predict). NBR adds an over-dispersion parameter that explicitly allows for this.
+
+The NBR coefficient β on log(population) is the **scaling exponent**: expected inscription count grows as population^β. β = 1 means linear scaling; β = 0.566 (our result) means *sublinear* — bigger cities produce *proportionally fewer* inscriptions per capita than smaller ones.
+
+---
+
+## G6 · What is OLS log-log — and why does it fail here?
+
+OLS (Ordinary Least Squares) is the classic straight-line regression. "Log-log" means both predictor and outcome are log-transformed before fitting.
+
+The published inscription-scaling literature (Hanson 2021, Carleton 2025) uses OLS on `log(inscription count) ~ log(population)`. The trouble for our corpus is that we have many cities with **inscription count = 1**, where `log(1) = 0`. Those cities collapse the bottom of the regression to a horizontal line, **flattening the slope**.
+
+Our OLS log-log result (β = 0.284, R² = 0.04) is exactly this artefact: **half the NBR slope**, with near-zero explanatory power. NBR correctly handles count variance scaling with the mean and doesn't suffer the low-count distortion.
+
+This isn't a contradiction with published results: same spec on a different corpus with different filtering can give a very different number (Hanson 2021's 0.672).
+
+---
+
+## G7 · What is the Mundlak (within-between) decomposition?
+
+This is the statistical move that lets us **separate** the within-province population effect from province-level "everything else".
+
+Each city's `log(population)` is split into two pieces:
+
+1. The **province-mean log(population)** — typical city size in this province
+2. The city's **deviation** from that province mean — how much bigger or smaller than typical
+
+Both enter the regression with their own coefficients. **β_within** is the coefficient on the *deviation* — by construction orthogonal to province membership, so it's an unconfounded within-province effect. **β_between** is the coefficient on the province mean — explicitly *confounded* with everything else that varies between provinces.
+
+Named after Yair Mundlak (1970s).
+
+---
+
+## G8 · What does f<sub>within</sub> mean?
+
+**f<sub>within</sub>** is a **variance fraction** — what proportion of the systematic variation in expected inscription count across cities is attributable to within-province population:
+
+  f<sub>within</sub> = Var(β<sub>within</sub> × within-province deviation) / Var(total expected log-count across cities)
+
+A value of **0.30** means **30 %** of city-to-city differences in *expected* inscription count are explained by within-province population. The remaining 70 % lives in:
+
+- Province random intercepts — habit, culture, administration, survival (the biggest chunk)
+- A small + statistically null between-province population gradient
+- Component covariances
+
+A variance fraction (not a slope coefficient) tells you how much of the *variation* the effect accounts for. A slope alone wouldn't.
+
+---
+
+## G9 · Bootstrap CIs vs Bayesian credible intervals
+
+Both express uncertainty about a quantity (like β or f<sub>within</sub>) — but they come from different procedures.
+
+**Bootstrap CI (frequentist)** — slide 6a NBR β; slide 1 empire-SPA band. Resample the dataset many times *with replacement*, refit on each resample, take the 2.5th–97.5th percentile. Tells you how much your estimate would change *if you'd sampled slightly different data*.
+
+**Credible interval (Bayesian)** — slide 5 α posterior; slide 6b β<sub>within</sub>, f<sub>within</sub>. The model gives you a probability distribution over plausible parameter values directly; the 95 % credible interval is the central 95 % of that distribution. Tells you where the parameter *probably is*, given the data and the model.
+
+Both read as "95 % intervals" and in our analyses they agree closely — but the underlying inference is different.
