@@ -31,10 +31,11 @@ LaTeX paper-document is a last-resort reading copy.
 
 ## 2 · Slide-by-slide cheat sheet
 
-Target: ~ 12 min over **8 main slides** (1, 2, 3, 4, 5, 6a, 6b, 7) followed
-by a **12-slide deep-dive** (B1–B12) for Q&A. Average ~ 90 s per main slide.
-Press **`o`** in revealjs for the slide overview if you need to jump to a
-backup slide during Q&A.
+Target: ~ 12 min over **8 main slides** (1, 2, 3, 4, 5, 6a, 6b, 7). Behind
+them sit two reserve sections: **B1–B12** (anticipated-question deep dive)
+and **G1–G9** (methods explainers in plain English for non-quantitative
+audience members). Average ~ 90 s per main slide. Press **`o`** in revealjs
+for the slide overview if you need to jump to a backup slide during Q&A.
 
 ### Slide 1 — Dates-as-data tradition + the puzzle (~ 90 s)
 - Open by *naming* the habit-only critique (MacMullen 1982; Hanson 2021). Don't avoid it.
@@ -135,7 +136,12 @@ backup slide during Q&A.
 
 If a question goes substantive, jump to the relevant backup slide. Press
 **`o`** in revealjs for the slide overview, or use the slide number.
-The deck now carries a **12-slide deep-dive** behind the main 8 main slides.
+The deck carries **two** backup sections behind the main 8 slides:
+
+- **B1–B12**: anticipated-question responses (specific defences / extensions)
+- **G1–G9**: methods explainers in plain English (jump here if the audience needs the statistical operation defined)
+
+### B-slides — anticipated questions (Q&A reserve)
 
 | If asked about… | Jump to | Says… |
 |---|---|---|
@@ -151,6 +157,22 @@ The deck now carries a **12-slide deep-dive** behind the main 8 main slides.
 | Hanson 2021's specific residual findings | **B10** | Provincial-capital over-production; Moran's I = 0.046 on residuals; prereg H3c replicates both |
 | Future statistical directions (HMM) | **B11** | Martin's state-space proposal; post-lodgement OSF amendment if pursued |
 | Why both frequentist and Bayesian | **B12** | Slide 6a is the published-literature comparator; slide 6b is the new substantive contribution |
+
+### G-slides — methods explainers (plain English)
+
+If an audience member from a non-quantitative background needs a statistical operation defined, jump to the relevant G-slide.
+
+| Term | Jump to | One-line gist |
+|---|---|---|
+| Summed Probability Analysis (SPA) | **G1** | Each inscription's date is a probability distribution; sum across inscriptions = expected count per year |
+| Aoristic dating (uniform vs trapezoidal) | **G2** | Treats interval dates by spreading evidence across the range; uniform is the primary spec |
+| Power simulation | **G3** | Plant a known effect in synthetic data; measure how often the method detects it |
+| Bayesian mixture decomposition | **G4** | Observed SPA = α × editorial encoding + (1−α) × real ancient production; Bayesian = full posterior on α |
+| Negative Binomial Regression (NBR) | **G5** | Count-data regression that handles over-dispersion; β is the scaling exponent |
+| OLS log-log — why it fails here | **G6** | Classic linear fit on log(count); collapses with N = 1 tail (log 1 = 0) |
+| Mundlak (within-between) decomposition | **G7** | Splits log(population) into province-mean + city-deviation; isolates the within-province effect |
+| f_within (variance fraction) | **G8** | Proportion of city-to-city variation in expected log-count attributable to within-province population |
+| Bootstrap CI vs Bayesian credible interval | **G9** | Resample-based vs posterior-based uncertainty intervals; both read as 95 % intervals but answer different questions |
 
 ## 5 · Tone and what to *not* over-claim
 
