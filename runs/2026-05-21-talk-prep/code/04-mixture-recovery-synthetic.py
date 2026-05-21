@@ -375,17 +375,11 @@ def render_recovery(y: np.ndarray, truth: dict, summ: dict) -> Path:
         f"prereg gates: R-hat < 1.01, ESS >= 400."
     )
     fig.suptitle(
-        "Synthetic recovery of the preregistered Bayesian mixture model "
-        "(one cell)",
+        "Synthetic mixture recovery (one cell)",
         fontsize=12, y=0.995,
     )
     fig.text(
         0.50, 0.01, diag_str, ha="center", fontsize=8, alpha=0.7,
-    )
-    fig.text(
-        0.99, 0.01,
-        "preliminary, post-lodgement; the preregistered analysis is forthcoming",
-        ha="right", fontsize=8, alpha=0.6,
     )
 
     out = FIG_DIR / "fig-05-mixture-recovery.png"

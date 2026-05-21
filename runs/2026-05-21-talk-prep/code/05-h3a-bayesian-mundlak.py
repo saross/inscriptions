@@ -331,16 +331,10 @@ def render_figure(idata: az.InferenceData, cities: pd.DataFrame,
         f"divergences = {summary['n_divergences']}"
     )
     fig.suptitle(
-        "H3a Bayesian within-between (Mundlak) NBR --- preliminary "
-        "post-lodgement results",
+        "Bayesian within-between (Mundlak) NBR --- posterior summary",
         fontsize=12, y=0.99,
     )
     fig.text(0.50, 0.01, diag, ha="center", fontsize=8, alpha=0.7)
-    fig.text(
-        0.99, 0.01,
-        "preliminary, post-lodgement; the preregistered analysis is forthcoming",
-        ha="right", fontsize=8, alpha=0.6,
-    )
 
     out = FIG_DIR / "fig-06b-h3a-mundlak.png"
     fig.tight_layout(rect=(0, 0.025, 1, 0.965))

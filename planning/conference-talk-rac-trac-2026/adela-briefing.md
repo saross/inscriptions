@@ -63,13 +63,13 @@ Mundlak result). Average ~ 90 s per slide.
 - The recovery figure shows: on a SYNTHETIC dataset with known α = 0.50 and known smooth Gaussian shape, the model recovered **α median = 0.477, 95% CI [0.414, 0.541]** (covers truth) and **Pearson r = 1.000** against the true shape. All preregistered validation gates pass (R̂ = 1.0000; ESS ≥ 2,567; Pearson ≥ 0.95 threshold cleared).
 - **Honest disclosure**: one synthetic cell, parametric simplification (one tier + Gaussian); the prereg's full validation runs 100 replicates per cell across a multi-axis grid. Full validation runs post-talk.
 
-### Slide 6 — Frequentist scaling comparator (~ 100 s)
+### Slide 6a — Frequentist scaling comparator (~ 100 s)
 - This is the comparator to Hanson 2021 (β = 0.672 [0.588, 0.756]) and Carleton et al. 2025 (β ≈ 0.3 – 0.5; no-zeros ≈ 0.68).
 - Our **frequentist NBR β = 0.566, bootstrap 95 % CI [0.543, 0.574]** on **1,044** Hanson-matched cities ex-Rome.
 - **OLS log-log β = 0.284 (R² = 0.04)** — dampened by the low-count tail; NBR is the better spec for over-dispersed count data.
 - Lead the audience to slide 6b: this is just the comparator; the BINDING analysis is the Bayesian Mundlak on the next slide.
 
-### Slide 6b — Preregistered Bayesian Mundlak (~ 130 s — the SUBSTANTIVE PUNCHLINE)
+### Slide 6b — How much of the variation is population vs everything else? (~ 130 s — the SUBSTANTIVE PUNCHLINE)
 - The within-between (Mundlak) decomposition is the methodological key.
 - Each city's `log(pop)` splits into a province-mean component + a within-province deviation. β_within is the coefficient on the deviation — the WITHIN-PROVINCE population effect, orthogonal to province membership.
 - **Headline numbers**:
@@ -103,7 +103,7 @@ Mundlak result). Average ~ 90 s per slide.
 - "Rome contributes 65,435 of 180,609 inscriptions (36 %); as a single outlier it dominates the scaling fit. Hanson 2021 excludes Rome for the same reason (Table 7.3 caption). Reported transparently."
 
 ### Q4 — "Why frequentist and Bayesian on the same deck?"
-- "Slide 6 is the direct comparator to the published literature (Hanson 2021, Carleton 2025), which is frequentist. Slide 6b is the preregistered binding analysis. They answer related but distinct questions; the numbers are qualitatively consistent (β_within = 0.587 sits inside the bootstrap CI of empire-wide β = [0.543, 0.574])."
+- "Slide 6a is the direct comparator to the published literature (Hanson 2021, Carleton 2025), which is frequentist. Slide 6b is the preregistered within-province decomposition — that's the genuinely new substantive analysis. They answer related but distinct questions; β_within = 0.587 sits inside the bootstrap CI of empire-wide β = [0.543, 0.574], so they're qualitatively consistent."
 
 ### Q5 — "How do you handle wide-template editorial encoding?"
 - "Two-pronged. For the cross-sectional H3a regression on slide 6b, the protection is the 50 BC – AD 350 date-window filter itself (cross-sectional artefact protection). For the temporal SPA analyses (H2.1 validation, H3b deviation-detection), the protection is the Bayesian mixture model shown on slide 5. The mixture is NOT applied to the cross-sectional counts because per-city mixture is unidentified for ~ 600 of the ~ 1,000 cities below N = 100."
@@ -125,15 +125,22 @@ Mundlak result). Average ~ 90 s per slide.
 
 If a question goes substantive, jump to the relevant backup slide. Press
 **`o`** in revealjs for the slide overview, or use the slide number.
+The deck now carries a **12-slide deep-dive** behind the main 8 main slides.
 
 | If asked about… | Jump to | Says… |
 |---|---|---|
-| Hanson 2021's specific residual findings | **B1** | Provincial-capital over-production, Moran's I = 0.046 on residuals, prereg H3c replicates both |
-| Why both NBR specifications on the deck | **B2** | (Updated 2026-05-21 to cover the new Bayesian result alongside the comparator) |
-| Why the 50 BC – AD 350 envelope | **B3** | Constrains the data-attribution artefact; aligned with Hanson 2016 |
-| Why exclude Rome | **B4** | 36 % of corpus, dominates as outlier, Hanson 2021 also excludes |
-| How year-precise inscriptions interact with the mixture | **B5** | Not in convention component; stay in p_gen as real anchors |
-| Future statistical directions (HMM) | **B6** | Statistician collaborator's proposal; post-lodgement OSF amendment if pursued |
+| Why exclude Rome | **B1** | 36 % of corpus, dominates as outlier, Hanson 2021 also excludes |
+| Why the 50 BC – AD 350 envelope | **B2** | Constrains the data-attribution artefact; aligned with Hanson 2016 |
+| Hanson population uncertainty | **B3** | Preregistered Bayesian measurement-error sensitivity (σ_pop ∈ {0.1, 0.2, 0.3}) |
+| Why NBR not OLS log-log | **B4** | Over-dispersed counts; OLS dragged toward zero by low-count tail |
+| Why no per-city mixture | **B5** | Unidentified for ~ 600 cities with N < 100; date-window filter is the cross-sectional artefact protection |
+| Year-precise inscriptions in the mixture | **B6** | Not in convention component; stay in p_gen as real ancient anchors |
+| Survival / publication bias | **B7** | Within-province is robust to province-level survival; between-province explicitly flagged |
+| 1,044 vs prereg's "~815" sample-size note | **B8** | Stale Latin-province subset; we use the text-spec-faithful denominator; logged for amendment |
+| Can small-N cities tell us anything? | **B9** | Yes for shape claims + H3a leverage; no for temporal deviation-detection |
+| Hanson 2021's specific residual findings | **B10** | Provincial-capital over-production; Moran's I = 0.046 on residuals; prereg H3c replicates both |
+| Future statistical directions (HMM) | **B11** | Martin's state-space proposal; post-lodgement OSF amendment if pursued |
+| Why both frequentist and Bayesian | **B12** | Slide 6a is the published-literature comparator; slide 6b is the new substantive contribution |
 
 ## 5 · Tone and what to *not* over-claim
 

@@ -177,24 +177,47 @@ def style_axes(ax: plt.Axes, ylabel: str = "summed probability mass / 5 y") -> N
         ax.axvline(x, color="grey", linestyle=":", alpha=0.25, linewidth=0.6)
 
 
-def render_empire(df: pd.DataFrame) -> Path:
-    """Render the empire-wide SPA over the filtered 180,609-row corpus."""
+def bootstrap_spa(df: pd.DataFrame, n_reps: int = 1000) -> np.ndarray:
+    """1,000-replicate row-resample bootstrap of the uniform-aoristic SPA.
+
+    Returns
+    -------
+    (n_reps, N_BINS) array of SPA replicates.
+    """
+    print(f"[block-2] bootstrapping empire SPA: {n_reps} replicates "
+          f"on {len(df):,} rows")
+    rng = np.random.default_rng(RANDOM_SEED)
+    nb = df["not_before"].to_numpy()
+    na = df["not_after"].to_numpy()
+    w = df["width"].to_numpy()
+    n_rows = len(df)
+    reps = np.zeros((n_reps, len(BIN_CENTRES)), dtype=float)
+    for b in range(n_reps):
+        idx = rng.integers(0, n_rows, size=n_rows)
+        reps[b] = uniform_aoristic_spa(nb[idx], na[idx], w[idx])
+        if (b + 1) % 100 == 0:
+            print(f"    .. {b + 1}/{n_reps}")
+    return reps
+
+
+def render_empire(df: pd.DataFrame, n_bootstrap: int = 1000) -> Path:
+    """Render the empire-wide SPA + 95% row-resample bootstrap CI band."""
     print(f"[block-2] empire SPA on {len(df):,} rows")
     spa = spa_of(df)
+    boot = bootstrap_spa(df, n_reps=n_bootstrap)
+    ci_lo = np.percentile(boot, 2.5, axis=0)
+    ci_hi = np.percentile(boot, 97.5, axis=0)
+
     fig, ax = plt.subplots(figsize=FIG_SIZE_WIDE)
-    ax.fill_between(BIN_CENTRES, spa, step=None, alpha=0.30, color="C0")
-    ax.plot(BIN_CENTRES, spa, color="C0", linewidth=1.6, label="empire SPA")
+    ax.fill_between(BIN_CENTRES, ci_lo, ci_hi, alpha=0.25, color="C0",
+                    label="95 % row-resample bootstrap CI (1,000 reps)")
+    ax.plot(BIN_CENTRES, spa, color="C0", linewidth=1.6,
+            label="empire SPA (point estimate)")
     style_axes(ax)
     ax.set_title(
-        f"Latin epigraphy, empire-wide (LIRE v3.0, prereg filter; "
-        f"N = {len(df):,} inscriptions; 5-year bins)",
+        f"Raw uncorrected empire SPA, LIRE v3.0 ({len(df):,} inscriptions; "
+        f"5-year bins; uniform aoristic mass)",
         fontsize=12,
-    )
-    ax.text(
-        0.02, 0.95,
-        "preliminary, post-lodgement;\nthe preregistered analysis is forthcoming",
-        transform=ax.transAxes, fontsize=9, alpha=0.7, va="top",
-        bbox={"facecolor": "white", "edgecolor": "grey", "alpha": 0.7},
     )
     ax.legend(loc="upper right", fontsize=9)
     out = FIG_DIR / "fig-04a-empire-spa.png"
@@ -202,11 +225,17 @@ def render_empire(df: pd.DataFrame) -> Path:
     fig.savefig(out, dpi=DPI)
     plt.close(fig)
     print(f"[block-2]   -> {out}")
+    # Persist the bootstrap replicates table.
+    pd.DataFrame(
+        np.column_stack([BIN_CENTRES, spa, ci_lo, ci_hi]),
+        columns=["bin_centre", "spa_point", "ci_lo_2p5", "ci_hi_97p5"],
+    ).to_csv(TBL_DIR / "empire-spa-bootstrap.csv", index=False)
     return out
 
 
 def render_province(df: pd.DataFrame) -> Path:
-    """Render top-N province SPAs (Rome-excluded), unit-height-normalised."""
+    """Render top-N province SPAs (Rome-excluded) as 2x4 small-multiples,
+    unit-peak-normalised, shared Y axis."""
     rome = rome_mask(df)
     ex_rome = df.loc[~rome].copy()
     counts = ex_rome.groupby("province").size().sort_values(ascending=False)
@@ -218,30 +247,39 @@ def render_province(df: pd.DataFrame) -> Path:
     for p in top_provinces:
         print(f"    {p:30} N = {int(counts[p]):>6,}")
 
-    fig, ax = plt.subplots(figsize=FIG_SIZE_WIDE)
+    n_cols = 4
+    n_rows = (N_PROVINCES + n_cols - 1) // n_cols
+    fig, axes = plt.subplots(
+        n_rows, n_cols, figsize=FIG_SIZE_GRID, sharex=True, sharey=True,
+    )
+    axes = np.asarray(axes).reshape(-1)
     cmap = plt.get_cmap("viridis")
     for i, prov in enumerate(top_provinces):
+        ax = axes[i]
         sub = ex_rome.loc[ex_rome["province"] == prov]
         spa = spa_of(sub)
         if spa.max() > 0:
             spa = spa / spa.max()
         colour = cmap(i / max(1, N_PROVINCES - 1))
-        ax.plot(
-            BIN_CENTRES, spa, color=colour, linewidth=1.3,
-            label=f"{prov}  (N = {int(counts[prov]):,})",
-        )
-    style_axes(ax, ylabel="SPA (normalised to unit peak)")
-    ax.set_title(
-        f"Per-province SPA shapes (top {N_PROVINCES} by inscription count, "
-        f"Rome excluded; unit-height-normalised)", fontsize=12,
+        ax.fill_between(BIN_CENTRES, spa, alpha=0.25, color=colour)
+        ax.plot(BIN_CENTRES, spa, color=colour, linewidth=1.2)
+        ax.set_xlim(ENVELOPE_MIN, ENVELOPE_MAX)
+        ax.axvline(0, color="grey", linestyle="--", alpha=0.4, linewidth=0.7)
+        for x in (100, 200, 300):
+            ax.axvline(x, color="grey", linestyle=":", alpha=0.2, linewidth=0.5)
+        ax.set_title(f"{prov}  (N = {int(counts[prov]):,})", fontsize=10)
+        ax.set_ylim(0, 1.05)
+    for j in range(len(top_provinces), len(axes)):
+        axes[j].set_visible(False)
+    for ax in axes[-n_cols:]:
+        ax.set_xlabel("year")
+    for ax in axes[::n_cols]:
+        ax.set_ylabel("SPA (norm.)")
+    fig.suptitle(
+        f"Raw uncorrected per-province SPAs: top {N_PROVINCES} by "
+        f"inscription count, Rome excluded; unit-peak-normalised",
+        fontsize=12, y=0.995,
     )
-    ax.text(
-        0.02, 0.95,
-        "preliminary, post-lodgement;\nthe preregistered analysis is forthcoming",
-        transform=ax.transAxes, fontsize=9, alpha=0.7, va="top",
-        bbox={"facecolor": "white", "edgecolor": "grey", "alpha": 0.7},
-    )
-    ax.legend(loc="upper right", fontsize=8, ncol=2)
     out = FIG_DIR / "fig-04b-province-spa.png"
     fig.tight_layout()
     fig.savefig(out, dpi=DPI)
@@ -294,14 +332,9 @@ def render_city(df: pd.DataFrame) -> Path:
     for ax in axes[::n_cols]:
         ax.set_ylabel("SPA (norm.)")
     fig.suptitle(
-        f"Per-city SPA shapes: top {N_CITIES} Hanson-matched cities ex-Rome "
-        f"by inscription count; unit-height-normalised",
+        f"Raw uncorrected per-city SPAs: top {N_CITIES} Hanson-matched "
+        f"cities ex-Rome by inscription count; unit-peak-normalised",
         fontsize=12, y=0.995,
-    )
-    fig.text(
-        0.01, 0.01,
-        "preliminary, post-lodgement; the preregistered analysis is forthcoming",
-        fontsize=8, alpha=0.6,
     )
     out = FIG_DIR / "fig-04c-city-spa.png"
     fig.tight_layout()

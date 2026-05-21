@@ -196,8 +196,9 @@ def fit_ols_loglog(cities: pd.DataFrame) -> dict:
     }
 
 
-def bootstrap_nbr(rows_df: pd.DataFrame, n_reps: int = N_BOOTSTRAP) -> np.ndarray:
-    """Row-resample bootstrap of NBR beta_pop.
+def bootstrap_nbr(rows_df: pd.DataFrame, n_reps: int = N_BOOTSTRAP
+                  ) -> tuple[np.ndarray, np.ndarray]:
+    """Row-resample bootstrap of NBR (const, beta_pop) pairs.
 
     Resamples the per-row corpus (Rome-excluded, Hanson-joined) with
     replacement; re-aggregates to cities; refits NBR. Cities that the
@@ -205,11 +206,13 @@ def bootstrap_nbr(rows_df: pd.DataFrame, n_reps: int = N_BOOTSTRAP) -> np.ndarra
 
     Returns
     -------
-    np.ndarray of length n_reps; entries are beta_pop estimates.
+    (consts, betas) : (np.ndarray, np.ndarray) of length n_reps; entries are
+        intercept and slope estimates respectively.
     """
     sub_rows = rows_df.copy()
     n_rows = len(sub_rows)
     print(f"[block-3] bootstrap NBR: {n_reps} replicates on {n_rows:,} rows")
+    consts = np.full(n_reps, np.nan, dtype=float)
     betas = np.full(n_reps, np.nan, dtype=float)
 
     # Pre-materialise the join inputs.
@@ -236,17 +239,19 @@ def bootstrap_nbr(rows_df: pd.DataFrame, n_reps: int = N_BOOTSTRAP) -> np.ndarra
             y = agg["inscription_count"].to_numpy(dtype=float)
             X = sm.add_constant(agg[["log_pop"]].to_numpy(dtype=float))
             fit = NegativeBinomial(y, X).fit(disp=False, maxiter=500)
+            consts[b] = float(fit.params[0])
             betas[b] = float(fit.params[1])
         except Exception:
+            consts[b] = np.nan
             betas[b] = np.nan  # non-convergence; rare
         if (b + 1) % 100 == 0:
             print(f"    .. {b + 1}/{n_reps} done; "
-                  f"current 95% CI = "
+                  f"current 95% CI on beta = "
                   f"[{np.nanpercentile(betas[:b+1], 2.5):.3f}, "
                   f"{np.nanpercentile(betas[:b+1], 97.5):.3f}]")
     n_failed = int(np.isnan(betas).sum())
     print(f"[block-3] bootstrap complete; {n_failed} non-converged replicates")
-    return betas
+    return consts, betas
 
 
 # ---------------------------------------------------------------------------
@@ -256,9 +261,10 @@ def render_scatter_with_band(
     cities: pd.DataFrame,
     nbr_point: dict,
     ols_point: dict,
+    boot_consts: np.ndarray,
     boot_betas: np.ndarray,
 ) -> Path:
-    """log-log scatter + NBR fitted line + bootstrap β band annotation."""
+    """log-log scatter + NBR fitted line + bootstrap CI band on the fit."""
     fig, ax = plt.subplots(figsize=FIG_SIZE_WIDE)
     log_pop = cities["log_pop"].to_numpy()
     log_count = cities["log_count"].to_numpy()
@@ -266,32 +272,39 @@ def render_scatter_with_band(
         log_pop, log_count, alpha=0.35, s=18, color="C0",
         edgecolor="none", label=f"{len(cities)} cities (Rome ex.)",
     )
-    # NBR fitted line on the log E[y] scale.
+    # NBR fitted line on the log E[y] scale, with a 95 % bootstrap CI band
+    # built by evaluating each bootstrap (const, beta) pair across the x grid.
     xs = np.linspace(log_pop.min(), log_pop.max(), 200)
+    # bootstrap line samples: shape (n_boot, len(xs))
+    mask = ~np.isnan(boot_consts) & ~np.isnan(boot_betas)
+    boot_lines = (boot_consts[mask, None] + boot_betas[mask, None] * xs[None, :])
+    band_lo = np.percentile(boot_lines, 2.5, axis=0)
+    band_hi = np.percentile(boot_lines, 97.5, axis=0)
+    ax.fill_between(
+        xs, band_lo, band_hi, color="C3", alpha=0.20,
+        label="NBR fit 95 % bootstrap CI band",
+    )
+
     ys_nbr = nbr_point["beta_const"] + nbr_point["beta_pop"] * xs
     ax.plot(
         xs, ys_nbr, color="C3", linewidth=1.8,
         label=(f"NBR fit  beta_pop = {nbr_point['beta_pop']:.3f}  "
-               f"(95% CI [{np.nanpercentile(boot_betas, 2.5):.3f}, "
+               f"(95 % CI [{np.nanpercentile(boot_betas, 2.5):.3f}, "
                f"{np.nanpercentile(boot_betas, 97.5):.3f}])"),
     )
-    # OLS log-log line.
     ys_ols = ols_point["beta_const"] + ols_point["beta_pop"] * xs
     ax.plot(
         xs, ys_ols, color="C2", linewidth=1.5, linestyle="--",
         label=(f"OLS log-log  beta_pop = {ols_point['beta_pop']:.3f}  "
                f"(R^2 = {ols_point['r2']:.3f})"),
     )
-    # Reference: Hanson 2021 beta = 0.672.
-    ax.axhline(np.nan)  # no-op anchor
     ax.set_xlabel("log(Hanson 2016 urban population)")
     ax.set_ylabel("log(LIRE inscription count)")
     ax.set_title(
-        f"Hanson-scaling fit on date-window-filtered LIRE counts "
+        f"Hanson scaling on date-window-filtered LIRE counts "
         f"(N = {len(cities):,} Hanson cities, Rome excluded)",
         fontsize=12,
     )
-    # Comparator panel.
     txt = (
         "Comparators (published):\n"
         f"  Hanson 2021         beta = {HANSON_2021['beta']:.3f} "
@@ -302,11 +315,6 @@ def render_scatter_with_band(
     ax.text(
         0.02, 0.98, txt, transform=ax.transAxes, fontsize=9, va="top",
         bbox={"facecolor": "white", "edgecolor": "grey", "alpha": 0.85},
-    )
-    ax.text(
-        0.99, 0.02,
-        "preliminary, post-lodgement; the preregistered analysis is forthcoming",
-        transform=ax.transAxes, fontsize=8, alpha=0.6, ha="right",
     )
     ax.legend(loc="lower right", fontsize=9)
     ax.grid(True, alpha=0.2)
@@ -356,7 +364,7 @@ def main() -> int:
           f"se = {ols_point['se_pop']:.4f}   R^2 = {ols_point['r2']:.4f}   "
           f"n = {ols_point['n']}")
 
-    boot_betas = bootstrap_nbr(rows_for_nbr, n_reps=N_BOOTSTRAP)
+    boot_consts, boot_betas = bootstrap_nbr(rows_for_nbr, n_reps=N_BOOTSTRAP)
     ci_lo = float(np.nanpercentile(boot_betas, 2.5))
     ci_hi = float(np.nanpercentile(boot_betas, 97.5))
     ci_med = float(np.nanmedian(boot_betas))
@@ -378,12 +386,16 @@ def main() -> int:
         {"model": "OLS_loglog", **ols_point, "boot_ci_lo": np.nan,
          "boot_ci_hi": np.nan, "boot_median": np.nan},
     ]).to_csv(TBL_DIR / "nbr-summary.csv", index=False)
-    pd.DataFrame({"bootstrap_beta_pop": boot_betas}).to_csv(
-        TBL_DIR / "nbr-bootstrap-beta.csv", index=False,
-    )
+    pd.DataFrame({
+        "bootstrap_const": boot_consts,
+        "bootstrap_beta_pop": boot_betas,
+    }).to_csv(TBL_DIR / "nbr-bootstrap-beta.csv", index=False)
 
     # Figure.
-    fig_paths = [render_scatter_with_band(cities, nbr_point, ols_point, boot_betas)]
+    fig_paths = [
+        render_scatter_with_band(cities, nbr_point, ols_point,
+                                  boot_consts, boot_betas),
+    ]
     mirror_to_talk_dir(fig_paths)
     return 0
 
