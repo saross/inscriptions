@@ -63,6 +63,8 @@ def _load_sibling(filename: str, module_name: str):
     if spec is None or spec.loader is None:
         raise RuntimeError(f"Could not load {filename}")
     mod = importlib.util.module_from_spec(spec)
+    # Register in sys.modules before exec so dataclasses can resolve.
+    sys.modules[module_name] = mod
     spec.loader.exec_module(mod)
     return mod
 

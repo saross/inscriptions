@@ -80,6 +80,9 @@ _SPEC = importlib.util.spec_from_file_location(
 if _SPEC is None or _SPEC.loader is None:
     raise RuntimeError("Could not load 01-synthetic-cell-generator.py")
 synth_gen = importlib.util.module_from_spec(_SPEC)
+# Register in sys.modules BEFORE exec_module so @dataclass et al. can
+# resolve the module by name via sys.modules lookup.
+sys.modules["synth_gen"] = synth_gen
 _SPEC.loader.exec_module(synth_gen)
 
 
