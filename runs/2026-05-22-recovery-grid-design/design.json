@@ -1,0 +1,116 @@
+{
+  "schema_version": "1.0",
+  "design_artefact_id": "2026-05-22-recovery-grid-design",
+  "binds": {
+    "preregistration": "planning/preregistration-draft.md, sections 3-4",
+    "decisions": [19, 20, 21]
+  },
+  "envelope": {
+    "envelope_min_year": -50,
+    "envelope_max_year": 350,
+    "bin_width_years": 5,
+    "n_bins": 80
+  },
+  "base_seed": 20260522,
+  "replicates_per_cell": 100,
+  "seed_policy": "cell_seed = base_seed + cell_index; replicate_seed = cell_seed * 1000 + replicate_index",
+  "alpha_grid": [0.05, 0.30, 0.50, 0.70, 0.95],
+  "shape_library": [
+    {
+      "name": "flat_baseline",
+      "generator": "uniform",
+      "parameters": {}
+    },
+    {
+      "name": "smooth_growth",
+      "generator": "exponential",
+      "parameters": {"rate_per_year": 0.005, "sign": 1}
+    },
+    {
+      "name": "smooth_decline",
+      "generator": "exponential",
+      "parameters": {"rate_per_year": 0.005, "sign": -1}
+    },
+    {
+      "name": "rise_and_fall",
+      "generator": "gaussian",
+      "parameters": {"mu_year": 150.0, "sigma_year": 60.0}
+    },
+    {
+      "name": "bimodal",
+      "generator": "gaussian_mixture",
+      "parameters": {
+        "components": [
+          {"mu_year": 50.0, "sigma_year": 40.0, "weight": 0.5},
+          {"mu_year": 250.0, "sigma_year": 40.0, "weight": 0.5}
+        ]
+      }
+    },
+    {
+      "name": "regnal_cluster",
+      "generator": "regnal_plus_smooth",
+      "parameters": {
+        "spikes": [
+          {"mu_year": 77.5, "sigma_year": 7.5, "weight": 0.20, "label": "Flavian"},
+          {"mu_year": 122.5, "sigma_year": 7.5, "weight": 0.30, "label": "Hadrianic"},
+          {"mu_year": 212.5, "sigma_year": 7.5, "weight": 0.15, "label": "Severan"}
+        ],
+        "baseline_weight": 0.35,
+        "baseline_generator": "exponential",
+        "baseline_parameters": {"rate_per_year": 0.003, "sign": 1}
+      }
+    }
+  ],
+  "tier_weight_grid": [
+    {"name": "uniform", "weights": [0.3333333333, 0.3333333333, 0.3333333334]},
+    {"name": "century_heavy", "weights": [0.70, 0.20, 0.10]},
+    {"name": "half_century_heavy", "weights": [0.20, 0.70, 0.10]},
+    {"name": "reign_heavy", "weights": [0.20, 0.10, 0.70]},
+    {"name": "pilot_proxy", "weights": [0.55, 0.30, 0.15]}
+  ],
+  "tier_order": ["century", "half_century", "reign"],
+  "n_grid": [2000, 10000, 50000],
+  "template_intervals_by_tier": {
+    "century": [
+      {"name": "C-50-0", "lo": -49, "hi": 0},
+      {"name": "C1", "lo": 1, "hi": 100},
+      {"name": "C2", "lo": 101, "hi": 200},
+      {"name": "C3", "lo": 201, "hi": 300},
+      {"name": "C4_partial", "lo": 301, "hi": 350}
+    ],
+    "half_century": [
+      {"name": "H1a", "lo": 1, "hi": 50},
+      {"name": "H1b", "lo": 51, "hi": 100},
+      {"name": "H2a", "lo": 101, "hi": 150},
+      {"name": "H2b", "lo": 151, "hi": 200},
+      {"name": "H_mid2_C2", "lo": 125, "hi": 175},
+      {"name": "H3a", "lo": 201, "hi": 250},
+      {"name": "H3b", "lo": 251, "hi": 300},
+      {"name": "H_mid_C3", "lo": 225, "hi": 275}
+    ],
+    "reign": [
+      {"name": "Augustan", "lo": -27, "hi": 14},
+      {"name": "Tiberian", "lo": 14, "hi": 37},
+      {"name": "Flavian", "lo": 69, "hi": 96},
+      {"name": "Trajanic", "lo": 98, "hi": 117},
+      {"name": "Hadrianic", "lo": 117, "hi": 138},
+      {"name": "Antonine", "lo": 138, "hi": 192},
+      {"name": "Severan", "lo": 193, "hi": 235},
+      {"name": "Tetrarchic", "lo": 284, "hi": 305}
+    ]
+  },
+  "template_intervals_note": "These intervals are a working dictionary scoped to the recovery simulation. They are NOT the pre-Phase-2 empirical-scan dictionary referenced in prereg section 3 line 202 (runs/2026-05-XX-template-dictionary/). For the recovery simulation the dictionary contents only need to span the three tiers' shapes plausibly; the production mixture fit on real data will use the empirical-scan dictionary instead.",
+  "total_cells": 450,
+  "total_replicates": 45000,
+  "decision_rule": {
+    "alpha_coverage_per_cell_threshold": 0.90,
+    "alpha_coverage_global_threshold": 0.90,
+    "pearson_r_shape_per_cell_threshold": 0.95,
+    "pearson_r_shape_global_threshold": 0.90,
+    "wasserstein_1": "reported supplementary; flagging threshold deferred"
+  },
+  "deferred_thresholds": [
+    "Wasserstein-1 flagging threshold (post-smoke-test)",
+    "PPC numerical thresholds for H3a (pre-Phase-3)"
+  ]
+}
