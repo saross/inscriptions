@@ -18,19 +18,23 @@ prepared-objection notes — this document is the quick-reference.
 
 | Artefact | Path | Purpose |
 |---|---|---|
-| Primary deck | `planning/conference-talk-rac-trac-2026/slide-outline.html` | Self-contained revealjs HTML (~ 6 MB, all figures embedded as data URIs). Open in any modern browser; press **`s`** to enter speaker view. |
-| Paper-document backup | `planning/conference-talk-rac-trac-2026/slide-outline.pdf` | 11-page LaTeX paper-document fallback if the HTML setup fails. Not a slide-format PDF — use the HTML if at all possible. |
+| Primary deck | `planning/conference-talk-rac-trac-2026/slide-outline.html` | Self-contained revealjs HTML (~ 6.5 MB, all figures embedded as data URIs). Open in any modern browser; press **`s`** for speaker view, **`o`** for slide overview. |
+| Slide-format PDF | `planning/conference-talk-rac-trac-2026/slide-outline-slides.pdf` | 22-page slide-format PDF (~ 2 MB; one slide per page, 16:9). Generated via Decktape. **Recommended backup** if the HTML setup fails. |
+| Paper-document backup | `planning/conference-talk-rac-trac-2026/slide-outline.pdf` | LaTeX typeset PDF (paper-document layout, ~ 1.8 MB). Less useful than the slide-format PDF for live delivery; included as a text-content fallback. |
 | Quarto source | `planning/conference-talk-rac-trac-2026/slide-outline.qmd` | Re-render if last-minute edits are needed: `quarto render slide-outline.qmd --to revealjs` |
-| Figures | `planning/conference-talk-rac-trac-2026/figures/` | All five talk figures + the run-mirror in `runs/2026-05-21-talk-prep/outputs/figures/` |
+| Figures | `planning/conference-talk-rac-trac-2026/figures/` | All talk figures (mirrored from `runs/2026-05-21-talk-prep/outputs/figures/`) |
 
 **Recommended setup on the day**: bring the HTML on a USB stick AND email it to
 yourself. Test it in the lectern browser before the session starts. If for any
-reason the HTML doesn't load, the PDF is a paper-document reading copy.
+reason the HTML doesn't load, the slide-format PDF is the primary backup; the
+LaTeX paper-document is a last-resort reading copy.
 
 ## 2 · Slide-by-slide cheat sheet
 
-Target: ~ 12 min over 8 slides (added one to the original 7 for the Bayesian
-Mundlak result). Average ~ 90 s per slide.
+Target: ~ 12 min over **8 main slides** (1, 2, 3, 4, 5, 6a, 6b, 7) followed
+by a **12-slide deep-dive** (B1–B12) for Q&A. Average ~ 90 s per main slide.
+Press **`o`** in revealjs for the slide overview if you need to jump to a
+backup slide during Q&A.
 
 ### Slide 1 — Dates-as-data tradition + the puzzle (~ 90 s)
 - Open by *naming* the habit-only critique (MacMullen 1982; Hanson 2021). Don't avoid it.
@@ -41,26 +45,31 @@ Mundlak result). Average ~ 90 s per slide.
 ### Slide 2 — Editorial distortion has a measurable signature (~ 110 s)
 - The empirical SPA shape decomposes cleanly: wide-template plateaus + narrow regnal spikes + BC/AD step.
 - Specifics: **54.5 %** of `not_before` end in `01`; **53.0 %** of `not_after` end in `00`. Largest single step in the SPA is **+1,159 at 1 BC / AD 1**.
-- Spike-to-plateau ratio at AD 122.5 jumps from 1.61× to **13.83×** when filtered to narrow-precision inscriptions — i.e. the spike is REAL ancient clustering, the plateau is editorial encoding.
+- Spike-to-plateau ratio at AD 122.5 jumps from 1.61× to **13.83×** under the *high-precision filter* (inscriptions with `date_range = not_after − not_before ≤ 25` years) — i.e. the spike is REAL ancient clustering, the plateau is editorial encoding.
+- **Important framing**: AD 77.5 / 122.5 / 212.5 are *midpoints of editorial reign-interval templates*, NOT dynasty labels. AD 77.5 = midpoint of Flavian-period consular templates ([76,78], [77,79], [78,79]); AD 122.5 = mass from Hadrian's reign [117,138] + the exact-year [123,123] template (1,304 inscriptions); AD 212.5 = midpoint of Severan reign-interval templates.
 - This earns the audience's attention for the methodological argument that follows.
 
-### Slide 3 — Phase 1 reachability (~ 100 s)
-- Phase 1 is **complete methodology**, locked at OSF lodgement.
+### Slide 3 — A power simulation: which analyses are reachable? (~ 100 s)
+- This is the first methodological phase — a **power simulation** completed before any substantive analysis. Locked at OSF lodgement.
 - Take-home: we did the simulation work first to determine where the data has enough power. Cells that don't clear the minimum-N threshold are flagged "unreachable" rather than reported with inflated false-positives.
-- Specifics: empire reachable at n = 50,000; provinces and urban areas at n ≈ **1,549** for the binding bracket; **96 H1-reachable cells** total.
+- **What's a "cell"**: one combination of {analysis level (empire / province / urban-area) × subset × null model × effect bracket × sample size n}. Each cell gets 1,000 synthetic replicates.
+- **Reading the chart**: rows = effect brackets; columns = sample size n; colour = detection rate; top "zero" row = false-positive control; white line = ~ 80 %-detection contour.
+- Specifics: empire reachable at n = 50,000; provinces and urban areas at n ≈ **1,549** for the binding bracket; **96 reachable cells** total.
 - If asked about FP control: ≤ 5 % across all 96 zero-effect cells (range [0.007, 0.049]).
 - If asked about the math: forward-fit null in true-date space → synthetic-from-null DGP with empirical aoristic widths → 1,000 iterations × 1,000 MC replicates.
 
 ### Slide 4 — Multi-scale SPA shapes (~ 100 s)
-- Two figures: top-8 provinces (left) + top-8 cities (right), each scaled to unit peak height.
+- Two 2×4 small-multiples grids: top-8 provinces (left) + top-8 cities (right), each scaled to unit peak. Shared y-axis within each grid.
 - The point is empirical, not statistical: at every scale, structure beyond uniform.
 - **Validity check**: Pompeii cuts off cleanly at AD 79 (Vesuvius). This is a smoking-gun that the pipeline is doing the right thing.
-- Be explicit: these are RAW, not mixture-corrected. The mixture is what we discuss next.
+- Historically-coherent shapes worth pointing at: **Dacia** peaks 2nd–3rd c. (province only from AD 106; logical); **Britannia** peaks 2nd–3rd c. (provincialised AD 43); **Pannonia superior** peaks late 2nd–3rd c. (frontier garrison expansion); **Cirta** peaks 2nd–3rd c. (Antonine North-African boom).
+- Be explicit: these are RAW UNCORRECTED, not mixture-corrected. The mixture is what we discuss next.
 
-### Slide 5 — Bayesian mixture decomposition (~ 110 s)
-- This is the METHODOLOGICAL CORE.
-- Model: `y_t ~ Multinomial(N, α · p_conv + (1 − α) · p_gen)`. Convention component built from empirically-attested template intervals (century slabs, half-century slabs, reign-interval slabs). Year-precise inscriptions stay in `p_gen` as real ancient anchors.
-- The recovery figure shows: on a SYNTHETIC dataset with known α = 0.50 and known smooth Gaussian shape, the model recovered **α median = 0.477, 95% CI [0.414, 0.541]** (covers truth) and **Pearson r = 1.000** against the true shape. All preregistered validation gates pass (R̂ = 1.0000; ESS ≥ 2,567; Pearson ≥ 0.95 threshold cleared).
+### Slide 5 — Correcting editorial artefacts: Bayesian mixture decomposition (~ 110 s)
+- This is the METHODOLOGICAL CORE. The slide deliberately drops the technical formula in favour of a plain-English framing; the formula lives in the speaker notes if you need to refer to it.
+- **Plain-English story**: the observed SPA is a *weighted sum* of two underlying shapes — an editorial-encoding component (what editors produce when they assign wide template intervals like "1st century AD" or "Hadrianic") and a real-ancient-production component (the smooth signal underneath). The mixture weight α estimates what fraction of the SPA is editorial encoding.
+- The convention component is built from a small dictionary of empirically-attested template intervals: century slabs, half-century slabs where supported, and reign-interval templates. Year-precise inscriptions ([t, t] consular dates) are NOT in the convention component — they stay in the genuine signal as real ancient anchors.
+- The recovery figure shows: on a SYNTHETIC dataset with known α = 0.50 and known smooth Gaussian shape, the model recovered **α median = 0.477, 95% CI [0.414, 0.541]** (covers truth) and **Pearson r = 1.000** against the true shape. R̂ = 1.0000; ESS ≥ 2,567.
 - **Honest disclosure**: one synthetic cell, parametric simplification (one tier + Gaussian); the prereg's full validation runs 100 replicates per cell across a multi-axis grid. Full validation runs post-talk.
 
 ### Slide 6a — Frequentist scaling comparator (~ 100 s)
@@ -81,12 +90,13 @@ Mundlak result). Average ~ 90 s per slide.
 - **The framing line**: "~ 30 % of city-to-city systematic variation in inscription production is attributable to within-province population. Habit, convention, survival, and provincial-administrative effects together account for the other ~ 70 %." That's the complexity-decomposition Shawn's abstract promises.
 
 ### Slide 7 — Where this is heading + feedback prompts (~ 80 s)
-- One slide; close out. Acknowledge OSF lodgement (`osf.io/uycs6`, currently embargoed); point to the public repo at the lodgement tag.
-- Six feedback prompts on the right. Pick **2–3 to highlight aloud**; the rest are there for the audience to read at their own pace.
-- Recommended priority for what to say out loud:
+- One slide; close out. Acknowledge OSF lodgement (`osf.io/uycs6`, currently embargoed); the public-repo link is in the footer.
+- Mention briefly: **Forthcoming work** — statistician review (Martin's consultation); state-space / HMM alternative under exploration (see B11 if asked); trapezoidal-aoristic sensitivity (the uniform-aoristic assumption is preregistered to be tested against a trapezoidal alternative; pilot diagnostics give per-bin Pearson r = 0.94 — quantitatively consequential, not qualitatively decisive).
+- **Three feedback prompts** on the right. All three are worth saying aloud at a measured pace:
   1. Prompt 1 (editorial-template decomposition — for Heřmánková / Kaše / Glomb specifically)
   2. Prompt 2 (the 70% non-population variance — which sub-mechanisms?)
-  3. Prompt 6 if Sommerschield is still in the room — open the cross-collaboration question
+  3. Prompt 3 (negative-control subgroups + independent demographic anchors)
+- **Contact line** at the bottom: Shawn's email (`shawn@fieldnote.au`). Invite continued feedback via email — the audience may have ideas they want to share post-Q&A.
 
 ## 3 · Anticipated Q&A — quick responses
 

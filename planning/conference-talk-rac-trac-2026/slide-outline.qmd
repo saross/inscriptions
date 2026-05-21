@@ -452,10 +452,9 @@ Anticipate audience pushback:
 - Mixture validation (recovery grid)
 - Mundlak NBR + within-province verdict
 - Antonine plague + 3rd-c. Crisis probes
-- Provincial-capital residuals + Moran's I (Hanson 2021 replication)
-- 13 sensitivity / exploratory analyses
+- Provincial-capital residuals + Moran's I
 
-**Forthcoming**: statistician review (Martin); state-space / HMM alternative under exploration (B11).
+**Forthcoming**: statistician review; state-space / HMM alternative; trapezoidal-aoristic sensitivity.
 :::
 ::: {.column width="50%"}
 **Questions for this room**:
