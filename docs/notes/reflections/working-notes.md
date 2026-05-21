@@ -1107,3 +1107,91 @@ None of the three prior rubrics had **"is this an applied statistician's recomme
 **Lesson generalising to research-methodology review.** Late-stage adversarial review at saturation is *role-conditional*, not document-conditional. A document that has saturated under one role's review may still have substantial gaps visible under another role's review. Multiple role-framings (prereg-failure-mode auditor; applied statistician; substantive-domain expert; software engineer reviewing implementation feasibility; ethics / open-science compliance reviewer) cover different gaps. Where the cost of missing a gap is high (lodgement; publication; clinical-trial registration), running multiple role-framings in sequence is cheap insurance. Concretely, for this project: had Martin not been the planned external reviewer, the stand-in-statistician role would have been worth running earlier in the cycle, not as a hedge at the end.
 
 **Note for future projects.** The stand-in-review pattern (same LLM, different role-framing) is a transferable technique. It doesn't substitute for a human expert reviewer, but it does fill in coverage gaps left by adversarial-rubric reviews. Worth keeping in the methodological toolkit as a hedge-against-delay or as a pre-flight check before sending to a high-bandwidth-cost human reviewer.
+
+---
+
+## Obs 42 — 2026-05-20 [GOTCHA]: pandoc URL rendering needs *both* `+autolink_bare_uris` *and* `xurl` to handle long DOIs
+
+While producing the OSF supplementary PDF (`planning/osf-supplementary-2026-05-20.pdf`) from a markdown source, long DOI URLs in the §13 references list overflowed the right page edge. Examples that triggered the issue: `https://doi.org/10.1371/journal.pone.0191055` (Carleton et al. 2018) and `https://doi.org/10.1080/00031305.2018.1549100` (Gelman et al. 2019). The URLs rendered into the PDF as plain text and truncated mid-character at the page boundary.
+
+First fix attempt: `\usepackage{xurl}` via `pandoc --include-in-header=...`. **This alone did nothing.** Visual confirmation showed the same truncation.
+
+Root cause: inspecting the pandoc-generated LaTeX intermediate showed *zero* `\href` or `\url{...}` instances. Pandoc had rendered every bare URL as **plain literal text**, not as a hyperlink macro. The xurl package modifies `\url{...}` typesetting — it cannot break plain text tokens. Pandoc's default markdown reader does not autolink bare URIs; that requires the explicit `+autolink_bare_uris` extension.
+
+Two-pronged fix required, applied together:
+
+1. **Pandoc reader extension**: `-f markdown+autolink_bare_uris` so bare URLs in the markdown are emitted as `\url{...}` macros in the LaTeX.
+2. **xurl package**: included via `--include-in-header=` containing `\usepackage{xurl}` (pandoc's own template loads xurl conditionally if available, but explicit is belt-and-braces).
+
+Either fix alone is ineffective. The first alone produces `\url{...}` macros that hyperref renders as unbreakable tokens. The second alone leaves URLs as plain text. Both together: URLs render as clickable hyperlinks AND break at any character to fit the line.
+
+Verification path: spot-check generated LaTeX (`pandoc -t latex --standalone`) for `\href` / `\url` macro counts; if zero, autolink isn't active. Run `pdftotext -layout` on the PDF and search for truncated URLs at column-rightmost positions.
+
+Generalisable: any pandoc workflow producing a publication-grade PDF from markdown with inline URLs needs both flags. The default pandoc CLI does *not* set them. Worth adding to project-specific build scripts.
+
+Captured from PDF iterations v1 → v4 in `planning/osf-supplementary-2026-05-20.pdf`, between commits `98f7607` and `a2e40fd`.
+
+---
+
+## Obs 43 — 2026-05-20 [GOTCHA]: unescaped pipe characters inside markdown-table cells silently truncate content across renderers
+
+The §7 (Effect-size pre-specifications) table in the prereg had this row in source:
+
+```
+| H3c (i) | Capitals contrast on draw-wise Pearson residuals | P(mean(r_c | capitals) − mean(r_c | non-capitals) > 0) ≥ 0.95. |
+```
+
+The `|` characters inside the conditioning notation `r_c | capitals` were interpreted by every CommonMark-compliant renderer (pandoc, GitHub preview, OSF in-browser preview) as **table column separators**, truncating the visible cell content to `P(mean(r_c` and starting new (mostly-empty) columns from each subsequent `|`.
+
+This is a **silent failure mode**: the source markdown reads correctly to a human; the rendered output is broken without any error or warning; the table structurally renders without complaint (just with extra invisible empty columns). The bug was caught only by adversarial verification post-rendering (see Obs 45).
+
+Fix: escape pipes inside cell content as `\|`. CommonMark-compliant; preserves the visible `|` in the rendered cell while preventing column-separation interpretation.
+
+Generalisation: any markdown table cell whose content contains a `|` (math conditional `P(A | B)`; set-builder `{x | x > 0}`; alternation; absolute-value bars; `Either / Or` lists) must escape it. The escape is locally near-invisible but globally safe across renderers.
+
+Detection: harder than it should be — the markdown looks fine; the rendered output looks "structurally fine" with truncated content; the failure mode is silent. Best protection: adversarial verifier on the rendered artefact (Obs 45). Best prevention: a `grep -nE '^\|.*[a-zA-Z_)] \| [a-zA-Z(]'` style spot-check on table rows during authoring.
+
+Captured from commit `42f639d` (the pipe-escape fix applied to `planning/preregistration-draft.md` line 398 and `planning/osf-supplementary-2026-05-20.md` line 365).
+
+---
+
+## Obs 44 — 2026-05-20 [GOTCHA]: Zenodo concept-DOI vs version-DOI confusion can produce wrong-version citations
+
+The prereg cited LIRE v3.0 with DOI `10.5281/zenodo.8147298`. Verification against DataCite (`https://api.datacite.org/dois/<doi>`) and Zenodo (`https://zenodo.org/api/records/<recid>`) showed this DOI actually resolves to **LIRE v2.3, published 2023-07-14** — *not* v3.0. The correct version-specific DOI for v3.0 (published 2023-10-11, matching the date the prereg also cited) is `10.5281/zenodo.8431452`. The concept DOI for the entire LIRE release series — which resolves to whatever the latest version is — is `10.5281/zenodo.5074773`.
+
+Pattern: Zenodo mints three logically-distinct DOI types for a multi-version deposit:
+
+1. **Concept DOI**: stable pointer to "the work" — resolves to the latest version at the moment of resolution. Useful for "this dataset" claims; *unstable* for "this exact version" claims because it can resolve differently over time as new versions are deposited.
+2. **Per-version DOIs**: stable pointers to specific versions. Each version gets its own DOI. Cited papers should pin the version-specific DOI for replicability.
+3. **Reserved DOI** (latent): minted at deposit reservation, before publication.
+
+Verification path: hit DataCite or Zenodo API and check the `version` and `publication_date` fields. Zenodo's record API exposes `conceptdoi` and `conceptrecid` alongside the version-specific `doi` and `record_id`. Single API call resolves the ambiguity.
+
+How the prereg ended up with the wrong DOI: most likely a copy-paste from an earlier exploration / notebook that used v2.3, with the human-readable v3.0 + date label updated but the DOI not re-checked. The wrong-DOI / right-date / right-version-label combination is a particularly insidious form of citation error — visual scan doesn't catch it because the metadata all agree; only API verification reveals the divergence.
+
+Generalisable: any time a version-aware deposit is cited, the citation should be verified against the registrar's API at write-time. Applies to Zenodo, OSF, Dryad, figshare, Software Heritage, and any registrar that uses concept-and-version DOI pairs. Worth building into `/cite-new`-equivalent skills.
+
+Captured from the multi-stage citation audit during OSF lodgement (commits `3da5711` and `d6261f1`).
+
+---
+
+## Obs 45 — 2026-05-20 [PATTERN]: adversarial verifier for source-vs-render comparison catches silent rendering-pipeline bugs
+
+After producing the OSF supplementary PDF from its markdown source, dispatched an adversarial verifier agent with the brief: "extract text from the PDF; compare structurally and verbatim against the markdown source; flag every discrepancy that isn't a known-deliberate transformation." The verifier was given an explicit list of acceptable transformations (YAML strip; Field-wrapper strip; cross-reference renumbering with explicit +1 mapping) so it wouldn't flag those as errors.
+
+The verifier caught the §7 H3c(i) pipe-in-cell truncation bug (Obs 43) that author-side review had missed. The bug was invisible in the markdown source (text reads correctly to a human) and only manifested in the rendered PDF. Without the verifier the lodged artefact would have contained a corrupted decision rule in the headline effect-size table.
+
+Pattern: when generating a binary or fixed-format artefact (PDF, image, slide deck, exported data file) from a malleable source (markdown, source code, data file), the author cannot easily catch source-vs-render divergences. A second-pass adversarial verifier agent with the *explicit task of source-to-render comparison* — and an explicit allow-list of acceptable transformations — catches silent rendering failures that author-side review consistently misses.
+
+Cost: one agent dispatch, ~10 minutes wall-clock. Benefit: caught a load-bearing bug before the artefact was deposited in a permanent public record (OSF doesn't support easy retraction). High-leverage pattern for one-shot publishing workflows.
+
+Necessary conditions for the pattern to work:
+
+- The verifier must run AFTER the rendered artefact is produced (not during the build).
+- The verifier must have access to both the source and the rendered artefact (not just the source).
+- The verifier must be told what transformations are *expected* — otherwise it flags benign differences as errors.
+- The verifier should be in a fresh context to avoid carrying author-side priors about "this should be fine."
+
+Generalisable to: PDF generation; slide-deck rendering; chart export; documentation site builds; code-to-config compilation; any pipeline where source-to-render fidelity matters and rendering failures are silent rather than loud.
+
+Captured from the OSF lodgement workflow, leading to commit `42f639d`. Worth adding to the project-level skill set for future high-stakes artefact-generation workflows.

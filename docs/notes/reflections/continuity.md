@@ -207,6 +207,24 @@ That's enough to engage substantively. Deeper context (the scout report, working
 
 ## Session history — done items (terse)
 
+### 2026-05-20 / 2026-05-21 (OSF lodgement + conference-talk planning)
+
+- **OSF lodgement.** Preregistration lodged at `https://osf.io/uycs6/` (embargoed pending double-blind submission decision); supplementary upload PDF deposited. Repository tagged at lodgement state: `osf-lodgement-2026-05-20` → commit `a2e40fd`. Tag moved four times across the day as PDF rendering bugs surfaced and were fixed.
+- **Pre-lodgement fixes** to `planning/preregistration-draft.md` and the OSF supplementary upload (`planning/osf-supplementary-2026-05-20.md`, `.pdf`): radiocarbon-SPA framing (Rick 1987 → Williams 2012 → Timpson et al. 2014 → Crema & Bevan 2021); empirically-grounded 5-year-bin rationale (Antonine probe FWHM constraint); LIRE v3.0 DOI corrected from v2.3's `8147298` to v3.0's `8431452` (Obs 44); duplicate DOI bug in §8 Data line found and fixed; pipe-in-table-cell bug fixed across both files (Obs 43); §12 References list built (21 entries; APA-7-ish; Mundlak 1978 included as eponym-source).
+- **OSF supplementary** built as a separate clean upload artefact (498 lines): YAML / Field-1 / Field-2 stripped; Field 3 → §1; Field-4 subsections § 1–12 → §2–13; 42 internal cross-references renumbered (+1); paper-internal Heřmánková §29/§45/§60 references correctly preserved.
+- **PDF generation v1 → v4** via pandoc 3.6.3 + xelatex: v1 (1in margins, default mono); v2 (pipe-cell fix + 0.8in margins + mono Scale=0.78 to fit ASCII flowchart + H3a NBR formula); v3 (`xurl` package — ineffective alone); v4 (`xurl` + pandoc `-f markdown+autolink_bare_uris` — both required, see Obs 42). 32 pages letter-size, all URLs wrap, all tables intact.
+- **Adversarial verifier** dispatched after PDF v2 produced — caught the pipe-in-cell H3c(i) truncation bug that author-side review had missed (Obs 45). Verifier verdict: PARTIAL → PASS after fix.
+- **Tertiary analysis logged** in continuity: max-Hanson-pop vs peak-inscription-window scaling test. Hanson's populations are max-theoretical (footprint × density), not realised peak; envelope-vs-envelope rather than max-vs-max. Logged as a post-lodgement future-work amendment candidate.
+- **Conference talk planning** (overnight, externalised). New directory `planning/conference-talk-rac-trac-2026/`:
+  - `conference-context.md` (briefing from scout): RAC/TRAC 2026 Aarhus, Thu 21 – Sat 23 May 2026; **session TRAC7 "Beyond names and numbers: Quantitative epigraphy and the discovery of historical patterns"** organised by Heřmánková, Glomb, Kaše (the SDAM / LIRE creators); **Shawn's paper slot Friday 22 May 14:20 room Preben Hornung**; 20-min standard slot; adjacent talks Sommerschield (Aeneas; 14:00) and Bennett (15:00).
+  - `asset-inventory.md`: 2024 exploratory notebook (`archive/2026-04-22-inscriptions-spa.ipynb`) is the goldmine — empire / province / city SPAs + frequentist Hanson NBR-with-bootstrap already implemented; main work for next session is applying the prereg date-window filter and re-rendering at slide aspect.
+  - `slide-outline.qmd`: 7-slide Quarto revealjs skeleton + speaker notes (HTML comments).
+  - `analysis-roadmap.md`: 36-hour hour-by-hour plan with decision gates at hour 18 (A+ go/no-go) and hour 26 (Bayesian H3a stretch go/no-go).
+  - `talking-points-feedback.md`: 7 anticipated objections + prepared responses + 5 feedback prompts (one specifically inviting Sommerschield engagement).
+- **Speaker question resolved 2026-05-21**: **Adela is reading the paper on Shawn's behalf** at the 14:20 Friday slot. Shawn cannot travel; remote presentation not supported. Adela also has her own separate paper at 12:20 (Roman marriage ages).
+- **OSF URL folded** across artefacts: prereg §11 Provenance (post-lodgement amendment trail); slide deck footer + slides 5 / 7; project `README.md` (previously empty; now a proper landing page).
+- **Commits + push** across the two days: pre-lodgement (`feae7c5` → `a2e40fd`, ~10 focused commits); overnight planning `83574a8`; resolved-question `003393c`; working-notes Obs 42–45 + this entry pending.
+
 ### 2026-05-17 (later — Martin pack + stand-in statistical review + D27–32)
 
 - Drafted Martin consultation pack (`planning/martin-consultation-pack-2026-05-17.md`, 863 lines, exec-summary + 8-question list + appendices, applied-econometrician framing).
