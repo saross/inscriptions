@@ -1,0 +1,2 @@
+any_material_divergence,overall_decision,sigma_pop_grid,primary_ci_lo,primary_ci_hi,shift_threshold
+False,ROBUST_UNDER_MEASUREMENT_ERROR_SENSITIVITY,"[0.1, 0.2, 0.3]",0.24,0.366,0.063

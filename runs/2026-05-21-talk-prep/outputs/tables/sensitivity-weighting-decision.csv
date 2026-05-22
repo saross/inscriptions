@@ -1,0 +1,2 @@
+primary_ci_lo_05,primary_ci_hi_05,primary_ci_half_width,median_spread_three_weighting,material_divergence,decision
+0.24,0.366,0.063,0.19618777253764802,True,FLAG_AS_LIMITATION
