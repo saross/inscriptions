@@ -79,6 +79,18 @@ Implementation plan summary (full detail in `analysis-roadmap.md`):
 
 ---
 
+## Talk-day handoff queue (2026-05-22 session close)
+
+Pre-/post-talk work for the next session. **Read `planning/next-session-prompt-2026-05-22.md` first.**
+
+1. [ ] **Incorporate Adela's feedback on the deck.** Headline framing: less technical detail, more "implications + contribution to the study of Rome / our understanding of Roman history." Some methodological detail stays, but briefer, mostly around three themes: correcting for biases like editorial distortion; sample size; regression against Hanson's population. Right level of statistical detail is "explain to an undergrad history major" — the G-series methods-glossary slides are the tonal anchor. **Adela's specific feedback** (location: Shawn's email; possibly saved to `planning/conference-talk-rac-trac-2026/adela-feedback.md`) is the primary source — read it first; map per-slide; don't lose the substantive findings (30% within-province, f_within posterior, editorial-template signature numbers) while reframing presentation.
+
+2. [ ] **Compose full speaker notes / script for Adela.** Currently the speaker notes are HTML comments in `slide-outline.qmd`, surfaced via revealjs's `s` key. Adela may want a **continuous full-text script** to rehearse from. Action: extract + polish into a flowing read-aloud script (~ 1,500–1,800 words for the 12-min target at 150 wpm), save to `planning/conference-talk-rac-trac-2026/full-script.md`. Per-slide structure preserved; transitions smoothed.
+
+3. [ ] **Phase 2 mixture-recovery grid monitoring.** Running on sapphire at `~/cc-scratch/inscriptions-recovery-grid/`; 9 of 450 cells complete in ~ 10 h elapsed at session close. Initial 50 h projection looks optimistic — realistic estimate now 80–120 h based on observed per-fit timing (70–90 s under parallel load). Check `grid-state.json`; let it run unless completion rate is badly off, in which case investigate the concurrency slowdown caveat (see "Open caveats" below). When done, run `runs/2026-05-22-recovery-grid-validation/code/05-grid-summariser.py` for the per-cell pass-rate table + binding-criterion verdict.
+
+---
+
 ## Priority queue — Phase 2 substantive work (post-OSF lock)
 
 Detailed in `planning/backlog-2026-05-03.md` §"What's preregistered, designed, but NOT YET IMPLEMENTED". Headlines:
