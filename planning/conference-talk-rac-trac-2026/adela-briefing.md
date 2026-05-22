@@ -157,6 +157,7 @@ The deck carries **two** backup sections behind the main 8 slides:
 | Hanson 2021's specific residual findings | **B10** | Provincial-capital over-production; Moran's I = 0.046 on residuals; prereg H3c replicates both |
 | Future statistical directions (HMM) | **B11** | Martin's state-space proposal; post-lodgement OSF amendment if pursued |
 | Why both frequentist and Bayesian | **B12** | Slide 6a is the published-literature comparator; slide 6b is the new substantive contribution |
+| **Isn't the 1,549 threshold too restrictive?** Sample-size reach | **B13** | Heatmap of detection rate × N × effect-bracket. Below N ≈ 1,000 nothing reachable; 50%-over-50y at N ≈ 2,500; 20%-over-25y not reachable at any practical N. Smaller subsets do cross-sectional (6b) + descriptive (B9) instead |
 
 ### G-slides — methods explainers (plain English)
 

@@ -723,6 +723,46 @@ information.
 
 ---
 
+## B13 · Reachability across sample size and effect size
+
+::: {.columns}
+::: {.column width="55%"}
+![Detection rate by sample-size N (rows) × effect bracket (columns). Each panel = an analysis level. Worst-case across null models. Green ≥ 0.80 (reliably reachable); yellow partial; red unreachable. Gaussian-tapered events.](figures/fig-reachability-historian.png){fig-align="center" width="100%"}
+:::
+::: {.column width="45%"}
+**For a given subset / unit of N inscriptions**, the table reads off what kinds of temporal deviations the preregistered envelope test can credibly detect.
+
+- Below **N ≈ 1,000**, almost no effect is reliably detectable
+- **50 %-over-50 y** events: need N ≈ 2,500
+- **20 %-over-25 y** events: not reachable at any practical N — below the method's resolving power
+- Smaller subsets still participate in cross-sectional regressions (6b) and descriptive-shape comparison (B9)
+:::
+:::
+
+<!--
+SPEAKER NOTE B13: this is the answer to "isn't the 1,549 threshold too
+restrictive?" objection. Show the full grid: small datasets aren't
+useless, they're just restricted to descriptive / cross-sectional
+work. The 1,549 number is the binding-bracket conservative reading;
+the grid shows what's reachable across the broader effect-detection
+envelope. The smallest events (20 % over 25 y) are below the method's
+resolving power at any practical N — that's a property of the data,
+not of our specific method.
+
+Worked-example anchor for Q&A: a hypothetical collegia subset with
+~ 3,000 inscriptions reads off as REACHABLE at the binding bracket for
+the empire-wide trajectory; PARTIAL at provincial level; OUT OF SCOPE
+at single-city level. The historian knows BEFORE running the analysis
+what claims the subset can support.
+
+Also mention briefly: this is for ONE specific method (the
+preregistered permutation-envelope test). Bayesian aoristic methods
+(baorista, Crema 2025) may have different reachability profiles —
+flagged as a Tier 3 / 4 follow-up.
+-->
+
+---
+
 ## Methods glossary (for the stats-curious) {.section-title}
 
 Plain-English explanations of the statistical operations in this talk, aimed at intelligent undergraduates from any humanities discipline. Adela should jump to whichever slide answers an audience question (press `o` for overview).
