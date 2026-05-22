@@ -428,3 +428,85 @@ Final deck: 33 slides (title + 9 main + deep-dive intro + 12 B + glossary intro 
 - Saved feedback memory: route compute to sapphire (not local); background tasks > 3 min. (Existing scratchpad rule from 2026-03-24 was the primary; the JSONL memory entry is the secondary capture.)
 
 **Contextual assumptions.** This session ran continuously across a calendar-day boundary without compaction or instance change — all entries reflect direct first-person experience. The talk delivery is Friday 2026-05-22 14:20 Aarhus time, ~ 7-8 hours after session close (Australia time). Adela has feedback in Shawn's email (not in the project files at session close); next session inherits the incorporation task. The Phase 2 grid is running independent of any further session activity; sapphire is on a stable network and the nohup process survives session disconnection. Standing rules respected throughout: all serious compute on sapphire; local-machine work limited to text edits + visual QA + light pandas; no silent parameter reductions on preregistered analyses; binary deliverables visually confirmed with Shawn before commit (validated repeatedly this session — Shawn caught the 1,549-false-precision issue and the slide-3a chart bug that I had visual-scanned without noticing).
+
+
+---
+
+## 2026-05-22 — Talk-day session (Adela's feedback incorporated; Phase 2 grid restarted)
+
+**Scope.** Final deck-prep ahead of Adela's 14:20 Friday delivery at TRAC7 Aarhus. Incorporated her per-slide feedback into the deck; produced standalone speaker artefacts; killed and restarted the Phase 2 mixture-recovery grid under an optimised concurrency configuration after a background investigation diagnosed the slowdown cause.
+
+**Deck content changes.**
+
+- Main path went from 9 main / 12 backup / 9 glossary to **9 main + 13 backup + 9 glossary**, plus new slide 7a (worked example).
+- Slide 6 merged old 6a (frequentist NBR comparator) and 6b (Bayesian Mundlak) into a single "What we found" punchline slide. Frequentist NBR demoted to B12.
+- Slide 7a added (between general implications and feedback questions) promoting Adela's wife/daughter corpus as a worked example.
+- Slide 5 reworked to drop the alpha-posterior framing in main visible content; "Output" line added in right column.
+- Slide 2 went through three iterations on minimalism (caption + punchline + spike interpretation).
+- Slides 3a / 3b: technical jargon stripped from captions (`a_50pc_50y`, `CPL-Gaussian` gone); bullets tightened.
+- Slide 4: captions now name Pompeii AD 79 cut-off + Dacia AD 106-271 window as verified interpretive anchors.
+- Slides 7, 8, 9 split from the previous combined slide 7: implications / feedback questions / open science as three separate slides.
+- B1, B3, B7, B13 elaborated for standalone-readability (Shawn's request that backup slides be consult-as-artefact rather than terse).
+- B1, B3, B13 subsequently split into a/b pairs to fix overflow on PDF render (no `.scrollable`; clean two-slide approach).
+- New backup R-slide B13a/b: Multi-scale (MAUP) cross-check — direct response to Adela's specific critique.
+- Local hardware references (`zbook`, `sapphire`) scrubbed from speaker notes and B-slide bodies.
+- All stale `slide 6a` / `slide 6b` cross-references updated to `slide 6` post-merge.
+
+**Figures.**
+
+- `fig-06-variance-partition.png` (new): clean horizontal stacked bar showing the 30 % within-province / 70 % "habit · economic · social · political · cultural · survival" partition with 95 % CI annotation. Built in matplotlib (~ 30 lines); replaces the four-panel posterior summary as the slide-6 hero.
+- Five figures with baked-in matplotlib titles cropped via PIL: `fig-02a` (was "A1. Empirical SPA — uniform aoristic mass…"); `fig-03` (was "Phase 1 reachability — provincial level…"); `fig-04b` ("Raw uncorrected per-province SPAs:…"); `fig-04c` ("Raw uncorrected per-city SPAs:…"); `fig-05` ("Synthetic mixture recovery (one cell)"). Originals preserved as `*.original.png` siblings for round-trip recovery.
+- `fig-04b` and `fig-04c` got short title bars added back via PIL composite ("Uncorrected per-province SPAs" / "Uncorrected per-city SPAs") at Shawn's request — short chart titles on the figure, separate caption underneath.
+- `fig-05` had the left "Posterior on alpha" panel cropped off (~ 1/3 of figure width); the right two panels (synthetic data decomposition + recovered ancient signal vs truth) are what now displays. Caption rewritten to describe both panels.
+
+**Speaker artefacts.**
+
+- HTML-comment speaker notes converted to `::: notes` divs so reveal.js speaker view (press `s`) picks them up (27 blocks).
+- All 27 notes rewritten as glance-friendly bullet lists (target ≤ 10-15 bullets per main slide; ≤ 6 per backup).
+- `inscription-spa-script.md/.pdf`: continuous-prose speaker script for rehearsal, ~ 1,900 spoken words across 10 slides (~ 12.7 min at 150 wpm). Hybrid format: slide-number headings as soft breaks; slide-advance cues in `[brackets]`.
+- `inscription-spa-notes.md/.pdf`: standalone bullet-form notes extracted from the `::: notes` divs, keyed to each slide. Printable / second-screen reference for live delivery.
+
+**File renames.** All deck-related artefacts renamed from `slide-outline.*` to `inscription-spa-*` for semantic clarity. Stale prior-session paper-format PDF moved to `archive/planning/conference-talk-rac-trac-2026/slide-outline-paper-format-2026-05-22-1244.pdf`.
+
+**Grid restart.**
+
+- Background investigation agent diagnosed: SMT saturation (19 workers on 12 physical cores = 14 of 19 workers SMT-paired; 21% silicon-level wall-clock lost to contention, invisible to per-worker CPU%).
+- Recommended config: `n_jobs=12`, `taskset -c 0-11` pin to physical cores, `PYTENSOR_FLAGS=mode=FAST_RUN,allow_gc=False`.
+- Second background agent applied the restart. Verification: 12 workers spawned, all pinned to logical CPUs 0-11 (mask `fff`).
+- Empirical post-restart timings: N=2,000 ≈ 18 s/fit (predicted 20-25); N=10,000 ≈ 30 s/fit (predicted 29-36). Wall-clock projection ~ 31.6 h (was ~ 100 h).
+- Grid running unattended at session close. Pre-restart snapshot of `grid-state.json` preserved on sapphire.
+
+**Background agents this session (3 total, all clean returns).**
+
+1. Concurrency investigation (`a9041eeae8e2603bd`): 1.2k tokens, 48 tool uses, 13 min wall. Read SMOKE-TEST.md, ran live diagnostics on sapphire (with explicit "do not touch the live grid" constraint), produced `CONCURRENCY-INVESTIGATION.md`.
+2. Grid restart (`a900b09abfd3554a1`): pre-restart snapshot saved → SIGINT to PID 633268 → all 18 workers gone within 30 s → relaunch under new config → verify mask + worker count → monitor first 5 cells → write `RESTART-LOG.md`. The earlier attempt (`af4524a13e1677586`) failed with API 529 before any tool calls; relaunch succeeded.
+3. Speaker notes consistency QA (`a50ed4e0681bf19b7`): walked through all main slides, identified divergences between visible content and speaker notes (notably slide 5's α-posterior references after the panel was cropped; slide 7's wife/daughter narration after the example moved to 7a), edited only speaker notes, produced `qa-report-2026-05-22.md`.
+
+**Commits.** Seven on `main`, all pushed:
+
+1. `854d196` — captured Adela's feedback + revision plan + QA report + TRAC PDF reference
+2. `47ff7ce` — deck source rewrite (qmd content + figure crops + new variance-partition figure + originals)
+3. `80f3805` — rendered deck artefacts (HTML + PDF; stale slide-outline.* removed)
+4. `4a54cc3` — speaker script + standalone notes (MD + PDF for both)
+5. `8626726` — archive stale LaTeX paper-format slide-outline PDF
+6. `cb32234` — grid concurrency investigation + restart log
+7. `f4318cc` — data-profile-iterate smoke-test outputs
+
+Plus a handoff commit `6f94bc8` (continuity + user-observations Obs 5).
+
+**Memory captures (5 via /remember).**
+
+- `2026-05-22-018eedaeab88` [gotcha] — SMT saturation cure (n_jobs=physical_cores + taskset pinning)
+- `2026-05-22-96af8f645552` [gotcha] — matplotlib `set_title` bakes invisibly into PNGs
+- `2026-05-22-48f6cf79bd4f` [feedback] — time-pressure cue → immediate explicit re-scope, not silent continuation
+- `2026-05-22-81c83b4699bb` [feedback] — hardware-name scrubbing for public artefacts
+- `2026-05-22-bbda749c90b1` [feedback] — minimalism = state the pedagogical principle, not just "shorter"
+
+**User-observations addition (1).** Obs 5 — visual-scan verification is the only real review for visual deliverables. Three new data points this session (figure title bake-in; caption row-direction error; slide overflow) reinforce Obs 1.
+
+**Wiki candidates flagged (2 in `~/personal-assistant/notes/_inbox.md`).**
+
+- Bounded background-agent briefs with halt-and-ask discipline scaling across a session (this session = three concurrent agents, all clean).
+- Three-artefact set for delegated talks (slides + bullet notes + continuous script — three cognitive moments).
+
+**Contextual assumptions.** This session ran continuously without compaction. The talk delivery is Friday 2026-05-22 14:20 Aarhus time; Adela delivers; Shawn cannot travel. The deck PDF was sent to Adela at session close; grid runs unattended on sapphire; sapphire is on stable network and nohup process survives session disconnection. Standing rule respected throughout: all serious compute on sapphire (the grid + the investigation agent's diagnostics ran there); local-machine work limited to text edits + visual QA + light pandas / PIL / Python. Three "visual-scan verification" catches by Shawn this session continue to validate the user-observations Obs 1 + 5 pattern; my "looks fine to me" reads on rendered visual artefacts are systematically less reliable than his.

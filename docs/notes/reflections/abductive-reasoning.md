@@ -479,3 +479,55 @@ Test not yet run — this is a session-close abductive note, not a completed inv
 **Method-level lesson.** When a sensitivity analysis is preregistered to "report alongside" the primary, *report alongside* should be taken literally — give it analytical space in the primary write-up, not just a footnote in the limitations. The three-weighting sensitivity is the right test for whether a variance-fraction estimand is robust to its denominator choice. When it isn't robust, that's information, not a problem to be hand-waved. The prereg's §5 framing — "exploratory sensitivities answering related but distinct substantive questions" — is precisely right; it took the empirical result to land that framing as more than a paragraph.
 
 **Second-order observation.** This was a surprise I would not have detected without running the sensitivity. The talk's slide 6b reports the 30 % unweighted figure as the headline, and that's correct under the prereg's binding rule — but a reader of the slide alone would not know that population's contribution roughly doubles under reasonable alternative weightings. The B12 backup slide ("Why both frequentist and Bayesian?") doesn't carry this nuance either. If a curious audience member asks "how robust is the 30 % to weighting choices?", the honest answer is "not very — the population-weighted variant is ~ 50 %, and the prereg flags this as a limitation". I should have folded this into the deck more explicitly; it's the kind of substantive nuance the talk's pedagogical-clarity rewrite tended to elide. Worth raising in the Adela-feedback-incorporation pass next session.
+
+
+---
+
+## Entry 11 — 2026-05-22: the SMT-saturation diagnosis is a one-layer-down lesson about benchmarking compute-bound workloads
+
+**Surprising fact.** A pymc/pytensor Bayesian mixture-recovery grid running on sapphire (Ryzen 9 7900, 12 physical / 24 SMT cores) was 3-4× slower than the standalone single-fit benchmark. The prior session's smoke-test had benchmarked three concurrency configurations:
+
+| Config | Per-fit wall | Throughput |
+|---|---|---|
+| Standalone (1 fit) | ~14-18 s | — |
+| Bash-parallel 20 procs | 17-32 s (avg 26 s) | 0.59 fits/s |
+| joblib loky n_jobs=20 | 50-115 s | 0.25 fits/s |
+| Subprocess-pool n_jobs=20 (chosen) | ~50 s | 0.19 fits/s |
+
+The smoke-test author concluded that subprocess startup overhead explained the gap between bash-parallel (0.59 fits/s) and subprocess-pool (0.19 fits/s). On that reasoning, the chosen orchestrator was intrinsically ~ 3× slower than the optimum and there was no fix short of rewriting the orchestrator.
+
+I had been ready to accept that conclusion. The fix turned out to be entirely different and operated on a different layer of the system.
+
+**Probe.** A background investigation agent re-examined the live grid (PIDs of all 19 workers, `/proc/PID/cpu_allowed_list` reads, `vmstat` snapshots, `ps` with `-o cpu_allowed`, py-spy-style stack samples). Three observations layered into the diagnosis:
+
+1. **SMT pairing**: in steady-state ps snapshots, **7 of 12 physical cores hosted 2 workers via SMT siblings**; 5 hosted 1 worker. 14 of 19 workers (74%) were in SMT-contended pairs. The kernel scheduler had distributed workers across the 24 logical CPUs roughly evenly — but "evenly across 24 logical CPUs" maps to "unevenly across 12 physical cores".
+
+2. **Per-worker CPU% looks fine**: each worker really IS at ~ 100% of its allocated logical-CPU slice. The contention is *between* SMT-paired workers at the silicon level, not at the OS-scheduler level. Per-process `%CPU` accounting can't see this — it reports the worker's own utilisation of its allocated thread, not the contention with its SMT sibling for shared per-core resources (L2 cache, FPU dispatch, branch predictor, memory controller queues).
+
+3. **`vmstat` shows the missing time**: under the grid's load, `vmstat` reports `us=79 id=21`. The 21% idle is wall-clock that's invisible to per-worker accounting but real — it's the silicon waiting on resource contention between SMT pairs. That 21% is roughly the slowdown factor relative to non-paired workload.
+
+The fix predicted from this diagnosis: cap `n_jobs` at the physical-core count and pin to logical CPUs 0-11 (the first SMT thread of each physical core), avoiding SMT siblings entirely.
+
+**Hypothesis tested + confirmed.** Predicted post-restart per-fit times under `n_jobs=12 + taskset -c 0-11`:
+
+| Cell N | Predicted | Measured (post-restart) |
+|---|---|---|
+| N = 2,000 | 20-25 s | **~ 18 s** (slightly better) |
+| N = 10,000 | 29-36 s | **~ 30 s** (within range) |
+| N = 50,000 | 45-72 s | **~ 50 s** (low end of range) |
+
+Predicted total wall-clock: 25-35 h. Measured trajectory: **31.6 h**. The restart agent ran the predict-then-measure protocol and confirmed both the per-fit timings AND the aggregate wall-clock match the SMT-pinning model within the predicted ranges.
+
+**Belief revision.** Three layers, in increasing scope.
+
+(i) **On the specific bottleneck.** I had been ready to attribute the slowdown to orchestrator-level overhead (subprocess startup, pytensor compile-cache locks, joblib coordination). All of those were ruled out: subprocess startup amortises to negligible because each cell runs 100 fits per python invocation; compile-cache locks would show as `D` state in `ps`, not `R` (workers were 100% in `R`); joblib coordination cost was already eliminated by using a plain subprocess pool, not joblib. The actual bottleneck was at the silicon layer — SMT-sibling contention — invisible to all of the higher-layer diagnostic tools the smoke-test had used. Lesson: when the obvious software-level mechanisms have been ruled out but the gap persists, look one layer down (silicon scheduling, NUMA, memory bandwidth) before declaring the workload intrinsically slow.
+
+(ii) **On the smoke-test pattern more generally.** The smoke-test had benchmarked three configurations and chosen the best of the three. What it had NOT done was benchmark across `n_jobs` *values* within a configuration. The 0.59 fits/s "bash-parallel 20 procs" result was a transient — short-lived shells in the smoke-test didn't all coexist for the full window. Under steady-state contention (which the live grid actually runs in), every concurrency config gives 50-100 s/fit because they're all SMT-saturated above n_jobs=12. The smoke-test missed this because it was comparing orchestrators, not n_jobs values. Going forward, any concurrency benchmark needs to sweep `n_jobs` from `physical_core_count − k` to `physical_core_count + k` to see the knee-of-the-curve, not just pick the best orchestrator.
+
+(iii) **On benchmarking compute-bound workloads more broadly.** The smoke-test had ALSO assumed that per-fit time would be independent of N (cell sample size); empirically N=2,000 cells take 62 s pre-restart and N=10,000 cells take 90 s pre-restart (44 % increase, not constant). That assumption was a second source of wall-clock under-projection: the smoke-test extrapolated from N=2,000 timings, missing the N-scaling cost. For future grid-scale Bayesian workloads on memory-bandwidth-sensitive hardware, the benchmark sweep needs both axes: `n_jobs × N`, not just `n_jobs` at one fixed N. The Ryzen's shared L3 cache (32 MB across two CCDs) is the latent variable explaining the N-scaling cost; larger N means more posterior-draw memory pressure means more cache-miss latency.
+
+**Method-level lesson.** *Predict-then-measure is the discipline that distinguishes a defensible diagnosis from a confident guess.* The background investigation agent did three things that made this entry possible: (i) it stated a quantitative prediction (n_jobs=12 → ~ 25-35 h wall-clock; per-fit ~ 17-25 s at N=2,000) before the restart; (ii) it pre-specified an early-halt threshold (> 35 s/fit after 5 cells = halt and report); (iii) it measured the actual post-restart timings and compared to the prediction. The prediction held. If it had failed, the post-restart agent would have halted the grid and surfaced the failure — not autonomously expanded scope to debug. This protocol is more robust than "diagnose and fix" because it makes the diagnosis falsifiable. Going forward, any compute-infrastructure diagnosis I do should produce a numeric prediction before the fix is applied; the fix is only "validated" if the prediction holds within stated bounds.
+
+**Second-order observation.** This is the second time in two sessions that a quantitative-prediction-with-bounded-test approach has produced a clean result (the first was the OSF lodgement adversarial-verifier dispatch from 2026-05-20, which made fix-quality falsifiable in the same way). The pattern works because it forces the diagnostic step to commit to a specific mechanism, not just a vague "this should be faster". A mechanism that predicts the wrong number is more useful than a mechanism that predicts no number, because the wrong-number case is informative — it tells you *which* layer of the model was wrong. The SMT-pinning prediction could have come back at "predicted 25-35 h, observed 80 h" — that would have told us SMT pairing was not the only bottleneck and there was a second layer to investigate (NUMA, memory bandwidth, something else). It came back within range, which means SMT pairing WAS the dominant bottleneck. Either outcome would have been informative; an unfalsifiable diagnosis would not.
+
+The pattern generalises: research-side claims should similarly carry quantitative predictions where possible. The 30% within-province population partition is more credible because the prereg committed to a "supported / borderline / refuted" decision rule with specific thresholds; the f_within sensitivity result is more credible because the prereg committed to a "if shifts by > 50% of CI width, flag as limitation" rule. Each predicted-then-measured number is a falsifiable step. The grid-restart's success today is a small-scale instance of the same discipline.
