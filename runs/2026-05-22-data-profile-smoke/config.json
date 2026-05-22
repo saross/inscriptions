@@ -1,0 +1,28 @@
+{
+  "dataset_path": "/home/shawn/Code/inscriptions/archive/data-2026-04-22/LIRE_v3-0.parquet",
+  "schema": "infer",
+  "subset_levels": [
+    {
+      "name": "dataset",
+      "columns": []
+    },
+    {
+      "name": "province",
+      "columns": ["province"],
+      "threshold_candidates": [100, 1000, 10000]
+    },
+    {
+      "name": "urban-area",
+      "columns": ["urban_context_city"],
+      "threshold_candidates": [10, 100, 1000]
+    }
+  ],
+  "artefact_checks": "default",
+  "date_columns": ["not_before", "not_after"],
+  "spatial_columns": ["Latitude", "Longitude"],
+  "output_dir": "/home/shawn/Code/inscriptions/runs/2026-05-22-data-profile-smoke",
+  "venv_python": "/home/shawn/Code/inscriptions/.venv/bin/python3",
+  "max_runtime_minutes": 15,
+  "comprehensive_mode": false,
+  "primary_key": "LIST-ID"
+}

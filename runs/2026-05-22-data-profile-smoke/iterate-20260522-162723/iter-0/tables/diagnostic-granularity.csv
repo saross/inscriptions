@@ -1,0 +1,9 @@
+bucket,count,share
+exact-0,8279,0.045277
+exact-25,172,0.000941
+exact-50,631,0.003451
+exact-100,662,0.00362
+exact-200,170,0.00093
+exact-500,0,0.0
+other-multiples-of-10,4422,0.024183
+other,168517,0.921598

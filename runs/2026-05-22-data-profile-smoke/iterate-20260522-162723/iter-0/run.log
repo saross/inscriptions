@@ -1,0 +1,10 @@
+[   0.00s] Loading parquet
+[   0.15s] Loaded shape=(182853, 63)
+[   0.15s] Dataset-level profile
+[   0.38s] Subset level: province
+[   0.48s] Subset level: urban-area
+[   0.79s] Artefact checks
+[   1.45s] Unexpected-pattern diagnostic
+[   1.46s] Writing reports
+[   1.47s] Wrote 83 claims
+[   1.47s] Done

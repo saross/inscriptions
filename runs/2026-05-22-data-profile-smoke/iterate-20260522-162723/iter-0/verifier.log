@@ -1,0 +1,33 @@
+verifier run — LIRE v3.0 iter-0
+date: 2026-05-22
+input claims: 83 (claims.jsonl present, well-formed)
+dataset: /home/shawn/Code/inscriptions/archive/data-2026-04-22/LIRE_v3-0.parquet
+verifier interpreter: /home/shawn/Code/inscriptions/.venv/bin/python3
+sampling: none (182,853 rows < 1M threshold)
+independent code path: re-loaded parquet with pandas; recomputed every primitive
+  (counts, rates, chi-square, p-values, midpoint-inflation, editorial spikes,
+  coordinate precision, granularity histogram, date-range histogram, subset
+  group counts) directly from source. Did not read tables/*.csv as source of truth.
+verdict: PARTIAL
+status_counts: pass=81, partial=2, fail=0, unverifiable=0
+severity (FAIL+PARTIAL): low=2
+findings:
+  - All 83 numerical claims reproduce within the spec tolerance bands.
+  - Two PARTIAL claims (count-province-group-count, count-urban-area-group-count)
+    flagged for source_method-string misdescription only. The recorded source_method
+    `df.groupby([col]).ngroups` corresponds to default dropna=True (yielding 65 and
+    1,045 respectively), but the reported values 66 and 1,046 require dropna=False.
+    The visible top-N table in profile-urban-area.md already shows `<null>` as a
+    40,944-row group, so the analytic choice is internally consistent; only the
+    source_method string in claims.jsonl is misleading.
+  - Midpoint-inflation chi² reproduces to <1e-6 relative (11350996.16 vs verifier
+    11350996.16).
+  - Editorial-spike chi² reproduces to <1e-6 relative (48.7587 vs verifier 48.7587,
+    p=2.89e-12).
+  - Coordinate-precision rate >4dp reproduces at 0.715012 (claim 0.715012).
+  - Granularity histogram and broad date-range histogram both reproduce exactly.
+  - Subset spot-check (Pannonia inferior, Oenoanda): both match exactly.
+outputs:
+  - corrections.jsonl (83 rows, schema-compliant)
+  - corrections.md (full audit + non-PASS detail + spot-checks)
+  - verdict.md (PARTIAL)

@@ -1,0 +1,11 @@
+group,count,dated_rate,geolocated_rate,date_range_median
+Roma,65452,1.0,1.0,99.0
+<null>,40944,1.0,1.0,99.0
+Pompeii,4511,1.0,1.0,78.0
+Salona,3472,1.0,1.0,149.0
+Mogontiacum,2971,1.0,1.0,28.0
+Ostia,2647,1.0,1.0,79.0
+Aquileia,2034,1.0,1.0,99.0
+Puteoli,1780,1.0,1.0,99.0
+Carnuntum (1),1648,1.0,1.0,129.0
+Cirta,1020,1.0,1.0,59.0
