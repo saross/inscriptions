@@ -1195,3 +1195,70 @@ Necessary conditions for the pattern to work:
 Generalisable to: PDF generation; slide-deck rendering; chart export; documentation site builds; code-to-config compilation; any pipeline where source-to-render fidelity matters and rendering failures are silent rather than loud.
 
 Captured from the OSF lodgement workflow, leading to commit `42f639d`. Worth adding to the project-level skill set for future high-stakes artefact-generation workflows.
+
+---
+
+## Obs 46 — 2026-05-22 [FINDING]: f_within is materially weighting-sensitive (30 % → 50 %); the unweighted primary is the conservative reading
+
+The preregistered §5 three-weighting sensitivity on the H3a Mundlak f_within (`runs/2026-05-21-talk-prep/code/06-sensitivity-weighting.py`) returned material divergence by the prereg's decision rule. Unweighted f_within = 0.300 [0.240, 0.366]; population-weighted = 0.496 [0.393, 0.610]; inscription-weighted = 0.421 [0.337, 0.512]. Median spread across variants is 0.196, > 3× the primary CI half-width (0.063). Per prereg §5, this is flagged as a paper-level limitation.
+
+Substantively: the population-attributable variance fraction is roughly *double* under weightings that focus on the cities where systematic relationships are sharpest. Two candidate explanations (logged in abductive-reasoning Entry 10): (A) small-N cities have high noise-to-signal that contaminates the unweighted denominator, so weighting cleans the estimate; (B) the substantive role of population in inscription production is genuinely different at different city sizes, with bigger cities exhibiting more diverse population-driven mechanisms. Both predict the same direction of effect but lead to different paper-level interpretations. The diagnostic test — examining the distribution of within-province population deviations in the small-N tail vs the large-N body — is not yet run.
+
+For the conference talk (Adela's delivery Friday 2026-05-22), the unweighted 30 % is reported as the headline per the prereg's binding rule, and the talk's slide 6b speaker notes flag the three-weighting result for any Q&A pushback. For the paper, the three weightings should be reported alongside each other with substantive interpretation, not just as a robustness footnote. This is a real finding about the structure of inscription-population scaling, not just a sensitivity result.
+
+Generalisable: variance-fraction estimands are intrinsically sensitive to the variance denominator's weighting. Any future paper that reports a "fraction of variance attributable to X" estimand should examine the multi-weighting decomposition as part of the primary reporting. This is a known property of mixed-effects model variance decompositions (Nakagawa & Schielzeth 2013 marginal-vs-conditional R²) but is easy to elide as "robustness check" rather than substantive analysis.
+
+Captured from Block 6 of the 2026-05-21 talk-prep run, committed at `773c9e0`.
+
+---
+
+## Obs 47 — 2026-05-22 [GOTCHA]: a single-cell value quoted forward as a "minimum-N" summary can canonise false precision across artefacts
+
+The "minimum N ≈ 1,549" figure quoted in the lodged prereg as the binding-bracket reachability threshold was actually one specific cell of the Phase 1 v2 simulation grid (urban-area level, cpl-k=3 null, Gaussian taper). The full range across the four null-model variants is:
+
+- Province {1,385; 1,618; 1,869; 1,938}
+- Urban-area {1,409; **1,549**; 1,854; 1,923}
+
+"1,549" is neither the median nor the conservative value across either level. The two levels' ranges essentially overlap, justifying a single combined headline — but the right headline is "~ 1,600 (range 1,400 – 1,950 across nulls)", not "1,549". The original figure had propagated forward through:
+
+- The lodged preregistration §3 (mentioned multiple times)
+- The conference talk's slide 3a (right column bullet)
+- The Adela briefing's slide-3a cheat sheet
+- The B9 backup slide (small-N cities)
+- The paper-fragment draft (`planning/paper-subsection-reachability.md`)
+- The continuity doc's future-work entry
+
+Without anyone interrogating "is this number a robust summary, or is it one cell?" until Shawn asked the direct question during deck QA.
+
+Fix (committed at `3e1d74a`): all talk artefacts updated to "≈ 1,600 (range 1,400 – 1,950 across nulls)"; speaker note expanded with the across-nulls rationale; the lodged prereg's number stays as "1,549" since the prereg is committed (any change goes via amendment trail). The continuity doc's mention also updated for consistency in future-work planning.
+
+Generalisable: any "summary statistic" inherited from a prior document deserves a re-derivation from the underlying data before being quoted forward, especially in publication-grade artefacts. For multi-variant simulation outputs (different null models, different tapers, different cells), the multi-variant range should always accompany or replace any single-cell summary. False precision in inherited numbers is a class of error that's invisible to source-review (the source agrees with itself) and only catchable by data-side re-derivation.
+
+The threshold-table parquet (`runs/2026-04-25-h1-simulation/outputs/h1-v2/thresholds.parquet`, ~ 7 KB) is committed and was on disk all along; the cross-variant range was visible the moment the file was opened. Quoting the prereg's number forward without opening the file was the actual error mode. Cheap re-derivation, expensive un-shipping.
+
+Captured from the slide-3a/3b colour-and-clarity QA round in the 2026-05-22 session.
+
+---
+
+## Obs 48 — 2026-05-22 [PATTERN]: agent-in-worktree with halt-and-ask discipline scales well for bounded chunky implementation tasks
+
+Spawned a general-purpose agent in a `git worktree` to handle the Phase 2 mixture-recovery grid design + harness implementation + sapphire launch. The agent's brief was self-contained (read prereg §3-4 + Decisions 17/19/20/21; pin grid axes per the prereg's binding minimums; implement the simulation harness; smoke-test one cell; launch on sapphire OR halt-and-ask if launch is too expensive). The agent honoured the halt-and-ask rule: when the smoke test revealed a 3-5× per-fit slowdown under concurrent load (27-66 h projected wall-clock vs the brief's 9 h upper estimate), the agent committed the design + harness + smoke-test results to its worktree branch but did NOT autonomously launch the grid — it returned the four decision options to the main thread instead.
+
+The pattern that worked:
+
+1. **Bounded brief**: the agent had a clear deliverable scope (design artefact + harness + smoke test + launch decision) with explicit hard-stop rules (no silent replicate-reduction; halt-and-ask if compute is more than projected).
+2. **Worktree isolation**: the agent committed to its own branch in `.claude/worktrees/`, leaving the main thread's working tree clean. Four commits preserved with `--no-ff` on merge so the agent's design trail is visible in the main history.
+3. **Discipline-respect**: the agent didn't try to negotiate the brief's stop rule down; it stopped and explained. The main thread (with broader standing context about Shawn's "multi-day runs are OK" authorisation) made the actual launch decision afterward.
+4. **Honest reporting**: the agent's return message itemised what it couldn't resolve (concurrency slowdown), what it had to proxy (pilot-posterior tier vector), and what wall-clock estimate was realistic given the slowdown. Not a "ready to ship" framing — a "here's the state and here are the open issues" framing.
+
+The agent's smoke test ran in 18s standalone but 70-90s under 19-way parallel — a 4-5x slowdown the agent flagged but underweighted in its 50h wall-clock projection (subsequent observation suggests 80-120h actual). For future similar agent uses: when an agent's wall-clock estimate is based on a smoke-test (typically 1 cell, no concurrency), the main thread should add a "post-smoke verification" step where the realistic-concurrency cost is measured before the final launch decision is locked in.
+
+Pattern is generalisable to other bounded chunky implementation tasks where:
+- The work is self-contained enough to brief in a single prompt (~ 1,000-3,000 words).
+- The deliverables are concrete and verifiable (committed code + smoke-test results).
+- The hard-stop conditions are pre-specifiable (no silent X reductions; halt-and-ask on Y).
+- The compute commitment is sequential and pause-able (the agent does design + smoke; main thread launches).
+
+Anti-pattern: agents asked to do exploration-and-judgement work where the brief can't pre-specify what counts as "done." For that, main-thread reasoning with subagents-for-context-management is the better pattern.
+
+Captured from the Phase B agent invocation in the 2026-05-21/22 session, committed at `db04bf0` (merge of `worktree-agent-a6e1b611cd0719a27` into main).

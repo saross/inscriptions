@@ -439,3 +439,43 @@ Test: regenerate with `-f markdown+autolink_bare_uris` plus the existing `--incl
 Working-notes Obs 42 carries the operational guidance for the specific issue. The wider abductive lesson is the one this entry captures: **silent multi-stage pipelines need stage-by-stage verification**, not end-to-end "did the output change?" verification. The latter can't distinguish between "fix applied to wrong stage" and "fix wasn't enough." The former can.
 
 **Second-order observation.** This entry was easy to write because both stand-in reviewers happened to agree on the same two items — cross-model agreement made the "this is a real catch, not a noise" judgement straightforward. If only one stand-in reviewer had flagged the replicate-count issue, I would have triaged it down as a single-model catch and possibly deferred it as not-load-bearing. The cross-model orthogonality at saturation produced both the catch and the confidence in the catch. The lesson generalises: cross-model framing is doing two jobs at once — improving coverage *and* providing the credibility signal for the items found.
+
+---
+
+## Entry 10 — 2026-05-22: f_within is materially weighting-sensitive; the unweighted 30 % is the conservative reading, not the full story
+
+**Surprising fact.** The preregistered §5 three-weighting sensitivity (Block 6 of the 2026-05-22 talk-prep work) returned material divergence in a direction I did not anticipate. The three variants:
+
+| Weighting              | f_within median | 95 % CI         |
+|------------------------|-----------------|-----------------|
+| Unweighted (binding)   | 0.300           | [0.240, 0.366]  |
+| Population-weighted    | **0.496**       | [0.393, 0.610]  |
+| Inscription-weighted   | **0.421**       | [0.337, 0.512]  |
+
+Median spread across variants is 0.196, more than three times the primary CI half-width (0.063). Per the prereg's §5 decision rule, this triggers a "flag as limitation in the paper" outcome. But that "limitation" framing understates what the data is actually saying. The population-weighted variant — where each city contributes to the variance numerator + denominator in proportion to its population — gives f_within ≈ 0.50, roughly *double* the unweighted estimate.
+
+I had braced for this sensitivity to come back robust (a "yes, the answer doesn't change much under different weighting choices" check). It did not. The three weightings disagree by a factor of 1.65×.
+
+**Probe.** What does it *mean* that f_within is bigger when cities are weighted by their size? Two candidate explanations.
+
+Candidate A: the sample's noise-vs-signal ratio varies systematically with city size, and weighted variances reduce the influence of noisy observations. Specifically: small cities have small inscription counts (the minimum is N = 1 in the LIRE-Hanson join). Small counts have high *relative* uncertainty — the NegBin variance at low mu is large compared to mu — so the *systematic* contribution of population to log expected count is masked by the *random* contribution of sampling noise. Weighting by population (or by inscription count) reduces the influence of these high-noise observations. The weighted f_within is therefore a "cleaner" measure of the population-attributable variance, with less noise contamination.
+
+Candidate B: population's *substantive* role in inscription production is genuinely different at different city sizes. Bigger cities might have more diverse mechanisms by which population produces inscriptions (more workshops; more occupational specialisation; more elite patrons commissioning monumental epigraphy); smaller cities might have a thinner palette of inscription-producing mechanisms, dominated by individual elite/military presence rather than by population-driven mechanisms. Under this reading, the weighted variants aren't "cleaner" — they're answering a different question: "within the cities where systematic population-driven inscription production is operating, how much does population explain?" vs the unweighted "across all cities, how much does population explain?".
+
+Both candidates predict the same direction of effect (weighted variants give bigger f_within); they differ in interpretation. Candidate A is a "this is the right number to quote" story; Candidate B is a "the choice of weighting is itself substantive" story.
+
+Test: examine the *distribution of within-province population deviations* in the small-N tail vs the large-N body. If candidate A is right, the small-N tail should look noisier (more dispersed deviations relative to systematic population variation); if candidate B is right, the small-N tail might look qualitatively different (e.g., truncated, sparse, with discontinuous patches reflecting individual cities rather than continuous population gradients).
+
+Test not yet run — this is a session-close abductive note, not a completed investigation. Logged for future session.
+
+**Belief revision.** Three layers.
+
+(i) **On the specific number.** I had been quoting "30 % of city-to-city variation attributable to within-province population" as the talk's headline. That number is correct as the prereg-binding answer. But the prereg's reason for choosing unweighted variance as the primary is methodological (it's the simplest, least-confounded denominator definition), not substantive. The substantive headline-finding is more nuanced: *at least* 30 % is population-attributable, and *up to* roughly 50 % under weightings that focus on the cities where systematic relationships are sharpest. The talk should report 30 % as the conservative reading; the paper should walk through all three weightings and let the reader see the range.
+
+(ii) **On the prereg's §5 sensitivities more generally.** I had been thinking of the §5 sensitivities as a list of "checks the prereg includes for due diligence". They are also (often) *substantive analyses that answer related but distinct questions*. The three-weighting result here is a case where the "sensitivity" is at least as informative about the underlying phenomenon as the "primary". Going forward, every §5 sensitivity should be approached as a potentially-substantive analysis, not just a robustness check, and the paper should give them analytical space rather than relegating them to a limitations subsection.
+
+(iii) **On variance-partition estimands more generally.** The "fraction of variation attributable to X" question is intuitively unambiguous but technically depends on which variance you're computing — which is sensitive to how observations are weighted. This is a known property of variance decompositions in mixed-effects models (the difference between "marginal R²" and "conditional R²" in Nakagawa & Schielzeth 2013 is a special case), but I had not internalised it as something that could matter *substantively* for this specific result. Going forward, any variance-fraction estimand I quote will get the multi-weighting decomposition examined as part of the primary reporting, not as a sensitivity.
+
+**Method-level lesson.** When a sensitivity analysis is preregistered to "report alongside" the primary, *report alongside* should be taken literally — give it analytical space in the primary write-up, not just a footnote in the limitations. The three-weighting sensitivity is the right test for whether a variance-fraction estimand is robust to its denominator choice. When it isn't robust, that's information, not a problem to be hand-waved. The prereg's §5 framing — "exploratory sensitivities answering related but distinct substantive questions" — is precisely right; it took the empirical result to land that framing as more than a paragraph.
+
+**Second-order observation.** This was a surprise I would not have detected without running the sensitivity. The talk's slide 6b reports the 30 % unweighted figure as the headline, and that's correct under the prereg's binding rule — but a reader of the slide alone would not know that population's contribution roughly doubles under reasonable alternative weightings. The B12 backup slide ("Why both frequentist and Bayesian?") doesn't carry this nuance either. If a curious audience member asks "how robust is the 30 % to weighting choices?", the honest answer is "not very — the population-weighted variant is ~ 50 %, and the prereg flags this as a limitation". I should have folded this into the deck more explicitly; it's the kind of substantive nuance the talk's pedagogical-clarity rewrite tended to elide. Worth raising in the Adela-feedback-incorporation pass next session.

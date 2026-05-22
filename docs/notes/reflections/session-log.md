@@ -356,3 +356,75 @@ Two calendar days of operational work that closed the OSF lodgement and opened t
 - Lodgement tag `osf-lodgement-2026-05-20` created and re-pointed four times, settling at commit `a2e40fd` post v4 PDF.
 
 **Contextual assumptions.** The Friday 2026-05-22 conference deadline is now a *hard* deadline — Adela needs the slide deck and speaker notes by Friday morning Aarhus time. The 36-hour analysis roadmap is built around her arrival; the decision gates exist because the implementation work is genuinely time-bounded. The OSF embargo on the prereg is a "in case we go double-blind" hedge, not a settled decision; the URL is publicly visible (unblockable) but the deposit contents are gated. The lodgement tag NOT including the OSF-URL amendment (the amendment lives in post-tag commits) is the deliberate convention — anyone needing the "as lodged" version clones at the tag, not at main. The next-session implementation work has been deliberately kept out of this session because the cleaner handoff is starting fresh with the roadmap in hand rather than mid-debugging-cycle.
+
+---
+
+## 2026-05-21 → 2026-05-22 — Session log: RAC-TRAC talk-prep arc, end to end
+
+Continuous single-session run from the Entry-7 handoff (post-OSF-lodgement, conference-talk-implementation pivot) through to a clean session-close for Adela's Friday-afternoon delivery at TRAC7 Aarhus.
+
+**Repository state at session open**: HEAD = `b0f1ddd` (`docs(reflect): /reflect entries — Entry 7 across reflection docs`). Clean tree.
+
+**Repository state at session close**: HEAD = `51f3c9f` (`docs(continuity): session handoff — talk-day queue + next-session prompt`). Clean tree. On origin/main.
+
+**Block-by-block summary of work landed**:
+
+- **Block 1** (`runs/2026-05-21-talk-prep/code/01-filter-and-prep.py`): apply prereg-canonical filter to LIRE v3.0; 180,609 rows; four row-level counts hit exact (180,609 / 65,435 Rome / 115,174 ex-Rome / 140,575 Hanson-city-assigned). One flagged finding deferred: the prereg's "~ 815" Hanson-cities figure was inherited from a stale Latin-province subset; text-spec-faithful count is 1,044. Shawn approved (a) — broader 1,044-city sample.
+- **Block 2** (`02-empire-province-city-spas.py`): empire/province/city raw SPAs at 16:9; later re-rendered as 2x4 small-multiples per Shawn's feedback. Validity check: Pompeii cuts off cleanly at AD 79.
+- **Block 3** (`03-hanson-nbr-bootstrap.py`): frequentist NBR + 1,000-replicate row-resample bootstrap. β = 0.566, 95 % CI [0.543, 0.574]; OLS log-log β = 0.284, R² = 0.04. Later re-rendered with (const, slope) bootstrap pairs for a fitted-line CI band.
+- **Block 4** (`04-mixture-recovery-synthetic.py`): synthetic mixture-recovery demo. α posterior covers truth (0.477 / 95 % CI [0.414, 0.541]; truth 0.50); Pearson r = 1.000 vs true p_gen; all prereg validation gates pass. Ran on sapphire (2 s; native C-compile).
+- **Block 4b** (`05-h3a-bayesian-mundlak.py`): Bayesian within-between Mundlak NBR per prereg §4. β_within = 0.587; β_between ≈ −0.26 (CI straddles 0); **f_within = 0.299, 95 % CI [0.240, 0.366]; verdict supported**. Re-fit with tune=3,000 (initial tune=1,000 hit R-hat = 1.0100 exactly at gate). Ran on sapphire (78 s).
+- **Block 5** (slide assembly): populated `slide-outline.qmd` with all five new figures + numerical results. Added a new slide 6b for the Mundlak result. Wired in slide-2 figures from `runs/2026-05-17-*/` and slide-3 figure from `runs/2026-04-25-h1-simulation/`. Rendered three formats: Quarto revealjs HTML; LaTeX paper-document PDF; slide-format PDF via Decktape + Brave (installed at `~/tools/decktape/` for this session, reusable for HUMN8031). Fixed title-slide "Invalid Date" bug + empty-slide-from-orphan-comment bug.
+- **Block 6** (`adela-briefing.md`): wrote the slide-by-slide cheat-sheet + 9 anticipated-question Q&A responses + backup-slide map + tone framing + logistics. ~ 4,000 words.
+
+**Phase A sensitivities (Block 6 + 7, ran overnight on sapphire)**:
+- `06-sensitivity-weighting.py`: three-weighting f_within. Material divergence flagged per prereg §5: unweighted 0.300; population-weighted 0.496; inscription-weighted 0.421. Median spread 0.196 > primary half-width 0.063. Substantive finding logged in working-notes Obs 46 + abductive-reasoning Entry 10.
+- `07-sensitivity-measurement-error.py`: Hanson-population measurement-error at σ_pop ∈ {0.1, 0.2, 0.3}. ROBUST under all three σ_pop levels; max shift from primary 0.045, well inside the 0.063 threshold. Strengthens the B3 backup-slide claim.
+
+**Phase B mixture-recovery grid validation (running on sapphire)**:
+- Spawned a background `general-purpose` agent in a worktree to handle the design + harness + smoke-test + launch. Worktree at `.claude/worktrees/agent-a6e1b611cd0719a27`.
+- Agent committed 4 logical units: design artefact (`runs/2026-05-22-recovery-grid-design/`), simulation harness (`runs/2026-05-22-recovery-grid-validation/code/`), smoke-test results + dynamic-module-loading fix, subprocess-pool orchestrator + halt-for-direction.
+- Grid axes (honouring prereg/Decision 21 binding minimums): 5 α × 6 shapes × 5 tier-weight vectors × 3 N values × 100 replicates = 450 cells × 100 reps = 45,000 fits.
+- Smoke test passed: one cell × one replicate gave α covering truth, Pearson r = 0.9929 (above prereg-binding 0.95), R̂ = 1.0063, 0 divergences.
+- Agent halted at launch decision because parallel-load wall-clock projection (27-66 h) exceeded the brief's 9.4 h spec estimate. Main thread launched after Shawn's "save ~ 20 % of cores; multi-day OK" direction.
+- Worktree merged into main via `--no-ff` (commit `db04bf0`); worktree branch deleted after merge.
+- Grid running on sapphire at `~/cc-scratch/inscriptions-recovery-grid/` with `--n-jobs 19`. 9 of 450 cells complete at session-close (~ 10 h elapsed). Realistic wall-clock estimate now 80-120 h based on observed per-fit timing under parallel load.
+
+**Tier-1 historian-facing reachability guide**:
+- `runs/2026-05-22-reachability-guide/code/build-historian-table.py` — derives a worst-case-across-nulls detection-rate table from the existing Phase 1 v2 `power-curves.parquet`. No new compute required.
+- `runs/2026-05-22-reachability-guide/code/rerender-slide-3a-heatmap.py` — re-renders the slide 3a Phase-1 heatmap in red-yellow-green palette matching slide 3b's colour grammar.
+- Three-panel heatmap (empire / province / urban-area) with detection rate annotated per cell; greyed cells mark "not in this level's simulation grid".
+- Paper draft fragment at `planning/paper-subsection-reachability.md` (~ 1,200 words) with collegia worked example.
+- Tier 2/3/4 follow-ups logged in continuity (finer bracket grid; per-subset reachability; baorista parallel analysis).
+- Slide 3b in main deck (was B13; promoted on Shawn's request).
+
+**Deck iteration arc** (high-level, no commit-by-commit fidelity):
+
+- Initial: 7-slide skeleton from the overnight planning.
+- Pass 1: added slide 6b for Mundlak result (8 main slides).
+- Pass 2: applied `smaller: true` globally + per-slide trims to fight overflow under revealjs's 720p canvas.
+- Pass 3: ruthless visible-text minimisation per Shawn's pedagogical feedback ("audiences can't both read and listen").
+- Pass 4: renamed slide 6 → 6a; replaced jargony "binding analysis" with question-form title; added 12 backup slides (B1-B12) for anticipated-question reserve.
+- Pass 5: added 9 G-series methods-glossary slides for plain-English methods explainers.
+- Pass 6: added B13 (reachability heatmap); promoted to slide 3b in the next pass; renamed slide 3 → 3a.
+- Pass 7: fixed slide 3a chart bug (sharey=True misaligned empire-level data); recoloured to RYG to match 3b; tightened bracket labels to prevent overlap.
+- Pass 8: corrected "1,549 min N" → "~ 1,600 (range 1,400 – 1,950 across nulls)" per the four-cell range; expanded speaker notes with empire-only-at-50k rationale + 1,600 vs 1,549 rationale.
+
+Final deck: 33 slides (title + 9 main + deep-dive intro + 12 B + glossary intro + 9 G).
+
+**Continuity updates**:
+- Four open caveats from Phase B work logged: concurrency slowdown unresolved; `pilot_proxy` tier vector is a proxy not a real posterior draw; W-1 + PPC numerical thresholds deferred; smoke-test R-hat close to gate.
+- Tier 2/3/4 reachability extensions logged as future work.
+- New "Talk-day handoff queue" section above the existing Phase 2 substantive work queue, with three immediate priorities for next session.
+
+**Tooling additions** (out-of-repo, local machine):
+- `~/tools/decktape/` — local Decktape install via npm (109 deps, no Chromium pull). Points at Brave via `PUPPETEER_EXECUTABLE_PATH=/usr/bin/brave-browser`. Reusable across projects.
+
+**Sapphire workspace**:
+- `~/cc-scratch/inscriptions-talk-prep/` — Phase A sensitivities + Blocks 1-5 sapphire mirror; venv with pymc 6.0.1.
+- `~/cc-scratch/inscriptions-recovery-grid/` — Phase 2 grid validation; running.
+
+**Memory captures**:
+- Saved feedback memory: route compute to sapphire (not local); background tasks > 3 min. (Existing scratchpad rule from 2026-03-24 was the primary; the JSONL memory entry is the secondary capture.)
+
+**Contextual assumptions.** This session ran continuously across a calendar-day boundary without compaction or instance change — all entries reflect direct first-person experience. The talk delivery is Friday 2026-05-22 14:20 Aarhus time, ~ 7-8 hours after session close (Australia time). Adela has feedback in Shawn's email (not in the project files at session close); next session inherits the incorporation task. The Phase 2 grid is running independent of any further session activity; sapphire is on a stable network and the nohup process survives session disconnection. Standing rules respected throughout: all serious compute on sapphire; local-machine work limited to text edits + visual QA + light pandas; no silent parameter reductions on preregistered analyses; binary deliverables visually confirmed with Shawn before commit (validated repeatedly this session — Shawn caught the 1,549-false-precision issue and the slide-3a chart bug that I had visual-scanned without noticing).
