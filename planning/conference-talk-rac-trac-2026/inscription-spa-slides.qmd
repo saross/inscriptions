@@ -1,9 +1,9 @@
 ---
 title: "Dates-as-Data for Inscriptions"
-subtitle: "Using SPA with Latin epigraphic databases to investigate changing complexity in the Western Roman Empire — RAC-TRAC 2026, TRAC7, Aarhus"
+subtitle: "Using Summed Probability Analysis (SPA) with Latin epigraphic databases to investigate population in the Western Roman Empire — RAC-TRAC 2026, TRAC7, Aarhus"
 author:
-  - "Adela Sobotková (Aarhus University) — presenting"
-  - "Shawn Ross (Macquarie University) — author, in absentia"
+  - "Adela Sobotková (Aarhus University)"
+  - "Shawn Ross (Macquarie University)"
 date: "2026-05-22"
 date-format: long
 format:
@@ -17,249 +17,119 @@ format:
     footer: "Preregistration: osf.io/uycs6 (embargoed) — repo: github.com/saross/inscriptions/tree/osf-lodgement-2026-05-20"
 ---
 
-## 1 · The dates-as-data tradition, and a persistent puzzle
-
-::: {.columns}
-::: {.column width="60%"}
-- 40 years of "dates as data" in archaeology (Rick 1987; Timpson et al. 2014; Crema & Bevan 2021)
-- LIRE v3.0: **180,609 inscriptions**, 50 BC – AD 350 (Kaše et al. 2023)
-- **The recurring objection** — the **epigraphic habit** (MacMullen 1982; Hanson 2021)
-- **Our question**: how much demographic signal survives editorial distortion?
-:::
-::: {.column width="40%"}
-![Raw empire-wide SPA, LIRE v3.0 (180,609 inscriptions, 5-year bins, uniform aoristic). Thin band = 95 % row-resample bootstrap CI.](figures/fig-04a-empire-spa.png){fig-align="center"}
-:::
-:::
-
-<!--
-SPEAKER NOTES — slide 1 (≈ 90 s):
-Set up the project as a contribution to the dates-as-data conversation
-that has been running for ~40 years in radiocarbon archaeology and is
-now becoming live in epigraphic studies (cite Heřmánková, Kaše,
-Sobotková 2021 if asked). Acknowledge the audience's likely
-scepticism head-on: the "habit only" position is a well-established
-critique. Frame the talk as a methodological contribution that
-takes that critique seriously — by separating editorial distortion
-from underlying signal before doing any substantive analysis —
-and asks how much residual demographic signal is left when we do.
-
-Tone: open, exploratory, inviting feedback. We are NOT claiming to
-have settled the debate, we are claiming to have a methodological
-framework that lets the debate proceed on better evidence.
--->
-
----
-
-## 2 · Editorial distortion has a measurable signature
+## 1 · Are inscriptions a demographic proxy?
 
 ::: {.columns}
 ::: {.column width="55%"}
-![](figures/fig-02a-empirical-spa.png){fig-align="center" width="100%"}
+Radiocarbon date SPA has been used as a demographic proxy in archaeology for 40 years.
 
-- **54.5 %** of `not_before` end in `01`; **53.0 %** of `not_after` end in `00`
-- Largest step in the SPA: **+1,159 at the 1 BC / AD 1 boundary**
-- Narrow spikes at AD 77.5 (Flavian), 122.5 (Hadrianic), 212.5 (Severan)
+Can Latin inscriptions be used the same way? (e.g., **LIRE v3.0 with 180,609 inscriptions**)
+
+**The Objection**: Inscripton counts only reflect the *epigraphic habit*, not demography.
+
+**Our question**: How much (if any) demographic signal is in the counts?
 :::
 ::: {.column width="45%"}
-![](figures/fig-02b-width-histogram.png){fig-align="center" width="100%"}
-
-**Reading the signature**:
-
-- Wide templates → editorial encoding artefact
-- Narrow spikes → real ancient clustering (sustain under high-precision filter)
+![Raw empire-wide SPA, LIRE v3.0 — 5-year bins, uniform aoristic. Thin band = 95 % row-resample bootstrap CI.](figures/fig-04a-empire-spa.png){fig-align="center"}
 :::
 :::
 
-<!--
-SPEAKER NOTES — slide 2 (≈ 110 s):
-The audience knows from experience that some dates in the corpus are
-"AD 1 – 100" or "Hadrianic" rather than precise years, but they may
-not have seen the empirical signature decomposed this cleanly. The
-key takeaway: wide-template intervals deposit FLAT PLATEAUS of mass
-(under uniform aoristic), not preferential mass at the midpoint —
-and the empirical SPA shows exactly that. The plateau-step structure
-at century boundaries is the editorial artefact.
+::: notes
+**Slide 1** (≈ 90 s)
 
-DEFINING "MIDPOINTS" PROPERLY: the AD 77.5, 122.5, and 212.5 spikes are
-**midpoints of regnal-interval editorial templates**, not dynasty
-labels:
-  - AD 77.5 = midpoint of Flavian-period consular-date templates such
-    as [78, 79], [77, 79], [76, 78] (multiple consular pairs from the
-    Vespasian / Titus era stacking up at this bin centre).
-  - AD 122.5 = mass from Hadrian's reign template [117, 138] (552
-    inscriptions) PLUS the exact-year template [123, 123] (1,304
-    inscriptions encoding consular AD 123 explicitly).
-  - AD 212.5 = midpoint of Severan reign-interval templates centred on
-    early-3rd-century consular pairs (similar logic to AD 77.5).
-
-DEFINING "HIGH-PRECISION FILTER": the high-precision subcorpus is the
-subset of inscriptions whose stated date range is narrow — operationally,
-`date_range = not_after - not_before ≤ 25` years (so inscriptions
-confident to the quarter-century or finer). About 8,279 inscriptions in
-the corpus have date_range = 0 (single-year-precise); about 20,286 have
-date_range ≤ 25. When you re-do the empire SPA on JUST those narrow
-inscriptions, the broad plateau largely dissolves (because wide-template
-inscriptions get filtered out) but the regnal spikes at AD 77.5, 122.5,
-212.5 INTENSIFY in relative terms — proving they're real ancient
-clustering, not editorial encoding.
-
-This slide is the EMPIRICAL CASE that editorial distortion is real,
-measurable, and separable. It earns the audience's attention for the
-methodological argument that follows.
--->
+- SPA tradition: Rick 1987 · Timpson 2014 · Crema & Bevan 2021
+- LIRE v3.0: 180,609 inscriptions, Western Empire, 50 BC – AD 350 (Kaše 2023)
+- Objection: MacMullen 1982 / Hanson 2021 — *epigraphic habit*, not demography
+- Wedge (Petra Heřmánková): even ~ 10 % demographic = significant
+- *Take-away*: not refuting habit — testing how much signal survives
+- Tone: exploratory, feedback-seeking
+:::
 
 ---
 
-## 3a · A power simulation: which analyses are reachable?
+## 2 · Problem: Serious editorial distortion of inscription dates
+
+![Raw empire-wide SPA, annotated with century boundaries. Wide slabs at century boundaries are the convention layer.](figures/fig-02a-empirical-spa.png){fig-align="center" width="80%"}
+
+*"2nd century AD" · "mid-Flavian" · "reign of Hadrian"* are conventions, not uniform probabilities over years.
+
+::: notes
+**Slide 2** (≈ 110 s)
+
+- **Concrete example**: "2nd c AD" ≠ uniform 100–199, it's *the template*
+- Other examples: "mid-Flavian" · "reign of Hadrian" · "second quarter of the 3rd c"
+- **Hazard**: uniform-aoristic on conventional dates → flat plateaus + sharp steps
+- **Evidence**: 54.5 % `not_before` end `01` · 53 % `not_after` end `00` · +1,159 at BC/AD step
+- **Spikes (proactive — someone will ask)**: AD 77.5 / 122.5 / 212.5 are a mix of convention + tighter dating
+- **Hadrianic 122.5**: ~ 70 % year-precise (consular AD 123) + ~ 30 % reign-template [117, 138]
+- **Close**: convention is separable → slide 3a (reach) · slide 5 (model)
+
+*If pressed on specifics*:
+- AD 77.5 = Flavian consular pairs [78, 79] etc — real practice, "Flavian" is editorial label
+- AD 212.5 = Severan reign-interval, closest to pure convention
+- High-precision filter (≤ 25 y): ~ 20,286 inscriptions; NB Hadrian's 21-y reign fits inside → filter is not a clean separator; mixture model on slide 5 is the proper tool
+:::
+
+---
+
+## 3a · Minimum corpus required to detect deviations determined by simulation
 
 ::: {.columns}
 ::: {.column width="55%"}
-![Detection rate (colour) by **effect bracket** (rows) × **sample size n** (columns). Top row `zero` = false-positive control. Binding bracket `a_50pc_50y` (50 %-over-50 y, Gaussian-tapered). White line = ~ 80 %-detection contour. Province-level analyses with the CPL-Gaussian null.](figures/fig-03-phase1-heatmap.png){fig-align="center" width="100%"}
+![Detection rate (rows = event magnitude / duration; columns = sample size). Bottom row = null with no planted event. Greener cells = reliably detectable.](figures/fig-03-phase1-heatmap.png){fig-align="center" width="100%"}
 :::
 ::: {.column width="45%"}
-Synthetic corpora with **known** deviations → run through the detection method → measure detection rate.
-
-For the binding bracket:
-
-- **Empire**: reachable at n = 50,000 *(only n tested at empire scale)*
-- **Province / urban-area**: min n ≈ **1,600** *(range 1,400 – 1,950 across nulls)*
-- False-positive control ≤ 5 % across all 96 zero-effect cells
+- **Empire** tested at n = 50,000 to demonstrate utility of LIRE
+- **Province / city** tested at various n. **≥1,600 inscriptions** needed to detect crisis-scale change (50% count change in 50 years)
+- False-positive rate ≤ 5 % on intentionally null data
 :::
 :::
 
-<!--
-SPEAKER NOTES — slide 3 (≈ 100 s):
+::: notes
+**Slide 3a** (≈ 100 s)
 
-WHAT THIS SLIDE IS: this is the first phase of the project's methodology
-— a POWER SIMULATION completed before any substantive analysis. The
-point to communicate to the audience: we are not running every test on
-every small subset. We did the simulation work first to determine where
-the data has enough statistical power to support a test. Cells that
-don't clear the minimum-N gate are flagged "unreachable" rather than
-reported with inflated false-positive rates.
+- **Power simulation** done *before* substantive analysis — pre-analysis discipline
+- Synthetic corpora with planted signal → run detection method → measure rate
+- 96 cells × 1,000 replicates each
+- **Empire** (n = 50,000): reachable — that's the only n tested at empire
+- **Province / city**: ≥ ~ 1,600 inscriptions for crisis-scale (50 % / 50 y)
+- False-positive ≤ 5 % across all 96 nulls (range [0.007, 0.049])
 
-DEFINING A "CELL": a single cell in the simulation grid is one
-combination of {analysis level (empire / province / urban-area) ×
-data subset × null-model class (exponential / piecewise-linear) ×
-effect bracket (size × duration × shape — e.g. 50%-over-50y-Gaussian) ×
-sample size n}. Each cell gets 1,000 synthetic replicates; detection
-rate is the fraction of replicates the method correctly flags.
-
-THE METHOD ON THE HEATMAP: each row is a different bracket (a known
-effect to recover); the colour is detection rate. The bracket
-"a_50pc_50y" is the binding one — a 50%-amplitude deviation over a
-50-year window, smoothed with a Gaussian taper. This is the
-conservative bracket we promise to detect; smaller effects are out of
-scope. Yellow = nearly perfect detection; green = still detectable;
-purple = below detection floor (where the zero-effect cell sits, as a
-false-positive control).
-
-WORTH SAYING ALOUD: v2 simulation achieved false-positive control ≤ 5%
-across all 96 zero-effect cells (range [0.007, 0.049]) — the method is
-properly calibrated. The 96-cell reachability map is a public
-scientific result on its own — other epigraphic-corpus studies could
-use these thresholds as a methodology reference.
-
-WHY "EMPIRE n = 50,000 ONLY"? The empire was simulated at a SINGLE
-n-grid point (n = 50,000), not across a range. The actual filtered
-empire corpus is N = 180,609 inscriptions, so testing at smaller n
-values doesn't correspond to any real-world empire-scale analysis we'd
-plausibly run. The empire-level result reads "yes, reachable at this
-scale" — but doesn't pin a lower bound on what would also be
-reachable. Province and urban-area, by contrast, were tested across
-the full n grid (100 → 25,000 for province; 25 → 2,500 for
-urban-area), because real provincial / urban-area corpora vary
-substantially in size. That's where the "min n ≈ 1,600" floor comes
-from — it's the smallest n at which the province / urban-area
-simulations achieve ≥ 80 % detection on the binding bracket.
-
-WHY "1,600" AND NOT "1,549" OR SOMETHING MORE PRECISE? Because the
-actual measured thresholds vary across the four null-model
-specifications: province values are {1,385, 1,618, 1,869, 1,938};
-urban-area values are {1,409, 1,549, 1,854, 1,923}. The two levels'
-ranges essentially overlap, justifying a single headline figure. The
-rounded "≈ 1,600" sits inside both measured ranges (slightly more
-conservative than the median across nulls) and avoids implying false
-precision. If asked: the exact median across all 8 measured cells is
-~ 1,700; we round down to 1,600 as a slightly-more-conservative
-headline.
-
-IF ASKED ABOUT THE MATH: forward-fit null in true-date space, then
-synthetic-from-null data-generating process with empirical aoristic
-widths bootstrapped in, 1,000 simulation iterations × 1,000 Monte Carlo
-replicates per cell.
--->
+*If pressed*:
+- "1,600" is rounded; measured floors range 1,385–1,938 across four null specs
+- Heatmap colours: greener = reliably detectable; redder = below floor
+:::
 
 ---
 
-## 3b · Reachability across sample size and effect size
+## 3b · Deviation detection across sample and effect sizes
 
 ::: {.columns}
 ::: {.column width="60%"}
-![Detection rate by N (rows) × effect bracket (columns). Grey cells = combination not in the simulation grid for that level.](figures/fig-reachability-historian.png){fig-align="center" width="100%"}
+![Detection rate by sample size (rows) and event size (columns). Grey = combination not simulated at that scale.](figures/fig-reachability-historian.png){fig-align="center" width="100%"}
 :::
 ::: {.column width="40%"}
-**Practical reads**:
-
-- **N < 1,000** → nothing reliably detectable
-- **50 %/50 y** events → need **N ≈ 2,500**
-- **20 %/25 y** events → unreachable at any practical N
-- Smaller subsets → cross-sectional (slide 6b) + descriptive (slide 4) instead
+- **N < 1,000** → no reliable change-detection
+- **N ≈ 2,500** → 50 % / 50 y events detectable
+- **20 % / 25 y** events → undetectable at any tested N
+- Smaller corpora are still useful for cross-sectional or descriptive analyses
 :::
 :::
 
-<!--
-SPEAKER NOTES — slide 3b (≈ 90 s):
+::: notes
+**Slide 3b** (≈ 90 s)
 
-WHAT THIS SLIDE DOES: extends slide 3a's binding-bracket headline
-(min N ≈ 1,600 for the 50 %-over-50 y bracket at province / urban-area
-level — the actual measured values range 1,385 – 1,938 across the
-four null-model variants; "1,600" is the rounded headline figure)
-to the broader effect-detection envelope. For a historian asking "can
-my subset of N inscriptions support a confirmatory deviation-detection
-claim?", this reads off the answer.
+- **Practical reads** for a historian's subset:
+  - **N < 1,000** → cross-sectional or descriptive only
+  - **N ≈ 2,500** → 50 % / 50 y events reliably (≥ 0.97 detection)
+  - **20 % / 25 y** → undetectable at any tested N (method-broad, not us-specific)
+- Empire-wide subsets (e.g. collegia ≈ 3,000) → reachable at empire, partial at province
+- "Pre-analysis discipline" — what claims YOUR subset supports
 
-THE PRACTICAL READS:
-  - Below N ≈ 1,000: effectively unreachable for confirmatory
-    deviation-detection at the preregistered false-positive rate.
-    The inscription series can still support descriptive shape
-    comparison (which we do on slide 4) and contribute leverage to
-    cross-sectional regressions (slide 6b).
-  - At N ≈ 2,500: the binding 50 %-over-50 y bracket becomes
-    reliably reachable (detection rate ≥ 0.97). This is where empire-
-    wide subsets like collegia (~ 3,000), military-diploma inscriptions
-    (similar order), or specific religious-cult subsets start being
-    analytically interesting.
-  - The 20 %-over-25 y bracket (small, narrow events) is below the
-    method's resolving power at any practical N we tested. This is a
-    property of inscription-SPA inference broadly, not specific to our
-    method.
-
-WHY THIS MATTERS FOR THE FIELD: dates-as-data work on inscription
-corpora has historically been opportunistic — researchers test
-whatever subset is available, against whatever pattern catches the
-eye, without prior calibration. The Phase 1 reachability map is a
-pre-analysis discipline: it tells you before you run an analysis
-what claims your subset can credibly support, and where you should
-drop to descriptive / cross-sectional reasoning instead.
-
-WORKED EXAMPLE for Q&A: a hypothetical collegia / guild inscription
-subset (~ 3,000 inscriptions empire-wide) reads off as REACHABLE for
-the binding bracket at empire scale; PARTIAL at provincial scale;
-OUT OF SCOPE at single-city scale. The historian knows BEFORE running
-the analysis what claims the subset can support.
-
-SCOPE caveats to soft-pedal aloud, in speaker notes for reference:
-  - This is for ONE specific method (the preregistered permutation-
-    envelope test). Bayesian aoristic methods (Crema 2025, baorista)
-    may have different — possibly more permissive — reachability
-    profiles; a parallel analysis is on the post-talk to-do list.
-  - The current grid covers three effect-size brackets. Tier 2 of the
-    follow-up work fills in finer brackets; Tier 3 produces per-subset
-    reachability tables using each subset's own aoristic-width
-    distribution. Both are committed to in the paper's methodology-
-    supplement section.
--->
+*If pressed*:
+- Tier 2 follow-up: finer brackets · Tier 3: per-subset reachability with subset's own aoristic widths
+- Method = preregistered permutation-envelope test; Bayesian aoristic (Crema 2025) may differ
+:::
 
 ---
 
@@ -267,328 +137,189 @@ SCOPE caveats to soft-pedal aloud, in speaker notes for reference:
 
 ::: {.columns}
 ::: {.column width="50%"}
-![Top 8 provinces by inscription count (Rome excluded); raw uncorrected SPAs, unit-peak-normalised.](figures/fig-04b-province-spa.png){fig-align="center"}
+![Raw, uncorrected per-province SPAs, top 8 provinces by inscription count, Rome excluded, unit-peak-normalised. Dacia's narrow window matches the Roman occupation period (AD 106–271).](figures/fig-04b-province-spa.png){fig-align="center"}
 :::
 ::: {.column width="50%"}
-![Top 8 Hanson-matched cities (Rome excluded); raw uncorrected SPAs, unit-peak-normalised.](figures/fig-04c-city-spa.png){fig-align="center"}
+![Raw, uncorrected per-city SPAs, top 8 Hanson-matched cities by inscription count, Rome excluded, unit-peak-normalised. Pompeii cuts off at AD 79.](figures/fig-04c-city-spa.png){fig-align="center"}
 :::
 :::
 
-<!--
-SPEAKER NOTES — slide 4 (≈ 110 s):
-Show the data. The point here is empirical, not statistical: at every
-analysis scale we look at, there's structure beyond a uniform
-distribution. The editorial artefact is present but doesn't drown out
-the underlying signal — especially at smaller scales where individual
-city / province dynamics start to show through.
+*Each curve has its own shape — some match recognisable historical events; most reflect a mix of demography, habit, and survival.*
 
-Be explicit: these are RAW, not mixture-corrected. The mixture model
-discussed next is the proposed correction. We're showing the
-uncorrected data first because (a) it's what the field traditionally
-analyses and (b) the editorial-distortion problem we identified on
-slide 2 lives in these curves.
+::: notes
+**Slide 4** (≈ 110 s)
 
-If the audience asks "which city subset shapes look most interesting?"
-— that's a great Q&A opening for substantive interpretation later.
--->
+- Top 8 provinces + top 8 Hanson-cities, peak-normalised, **raw** (no mixture correction)
+- **Pompeii**: cuts off at AD 79 (Vesuvius) — literal preservation artefact
+- **Dacia**: narrow AD 100–270 ≈ Roman occupation (Trajan → Aurelian)
+- Latium-Campania early spike includes the Pompeii contribution
+- Other features: Pannonia super late peak · Britannia mid-2nd c · Cirta tight peak AD 200
+- *Mix of demography, habit, and preservation — distinguishing them is the rest of the talk*
+- Q&A invitation: which shapes does the room recognise?
+:::
 
 ---
 
-## 5 · Correcting editorial artefacts: Bayesian mixture decomposition
+## 5 · Removing the convention layer
 
 ::: {.columns}
-::: {.column width="45%"}
-**The idea**:
-
-- Split the observed SPA into **editorial encoding** (template intervals) **+ real ancient production** (smooth signal)
-- Estimate **what fraction (α) is editorial** at the empire level
-- Validate by **recovering known answers from synthetic data**
+::: {.column width="60%"}
+![Synthetic mixture recovery: convention (red) and ancient signal (green); recovered shape vs truth, bottom panel.](figures/fig-05-mixture-recovery.png){fig-align="center" width="100%"}
 :::
+::: {.column width="40%"}
+Observed SPA = **convention slabs + ancient signal**.
+
+Convention component built from known templates (centuries, half-centuries, reigns).
+
+**Output**: a cleaner SPA with the convention layer stripped — the input to all downstream temporal analyses.
+
+*Bayesian aoristic, borrowed from interval-dated ceramics (Crema 2024).*
+:::
+:::
+
+::: notes
+**Slide 5** (≈ 110 s)
+
+- **Model**: observed SPA = convention slabs + ancient signal (mixture)
+- Convention component constrained by **template dictionary**: centuries, half-centuries, reigns (Augustan, Flavian, Hadrianic, Antonine, Severan)
+- Year-precise inscriptions → stay in ancient signal (real anchors)
+- Constraint makes the mixture **identifiable** — can't trade mass arbitrarily
+- **Provenance**: Crema 2024 (baorista, interval-dated ceramics) — direct transfer
+- 2024 pilot: discarded wide dates → lost > 50 % of corpus (median range > 100 y); mixture keeps them
+- **Figure**: synthetic data, top panel = mixed observation (red+green overlay on grey), bottom panel = recovered ancient signal vs planted truth
+- **Output (right column)**: cleaner SPA → input to all downstream temporal analyses
+- *Don't say*: "α / posterior / Pearson r / NUTS" — that panel was cropped; refer to G-series if asked
+:::
+
+---
+
+## 6 · What we found
+
+![Variance partition on 1,044 Hanson-matched cities (Rome excluded): 30 % of city-to-city variation in inscription counts → within-province population; 95 % CI [24 %, 37 %].](figures/fig-06-variance-partition.png){fig-align="center" width="90%"}
+
+*Other factors (some combination of economic, social, cultural — including Epigraphic Habit) still dominant — but a real, measurable demographic signal.*
+
+*Single-scale here; multi-scale (MAUP) cross-check in follow-up work.*
+
+::: notes
+**Slide 6 — THE PUNCHLINE** (≈ 130 s · *let it breathe*)
+
+- **Method**: compare cities **WITHIN same province** → strips out province-level confounds (habit, economic, social, political, cultural, survival)
+- "Within-between" decomposition borrowed from **Mundlak (1970s econometrics)**
+- **Result**: ~ 30 % of city-to-city variation = within-province population
+- Sample: 1,044 Hanson-matched cities **ex-Rome**
+- 95 % CI [24 %, 37 %] — well above preregistered 10 % "supported" threshold
+- "First preregistered quantitative partition of habit-vs-population on a major inscription corpus"
+- **MAUP caveat**: single-scale here; multi-scale check (cities-within-macro-regions etc.) post-talk
+
+**DON'T say aloud**: "Bayesian Mundlak NBR" · "β_within" · "f_within" · "posterior" · "0.587"
+
+**Anticipated questions**:
+- *Why no mixture correction here?* → cross-sectional uses date-window filter, not mixture; per-city mixture unidentified for ~ 600 small cities
+- *Vs Hanson 2021?* → β ≈ 0.566 (CI [0.543, 0.574]) vs Hanson 0.672 / Carleton ~ 0.68 — same family; both exclude Rome; difference is corpus / filter (backup B12)
+- *Subgroups?* → prereg § 5, post-talk
+:::
+
+---
+
+## 7 · What it means
+
+**Habit-only critique** — partially refuted. Demographic signal real and substantial; habit is probably part of the residual.
+
+**Inscription-SPA** — a legitimate tool for population change, with sample-size tiering. Change-detection above ~ 1,600 inscriptions; descriptive shape at any size; cross-sectional analysis available to all corpora.
+
+**Small-N studies** — descriptive shape and cross-sectional questions supported. *Worked example: next slide.*
+
+::: notes
+**Slide 7** (≈ 100 s)
+
+**Three implications**:
+
+1. **Habit-only critique** — partially refuted; not the whole story (~ 30 % demographic vs ~ 70 % habit-territory)
+2. **Inscription-SPA toolkit** opens for epigraphic studies, with sample-size tiering (back to slides 3a / 3b)
+3. **Small-N corpora** not shut out — descriptive + cross-sectional remain at any N
+
+Transition to 7a: "Let me show you what that looks like concretely…"
+:::
+
+---
+
+## 7a · Worked example: marriage-age inscriptions
+
+::: {.columns}
 ::: {.column width="55%"}
-![](figures/fig-05-mixture-recovery.png){fig-align="center" width="100%"}
+**Adela's wife / daughter corpus** (presented later this session):
 
-Synthetic cell, N = 5,000, true α = 0.50. **α posterior covers truth** (median 0.477, 95 % CI [0.414, 0.541]); **shape Pearson r = 1.000**. *Schematic only; full grid post-talk.*
+~ 1,700 records with age — 894 wives + 813 daughters. Centuries C2 + C3 carry ~ 75 % of the data.
+
+Question: did the wife-overtakes-daughter *crossover age* shift in response to the Antonine plague and the 3rd-c. crisis?
+:::
+::: {.column width="45%"}
+**Where it sits on the sensitivity ladder**:
+
+*Static crossover* (Shaw 1987 reproduction) — comfortably supported at ~ 1,700 records.
+
+*Continuous per-50-y trajectory* — per-bin count ~ 200–300, below the change-detection floor.
+
+*Workaround*: categorical comparison across periods; pool urban vs rural; aggregate centuries where needed.
 :::
 :::
 
-<!--
-SPEAKER NOTES — slide 5 (≈ 110 s):
+*A live worked example for any small-corpus project: figure out where you sit on the ladder, then choose claims accordingly.*
 
-THE PLAIN-ENGLISH STORY for the audience:
+::: notes
+**Slide 7a** (≈ 70 s · *can compress to 45 s if her own talk already gave the data structure*)
 
-"We saw on slide 2 that the observed SPA is partly *real ancient
-clustering* — those regnal spikes at AD 77.5, 122.5, 212.5 — and
-partly *editorial encoding artefact* — the plateau-step structure at
-century boundaries from inscriptions dated to wide template intervals
-like '1st century AD' or 'Hadrianic'. The mixture model formalises
-this decomposition.
-
-The idea is straightforward. We say the observed shape of the SPA is
-a *weighted sum* of two underlying shapes: a CONVENTION component
-(what editors produce when they assign wide template intervals), and
-a GENUINE component (what real ancient inscription production looked
-like). The weight α tells us what fraction of the observed SPA is
-editorial encoding. The model estimates α and the genuine shape
-together, from the data.
-
-The convention component isn't free-form — it's built from a small
-dictionary of empirically-attested template intervals: century slabs
-([1-100], [101-200], ...), half-century slabs where supported, and
-reign-interval templates (Augustan, Flavian, Hadrianic, Antonine,
-Severan). Year-precise inscriptions are NOT in the convention
-component — they stay in the genuine signal as real ancient anchors.
-
-WHY IT MATTERS: once we can estimate α and the genuine shape, we can
-report the *corrected* temporal trajectory of inscription production
-— the ancient signal with editorial encoding stripped away. This is
-the input to all the temporal analyses (the Antonine plague probe,
-the third-century crisis probe, the per-province trajectory work).
-
-HOW WE'RE VALIDATING IT: shown on the right. On a synthetic dataset
-where we KNOW the true α (= 0.50) and KNOW the true genuine shape (a
-smooth Gaussian peaking AD 150), the model recovered both correctly:
-the α posterior covered the truth (95 % CI [0.414, 0.541]) and the
-recovered shape tracked the true shape with Pearson r = 1.000. This
-is the principle of the full validation grid — 100 replicates per cell
-across the α × shape × tier-weight × N grid — which runs post-talk.
-
-WHAT TO SOFT-PEDAL: this is one synthetic cell with simplifications
-(one tier, parametric Gaussian); the full grid will use the three-tier
-dictionary and a flexible smoothness prior. The point of the
-demonstration is to show the recovery principle works, not to claim
-the full model has been validated.
--->
+- **Corpus**: Adela's wife / daughter — ~ 1,700 records (894 wives + 813 daughters); C2 + C3 dominate (~ 75 %)
+- **Classic framing**: Shaw & Saller — wife-overtakes-daughter age as marriage-age proxy
+- **Question**: did the crossover age *shift* (Antonine plague, 3rd-c. crisis)?
+- **Static crossover**: comfortably supported · Adela has reproduced Shaw under stricter filters
+- **Continuous trajectory** (per-50-y bin, ~ 200–300 records): below the 1,600 floor
+- **Workaround**: categorical comparison across pooled periods; urban vs rural slicing
+- **General point**: any small-corpus project maps onto the same ladder
+:::
 
 ---
 
-## 6a · Does Hanson population predict inscription count?
+## 8 · Questions for this room
 
-::: {.columns}
-::: {.column width="60%"}
-![Log–log scatter, 1,044 Hanson-matched cities (Rome excluded). NBR fit (red, with 95 % bootstrap CI band); OLS log-log fit (green dashed).](figures/fig-06-nbr-bootstrap.png){fig-align="center"}
+1. **The convention layer** — does it match dating practice you've seen in EDH / EDCS / LIRE? Are there template intervals we've missed?
+
+2. **The ~ 70 % non-population variance** — which sub-mechanisms do you think drive most of it? Economic structure, status display, monumental practice, religious cycles, administrative density, survival bias?
+
+3. **Negative-control subgroups** — which sub-corpora *should* habit-alone clearly dominate? What's our natural falsification test?
+
+4. **Independent demographic anchors** — what published demographic reconstructions would you trust as ground-truth for validating the corrected SPA?
+
+::: notes
+**Slide 8** (≈ 60 s)
+
+- **Pause 5–10 s after each question** — invite thinking, don't fill time
+- Order: Q1 first if LIRE / SDAM colleagues present · Q3 first otherwise (most provocative)
+- Q1 = LIRE / SDAM team · Q2 = methodology · Q3 = falsification · Q4 = anchors
 :::
-::: {.column width="40%"}
-**Sublinear scaling**: bigger cities produce *proportionally fewer* inscriptions per capita.
-
-| Source | β |
-|---|---|
-| **Our NBR** | **0.566** |
-| Hanson 2021 | 0.672 |
-| Carleton 2025 (no-zeros) | ~ 0.68 |
-
-Our 95 % bootstrap CI: [0.543, 0.574].
-:::
-:::
-
-<!--
-SPEAKER NOTES — slide 6 (≈ 100 s):
-
-THE PLAIN-ENGLISH STORY:
-
-"This is the published-comparator analysis. The classic dates-as-data
-question for inscriptions is: do bigger cities produce more
-inscriptions in proportion to their population, or more (super-linear),
-or less (sub-linear)? Hanson 2021 reported a scaling exponent of about
-0.67 — meaning a city ten times bigger produces about 10^0.67 ≈ 4.7
-times as many inscriptions, not 10. Carleton et al. 2025 reported a
-range around 0.3 to 0.7 depending on the inscription subset.
-
-Our preliminary fit on the date-window-filtered LIRE corpus gives a
-scaling exponent of 0.566, with a very tight bootstrap confidence
-interval of 0.543 to 0.574. That sits right in the middle of the
-published comparator range, slightly below Hanson 2021's 0.672 and
-close to Carleton 2025's no-zeros variant of 0.68. So the sublinear
-scaling claim broadly reproduces under our methodology — same family
-of numbers, with our specific value at the low end of published
-comparators.
-
-WHY THIS MATTERS: if our pipeline didn't reproduce a finding the field
-has already established, that would be a methodology warning sign. The
-fact that we land in the published range tells us the filter, the
-data-prep, and the regression are doing the right thing. With that
-validated, we can move on to the new contribution — the
-within-between decomposition on the next slide.
-
-DEFINING THE NUMBERS:
-- *NBR β*: the scaling exponent on the count scale. If E[insc] ∝ pop^β,
-  then β = 0.566 means doubling a city's population multiplies expected
-  inscriptions by 2^0.566 ≈ 1.48× (not 2×).
-- *OLS log-log β = 0.284*: a different specification — straight-line
-  regression on log(count) ~ log(pop). It comes out half the NBR
-  exponent, with very low R². This is a methodology footnote: the OLS
-  spec is dragged toward zero by the long tail of cities with N = 1
-  inscription (log(1) = 0); NBR is the better choice for over-dispersed
-  count data.
-- *1,044 cities*: all Hanson-matched cities Rome-excluded in the
-  date-window-filtered corpus. (NB: the lodged OSF preregistration
-  quotes "~815" — that figure was inherited from a 2024 notebook subset
-  using a Latin-language filter that we've since simplified out. The
-  prereg's text spec — "all cities with Hanson population estimates,
-  Rome excluded" — yields 1,044 directly. This is a methodological
-  footnote we're transparent about; addressed in the prereg amendment
-  trail.)
-
-THE PROPER ANALYSIS IS NEXT: this empire-wide single-coefficient NBR
-doesn't separate within-province from between-province effects. The
-binding decomposition is on slide 6b.
--->
 
 ---
 
-## 6b · How much of the variation is population, vs. everything else?
+## 9 · Open science
 
-::: {.columns}
-::: {.column width="60%"}
-![](figures/fig-06b-h3a-mundlak.png){fig-align="center" width="100%"}
+**Preregistration**: `osf.io/uycs6` *(lodged 2026-05-20, embargoed)*
+
+**Repository**: `github.com/saross/inscriptions/tree/osf-lodgement-2026-05-20`
+
+**Contact**: Shawn Ross · `shawn@fieldnote.au`
+
+*This is a feedback-seeking talk. Confirmatory tests are pinned in the prereg and run post-talk.*
+
+::: notes
+**Slide 9** (≈ 30 s · close)
+
+- OSF prereg lodged 2026-05-20, embargoed
+- Repo public at lodgement tag — clone & audit
+- Feedback-seeking; confirmatory tests run post-talk
+- *"Thank you. I'd value your feedback."*
+- Press `o` for overview if Q&A needs backup slides
 :::
-::: {.column width="40%"}
-**Compare cities *within* a province** — that strips out province-wide effects (habit, administration, survival) and isolates the population signal.
-
-**Result** (1,044 cities ex-Rome):
-
-- **~ 30 %** of city-to-city variation → within-province population
-- **~ 70 %** → habit, convention, survival, admin structure
-- 95 % CI on the 30 % figure: [24 %, 37 %]
-:::
-:::
-
-<!--
-SPEAKER NOTES — slide 6b (≈ 130 s):
-
-THIS IS THE SUBSTANTIVE PUNCHLINE. The methodology has a technical
-name (a Bayesian within-between or "Mundlak" negative-binomial
-regression) but the IDEA is straightforward, and that's what to
-deliver to the audience.
-
-WHAT THE METHOD DOES, IN PLAIN ENGLISH:
-
-"We want to know whether bigger cities produce more inscriptions
-because they're bigger, or because of something cultural — the
-'epigraphic habit'. The problem is that habit and population are
-correlated at the province level: some provinces had vigorous
-epigraphic cultures across all their cities; others didn't. If we
-just compare city size to inscription count across the whole empire,
-those province-level differences contaminate the population signal.
-
-So we use a method that compares cities WITHIN THE SAME PROVINCE.
-Each city's population is split into two pieces — what's typical for
-its province, and how much it deviates from the province's typical
-city. The deviation piece is what we use to estimate the population
-effect. By construction, that piece is orthogonal to province
-membership — so it can't be contaminated by province-level habit,
-administration, or survival bias. It's a clean within-province scaling
-estimate.
-
-(This decomposition is sometimes called a 'Mundlak' specification
-after the economist who first formalised it. Negative-binomial
-regression is the count-data model we use because inscription counts
-are over-dispersed — far more variable than a simple count model
-would predict. The Bayesian framing gives us a full posterior
-distribution on the variance fraction, not just a point estimate.)"
-
-WHAT WE FOUND:
-
-"About 30 % of the city-to-city variation in expected inscription
-production is attributable to within-province population. The other
-70 % is everything else that varies between provinces — cultural
-habit, monumental practice, administrative structure, survival
-bias, and so on.
-
-The 95 % credible interval on that 30 % figure is [24 %, 37 %], which
-sits entirely above the 10 % threshold we preregistered as the
-'supported' boundary. The probability that the within-province
-population effect explains more than 20 % of the variation is
-effectively 1. So the population signal is real and substantial — but
-the habit-only critique still captures the larger share of the story.
-Both sides of the long-running debate are partially right; this is
-the first preregistered quantitative partition we know of."
-
-WHY IT MATTERS FOR THE FIELD:
-
-"This is a complexity decomposition, not a population claim. We
-aren't saying inscription counts measure population. We're saying
-that within-province inscription production carries a measurable
-demographic signal — about a third of the systematic variation — and
-that the remaining two-thirds is exactly the territory the habit
-critique points at. Future work will try to attribute pieces of that
-two-thirds to specific mechanisms (monumental practice, status
-display, provincial-capital effects, religious cycles)."
-
-Caveats to acknowledge (sample size is bigger than prereg's "~815"
-quote — see slide 6 notes — and there's a long agenda of robustness
-work pre-specified: aoristic-MC sensitivity, three-weighting variance
-sensitivity, Hanson-population measurement-error sensitivity, brms-vs-
-pymc shadow validation. All preregistered, post-talk.)
-
-Anticipate audience pushback:
-- "But you haven't applied the mixture correction to these counts!"
-  → Correct, and intentional. The cross-sectional H3a regression
-  operates on date-window-filtered counts; the mixture correction is
-  for the TEMPORAL SPA analyses (H2.1, H3b). The cross-sectional
-  artefact protection is the 50 BC – AD 350 date-window filter itself.
-  Per-city mixture would be unidentified for ~ 600 of the cities below
-  N=100 inscriptions.
-- "What about province as a fixed predictor?" → β_between captures
-  that; we report it but flag its non-identifiability from province-
-  level everything-else.
-- "Subgroup analyses?" → Pre-specified in prereg §5 (small-N
-  trajectory work). Out of scope for the 12-min talk.
--->
-
----
-
-## 7 · Where this is heading, and what we'd love feedback on
-
-::: {.columns}
-::: {.column width="50%"}
-**Preregistration lodged 2026-05-20**: `osf.io/uycs6` _(embargoed)_
-
-- Mixture validation (recovery grid)
-- Mundlak NBR + within-province verdict
-- Antonine plague + 3rd-c. Crisis probes
-- Provincial-capital residuals + Moran's I
-
-**Forthcoming**: statistician review; state-space / HMM alternative; trapezoidal-aoristic sensitivity.
-:::
-::: {.column width="50%"}
-**Questions for this room**:
-
-1. **LIRE / SDAM team**: does the editorial-template decomposition match dating practice in EDH / EDCS / LIRE?
-
-2. **Which sub-mechanisms** drive the ~ 70 % non-population variance?
-
-3. **Negative-control subgroups** or **independent demographic anchors**?
-:::
-:::
-
-**Contact**: Shawn Ross · `shawn@fieldnote.au` — feedback warmly welcomed.
-
-<!--
-SPEAKER NOTES — slide 7 (≈ 80 s):
-Close with three things:
-
-1. The PROJECT is preregistered (cite OSF DOI when available) — open
-   science commitment, all confirmatory tests pinned BEFORE data is
-   touched.
-2. The REPOSITORY is public and pinned at the lodgement tag — readers
-   can clone, browse, replicate.
-3. We WANT FEEDBACK — this is a feedback-seeking talk, not a results
-   presentation. The four questions on the right are the openings we
-   want the audience to engage with. Adela can adapt these on the day
-   based on session theme.
-
-End with thanks; invite questions; have a couple of backup figures
-ready if Q&A goes substantive.
-
-Backup material to have ready (NOT on the deck, but in a backup file):
-- The post-lodgement OSF DOI when available
-- The decision log / changelog if anyone asks about methodological
-  choices
-- Specific Carleton et al. 2025 β values for the elite-honorific
-  subsets
-- The Phase 1 power-curve figures for any specific bracket
-- The mixture-recovery demo (if completed but not slide-fronted)
--->
 
 ---
 
@@ -598,21 +329,38 @@ The slides that follow address anticipated audience questions. Adela should jump
 
 ---
 
-## B1 · Why exclude Rome from the scaling fit?
+## B1a · Why exclude Rome — the numbers
 
-- Rome alone contributes **65,435 inscriptions** to the filtered corpus — **36.2 %** of the total
-- As a single observation it dominates the scaling regression
-- Hanson 2021 also excludes Rome (Table 7.3 caption) — methodologically consistent
-- Reported transparently; **not tested as a sensitivity** (per prereg §9)
+**The numbers**. Rome alone contributes **65,435 inscriptions** to the filtered LIRE corpus — **36.2 %** of the total. The next-largest case, Pompeii, has 4,508. Rome sits more than one full log-unit above the rest of the Hanson-matched city distribution; on a log–log scaling plot, it's a single isolated point at the top.
 
-<!--
-SPEAKER NOTE B1: a city with 65,435 inscriptions sits multiple log-units
-above the next-largest case (Pompeii at 4,508). Including Rome would
-make the regression a "one outlier vs everything else" exercise. The
-sublinear scaling result holds with or without Rome; we exclude for
-methodological consistency with Hanson and to keep the focus on the
-"normal" city-size range.
--->
+**Why it matters for the regression**. In a population-versus-count regression on 1,044 cities, a single point that far from the rest exerts very high leverage — it can pull the fitted slope toward itself almost regardless of what the other 1,043 cities are doing. Including Rome would effectively make the analysis "one outlier vs everything else", which is a different statistical question than "how do normal-sized Roman cities scale".
+
+**Methodological precedent**. Hanson 2021 (Table 7.3 caption) excludes Rome on the same logic. Carleton et al. 2025 similarly exclude or sequester. Excluding Rome from scaling fits is the consensus practice in the published literature, not a choice we invented.
+
+::: notes
+SPEAKER NOTE B1a: short version if asked — "Rome has 65,435
+inscriptions, the next largest has 4,508. As a single point it
+dominates the regression; Hanson and Carleton both exclude it for
+the same reason."
+:::
+
+---
+
+## B1b · Why exclude Rome — what we report
+
+**What we do report transparently**. The exclusion is named on slide 1's source figure and in slide 6's caption ("1,044 Hanson-matched cities ex-Rome"). The 30 % within-province partition is the result on the ex-Rome corpus.
+
+**What we don't do**. The lodged preregistration § 9 does not list Rome-inclusion as a preregistered sensitivity test. Adding it would be an amendment, not a confirmatory analysis. We could in principle report what the result looks like with Rome added, but that result would carry exactly the leverage caveat above.
+
+**The bottom line**. The sublinear scaling result and the 30 % within-province partition both hold with Rome excluded. Including Rome would change the *value* of the scaling coefficient (pulling it upward toward Rome) but not the *qualitative* finding that within-province population accounts for a substantial fraction of city-to-city variation.
+
+::: notes
+SPEAKER NOTE B1b: only the most stats-savvy questioner will ask
+about including Rome. If they do, point them at this slide. The
+"could in principle" line is the right tone — we're not avoiding
+the question, we're flagging that the answer would carry a known
+caveat.
+:::
 
 ---
 
@@ -623,29 +371,45 @@ methodological consistency with Hanson and to keep the focus on the
 - Aligned with **Hanson 2016's reference period** (100 BC – AD 300; our extension to AD 350)
 - Roughly the imperial-era period during which urban populations and inscription production overlap
 
-<!--
+::: notes
 SPEAKER NOTE B2: the envelope is a date-attribution artefact protection.
 Going earlier or later requires modelling different epigraphic regimes
 (Republican Latin vs Late Antique Christian). An envelope extension to
 AD 600 via LIST v1.2 is a candidate for a follow-up paper.
--->
+:::
 
 ---
 
-## B3 · How uncertain are the Hanson population estimates?
+## B3a · Hanson population uncertainty — the data
 
-- Hanson 2016 estimates are **max-theoretical** (urban footprint × density), not realised peaks
-- **Preregistered sensitivity** (Phase 3, post-talk): refit H3a with `log_pop_c ~ Normal(log_pop_observed_c, σ_pop)` for **σ_pop ∈ {0.1, 0.2, 0.3}**
-- Flag: if f_within shifts by > 50 % of its CI width under any σ_pop → reported as limitation
+**What Hanson 2016 actually provides**. The population figure for each city is a **maximum-theoretical estimate**, computed from urban footprint (the inhabited area of the city in hectares, derived from survey and excavation) multiplied by an assumed population density (people per hectare; Hanson uses a literature-consensus range of 150–250 per hectare). This is *not* a realised population peak at a specific historical moment; it's an upper bound on what the urban area *could* have held under standard density assumptions.
 
-<!--
-SPEAKER NOTE B3: this is exactly the audience's natural objection — the
-populations themselves are noisy, so any analysis that takes them at
-face value is suspect. The preregistered Bayesian measurement-error
-model lets the population be a latent quantity with observation noise
-σ_pop; the f_within posterior under that model is the proper response
-to the question. Not yet run; preregistered post-talk.
--->
+**Why this matters for our analysis**. Our scaling regression treats the Hanson figure as a point estimate of city population. If two cities have similar max-theoretical populations but very different actual peaks (because density varied, or because the maximum extent and the population peak fell in different centuries), the regression treats them as equivalent observations. That's the measurement-error problem we have to manage.
+
+::: notes
+SPEAKER NOTE B3a: the audience's natural objection is "Hanson's
+numbers are noisy, so any analysis taking them at face value is
+suspect". That objection is valid. B3b describes how we test
+robustness to that noise.
+:::
+
+---
+
+## B3b · Hanson population uncertainty — what we do about it
+
+**The preregistered sensitivity (Phase 3, post-talk)**. We refit the main H3a regression under a Bayesian measurement-error model: the observed Hanson figure is treated not as truth but as a noisy measurement of the (latent) true log-population, with `log_pop_c ~ Normal(log_pop_observed_c, σ_pop)`. We run this at three levels of assumed observation noise — σ_pop ∈ {0.1, 0.2, 0.3} — which correspond roughly to ±10 %, ±20 %, and ±30 % residual uncertainty on log-population for each city.
+
+**The decision rule** (preregistration § 5). If the within-province variance fraction shifts by more than 50 % of its 95 % credible-interval width under any of the three σ_pop levels, the population-uncertainty effect is flagged as a binding limitation. If it doesn't shift that much, the 30 % conclusion is reported as **robust to Hanson uncertainty** at the stated noise levels.
+
+**Phase A measurement-error sensitivity** (already complete): robust under all three σ_pop levels in the pre-Phase-B sensitivity work. The Phase 3 refit on the binding Mundlak specification is the formal version of the same check.
+
+::: notes
+SPEAKER NOTE B3b: short version — "Hanson populations are
+max-theoretical, not realised peaks. The preregistered sensitivity
+runs a Bayesian measurement-error model with σ_pop up to 0.3;
+the pre-binding sensitivity shows robust under all three levels.
+Formal version of the test runs post-talk."
+:::
 
 ---
 
@@ -655,7 +419,7 @@ to the question. Not yet run; preregistered post-talk.
 - **OLS on log(count)** is dragged toward zero by the long tail of cities with N = 1 (log(1) = 0). Our OLS β = 0.284, R² = 0.04 — half the NBR estimate, near-zero explanatory power
 - NBR correctly models count variance scaling with mean → β = 0.566, tight bootstrap CI
 
-<!--
+::: notes
 SPEAKER NOTE B4: this is methodologically important and worth landing
 clearly with a stats-curious audience. The specification matters
 because OLS log-log assumes Gaussian noise on log-counts at a constant
@@ -663,7 +427,7 @@ scale, but low-count cities have much higher relative noise. NBR
 handles that. The published comparators (Hanson 2021, Carleton 2025)
 use OLS log-log — our preliminary fit at NBR sits in the same family,
 which validates the methodology while pointing to a spec improvement.
--->
+:::
 
 ---
 
@@ -673,7 +437,7 @@ which validates the methodology while pointing to a spec improvement.
 - The cross-sectional H3a regression instead uses **the date-window filter** as its artefact protection
 - The empire-level mixture α posterior is reported as **descriptive context only**, not propagated into H3a's variance-fraction CI
 
-<!--
+::: notes
 SPEAKER NOTE B5: identifiability matters. Even with a perfect model,
 you can't extract a 5-parameter mixture decomposition from 30
 inscriptions. The empire-level fit (with N = 180,609) has plenty of
@@ -681,7 +445,7 @@ data; per-city fits don't. The 50 BC – AD 350 date-window filter does
 the artefact-protection job for the cross-sectional analyses; the
 mixture handles only the temporal analyses (H2.1 validation, H3b
 deviation-detection).
--->
+:::
 
 ---
 
@@ -691,35 +455,37 @@ deviation-detection).
 - They remain in `p_gen` as **real ancient anchors**
 - The convention component is built only from **wide-template slabs** (century, half-century, reign-interval)
 
-<!--
+::: notes
 SPEAKER NOTE B6: this matters because year-precise inscriptions are the
 strongest signal of genuine ancient production. AD 122.5 is partly
 driven by the exact-year template [123, 123] (1,304 inscriptions
 explicitly dated by consular AD 123). Folding those into the convention
 component would mean treating real ancient anchoring as artefact —
 methodologically wrong.
--->
+:::
 
 ---
 
-## B7 · Survival and publication bias
+## B7 · Survival and publication bias {.smaller}
 
-- The **between-province** Mundlak coefficient is **not separately identifiable** from province-level survival bias
-- The **within-province** coefficient is more defensible — it assumes roughly equal survival within a province (a much weaker assumption)
-- LIRE aggregates EDH + EDCS coverage → we inherit their editorial decisions and coverage gaps
-- **Reported as limitation** in prereg §9
+**The concern**. Not every Roman inscription survived to be excavated, photographed, and entered into a corpus. Survival depends on material (marble lasts; wood doesn't), geology (some sites are buried, others ploughed flat), and modern history (Hispania has been intensively surveyed; rural Britannia less so). Publication bias compounds this — the editors of EDH, EDCS, and the aggregator LIRE made decisions about what to include, what to digitise first, and where to focus revision effort.
 
-<!--
-SPEAKER NOTE B7: this is the survival-bias objection in its specific
-form. If Hispania's epigraphic record is better preserved than
-Britannia's, that's absorbed into α_province (the province random
-intercept), not into β_within. So the within-province population
-estimate is robust to province-level survival differences. What it's
-NOT robust to is within-province survival differences (e.g., one city
-in a province got buried by a volcano — but that's exactly Pompeii,
-and Pompeii's cut-off pattern is empirically visible rather than
-hidden).
--->
+**How it could distort our analysis**. If province A's inscriptions survive at a higher rate than province B's, the recorded counts in A will be systematically higher than the underlying ancient production would predict. A naive regression would read that as A having more "demographic" production, when it's just better preservation.
+
+**How the within-between decomposition protects us**. Province-level survival differences — Hispania-vs-Britannia survival rates, EDCS coverage strength in the Latin West vs Greek East, all of that — are absorbed into the *between*-province coefficient and the province-level random intercept. They appear nowhere in the *within*-province coefficient. So the within-province 30 % figure is robust to whatever province-level survival is doing, on the assumption that survival is roughly even *within* each province.
+
+**Where it doesn't protect us**. Within-province survival differences would still bias the within-province coefficient. The canonical case is **Pompeii under Vesuvius**: an extreme local preservation event that boosts one city's count enormously relative to its province-mates. That kind of artefact is empirically visible (Pompeii's SPA cuts off cleanly at AD 79 — see slide 4) rather than hidden, so we can identify and either include or exclude it case by case. Smaller, less-visible within-province survival differences are harder to detect but should average out across 1,044 cities.
+
+**What we inherit from the source corpora**. LIRE aggregates EDH + EDCS, so we inherit their editorial decisions and coverage gaps. We don't introduce new survival selection; we operate on the curated corpus as-is. Reported as a limitation in preregistration § 9.
+
+::: notes
+SPEAKER NOTE B7: short version — "Province-level survival
+differences are absorbed into the between-province coefficient and
+don't bias the within-province 30 %. Pompeii is the obvious
+within-province survival outlier; its cut-off is empirically
+visible so we can handle it. Smaller within-province differences
+should average across 1,044 cities."
+:::
 
 ---
 
@@ -730,12 +496,12 @@ hidden).
 - The "~815" figure was inherited from a 2024 notebook subset that applied an extra `province_language == 'Latin'` filter via a manually-curated mapping that isn't in LIRE
 - **Logged for the OSF amendment trail**; not a confirmatory deviation
 
-<!--
+::: notes
 SPEAKER NOTE B8: only mention this if asked. It's a transparency
 footnote — we found a discrepancy between the prereg's quoted N and
 what the text-spec produces from the data. We're going with the
 text-spec. Will be addressed in the amendment trail.
--->
+:::
 
 ---
 
@@ -746,7 +512,7 @@ text-spec. Will be addressed in the amendment trail.
 - **For the cross-sectional H3a regression**: YES — all 1,044 cities (no minimum N) contribute leverage
 - **Layer B inversion** (prereg §5): tentatively map inscription trajectory to illustrative population trajectory under stated assumptions
 
-<!--
+::: notes
 SPEAKER NOTE B9: this is the historian's natural question. The answer
 is nuanced: small-N cities are not "noise" but they're also not
 quantitative time-series. They carry shape information that's useful
@@ -756,7 +522,7 @@ prereg's §5 Layer A (descriptive shape comparison) and Layer B
 (tentative inversion to population trajectory under assumption) are
 the framings to use. Best practice: use the inscription series to
 corroborate inferences from other evidence streams, not to carry them.
--->
+:::
 
 ---
 
@@ -769,12 +535,12 @@ If asked about replicating Hanson 2021's specific findings:
 - **Moran's I = −0.006** on raw counts (no clustering — clustering is in the residuals)
 - **Our H3c** is a preregistered replication of both findings (post-talk)
 
-<!--
+::: notes
 SPEAKER NOTE B10: Hanson's residual structure is itself a substantive
 historical finding — it says provincial capitals are not just bigger,
 they're a *different kind* of city for epigraphic purposes. Our
 preregistered H3c is the two-part replication test on the LIRE corpus.
--->
+:::
 
 ---
 
@@ -788,7 +554,7 @@ Statistician collaborator (Martin) has proposed a state-space / HMM approach for
 - Post-lodgement **OSF amendment** if pursued
 - Citations: Kéry & Schaub 2012 (Integrated Population Models); Tingley & Huybers 2010 (BARCAST)
 
-<!--
+::: notes
 SPEAKER NOTE B11: this is the "future methodological directions" line
 of questioning. Martin's proposal would make the population a latent
 time-series rather than a static value joined from Hanson 2016; the
@@ -796,24 +562,66 @@ inscription series becomes an emission of the latent population
 process. State-space / HMM machinery is well-developed in ecology and
 climate science but hasn't been applied to epigraphic corpora.
 Genuinely novel and exciting; on the post-talk agenda.
--->
+:::
 
 ---
 
-## B12 · Why both frequentist and Bayesian on the deck?
+## B12 · Why both frequentist and Bayesian under the hood?
 
-- **Frequentist NBR** (slide 6a) → direct comparator to **published OLS log-log** literature (Hanson 2021, Carleton 2025)
-- **Bayesian Mundlak NBR** (slide 6b) → preregistered binding analysis; isolates the within-province population effect via the within-between decomposition
-- The two answer related but distinct questions; **β_within = 0.587** sits inside the empire-wide bootstrap CI **[0.543, 0.574]** — qualitatively consistent
-- Sample: 1,044 cities ex-Rome both; Mundlak adds 56 provinces for random-intercept structure
+- **Frequentist NBR** → direct comparator to **published OLS log-log** literature (Hanson 2021's β = 0.672; Carleton 2025's ~ 0.68); our preliminary NBR gives **β = 0.566** (95 % bootstrap CI [0.543, 0.574]) — in the same family
+- **Bayesian Mundlak NBR** → the **preregistered binding analysis** behind slide 6; isolates the within-province population effect (the 30 %) via within-between decomposition
+- **β_within = 0.587** (Bayesian) sits inside the empire-wide bootstrap CI [0.543, 0.574] (frequentist) — qualitatively consistent
+- Sample: 1,044 cities ex-Rome; Mundlak adds 56 provinces for random-intercept structure
 
-<!--
-SPEAKER NOTE B12: this is the "why two analyses?" question. They serve
-different purposes: comparator validation (slide 6a) and the new
-substantive contribution (slide 6b). They land in the same ballpark,
-which validates the methodology; the Mundlak split is the genuine new
-information.
--->
+::: notes
+SPEAKER NOTE B12: this is the "why two analyses?" question. They
+serve different purposes: comparator validation against the
+published literature (frequentist NBR), and the new substantive
+contribution (Bayesian Mundlak). They land in the same ballpark,
+which validates the methodology; the Mundlak within-between split
+is the genuine new information.
+
+NB: in the revised deck, the frequentist NBR comparator no longer
+has its own main-deck slide — it lives here. The main result slide
+(slide 6) leads with the 30 % within-province partition.
+:::
+
+---
+
+## B13a · Multi-scale (MAUP) — the concern
+
+**The Modifiable Areal Unit Problem** (Openshaw 1984): statistical relationships measured at one level of spatial aggregation don't necessarily replicate at others. The aggregation choice is itself a research decision.
+
+**Where it bites**. Our slide 6 partition is at one scale: cities within provinces. The 30 % within-province population effect could be specific to that scale, or survive at coarser aggregations. We don't yet know.
+
+**Partial protection**. The within-between construction isolates the within-province component and only claims the within-province result — robust to whatever province-level effects do. But it doesn't tell us whether a different grouping (macro-region instead of province) would carry a different signal.
+
+::: notes
+SPEAKER NOTE B13a: Adela's specific critique on the lodged draft.
+This slide names the concern; B13b describes the post-talk fix.
+:::
+
+---
+
+## B13b · Multi-scale (MAUP) — the planned check
+
+**Refit at progressively coarser aggregations**:
+
+- **Scale 1 (current)**: cities within provinces — reports ~ 30 % within-effect
+- **Scale 2**: cities within macro-regions (8 regions, after Hanson 2021)
+- **Scale 3**: provinces within empire — between-region check
+
+Three to four Bayesian Mundlak fits; coarser scales faster (fewer units). Total compute: a few hours.
+
+**What results would mean**. Persistence across scales = robustness. Substantial shift = informative about which scale carries the signal. Either outcome is publishable.
+
+**Data prep**: city → macro-region join column on the existing parquet (~ 1 h).
+
+::: notes
+SPEAKER NOTE B13b: honest answer if pressed in Q&A — "Yes, we
+know; multi-scale is on the post-talk to-do list. We expect the
+30 % to be robust but that's testable rather than asserted."
+:::
 
 ---
 
@@ -853,7 +661,7 @@ The procedure:
 2. **Run your method** on the synthetic data and see whether it detects the planted effect
 3. **Repeat 1,000 times per scenario** and measure the detection rate
 
-If detection rate is high (> 80 %), the method is *reachable* at that sample size. If detection rate is low, the method can't reliably see real effects of that size — you'd be claiming "no effect" even when the effect IS there. Phase 1 (slide 3) is this exercise across 96 combinations of analysis level × subset × effect size.
+If detection rate is high (> 80 %), the method is *reachable* at that sample size. If detection rate is low, the method can't reliably see real effects of that size — you'd be claiming "no effect" even when the effect IS there. Phase 1 (slides 3a and 3b) is this exercise across 96 combinations of analysis level × subset × effect size.
 
 ---
 
@@ -919,7 +727,7 @@ Named after Yair Mundlak (1970s).
 
 A value of **0.30** means **30 %** of city-to-city differences in *expected* inscription count are explained by within-province population. The remaining 70 % lives in:
 
-- Province random intercepts — habit, culture, administration, survival (the biggest chunk)
+- Province random intercepts — habit, economic and social structure, political / administrative factors, cultural patterning, survival bias (the biggest chunk)
 - A small + statistically null between-province population gradient
 - Component covariances
 
@@ -931,8 +739,8 @@ A variance fraction (not a slope coefficient) tells you how much of the *variati
 
 Both express uncertainty about a quantity (like β or f<sub>within</sub>) — but they come from different procedures.
 
-**Bootstrap CI (frequentist)** — slide 6a NBR β; slide 1 empire-SPA band. Resample the dataset many times *with replacement*, refit on each resample, take the 2.5th–97.5th percentile. Tells you how much your estimate would change *if you'd sampled slightly different data*.
+**Bootstrap CI (frequentist)** — empire-SPA band on slide 1; the frequentist NBR β comparator behind backup B12. Resample the dataset many times *with replacement*, refit on each resample, take the 2.5th–97.5th percentile. Tells you how much your estimate would change *if you'd sampled slightly different data*.
 
-**Credible interval (Bayesian)** — slide 5 α posterior; slide 6b β<sub>within</sub>, f<sub>within</sub>. The model gives you a probability distribution over plausible parameter values directly; the 95 % credible interval is the central 95 % of that distribution. Tells you where the parameter *probably is*, given the data and the model.
+**Credible interval (Bayesian)** — slide 5 mixture validation; slide 6 within-province variance partition. The model gives you a probability distribution over plausible parameter values directly; the 95 % credible interval is the central 95 % of that distribution. Tells you where the parameter *probably is*, given the data and the model.
 
 Both read as "95 % intervals" and in our analyses they agree closely — but the underlying inference is different.
