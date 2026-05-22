@@ -73,9 +73,9 @@ FIG.mkdir(parents=True, exist_ok=True)
 # Order brackets by the rough "size of event" — smaller (harder) first.
 BRACKET_ORDER = ["c_20pc_25y", "a_50pc_50y", "b_double_25y"]
 BRACKET_LABELS = {
-    "c_20pc_25y":   "20 %-over-25 y\n(narrow, weak)",
-    "a_50pc_50y":   "50 %-over-50 y\n(binding bracket)",
-    "b_double_25y": "100 %-over-25 y\n(sharp, strong)",
+    "c_20pc_25y":   "20 % / 25 y",
+    "a_50pc_50y":   "50 % / 50 y\n(binding)",
+    "b_double_25y": "100 % / 25 y",
 }
 LEVEL_LABELS = {
     "empire":     "Empire-level",
@@ -110,13 +110,19 @@ def build_table(pc: pd.DataFrame, taper: str = "gaussian") -> pd.DataFrame:
 def render_heatmap(wide: pd.DataFrame, taper: str, out_path: Path) -> None:
     """Render a 3-panel heatmap: empire / province / urban-area.
 
-    Rows = n (sample size; log-spaced labels); columns = effect bracket;
-    colour = detection rate. Annotated cells. Red-yellow-green colormap
-    with detection-rate thresholds (0.7, 0.8) marked.
+    All three panels share the FULL N_GRID (11 rows) so the y-axis is
+    visually comparable across panels; cells without simulation data
+    show as light grey with an em-dash. This is much clearer than
+    sharey=True on mismatched matrices (which silently mis-aligned the
+    empire-level data at the wrong y-row).
+
+    Annotated cells. Red-yellow-green colormap. The cell's detection
+    rate is shown numerically; > 0.80 is the conventional power
+    threshold.
     """
     fig, axes = plt.subplots(
-        1, 3, figsize=(13, 5), sharey=True,
-        gridspec_kw={"wspace": 0.10},
+        1, 3, figsize=(14, 7.5), sharey=False,
+        gridspec_kw={"wspace": 0.30},
     )
 
     # Red → yellow → green colour scheme
@@ -124,58 +130,74 @@ def render_heatmap(wide: pd.DataFrame, taper: str, out_path: Path) -> None:
         "ryg", ["#c0392b", "#f1c40f", "#27ae60"], N=256,
     )
 
+    # Build a full-grid matrix per panel: rows = N_GRID, cols = BRACKET_ORDER,
+    # with NaN where the simulation had no data for that combination.
+    n_rows = len(N_GRID)
+    n_cols = len(BRACKET_ORDER)
+
     for ax, level in zip(axes, ["empire", "province", "urban-area"]):
         sub = wide[wide["level"] == level].copy()
-        sub = sub.sort_values("n")
-        sub = sub[sub["n"].isin(N_GRID)]
+        sub = sub.set_index("n")
 
-        # Matrix: rows = n (ascending), cols = brackets
-        matrix = sub[BRACKET_ORDER].to_numpy()
-        n_values = sub["n"].tolist()
+        matrix = np.full((n_rows, n_cols), np.nan)
+        for i, n in enumerate(N_GRID):
+            if n in sub.index:
+                for j, b in enumerate(BRACKET_ORDER):
+                    v = sub.loc[n, b]
+                    if not pd.isna(v):
+                        matrix[i, j] = v
 
+        # Greyed-out background for NaN cells (so they read as
+        # "not in this level's simulation grid")
+        bg = np.where(np.isnan(matrix), 1.0, np.nan)
+        ax.imshow(bg, aspect="auto", cmap="Greys", vmin=0.0, vmax=2.0)
+        # Overlay coloured detection-rate where present
         im = ax.imshow(matrix, aspect="auto", cmap=cmap, vmin=0.0, vmax=1.0)
 
-        # Annotate cells with detection-rate values
-        for i in range(matrix.shape[0]):
-            for j in range(matrix.shape[1]):
+        # Annotate cells
+        for i in range(n_rows):
+            for j in range(n_cols):
                 v = matrix[i, j]
                 if np.isnan(v):
-                    txt = "—"
-                    colour = "grey"
+                    ax.text(j, i, "—", ha="center", va="center",
+                            fontsize=9, color="#888")
                 else:
-                    txt = f"{v:.2f}"
                     colour = "white" if v < 0.55 else "black"
-                ax.text(j, i, txt, ha="center", va="center",
-                        fontsize=8.5, color=colour)
+                    ax.text(j, i, f"{v:.2f}", ha="center", va="center",
+                            fontsize=9, color=colour)
 
-        ax.set_xticks(range(len(BRACKET_ORDER)))
+        ax.set_xticks(range(n_cols))
         ax.set_xticklabels([BRACKET_LABELS[b] for b in BRACKET_ORDER],
                             fontsize=9)
-        ax.set_yticks(range(len(n_values)))
-        ax.set_yticklabels([f"{n:,}" for n in n_values], fontsize=9)
+        ax.set_yticks(range(n_rows))
+        ax.set_yticklabels([f"{n:,}" for n in N_GRID], fontsize=9)
         ax.set_title(LEVEL_LABELS[level], fontsize=11)
+        # Light grid between cells for clarity
+        ax.set_xticks(np.arange(n_cols + 1) - 0.5, minor=True)
+        ax.set_yticks(np.arange(n_rows + 1) - 0.5, minor=True)
+        ax.grid(which="minor", color="white", linewidth=1.0)
+        ax.tick_params(which="minor", length=0)
+        ax.tick_params(axis="x", labelsize=8.5)
 
         if ax is axes[0]:
-            ax.set_ylabel("N inscriptions in the analysis unit / subset",
+            ax.set_ylabel("N inscriptions in the unit / subset",
                           fontsize=10)
+        ax.set_xlabel("Effect bracket", fontsize=9)
 
+    taper_label = ("Gaussian-tapered events" if taper == "gaussian"
+                    else "Step-onset events")
     fig.suptitle(
-        "Reachability — detection rate at varying sample size N "
-        f"(Gaussian-tapered events; worst-case across null models)"
-        if taper == "gaussian" else
-        "Reachability — detection rate at varying sample size N "
-        f"(step-onset events; worst-case across null models)",
-        fontsize=12, y=1.02,
+        f"Reachability — detection rate at varying sample size N "
+        f"({taper_label}; worst-case across null models)",
+        fontsize=12, y=1.00,
     )
 
-    # Colorbar
-    cbar = fig.colorbar(im, ax=axes, shrink=0.7, pad=0.02)
-    cbar.set_label("Detection rate (fraction of trials where the "
-                    "method correctly flags the planted effect)",
-                    fontsize=9)
+    # Colorbar on the right
+    cbar = fig.colorbar(im, ax=axes, shrink=0.6, pad=0.02, aspect=25)
+    cbar.set_label("Detection rate", fontsize=9)
     cbar.ax.axhline(0.80, color="black", linewidth=0.8, linestyle="--")
     cbar.ax.text(
-        1.4, 0.80, "0.80 = standard\npower threshold",
+        1.5, 0.80, "0.80 = standard\npower threshold",
         transform=cbar.ax.get_yaxis_transform(),
         fontsize=8, va="center",
     )
