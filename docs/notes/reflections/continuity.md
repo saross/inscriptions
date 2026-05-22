@@ -192,6 +192,15 @@ Detailed in `planning/backlog-2026-05-03.md` §"Open caveats / housekeeping". He
 - **RAC-TRAC 2026 conference details** — TBC.
 - **TBD 6 target journal venue** — leaning JAMT; soft commitment.
 
+### Open caveats from the 2026-05-21/22 Phase A + Phase B work
+
+Raised during the talk-prep sensitivities and the Phase 2 recovery-grid launch; not blocking the talk but flagged for follow-up:
+
+- **Concurrency slowdown on sapphire is unresolved.** pymc/pytensor incurs a 3–5× per-fit wall-clock slowdown under heavy concurrency (n_jobs ≥ 19) on sapphire's 24-core box, even with single-threaded BLAS (`OMP_NUM_THREADS=1`, `MKL_NUM_THREADS=1`) and isolated subprocess workers (not joblib/loky). Confirmed not BLAS oversubscription via `/proc/PID/environ` inspection. Investigate before any future grid-scale Bayesian run on sapphire — even a ~30 % wall-clock improvement would shave many hours off a 50 h grid. See `runs/2026-05-22-recovery-grid-validation/SMOKE-TEST.md` §"Concurrency".
+- **`pilot_proxy` tier vector is a proxy, not a real posterior draw.** The (0.55, 0.30, 0.15) "pilot_proxy" entry in the Phase 2 grid's tier-weight library is anchored to Decision 17's endpoint-frequency descriptives (54.5 % `not_before` `01`, 53.0 % `not_after` `00`), not to an actual posterior draw from a pilot fit. Replace with a real posterior draw once a pilot mixture fit becomes available. Flagged transparently in `runs/2026-05-22-recovery-grid-design/spec.md §2.3`.
+- **W-1 (Wasserstein-1) flagging threshold and PPC numerical thresholds deferred.** Both need empirical posteriors to anchor; cannot be pinned a priori. The recovery-grid simulation reports W-1 as a supplementary shape metric but does NOT gate on it yet. PPC numerical thresholds will be set after the first real-data Phase 2 fit. Flagged in `runs/2026-05-22-recovery-grid-design/spec.md §6`.
+- **Smoke-test R-hat is close to the binding gate.** Smoke-test cell (`shape=rise_and_fall_alpha=0.50_tier=uniform_N=2000` rep 0) had max R-hat 1.0063 vs the prereg-binding gate of < 1.01 (so it passed). The Gaussian-random-walk smoothness prior on `log p_gen` is the slowest-mixing parameter. If cell-wide R-hat pass rate in the full grid dips below the convergence-gate target, the response is **more draws / more tune iterations — not relaxing the gate**. Flagged in `runs/2026-05-22-recovery-grid-validation/SMOKE-TEST.md` §"Convergence".
+
 ---
 
 ## If context feels cold
