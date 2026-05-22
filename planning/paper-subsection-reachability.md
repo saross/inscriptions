@@ -2,7 +2,7 @@
 title: "Paper draft fragment — reachability guide for the inscription-SPA method"
 date: 2026-05-22
 audience: "Shawn (for incorporation into the main paper); colleague reviewers concerned about minimum-N thresholds"
-purpose: "Pre-empt the 'isn't 1,549 inscriptions too high?' objection by characterising what's reachable across a fuller grid of effect sizes and sample sizes."
+purpose: "Pre-empt the 'isn't the ~ 1,600-inscription minimum too high?' objection by characterising what's reachable across a fuller grid of effect sizes and sample sizes."
 status: "draft fragment; intended for §3 (Methods) or §6 (Discussion / Limitations) of the main paper"
 ---
 
@@ -12,7 +12,7 @@ status: "draft fragment; intended for §3 (Methods) or §6 (Discussion / Limitat
 
 A frequent — and well-grounded — concern about quantitative inscription studies is that the data are sparse relative to the questions practitioners want to ask. Many cities have only a few hundred dated inscriptions; many subset-of-interest queries (collegia / guild inscriptions; military diplomas; specific religious dedications; epitaphs of named status groups) reduce the working corpus further. Before committing analytic effort, a practitioner reasonably wants to know: *what kinds of temporal patterns can my method credibly detect in a subset of this size, and what kinds will look like noise even when they're real?*
 
-The preregistered Phase 1 simulation (see §3) gives this answer directly. It plants known temporal deviations of pre-specified size, duration, and onset-shape into synthetic corpora across an 11-point sample-size grid (N ∈ {25, 50, 100, 250, 500, 1,000, 2,500, 5,000, 10,000, 25,000, 50,000}) and three analysis levels (empire / province / urban-area), then runs the preregistered permutation-envelope detection method on each cell and measures the detection rate. The binding-bracket headline figure quoted elsewhere in the paper — minimum N ≈ 1,549 for credible 50 %-over-50-y detection at province / urban-area level — is the conservative reading of one cell of this grid. The full grid is more informative.
+The preregistered Phase 1 simulation (see §3) gives this answer directly. It plants known temporal deviations of pre-specified size, duration, and onset-shape into synthetic corpora across an 11-point sample-size grid (N ∈ {25, 50, 100, 250, 500, 1,000, 2,500, 5,000, 10,000, 25,000, 50,000}) and three analysis levels (empire / province / urban-area), then runs the preregistered permutation-envelope detection method on each cell and measures the detection rate. The binding-bracket headline figure quoted elsewhere in the paper — minimum N ≈ 1,600 for credible 50 %-over-50-y detection at province / urban-area level (the actual measured values range 1,385 – 1,938 across the four null-model variants; "1,600" is the rounded headline figure) — is the conservative reading of one slice of this grid. The full grid is more informative.
 
 ## Reachability across the grid (Table X)
 

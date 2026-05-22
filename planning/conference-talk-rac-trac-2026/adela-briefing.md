@@ -56,7 +56,7 @@ a backup slide during Q&A.
 - Take-home: we did the simulation work first to determine where the data has enough power. Cells that don't clear the minimum-N threshold are flagged "unreachable" rather than reported with inflated false-positives.
 - **What's a "cell"**: one combination of {analysis level (empire / province / urban-area) × subset × null model × effect bracket × sample size n}. Each cell gets 1,000 synthetic replicates.
 - **Reading the chart**: rows = effect brackets; columns = sample size n; colour = detection rate; top "zero" row = false-positive control; white line = ~ 80 %-detection contour.
-- Specifics: empire reachable at n = 50,000; provinces and urban areas at n ≈ **1,549** for the binding bracket; **96 reachable cells** total.
+- Specifics: empire reachable at n = 50,000 (the only n tested at empire scale — the actual filtered empire is N = 180,609 inscriptions, so testing at smaller n wouldn't correspond to a real scenario); provinces / urban-areas at n ≈ **1,600** for the binding bracket (the actual measured values range 1,385 – 1,938 across the four null-model variants; "1,600" is the rounded headline figure). The province and urban-area ranges essentially match. **96 reachable cells** across the full grid.
 - If asked about FP control: ≤ 5 % across all 96 zero-effect cells (range [0.007, 0.049]).
 - If asked about the math: forward-fit null in true-date space → synthetic-from-null DGP with empirical aoristic widths → 1,000 iterations × 1,000 MC replicates.
 
@@ -68,7 +68,7 @@ a backup slide during Q&A.
   - **20%-over-25y events**: not reachable at any practical N — below the method's resolving power. *This is a property of inscription-SPA inference broadly, not specific to our method.*
 - **Why this matters for the field**: inscription dates-as-data has historically been opportunistic — test whatever subset, against whatever pattern catches the eye. The reachability map is a *pre-analysis discipline*: tells you BEFORE running the analysis what claims your subset can credibly support.
 - **Worked example for Q&A**: a hypothetical collegia / guild subset (~ 3,000 inscriptions) → REACHABLE at empire scale; PARTIAL at provincial scale; OUT OF SCOPE at single-city scale. The historian can read the answer off before running anything.
-- If the audience pushes back ("isn't this restrictive?"): "yes for confirmatory temporal deviation-detection; no for cross-sectional regression (slide 6b — no minimum-N gate) or descriptive shape comparison (slide 4 cities under 1,549 still tell a real story)".
+- If the audience pushes back ("isn't this restrictive?"): "yes for confirmatory temporal deviation-detection; no for cross-sectional regression (slide 6b — no minimum-N gate) or descriptive shape comparison (slide 4 cities under 1,600 still tell a real story)".
 - Scope caveat to fold into speaker text: this is for ONE specific method (the preregistered permutation-envelope test); Bayesian-aoristic methods (Crema 2025, `baorista`) may be more permissive — flagged as a post-talk follow-up.
 
 ### Slide 4 — Multi-scale SPA shapes (~ 100 s)
@@ -170,7 +170,7 @@ The deck carries **two** backup sections behind the main 8 slides:
 | Future statistical directions (HMM) | **B11** | Martin's state-space proposal; post-lodgement OSF amendment if pursued |
 | Why both frequentist and Bayesian | **B12** | Slide 6a is the published-literature comparator; slide 6b is the new substantive contribution |
 
-*(The "isn't 1,549 too restrictive?" question is now on the main deck as slide 3b; no Q&A jump needed.)*
+*(The "isn't ~ 1,600 too restrictive?" question is now on the main deck as slide 3b; no Q&A jump needed.)*
 
 ### G-slides — methods explainers (plain English)
 

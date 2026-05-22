@@ -121,9 +121,8 @@ Synthetic corpora with **known** deviations → run through the detection method
 
 For the binding bracket:
 
-- **Empire** reachable at n = 50,000
-- **Province / urban-area** min n ≈ **1,549**
-- **96 reachable analysis cells**
+- **Empire**: reachable at n = 50,000 *(only n tested at empire scale)*
+- **Province / urban-area**: min n ≈ **1,600** *(range 1,400 – 1,950 across nulls)*
 - False-positive control ≤ 5 % across all 96 zero-effect cells
 :::
 :::
@@ -161,6 +160,30 @@ properly calibrated. The 96-cell reachability map is a public
 scientific result on its own — other epigraphic-corpus studies could
 use these thresholds as a methodology reference.
 
+WHY "EMPIRE n = 50,000 ONLY"? The empire was simulated at a SINGLE
+n-grid point (n = 50,000), not across a range. The actual filtered
+empire corpus is N = 180,609 inscriptions, so testing at smaller n
+values doesn't correspond to any real-world empire-scale analysis we'd
+plausibly run. The empire-level result reads "yes, reachable at this
+scale" — but doesn't pin a lower bound on what would also be
+reachable. Province and urban-area, by contrast, were tested across
+the full n grid (100 → 25,000 for province; 25 → 2,500 for
+urban-area), because real provincial / urban-area corpora vary
+substantially in size. That's where the "min n ≈ 1,600" floor comes
+from — it's the smallest n at which the province / urban-area
+simulations achieve ≥ 80 % detection on the binding bracket.
+
+WHY "1,600" AND NOT "1,549" OR SOMETHING MORE PRECISE? Because the
+actual measured thresholds vary across the four null-model
+specifications: province values are {1,385, 1,618, 1,869, 1,938};
+urban-area values are {1,409, 1,549, 1,854, 1,923}. The two levels'
+ranges essentially overlap, justifying a single headline figure. The
+rounded "≈ 1,600" sits inside both measured ranges (slightly more
+conservative than the median across nulls) and avoids implying false
+precision. If asked: the exact median across all 8 measured cells is
+~ 1,700; we round down to 1,600 as a slightly-more-conservative
+headline.
+
 IF ASKED ABOUT THE MATH: forward-fit null in true-date space, then
 synthetic-from-null data-generating process with empirical aoristic
 widths bootstrapped in, 1,000 simulation iterations × 1,000 Monte Carlo
@@ -189,10 +212,12 @@ replicates per cell.
 SPEAKER NOTES — slide 3b (≈ 90 s):
 
 WHAT THIS SLIDE DOES: extends slide 3a's binding-bracket headline
-(min N ≈ 1,549 for the 50 %-over-50 y bracket at province / urban-area
-level) to the broader effect-detection envelope. For a historian
-asking "can my subset of N inscriptions support a confirmatory
-deviation-detection claim?", this reads off the answer.
+(min N ≈ 1,600 for the 50 %-over-50 y bracket at province / urban-area
+level — the actual measured values range 1,385 – 1,938 across the
+four null-model variants; "1,600" is the rounded headline figure)
+to the broader effect-detection envelope. For a historian asking "can
+my subset of N inscriptions support a confirmatory deviation-detection
+claim?", this reads off the answer.
 
 THE PRACTICAL READS:
   - Below N ≈ 1,000: effectively unreachable for confirmatory
@@ -716,7 +741,7 @@ text-spec. Will be addressed in the amendment trail.
 
 ## B9 · Can small-N cities (100–250 inscriptions) tell us anything?
 
-- **For temporal deviation-detection**: NO — Phase 1's N ≈ 1,549 floor for credible 50%-over-50y detection. Inscription series below this are too sparse for formal inference
+- **For temporal deviation-detection**: NO — Phase 1's N ≈ 1,600 floor for credible 50%-over-50y detection. Inscription series below this are too sparse for formal inference
 - **For descriptive shape claims**: YES — visual peaks / declines / plateaus carry information
 - **For the cross-sectional H3a regression**: YES — all 1,044 cities (no minimum N) contribute leverage
 - **Layer B inversion** (prereg §5): tentatively map inscription trajectory to illustrative population trajectory under stated assumptions
