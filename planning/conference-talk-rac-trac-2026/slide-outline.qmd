@@ -110,7 +110,7 @@ methodological argument that follows.
 
 ---
 
-## 3 · A power simulation: which analyses are reachable?
+## 3a · A power simulation: which analyses are reachable?
 
 ::: {.columns}
 ::: {.column width="55%"}
@@ -165,6 +165,75 @@ IF ASKED ABOUT THE MATH: forward-fit null in true-date space, then
 synthetic-from-null data-generating process with empirical aoristic
 widths bootstrapped in, 1,000 simulation iterations × 1,000 Monte Carlo
 replicates per cell.
+-->
+
+---
+
+## 3b · Reachability across sample size and effect size
+
+::: {.columns}
+::: {.column width="60%"}
+![Detection rate by N (rows) × effect bracket (columns). Grey cells = combination not in the simulation grid for that level.](figures/fig-reachability-historian.png){fig-align="center" width="100%"}
+:::
+::: {.column width="40%"}
+**Practical reads**:
+
+- **N < 1,000** → nothing reliably detectable
+- **50 %/50 y** events → need **N ≈ 2,500**
+- **20 %/25 y** events → unreachable at any practical N
+- Smaller subsets → cross-sectional (slide 6b) + descriptive (slide 4) instead
+:::
+:::
+
+<!--
+SPEAKER NOTES — slide 3b (≈ 90 s):
+
+WHAT THIS SLIDE DOES: extends slide 3a's binding-bracket headline
+(min N ≈ 1,549 for the 50 %-over-50 y bracket at province / urban-area
+level) to the broader effect-detection envelope. For a historian
+asking "can my subset of N inscriptions support a confirmatory
+deviation-detection claim?", this reads off the answer.
+
+THE PRACTICAL READS:
+  - Below N ≈ 1,000: effectively unreachable for confirmatory
+    deviation-detection at the preregistered false-positive rate.
+    The inscription series can still support descriptive shape
+    comparison (which we do on slide 4) and contribute leverage to
+    cross-sectional regressions (slide 6b).
+  - At N ≈ 2,500: the binding 50 %-over-50 y bracket becomes
+    reliably reachable (detection rate ≥ 0.97). This is where empire-
+    wide subsets like collegia (~ 3,000), military-diploma inscriptions
+    (similar order), or specific religious-cult subsets start being
+    analytically interesting.
+  - The 20 %-over-25 y bracket (small, narrow events) is below the
+    method's resolving power at any practical N we tested. This is a
+    property of inscription-SPA inference broadly, not specific to our
+    method.
+
+WHY THIS MATTERS FOR THE FIELD: dates-as-data work on inscription
+corpora has historically been opportunistic — researchers test
+whatever subset is available, against whatever pattern catches the
+eye, without prior calibration. The Phase 1 reachability map is a
+pre-analysis discipline: it tells you before you run an analysis
+what claims your subset can credibly support, and where you should
+drop to descriptive / cross-sectional reasoning instead.
+
+WORKED EXAMPLE for Q&A: a hypothetical collegia / guild inscription
+subset (~ 3,000 inscriptions empire-wide) reads off as REACHABLE for
+the binding bracket at empire scale; PARTIAL at provincial scale;
+OUT OF SCOPE at single-city scale. The historian knows BEFORE running
+the analysis what claims the subset can support.
+
+SCOPE caveats to soft-pedal aloud, in speaker notes for reference:
+  - This is for ONE specific method (the preregistered permutation-
+    envelope test). Bayesian aoristic methods (Crema 2025, baorista)
+    may have different — possibly more permissive — reachability
+    profiles; a parallel analysis is on the post-talk to-do list.
+  - The current grid covers three effect-size brackets. Tier 2 of the
+    follow-up work fills in finer brackets; Tier 3 produces per-subset
+    reachability tables using each subset's own aoristic-width
+    distribution. Both are committed to in the paper's methodology-
+    supplement section.
 -->
 
 ---
@@ -719,46 +788,6 @@ different purposes: comparator validation (slide 6a) and the new
 substantive contribution (slide 6b). They land in the same ballpark,
 which validates the methodology; the Mundlak split is the genuine new
 information.
--->
-
----
-
-## B13 · Reachability across sample size and effect size
-
-::: {.columns}
-::: {.column width="55%"}
-![Detection rate by sample-size N (rows) × effect bracket (columns). Each panel = an analysis level. Worst-case across null models. Green ≥ 0.80 (reliably reachable); yellow partial; red unreachable. Gaussian-tapered events.](figures/fig-reachability-historian.png){fig-align="center" width="100%"}
-:::
-::: {.column width="45%"}
-**For a given subset / unit of N inscriptions**, the table reads off what kinds of temporal deviations the preregistered envelope test can credibly detect.
-
-- Below **N ≈ 1,000**, almost no effect is reliably detectable
-- **50 %-over-50 y** events: need N ≈ 2,500
-- **20 %-over-25 y** events: not reachable at any practical N — below the method's resolving power
-- Smaller subsets still participate in cross-sectional regressions (6b) and descriptive-shape comparison (B9)
-:::
-:::
-
-<!--
-SPEAKER NOTE B13: this is the answer to "isn't the 1,549 threshold too
-restrictive?" objection. Show the full grid: small datasets aren't
-useless, they're just restricted to descriptive / cross-sectional
-work. The 1,549 number is the binding-bracket conservative reading;
-the grid shows what's reachable across the broader effect-detection
-envelope. The smallest events (20 % over 25 y) are below the method's
-resolving power at any practical N — that's a property of the data,
-not of our specific method.
-
-Worked-example anchor for Q&A: a hypothetical collegia subset with
-~ 3,000 inscriptions reads off as REACHABLE at the binding bracket for
-the empire-wide trajectory; PARTIAL at provincial level; OUT OF SCOPE
-at single-city level. The historian knows BEFORE running the analysis
-what claims the subset can support.
-
-Also mention briefly: this is for ONE specific method (the
-preregistered permutation-envelope test). Bayesian aoristic methods
-(baorista, Crema 2025) may have different reachability profiles —
-flagged as a Tier 3 / 4 follow-up.
 -->
 
 ---

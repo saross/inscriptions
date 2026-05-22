@@ -31,11 +31,12 @@ LaTeX paper-document is a last-resort reading copy.
 
 ## 2 · Slide-by-slide cheat sheet
 
-Target: ~ 12 min over **8 main slides** (1, 2, 3, 4, 5, 6a, 6b, 7). Behind
-them sit two reserve sections: **B1–B12** (anticipated-question deep dive)
-and **G1–G9** (methods explainers in plain English for non-quantitative
-audience members). Average ~ 90 s per main slide. Press **`o`** in revealjs
-for the slide overview if you need to jump to a backup slide during Q&A.
+Target: ~ 12 min over **9 main slides** (1, 2, 3a, 3b, 4, 5, 6a, 6b, 7).
+Behind them sit two reserve sections: **B1–B12** (anticipated-question
+deep dive) and **G1–G9** (methods explainers in plain English for
+non-quantitative audience members). Average ~ 80 s per main slide.
+Press **`o`** in revealjs for the slide overview if you need to jump to
+a backup slide during Q&A.
 
 ### Slide 1 — Dates-as-data tradition + the puzzle (~ 90 s)
 - Open by *naming* the habit-only critique (MacMullen 1982; Hanson 2021). Don't avoid it.
@@ -50,7 +51,7 @@ for the slide overview if you need to jump to a backup slide during Q&A.
 - **Important framing**: AD 77.5 / 122.5 / 212.5 are *midpoints of editorial reign-interval templates*, NOT dynasty labels. AD 77.5 = midpoint of Flavian-period consular templates ([76,78], [77,79], [78,79]); AD 122.5 = mass from Hadrian's reign [117,138] + the exact-year [123,123] template (1,304 inscriptions); AD 212.5 = midpoint of Severan reign-interval templates.
 - This earns the audience's attention for the methodological argument that follows.
 
-### Slide 3 — A power simulation: which analyses are reachable? (~ 100 s)
+### Slide 3a — A power simulation: which analyses are reachable? (~ 90 s)
 - This is the first methodological phase — a **power simulation** completed before any substantive analysis. Locked at OSF lodgement.
 - Take-home: we did the simulation work first to determine where the data has enough power. Cells that don't clear the minimum-N threshold are flagged "unreachable" rather than reported with inflated false-positives.
 - **What's a "cell"**: one combination of {analysis level (empire / province / urban-area) × subset × null model × effect bracket × sample size n}. Each cell gets 1,000 synthetic replicates.
@@ -58,6 +59,17 @@ for the slide overview if you need to jump to a backup slide during Q&A.
 - Specifics: empire reachable at n = 50,000; provinces and urban areas at n ≈ **1,549** for the binding bracket; **96 reachable cells** total.
 - If asked about FP control: ≤ 5 % across all 96 zero-effect cells (range [0.007, 0.049]).
 - If asked about the math: forward-fit null in true-date space → synthetic-from-null DGP with empirical aoristic widths → 1,000 iterations × 1,000 MC replicates.
+
+### Slide 3b — Reachability across sample size and effect size (~ 90 s)
+- Extends 3a's binding-bracket headline to the broader effect-detection envelope. The point: "for a given subset of N inscriptions, here's what's reachable".
+- **Practical reads**:
+  - Below **N ≈ 1,000**: effectively unreachable for confirmatory deviation-detection.
+  - At **N ≈ 2,500**: 50%-over-50y binding bracket reliably reachable (detection rate ≥ 0.97).
+  - **20%-over-25y events**: not reachable at any practical N — below the method's resolving power. *This is a property of inscription-SPA inference broadly, not specific to our method.*
+- **Why this matters for the field**: inscription dates-as-data has historically been opportunistic — test whatever subset, against whatever pattern catches the eye. The reachability map is a *pre-analysis discipline*: tells you BEFORE running the analysis what claims your subset can credibly support.
+- **Worked example for Q&A**: a hypothetical collegia / guild subset (~ 3,000 inscriptions) → REACHABLE at empire scale; PARTIAL at provincial scale; OUT OF SCOPE at single-city scale. The historian can read the answer off before running anything.
+- If the audience pushes back ("isn't this restrictive?"): "yes for confirmatory temporal deviation-detection; no for cross-sectional regression (slide 6b — no minimum-N gate) or descriptive shape comparison (slide 4 cities under 1,549 still tell a real story)".
+- Scope caveat to fold into speaker text: this is for ONE specific method (the preregistered permutation-envelope test); Bayesian-aoristic methods (Crema 2025, `baorista`) may be more permissive — flagged as a post-talk follow-up.
 
 ### Slide 4 — Multi-scale SPA shapes (~ 100 s)
 - Two 2×4 small-multiples grids: top-8 provinces (left) + top-8 cities (right), each scaled to unit peak. Shared y-axis within each grid.
@@ -157,7 +169,8 @@ The deck carries **two** backup sections behind the main 8 slides:
 | Hanson 2021's specific residual findings | **B10** | Provincial-capital over-production; Moran's I = 0.046 on residuals; prereg H3c replicates both |
 | Future statistical directions (HMM) | **B11** | Martin's state-space proposal; post-lodgement OSF amendment if pursued |
 | Why both frequentist and Bayesian | **B12** | Slide 6a is the published-literature comparator; slide 6b is the new substantive contribution |
-| **Isn't the 1,549 threshold too restrictive?** Sample-size reach | **B13** | Heatmap of detection rate × N × effect-bracket. Below N ≈ 1,000 nothing reachable; 50%-over-50y at N ≈ 2,500; 20%-over-25y not reachable at any practical N. Smaller subsets do cross-sectional (6b) + descriptive (B9) instead |
+
+*(The "isn't 1,549 too restrictive?" question is now on the main deck as slide 3b; no Q&A jump needed.)*
 
 ### G-slides — methods explainers (plain English)
 
