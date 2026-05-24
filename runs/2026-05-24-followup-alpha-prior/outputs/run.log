@@ -1,0 +1,85 @@
+[followup] shape=bimodal_alpha=0.95_tier=uniform_N=10000  level=baseline  kw={'n_tune': 1000, 'n_draws': 2000, 'n_chains': 4, 'target_accept': 0.95}
+Initializing NUTS using jitter+adapt_diag...
+Sequential sampling (4 chains in 1 job)
+NUTS: [alpha, tier_weights, sigma_smooth, log_pgen_increments]
+Sampling 4 chains for 1_000 tune and 2_000 draw iterations (4_000 + 8_000 draws total) took 10 seconds.
+The rhat statistic is larger than 1.01 for some parameters. This indicates problems during sampling. See https://arxiv.org/abs/1903.08008 for details
+The effective sample size per chain is smaller than 100 for some parameters.  A higher number is needed for reliable rhat and ess computation. See https://arxiv.org/abs/1903.08008 for details
+[followup]   wall=13.6s
+[followup]   wrote /home/shawn/cc-scratch/inscriptions-recovery-grid/runs/2026-05-24-followup-alpha-prior/outputs/diagnostic-fits/shape=bimodal_alpha=0.95_tier=uniform_N=10000/replicate_000_effort=baseline-posterior.json
+[followup] shape=bimodal_alpha=0.95_tier=uniform_N=10000  level=harder  kw={'n_tune': 2000, 'n_draws': 4000, 'n_chains': 4, 'target_accept': 0.99}
+Initializing NUTS using jitter+adapt_diag...
+Sequential sampling (4 chains in 1 job)
+NUTS: [alpha, tier_weights, sigma_smooth, log_pgen_increments]
+Sampling 4 chains for 2_000 tune and 4_000 draw iterations (8_000 + 16_000 draws total) took 51 seconds.
+The rhat statistic is larger than 1.01 for some parameters. This indicates problems during sampling. See https://arxiv.org/abs/1903.08008 for details
+The effective sample size per chain is smaller than 100 for some parameters.  A higher number is needed for reliable rhat and ess computation. See https://arxiv.org/abs/1903.08008 for details
+[followup]   wall=52.6s
+[followup]   wrote /home/shawn/cc-scratch/inscriptions-recovery-grid/runs/2026-05-24-followup-alpha-prior/outputs/diagnostic-fits/shape=bimodal_alpha=0.95_tier=uniform_N=10000/replicate_000_effort=harder-posterior.json
+[followup] shape=bimodal_alpha=0.95_tier=uniform_N=10000  level=hardest  kw={'n_tune': 4000, 'n_draws': 8000, 'n_chains': 4, 'target_accept': 0.995}
+Initializing NUTS using jitter+adapt_diag...
+Sequential sampling (4 chains in 1 job)
+NUTS: [alpha, tier_weights, sigma_smooth, log_pgen_increments]
+Sampling 4 chains for 4_000 tune and 8_000 draw iterations (16_000 + 32_000 draws total) took 150 seconds.
+The rhat statistic is larger than 1.01 for some parameters. This indicates problems during sampling. See https://arxiv.org/abs/1903.08008 for details
+The effective sample size per chain is smaller than 100 for some parameters.  A higher number is needed for reliable rhat and ess computation. See https://arxiv.org/abs/1903.08008 for details
+[followup]   wall=151.5s
+[followup]   wrote /home/shawn/cc-scratch/inscriptions-recovery-grid/runs/2026-05-24-followup-alpha-prior/outputs/diagnostic-fits/shape=bimodal_alpha=0.95_tier=uniform_N=10000/replicate_000_effort=hardest-posterior.json
+[followup] shape=regnal_cluster_alpha=0.95_tier=half_century_heavy_N=10000  level=baseline  kw={'n_tune': 1000, 'n_draws': 2000, 'n_chains': 4, 'target_accept': 0.95}
+Initializing NUTS using jitter+adapt_diag...
+Sequential sampling (4 chains in 1 job)
+NUTS: [alpha, tier_weights, sigma_smooth, log_pgen_increments]
+Sampling 4 chains for 1_000 tune and 2_000 draw iterations (4_000 + 8_000 draws total) took 14 seconds.
+There were 22 divergences after tuning. Increase `target_accept` or reparameterize.
+The rhat statistic is larger than 1.01 for some parameters. This indicates problems during sampling. See https://arxiv.org/abs/1903.08008 for details
+The effective sample size per chain is smaller than 100 for some parameters.  A higher number is needed for reliable rhat and ess computation. See https://arxiv.org/abs/1903.08008 for details
+[followup]   wall=17.0s
+[followup]   wrote /home/shawn/cc-scratch/inscriptions-recovery-grid/runs/2026-05-24-followup-alpha-prior/outputs/diagnostic-fits/shape=regnal_cluster_alpha=0.95_tier=half_century_heavy_N=10000/replicate_000_effort=baseline-posterior.json
+[followup] shape=regnal_cluster_alpha=0.95_tier=half_century_heavy_N=10000  level=harder  kw={'n_tune': 2000, 'n_draws': 4000, 'n_chains': 4, 'target_accept': 0.99}
+Initializing NUTS using jitter+adapt_diag...
+Sequential sampling (4 chains in 1 job)
+NUTS: [alpha, tier_weights, sigma_smooth, log_pgen_increments]
+Sampling 4 chains for 2_000 tune and 4_000 draw iterations (8_000 + 16_000 draws total) took 63 seconds.
+The rhat statistic is larger than 1.01 for some parameters. This indicates problems during sampling. See https://arxiv.org/abs/1903.08008 for details
+The effective sample size per chain is smaller than 100 for some parameters.  A higher number is needed for reliable rhat and ess computation. See https://arxiv.org/abs/1903.08008 for details
+[followup]   wall=64.0s
+[followup]   wrote /home/shawn/cc-scratch/inscriptions-recovery-grid/runs/2026-05-24-followup-alpha-prior/outputs/diagnostic-fits/shape=regnal_cluster_alpha=0.95_tier=half_century_heavy_N=10000/replicate_000_effort=harder-posterior.json
+[followup] shape=regnal_cluster_alpha=0.95_tier=half_century_heavy_N=10000  level=hardest  kw={'n_tune': 4000, 'n_draws': 8000, 'n_chains': 4, 'target_accept': 0.995}
+Initializing NUTS using jitter+adapt_diag...
+Sequential sampling (4 chains in 1 job)
+NUTS: [alpha, tier_weights, sigma_smooth, log_pgen_increments]
+Sampling 4 chains for 4_000 tune and 8_000 draw iterations (16_000 + 32_000 draws total) took 115 seconds.
+There were 40 divergences after tuning. Increase `target_accept` or reparameterize.
+The rhat statistic is larger than 1.01 for some parameters. This indicates problems during sampling. See https://arxiv.org/abs/1903.08008 for details
+The effective sample size per chain is smaller than 100 for some parameters.  A higher number is needed for reliable rhat and ess computation. See https://arxiv.org/abs/1903.08008 for details
+[followup]   wall=116.6s
+[followup]   wrote /home/shawn/cc-scratch/inscriptions-recovery-grid/runs/2026-05-24-followup-alpha-prior/outputs/diagnostic-fits/shape=regnal_cluster_alpha=0.95_tier=half_century_heavy_N=10000/replicate_000_effort=hardest-posterior.json
+[followup] shape=smooth_decline_alpha=0.95_tier=century_heavy_N=10000  level=baseline  kw={'n_tune': 1000, 'n_draws': 2000, 'n_chains': 4, 'target_accept': 0.95}
+Initializing NUTS using jitter+adapt_diag...
+Sequential sampling (4 chains in 1 job)
+NUTS: [alpha, tier_weights, sigma_smooth, log_pgen_increments]
+Sampling 4 chains for 1_000 tune and 2_000 draw iterations (4_000 + 8_000 draws total) took 9 seconds.
+There were 47 divergences after tuning. Increase `target_accept` or reparameterize.
+The rhat statistic is larger than 1.01 for some parameters. This indicates problems during sampling. See https://arxiv.org/abs/1903.08008 for details
+The effective sample size per chain is smaller than 100 for some parameters.  A higher number is needed for reliable rhat and ess computation. See https://arxiv.org/abs/1903.08008 for details
+[followup]   wall=12.3s
+[followup]   wrote /home/shawn/cc-scratch/inscriptions-recovery-grid/runs/2026-05-24-followup-alpha-prior/outputs/diagnostic-fits/shape=smooth_decline_alpha=0.95_tier=century_heavy_N=10000/replicate_000_effort=baseline-posterior.json
+[followup] shape=smooth_decline_alpha=0.95_tier=century_heavy_N=10000  level=harder  kw={'n_tune': 2000, 'n_draws': 4000, 'n_chains': 4, 'target_accept': 0.99}
+Initializing NUTS using jitter+adapt_diag...
+Sequential sampling (4 chains in 1 job)
+NUTS: [alpha, tier_weights, sigma_smooth, log_pgen_increments]
+Sampling 4 chains for 2_000 tune and 4_000 draw iterations (8_000 + 16_000 draws total) took 52 seconds.
+The rhat statistic is larger than 1.01 for some parameters. This indicates problems during sampling. See https://arxiv.org/abs/1903.08008 for details
+The effective sample size per chain is smaller than 100 for some parameters.  A higher number is needed for reliable rhat and ess computation. See https://arxiv.org/abs/1903.08008 for details
+[followup]   wall=53.2s
+[followup]   wrote /home/shawn/cc-scratch/inscriptions-recovery-grid/runs/2026-05-24-followup-alpha-prior/outputs/diagnostic-fits/shape=smooth_decline_alpha=0.95_tier=century_heavy_N=10000/replicate_000_effort=harder-posterior.json
+[followup] shape=smooth_decline_alpha=0.95_tier=century_heavy_N=10000  level=hardest  kw={'n_tune': 4000, 'n_draws': 8000, 'n_chains': 4, 'target_accept': 0.995}
+Initializing NUTS using jitter+adapt_diag...
+Sequential sampling (4 chains in 1 job)
+NUTS: [alpha, tier_weights, sigma_smooth, log_pgen_increments]
+Sampling 4 chains for 4_000 tune and 8_000 draw iterations (16_000 + 32_000 draws total) took 121 seconds.
+The rhat statistic is larger than 1.01 for some parameters. This indicates problems during sampling. See https://arxiv.org/abs/1903.08008 for details
+The effective sample size per chain is smaller than 100 for some parameters.  A higher number is needed for reliable rhat and ess computation. See https://arxiv.org/abs/1903.08008 for details
+[followup]   wall=121.9s
+[followup]   wrote /home/shawn/cc-scratch/inscriptions-recovery-grid/runs/2026-05-24-followup-alpha-prior/outputs/diagnostic-fits/shape=smooth_decline_alpha=0.95_tier=century_heavy_N=10000/replicate_000_effort=hardest-posterior.json
+[followup] DONE. total wall = 610.3s
