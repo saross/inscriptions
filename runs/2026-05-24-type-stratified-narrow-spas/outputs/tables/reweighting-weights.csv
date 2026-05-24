@@ -1,0 +1,34 @@
+cohort,type,target_weight,in_cohort_total,contributes_to_pgen
+A_Tight,epitaph (funerary),0.5587,169,True
+A_Tight,votive,0.0924,491,True
+A_Tight,identification,0.125,716,True
+A_Tight,honorific,0.0364,1168,True
+A_Tight,building/dedicatory,0.0196,455,True
+A_Tight,mile-/leaguestone,0.0149,1058,True
+A_Tight,military diploma,0.0024,73,True
+A_Tight,boundary,0.0026,55,True
+A_Tight,acclamation,0.002,5,True
+A_Tight,other small,0.0075,32,True
+A_Tight,unknown,0.1385,1811,True
+B_FamFilt,epitaph (funerary),0.5587,5034,True
+B_FamFilt,votive,0.0924,1783,True
+B_FamFilt,identification,0.125,4881,True
+B_FamFilt,honorific,0.0364,3150,True
+B_FamFilt,building/dedicatory,0.0196,1365,True
+B_FamFilt,mile-/leaguestone,0.0149,1748,True
+B_FamFilt,military diploma,0.0024,147,True
+B_FamFilt,boundary,0.0026,266,True
+B_FamFilt,acclamation,0.002,23,True
+B_FamFilt,other small,0.0075,284,True
+B_FamFilt,unknown,0.1385,4874,True
+C_Width23,epitaph (funerary),0.5587,1706,True
+C_Width23,votive,0.0924,1568,True
+C_Width23,identification,0.125,3148,True
+C_Width23,honorific,0.0364,2871,True
+C_Width23,building/dedicatory,0.0196,1220,True
+C_Width23,mile-/leaguestone,0.0149,1652,True
+C_Width23,military diploma,0.0024,143,True
+C_Width23,boundary,0.0026,256,True
+C_Width23,acclamation,0.002,11,True
+C_Width23,other small,0.0075,234,True
+C_Width23,unknown,0.1385,4040,True

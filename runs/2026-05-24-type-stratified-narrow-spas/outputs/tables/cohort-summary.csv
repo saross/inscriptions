@@ -1,0 +1,4 @@
+cohort,n_records,pct_of_corpus,mean_date_range,median_date_range,mean_sigma_years
+A_Tight,14313,7.83,0.83,0,0.24
+B_FamFilt,31841,17.41,12.56,6,3.63
+C_Width23,25133,13.74,6.27,3,1.81
