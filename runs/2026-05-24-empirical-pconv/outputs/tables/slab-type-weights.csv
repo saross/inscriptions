@@ -1,0 +1,10 @@
+slab_name,width,count,weight,pct,family
+century,99,47267,0.3967,39.67,F1
+two_century,199,28227,0.2369,23.69,F1
+half_century,49,20216,0.1697,16.97,F1
+one_and_a_half_century,149,8690,0.0729,7.29,F1
+three_century,299,5892,0.0495,4.95,F1
+thirty_year_window,29,4039,0.0339,3.39,F3
+forty_year_window,39,3214,0.027,2.7,F3
+twenty_year_window,19,892,0.0075,0.75,F3
+quarter_century,24,705,0.0059,0.59,F1

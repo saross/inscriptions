@@ -1,0 +1,6 @@
+case,l1,max_abs_diff
+uniform,0.3264,0.0099
+century_heavy,0.3401,0.01382
+half_century_heavy,0.367,0.01074
+reign_heavy,0.5497,0.01487
+pilot_proxy,0.3067,0.01153
