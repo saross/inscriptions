@@ -73,3 +73,43 @@ last-updated: 2026-05-21
 **How to apply.** Whenever I produce a visual artefact (PDF, slide deck, rendered figure, chart, screenshot), do NOT declare it "ready" or "fixed" based on source-side checks alone. Surface the rendered output to Shawn and explicitly ask for a visual scan: *"Rendered PDF attached; please visually scan before treating as ready."* For multi-page artefacts, ask him to page through. Build the visual-scan step into the workflow rather than deferring it. The cost of one extra round-trip is trivial; the cost of an artefact-with-defect going out the door is substantial. Captured from three errors in one session — figure-title baked-in (commit `47ff7ce`), caption row direction (commit `47ff7ce`), backup-slide overflow (commits `47ff7ce` / `80f3805`).
 
 **Cross-references.** This is the same pattern as Obs 1 (OSF supplementary PDF iterations); this entry adds three new data points (figure titles, caption-figure misalignment, slide overflow). Together they suggest the pattern is general to *any* visual artefact, not specific to one document class. Also relates to memory `2026-05-22-96af8f645552` (matplotlib `set_title` bakes invisibly into PNGs).
+
+---
+
+## Obs 6 — 2026-05-25: Explicit "devil's advocate" framing produces more rigorous analysis than open prompts
+
+**Pattern.** Mid-session, Shawn asked: *"Playing devil's advocate, is it worth it to try to recover some meaning from that 2/3 that is editorial convention vs. simply running analysis on the 1/3 with intrinsic signal?"* That framing — explicitly inviting me to argue against the path we were on — produced the most rigorous long-form analysis of the session (`planning/h2.1-discard-vs-recover-rationale-2026-05-24.md`, committed at `ce140d1`). The same content under an open prompt ("what about discard?") would likely have produced a defensive summary of why we were already on the right path. The devil's-advocate framing inverted my default validation-of-trajectory mode and produced a balanced trade-off analysis with explicit decision-tree branches, instead.
+
+**Lesson.** When Shawn wants real argumentation rather than confirmation, the "playing devil's advocate" framing reliably surfaces the strongest case for the alternative. Open prompts get summaries; critique-prompts get arguments. The cost is a willingness to be wrong; the benefit is a much sharper analysis than a defensive read would produce.
+
+**How to apply.** When facing a decision where I'd be tempted to validate the current trajectory, Shawn's "devil's advocate" framing is the lever — and when he uses it, lean into it fully rather than hedging. The reverse is also true: when I notice I'm validating without questioning, I should consider whether a self-directed devil's-advocate pass is warranted, especially at architectural-decision boundaries. Captured from the 2026-05-24 discard-vs-recover analysis at commit `ce140d1`.
+
+---
+
+## Obs 7 — 2026-05-25: When I doubt an agent's output, verify against source before contradicting
+
+**Pattern.** The Stage 3 implementation-plan agent returned a document referring to `runs/2026-05-22-recovery-grid-validation/code/02-cell-mixture-fit.py`. I flagged this as a typo because I'd been calling the file `02-mixture-fit.py` throughout the session. I ran `ls` to "confirm" the agent had the filename wrong — and discovered that *I* had the filename wrong; the agent had checked disk and used the correct name. Shawn caught my self-correction implicitly by not commenting on the mis-flag, but the pattern is worth naming. Same general failure-mode class as the anti-confabulation rule in CLAUDE.md, applied to myself rather than to memories.
+
+**Lesson.** When my recollection of a specific (filename, path, identifier) contradicts an agent's output, the prior should be that the agent looked at disk and I'm remembering wrong, not the reverse. Opus 4.7's tendency to weld memory fragments under context pressure is well-documented in the global CLAUDE.md anti-confabulation rule; I should apply it to myself, not just to memories and prior conversation context. Confidence in a remembered specific is no guarantee of accuracy — particularly under context pressure in long sessions.
+
+**How to apply.** Any time I'm about to "correct" an agent's specific (filename, line number, citation, config value), run the verification at source *first*, then either update or stand down. The agent's specifics are usually fresher than mine; the cost of a `ls` or `grep` is trivial; the cost of confidently contradicting a correct agent is a small loss of trust in the agent's outputs that compounds over a session. Captured from the Stage 3 implementation-plan filename mis-flag during the 2026-05-25 session (commit `381c303`).
+
+---
+
+## Obs 8 — 2026-05-25: Explicit scope-out clauses make scope-honesty easier near session-end
+
+**Pattern.** When asking for the working-notes gap analysis, Shawn explicitly added: *"if this job is too big for this session, which we need to wind down, let's scope the issue and put it into continuity.md to pick up next session."* That escape hatch made it possible for me to honestly evaluate the job's size and conclude "no, this fits". Without the explicit out-clause I might have rationalised it as smaller than it was, or split-the-difference by doing a partial pass that left both this session and the next worse-off. The out-clause was the load-bearing element of the ask — its presence inverted the default scope-evaluation from "try to fit" to "evaluate honestly". A 1-line difference in the prompt produced a substantively different decision-making process.
+
+**Lesson.** Explicit scope-out clauses ("if too big, just scope it for next time") let me make honest scope judgements without the implicit pressure to fit work into the asking session. Without the out-clause, ambiguity defaults to "try to do it now"; with the out-clause, the default flips to "evaluate honestly, recommend either path". Worth Shawn doing routinely on bounded asks near session-end; worth me asking for the clause explicitly when an ask feels potentially-too-big.
+
+**How to apply.** When Shawn asks for something near a session-close, evaluate the scope honestly against remaining session time. If the out-clause isn't there but the work is potentially too big, ask: *"If this is too big to do tonight, do you want me to scope it for next session instead?"* The answer is informative either way — a "yes, just scope it" gives you back time for closer-to-the-wire items; a "no, please do it" commits both of us to the work with eyes open. Captured from the working-notes gap-analysis ask at end of 2026-05-25 session.
+
+---
+
+## Obs 9 — 2026-05-25: In-session `/remember` captures are immediately load-bearing, not just future-facing
+
+**Pattern.** Mid-session (2026-05-24) Shawn invoked `/remember` to capture the non-specialist explainer register as a preference. The memory landed as `2026-05-24-e6ec8f9174f1`. The same register-guidance immediately governed the next several explainer-style responses in the *same session* (the discard-vs-recover analysis; the slab-structure walkthrough; the briefing prep for Martin) — not just future sessions. The conventional read of `/remember` is "save this for next time"; the actual function here was "save this AND start following it now". The captured rule changed in-session behaviour as much as it changed future-session priming.
+
+**Lesson.** When Shawn captures a working preference via `/remember` mid-session, the preference takes effect immediately, not just from next session onward. Treat the capture as a behaviour-change event, not just a memory-store event. Mechanically: re-read the saved memory once after capture and apply it consciously to the next several responses, not just the next session's first response. The "for next time" framing of memory-capture under-states its immediate function.
+
+**How to apply.** After any `/remember`-style capture, briefly acknowledge in the same response that the rule will apply going forward starting now (not just at the next session boundary). This makes the immediate behaviour-change explicit and gives Shawn a chance to correct if his intent was "save for later, current style is fine". Especially useful for register / style preferences where the captured rule is most visibly applied in the very-next-response context. Captured from the 2026-05-24 register-preference capture and its in-session application during the rest of that day and the 2026-05-25 follow-on session.

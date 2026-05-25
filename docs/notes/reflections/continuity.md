@@ -107,9 +107,25 @@ Software stack confirmed (all licences compatible): `kairos` (tesselle, GPL-3.0)
 
 ---
 
-## Working-notes review — in flight 2026-05-25
+## Working-notes review — proposals ready for selective commit (2026-05-25)
 
-Working-notes is at Obs 48 (2026-05-22). Since then ~3 days of substantial methodological work (15+ commits) with zero new Obs recorded. A background agent (`ab80a245cae11167d`, launched 2026-05-25) is reviewing recent runs and planning artefacts to propose draft Obs entries for the period 2026-05-23 → 2026-05-25. **If the agent's proposed list is still un-actioned at the next session start**: read its return (in the closing session-end output), review the proposed Obs against the existing 48-entry register for distinctness, and selectively commit the keepers in one batch via `/observe`. Likely candidates include: family classifier as methodological abstraction; structural-vs-sampler diagnostic distinction; non-centred GRW free win; empirical-Bayes calibration-cohort pattern; the 1/6-signal-vs-5/6-convention finding; discard-vs-recover decision-tree framing; ceramics-aoristic bridge community identification.
+Working-notes is at Obs 48 (2026-05-22). The 2026-05-25 gap-analysis agent (`ab80a245cae11167d`) returned with **9 proposed entries (Obs 49–57)** covering the 2026-05-23 → 2026-05-25 work tranche. Proposals are at `docs/notes/reflections/PROPOSED-OBS-49-57-for-review.md` (commit `11ca91e`). Each is empirically anchored to commits / run-dirs / file paths.
+
+Headlines:
+
+- **Obs 49** [GOTCHA] tmpfs inode exhaustion in pytensor recompile loop (the 12-cell failure root cause)
+- **Obs 50** [FINDING] recovery grid FAILed 40.9 % — validation gate doing its job
+- **Obs 51** [SURPRISE] α-bias is bidirectional, saturates by α=0.70 (not corner at α=1)
+- **Obs 52** [PATTERN] three cheap negative results in sequence localise failure to structural identifiability
+- **Obs 53** [GOTCHA] Pearson r against zero-variance truth is undefined
+- **Obs 54** [PATTERN] interval *structure* not *width* — family classifier doubled cohort size at higher purity
+- **Obs 55** [DECISION] empirical-Bayes calibration cohort as the structural pivot (comparable to forward-fit pivot Obs 18)
+- **Obs 56** [PATTERN] bridge-the-clusters lit-scout (refines Obs 10 with disconnection-as-signal heuristic; promotion candidate to `~/personal-assistant/notes/llm-craft.md`)
+- **Obs 57** [PATTERN] diagnostic that doesn't fix the headline still banks structural improvements
+
+Agent's recommended commit-ordering: 49 → 50 → 53 → 51 → 52 → 57 → 54 → 55 → 56. Highest-value single entry: **Obs 55**.
+
+**Next-session action**: review the proposal file, edit any entries that need tightening, paste keepers into `working-notes.md` (append after current Obs 48) in the recommended order. Or use `/observe` for individual entries.
 
 ---
 
