@@ -510,3 +510,89 @@ Plus a handoff commit `6f94bc8` (continuity + user-observations Obs 5).
 - Three-artefact set for delegated talks (slides + bullet notes + continuous script — three cognitive moments).
 
 **Contextual assumptions.** This session ran continuously without compaction. The talk delivery is Friday 2026-05-22 14:20 Aarhus time; Adela delivers; Shawn cannot travel. The deck PDF was sent to Adela at session close; grid runs unattended on sapphire; sapphire is on stable network and nohup process survives session disconnection. Standing rule respected throughout: all serious compute on sapphire (the grid + the investigation agent's diagnostics ran there); local-machine work limited to text edits + visual QA + light pandas / PIL / Python. Three "visual-scan verification" catches by Shawn this session continue to validate the user-observations Obs 1 + 5 pattern; my "looks fine to me" reads on rendered visual artefacts are systematically less reliable than his.
+
+---
+
+## 2026-05-23 → 2026-05-25 — Session log: the recovery-grid FAIL → diagnostic chain → empirical-Bayes pivot → Martin-consultation prep arc
+
+A three-day continuous methodological arc closing the recovery-grid validation phase and opening the Stage-3 implementation phase.
+
+### Day 1 — 2026-05-23 (grid retry + diagnosis prologue)
+
+**What happened.** The Phase 2 recovery-grid that had been running since 2026-05-22 06:17 sapphire-local finished at 2026-05-23 12:07 — 29.84 h wall-clock vs the 31.6 h projection (~5% under). 438/450 cells completed; 12 cells failed late. Root cause of failures: `/tmp` on sapphire is tmpfs (31 GB / 1,048,576-inode ceiling); pytensor's `NamedTemporaryFile` outputs accumulated under `allow_gc=False` past the inode limit. Linux reports inode exhaustion as `ENOSPC` identically to disk exhaustion; `df -h` showed plenty of byte-space free.
+
+**The retry.** Drain `/tmp` (1,048,559 → 17 inodes used; 5.7 s); redirect `TMPDIR` to disk-backed scratch (433 GB free on NVMe). Relaunch via `RETRY-COMMAND.sh` keeping all other config identical. Retry took 0.85 h wall; all 12 cells PASS; the failed cells had partial replicates on disk and resumed cleanly. 23,264 pytensor temp files accumulated harmlessly on the disk-backed `TMPDIR` over the retry duration — would have re-blown the tmpfs ceiling without the redirect.
+
+**Summariser run.** `runs/2026-05-22-recovery-grid-validation/code/05-grid-summariser.py` produced REPORT.md with the binding-criterion verdict: **40.9 % of cells passing both criteria, vs the ≥ 90 % gate. FAIL.** Per-axis breakdown: α-coverage alone 63.6 %; shape-Pearson-r alone 69.8 %.
+
+**Commits.** `3df0d2c` (close recovery grid + 12-cell retry, with RETRY-COMMAND.sh documenting the /tmp inode root cause).
+
+### Day 2 — 2026-05-24 (four follow-up investigations + cohort design + Stages 1+2)
+
+**Experiments A + B** (`runs/2026-05-24-validation-investigation/`, commit `3d23fe6`). Three α=0.95 cells × three sampler-effort tiers; result: posterior unchanged across effort tiers, ruling out sampler-effort as the dominant cause. Experiment B examined the flat_baseline shape's 0% pass rate; established that the model recovers near-perfectly but Pearson r is undefined on zero-variance truth — a metric-pipeline bug, not a recovery failure. (Candidate Obs 53.)
+
+**F0 + F1 + F3** (`runs/2026-05-24-followup-systematics/`, `…followup-alpha-prior/`, `…followup-noncentred-grw/`, commit `e21f7bf`). F0 systematics analysis revealed the α-bias is bidirectional and saturates by α=0.70 — not a corner pathology at α=1 (candidate Obs 51). F1 swapped α prior to Uniform(0,1) → Δα = +0.025, below the +0.05 threshold; prior pull ruled out. F3 reparameterised GRW from centred to non-centred → Δα = +0.001 but ESS-bulk improved 45-50× and R-hat collapsed from ~1.04 to ~1.0008. Funnel geometry ruled out; non-centred adopted unconditionally as free win (candidate Obs 57). Three sequential clean-negatives localise the failure to structural identifiability (candidate Obs 52).
+
+**Date-range threshold analysis** (`runs/2026-05-24-date-range-threshold-analysis/`, commit `b78da5c`). Histograms of LIRE v3.0 `(not_after − not_before)` revealing the slab structure: 99-y peak (47k records), 49-y peak (20k), 199-y peak (28k), 24-y small peak (857). Per-bin counts at 25 % grid alignment. Type-composition table showed the narrow-dated subset is severely type-biased: epitaphs 56 % of corpus, 11 % of <25-y subset.
+
+**Family classifier + type-stratified narrow SPAs** (`runs/2026-05-24-type-stratified-narrow-spas/`, commit `6734ef0`). The load-bearing methodological abstraction of the session. Partition LIRE on `(not_before, not_after)` interval structure: F1_round (round-number slabs, 60.7 %), F3_periodic (decade-grid 30-y windows, 4.5 %), Tight (≤4 y, 7.8 %), F2_Other (5-48 y reign-windows, 9.6 %), Big (≥49 y non-round, 17.4 %). Cohort B = Tight ∪ F2_Other = 31,841 records (17.4 % of corpus) is the empirical-Bayes calibration cohort. F2_Other surfaced reign-window content (Antoninus Pius `AD 138–161`, tetrarchic `AD 291–325`, Hadrian `AD 117–138`, etc.) that width-only filtering would have missed. (Candidate Obs 54.)
+
+**Discard-vs-recover rationale** (`planning/h2.1-discard-vs-recover-rationale-2026-05-24.md`, commit `ce140d1`). Prompted by Shawn's "playing devil's advocate" framing (candidate user-observation Obs 6). Documented as a decision-tree branching on whether the empirical-Bayes pivot's Stage 4 validation succeeds.
+
+**Stages 1 + 2 of the empirical-Bayes calibration cohort.**
+
+- Stage 1 (`runs/2026-05-24-empirical-pconv/`, commit `a37261b`): empirical p_conv from F1+F3 inscriptions. 80-bin vector. L1 distance from the placeholder tier-template basis (pilot_proxy choice) = 0.31; ~15 % of total convention mass mis-allocated in the placeholder.
+- Stage 2 (`runs/2026-05-24-empirical-pgen-prior/`, commit `8e1897b`): empirical p_gen prior from Cohort B with type-reweighting (epitaph 3.2× up; honorific 0.28× down; milestone 0.19× down; military diploma 0.18× down). Bootstrap-derived per-bin σ_prior averages 0.044 on log scale.
+
+**Stage 3 implementation plan** (`planning/h2.1-stage-3-implementation-plan-2026-05-25.md`, commit `381c303`). Drafted by an agent; 12 sections, 5,700 words, 7 design decisions flagged for Martin.
+
+**Five planning explainer docs** (commit `b78da5c`): `h2.1-mixture-model-problem-explained-2026-05-24.md`, `h2.1-follow-up-candidates-2026-05-24.md`, `h2.1-prior-art-scout-empirical-bayes-calibration-2026-05-24.md`, plus the discard-vs-recover rationale and the Stage-3 plan. Pitched in the non-specialist register Shawn approved and captured as memory `2026-05-24-e6ec8f9174f1`.
+
+**Martin consultation pack** (`planning/martin-consultation-2026-05-25-followup.md`, commit `e57dc6b`). Six framed questions for the consultation; supersedes the four questions in the Experiment A/B diagnostic report. Compiled alongside the Stage-3 implementation plan and the planning explainers.
+
+### Day 3 — 2026-05-25 (Martin consultation prep + two scouts + working-notes review)
+
+**Martin consultation briefings** (`runs/2026-05-25-martin-consultation-prep/`, commits `55e050c` + `dbae06f`). Main briefing (7-section pre-meeting brief) + supplementary briefing (covers the 8 unanswered 2026-05-17 pack questions, 3 new findings, H3b/H3c/§5 backlog, strategic decisions). Four key figures: uncorrected SPA, slab-highlighting SPA (new, stacked-by-family), slab-excluding SPA (new, reweighted-prior overlay), Hanson NBR scaling. Per-region editorial-fraction analysis revealed AD 300-350 is 80 % editorial templates (template-dominated late corpus).
+
+**Lit-scout — pottery-aoristic Roman bibliography** (`planning/lit-scout-2026-05-25-pottery-aoristic-roman/`, commit `3e93660`). Closed-loop iteration via `/lit-scout-iterate`: iter-0 returned 25 references with 26/27 PASS + 1 FAIL (two citation_count confabulations on rows 24-25, value-reuse pattern). Iter-1 applied corrections; all 27 PASS. 15 new items imported to Zotero staging; 8 already in libraries (SDAM-AU + roman_demography); 2 OXREP chapters required hand-curation from OpenAlex + Semantic Scholar because CrossRef returns 404 on OUP `acprof:oso` DOIs (commit `b687ed2`). Headline finding: the Brughmans / Aarhus cluster (Komar/Brughmans/Borisova 2025, Franconi et al. 2023, Bevan et al. 2013) is the bridging community between radiocarbon-SPD methodologists and epigraphy-aoristic.
+
+**Prior-art-scout — ceramics-aoristic actionable techniques** (`planning/prior-art-scout-2026-05-25-ceramics-aoristic-techniques/`, commit `6877621`). Closed-loop iteration via `/prior-art-scout-iterate`: iter-0 returned 15 candidate techniques with 1 FAIL on a DOI confabulation (Bellanger & Husi 2012, off by six digits — `.12.039` resolved to a paleoindian dental microwear paper; correct DOI `.06.031`). Iter-1 applied correction; all 27 claims PASS. Identified 6 directly-adoptable + 4 to-adapt + 5 to-ignore techniques. Sharpened the methodological-novelty claim: the LIRE p_conv/p_gen decomposition is genuinely novel; ceramicists use sensitivity stratification not structural decomposition.
+
+**Continuity update + post-Martin action items** (commit `88f7c93`). Added a "Post-Martin / methodology-refinement action items" section to continuity.md with the 6 directly-adoptable + 4 to-adapt techniques from the prior-art scout. Added session-history entries for 2026-05-23, 2026-05-24, 2026-05-25. Added a "Working-notes review — in flight" section flagging the gap-analysis agent.
+
+**Working-notes gap-analysis agent** (commit `11ca91e`). Background agent reviewed recent runs/commits and proposed 9 Obs entries (49-57) covering the 2026-05-23 → 2026-05-25 gap. Inventoried 12 candidate topics, proposed 9 (skipped 3 for overlap-with-existing-Obs or planning-artefact-status). Proposals at `docs/notes/reflections/PROPOSED-OBS-49-57-for-review.md` for Shawn's selective commit.
+
+**`/handoff` session-close** (commit `6fda233`). Updated continuity.md (working-notes-review section now references the proposal file); appended 4 new user-observations (Obs 6-9) — devil's-advocate prompting (Obs 6); verify-before-contradicting-agent (Obs 7); explicit scope-out clauses (Obs 8); in-session `/remember` is immediately load-bearing (Obs 9). Committed Shawn's raw Martin consultation notes at `planning/martin.md`. Five wiki candidates flagged to `~/personal-assistant/data/notes/_inbox.md` (separate `pa-data` submodule, commit `63c75ec`).
+
+### Artefacts touched
+
+**New runs.** `runs/2026-05-24-validation-investigation/`, `…followup-systematics/`, `…followup-alpha-prior/`, `…followup-noncentred-grw/`, `…date-range-threshold-analysis/`, `…type-stratified-narrow-spas/`, `…empirical-pconv/`, `…empirical-pgen-prior/`, `runs/2026-05-25-martin-consultation-prep/`.
+
+**New planning docs.** `planning/h2.1-mixture-model-problem-explained-2026-05-24.md`, `h2.1-follow-up-candidates-2026-05-24.md`, `h2.1-discard-vs-recover-rationale-2026-05-24.md`, `h2.1-prior-art-scout-empirical-bayes-calibration-2026-05-24.md`, `h2.1-stage-3-implementation-plan-2026-05-25.md`, `martin-consultation-2026-05-25-followup.md`, `lit-scout-2026-05-25-pottery-aoristic-roman/`, `prior-art-scout-2026-05-25-ceramics-aoristic-techniques/`, `martin.md`.
+
+**Updated docs.** `docs/notes/reflections/continuity.md`, `docs/notes/user-observations.md` (Obs 6-9), and at session-close `docs/notes/reflections/{session-reflection,reasoning-log,abductive-reasoning,session-log}.md`.
+
+**Proposals pending review.** `docs/notes/reflections/PROPOSED-OBS-49-57-for-review.md` (9 candidate Obs entries from the gap-analysis agent).
+
+### Commits in arc
+
+`3df0d2c` (grid retry close) → `3d23fe6` (Experiments A+B) → `e21f7bf` (F0+F1+F3) → `e57dc6b` (Martin pack) → `b78da5c` (planning explainers + threshold analysis) → `6734ef0` (family classifier + cohort comparison) → `ce140d1` (discard-vs-recover rationale) → `a37261b` (Stage 1 empirical p_conv) → `8e1897b` (Stage 2 empirical p_gen prior) → `381c303` (Stage 3 plan) → `55e050c` (Martin briefing + figures) → `dbae06f` (supplementary briefing) → `3e93660` (lit-scout) → `b687ed2` (OXREP bib hand-curation) → `6877621` (prior-art scout) → `88f7c93` (continuity update with action items + session history) → `11ca91e` (proposed Obs 49-57) → `6fda233` (handoff bundle).
+
+### User-observations addition (4)
+
+- **Obs 6** (2026-05-25): explicit "devil's advocate" framing produces more rigorous analysis than open prompts. Anchor: discard-vs-recover rationale at commit `ce140d1`.
+- **Obs 7** (2026-05-25): when I doubt an agent's output, verify against source before contradicting. Anchor: Stage 3 implementation-plan filename mis-flag at commit `381c303`.
+- **Obs 8** (2026-05-25): explicit scope-out clauses make scope-honesty easier near session-end. Anchor: working-notes gap-analysis ask.
+- **Obs 9** (2026-05-25): in-session `/remember` captures are immediately load-bearing, not just future-facing. Anchor: register-preference memory `2026-05-24-e6ec8f9174f1`.
+
+### Wiki candidates flagged (5 in `~/personal-assistant/data/notes/_inbox.md`)
+
+- Three cheap diagnostic negatives in sequence localise a Bayesian-model failure to its mechanism.
+- Bridge-the-clusters lit-scout: disconnection-as-signal heuristic (refines an earlier observation; observed twice now).
+- Empirical-Bayes calibration cohort as a methodology pattern for breaking structural unidentifiability.
+- tmpfs inode exhaustion as silent killer for long Bayesian compute runs.
+- Non-specialist register / explainer-pattern preference (already memory-captured; promotion candidate to `notes/working-with-claude.md`).
+
+### Contextual assumptions
+
+The recovery-grid FAIL is being framed as the validation gate doing its job, not as a setback. The empirical-Bayes pivot is the project's second structural redesign driven by validation-gate output (after the 2026-04-26 forward-fit pivot). Martin's consultation on 2026-05-25 produced notes at `planning/martin.md` — short, unstructured, capturing his HMM-framing direction and a "use granular to characterise slabs" idea that aligns with our empirical-Bayes approach. Whether he addressed the eight 2026-05-17 pack questions is not yet clear from his notes; the post-Martin action items in continuity.md may need re-prioritising once his input is processed. All sapphire compute completed cleanly; all 18 commits this arc are on `origin/main`; working tree clean at handoff. The session ran continuously without compaction.
