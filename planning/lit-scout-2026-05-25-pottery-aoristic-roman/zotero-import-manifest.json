@@ -1,0 +1,246 @@
+{
+  "imported_at": "2026-05-25T02:24:34+00:00",
+  "workspace": "/tmp/lit-scout-iterate-20260525-114541",
+  "final_iteration": "iter-1",
+  "library_id": "3097511",
+  "library_type": "user",
+  "staging_collection_key": "IX8XR97K",
+  "subcollection_key": "MUIBX66E",
+  "subcollection_name": "2026-05-25-aoristic-bayesian-temporal-uncertainty-methods-on",
+  "query": "aoristic / Bayesian temporal-uncertainty methods on Roman pottery rim MNI / EVE as proxy for population, economic intensity, settlement (OXREP / ICRATES / Brughmans community)",
+  "items_created": [
+    {
+      "doi": "10.1007/s10816-024-09686-1",
+      "key": "6H7MRRTG"
+    },
+    {
+      "doi": "10.1371/journal.pone.0279382",
+      "key": "UTJ5538B"
+    },
+    {
+      "doi": "10.1017/eaa.2025.10022",
+      "key": "JGF5SMNT"
+    },
+    {
+      "doi": "10.1016/j.jas.2018.02.010",
+      "key": "VBV99C57"
+    },
+    {
+      "doi": "10.1016/j.jas.2017.10.001",
+      "key": "4V2FHHFP"
+    },
+    {
+      "doi": "10.18564/jasss.2953",
+      "key": "TCJGBVM6"
+    },
+    {
+      "doi": "10.1007/s10816-021-09510-0",
+      "key": "5DXDS8XV"
+    },
+    {
+      "doi": "10.5334/oq.29",
+      "key": "XXD22KXR"
+    },
+    {
+      "doi": "10.1098/rstb.2019.0726",
+      "key": "RRTWJ8NU"
+    },
+    {
+      "doi": "10.1016/j.jas.2025.106295",
+      "key": "G9TUJNRC"
+    },
+    {
+      "doi": "10.1017/s1047759423000508",
+      "key": "IEEGUHVM"
+    },
+    {
+      "doi": "10.15581/012.33.003",
+      "key": "3WJ24JZM"
+    },
+    {
+      "doi": "10.1484/m.jp-eb.5.120807",
+      "key": "KC5X8BJZ"
+    },
+    {
+      "doi": "10.3390/heritage8080298",
+      "key": "HQW8N7MJ"
+    },
+    {
+      "doi": "10.1111/arcm.13095",
+      "key": "E69PGWVE"
+    }
+  ],
+  "items_skipped": [
+    {
+      "doi": "10.1111/j.1475-4754.2012.00674.x",
+      "existing": [
+        {
+          "item_id": 2699,
+          "key": "DCZ9JPY9",
+          "library_id": 6,
+          "library_type": "group",
+          "library_name": "SDAM-AU",
+          "collections": "temporal_uncertainity"
+        }
+      ]
+    },
+    {
+      "doi": "10.1016/j.jasrep.2016.10.006",
+      "existing": [
+        {
+          "item_id": 2597,
+          "key": "U9RGT2F6",
+          "library_id": 6,
+          "library_type": "group",
+          "library_name": "SDAM-AU",
+          "collections": "JDH_article"
+        }
+      ]
+    },
+    {
+      "doi": "10.1016/j.jas.2015.12.007",
+      "existing": [
+        {
+          "item_id": 2318,
+          "key": "LZYWXLZL",
+          "library_id": 5,
+          "library_type": "group",
+          "library_name": "TRAP",
+          "collections": ""
+        },
+        {
+          "item_id": 2330,
+          "key": "Z6GDXGNL",
+          "library_id": 5,
+          "library_type": "group",
+          "library_name": "TRAP",
+          "collections": ""
+        },
+        {
+          "item_id": 2827,
+          "key": "MAAM8YAJ",
+          "library_id": 6,
+          "library_type": "group",
+          "library_name": "SDAM-AU",
+          "collections": "SPA"
+        }
+      ]
+    },
+    {
+      "doi": "10.1111/arcm.12984",
+      "existing": [
+        {
+          "item_id": 5077,
+          "key": "8I2IIY6S",
+          "library_id": 6,
+          "library_type": "group",
+          "library_name": "SDAM-AU",
+          "collections": "RAC-TRAC-2026"
+        }
+      ]
+    },
+    {
+      "doi": "10.1007/s10816-011-9122-3",
+      "existing": [
+        {
+          "item_id": 2320,
+          "key": "2VTK87QP",
+          "library_id": 5,
+          "library_type": "group",
+          "library_name": "TRAP",
+          "collections": ""
+        },
+        {
+          "item_id": 2323,
+          "key": "Y7HJNA8D",
+          "library_id": 5,
+          "library_type": "group",
+          "library_name": "TRAP",
+          "collections": ""
+        },
+        {
+          "item_id": 2325,
+          "key": "KTHWMK3J",
+          "library_id": 5,
+          "library_type": "group",
+          "library_name": "TRAP",
+          "collections": ""
+        },
+        {
+          "item_id": 2328,
+          "key": "YGFHENJZ",
+          "library_id": 5,
+          "library_type": "group",
+          "library_name": "TRAP",
+          "collections": ""
+        },
+        {
+          "item_id": 2701,
+          "key": "AL5XI5TH",
+          "library_id": 6,
+          "library_type": "group",
+          "library_name": "SDAM-AU",
+          "collections": "temporal_uncertainity; JDH_article"
+        },
+        {
+          "item_id": 2832,
+          "key": "AB7VNDRJ",
+          "library_id": 6,
+          "library_type": "group",
+          "library_name": "SDAM-AU",
+          "collections": "SPA"
+        }
+      ]
+    },
+    {
+      "doi": "10.15184/aqy.2016.35",
+      "existing": [
+        {
+          "item_id": 2726,
+          "key": "T689SMKS",
+          "library_id": 6,
+          "library_type": "group",
+          "library_name": "SDAM-AU",
+          "collections": "networks_archaeology_and_history"
+        }
+      ]
+    },
+    {
+      "doi": "10.1007/s10816-022-09559-5",
+      "existing": [
+        {
+          "item_id": 5097,
+          "key": "BGSKA3XM",
+          "library_id": 1,
+          "library_type": "user",
+          "library_name": "My Library",
+          "collections": "2026-05-22-bayesian-methods-for-archaeological-dating-and-chr"
+        }
+      ]
+    },
+    {
+      "doi": "10.1098/rsif.2017.0367",
+      "existing": [
+        {
+          "item_id": 2574,
+          "key": "G855HU3P",
+          "library_id": 6,
+          "library_type": "group",
+          "library_name": "SDAM-AU",
+          "collections": "JDH_article; PLOS_ONE; SOCDIV"
+        }
+      ]
+    }
+  ],
+  "items_failed": [
+    {
+      "doi": "10.1093/acprof:oso-9780199562596.003.0009",
+      "reason": "CrossRef returned no record"
+    },
+    {
+      "doi": "10.1093/acprof:oso-9780199562596.001.0001",
+      "reason": "CrossRef returned no record"
+    }
+  ],
+  "previous_invocations": []
+}
