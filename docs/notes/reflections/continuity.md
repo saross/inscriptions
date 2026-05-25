@@ -5,7 +5,7 @@ title: "Continuity — inscriptions project (living doc)"
 audience: "next CC instance picking up the project; Shawn after any break"
 status: living; updated at end of each session
 started: 2026-04-24
-last-updated: 2026-05-22 (post talk-day deck rewrite + grid restart; talk delivered by Adela)
+last-updated: 2026-05-25 (Martin consultation prep + ceramics-aoristic lit-scout & prior-art-scout; empirical-Bayes Stages 1+2 complete; Stage 3 spec drafted)
 ---
 
 # Continuity — inscriptions project
@@ -76,6 +76,40 @@ Implementation plan summary (full detail in `analysis-roadmap.md`):
 - Adjacent talks: Sommerschield (Aeneas neural-net; 14:00, directly precedes); Bennett (global Roman epitaph patterns; 15:00).
 - Slot is 20 min (Q&A batched at end of block); target 12 min talk leaves buffer.
 - Session theme explicitly welcomes statistical-bias-mitigation + Bayesian work — the room is the right room.
+
+---
+
+## Post-Martin / methodology-refinement action items (added 2026-05-25)
+
+Concrete techniques to adopt from the ceramics-aoristic-dating community, surfaced by the closed-loop prior-art scout at `planning/prior-art-scout-2026-05-25-ceramics-aoristic-techniques/REPORT.md` (15 candidate techniques, verifier-PASS after one iteration). Companion lit-scout bibliography at `planning/lit-scout-2026-05-25-pottery-aoristic-roman/` (25 references; Brughmans / Aarhus cluster as the bridge community). To be re-prioritised against Martin's feedback from the 2026-05-25 consultation.
+
+### Use directly — low cost, high leverage
+
+1. [ ] **Dual-dating sensitivity test** — run the mixture model under (a) intervals-as-recorded and (b) tightened-to-Tight+F2_Other intervals; overlay. Quantifies bracket-sensitivity directly. *<1 day diagnostic, no model restructure. Source: Franconi et al. 2023 / Komar et al. 2025.*
+2. [ ] **Interval-length duration reweighting** (`w_i = 1/Δτ_i`) on the input SPA before model fitting. Removes structural over-representation of century-slab inscriptions relative to Tight datings. *<1 day preprocessing. Source: Bevan & Crema 2021 — the MRUP paper.*
+3. [ ] **Null-model permutation envelope for p_gen** — simulate 1,000 curves from a flat / exponential / logistic-growth null; overlay 2.5th-97.5th percentile band on the recovered posterior. Standard in radiocarbon SPD literature; conspicuously absent in ceramics-aoristic papers. *1-3 days. Source: Crema 2025 / `rcarbon::modelTest()`.*
+4. [ ] **Site-binning normalisation** — group inscriptions by `provenance_site`, compute per-site SPA, normalise each to unity, sum. Addresses Rome / Ostia over-representation. *1-3 days. Source: Crema 2022 / Romanowska et al. 2022 / `rcarbon`.*
+5. [ ] **Stacked sensitivity-bands as primary visualisation convention** — adopt the ceramics-community figure idiom (line for posterior median + shaded bands for methodological sensitivity) for the main results figures. *<1 day plotting change.*
+6. [ ] **Corpus-source stratification supplementary** — run the pipeline separately on CIL / AE / EDH-derived subsets; present three p_gen curves side-by-side as a robustness annex. Pre-empts the corpus-heterogeneity reviewer objection. *<1 day. Source: Franconi et al. 2023 §Data.*
+
+### Adapt — feasible but requires design decision
+
+7. [ ] **Per-item phase-confidence weight** derived from family classifier (Tight → w=1.0, F1 century slab → w=0.7, F3 periodic → w=0.8, etc.). Sharpens the calibration-cohort signal. *1-3 days. Source: Bevan, Conolly et al. 2013 (Antikythera).*
+8. [ ] **CPUE-style sampling-intensity denominator** using LIRE provenanced-sites-active-per-bin as the denominator. Addresses differential epigraphic-fieldwork intensity. *1-3 days; the denominator may itself be confounded — report transparently. Source: Orton, Morris & Pipe 2017.*
+9. [ ] **Proxy cross-correlation as external validation** — normalise the recovered p_gen to [0, 1] and correlate against the Palmisano et al. 2017 central-Italy ceramic SPA + Komar et al. 2025 Italian amphora SPA + OXREP proxy estimates. *1-3 days; comparison-data acquisition is the main cost. Source: Palmisano, Bevan & Shennan 2017.*
+10. [ ] **Gaussian popularity curves for p_conv template internals** — non-uniform within-slab distributions parameterised by Stage 2 calibration-cohort empirical modes. *1-3 days. Source: Roberts et al. 2012 / `kairos::apportion()`.*
+
+### Methodology-paper framing implication
+
+The prior-art scout concluded that the LIRE mixture-model's explicit `p_conv` / `p_gen` decomposition is **genuinely novel** — the ceramics community handles editorial-convention heterogeneity through sensitivity stratification (Franconi et al. 2023 et al.) rather than through structural decomposition. The paper can frame this verbatim: *"where ceramicists treat convention heterogeneity as a sensitivity parameter (Franconi et al. 2023), we treat it as a structural model component that is simultaneously estimated."* This positions the methodology paper (if split off from the substantive paper) as bridging the inscription and ceramic literatures.
+
+Software stack confirmed (all licences compatible): `kairos` (tesselle, GPL-3.0), `rcarbon` (ahb108), `archSeries` (davidcorton), `datplot` (lsteinmann, GPL-3.0), `CeramicApportioning` (mpeeples2008), plus `baorista` already in toolkit.
+
+---
+
+## Working-notes review — in flight 2026-05-25
+
+Working-notes is at Obs 48 (2026-05-22). Since then ~3 days of substantial methodological work (15+ commits) with zero new Obs recorded. A background agent (`ab80a245cae11167d`, launched 2026-05-25) is reviewing recent runs and planning artefacts to propose draft Obs entries for the period 2026-05-23 → 2026-05-25. **If the agent's proposed list is still un-actioned at the next session start**: read its return (in the closing session-end output), review the proposed Obs against the existing 48-entry register for distinctness, and selectively commit the keepers in one batch via `/observe`. Likely candidates include: family classifier as methodological abstraction; structural-vs-sampler diagnostic distinction; non-centred GRW free win; empirical-Bayes calibration-cohort pattern; the 1/6-signal-vs-5/6-convention finding; discard-vs-recover decision-tree framing; ceramics-aoristic bridge community identification.
 
 ---
 
@@ -233,6 +267,18 @@ That's enough to engage substantively. Deeper context (the scout report, working
 ---
 
 ## Session history — done items (terse)
+
+### 2026-05-25 (Martin consultation prep)
+
+Day of the Martin Drechsler consultation. Pre-meeting work: composed `runs/2026-05-25-martin-consultation-prep/BRIEFING.md` (main briefing, 7 sections) and `BRIEFING-supplementary-issues.md` (covers the 8 unanswered 2026-05-17 pack questions + 3 new findings + H3b/H3c/§5/strategic decisions). Produced 4 key figures: uncorrected SPA, slab-highlighting SPA (new; stacked-by-family), slab-excluding SPA (new; reweighted-prior overlay), Hanson NBR scaling. Discovered along the way: AD 300-350 is 80 % editorial templates by aoristic mass — the late corpus is even more template-dominated than the AD 1-300 body. Then two scouts: `/lit-scout-iterate` for pottery-aoristic Roman bibliography (25 references, Brughmans / Aarhus / OXREP / ICRATES cluster; verifier-PASS after one iteration; 15 staged to Zotero, 8 already in libraries, 2 OXREP chapters required hand-curation from OpenAlex + Semantic Scholar because CrossRef returned 404 on `acprof:oso` DOIs); then `/prior-art-scout-iterate` for ceramics-aoristic actionable techniques (15 candidates; verifier-PASS after one iteration on a single DOI-confabulation correction; identified 6 directly-adoptable + 4 to-adapt; methodological-novelty claim sharpened to "structural mixture decomposition is novel; ceramicists use sensitivity stratification"). All action items folded into the post-Martin section above. Commits: `55e050c` (consultation briefing + figures), `dbae06f` (supplementary briefing), `3e93660` (lit-scout), `b687ed2` (OXREP bib hand-curation), `6877621` (prior-art scout).
+
+### 2026-05-24 (alpha-bias diagnostic + family classifier + empirical-Bayes Stages 1+2)
+
+The most methodologically rich day of the project. Started with the recovery-grid FAIL verdict (40.9 % of cells pass both binding criteria — committed `3df0d2c` after the 12-cell retry resolved the /tmp inode catastrophe). Diagnostic investigation Experiments A + B (`3d23fe6`) traced the failure to a structural likelihood ridge between α and shape complexity that biases α toward the middle of its range. Three follow-up investigations ruled out two cheap fixes and banked a free win: F0 (systematics across all 450 cells: bias begins at α=0.30 not α=0.95 as initially thought; regnal_cluster shows bidirectional bias); F1 (sharper α prior Beta(1,1) → Δα +0.025; not prior-pull); F3 (non-centred GRW reparameterisation → Δα +0.001 but ESS gain of 45-50× — adopt unconditionally) (`e21f7bf`). Date-range threshold analysis revealed slab structure: 99/49/24/199 are the dominant editorial-template widths; F1+F3 round-number-and-periodic families together account for 65 % of corpus; produced family classifier on `(not_before, not_after)` interval structure (`6734ef0`). Type-bias finding (epitaph is 56 % of corpus but only 18 % of narrow-dated subset) prompted post-stratification reweighting design. Discard-vs-recover rationale documented (`ce140d1`) — explicit decision-tree branching on recovery-grid verdict. Empirical-Bayes Stage 1 (`a37261b`): F1+F3 inscriptions yield empirical p_conv; replaces the placeholder template-dictionary from prereg §3 line 202. Stage 2 (`8e1897b`): Cohort B (Tight ∪ F2_Other, 31,841 records) gives well-constrained empirical p_gen prior with bootstrap-derived per-bin sigma_prior (median 0.044). Stage 3 implementation plan drafted by agent (`381c303`) — 12 sections, 5,700 words, 7 design decisions flagged for Martin. Martin consultation pack (`e57dc6b`) + four planning explainers in plain-language register (`b78da5c`). Memory captured: "default to non-specialist register for stats explanations to Shawn" (saved 2026-05-24-e6ec8f9174f1).
+
+### 2026-05-23 (grid retry + concurrency-investigation handoff)
+
+Picked up the 2026-05-22 grid restart on sapphire (PID 659564, projected ~ 31.6 h wall). At 08:09 UTC: 363/450 done + 12 in-flight + **12 failed**. Root cause of failures: tmpfs `/tmp` on sapphire hit its 1,048,576-inode ceiling during the alpha=0.30 smooth_decline cells; pytensor's `NamedTemporaryFile` outputs accumulated faster than they were cleaned. All 12 failures returned `OSError: [Errno 28] No space left on device`. Grid completed cleanly at 12:07 UTC (29.84 h wall — beating the 31.6 h projection by 5 %). Retry plan: clean `/tmp` (1,048,559 → 17 inodes used; 5.7 s); redirect TMPDIR to a disk-backed location (`~/cc-scratch/inscriptions-recovery-grid/pytensor-tmp/`); relaunch — 51 min wall, 450/450 complete, 0 failed (`3df0d2c`). Summariser run revealed the FAIL verdict (40.9 % pass-both), kicking off the 2026-05-24 diagnostic chain. The TMPDIR-redirect pattern saved us during the retry: 23,264 pytensor temp files accumulated harmlessly on disk vs the 1M tmpfs limit. Worth Obs (queued in working-notes review).
 
 ### 2026-05-22 (talk-day session — deck rewrite + grid restart)
 
