@@ -1265,6 +1265,20 @@ Captured from the Phase B agent invocation in the 2026-05-21/22 session, committ
 
 ---
 
+## Obs 49 — 2026-05-23 [GOTCHA]: tmpfs inode exhaustion can kill a long compute run while the byte-counter still looks fine
+
+The Phase 2 recovery-grid main run (started 2026-05-22 06:17 on sapphire, finished 2026-05-23 12:07, 29.84 h wall) completed 438 of 450 cells; 12 cells failed late, all of them in the `smooth_decline` shape at low α. The failure mode looked unfamiliar from the orchestrator's stderr — `OSError: [Errno 28] No space left on device` — even though `df -h /tmp` showed only 4.4 GB used out of a 31 GB tmpfs. The disk wasn't full; the **inode table** was. `/tmp`'s tmpfs had a 1,048,576-inode ceiling, and pytensor's compile loop had saturated it (1,048,559 / 1,048,576 used at kill time).
+
+Mechanism. The grid was launched with `PYTENSOR_FLAGS="mode=FAST_RUN,allow_gc=False"` — `allow_gc=False` is a performance setting that tells pytensor *not* to delete its `NamedTemporaryFile` compile artefacts as it goes. With 12 worker processes each recompiling the mixture model graph at every cell × replicate boundary, the per-fit leak (a few hundred small files) accumulated linearly. Most leaked files were under 4 kB, so the byte-counter barely moved while the inode counter climbed monotonically toward the ceiling. Once the table saturated, every subsequent worker that needed to create a temp file got `ENOSPC` and the per-fit retry logic gave up after three attempts. Linux reports inode exhaustion as `ENOSPC` identically to disk exhaustion — easy to misdiagnose if you only check `df -h` and not `df -i`.
+
+The fix for the retry (2026-05-23 12:30 → 13:21, 0.85 h, all 12 cells PASS): drain `/tmp` (1,048,559 → 17 inodes used) and point `TMPDIR` at a disk-backed scratch directory on the same NVMe with 433 GB free. Pytensor's `NamedTemporaryFile` calls honour `TMPDIR`, so this redirected the leak entirely off the tmpfs without changing the rest of the config. Disk-backed storage cannot inode-saturate during a 1 h run because spinning-/SSD-disk inode tables are orders of magnitude larger than the tmpfs default.
+
+Generalisable: any long compute run that uses JIT compilation (pytensor, numba's AOT cache, Cython rebuilds, Triton kernels) and turns the GC off for speed will accumulate small-file leakage. The default tmpfs inode count on Linux is much smaller than its byte capacity — on most distros it's 1 M or 2 M, easily reachable in a multi-hour multi-worker run. Both `df -h` and `df -i` should be in any pre-launch health check, and a `TMPDIR` redirected to disk-backed storage is a cheap insurance policy for any run > ~6 h. Documented in `RETRY-COMMAND.sh` header at commit `3df0d2c`.
+
+*Source:* `runs/2026-05-22-recovery-grid-validation/RETRY-COMMAND.sh` (header explanation); commit `3df0d2c`.
+
+---
+
 ## Obs 58 — 2026-05-26 [DECISION]: letter-count as complementary measure, not better alternative — the 'acts vs content' reframe
 
 The 2026-05-26 letter-count probe (`runs/2026-05-26-letter-count-probe/`) was designed under a binary framing: "is letter-count a better unit than inscription-count?" The probe spec encoded that framing directly in its verdict thresholds — any flag tripping meant letter-count becomes the headline unit (`runs/2026-05-26-letter-count-probe/spec.md` §"Verdict thresholds"). Two flags fired: Flag 2 MATERIAL (Hanson negative-binomial regression β = 0.566 under letter-count vs 0.515 under inscription-count, 95 % CIs non-overlapping; `runs/2026-05-26-letter-count-probe/outputs/tables/nbr-summary.csv`) and significant rank reshuffling at city and province level (Britannia #7 → #19, Hispania citerior #3 → #7, Ostia #3 → #1, Pompeii #1 → #3; `runs/2026-05-26-letter-count-probe/outputs/tables/city-rank-change.csv` and `province-rank-change.csv`). Main-thread Claude proposed adopting letter-count as the new headline with inscription-count demoted to a robustness annex.
