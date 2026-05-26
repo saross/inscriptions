@@ -1373,6 +1373,30 @@ Generalisable: any diagnostic engineered around a binary headline question shoul
 
 ---
 
+## Obs 54 — 2026-05-24 [PATTERN]: interval *structure*, not just interval *width*, is the right partition for aoristic corpora — the family classifier doubled the calibration-cohort size at higher purity
+
+Building a calibration cohort for the empirical-Bayes pivot (Obs 55) required separating "tightly-dated real signal" from "loosely-dated editorial templates" in the LIRE corpus. The obvious first cut is a date-range threshold: `date_range ≤ X` retains signal, drops templates. A 2026-05-24 threshold sweep (`runs/2026-05-24-date-range-threshold-analysis/`) gave the candidate cuts at < 25 y (n = 25,990; 14.2 % of corpus), < 50 y (n = 61,112; 33.4 %), etc. But the type-composition table revealed a problem: at the < 25 y cut, epitaphs (56 % of corpus) fall to 11 % of the subset while honorifics (4 % of corpus) climb to 15 %. The narrow-dated subset is **systematically type-biased** — exactly the Spektor & Kellen 2018 calibration-cohort failure mode that empirical-Bayes is supposed to avoid.
+
+The fix that landed: a **family classifier** (`runs/2026-05-24-type-stratified-narrow-spas/`) that partitions inscriptions on `(not_before, not_after)` *interval structure* rather than width alone:
+
+| Family | Rule | Count | % corpus | Median width |
+|---|---|---:|---:|---:|
+| **F1_round** | width ∈ {24, 49, 99, 149, 199, 299} AND endpoints on 25-y grid | 110,997 | 60.7 % | 99 |
+| **F3_periodic** | width ∈ {19, 29, 39} AND endpoints on 10-y grid, not F1 | 8,145 | 4.5 % | 29 |
+| **Tight** | width ≤ 4 AND not F1, not F3 | 14,313 | 7.8 % | 0 |
+| **F2_Other** | width ∈ [5, 48] AND not F1, not F3 | 17,528 | 9.6 % | 21 |
+| **Big** | width ≥ 49 AND not F1 | 31,870 | 17.4 % | 79 |
+
+F2_Other surfaced the load-bearing insight. The intervals in F2_Other are reign-windows: `AD 291–325` (tetrarchic), `AD 212–217` (Caracalla solo emperor), `AD −27 to 14` (Augustus), `AD 117–138` (Hadrian), `AD 138–161` (Antoninus Pius). These are width-23 to width-47, *not* editorial round-number templates — they're real ancient anchoring at reign granularity. A width-only threshold either includes them (and admits a lot of F1 half-century slabs at width 49) or excludes them (and loses real signal). The interval-structure rule admits F2_Other while excluding F1 half-century slabs of equal width.
+
+The resulting calibration cohort (**Tight ∪ F2_Other = 31,841 records, 17.4 % of corpus**) is double the size of a tight-only cohort (Cohort A: 14,313 at width ≤ 4) and 26 % larger than the cleanest width-based cohort (Cohort C: width ≤ 23 = 25,133), while still narrow on aoristic-uncertainty terms (mean σ = 3.6 y vs corpus mean 29 y). At Stage 2 every 5-y bin in the envelope has ≥ 130 records overlapping, with most bins at 500–3,000 — a well-constrained empirical prior across the whole range.
+
+Generalisable beyond inscriptions: any aoristic corpus where editorial dating conventions cluster on a discrete set of canonical interval widths (centuries, half-centuries, common decadal windows) will have the same interval-structure signal. Round-number / grid-aligned intervals encode "editor doesn't know more precisely than the convention"; off-grid intervals at similar widths often encode real domain-anchoring (here: reigns). The two populations have the same mean width and very different epistemic status. Partitioning on `(start, end, width)` rather than width-alone is a cheap and reproducible discriminator. Worth adopting whenever a corpus mixes editorial and substantive interval encodings.
+
+*Source:* `runs/2026-05-24-date-range-threshold-analysis/outputs/REPORT.md`; `runs/2026-05-24-type-stratified-narrow-spas/outputs/REPORT.md`; `planning/h2.1-discard-vs-recover-rationale-2026-05-24.md`. Commits `b78da5c`, `6734ef0`.
+
+---
+
 ## Obs 58 — 2026-05-26 [DECISION]: letter-count as complementary measure, not better alternative — the 'acts vs content' reframe
 
 The 2026-05-26 letter-count probe (`runs/2026-05-26-letter-count-probe/`) was designed under a binary framing: "is letter-count a better unit than inscription-count?" The probe spec encoded that framing directly in its verdict thresholds — any flag tripping meant letter-count becomes the headline unit (`runs/2026-05-26-letter-count-probe/spec.md` §"Verdict thresholds"). Two flags fired: Flag 2 MATERIAL (Hanson negative-binomial regression β = 0.566 under letter-count vs 0.515 under inscription-count, 95 % CIs non-overlapping; `runs/2026-05-26-letter-count-probe/outputs/tables/nbr-summary.csv`) and significant rank reshuffling at city and province level (Britannia #7 → #19, Hispania citerior #3 → #7, Ostia #3 → #1, Pompeii #1 → #3; `runs/2026-05-26-letter-count-probe/outputs/tables/city-rank-change.csv` and `province-rank-change.csv`). Main-thread Claude proposed adopting letter-count as the new headline with inscription-count demoted to a robustness annex.
