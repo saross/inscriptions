@@ -5,7 +5,7 @@ title: "Continuity — inscriptions project (living doc)"
 audience: "next CC instance picking up the project; Shawn after any break"
 status: living; updated at end of each session
 started: 2026-04-24
-last-updated: 2026-05-25 (Martin consultation prep + ceramics-aoristic lit-scout & prior-art-scout; empirical-Bayes Stages 1+2 complete; Stage 3 spec drafted)
+last-updated: 2026-05-26 (Martin consultation outcome; letter-count probe in flight)
 ---
 
 # Continuity — inscriptions project
@@ -39,6 +39,21 @@ The **OSF preregistration is lodged** (commit `a2e40fd`; git tag `osf-lodgement-
 - **Sapphire for compute.** Any bootstrap sweeps, permutation tests, Bayesian sampling, or CPU-intensive work runs on sapphire via SSH. Workdir is `~/Code/inscriptions` (note: NOT `~/inscriptions` — typo caused an agent stall 2026-04-22). uv at `~/.local/bin/uv` (not in non-interactive PATH).
 - **Hard-stop rules in agent briefs.** Especially: do NOT silently negotiate parameters down to fit time budgets — halt and report. Two prior incidents (H1 v1 silent bootstrap-from-LIRE; preliminary v2 silent 100/200 reduction) make this a learned-lesson.
 - **Agent-session-capture infrastructure operational** (2026-04-24; `/recall agent-infrastructure`). Use agents liberally for research and context management — session trail persistently captured for open-science research-record purposes.
+
+---
+
+## Martin Eftimoski consultation outcome — recalibration (2026-05-26)
+
+The 2026-05-25 consultation with **Martin Eftimoski** (the project's statistician collaborator — comp-sci PhD candidate at UNSW, applied-econometrics undergrad-MA, co-author on the 2017-ish Kazanlak burial-mounds ordered-logit paper; weaker on Bayesian register) produced a different signal than the project had been planning around. Recalibration in summary:
+
+- **Martin's role reframed: time-poor passion-project collaborator, not primary methodologist.** He's running his own business and pursuing a PhD; the inscriptions project is goodwill plus shared interest. Working assumption from here on: **one sanity-check read at draft-paper stage**; he will NOT engage in detail with the 8 consultation-pack questions (`planning/martin-consultation-pack-2026-05-17.md`), the 7 Stage-3 design decisions (`planning/stage-3-implementation-plan.md` commit `381c303`), or the four "Martin-flagged primary" decisions D19 / D21 / D23 / D25.
+- **Editorial-convention correction (SPA, mixture model, empirical-Bayes pivot): we proceed on our own.** Martin's one-line gloss — *"Model the process based off the more granular inscriptions, then construct a confidence band around the 'slab' inscriptions given what has been observed. Use the more frequent / granular information to characterise the 'slabs'"* — is essentially the empirical-Bayes calibration-cohort architecture we have already designed (Obs 55 candidate; commit `8e1897b` Stage 2; commit `381c303` Stage 3 spec), expressed in frequentist register. He confirmed the approach is plausible without engaging design-deep. **Stage 3 (empirical-Bayes) remains the right pivot; proceed.**
+- **Sample-size minima — "the data we have is the data we have."** Martin's framing: use what we have even with high uncertainty; let critics try to do better. **The §5 small-N city trajectories work is unblocked** (was hedged on Martin's guidance about minimum-N thresholds).
+- **Population–inscription scaling coefficient: we develop it; Martin reviews at draft.** He's content with the current approach.
+- **Letter-count nudge — promoted to active probe.** Martin thinks switching from inscription count to letter count is "crucial" — letter is a better unit of epigraphic production and information flow. Previously logged as a §5 exploratory; **promoted to in-flight probe beginning the 2026-05-26 session.**
+- **HMM follow-up paper — parallel track.** Martin's real interest is a follow-up Hidden-Markov-Model paper: given inscription counts (or letter counts), what's the most likely latent population trajectory? Structural-break priors (rising → falling), at empire / province / city levels. This is **a second-paper track, not part of the current paper**. He's a Claude Code power user; he'll be invited to the GitHub repo and run his own analyses. **Action**: create a one-page stub at `planning/hmm-paper-stub/` to preserve the design idea; substantive HMM work deferred until the current paper is closer to draft.
+- **Prereg framing of "Martin-flagged primary" decisions.** D19 / D21 / D23 / D25 — and the 7 Stage-3 design decisions — are now **project-decided with collaborator sanity-check at draft stage**, not awaiting-Martin-confirmation. Prereg framing to be amended in the next OSF amendment batch (not this session; flagged as backlog under Open caveats below).
+- **Ceramics-aoristic action items** in the section below (10 items) **all remain relevant** — they are tools the project uses to do the work itself; Martin's non-engagement doesn't change their value. See cross-reference below.
 
 ---
 
@@ -79,9 +94,11 @@ Implementation plan summary (full detail in `analysis-roadmap.md`):
 
 ---
 
-## Post-Martin / methodology-refinement action items (added 2026-05-25)
+## Post-Martin / methodology-refinement action items (added 2026-05-25; confirmed-relevant 2026-05-26 post-consultation)
 
-Concrete techniques to adopt from the ceramics-aoristic-dating community, surfaced by the closed-loop prior-art scout at `planning/prior-art-scout-2026-05-25-ceramics-aoristic-techniques/REPORT.md` (15 candidate techniques, verifier-PASS after one iteration). Companion lit-scout bibliography at `planning/lit-scout-2026-05-25-pottery-aoristic-roman/` (25 references; Brughmans / Aarhus cluster as the bridge community). To be re-prioritised against Martin's feedback from the 2026-05-25 consultation.
+**These are tools the project owns and applies itself — not asks of Martin.** All 10 items remain relevant under the 2026-05-26 recalibration (see top-of-doc section); Martin's non-engagement with design-detail does not change their value.
+
+Concrete techniques to adopt from the ceramics-aoristic-dating community, surfaced by the closed-loop prior-art scout at `planning/prior-art-scout-2026-05-25-ceramics-aoristic-techniques/REPORT.md` (15 candidate techniques, verifier-PASS after one iteration). Companion lit-scout bibliography at `planning/lit-scout-2026-05-25-pottery-aoristic-roman/` (25 references; Brughmans / Aarhus cluster as the bridge community).
 
 ### Use directly — low cost, high leverage
 
@@ -145,18 +162,19 @@ Pre-/post-talk work for the next session. **Read `planning/next-session-prompt-2
 
 Detailed in `planning/backlog-2026-05-03.md` §"What's preregistered, designed, but NOT YET IMPLEMENTED". Headlines:
 
+0. [ ] **Letter-count probe — in flight 2026-05-26.** Switch unit of analysis from inscription count to letter count and re-run the empire / province / city SPAs + scaling test. Martin flagged the switch as "crucial" at the 2026-05-25 consultation: letter is a better unit of epigraphic production and information flow than inscription. Previously logged as a §5 exploratory; promoted to active probe this session. Cheap (re-run existing pipelines with a different aggregation column).
 1. [ ] **H2 mixture-model implementation.** Substantive methodological contribution. ~2-3 days. Preregistered §3 + Decision 7. Outputs `data/processed/city_level_for_h3a.parquet` which unblocks Track 2.
-2. [ ] **H3a Bayesian NBR (pymc primary).** Primary quantitative substantive result. ~1-2 days. Awaits H2 output.
-3. [ ] **H3a brms shadow execution.** Script ready (`scripts/h3a_brms_shadow.R`); awaits H2 output. ~30 min.
+2. [ ] **H3a Bayesian NBR (pymc primary).** Primary quantitative substantive result. ~1-2 days. Depends on H2 output.
+3. [ ] **H3a brms shadow execution.** Script ready (`scripts/h3a_brms_shadow.R`); depends on H2 output. ~30 min.
 4. [ ] **H3b deviation detection** at H1-reachable cells (Holm-Bonferroni). ~1-2 days.
 5. [ ] **H3b Antonine + Crisis-of-Third-Century replication tests.** ~1 day each.
 6. [ ] **H3c residuals + Moran's I + provincial-capital t-test.** ~1 day.
 7. [ ] **§5 H3a variance partition.** ~6 LOC; rolls in with H3a.
-8. [ ] **§5 small-N city trajectory estimation** (Layers A + B + aggregate diagnostic). ~4-7 days incl. Layer B literature ground-truth assembly. Uses baorista (now installed).
+8. [ ] **§5 small-N city trajectory estimation** (Layers A + B + aggregate diagnostic). ~4-7 days incl. Layer B literature ground-truth assembly. Uses baorista (now installed). **Unblocked 2026-05-26** by Martin's "data we have is the data we have" framing — no longer hedged on minimum-N guidance.
 9. [ ] **Decision 3 sensitivity comparison: forward-fit vs baorista.** ~1 day.
-10. [ ] **§5 other exploratories** (stratified-by-class, scaling-residual, α-as-translator, chronological H3c, letter-count). Cheap each, run alongside H2/H3.
+10. [ ] **§5 other exploratories** (stratified-by-class, scaling-residual, α-as-translator, chronological H3c). Cheap each, run alongside H2/H3. *(letter-count promoted to item 0 above.)*
 
-Order: H2 → H3a (with brms shadow + variance partition + sensitivities) → H3b (with replications) → H3c → §5 small-N + Decision 3.
+Order: letter-count probe (in flight) → H2 → H3a (with brms shadow + variance partition + sensitivities) → H3b (with replications) → H3c → §5 small-N + Decision 3.
 
 ---
 
@@ -171,6 +189,8 @@ Logged for later consideration. Not part of the 2026-05-19 OSF lodgement; would 
 3. [ ] **Reachability-guide extension — substantive (multi-day sapphire compute).** Tier 3 of the historian-facing reachability work. Produce **per-subset reachability tables** for the project's preregistered subsets (collegia, military diplomas, religious dedications, imperial-titulature, stratified by inscription type, etc.). Each subset has its own aoristic-width distribution and temporal envelope; the reachability profile is therefore subset-specific, not derivable from the empire-level Phase 1 grid by simple N-scaling. Implementation: per-subset Phase 1 runs with the subset's own width distribution as input. Multi-day compute. Output artefact is the methodological-toolkit contribution that makes the paper a reference for future inscription-SPA work — every subsequent researcher with a subset of N inscriptions can consult it before launching an analysis. The collegia subset is the worked example in the current paper-fragment draft.
 
 4. [ ] **Bayesian-method reachability comparison.** A parallel reachability analysis under `baorista` (Crema 2025) Bayesian-aoristic methodology. Bayesian methods have different — possibly more permissive — reachability profiles than the frequentist permutation-envelope test. Complementary to Tier 3; ~ 1 day compute once baorista runs are stable on sapphire (see Decision 3).
+
+5. [ ] **Cumulative-totals Hanson NBR experiment (inscription count and letter count).** Low-priority follow-up to the 2026-05-26 letter-count probe. The probe matches the prereg's date-window-filtered count specification (Decision 22) for comparability with H3a. A separate experiment should aggregate cumulative totals across the full analysis envelope (50 BC – AD 350) — both inscription counts and letter counts — and re-fit the Hanson NBR, to test whether the date-window filter materially changes the scaling exponent versus the simpler envelope-cumulative specification. Cheap (~ <1 day); reuses the same pipeline with the date-window filter removed. Logged here so it isn't lost; no time-pressure.
 
 ---
 
@@ -259,6 +279,7 @@ Detailed in `planning/backlog-2026-05-03.md` §"Open caveats / housekeeping". He
 - **LIST v1.2 swap** — optional; LIRE remains primary.
 - **RAC-TRAC 2026 conference details** — TBC.
 - **TBD 6 target journal venue** — leaning JAMT; soft commitment.
+- **Prereg framing of D19 / D21 / D23 / D25 needs amendment** — currently flagged as "Martin-flagged primary" (awaiting-statistician) in `planning/preregistration-draft.md` and `planning/decision-log.md`. Per the 2026-05-26 recalibration (Martin's role reframed to single sanity-check at draft stage), these are project-decided with collaborator sanity-check at draft. Same applies to the 7 Stage-3 design decisions in `planning/stage-3-implementation-plan.md`. Reframe in the next OSF amendment batch.
 
 ### Open caveats from the 2026-05-21/22 Phase A + Phase B work
 
@@ -284,9 +305,13 @@ That's enough to engage substantively. Deeper context (the scout report, working
 
 ## Session history — done items (terse)
 
+### 2026-05-26 (Martin recalibration + letter-count probe)
+
+Session in progress — to be completed at session close. Headline: Martin meeting was both more and less than expected (see top-of-doc recalibration section).
+
 ### 2026-05-25 (Martin consultation prep)
 
-Day of the Martin Drechsler consultation. Pre-meeting work: composed `runs/2026-05-25-martin-consultation-prep/BRIEFING.md` (main briefing, 7 sections) and `BRIEFING-supplementary-issues.md` (covers the 8 unanswered 2026-05-17 pack questions + 3 new findings + H3b/H3c/§5/strategic decisions). Produced 4 key figures: uncorrected SPA, slab-highlighting SPA (new; stacked-by-family), slab-excluding SPA (new; reweighted-prior overlay), Hanson NBR scaling. Discovered along the way: AD 300-350 is 80 % editorial templates by aoristic mass — the late corpus is even more template-dominated than the AD 1-300 body. Then two scouts: `/lit-scout-iterate` for pottery-aoristic Roman bibliography (25 references, Brughmans / Aarhus / OXREP / ICRATES cluster; verifier-PASS after one iteration; 15 staged to Zotero, 8 already in libraries, 2 OXREP chapters required hand-curation from OpenAlex + Semantic Scholar because CrossRef returned 404 on `acprof:oso` DOIs); then `/prior-art-scout-iterate` for ceramics-aoristic actionable techniques (15 candidates; verifier-PASS after one iteration on a single DOI-confabulation correction; identified 6 directly-adoptable + 4 to-adapt; methodological-novelty claim sharpened to "structural mixture decomposition is novel; ceramicists use sensitivity stratification"). All action items folded into the post-Martin section above. Commits: `55e050c` (consultation briefing + figures), `dbae06f` (supplementary briefing), `3e93660` (lit-scout), `b687ed2` (OXREP bib hand-curation), `6877621` (prior-art scout).
+Day of the Martin Eftimoski consultation. Pre-meeting work: composed `runs/2026-05-25-martin-consultation-prep/BRIEFING.md` (main briefing, 7 sections) and `BRIEFING-supplementary-issues.md` (covers the 8 unanswered 2026-05-17 pack questions + 3 new findings + H3b/H3c/§5/strategic decisions). Produced 4 key figures: uncorrected SPA, slab-highlighting SPA (new; stacked-by-family), slab-excluding SPA (new; reweighted-prior overlay), Hanson NBR scaling. Discovered along the way: AD 300-350 is 80 % editorial templates by aoristic mass — the late corpus is even more template-dominated than the AD 1-300 body. Then two scouts: `/lit-scout-iterate` for pottery-aoristic Roman bibliography (25 references, Brughmans / Aarhus / OXREP / ICRATES cluster; verifier-PASS after one iteration; 15 staged to Zotero, 8 already in libraries, 2 OXREP chapters required hand-curation from OpenAlex + Semantic Scholar because CrossRef returned 404 on `acprof:oso` DOIs); then `/prior-art-scout-iterate` for ceramics-aoristic actionable techniques (15 candidates; verifier-PASS after one iteration on a single DOI-confabulation correction; identified 6 directly-adoptable + 4 to-adapt; methodological-novelty claim sharpened to "structural mixture decomposition is novel; ceramicists use sensitivity stratification"). All action items folded into the post-Martin section above. Commits: `55e050c` (consultation briefing + figures), `dbae06f` (supplementary briefing), `3e93660` (lit-scout), `b687ed2` (OXREP bib hand-curation), `6877621` (prior-art scout).
 
 ### 2026-05-24 (alpha-bias diagnostic + family classifier + empirical-Bayes Stages 1+2)
 
