@@ -1333,6 +1333,24 @@ The substantive lesson is the structural-bias diagnostic logic: under a likeliho
 
 ---
 
+## Obs 52 — 2026-05-24 [PATTERN]: distinguish sampler-effort, sampler-geometry, and structural-identifiability failures via three cheap negative results in sequence
+
+The recovery-grid bias triage ran three sequential cheap diagnostics, each designed to falsify one candidate cause. Each came back **negative** — the candidate explanation was ruled out — and the three negatives together localise the failure to structural identifiability rather than implementation.
+
+**Cheap diagnostic 1 — sampler effort.** Re-fit three α=0.95 cells under three sampling-effort tiers (baseline / harder / hardest: 1k–4k tune, 2k–8k draws, target_accept 0.95–0.995). If the posterior is being approximated badly by an under-powered sampler, harder effort moves α̂ toward truth. **Result:** α̂ moved by ≤ 0.01 across the three tiers while ESS rose ~5×, R-hat fell from 1.04 to ≤ 1.04, divergences eliminated. Same biased posterior, sampled more cleanly. *Cause ruled out:* sampler effort.
+
+**Cheap diagnostic 2 — prior pull.** Swap the α prior from Beta(2,2) (only ~5 % mass above α=0.95) to Beta(1,1) ≡ Uniform(0,1). If the symmetric prior is mechanically pulling α̂ toward 0.5, the uniform prior releases it. **Result:** α̂ moved by +0.025 on average (range +0.004 to +0.037), well below the +0.05 "substantial contributor" threshold. *Cause ruled out:* prior shape.
+
+**Cheap diagnostic 3 — sampler geometry.** Re-parameterise the GRW prior on log p_gen from centred (`log_pgen_increments ~ Normal(0, σ_smooth)`) to non-centred (`z ~ Normal(0,1); log_pgen_increments = σ_smooth · z`). The two are mathematically identical priors with different sampler-space geometries; the textbook cure for Neal-funnel pathologies. **Result:** α̂ moved by +0.001 on average (range −0.003 to +0.005). ESS-bulk improved 45–50×, R-hat from ~1.04 to ~1.0008, divergences 0 → 0 — sampling-quality improvement was huge, but the posterior did not shift. *Cause ruled out:* funnel geometry.
+
+The three negatives leave **structural identifiability**: the data carries a likelihood ridge between α and p_gen complexity that the architecture cannot resolve, regardless of how it's sampled, what prior is on α, or how the smoothness parameter is parameterised. The information needed to nail α down is not in the data and must come from outside the data (a calibration cohort) or from a different model (a structurally constrained residual). This is the framing the empirical-Bayes pivot rests on — see Obs 55.
+
+The generalisable pattern is a diagnostic ordering: when a Bayesian model fails, the candidate causes scale from cheap-to-fix (sampler effort) through mechanical (re-parameterisation) to structural (identifiability). Test them in order of cheapness. Each negative result is itself information — it narrows the candidate-cause space. The three negatives here cost ~ 25 min sapphire compute combined and bought a clean structural diagnosis. The free-win side-finding from diagnostic 3 (the ESS / R-hat improvement) banks an unconditional improvement to the production model regardless of whether the identifiability question is resolved.
+
+*Source:* `runs/2026-05-24-validation-investigation/outputs/REPORT.md` Experiment A; `runs/2026-05-24-followup-alpha-prior/outputs/REPORT.md` F1; `runs/2026-05-24-followup-noncentred-grw/outputs/REPORT.md` F3. Commits `3d23fe6` and `e21f7bf`. Cross-references Obs 28 and Obs 24.
+
+---
+
 ## Obs 58 — 2026-05-26 [DECISION]: letter-count as complementary measure, not better alternative — the 'acts vs content' reframe
 
 The 2026-05-26 letter-count probe (`runs/2026-05-26-letter-count-probe/`) was designed under a binary framing: "is letter-count a better unit than inscription-count?" The probe spec encoded that framing directly in its verdict thresholds — any flag tripping meant letter-count becomes the headline unit (`runs/2026-05-26-letter-count-probe/spec.md` §"Verdict thresholds"). Two flags fired: Flag 2 MATERIAL (Hanson negative-binomial regression β = 0.566 under letter-count vs 0.515 under inscription-count, 95 % CIs non-overlapping; `runs/2026-05-26-letter-count-probe/outputs/tables/nbr-summary.csv`) and significant rank reshuffling at city and province level (Britannia #7 → #19, Hispania citerior #3 → #7, Ostia #3 → #1, Pompeii #1 → #3; `runs/2026-05-26-letter-count-probe/outputs/tables/city-rank-change.csv` and `province-rank-change.csv`). Main-thread Claude proposed adopting letter-count as the new headline with inscription-count demoted to a robustness annex.
