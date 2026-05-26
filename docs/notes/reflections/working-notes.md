@@ -1309,6 +1309,30 @@ This is a Decision-22-class error (Obs 38): a binding numerical criterion was sp
 
 ---
 
+## Obs 51 — 2026-05-24 [SURPRISE]: the α-bias is bidirectional and saturates by α=0.70 — it is not a corner pathology at α=1
+
+The pre-investigation mental model was that the recovery-grid failure at α=0.95 was an "extreme corner" issue: the model breaks down at the boundary of the α parameter space, but the rest of the grid is well-behaved. The F0a systematics analysis (`runs/2026-05-24-followup-systematics/`) overturned this read.
+
+Marginalised over every other axis of the 450-cell grid, mean α-bias progresses through:
+
+| α_true | mean(α̂) | bias | direction |
+|---|---:|---:|---|
+| 0.05 | 0.120 | **+0.070** | over-estimates |
+| 0.30 | 0.290 | −0.010 | ~unbiased |
+| 0.50 | 0.456 | −0.044 | under |
+| 0.70 | 0.640 | −0.060 | under |
+| 0.95 | 0.885 | −0.065 | under |
+
+The downward pull on α̂ **starts at α=0.50**, has gained nearly all its eventual magnitude by α=0.70, and only marginally worsens at α=0.95 (Δbias = +0.004 from 0.70 to 0.95). What collapses at α=0.95 is not the bias but the **shape-recovery pass rate** — 78 % → 22 % — because by then α̂ has been pulled far enough toward 0.5 that the recovered p_gen has to absorb the missing convention mass and the Pearson r against truth breaks down.
+
+The shape-by-α heatmap is also bidirectional. `regnal_cluster` is the only shape with *positive* α-bias across α ≤ 0.50 (+0.197 / +0.134 / +0.085 at α=0.05/0.30/0.50). The mechanism: when the truth has narrow concentrated spikes (regnal_cluster's 5-year peaks at Hadrian, Flavian, Severus etc.), the convention component p_conv absorbs the spike signal — the model **over-attributes mass to α** because the convention basis is more flexible at narrow features than the GRW-smoothed p_gen. Same likelihood ridge, opposite sign, depending on which side (convention or genuine) is the "less complex" home for narrow features under the model's smoothness assumptions.
+
+The substantive lesson is the structural-bias diagnostic logic: under a likelihood ridge between a parametric basis and a non-parametric residual, the posterior locates mass at whichever side accommodates it cheaply under the priors. A GRW smoothness prior on log p_gen makes p_gen the "smoother" side; the parametric basis is therefore the "less smooth" side; whichever side is more compatible with the truth's complexity ends up winning. At low α_true with narrow truth → p_conv wins → α̂ over-estimates. At high α_true with smooth truth → p_gen wins → α̂ under-estimates. The ridge is bidirectional and shape-sensitive. This sharpened the question for Martin from "α=0.95 is broken" to "the model's priors implicitly choose a side; please help us understand whether to (i) make the priors symmetric in complexity, (ii) constrain α empirically via the calibration cohort, or (iii) restructure the residual process".
+
+*Source:* `runs/2026-05-24-followup-systematics/outputs/REPORT.md` §F0a Tables 1–3 and heatmap; commit `e21f7bf`.
+
+---
+
 ## Obs 58 — 2026-05-26 [DECISION]: letter-count as complementary measure, not better alternative — the 'acts vs content' reframe
 
 The 2026-05-26 letter-count probe (`runs/2026-05-26-letter-count-probe/`) was designed under a binary framing: "is letter-count a better unit than inscription-count?" The probe spec encoded that framing directly in its verdict thresholds — any flag tripping meant letter-count becomes the headline unit (`runs/2026-05-26-letter-count-probe/spec.md` §"Verdict thresholds"). Two flags fired: Flag 2 MATERIAL (Hanson negative-binomial regression β = 0.566 under letter-count vs 0.515 under inscription-count, 95 % CIs non-overlapping; `runs/2026-05-26-letter-count-probe/outputs/tables/nbr-summary.csv`) and significant rank reshuffling at city and province level (Britannia #7 → #19, Hispania citerior #3 → #7, Ostia #3 → #1, Pompeii #1 → #3; `runs/2026-05-26-letter-count-probe/outputs/tables/city-rank-change.csv` and `province-rank-change.csv`). Main-thread Claude proposed adopting letter-count as the new headline with inscription-count demoted to a robustness annex.
