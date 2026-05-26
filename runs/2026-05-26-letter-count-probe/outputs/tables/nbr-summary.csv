@@ -1,0 +1,4 @@
+variant,label,n_cities,n_zero_response,beta_pop,se_pop,alpha,ci_lo_2p5,ci_hi_97p5
+inscription,inscription count,1044,0,0.5663,0.0430,2.1530,0.5435,0.5743
+letter_cons,letter total (conservative),1044,0,0.5146,0.0397,2.0384,0.4627,0.5419
+letter_intr,letter total (interpretive),1044,0,0.5116,0.0396,2.0051,0.4681,0.5364

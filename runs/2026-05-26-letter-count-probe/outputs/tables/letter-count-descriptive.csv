@@ -1,0 +1,3 @@
+field,n,n_zero,pct_zero,median,q25,q75,mean,max,sum
+letter_count_conservative,180609,4000,2.215,25.000,10.000,52.000,45.448,35537,8208304
+letter_count_interpretive,180609,3930,2.176,42.000,16.000,82.000,70.764,46926,12780529

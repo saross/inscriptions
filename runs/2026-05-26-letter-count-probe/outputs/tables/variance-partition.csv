@@ -1,0 +1,4 @@
+variant,label,n_cities,beta_within,beta_between,var_within,var_between,f_within_pct,f_within_ci_lo_pct,f_within_ci_hi_pct
+inscription,inscription count,1044,0.6658,-0.3097,0.5223,0.0244,95.5366,93.5471,97.7393
+letter_cons,letter total (conservative),1044,0.5731,-0.1905,0.3870,0.0092,97.6697,96.1004,99.8269
+letter_intr,letter total (interpretive),1044,0.5765,-0.1985,0.3916,0.0100,97.5032,95.6840,99.6798

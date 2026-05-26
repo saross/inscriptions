@@ -13,6 +13,7 @@ runs/**/run.pid
 # original LIRE_v3-0.parquet via the run's filter script. Live on sapphire too
 # when blocks run there; pulled back as needed.
 runs/**/data/lire-filtered.parquet
+runs/**/data/lire-filtered-with-letters.parquet
 
 # Compile output from R/Stan/NIMBLE installs — large, noise, reproducible
 # from the install scripts. Live on sapphire as ground truth.

@@ -1,0 +1,4 @@
+a,b,pearson_r,spearman_r
+inscription,letter_conservative,0.9041,0.8627
+inscription,letter_interpretive,0.8828,0.8500
+letter_conservative,letter_interpretive,0.9938,0.9886
