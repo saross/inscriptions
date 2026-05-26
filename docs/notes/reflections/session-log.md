@@ -596,3 +596,64 @@ A three-day continuous methodological arc closing the recovery-grid validation p
 ### Contextual assumptions
 
 The recovery-grid FAIL is being framed as the validation gate doing its job, not as a setback. The empirical-Bayes pivot is the project's second structural redesign driven by validation-gate output (after the 2026-04-26 forward-fit pivot). Martin's consultation on 2026-05-25 produced notes at `planning/martin.md` — short, unstructured, capturing his HMM-framing direction and a "use granular to characterise slabs" idea that aligns with our empirical-Bayes approach. Whether he addressed the eight 2026-05-17 pack questions is not yet clear from his notes; the post-Martin action items in continuity.md may need re-prioritising once his input is processed. All sapphire compute completed cleanly; all 18 commits this arc are on `origin/main`; working tree clean at handoff. The session ran continuously without compaction.
+
+---
+
+## 2026-05-26 — Letter-count probe complete; recovery-grid two-unit launched; "acts vs content" reframe locked
+
+Single-day session, continuous (no compaction). Opened with the post-Martin recalibration in train (3 planning files + continuity 2026-05-25 history block to fix from "Drechsler" to "Eftimoski"). Closed with the letter-count probe complete, six commits of substantive work landed plus ~16 of supporting infrastructure, the recovery-grid two-unit re-simulation running on sapphire, and the working-notes register caught up (Obs 49-60 all landed).
+
+### Headlines
+
+- **Letter-count probe complete.** Six blocks executed: 01 letter-count computation; 02 empire SPA shape comparison; 03 province/city rank shuffles; 04 Hanson NBR; 05 frequentist Mundlak; 06 Bayesian Mundlak on sapphire. REPORT at `runs/2026-05-26-letter-count-probe/REPORT.md` (commit `348ea25`). Three flags evaluated: Flag 1 (SPA shape) MODEST; **Flag 2 (Hanson β) MATERIAL** (no CI overlap; β 0.566 → 0.515); **Flag 3 (f_within) MATERIAL** (+9.89 pp; 29.94 % → 39.83 %).
+- **"Acts vs content" reframe locked** (Obs 58, commit `dd326dc`). I coined the construct-distinction in Block 3's substantive writeup; Shawn extended it to "complementary measures with delta as research object, analogous to scaling-residuals." Reshapes Stage 3 (parallel fits under both units), the recovery-grid re-simulation (two grids head-to-head), and the methodology paper's argument structure.
+- **Mundlak corroboration** (Obs 59, commit `de8fa8f`). Bayesian fits on sapphire matched talk-prep slide-6 punchline at 29.94 % for inscription-count (sanity-check); +9.89 pp shift to 39.83 % under letter-mass. Mechanism: β_between centres toward zero (−0.248 → −0.158); denominator shrinks faster than numerator.
+- **`pilot_proxy` template-tier corroboration** (Obs 60, commit `2f86c95`). Letter-mass re-derivation shifts the tier vector from (0.55, 0.30, 0.15) to (0.5230, 0.0733, 0.4038) — reign-interval mass quadruples; half-century mass collapses; century mass roughly stable. Letter-weighting elevates reign-dated formulary epigraphy (imperial titulature, military diplomas, full dating apparatus).
+- **Recovery-grid two-unit re-simulation running** (`runs/2026-05-26-recovery-grid-two-unit/`; spec commit `507a722`). Two grids head-to-head — inscription-mass + letter-mass conservative, both with F1 + F3 structural fixes baked in. Production launched on sapphire PID 931910 at 2026-05-26 05:53 UTC; ETA ~ 76 h sequential; STATUS.txt at the spec'd path is the polling side-channel.
+- **Working-notes batch intake.** 9 proposed Obs 49-57 landed in recommended order (commit range `43d814d..65edb2e`); `PROPOSED-OBS-49-57-for-review.md` staging file deleted; working-notes is now at Obs 60.
+- **HMM follow-up paper stub** created at `planning/hmm-paper-stub/` (commit `dad1fcd`). One-page placeholder; substantive work deferred until current paper closer to draft.
+- **Name correction** (commit `f3e5322`). Three planning files + continuity 2026-05-25 history block: "Martin Drechsler" → "Martin Eftimoski." Memory `2026-05-26-214ce5ca1491` captures the corrected profile.
+
+### New / updated runs
+
+- `runs/2026-05-26-letter-count-probe/` (six code scripts; outputs; REPORT)
+- `runs/2026-05-26-recovery-grid-two-unit/` (spec; harness in `code/`; pre-launch gate artefacts; pilot_proxy artefacts per grid)
+
+### New planning docs
+
+- `planning/hmm-paper-stub/README.md`
+
+### Updated docs
+
+- `docs/notes/reflections/continuity.md` (Martin-recalibration section + priority queue + working-notes section + 2026-05-26 session-history entry)
+- `docs/notes/reflections/working-notes.md` (Obs 49-60 landed)
+- `docs/notes/user-observations.md` (Obs 10-12 added; see below)
+- `docs/notes/reflections/{session-reflection, abductive-reasoning, session-log}.md` (at session close)
+- Three `planning/h2.1-*.md` files: name correction
+- `.gitignore`: added `lire-filtered-with-letters.parquet` exclusion; recovery-grid-two-unit per-replicate exclusions
+
+### Commits in arc
+
+`dd326dc` (Obs 58) → `21a80c0` (block-6 script setup) → `f3e5322` (name correction + continuity recalibration) → `26ab70e` (letter-probe blocks 1-5) → `507a722` (recovery-grid spec) → `de8fa8f` (Obs 59) → `49957a7` (Mundlak result outputs) → `348ea25` (REPORT.md closes probe) → `16c8c88` (recovery-grid harness) → `8925126` (pre-launch gate artefacts) → `65756ac` (wrapper smoke-summary fix) → `dad1fcd` (HMM stub) → `43d814d..65edb2e` (Obs 49-57 batch intake + cleanup; 10 commits) → `2f86c95` (Obs 60) → `25f655d` (continuity handoff). ~ 22 commits; all pushed to `origin/main`.
+
+### User-observations addition (3)
+
+- **Obs 10** (2026-05-26): Substantive intellectual contributions need accurate attribution; under-claiming erases what I bring to co-research. Anchor: the "acts vs content" coinage in Block 3 writeup + Shawn's credit-correction at session-close. Memory `2026-05-26-652990d9d646`.
+- **Obs 11** (2026-05-26): Pause and surface methodologically-different metrics before committing; "lab-not-dev-team" working as designed. Anchor: Block-5 frequentist Mundlak f_within ≈ 95 % vs Block-6 Bayesian ≈ 30 % (different denominators).
+- **Obs 12** (2026-05-26): Substantial spec docs can evolve mid-session as findings accumulate; don't lock too early. Anchor: recovery-grid two-unit spec evolved through three design expansions across the session.
+
+### Wiki candidates flagged (3 in `~/personal-assistant/notes/_inbox.md`)
+
+- Binary verdict thresholds force false choices when alternatives are different constructs rather than rival operationalisations — candidate for `llm-craft.md` or new `notes/sensitivity-probe-design.md`.
+- Long sapphire-job orchestration pattern (agent launches under nohup, captures remote PID, writes STATUS.txt side-channel, exits with PID + STATUS reported; main thread polls via direct SSH) — candidate for new `notes/agent-orchestration.md`.
+- Agent anti-confabulation catches brief errors when a brief carries specific factual claims; cascading anti-confabulation discipline from briefing to execution — candidate to extend `llm-craft.md`.
+
+### Memories captured this session (3)
+
+- `2026-05-26-214ce5ca1491` (contact): Martin Eftimoski profile + correction from "Drechsler."
+- `2026-05-26-40ce5927fddc` (feedback): amendment-gate rule — flag before launching work whose published claims need a not-yet-lodged OSF amendment.
+- `2026-05-26-652990d9d646` (feedback): take credit honestly for substantive contributions; default to claiming; Shawn corrects over-claiming; the error-mode is under-claiming.
+
+### Contextual assumptions
+
+The session opened with the Bayesian Mundlak's actual wall-clock (4.3 min) substantially below my pre-launch estimate (45 min) — the harness is well-tuned and my estimates were conservative. The recovery-grid two-unit launch authorisation was gated explicitly on Mundlak completion (per spec §10 Decision 4); that trigger fired at 02:56 UTC; harness-prep agent dispatched 4-5 h later (after Shawn's session re-engagement) with the spec's launch authorisation already locked. The Mundlak agent's dropped completion notification (documented failure mode) was handled by direct SSH check when Shawn asked for status — no friction. All session work happened on amd-tower; sapphire is doing the production compute under nohup. The harness-prep agent flagged the wall-clock estimate from spec §6 (~ 60 h) as too optimistic and reported ~ 76 h based on smoke-test timings; the deviation was surfaced rather than relaxed. Working tree clean at handoff; one outstanding state: sapphire's working tree diverges from `origin/HEAD` in the smoke-cell artefact deletions (intentional, per the harness's resumability skip logic; sapphire never pushes). All ~ 22 commits this session are on `origin/main`.
