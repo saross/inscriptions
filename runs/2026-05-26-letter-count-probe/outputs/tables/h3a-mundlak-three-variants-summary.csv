@@ -1,0 +1,4 @@
+variant,label,n_cities,n_provinces,f_within_median,f_within_ci_lo,f_within_ci_hi,p_f_gt_005,p_f_gt_010,p_f_gt_020,beta_within_median,beta_within_ci_lo,beta_within_ci_hi,beta_between_median,beta_between_ci_lo,beta_between_ci_hi,max_rhat,min_ess_bulk,n_divergences,convergence_passed,wall_seconds
+inscription,inscription count,1044,56,0.299425,0.237048,0.366331,1.000000,1.000000,0.999375,0.587062,0.518130,0.657689,-0.247623,-0.721928,0.253825,1.000000,1041.000000,0,True,95.944621
+letter_cons,letter total (conservative),1044,56,0.398301,0.320369,0.481737,1.000000,1.000000,1.000000,0.558771,0.488949,0.629302,-0.157681,-0.546176,0.243667,1.000000,1943.000000,0,True,78.659707
+letter_intr,letter total (interpretive),1044,56,0.398254,0.319709,0.482974,1.000000,1.000000,1.000000,0.558729,0.490160,0.627741,-0.169931,-0.570174,0.229946,1.000000,1489.000000,0,True,79.846564
