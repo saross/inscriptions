@@ -1293,6 +1293,22 @@ Three structural patterns of failure show up cleanly in the cell-level data: (a)
 
 ---
 
+## Obs 53 — 2026-05-24 [GOTCHA]: Pearson r against a zero-variance truth is undefined — a binding-criterion bug, not a recovery failure
+
+`flat_baseline` was one of six shapes in the H2.1 recovery-grid design, included as a control: if the truth p_gen is uniform across the envelope, the model should recover ~ uniform. Of the 75 `flat_baseline` cells in the grid, **0 %** passed the prereg's binding shape-recovery criterion (median Pearson r ≥ 0.95).
+
+This was not a recovery failure. Pearson correlation is `cov(x, y) / (σ_x · σ_y)`. When `truth` is constant, `σ_truth = 0`, so the denominator is zero and the metric is mathematically undefined — `scipy.stats.pearsonr` returns NaN with a `ConstantInputWarning`, and the cell-summariser treated NaN as a fail. When we actually looked at what the model recovered in the flat_baseline cells (Experiment B), the posterior-mean p_gen had variance ~ 10⁻⁹–10⁻⁸ against a uniform truth value of 1.25 × 10⁻² — six orders of magnitude below "distinguishable from flat", max deviation ~ 10⁻⁴, Wasserstein-1 ≤ 0.7 years on a 400-year envelope. The recovery was almost perfect; the *measuring stick* was broken on flat surfaces.
+
+The fix is mechanical: replace Pearson r with Wasserstein-1 (the "earth-mover" distance) as the binding shape metric. W-1 is well-defined for any pair of probability vectors including constants, has interpretable units (years on this envelope), and is mass-sensitive in a way Pearson r is not — W-1 catches the kind of small-mass-displacement failure that Pearson r is blind to (the `regnal_cluster` shape passes Pearson r 84 % of the time but has median W-1 ~ 10 years, comparable to the *worst* non-flat shapes at α=0.95; see Obs 51). The empirical W-1 distribution from the 450-cell grid (`runs/2026-05-24-followup-systematics/` F0b) gives 18.6 y as the threshold that matches Pearson r ≥ 0.95 selectivity on non-flat cells; 5 y is one bin width and is markedly stricter (28.8 % pass).
+
+Generalisable: any preregistered binding metric for "recovery against truth" needs to be runnable on every truth shape in the test grid. Constants, zero-mass regions, and degenerate distributions are not edge cases to be handled later — they're tests of whether the metric is well-defined at all. The standard pre-commitment check is "compute this metric on each truth shape with a trivially-correct recovery; does it return a sensible value?" Pearson r on `flat_baseline` would have failed this check the moment it was tried.
+
+This is a Decision-22-class error (Obs 38): a binding numerical criterion was specified for a multi-cell grid without tracing its mathematical implications across every cell's structure. The lesson recurs: when a preregistered criterion is applied across heterogeneous cells, each cell type needs an explicit "does the criterion work here?" check before the gate goes live.
+
+*Source:* `runs/2026-05-24-validation-investigation/outputs/REPORT.md` Experiment B; `runs/2026-05-24-followup-systematics/outputs/REPORT.md` §F0b. Cross-reference Obs 38.
+
+---
+
 ## Obs 58 — 2026-05-26 [DECISION]: letter-count as complementary measure, not better alternative — the 'acts vs content' reframe
 
 The 2026-05-26 letter-count probe (`runs/2026-05-26-letter-count-probe/`) was designed under a binary framing: "is letter-count a better unit than inscription-count?" The probe spec encoded that framing directly in its verdict thresholds — any flag tripping meant letter-count becomes the headline unit (`runs/2026-05-26-letter-count-probe/spec.md` §"Verdict thresholds"). Two flags fired: Flag 2 MATERIAL (Hanson negative-binomial regression β = 0.566 under letter-count vs 0.515 under inscription-count, 95 % CIs non-overlapping; `runs/2026-05-26-letter-count-probe/outputs/tables/nbr-summary.csv`) and significant rank reshuffling at city and province level (Britannia #7 → #19, Hispania citerior #3 → #7, Ostia #3 → #1, Pompeii #1 → #3; `runs/2026-05-26-letter-count-probe/outputs/tables/city-rank-change.csv` and `province-rank-change.csv`). Main-thread Claude proposed adopting letter-count as the new headline with inscription-count demoted to a robustness annex.
