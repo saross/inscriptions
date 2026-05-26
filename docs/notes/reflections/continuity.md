@@ -5,7 +5,7 @@ title: "Continuity — inscriptions project (living doc)"
 audience: "next CC instance picking up the project; Shawn after any break"
 status: living; updated at end of each session
 started: 2026-04-24
-last-updated: 2026-05-26 (Martin consultation outcome; letter-count probe in flight)
+last-updated: 2026-05-26 (letter-count probe complete; recovery-grid two-unit running on sapphire; "acts vs content" reframe locked)
 ---
 
 # Continuity — inscriptions project
@@ -124,25 +124,9 @@ Software stack confirmed (all licences compatible): `kairos` (tesselle, GPL-3.0)
 
 ---
 
-## Working-notes review — proposals ready for selective commit (2026-05-25)
+## Working-notes register — current state
 
-Working-notes is at Obs 48 (2026-05-22). The 2026-05-25 gap-analysis agent (`ab80a245cae11167d`) returned with **9 proposed entries (Obs 49–57)** covering the 2026-05-23 → 2026-05-25 work tranche. Proposals are at `docs/notes/reflections/PROPOSED-OBS-49-57-for-review.md` (commit `11ca91e`). Each is empirically anchored to commits / run-dirs / file paths.
-
-Headlines:
-
-- **Obs 49** [GOTCHA] tmpfs inode exhaustion in pytensor recompile loop (the 12-cell failure root cause)
-- **Obs 50** [FINDING] recovery grid FAILed 40.9 % — validation gate doing its job
-- **Obs 51** [SURPRISE] α-bias is bidirectional, saturates by α=0.70 (not corner at α=1)
-- **Obs 52** [PATTERN] three cheap negative results in sequence localise failure to structural identifiability
-- **Obs 53** [GOTCHA] Pearson r against zero-variance truth is undefined
-- **Obs 54** [PATTERN] interval *structure* not *width* — family classifier doubled cohort size at higher purity
-- **Obs 55** [DECISION] empirical-Bayes calibration cohort as the structural pivot (comparable to forward-fit pivot Obs 18)
-- **Obs 56** [PATTERN] bridge-the-clusters lit-scout (refines Obs 10 with disconnection-as-signal heuristic; promotion candidate to `~/personal-assistant/notes/llm-craft.md`)
-- **Obs 57** [PATTERN] diagnostic that doesn't fix the headline still banks structural improvements
-
-Agent's recommended commit-ordering: 49 → 50 → 53 → 51 → 52 → 57 → 54 → 55 → 56. Highest-value single entry: **Obs 55**.
-
-**Next-session action**: review the proposal file, edit any entries that need tightening, paste keepers into `working-notes.md` (append after current Obs 48) in the recommended order. Or use `/observe` for individual entries.
+Working-notes.md is at **Obs 60** (2026-05-26). The 9 proposed Obs 49–57 from the 2026-05-25 gap-analysis agent were landed via batch intake on 2026-05-26 (commit range `43d814d..65edb2e`); the `PROPOSED-OBS-49-57-for-review.md` staging file was deleted as part of the same intake. Obs 58 (commit `dd326dc`) captures the "acts vs content" reframe; Obs 59 (`de8fa8f`) corroborates it at the Mundlak f_within layer (+9.89 pp shift); Obs 60 (`2f86c95`) corroborates at the editorial-template-tier layer (pilot_proxy reign-weight quadruples under letter-mass). Obs 56 was flagged at intake as a promotion candidate to `~/personal-assistant/notes/llm-craft.md` (the bridge-the-clusters lit-scout heuristic).
 
 ---
 
@@ -162,7 +146,7 @@ Pre-/post-talk work for the next session. **Read `planning/next-session-prompt-2
 
 Detailed in `planning/backlog-2026-05-03.md` §"What's preregistered, designed, but NOT YET IMPLEMENTED". Headlines:
 
-0. [ ] **Letter-count probe — in flight 2026-05-26.** Switch unit of analysis from inscription count to letter count and re-run the empire / province / city SPAs + scaling test. Martin flagged the switch as "crucial" at the 2026-05-25 consultation: letter is a better unit of epigraphic production and information flow than inscription. Previously logged as a §5 exploratory; promoted to active probe this session. Cheap (re-run existing pipelines with a different aggregation column).
+0. [x] **Letter-count probe — complete 2026-05-26.** Six blocks executed; REPORT at `runs/2026-05-26-letter-count-probe/REPORT.md` (commit `348ea25`). Three flags evaluated: Flag 1 SPA-shape MODEST (r ≈ 0.88-0.90); **Flag 2 Hanson β MATERIAL** (no CI overlap; β 0.566 → 0.515); **Flag 3 f_within MATERIAL** (Bayesian Mundlak, +9.89 pp; 30 % → 40 %). The probe's spec wrote a binary verdict rule that was superseded mid-session by Shawn's **"acts vs content" reframe** (Obs 58 commit `dd326dc`): inscription-count and letter-mass are complementary measures of partially-different constructs; their delta is itself a research object. Stage 3 will fit under both units in parallel. The recovery-grid two-unit re-simulation (`runs/2026-05-26-recovery-grid-two-unit/spec.md`) is now the Stage 3 launch gate; production running on sapphire PID 931910 since 2026-05-26 05:53 UTC; ETA ~76 h sequential; STATUS file at `~/Code/inscriptions/runs/2026-05-26-recovery-grid-two-unit/STATUS.txt` on sapphire.
 1. [ ] **H2 mixture-model implementation.** Substantive methodological contribution. ~2-3 days. Preregistered §3 + Decision 7. Outputs `data/processed/city_level_for_h3a.parquet` which unblocks Track 2.
 2. [ ] **H3a Bayesian NBR (pymc primary).** Primary quantitative substantive result. ~1-2 days. Depends on H2 output.
 3. [ ] **H3a brms shadow execution.** Script ready (`scripts/h3a_brms_shadow.R`); depends on H2 output. ~30 min.
@@ -305,9 +289,9 @@ That's enough to engage substantively. Deeper context (the scout report, working
 
 ## Session history — done items (terse)
 
-### 2026-05-26 (Martin recalibration + letter-count probe)
+### 2026-05-26 (letter-count probe complete + recovery-grid launched + "acts vs content" reframe locked)
 
-Session in progress — to be completed at session close. Headline: Martin meeting was both more and less than expected (see top-of-doc recalibration section).
+The session that operationalised the post-Martin recalibration. Opened with a name correction: the 2026-05-25 consultee was **Martin Eftimoski (NOT Drechsler)**; three planning files + the continuity 2026-05-25 session-history block fixed in `f3e5322`, memory `2026-05-26-214ce5ca1491` captures the corrected profile. Then the **letter-count probe** ran six blocks: blocks 1–5 on amd-tower (descriptive + empire-SPA + province/city SPAs with rank shuffles + Hanson NBR + frequentist Mundlak); block 6 the directly-comparable Bayesian Mundlak NBR on sapphire (`21a80c0`, `49957a7`; 4.3 min wall-clock; all three variants PASSed convergence gates). Verdict: Flag 2 (Hanson β) and Flag 3 (f_within +9.89 pp; 30 % → 40 %) both MATERIAL; Flag 1 (SPA shape) MODEST. **Shawn rejected the spec's binary verdict rule mid-probe**: inscription-count and letter-mass are complementary measures of partially-different constructs ("acts vs content"); their delta is a research object in its own right. This was the session's defining methodological move, captured at Obs 58 (`dd326dc`), corroborated empirically by Obs 59 (`de8fa8f`, Mundlak +9.89 pp) and Obs 60 (`2f86c95`, pilot_proxy reign-weight quadruples under letter-weighting — corroboration at the editorial-template-tier layer). The probe REPORT closed task #6 at `348ea25`. The **recovery-grid two-unit re-simulation** spec was drafted (`507a722`) per the new framework — two grids head-to-head (inscription-mass + letter-mass-conservative); harness built and smoke-tested on sapphire (`16c8c88`, `8925126`, `65756ac`); production launched 05:53 UTC at PID 931910 with ETA ~76 h sequential (Friday AEST). Working-notes batch intake landed the 9 pending proposed Obs 49–57 (`43d814d..65edb2e`) plus cleanup of the staging file. HMM follow-up paper stub created at `planning/hmm-paper-stub/` (`dad1fcd`). Two memories captured beyond the name fix: `2026-05-26-40ce5927fddc` (amendment-gate rule — flag before launching work whose published claims require a not-yet-lodged OSF amendment). ~22 commits this session; all pushed.
 
 ### 2026-05-25 (Martin consultation prep)
 
