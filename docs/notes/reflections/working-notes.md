@@ -1279,6 +1279,20 @@ Generalisable: any long compute run that uses JIT compilation (pytensor, numba's
 
 ---
 
+## Obs 50 — 2026-05-23 [FINDING]: the recovery grid FAILed — 40.9 % of cells pass both binding criteria; the methodological novelty claim now rests on a contingent fix
+
+The Phase 2 H2.1 recovery-grid validation, designed at `runs/2026-05-22-recovery-grid-design/` per the binding criteria in prereg §3 lines 165–210 (Decision 19), came in at **40.9 %** of cells passing both α-coverage ≥ 90 % and median Pearson r ≥ 0.95 simultaneously, against a binding gate of ≥ 90 % of cells on each criterion. The verdict is FAIL on the prereg's terms. Per-axis breakdown: α-coverage alone passes in 63.6 % of cells; shape recovery alone in 69.8 %; both simultaneously in 40.9 %.
+
+This is what a recovery simulation is *for*. The whole point of running ~ 45,000 fits on synthetic data with known truth before applying the model to LIRE was to find out whether the architecture is sound. It would have been worse to discover the bias on real data with no ground truth to anchor the diagnosis. The grid's job was to flag the problem cheaply, and it did. Restating: this is not a setback that puts the project in doubt; this is the validation gate doing the work it was preregistered to do. The next phase is structural fix → re-validate → unfreeze the binding gate.
+
+The substantive consequence for the paper: the headline methodological-novelty claim ("Bayesian mixture model for editorial-template deconvolution on Latin epigraphy") will need to be qualified as "with empirical-Bayes calibration cohort to break the likelihood ridge" once Stage 3 (Obs 55) lands. The empirical-Bayes pivot is not a small refinement; it changes the model's identifiability story from "fully data-driven decomposition" to "data-driven decomposition with an informative prior derived from a corpus subset." The paper's contribution still stands, but the framing in the discussion needs to be honest about *why* the calibration cohort is necessary — pointing to Spektor & Kellen 2018 for the failure-mode literature and to Wraith et al. 2014 / Christophe et al. 2018 for the precedent for the fix. The "twenty years ago in radiocarbon" frame (Bevan & Crema 2021; Crema 2022) is the rhetorical anchor.
+
+Three structural patterns of failure show up cleanly in the cell-level data: (a) `flat_baseline` shape fails at 0 % shape-pass across all α — a metric-pipeline artefact, not a model-recovery failure (see Obs 53); (b) α=0.95 shape-pass collapses to 22 % from 78–88 % at lower α — sampler-pathology marker for the likelihood ridge (see Obs 51); (c) `regnal_cluster` at α=0.05 has α-coverage 31 % vs the ≥ 90 % gate — the convention component is absorbing genuine narrow signal at low truth-α (see Obs 51 again). These three patterns separate cleanly under the F0/F1/F3 follow-up investigations and define the structural-fix design space for Stage 3.
+
+*Source:* `runs/2026-05-22-recovery-grid-validation/outputs/REPORT.md`; commit `3df0d2c`. Cross-reference Obs 51, 52, 53, 55.
+
+---
+
 ## Obs 58 — 2026-05-26 [DECISION]: letter-count as complementary measure, not better alternative — the 'acts vs content' reframe
 
 The 2026-05-26 letter-count probe (`runs/2026-05-26-letter-count-probe/`) was designed under a binary framing: "is letter-count a better unit than inscription-count?" The probe spec encoded that framing directly in its verdict thresholds — any flag tripping meant letter-count becomes the headline unit (`runs/2026-05-26-letter-count-probe/spec.md` §"Verdict thresholds"). Two flags fired: Flag 2 MATERIAL (Hanson negative-binomial regression β = 0.566 under letter-count vs 0.515 under inscription-count, 95 % CIs non-overlapping; `runs/2026-05-26-letter-count-probe/outputs/tables/nbr-summary.csv`) and significant rank reshuffling at city and province level (Britannia #7 → #19, Hispania citerior #3 → #7, Ostia #3 → #1, Pompeii #1 → #3; `runs/2026-05-26-letter-count-probe/outputs/tables/city-rank-change.csv` and `province-rank-change.csv`). Main-thread Claude proposed adopting letter-count as the new headline with inscription-count demoted to a robustness annex.
