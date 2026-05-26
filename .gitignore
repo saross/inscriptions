@@ -9,6 +9,20 @@ data/LIST_v1-2.parquet
 runs/**/cell-results.parquet
 runs/**/run.pid
 
+# Recovery-grid two-unit re-simulation (2026-05-26): production
+# per-replicate synthetic data (45,000 / grid) and per-replicate posterior
+# fits (45,000 / grid) regenerate deterministically from base_seed +
+# cell_index + replicate; bulk would push the repo past the GitHub limit.
+# Cell-summary JSON + grid-state.json + REPORT.md ARE committed. The
+# smoke-test cell (shape=rise_and_fall_alpha=0.50_tier=uniform_N=2000)
+# is committed as a research record of the pre-launch gates via the
+# explicit re-include below.
+runs/2026-05-26-recovery-grid-two-unit/*/data/synthetic-cells/*/
+runs/2026-05-26-recovery-grid-two-unit/*/outputs/cell-fits/*/
+runs/2026-05-26-recovery-grid-two-unit/*/outputs/cell-logs/
+!runs/2026-05-26-recovery-grid-two-unit/*/data/synthetic-cells/shape=rise_and_fall_alpha=0.50_tier=uniform_N=2000/
+!runs/2026-05-26-recovery-grid-two-unit/*/outputs/cell-fits/shape=rise_and_fall_alpha=0.50_tier=uniform_N=2000/
+
 # Intermediate filtered LIRE corpora (~ 60 MB each). Reconstructable from the
 # original LIRE_v3-0.parquet via the run's filter script. Live on sapphire too
 # when blocks run there; pulled back as needed.
