@@ -94,24 +94,30 @@ if ! "${PYTHON}" -c 'import pymc, arviz, statsmodels, scipy, numpy, pandas' 2>/d
 fi
 
 # ---------------------------------------------------------------------------
-# Smoke pass — assumed to have been run independently before launch.
-# The gates write their own JSON outputs under comparison/ and
-# */outputs/cell-summaries/. We sanity-check those exist here; the
-# wrapper does NOT re-run the gates (they are slow and the main agent
-# runs them before commit).
+# Pre-launch artefact check.
+#
+# We DO NOT check for the smoke-cell summary — the production grid
+# regenerates the smoke cell with 100 replicates (the smoke run used 5);
+# leaving the 5-replicate summary in place would trigger the worker's
+# resumability skip and contaminate the production grid with an
+# under-sampled cell. The smoke artefacts are committed as a research
+# record under ``runs/2026-05-26-recovery-grid-two-unit/*/outputs/`` in
+# the repo but are removed on sapphire before the production launch.
+#
+# The pilot-proxy.json files are the only on-disk artefacts both grids
+# require to start — they are written by ``derive-pilot-proxy.py`` and
+# are unit-correct regardless of replicate count.
 # ---------------------------------------------------------------------------
-SMOKE_A="${RUN_ROOT}/inscription-mass/outputs/cell-summaries/shape=rise_and_fall_alpha=0.50_tier=uniform_N=2000-summary.json"
-SMOKE_B="${RUN_ROOT}/letter-mass/outputs/cell-summaries/shape=rise_and_fall_alpha=0.50_tier=uniform_N=2000-summary.json"
 PROXY_A="${RUN_ROOT}/inscription-mass/data/pilot-proxy.json"
 PROXY_B="${RUN_ROOT}/letter-mass/data/pilot-proxy.json"
 
-for f in "${SMOKE_A}" "${SMOKE_B}" "${PROXY_A}" "${PROXY_B}"; do
+for f in "${PROXY_A}" "${PROXY_B}"; do
     if [[ ! -e "${f}" ]]; then
         status "FATAL pre-launch artefact missing: ${f}"
         exit 2
     fi
 done
-status "SMOKE-PASS (gate artefacts located)"
+status "PRE-LAUNCH-CHECK-OK (pilot-proxy artefacts located)"
 
 # ---------------------------------------------------------------------------
 # Grid A: inscription-mass.
