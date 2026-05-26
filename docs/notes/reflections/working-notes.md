@@ -1351,6 +1351,28 @@ The generalisable pattern is a diagnostic ordering: when a Bayesian model fails,
 
 ---
 
+## Obs 57 — 2026-05-24 [PATTERN]: a "diagnostic that doesn't fix the headline" still banks structural improvements — separately commit the side-finding
+
+The non-centred GRW re-parameterisation (F3 follow-up) was undertaken with one question in mind: does it cure the α=0.95 bias? Per the brief's pre-stated decision rule (Δα ≥ +0.03 → "marginal fix"; ≥ +0.05 → "substantial fix"), the answer was a clean negative — mean Δα = +0.001 across three cells, three orders of magnitude below the threshold. The bias is not funnel geometry.
+
+But the *side-effect* of the re-parameterisation was substantial and unambiguous. The same three fits showed:
+
+- ESS-bulk: 104 → 7 628 (bimodal), 147 → 6 540 (regnal), 248 → 12 322 (smooth_decline) — **~50× improvement**
+- ESS-tail: similar magnitude (72 → 12 193; 260 → 6 798; 421 → 15 441)
+- R-hat: ~1.04 → ~1.0008 — collapses ~50× toward 1.0
+- Divergences: 0 → 0 (already clean at hardest)
+- Wall time: unchanged or slightly faster
+
+This is a **free win on computational efficiency** that is independent of whether the headline question is resolved. The non-centred parameterisation gives the same posterior (prior-equivalence verified to within Monte Carlo error on 1,000 prior draws before any production fits ran) at much higher sampling efficiency. It is an unconditional improvement to the production model. Stage 3 (Obs 55) adopts it as default.
+
+The discipline that worked: separating "did the change fix the headline?" from "did the change improve anything else?" in the post-run analysis. The pre-stated decision rule covered only the headline; the supplementary diagnostics surfaced the side-finding as its own deliverable. The follow-up plan (`planning/h2.1-stage-3-implementation-plan-2026-05-25.md`) treats the parameterisation change as locked-in independently of the empirical-Bayes pivot's outcome — even if Stage 3's full architecture fails Stage 4 validation, the non-centred change still ships.
+
+Generalisable: any diagnostic engineered around a binary headline question should also be instrumented to surface *unconditional structural improvements* the change introduces. The headline question is "did it fix the thing?"; the additional question is "did it improve the engine?". A diagnostic that answers only the first is single-purpose; one that answers both banks gains regardless of headline outcome. In Bayesian model development specifically, sampler-quality diagnostics (ESS, R-hat, divergences, wall-time) should be reported alongside the substantive answer whenever any model-structural change is tested — they're cheap to compute and frequently carry standalone value.
+
+*Source:* `runs/2026-05-24-followup-noncentred-grw/outputs/REPORT.md`; commit `e21f7bf`. Cross-reference Obs 25.
+
+---
+
 ## Obs 58 — 2026-05-26 [DECISION]: letter-count as complementary measure, not better alternative — the 'acts vs content' reframe
 
 The 2026-05-26 letter-count probe (`runs/2026-05-26-letter-count-probe/`) was designed under a binary framing: "is letter-count a better unit than inscription-count?" The probe spec encoded that framing directly in its verdict thresholds — any flag tripping meant letter-count becomes the headline unit (`runs/2026-05-26-letter-count-probe/spec.md` §"Verdict thresholds"). Two flags fired: Flag 2 MATERIAL (Hanson negative-binomial regression β = 0.566 under letter-count vs 0.515 under inscription-count, 95 % CIs non-overlapping; `runs/2026-05-26-letter-count-probe/outputs/tables/nbr-summary.csv`) and significant rank reshuffling at city and province level (Britannia #7 → #19, Hispania citerior #3 → #7, Ostia #3 → #1, Pompeii #1 → #3; `runs/2026-05-26-letter-count-probe/outputs/tables/city-rank-change.csv` and `province-rank-change.csv`). Main-thread Claude proposed adopting letter-count as the new headline with inscription-count demoted to a robustness annex.
