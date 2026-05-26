@@ -1262,3 +1262,48 @@ Pattern is generalisable to other bounded chunky implementation tasks where:
 Anti-pattern: agents asked to do exploration-and-judgement work where the brief can't pre-specify what counts as "done." For that, main-thread reasoning with subagents-for-context-management is the better pattern.
 
 Captured from the Phase B agent invocation in the 2026-05-21/22 session, committed at `db04bf0` (merge of `worktree-agent-a6e1b611cd0719a27` into main).
+
+---
+
+## Obs 58 — 2026-05-26 [DECISION]: letter-count as complementary measure, not better alternative — the 'acts vs content' reframe
+
+The 2026-05-26 letter-count probe (`runs/2026-05-26-letter-count-probe/`) was designed under a binary framing: "is letter-count a better unit than inscription-count?" The probe spec encoded that framing directly in its verdict thresholds — any flag tripping meant letter-count becomes the headline unit (`runs/2026-05-26-letter-count-probe/spec.md` §"Verdict thresholds"). Two flags fired: Flag 2 MATERIAL (Hanson negative-binomial regression β = 0.566 under letter-count vs 0.515 under inscription-count, 95 % CIs non-overlapping; `runs/2026-05-26-letter-count-probe/outputs/tables/nbr-summary.csv`) and significant rank reshuffling at city and province level (Britannia #7 → #19, Hispania citerior #3 → #7, Ostia #3 → #1, Pompeii #1 → #3; `runs/2026-05-26-letter-count-probe/outputs/tables/city-rank-change.csv` and `province-rank-change.csv`). Main-thread Claude proposed adopting letter-count as the new headline with inscription-count demoted to a robustness annex.
+
+Shawn rejected the binary. The operative reframe: **inscription-count measures epigraphic ACTS; letter-count measures epigraphic CONTENT.** These are not rival operationalisations of a single construct — they are different constructs. That is why they diverge where they diverge: frontier-military epigraphy (Britannia, Germania superior) is terse, so letter-count deflates it relative to inscription-count; Italian funerary-monumental (Regio I, Regio X) and Ostian commercial epigraphy are letter-heavy, so letter-count amplifies them; Pompeii's drop is the graffiti effect (high inscription-count, short texts). The divergence is the substantive finding, not a reason to pick a winner.
+
+Consequently: **the delta between the two units becomes a research object in its own right**, directly analogous to how scaling-residuals (observed inscriptions minus what population predicts) are already a research target. The project now has a two-dimensional residual space: scaling-residual × content-residual.
+
+**What changes downstream:**
+
+| Affected component | Previous plan | Revised plan |
+|---|---|---|
+| Recovery-grid re-simulation | Single inscription-mass grid | Two parallel grids — inscription-mass + letter-mass-conservative (`runs/2026-05-26-recovery-grid-letter-mass/`, spec drafting in flight at time of Obs) |
+| Stage 3 mixture model | Single-unit fits | Parallel fits under both units; delta as a third derived output (extends `planning/h2.1-stage-3-implementation-plan-2026-05-25.md`) |
+| §5 exploratories | Each run once | Each run under both units; per-subset deltas as data |
+| HMM follow-up (Martin Eftimoski) | Observation series = inscription counts | Either or both series; delta as optional third channel |
+| OSF amendment scope | "Swap unit" amendment | "Adopt two-measure framework with delta as derived quantity" — one amendment, not a unit-swap |
+| Backlog #5 (cumulative-totals experiment) | Standalone §5 exploratory | Subsumed into the two-measure framework |
+
+**Why the binary framing arose.** The probe spec was written with a verdict-threshold structure copied from standard sensitivity-probe templates ("if any flag fires → adopt the alternative"). That structure presupposes unit-selection: the alternatives are rival operationalisations of one thing. When the alternatives are genuinely different constructs, the threshold structure forces a false choice. The spec's framing shaped the interpretation before the results were seen.
+
+**Generalising: a fifth question for unit-of-analysis probe specs.** The standing four-test on statistical choices ("more appropriate test? more powerful alternative? more current best-practice? assumptions hold?") should have a fifth question for unit-of-analysis decisions: "are these rival operationalisations of one construct, or measures of substantively different constructs?" If different constructs: the design should produce a comparative analysis, not a winner. Verdict thresholds are inappropriate.
+
+**Methodological gain from the reframe.** The paper now distinguishes "frequency of inscribing" (epigraphic acts) from "quantity of communication" (epigraphic content) throughout. The delta between them — content surplus or deficit per act — is a third variable capturing something about inscription *style* and *function* that neither measure alone encodes. This is a larger methodological contribution than "we used a better unit."
+
+---
+
+### Related observations and artefacts
+
+**Obs 18** (forward-fit pivot, 2026-04-26): analogous structural reframe — the methodological gain came from reconceptualising the problem rather than selecting between operationalisations. That pivot dissolved the fitting-space asymmetry by changing *what space the model operates in*; this one dissolves the unit-selection problem by recognising the two units are in different construct spaces.
+
+**Proposed Obs 55** (empirical-Bayes calibration-cohort architectural pivot; `docs/notes/reflections/PROPOSED-OBS-49-57-for-review.md`): the prior comparable methodological pivot in the reserved-numbers block. If/when Obs 55 is inducted, this Obs and Obs 55 jointly mark the project's two largest structural pivots of the 2026-05-23 → 2026-05-26 arc.
+
+**Proposed Obs 51** (α-bias surprise, same file): diagnostic-chain finding from which the recovery-grid re-simulation inherits the post-F1+F3 fix. The two parallel grids this Obs introduces will run under the same corrected pipeline.
+
+**Artefacts**: `runs/2026-05-26-letter-count-probe/` (all probe outputs), `runs/2026-05-26-letter-count-probe/spec.md` (the binary-verdict-threshold spec being reframed), `runs/2026-05-26-letter-count-probe/outputs/tables/nbr-summary.csv` (Flag 2 β values), `runs/2026-05-26-letter-count-probe/outputs/tables/city-rank-change.csv` and `province-rank-change.csv` (rank shuffles), `planning/h2.1-stage-3-implementation-plan-2026-05-25.md` (stage 3 plan this Obs extends), `docs/notes/reflections/continuity.md` §"Martin Eftimoski consultation outcome — recalibration (2026-05-26)" (Martin nudge that introduced letter-count to the project).
+
+---
+
+### Findable later
+
+`letter-count`, `complementary-measure`, `acts-vs-content`, `delta-as-residual`, `two-measure-framework`, `binary-framing-resistance`, `methodology-paper-architecture`, `scaling-residuals`, `unit-of-analysis`, `content-residual`, `Britannia rank`, `Ostia rank`, `Pompeii graffiti effect`, `verdict-threshold probe`, `fifth-question unit-of-analysis`, `epigraphic acts`, `epigraphic content`, `NBR beta 0.566`, `NBR beta 0.515`, `recovery-grid letter-mass`
