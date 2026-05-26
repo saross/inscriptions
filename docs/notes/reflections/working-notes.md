@@ -1307,3 +1307,70 @@ Consequently: **the delta between the two units becomes a research object in its
 ### Findable later
 
 `letter-count`, `complementary-measure`, `acts-vs-content`, `delta-as-residual`, `two-measure-framework`, `binary-framing-resistance`, `methodology-paper-architecture`, `scaling-residuals`, `unit-of-analysis`, `content-residual`, `Britannia rank`, `Ostia rank`, `Pompeii graffiti effect`, `verdict-threshold probe`, `fifth-question unit-of-analysis`, `epigraphic acts`, `epigraphic content`, `NBR beta 0.566`, `NBR beta 0.515`, `recovery-grid letter-mass`
+
+---
+
+## Obs 59 — 2026-05-26 [FINDING]: letter-mass strips between-province habit noise — f_within shifts +9.89 pp under Mundlak
+
+The 2026-05-26 letter-count probe's Bayesian Mundlak refit (`runs/2026-05-26-letter-count-probe/code/06-h3a-bayesian-mundlak-letter.py`, committed at `21a80c0`) ran three response variants on the same 1,044-city, 56-province sample (Hanson-Rome-excluded) and produced directly-comparable f_within posteriors. R-hat = 1.0000 across all three fits, min ESS_bulk = 1,041, zero divergences; wall-clock 4.3 minutes total on sapphire. Numbers sourced from `runs/2026-05-26-letter-count-probe/outputs/tables/h3a-mundlak-three-variants-summary.csv` (pulled from sapphire 2026-05-26; not yet committed to local repo at time of this Obs — commit to follow shortly).
+
+| Variant | f_within median | 95 % CI |
+|---|---|---|
+| Inscription count | 29.94 % | [23.70 %, 36.63 %] |
+| Letter-mass conservative | 39.83 % | [32.04 %, 48.17 %] |
+| Letter-mass interpretive | 39.83 % | [31.97 %, 48.30 %] |
+
+The inscription-count result (29.94 %) reproduces the talk-prep slide-6 punchline of 29.95 % (`runs/2026-05-21-talk-prep/outputs/tables/h3a-summary.csv`) to two decimal places — a cross-seed, cross-run sanity check on model, data, and sampler consistency (talk-prep seed 20260521; this run 20260526). The two letter-mass variants are essentially identical (conservative vs interpretive f_within differ by 0.005 pp), consistent with the Block 2 finding that the two empire SPAs have Pearson r = 0.994.
+
+**The shift is +9.89 pp from the inscription baseline (29.94 % → 39.83 %).** Under the probe's pre-specified verdict thresholds (NO-CHANGE < 2 pp; MODEST 2–5 pp; MATERIAL > 5 pp), this is **Flag 3 MATERIAL**.
+
+**Mechanism.** The between-province component shrinks under letter-mass while the within-province component is roughly stable:
+
+| Parameter | Inscription count | Letter-mass conservative | Change |
+|---|---|---|---|
+| beta_within median | 0.587 | 0.559 | −5 % |
+| beta_between median | −0.248 | −0.158 | −36 % (centring toward zero) |
+
+The denominator of f_within (total variance, incorporating both the beta_between contribution and the province random-effect variance) shrinks faster than the numerator (within variance), so the fraction rises by nearly 10 pp. The between-province variance reduction is the dominant driver, not an increase in the within-province signal.
+
+**Substantive interpretation.** Letter-mass strips out provincial-level epigraphic habit noise — the province-level cultural variation (Latin vs Greek vs frontier-military epigraphic styles; provincial elite practice) that drives inscription-act counts more than information-content counts. Within a province, city population predicts letter production more cleanly than it predicts inscription frequency. The ACT of inscribing varies by province for habit reasons; the AMOUNT inscribed per inscription varies in a way that is better predicted by city-level population. This is what Obs 58's reframe predicted: inscription-count and letter-count are not rivals for the same construct, and the between-province signal embedded in each is different in kind.
+
+Direction-of-effect is consistent with Martin Eftimoski's 2026-05-25 nudge that "letter is the better unit for production / information flow." Magnitude exceeds any preliminary "modest" expectation: this is closer to a doubling of the within-province variance share than a small shift.
+
+**Three-flag verdict on the letter-count probe (all flags now evaluated):**
+
+| Flag | Statistic | Verdict |
+|---|---|---|
+| 1 | Empire SPA shape, Pearson r | MODEST (r ≈ 0.88–0.90) |
+| 2 | Hanson β (frequentist NBR) | MATERIAL (no CI overlap; β 0.566 → 0.515) |
+| 3 | f_within (Bayesian Mundlak) | MATERIAL (+9.89 pp; 30 % → 40 %) |
+
+Two of three MATERIAL. The case for keeping both inscription-count and letter-count as first-class measures is overdetermined by the probe's own evidence.
+
+**Empirical corroboration of Obs 58.** Obs 58 was a methodological reframe made before the Bayesian Mundlak result was available; this Obs validates it post-hoc. The units are not rivals for the same construct — they track partially-different signals — and the f_within delta is itself diagnostic: places and contexts where inscription-mass and letter-mass diverge are places where epigraphic habit decouples from epigraphic production. The two-measure framework was locked in for methodological reasons at Obs 58; this empirical result reinforces the lock-in independently.
+
+**Methodological-paper implication.** The f_within shift is a paper-worthy finding in its own right. The within-province epigraphic-population scaling is stronger under letter-mass than under inscription-count by ~ 10 pp. This is publishable as evidence that "epigraphic habit" (act-counts) and "epigraphic production" (content) are partially-independent constructs, with population effects loading more cleanly on content. The within-between decomposition becomes a third axis of the paper's argument alongside the SPA-shape axis and the Hanson-scaling axis.
+
+**Failure-mode note for the record.** The background agent that launched this Mundlak fit on sapphire used a polling pattern that dropped the completion notification — the known failure mode documented in `docs/notes/reflections/continuity.md` §"Failure modes" ("Background agents that arm a Monitor and exit don't re-fire from monitor events"). The result was on sapphire by 02:56 local time; main-thread Claude discovered the completion only when Shawn explicitly asked for status ~ 9 hours later. The pattern that worked: a direct SSH check from main-thread for the output files. Future agents launching long sapphire jobs should report PID + estimated completion + leave a side-channel signal (e.g., write a status file to a known path) rather than relying on the agent's own polling loop.
+
+---
+
+### Related observations and artefacts
+
+**Obs 58** (acts vs content reframe; commit `dd326dc`): the methodological reframe this Obs empirically corroborates. Obs 58 locked in the two-measure framework before the Bayesian result was available; the +9.89 pp f_within shift validates it post-hoc.
+
+**Obs 46** (f_within weighting sensitivity; commit `773c9e0`): the prior f_within material-sensitivity finding (unweighted 30 % → population-weighted 50 %). Obs 59 is a different axis of sensitivity — unit-of-analysis rather than observation-weighting — but both findings reinforce the point that the variance-partition estimand is diagnostically rich, not just a headline number.
+
+**Proposed Obs 55** (empirical-Bayes calibration-cohort architectural pivot; `docs/notes/reflections/PROPOSED-OBS-49-57-for-review.md`): the structural pivot this probe was designed to validate. If/when inducted, Obs 55 and Obs 58–59 jointly bracket the project's largest methodological pivot of the 2026-05-23 → 2026-05-26 arc.
+
+**Continuity §"Martin Eftimoski consultation outcome — recalibration (2026-05-26)"** (`docs/notes/reflections/continuity.md`): the Martin nudge that introduced letter-count and anticipated the direction of the shift.
+
+**Talk-prep H3a result** (`runs/2026-05-21-talk-prep/outputs/tables/h3a-summary.csv`): f_within = 29.95 % that the inscription-count Mundlak refit here reproduces to two decimal places. The cross-seed replication confirms sampler and data-pipeline stability.
+
+**Artefacts**: `runs/2026-05-26-letter-count-probe/code/06-h3a-bayesian-mundlak-letter.py` (script; commit `21a80c0`), `runs/2026-05-26-letter-count-probe/outputs/tables/h3a-mundlak-three-variants-summary.csv` (headline posteriors; to be committed shortly), `runs/2026-05-26-letter-count-probe/outputs/tables/h3a-mundlak-three-variants-posterior.csv` (full posterior draws; to be committed), `runs/2026-05-26-letter-count-probe/outputs/figures/fig-06-h3a-mundlak-three-variants.png` (comparison figure; to be committed), `runs/2026-05-26-letter-count-probe/RUN-LOG-06.md` (run log; to be committed).
+
+---
+
+### Findable later
+
+`f-within`, `variance-partition`, `Mundlak`, `two-measure-validation`, `epigraphic-habit-vs-production`, `between-province-noise`, `letter-mass-shift`, `content-residual`, `Bayesian-NBR`, `posterior-replication`, `f_within 39.83`, `f_within 29.94`, `9.89 pp`, `beta_between shrinkage`, `Flag 3 MATERIAL`, `three-flag verdict`, `letter-count probe`, `inscription-count probe`, `background-agent polling failure`, `sapphire status file pattern`, `talk-prep replication`, `cross-seed stability`
