@@ -1547,3 +1547,53 @@ Two of three MATERIAL. The case for keeping both inscription-count and letter-co
 ### Findable later
 
 `f-within`, `variance-partition`, `Mundlak`, `two-measure-validation`, `epigraphic-habit-vs-production`, `between-province-noise`, `letter-mass-shift`, `content-residual`, `Bayesian-NBR`, `posterior-replication`, `f_within 39.83`, `f_within 29.94`, `9.89 pp`, `beta_between shrinkage`, `Flag 3 MATERIAL`, `three-flag verdict`, `letter-count probe`, `inscription-count probe`, `background-agent polling failure`, `sapphire status file pattern`, `talk-prep replication`, `cross-seed stability`
+
+---
+
+## Obs 60 — 2026-05-26 [FINDING]: letter-mass reshapes the editorial-template tier composition — `pilot_proxy` reign-weight quadruples
+
+The 2026-05-26 recovery-grid two-unit re-simulation (`runs/2026-05-26-recovery-grid-two-unit/spec.md`, commit `507a722`) requires a per-grid `pilot_proxy` tier vector — a three-way weighting over the editorial-template tiers defined in Decision 20 (century-slab, half-century-slab, reign-interval-slab). Grid A (inscription-mass) carries forward the hard-pinned 2026-05-22 anchor `(0.55, 0.30, 0.15)`, derived from inscription-endpoint frequencies per Decision 17 lines 1314–1316 (54.5 % of `not_before` values end in `01`; 53.0 % of `not_after` values end in `00`). Grid B (letter-mass conservative) cannot inherit that vector: the endpoint-frequency descriptive must be re-derived by weighting each inscription's tier contribution by `letter_count_conservative`.
+
+Sapphire pre-launch gate 4 (commit `8925126`) produced both vectors across the same 180,609-row LIRE-filtered corpus:
+
+| Tier | Inscription `pilot_proxy` | Letter `pilot_proxy` | Shift |
+|---|---:|---:|---:|
+| Century-slab | 0.55 | 0.5230 | −2.7 pp |
+| Half-century-slab | 0.30 | 0.0733 | **−22.7 pp** |
+| Reign-interval-slab | 0.15 | 0.4038 | **+25.4 pp** |
+
+The century-slab share is roughly stable (~ 3 pp drop). The half-century-slab mass collapses from 30 % to 7 %; the reign-interval-slab mass quadruples from 15 % to 40 %.
+
+**Substantive mechanism.** Reign-interval-dated inscriptions tend to be longer than half-century-slab inscriptions. Imperial titulature, military diplomas, and civic decrees that carry full reign-dating formulas (e.g., `Trib(unicia) pot(estate) XIIII co(n)s(ul) III imp(erator) XVI p(ater) p(atriae)`) include the emperor's name, titles, and the formal dating apparatus — content-heavy by construction. Half-century-slab dating is editorial shorthand applied to inscriptions that vary in length independently of why they were assigned that tier. Letter-weighting amplifies the inscriptions whose dating formula IS the content; it shrinks the inscriptions whose dating is editorial filler.
+
+**The tier-composition shift is the "acts vs content" reframe (Obs 58, commit `dd326dc`) appearing one layer deeper.** Obs 58 made the construct-distinction argument from aggregate divergence and province-rank shuffles; Obs 59 (commit `de8fa8f`) corroborated it at the variance-partition layer (Mundlak f_within +9.89 pp). This Obs is the sibling corroboration at the template-tier-composition layer — the prior shape that feeds into the empirical-Bayes calibration cohort is itself substantively reshaped by the unit-of-analysis choice. The three findings triangulate: the reframe is not a re-labelling but a genuine construct difference embedded throughout the pipeline.
+
+**Implications for the recovery grids** (running on sapphire at time of this Obs, PID 931910, ETA Friday): despite sharing an identical cell design — same axes, shapes, sample sizes, replicate counts, and seed policy — Grid A and Grid B do not run on identical template-prior structures. That is the point. The unit-of-analysis swap reshapes the prior in a substantively meaningful way, and identifiability needs to be validated under each separately. Any Grid B FAIL in the recovery-grid results should not be attributed cleanly to "letter unit is bad": the heavier tail in the letter-count distribution and the tier-vector shift are both candidate explanations, and they need to be disentangled diagnostically.
+
+The verdict-flag-3 result from Obs 59 (+9.89 pp f_within shift) was measured WITHOUT this tier-vector distinction. Block-6 Mundlak treated the response variable directly; no tier-vector entered the computation. The recovery grids ARE running with the re-derived vectors, so the tier-composition shift reported here is a structural input to the grids that Obs 59 did not see.
+
+**For the methodology paper.** The `pilot_proxy` comparison table is itself a paper-worthy artefact. The empirical-template-tier composition under each unit choice tells the reader *why* the two units produce different downstream estimates: not simply because long inscriptions weight differently in aggregate, but because letter-weighting selectively elevates a specific KIND of inscription — reign-dated formulary epigraphy — that has different temporal-clustering properties than half-century-slab editorial assignments. Formulary inscriptions cluster tightly under the reign they name; half-century inscriptions spread across a 50-year window by editorial convention. Letter-mass therefore loads the calibration cohort with more temporally-pinned exemplars, which in turn affects the shape of the empirical prior the mixture model sees. The tier-composition shift is mechanistically connected to the f_within shift reported in Obs 59 and the Hanson-β shift in the probe's Flag 2 — all three reflect the same underlying fact that reign-dated formulary content is longer, more temporally specific, and more concentrated in particular provinces and periods.
+
+---
+
+### Related observations and artefacts
+
+**Obs 58** (acts vs content reframe; commit `dd326dc`): the methodological reframe this Obs corroborates at the template-tier layer. Obs 58 locked in the two-measure framework on construct-distinction grounds; this Obs shows the distinction is embedded in the prior shape itself.
+
+**Obs 59** (Mundlak f_within shift +9.89 pp; commit `de8fa8f`): the sibling corroboration at the variance-partition layer. Together, Obs 59 and this Obs represent two independent empirical demonstrations of the same underlying construct difference — variance-partition and prior-composition are different diagnostics, both pointing the same direction.
+
+**Obs 55** (empirical-Bayes calibration cohort as structural pivot): the architectural decision whose downstream identifiability the recovery grids are testing. The tier-composition shift reported here is a direct input to the calibration-cohort composition under letter-mass.
+
+**Obs 50** (recovery-grid 2026-05-22 FAIL that motivated the diagnostic chain): the structural failure that made the two-unit re-simulation necessary. Context for why the parallel grids exist at all.
+
+**Decision 20** (template-interval slab structure: century-slab, half-century-slab, reign-interval-slab): the tier framework these vectors weight. `pilot_proxy` is a weighting over these three tiers.
+
+**Decision 17** (lines 1314–1316: `not_before` `01` 54.5 %, `not_after` `00` 53.0 %): the inscription-endpoint-frequency descriptive that anchored the hard-pinned inscription-mass `pilot_proxy`. The letter-mass re-derivation uses the same endpoint-pattern classifier but weights by `letter_count_conservative` rather than counting inscriptions uniformly.
+
+**Artefacts**: `runs/2026-05-26-recovery-grid-two-unit/inscription-mass/data/pilot-proxy.json` (hard-pinned inscription vector; commit `8925126`), `runs/2026-05-26-recovery-grid-two-unit/letter-mass/data/pilot-proxy.json` (re-derived letter vector; commit `8925126`), `runs/2026-05-26-recovery-grid-two-unit/spec.md` §3.3 (tier-vector derivation protocol; commit `507a722`).
+
+---
+
+### Findable later
+
+`pilot_proxy`, `tier-vector`, `editorial-template`, `reign-interval-slab`, `half-century-slab`, `letter-weighted-descriptive`, `calibration-cohort`, `empirical-Bayes-prior-shape`, `tier-composition-shift`, `two-measure-corroboration`, `pilot-proxy-json`, `formulary-epigraphy`, `reign-dated`, `letter-count-conservative`, `recovery-grid-two-unit`, `pre-launch-gate`, `century-slab`, `template-prior`, `prior-shape`, `unit-of-analysis-prior`
