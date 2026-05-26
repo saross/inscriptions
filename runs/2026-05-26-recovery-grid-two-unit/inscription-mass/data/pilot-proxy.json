@@ -1,0 +1,27 @@
+{
+  "unit": "inscription",
+  "weights": [
+    0.55,
+    0.3,
+    0.15
+  ],
+  "tier_order": [
+    "century",
+    "half_century",
+    "reign"
+  ],
+  "anchor": "2026-05-22 design.json hard-pinned value. Endpoint-frequency descriptive evidence (Decision 17 lines 1314-1316).",
+  "rederivation_diagnostic": {
+    "method": "endpoint-pattern classifier; tier=0 if not_before%100==1 or not_after%100==0; tier=1 elif not_before%100==51 or not_after%100==50; else tier=2.",
+    "n_rows": 180609,
+    "n_century": 119076,
+    "n_half_century": 12421,
+    "n_reign": 49112,
+    "uniform_weighted_proxy": [
+      0.6593026925568494,
+      0.0687728739985272,
+      0.27192443344462347
+    ],
+    "note": "uniform_weighted_proxy is the descriptive re-derivation; the inscription grid uses the hard-pinned (0.55, 0.30, 0.15) per spec \u00a73.3."
+  }
+}

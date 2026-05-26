@@ -1,0 +1,28 @@
+{
+  "cell_id": "shape=rise_and_fall_alpha=0.50_tier=uniform_N=2000",
+  "shape_name": "rise_and_fall",
+  "alpha_true": 0.5,
+  "tier_weights_name": "uniform",
+  "tier_weights_true": [
+    0.3333333333,
+    0.3333333333,
+    0.3333333334
+  ],
+  "n": 2000,
+  "unit": "letter",
+  "n_replicates": 5,
+  "alpha_coverage": 0.0,
+  "alpha_coverage_pass": false,
+  "median_pearson_r_pgen": 0.8187485219729007,
+  "mean_pearson_r_pgen": 0.8215390603590867,
+  "pearson_r_pass": false,
+  "median_wasserstein_1_pgen": 16.829441443054638,
+  "convergence_pass_rate": 1.0,
+  "n_divergences_total": 0,
+  "mean_fit_seconds": 54.44890394210815,
+  "per_tier_coverage": [
+    0.8,
+    1.0,
+    1.0
+  ]
+}

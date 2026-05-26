@@ -1,0 +1,10 @@
+{
+  "cell_id": "shape=rise_and_fall_alpha=0.50_tier=uniform_N=10000",
+  "n_bins": 80,
+  "n_inscriptions": 10000,
+  "inscription_mass_total": 10000,
+  "letter_mass_total": 442239,
+  "pearson_r": 0.8972896025665659,
+  "threshold": 0.85,
+  "pass": true
+}

@@ -1,0 +1,25 @@
+{
+  "unit": "inscription",
+  "base_seed": 20260526,
+  "pilot_proxy": [
+    0.55,
+    0.3,
+    0.15
+  ],
+  "started_at": "2026-05-26 05:41:15",
+  "total_cells": 1,
+  "n_jobs": 5,
+  "n_replicates_per_cell": 5,
+  "design_path": "runs/2026-05-22-recovery-grid-design/design.json",
+  "completed_cells": [
+    {
+      "cell_id": "shape=rise_and_fall_alpha=0.50_tier=uniform_N=2000",
+      "alpha_coverage": 1.0,
+      "median_pearson_r_pgen": 0.9759848690364159,
+      "mean_fit_seconds": 18.869549608230592
+    }
+  ],
+  "failed_cells": [],
+  "finished_at": "2026-05-26 05:42:53",
+  "total_wall_seconds": 98.00469946861267
+}

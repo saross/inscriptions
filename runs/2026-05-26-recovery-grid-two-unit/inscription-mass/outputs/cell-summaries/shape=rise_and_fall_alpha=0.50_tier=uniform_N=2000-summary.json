@@ -1,0 +1,28 @@
+{
+  "cell_id": "shape=rise_and_fall_alpha=0.50_tier=uniform_N=2000",
+  "shape_name": "rise_and_fall",
+  "alpha_true": 0.5,
+  "tier_weights_name": "uniform",
+  "tier_weights_true": [
+    0.3333333333,
+    0.3333333333,
+    0.3333333334
+  ],
+  "n": 2000,
+  "unit": "inscription",
+  "n_replicates": 5,
+  "alpha_coverage": 1.0,
+  "alpha_coverage_pass": true,
+  "median_pearson_r_pgen": 0.9759848690364159,
+  "mean_pearson_r_pgen": 0.9774924101218021,
+  "pearson_r_pass": true,
+  "median_wasserstein_1_pgen": 12.628450053370667,
+  "convergence_pass_rate": 1.0,
+  "n_divergences_total": 0,
+  "mean_fit_seconds": 18.869549608230592,
+  "per_tier_coverage": [
+    0.4,
+    1.0,
+    0.8
+  ]
+}

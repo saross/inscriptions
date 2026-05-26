@@ -1,0 +1,25 @@
+{
+  "letter_parquet": "runs/2026-05-26-letter-count-probe/data/lire-filtered-with-letters.parquet",
+  "actual": {
+    "n_rows": 180609,
+    "median": 25.0,
+    "mean": 45.447923414669255,
+    "max": 35537,
+    "pct_zero": 2.2147290555841628
+  },
+  "expected": {
+    "n_rows": 180609,
+    "median": 25.0,
+    "mean": 45.4,
+    "max": 35537,
+    "pct_zero": 2.215
+  },
+  "tolerances": {
+    "median": 2.0,
+    "mean": 5.0,
+    "max": 200,
+    "pct_zero": 0.5
+  },
+  "pass": true,
+  "fails": []
+}

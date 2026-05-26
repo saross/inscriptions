@@ -1,0 +1,34 @@
+{
+  "unit": "letter",
+  "weights": [
+    0.522966620144673,
+    0.07326677959295855,
+    0.40376660026236844
+  ],
+  "tier_order": [
+    "century",
+    "half_century",
+    "reign"
+  ],
+  "anchor": "Re-derived 2026-05-26: endpoint-pattern tier classifier weighted by letter_count_conservative across the 180,609-row LIRE filter.",
+  "rederivation_diagnostic": {
+    "method": "endpoint-pattern classifier; tier=0 if not_before%100==1 or not_after%100==0; tier=1 elif not_before%100==51 or not_after%100==50; else tier=2.",
+    "n_rows": 180609,
+    "n_century": 119076,
+    "n_half_century": 12421,
+    "n_reign": 49112,
+    "letter_sum_century": 4292669,
+    "letter_sum_half_century": 601396,
+    "letter_sum_reign": 3314239,
+    "uniform_weighted_proxy": [
+      0.6593026925568494,
+      0.0687728739985272,
+      0.27192443344462347
+    ],
+    "letter_weighted_proxy": [
+      0.522966620144673,
+      0.07326677959295855,
+      0.40376660026236844
+    ]
+  }
+}

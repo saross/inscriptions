@@ -1,0 +1,17 @@
+{
+  "cell_id": "shape=rise_and_fall_alpha=0.50_tier=uniform_N=2000",
+  "replicate": 0,
+  "alpha_true": 0.5,
+  "n": 2000,
+  "tier_weights_name": "uniform",
+  "tier_weights_true": [
+    0.3333333333,
+    0.3333333333,
+    0.3333333334
+  ],
+  "shape_name": "rise_and_fall",
+  "unit": "letter",
+  "data_seed": 20260794000,
+  "letter_weight_seed": 21259794000,
+  "cell_index": 267
+}

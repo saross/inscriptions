@@ -1,0 +1,25 @@
+{
+  "unit": "letter",
+  "base_seed": 20260527,
+  "pilot_proxy": [
+    0.522966620144673,
+    0.07326677959295855,
+    0.40376660026236844
+  ],
+  "started_at": "2026-05-26 05:43:03",
+  "total_cells": 1,
+  "n_jobs": 5,
+  "n_replicates_per_cell": 5,
+  "design_path": "runs/2026-05-22-recovery-grid-design/design.json",
+  "completed_cells": [
+    {
+      "cell_id": "shape=rise_and_fall_alpha=0.50_tier=uniform_N=2000",
+      "alpha_coverage": 0.0,
+      "median_pearson_r_pgen": 0.8187485219729007,
+      "mean_fit_seconds": 54.44890394210815
+    }
+  ],
+  "failed_cells": [],
+  "finished_at": "2026-05-26 05:47:39",
+  "total_wall_seconds": 276.01001262664795
+}
