@@ -227,7 +227,7 @@ Logged for later consideration. Not part of the 2026-05-19 OSF lodgement; would 
 9. `runs/2026-05-15-editorial-convention-hierarchy/outputs/REPORT.md` — historical diagnostic that originally grounded Decision 17. Reinterpreted by the 2026-05-17 diagnostics (the int-truncated-midpoint test statistic this run used conflated mechanisms); data still committed and reproducible.
 10. `runs/2026-05-03-baorista-install/INSTALL-LOG.md` — baorista + brms install record.
 11. `planning/backlog-2026-05-03.md` — Phase 2/3 substantive-work backlog (post-OSF-lock work).
-12. `docs/notes/reflections/working-notes.md` — running observations.
+12. `docs/notes/working-notes.md` — running observations.
 13. `archive/planning/preregistration-amendments-2026-04-25.md` — historical round-1 amendments record.
 14. `planning/prior-art-scout-2026-04-25-aoristic-envelope.md` — literature scan that informed the forward-fit pivot.
 
