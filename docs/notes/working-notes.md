@@ -1671,3 +1671,23 @@ The n_eff calculation uses `letter_count_conservative` throughout, consistent wi
 ### Findable later
 
 `letter-mass`, `design-effect`, `kish-effective-sample-size`, `detection-power`, `reachability`, `heavy-tailed-weights`, `compound-sum`, `acts-vs-content`, `two-measure-framework`, `temporal-detectability`, `content-sensitivity`, `n_eff`, `CV-squared`, `Pompeii-DEFF`, `Ostia-DEFF`, `Mogontiacum-DEFF`, `unreachable-corpus-wide`, `OSF-amendment-01`, `analytic-reachability`, `letter-mass-reachability`, `letter-mass-design-effect`, `zero-eligible`, `DEFF-15`, `n_eff-11777`, `effective-sample-size`, `inscription-count-vs-letter-mass-power`
+
+---
+
+## Obs 62 — 2026-05-30 [CORRECTION]: Obs 61 per-city design effect and city denominator corrected (analysis-unit grouping + exact Rome match); headline robust
+
+A code audit (`/audit` over the §5 harness + letter-mass scripts; verification at `scripts/audit-verify-rome-and-deff.py`, commit `5059d6d`) found two unit/input-consistency issues in the numbers Obs 61 reported. Both are corrected here; **Obs 61's qualitative conclusion — letter-mass temporal detection is unreachable corpus-wide — is unchanged and was re-verified.**
+
+**Correction 1 — per-city design-effect grouping.** Obs 61 cited "per-city median DEFF 2.21 (IQR [1.76, 3.40])". That was computed by `place` (raw findspot), because `scripts/letter-mass-design-effect.py` auto-detected the grouping column and picked `place` first. The analysis unit used by the reachability translation and the §5 trajectory work is `urban_context_city` (the Hanson-matched urban area). Recomputed on that unit (≥30 inscriptions, exact-Rome-excluded): **median DEFF 2.38, IQR [1.85, 3.70]** (n=382 cities). The interpretive figure becomes **≈ 0.42× effective N at the median city** (was 0.45×). The corpus-wide DEFF (~15) is unchanged.
+
+**Correction 2 — Rome-exclusion over-match.** The denominator "0 of 1,041 cities" used `contains("rom")`, which spuriously excluded Romula (N=54, a legitimate city), Tauromenium (N=9), and Caesaromagus (Britannia N=12 / Gallia Belgica N=1) alongside Roma. With an exact `Roma`/`Rome` match the corrected denominator is **1,044**.
+
+**Headline re-verified robust.** Under both the buggy and corrected exclusion, letter-mass eligibility is **0** urban-area cities at all four Phase-1 thresholds (1409/1549/1854/1923), versus 5–7 under inscription count. The corrected figures were applied to OSF Amendment 01 (§A5.2/§A5.5) before lodgement (commit `4fad07b`) and the §5 spec; the code fixes (exact Rome match, analysis-unit DEFF reporting, plus a related province-assignment fix that moved the §5 post-clip target count from 267 to 268 by restoring Romula) are in commit `2c82a87`, with the spec finalised at `41cb028`.
+
+### Related observations and artefacts
+
+**Obs 61** (`107226b`): the observation these figures correct; its mechanism (letter mass is a compound sum; the design effect deflates effective N) and qualitative conclusion stand. **Artefacts**: `scripts/audit-verify-rome-and-deff.py` (`5059d6d`), `scripts/letter-mass-design-effect.py`, `scripts/letter-mass-reachability.py`.
+
+### Findable later
+
+`correction`, `obs-61-correction`, `design-effect`, `analysis-unit`, `urban_context_city`, `rome-exclusion`, `denominator-1044`, `kish`, `audit`, `letter-mass`, `reachability`, `headline-robust`
