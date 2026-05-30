@@ -142,8 +142,13 @@ def assemble(out_dir: Path, cities: list[str]) -> HierData:
         A :class:`HierData` with concatenated design matrix and index arrays.
 
     Raises:
-        ValueError: If any city has zero-mass inscriptions or duplicate names.
+        ValueError: If ``cities`` is empty, contains duplicate names, or any
+            city has zero-mass inscriptions.
     """
+    if not cities:
+        raise ValueError(
+            "assemble() received an empty city subset; nothing to fit."
+        )
     if len(set(cities)) != len(cities):
         raise ValueError("Duplicate city names in subset.")
 
@@ -260,9 +265,13 @@ def build_model(
         )
 
         # --- Province shape + level offset (non-singleton provinces only) ----
-        sigma_u = pm.HalfNormal("sigma_u", s_u)
-        sigma_bu = pm.HalfNormal("sigma_bu", s_bu)
+        # sigma_u / sigma_bu are registered ONLY when there is at least one
+        # non-singleton province (P > 0). When every province is a singleton
+        # they parameterise nothing, so sampling them would just add unused
+        # free parameters that muddy the convergence diagnostics (audit C).
         if P > 0:
+            sigma_u = pm.HalfNormal("sigma_u", s_u)
+            sigma_bu = pm.HalfNormal("sigma_bu", s_bu)
             z_u = pm.Normal("z_u", 0.0, 1.0, dims=("prov", "bin"))
             u_walk = pt.cumsum(z_u, axis=1) * sigma_u            # (P, T)
             u_shape = pm.Deterministic(

@@ -35,6 +35,12 @@ inscriptions, S1 = sum(w), S2 = sum(w**2).
                                       letters as a count" run would overstate
                                       effective N (hence overstate power).
 
+The corpus-wide DEFF is computed on inscriptions with letter > 0 (zero-letter
+acts carry no letter mass). The per-city DEFF is reported for BOTH groupings,
+explicitly labelled: ``urban_context_city`` (the analysis unit — PRIMARY, the
+figure the paper cites) and ``place`` (raw findspot — SECONDARY). Rome is
+excluded by an EXACT ``roma``/``rome`` test, never a loose substring.
+
 Run (on sapphire, via the grid venv; reads from stdin):
     ssh sapphire '/home/shawn/cc-scratch/inscriptions-talk-prep/venv/bin/python' \
         < scripts/letter-mass-design-effect.py
@@ -57,15 +63,31 @@ PARQUET = Path(
     "data/lire-filtered-with-letters.parquet"
 )
 
-# Candidate substrings for auto-detecting the conservative letter-count column
-# and a city/site grouping column. Ordered by preference.
+# Candidate substrings for auto-detecting the conservative letter-count column.
+# Ordered by preference.
 LETTER_COL_HINTS = (
     "conservative",
     "letters_conservative",
     "letter_count_conservative",
     "n_letters_conservative",
 )
-CITY_COL_HINTS = ("place", "provenance", "findspot", "site", "city", "urban")
+
+# Per-city grouping is computed for BOTH of these, explicitly labelled, rather
+# than silently auto-picking one (audit finding A1):
+#   - ``urban_context_city`` is the ANALYSIS UNIT (Hanson urban-area city) — the
+#     PRIMARY per-city DEFF the paper cites.
+#   - ``place`` is the raw findspot — a SECONDARY view only.
+GROUP_COLS = ("urban_context_city", "place")
+
+# Rome-exclusion: EXACT match only ("roma"/"rome"). A loose contains("rom")
+# over-matches Romula, Tauromenium, and Caesaromagus (see
+# audit-verify-rome-and-deff.py), so we never use a substring test here.
+ROME_TOKENS = ("roma", "rome")
+
+
+def is_rome(name: object) -> bool:
+    """EXACT Rome match: ``str(name).strip().lower() in ("roma", "rome")``."""
+    return str(name).strip().lower() in ROME_TOKENS
 
 
 def _pick_column(cols: list[str], hints: tuple[str, ...]) -> list[str]:
@@ -132,8 +154,12 @@ def main() -> int:
     print(f"Using letter-count column: '{letter_col}'")
 
     w = df[letter_col].to_numpy(dtype=float)
-    # Keep only positive letter counts (an inscription with 0 conservative
-    # letters carries no content mass; it still counts as one epigraphic act).
+    # The corpus DEFF is computed on inscriptions with letter > 0 (``w_pos``):
+    # an inscription with 0 conservative letters carries no letter mass, so it
+    # contributes nothing to the letter-weighted SPA whose design effect we are
+    # measuring. (It still counts as one epigraphic act in the inscription-count
+    # process; that process is the n=1 baseline, not the thing under test here.)
+    # We report the zero-letter count separately for transparency.
     w_pos = w[np.isfinite(w) & (w > 0)]
     n_total = int(np.isfinite(w).sum())
     n_zero = int((np.isfinite(w) & (w <= 0)).sum())
@@ -163,50 +189,62 @@ def main() -> int:
         f"(factor by which 'total letters as a count' overstates effective N)"
     )
 
-    # Per-city design effect at the analysis unit (time-series detection runs
-    # per subset/city, so the corpus-wide number can mislead).
-    city_candidates = _pick_column(list(df.columns), CITY_COL_HINTS)
+    # Per-city design effect, reported for BOTH groupings explicitly (audit
+    # finding A1): the time-series detection runs per subset/city, so the
+    # corpus-wide number can mislead, and the choice of grouping column matters.
     print("\n" + "=" * 64)
     print("PER-CITY DESIGN EFFECT (analysis-unit view)")
     print("=" * 64)
-    print(f"city/site column candidates: {city_candidates}")
-    if not city_candidates:
-        print("No city/site column detected; skipping per-city view.")
-        return 0
-    city_col = city_candidates[0]
-    print(f"Using grouping column: '{city_col}'")
+    for group_col, role in (
+        ("urban_context_city", "PRIMARY — analysis unit; the figure the paper cites"),
+        ("place", "SECONDARY — raw findspot"),
+    ):
+        if group_col not in df.columns:
+            print(f"\n(column '{group_col}' absent; skipping)")
+            continue
+        _per_city_deff(df, group_col, letter_col, role)
+    return 0
 
-    sub = df[[city_col, letter_col]].copy()
+
+def _per_city_deff(df: pd.DataFrame, group_col: str, letter_col: str,
+                   role: str) -> None:
+    """Report the per-city Kish DEFF summary for one grouping column.
+
+    Rome (exact ``roma``/``rome`` only) is excluded, and only cities with at
+    least 30 inscriptions (letter > 0) are summarised.
+    """
+    sub = df[[group_col, letter_col]].copy()
+    sub = sub[sub[group_col].notna()]
+    sub = sub[~sub[group_col].map(is_rome)]
     sub = sub[np.isfinite(sub[letter_col]) & (sub[letter_col] > 0)]
-    deffs = []
-    for _, grp in sub.groupby(city_col):
+    deffs: list[float] = []
+    for _, grp in sub.groupby(group_col):
         wv = grp[letter_col].to_numpy(dtype=float)
         if wv.size >= 30:  # only cities with enough inscriptions to matter
             s1 = wv.sum()
             s2 = (wv * wv).sum()
-            deffs.append((wv.size, (wv.size * s2) / (s1 * s1)))
+            deffs.append((wv.size * s2) / (s1 * s1))
+    print(f"\ngrouping by '{group_col}'  ({role})")
     if not deffs:
-        print("No city had >= 30 inscriptions; skipping per-city summary.")
-        return 0
-    n_cities = len(deffs)
-    deff_arr = np.array([d for _, d in deffs])
-    size_arr = np.array([s for s, _ in deffs])
-    print(f"\ncities with >= 30 inscriptions: {n_cities}")
-    print(f"per-city DEFF (= 1 + CV^2 of letter counts within city):")
-    print(f"  median  = {np.median(deff_arr):.2f}")
-    print(f"  25-75%  = [{np.percentile(deff_arr, 25):.2f}, "
-          f"{np.percentile(deff_arr, 75):.2f}]")
-    print(f"  10-90%  = [{np.percentile(deff_arr, 10):.2f}, "
-          f"{np.percentile(deff_arr, 90):.2f}]")
-    print(f"  max     = {deff_arr.max():.2f}")
-    # Effective-N shrinkage at the median city.
+        print("  no city had >= 30 inscriptions; skipping.")
+        return
+    deff_arr = np.array(deffs)
+    n_cities = len(deff_arr)
     med_deff = float(np.median(deff_arr))
+    print(f"  cities with >= 30 inscriptions (Rome-excluded): {n_cities}")
+    print(f"  per-city DEFF (= 1 + CV^2 of letter counts within city):")
+    print(f"    median  = {med_deff:.2f}")
+    print(f"    25-75%  = [{np.percentile(deff_arr, 25):.2f}, "
+          f"{np.percentile(deff_arr, 75):.2f}]")
+    print(f"    10-90%  = [{np.percentile(deff_arr, 10):.2f}, "
+          f"{np.percentile(deff_arr, 90):.2f}]")
+    print(f"    max     = {deff_arr.max():.2f}")
+    # Effective-N shrinkage at the median city.
     print(
-        f"\ninterpretation: at the median city, the letter-mass SPA has "
-        f"~1/{med_deff:.2f} = {1.0/med_deff:.2f}x the effective N of the "
+        f"  interpretation: at the median city, the letter-mass SPA has "
+        f"~1/{med_deff:.2f} = {1.0 / med_deff:.2f}x the effective N of the "
         f"inscription-count SPA for the SAME inscriptions."
     )
-    return 0
 
 
 if __name__ == "__main__":

@@ -48,6 +48,39 @@ PROV_COL = "province"  # also report province_label_clean if present
 THRESHOLD = 1549       # urban-area 50%/50y cpl-3-gauss (prereg §6 line 408)
 N_FLOOR = 50           # small-N estimation floor (Crema 2025)
 
+# Rome-exclusion: EXACT match only ("roma"/"rome"). A loose contains("rom")
+# over-matches Romula (N=54, a legitimate target city), Tauromenium, and
+# Caesaromagus — see audit-verify-rome-and-deff.py.
+ROME_TOKENS = ("roma", "rome")
+
+
+def is_rome(name: object) -> bool:
+    """EXACT Rome match: ``str(name).strip().lower() in ("roma", "rome")``."""
+    return str(name).strip().lower() in ROME_TOKENS
+
+
+def most_common_province(values: pd.Series) -> object:
+    """Return a city's most-common province value, alphabetical tiebreak.
+
+    Replaces the earlier ``("province", "first")`` aggregation, which assigned
+    whatever province happened to sit on the first row (audit finding B1). We
+    take the mode across the city's rows (NaNs ignored); ties are broken
+    deterministically by sorting the tied values and taking the first.
+
+    Args:
+        values: The ``province`` values for one city's inscriptions.
+
+    Returns:
+        The most-common non-null province value, or ``np.nan`` if the city has
+        no non-null province at all.
+    """
+    counts = values.dropna().value_counts()
+    if counts.empty:
+        return np.nan
+    top = counts.max()
+    tied = sorted(str(v) for v in counts[counts == top].index)
+    return tied[0]
+
 
 def main() -> int:
     if not PARQUET.exists():
@@ -60,19 +93,28 @@ def main() -> int:
 
     # Hanson-matched = has an urban-area city label AND a population estimate.
     matched = df[df[CITY_COL].notna() & df[POP_COL].notna()].copy()
-    # Rome-exclusion.
-    matched = matched[~matched[CITY_COL].str.lower().str.contains("rom", na=False)]
+    # Rome-exclusion (EXACT match — see is_rome / ROME_TOKENS above).
+    matched = matched[~matched[CITY_COL].map(is_rome)]
     print(f"Hanson-matched, Rome-excluded inscriptions: {len(matched)}")
 
+    # Per-city aggregation. Province is the MOST-COMMON value across the city's
+    # rows (alphabetical tiebreak), not the arbitrary first row (audit B1).
+    grp = matched.groupby(CITY_COL)
     per_city = (
-        matched.groupby(CITY_COL)
-        .agg(n=("not_before", "size"),
-             pop=(POP_COL, "first"),
-             province=(PROV_COL, "first"))
+        grp.agg(n=("not_before", "size"), pop=(POP_COL, "first"))
         .reset_index()
     )
+    prov_mode = grp[PROV_COL].apply(most_common_province).rename("province")
+    per_city = per_city.merge(prov_mode, on=CITY_COL, how="left")
+
+    # Report how many cities had more than one DISTINCT province value across
+    # their rows (the ambiguity the mode resolves).
+    n_distinct_prov = grp[PROV_COL].nunique(dropna=True)
+    n_ambiguous = int((n_distinct_prov > 1).sum())
     n_cities_total = len(per_city)
-    print(f"Hanson-matched, Rome-excluded cities (any N): {n_cities_total}\n")
+    print(f"Hanson-matched, Rome-excluded cities (any N): {n_cities_total}")
+    print(f"  cities with >1 distinct province value (mode-resolved): "
+          f"{n_ambiguous}\n")
 
     # Target-set bucketing.
     below_floor = per_city[per_city["n"] < N_FLOOR]

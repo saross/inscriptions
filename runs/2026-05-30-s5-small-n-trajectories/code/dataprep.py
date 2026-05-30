@@ -17,8 +17,10 @@ and the implementation brief):
    Bin ``t`` covers the half-open interval ``[edge_t, edge_{t+1})``.
 2. Filter to the §5 target set: keep rows where both ``urban_context_city``
    and ``urban_context_pop_est`` are non-null (Hanson-matched); drop Rome
-   (city name contains "rom", case-insensitive); require the date interval to
-   overlap the envelope.
+   (EXACT match, ``name.strip().lower() in {"roma", "rome"}`` — not a loose
+   substring, which would wrongly drop Romula etc.); drop rows with a missing
+   ``not_before``/``not_after``; require the date interval to overlap the
+   envelope.
 3. Clip each inscription's ``[not_before, not_after]`` to the envelope, then
    drop any row whose clipped ``not_before >= not_after`` or which has zero
    envelope overlap. This removes the bad ``not_after = 2230`` record.
@@ -87,6 +89,38 @@ PROV_COL = "province"
 NB_COL = "not_before"
 NA_COL = "not_after"
 
+# Rome-exclusion: EXACT match only ("roma"/"rome"). A loose contains("rom")
+# over-matches Romula, Tauromenium, and Caesaromagus (audit A2).
+ROME_TOKENS = ("roma", "rome")
+
+
+def _is_rome(name: object) -> bool:
+    """EXACT Rome match: ``str(name).strip().lower() in ("roma", "rome")``."""
+    return str(name).strip().lower() in ROME_TOKENS
+
+
+def _most_common_province(values: pd.Series) -> object:
+    """Return a city's most-common province value, alphabetical tiebreak.
+
+    Replaces the earlier ``GroupBy.first()`` province assignment, which took
+    whatever province sat on the first row (audit finding B1). We take the mode
+    across the city's rows (NaNs ignored); ties are broken deterministically by
+    sorting the tied values and taking the first.
+
+    Args:
+        values: The ``province`` values for one city's inscriptions.
+
+    Returns:
+        The most-common non-null province value, or ``np.nan`` if the city has
+        no non-null province at all.
+    """
+    counts = values.dropna().value_counts()
+    if counts.empty:
+        return np.nan
+    top = counts.max()
+    tied = sorted(str(v) for v in counts[counts == top].index)
+    return tied[0]
+
 
 # --------------------------------------------------------------------------- #
 # Filtering.
@@ -95,14 +129,13 @@ NA_COL = "not_after"
 def load_and_filter(parquet_path: Path) -> tuple[pd.DataFrame, dict]:
     """Load the corpus and apply the §5 target-set filter + envelope clip.
 
-    The Rome-exclusion uses the same case-insensitive ``contains("rom")``
-    substring test as the canonical profiling script
-    (``scripts/s5-target-set-profile.py``), so the resulting target set is
-    consistent with the spec's published bucketing. NOTE: that substring also
-    matches a handful of unrelated cities (Romula, Tauromenium, the two
-    Caesaromagus entries); this is a known over-match inherited from the
-    reference script and is documented in the smoke report rather than silently
-    "fixed", because changing it would change the canonical target set.
+    The Rome-exclusion uses an EXACT match (a city is Rome iff
+    ``str(name).strip().lower() in ("roma", "rome")``), matching the corrected
+    canonical profiling script (``scripts/s5-target-set-profile.py``). An
+    earlier loose ``contains("rom")`` test wrongly dropped legitimate target
+    cities — Romula (N=54), Tauromenium, and the two Caesaromagus entries
+    (audit finding A2; see ``scripts/audit-verify-rome-and-deff.py``); the exact
+    test restores them to the target set.
 
     Args:
         parquet_path: Path to ``lire-filtered-with-letters.parquet``.
@@ -120,11 +153,19 @@ def load_and_filter(parquet_path: Path) -> tuple[pd.DataFrame, dict]:
     matched = df[df[CITY_COL].notna() & df[POP_COL].notna()].copy()
     stats["rows_hanson_matched"] = len(matched)
 
-    # 2. Rome exclusion (case-insensitive substring; canonical-script parity).
-    is_rome = matched[CITY_COL].str.contains("rom", case=False, na=False)
+    # 2. Rome exclusion (EXACT match — not a loose substring; audit A2).
+    is_rome = matched[CITY_COL].map(_is_rome)
     stats["rows_rome_excluded"] = int(is_rome.sum())
     matched = matched[~is_rome].copy()
     stats["rows_after_rome"] = len(matched)
+
+    # 2b. Drop rows with a missing not_before / not_after BEFORE clipping: a NaN
+    #     date cannot be clipped to an integer bin edge and would silently
+    #     corrupt the aoristic matrix. Report how many were dropped (audit C-i).
+    has_dates = matched[NB_COL].notna() & matched[NA_COL].notna()
+    stats["rows_dropped_nan_dates"] = int((~has_dates).sum())
+    matched = matched[has_dates].copy()
+    stats["rows_after_nan_drop"] = len(matched)
 
     # 3. Clip intervals to the envelope (vectorised), tracking pre-clip overlap.
     nb_clip = matched[NB_COL].clip(ENV_LO, ENV_HI)
@@ -235,11 +276,16 @@ def prepare(parquet_path: Path, out_dir: Path) -> tuple[pd.DataFrame, dict]:
     out_dir.mkdir(parents=True, exist_ok=True)
     df, stats = load_and_filter(parquet_path)
 
-    # Per-city counts and metadata.
+    # Per-city counts and metadata. Province is the MOST-COMMON value across the
+    # city's rows (alphabetical tiebreak), not the arbitrary first row (audit
+    # B1); pop_est is constant within a Hanson-matched city so first() is fine.
     grp = df.groupby(CITY_COL)
     counts = grp.size()
-    meta_prov = grp[PROV_COL].first()
+    meta_prov = grp[PROV_COL].apply(_most_common_province)
     meta_pop = grp[POP_COL].first()
+    # How many cities span >1 distinct province value (the ambiguity mode fixes).
+    n_distinct_prov = grp[PROV_COL].nunique(dropna=True)
+    stats["n_cities_multi_province"] = int((n_distinct_prov > 1).sum())
 
     rows = []
     for city, n in counts.items():
@@ -342,31 +388,55 @@ def _print_verification(stats: dict) -> None:
     print(f"  Hanson-matched      : {stats['rows_hanson_matched']:>7}")
     print(f"  Rome rows excluded  : {stats['rows_rome_excluded']:>7}")
     print(f"  after Rome excl.    : {stats['rows_after_rome']:>7}")
+    print(f"  dropped NaN dates   : {stats['rows_dropped_nan_dates']:>7}")
+    print(f"  after NaN-date drop : {stats['rows_after_nan_drop']:>7}")
     print(f"  overlap envelope    : {stats['rows_overlap_envelope']:>7}")
     print(f"  dropped clip/overlap: {stats['rows_dropped_clip_overlap']:>7}")
     print(f"  surviving rows      : {stats['rows_surviving']:>7}")
     print("-" * 68)
+    _env_ok = (
+        "no out-of-envelope dates survive — OK"
+        if stats["surviving_na_clip_gt_env_hi"] == 0
+        else "OUT-OF-ENVELOPE SURVIVES — BAD"
+    )
     print(f"  raw not_after>{ENV_HI}   : {stats['raw_not_after_gt_env_hi']}  "
           f"-> surviving na_clip>{ENV_HI}: {stats['surviving_na_clip_gt_env_hi']}  "
           f"(surviving na_clip max = {stats['surviving_na_clip_max']})  "
-          f"({'no out-of-envelope dates survive — OK' if stats['surviving_na_clip_gt_env_hi'] == 0 else 'OUT-OF-ENVELOPE SURVIVES — BAD'})")
+          f"({_env_ok})")
     print(f"  not_after==2230 rec : total={stats['bad_2230_rows_total']}  "
-          f"kept={stats['bad_2230_rows_kept']}  clipped-to={stats['bad_2230_clipped_to']}  "
+          f"kept={stats['bad_2230_rows_kept']}  "
+          f"clipped-to={stats['bad_2230_clipped_to']}  "
           f"(repaired-by-clip, not dropped — its not_before is valid; "
           f"the absurd 2230 upper date is removed)")
     print("-" * 68)
     print(f"  cities (any N)      : {stats['n_cities_total']:>7}")
-    print(f"  TARGET (50<=N<1549) : {stats['n_target']:>7}   (spec: ~279)")
-    print(f"  large anchor (>=1549): {stats['n_large_anchor']:>6}   (spec: ~7)")
+    # Label reflects the ACTUAL computed count, not a hardcoded spec figure
+    # (audit C-ii): the post-clip target restores Romula etc. (exact Rome match).
+    print(f"  TARGET (50<=N<1549) : {stats['n_target']:>7}   "
+          f"(computed; post-clip exact-Rome target set)")
+    print(f"  large anchor (>=1549): {stats['n_large_anchor']:>6}")
     print(f"  below floor (N<50)  : {stats['n_below_floor']:>7}")
+    print(f"  cities >1 province  : {stats['n_cities_multi_province']:>7}   "
+          f"(province assigned by mode, alphabetical tiebreak)")
     print(f"  large-anchor names  : {stats['large_anchor_names']}")
     print("-" * 68)
+    _a_ok = (
+        "in [0,1] — OK"
+        if 0.0 <= stats["a_min"] and stats["a_max"] <= 1.0 + 1e-9
+        else "OUT OF RANGE — BAD"
+    )
     print(f"  aoristic a min/max  : {stats['a_min']:.6f} / {stats['a_max']:.6f}  "
-          f"({'in [0,1] — OK' if 0.0 <= stats['a_min'] and stats['a_max'] <= 1.0 + 1e-9 else 'OUT OF RANGE — BAD'})")
+          f"({_a_ok})")
+    _cov_ok = (
+        "MATCH"
+        if abs(stats["sample_aoristic_coverage"]
+               - stats["sample_clipped_length"]) < 1e-6
+        else "MISMATCH"
+    )
     print(f"  sample row coverage : sum_t a*{BIN_WIDTH} = "
           f"{stats['sample_aoristic_coverage']:.4f}  vs clipped length "
           f"{stats['sample_clipped_length']}  "
-          f"({'MATCH' if abs(stats['sample_aoristic_coverage'] - stats['sample_clipped_length']) < 1e-6 else 'MISMATCH'})")
+          f"({_cov_ok})")
     print(f"  coverage identity   : max |sum_t a*{BIN_WIDTH} - len| over all rows "
           f"= {stats['coverage_max_abs_err']:.2e}")
     print("=" * 68)

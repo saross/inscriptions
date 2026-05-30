@@ -64,6 +64,8 @@ THRESHOLDS = {
 GROUP_COLS = ("urban_context_city", "place")
 
 # Rome-exclusion: the preregistration excludes Rome from city/urban analyses.
+# EXACT match only ("roma"/"rome") — a loose contains("rom") over-matches
+# Romula, Tauromenium, Caesaromagus (see audit-verify-rome-and-deff.py).
 ROME_TOKENS = ("roma", "rome")
 
 
@@ -86,8 +88,14 @@ def per_city_table(df: pd.DataFrame, group_col: str) -> pd.DataFrame:
 
 
 def is_rome(name: str) -> bool:
-    low = name.lower()
-    return any(tok in low for tok in ROME_TOKENS)
+    """EXACT Rome match (the city actually called Rome), not a substring test.
+
+    Uses ``str(name).strip().lower() in ("roma", "rome")``. An earlier loose
+    ``contains("rom")`` test wrongly dropped legitimate target cities — Romula
+    (N=54), Tauromenium, and the two Caesaromagus entries — verified in
+    ``scripts/audit-verify-rome-and-deff.py``.
+    """
+    return str(name).strip().lower() in ROME_TOKENS
 
 
 def main() -> int:

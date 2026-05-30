@@ -31,7 +31,7 @@ Run (on zbook, in the venv, with threading/scratch env set)::
 
     ~/Code/inscriptions/.venv/bin/python \
         runs/2026-05-30-s5-small-n-trajectories/code/hier_smoke_fit.py \
-        --draws 1000 --tune 1000 --s-g 0.5 --s-u 0.3 --s-v 0.3
+        --draws 1000 --tune 1000 --s-g 0.3 --s-u 0.15 --s-v 0.15
 
 Author / Date
 -------------
@@ -355,9 +355,11 @@ def main() -> int:
     p.add_argument("--tune", type=int, default=1000)
     p.add_argument("--chains", type=int, default=4)
     p.add_argument("--target-accept", type=float, default=0.99)
-    p.add_argument("--s-g", type=float, default=0.5)
-    p.add_argument("--s-u", type=float, default=0.3)
-    p.add_argument("--s-v", type=float, default=0.3)
+    # Defaults are the prior-predictive-PINNED scales (prior_predictive.py), so
+    # an unattended run uses the pinned priors (audit B2).
+    p.add_argument("--s-g", type=float, default=0.3)
+    p.add_argument("--s-u", type=float, default=0.15)
+    p.add_argument("--s-v", type=float, default=0.15)
     p.add_argument("--seed", type=int, default=2026)
     p.add_argument("--no-escalate", action="store_true")
     p.add_argument("--out-dir", type=Path,

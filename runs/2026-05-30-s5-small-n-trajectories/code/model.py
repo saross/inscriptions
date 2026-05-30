@@ -36,7 +36,7 @@ Model (per city with ``N`` inscriptions, ``T = 16`` bins):
   the intensity integrated over each inscription's allowed bins. Wide-interval
   inscriptions inform the level not the shape; narrow ones pin the shape.
 
-Sampling defaults: 4 chains, tune 1000, draws 1000, ``target_accept = 0.95``.
+Sampling defaults: 4 chains, tune 1000, draws 1000, ``target_accept = 0.99``.
 
 Author / Date
 -------------
