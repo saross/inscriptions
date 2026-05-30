@@ -136,7 +136,8 @@ and design-effect-noisy here.
 - **Inscription count (primary).** Each inscription contributes weight 1.
 - **Letter mass (exploratory overlay).** Each inscription contributes weight =
   `letter_count_conservative`. Reported with the explicit design-effect caveat
-  (Obs 61): per-city DEFF ≈ 2.2 inflates posterior CI width, so letter-mass
+  (Obs 61): per-city DEFF ≈ 2.4 (urban_context_city) inflates posterior CI
+  width, so letter-mass
   trajectories are wider/noisier; this is estimation (CIs widen) not detection
   (which is unreachable), so it remains feasible. Letter-mass trajectories are
   read as a content overlay, never as a replacement for the inscription-count

@@ -143,13 +143,14 @@ cross-sectional analyses, to avoid requiring a new unit-specific power
   letter mass — a *compound sum* of heavy-tailed per-inscription letter
   counts. Empirically (`scripts/letter-mass-design-effect.py`), the
   letter-weight Kish design effect is large: corpus-wide ~15, per-city median
-  ~2.2 (interquartile range ~1.8–3.4). The letter-mass detection SPA
-  therefore carries *fewer* effective observations than the inscription-count
-  SPA for the same inscriptions (≈ 0.45× at the median city), making
+  ~2.4 (interquartile range ~1.9–3.7, at the `urban_context_city` analysis
+  unit). The letter-mass detection SPA therefore carries *fewer* effective
+  observations than the inscription-count SPA for the same inscriptions
+  (≈ 0.42× at the median city), making
   letter-mass temporal detection *less* powered, not more. An analytic
   reachability translation (`scripts/letter-mass-reachability.py`) shows the
   consequence is categorical: **no** city in the corpus clears the
-  preregistered urban-area detection thresholds under letter mass (0 of 1,041
+  preregistered urban-area detection thresholds under letter mass (0 of 1,044
   Rome-excluded urban-area cities, versus 5–7 under inscription count) — even
   Pompeii, Salona, and Ostia fall below the floor once weighted by content.
   Letter-mass temporal detection is therefore not merely under-powered but
@@ -219,7 +220,7 @@ posterior-median Pearson *r* ≥ 0.95 between recovered and true genuine SPA in
   under each unit; it does **not** establish **detection-power** thresholds,
   which are a separate Phase-1 product and cannot be re-used for letter mass.
   Letter mass is a compound sum of heavy-tailed per-inscription letter counts
-  (per-city Kish design effect median ~2.2; §A5.2), so its temporal-detection
+  (per-city Kish design effect median ~2.4; §A5.2), so its temporal-detection
   power is design-effect-limited and *lower* than inscription count's. The
   cross-sectional H3a regresses per-city letter-mass *totals* on population
   and does not use detection thresholds (see line 131), so the design effect
@@ -227,7 +228,7 @@ posterior-median Pearson *r* ≥ 0.95 between recovered and true genuine SPA in
   cross-section is therefore principled, not a convenience. An analytic reachability
   translation (`scripts/letter-mass-reachability.py`) already shows
   letter-mass temporal detection is unreachable for every urban-area city in
-  the corpus (0 of 1,041, versus 5–7 under inscription count); because the
+  the corpus (0 of 1,044, versus 5–7 under inscription count); because the
   neglected heavy-tail effects can only reduce power further, a full
   compound-process simulation cannot overturn this. The simulation is
   therefore logged as an optional methodology-follow-up refinement, not a
