@@ -88,18 +88,48 @@ log λ[c,t] = μ[t]  +  u[p(c), t]  +  v[c, t]
   (province term fixed at 0 / merged into global).
 - **Parameterisation:** non-centred for all RW innovations (the 2026-05-24 F3
   lesson: non-centred GRW gave a 45–50× ESS gain at negligible bias).
-- **Priors (weakly-informative; to be pinned in a design artefact before the
-  production run):** `σ_μ, σ_u, σ_v ~ HalfNormal(·)`; overall level anchored so
-  Σ_t exp(μ[t]) matches the empire-level mean rate. Exact hyperprior scales set
-  at smoke-test stage and committed before production.
+- **Variance components are learnt, not fixed.** `σ_μ, σ_u, σ_v ~ HalfNormal(·)`
+  (log-rate scale), and the model estimates them — the `σ_v` posterior is itself
+  a reported quantity (how heterogeneous are city trajectories within
+  provinces). The overall level is anchored so `Σ_t exp(μ[t])` matches the
+  empire-level mean rate.
+- **Hyperprior scales pinned by prior-predictive check.** At smoke stage,
+  trajectory ensembles are simulated *from the prior alone* (no fitted outcomes,
+  so priors are set without peeking at results) and the HalfNormal scales chosen
+  so the ensemble looks like plausible epigraphic histories (neither jagged nor
+  flat). The chosen scales are committed in a design artefact **before** the
+  production fit; Claude pins and reports them, Shawn does a post-hoc sanity
+  check (2026-05-30 decision).
 
-**Likelihood (proper Bayesian-aoristic, per Crema 2024 / baorista).** Each
-inscription contributes a marginalised-over-true-date likelihood given the
-ICAR-smoothed intensity, using the aoristic weights `a[i,t]`: the event's
-contribution sums the (normalised) intensity over the bins its interval allows.
-The exact functional form is pinned in the implementation and **validated against
-baorista on a single city with pooling disabled** (correctness check) before the
-hierarchy is added.
+**Likelihood — Poisson-process aoristic (inscription count, primary).**
+Inscriptions are modelled as a Poisson process with intensity
+`λ[c,t] = exp(μ[t] + u[p(c),t] + v[c,t])`. Each inscription's true bin is
+unobserved but interval-censored, so it is marginalised analytically, giving the
+per-city log-likelihood
+
+```
+log L[c] = − Σ_t λ[c,t]  +  Σ_i log( Σ_t a[i,t] · λ[c,t] )
+```
+
+where `a[i,t]` is the fraction of bin *t* covered by inscription *i*'s
+envelope-clipped interval (uniform-within-interval aoristic assumption).
+Narrow-interval inscriptions concentrate rate-mass; wide editorial-template
+intervals contribute `Σ a·λ` over many bins and so inform the level but not the
+shape — the desired behaviour, with no hand-tuning. The **full Poisson form**
+(not the level-free normalised form) is used so the hierarchy pools level as
+well as shape. Implemented as a custom pymc log-likelihood
+(`pm.Potential` / `CustomDist`); **validated against baorista on a single city
+with pooling disabled, comparing the normalised (shape) posterior** (baorista
+models shape only).
+
+**Likelihood — letter mass (exploratory overlay).** Letters are not Poisson
+events, so the clean form does not transfer. Each inscription's letters are
+aoristically apportioned to bins (`w_i · a[i,t]`) and the per-bin letter mass is
+modelled with an over-dispersed observation (negative-binomial / Gamma) whose
+dispersion absorbs the design effect (Obs 61). The exact letter form
+(weighted-Poisson vs NB/Gamma) is **finalised at the smoke stage by
+posterior-predictive check** — proportionate given letter mass is exploratory
+and design-effect-noisy here.
 
 ## 5. Two-measure execution
 
@@ -145,13 +175,44 @@ hierarchy is added.
 - Per-city posterior trajectory shape with 95 % credible intervals (both units).
 - **Aggregate diagnostic:** posterior precision vs N (median CI width binned by
   the N buckets in §2); trajectory-shape clustering across the 279 cities.
-- **Validation anchors:** the 7 large (N ≥ 1549) well-dated cities (e.g. Pompeii,
-  Ostia) — fit Layer A on them and check the recovered trajectory against their
-  independently-known flourishing dates, as a method sanity check before
-  trusting small-N outputs. (This is the Layer A precursor to the Layer B
-  validation gate; full independent-date assembly is Layer B's job.)
 - A negative result (small-N trajectories too uncertain to be informative below
-  some N) is itself a reportable methodological finding.
+  some N) is itself a reportable methodological finding (quantified by the
+  subsample-recover calibration below).
+
+### 8a. Validation design (three complementary checks; 2026-05-30)
+
+1. **Internal consistency.** Fit Layer A on the 7 large (N ≥ 1549) cities;
+   confirm each posterior trajectory matches the city's own well-constrained
+   empirical SPA — i.e. smoothing + pooling do not distort a data-rich city.
+
+2. **External anchors.** Sharpest is **Pompeii's AD 79 terminus** (the city was
+   buried, so genuine post-79 mass should be ~zero — a direct check on aoristic
+   handling and template smearing); foundation dates for any colonies in the set
+   give "~zero before founding" tests. Full independent-date assembly remains
+   Layer B's job.
+
+3. **Subsample-and-recover (the calibration test).** A mini recovery grid for
+   the trajectory method, run thoroughly:
+   - **Donors:** the 7 large cities, chosen to span trajectory shapes (e.g.
+     Pompeii early/terminated, Ostia later peak, Salona, plus frontier vs
+     Italian). Each donor's full-N standalone posterior-median trajectory is the
+     recovery *truth*.
+   - **Grid:** N ∈ {50, 100, 200, 300, 500}; **30–50 random subsamples** per
+     (donor, N) cell; refit and compare to truth.
+   - **Metrics per cell:** trajectory 95 % CI coverage of the full-N truth
+     (target ~0.95; flags over-confidence or vacuity); posterior-median shape
+     correlation (Pearson r); CI width (→ the precision-vs-N curve); peak bias.
+   - **Primary tier = standalone (no pooling)** — isolates the likelihood +
+     aoristic + RW-smoothing at small N and is *conservative*, since pooling
+     toward the province can only reduce small-N variance. A **secondary tier**
+     refits a handful of (donor, N) cells **within the full hierarchy** to
+     confirm pooling improves coverage as expected.
+   - **Deliverable:** a calibration statement — below N ≈ X the trajectory CIs
+     are too wide to be informative; above it, recovery is honest. Quantifies the
+     preregistered honest-negative-result and guards against it being a model
+     artefact.
+   - **Compute:** ~7 donors × 5 N × ~40 replicates ≈ 1,400 single-city fits
+     (fast; small N, 16 bins) on zbook.
 
 ## 9. Confirmed design decisions (2026-05-30)
 
@@ -159,17 +220,29 @@ hierarchy is added.
 |---|---|
 | Bin width | 25 years (16 bins), 50y robustness check |
 | Model structure | Monolithic hierarchical (all 279 cities + 46 provinces jointly) |
-| Aoristic | Proper Bayesian-aoristic (baorista-style), validated vs baorista |
+| Aoristic likelihood | Poisson-process aoristic, full level (inscription); NB/Gamma at smoke (letter); validated vs baorista on shape |
+| Hyperpriors | Variance components learnt; HalfNormal scales pinned by prior-predictive at smoke, committed pre-production (Shawn sanity-checks) |
+| Validation | Internal consistency (7 large) + Pompeii AD 79 external + thorough subsample-recover N∈{50–500} |
 | Two-unit | Inscription primary; letter-mass exploratory overlay (design-effect caveat) |
 | Singletons | Pool toward global trajectory |
 | Bad records | Re-clip to AD ≤ 350 envelope |
 | Layer B | Deferred (needs H3a β_within) |
 | Parameterisation | Non-centred RW innovations |
 
-## 10. Open items for sign-off
+## 10. Open items — resolved 2026-05-30
 
-- Hyperprior scales (`σ_μ, σ_u, σ_v` and the level anchor) — to be pinned at
-  smoke-test stage and committed in a design artefact before production.
-- Exact aoristic likelihood form — pinned in code, validated against baorista.
-- Confirmation that the 7 large anchors are the right validation set (vs a
-  curated independently-dated subset).
+All three sign-off items are now closed (see §4 likelihood + hyperprior
+protocol, §8a validation):
+
+- **Aoristic likelihood** — Poisson-process form pinned (§4); letter form
+  finalised at smoke (Decision 1).
+- **Hyperpriors** — learnt; scales pinned by prior-predictive at smoke, committed
+  pre-production; Shawn sanity-checks (Decision 2).
+- **Validation set** — three-part design with thorough subsample-recover (§8a,
+  Decision 3).
+
+**Remaining (smoke-stage, before production):** (a) prior-predictive hyperprior
+pinning + design artefact; (b) aoristic-likelihood code validated against
+baorista (single city, shape); (c) letter-mass likelihood form chosen by PPC;
+(d) convergence confirmed on the 3–5 city smoke subset. Production launches only
+after these **and** Shawn's go.
