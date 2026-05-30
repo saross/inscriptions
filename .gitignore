@@ -47,3 +47,8 @@ __pycache__/
 .env
 .env.local
 !.env.example
+
+# §5 Layer-A derived data caches and Python build cruft (regenerable via
+# dataprep.py; kept out of git like the source parquet).
+runs/2026-05-30-s5-small-n-trajectories/code/prepared/
+runs/2026-05-30-s5-small-n-trajectories/code/__pycache__/
