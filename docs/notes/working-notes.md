@@ -1597,3 +1597,77 @@ The verdict-flag-3 result from Obs 59 (+9.89 pp f_within shift) was measured WIT
 ### Findable later
 
 `pilot_proxy`, `tier-vector`, `editorial-template`, `reign-interval-slab`, `half-century-slab`, `letter-weighted-descriptive`, `calibration-cohort`, `empirical-Bayes-prior-shape`, `tier-composition-shift`, `two-measure-corroboration`, `pilot-proxy-json`, `formulary-epigraphy`, `reign-dated`, `letter-count-conservative`, `recovery-grid-two-unit`, `pre-launch-gate`, `century-slab`, `template-prior`, `prior-shape`, `unit-of-analysis-prior`
+
+---
+
+## Obs 61 — 2026-05-30 [FINDING]: letter mass is the temporally *weaker* unit — the heavy-tailed design effect makes content less detectable than acts
+
+The 2026-05-26 "acts vs content" reframe (Obs 58, commit `dd326dc`) established inscription count and letter mass as measures of different constructs. This Obs quantifies a consequence that runs against intuition: **letter mass, the richer content measure, has *less* statistical power for temporal detection than the simpler inscription count** — because it is a compound sum of heavy-tailed per-inscription letter counts, not a count of independent events.
+
+### The finding
+
+**Mechanism.** In a letter-mass spline/permutation SPA each inscription enters weighted by its letter count `w_i`. The Kish effective sample size `n_eff = (Σw_i)²/Σ(w_i²)` then governs precision, and the design effect `DEFF = n/n_eff = 1 + CV²` (CV = coefficient of variation of inscription lengths) measures the loss. Letters within one inscription share a single date, so they are not independent timing observations; weighting by length therefore concentrates the signal in a few long texts and can only *reduce* effective N relative to equal-weight counting.
+
+**Empirical magnitudes** (`scripts/letter-mass-design-effect.py`, on `runs/2026-05-26-letter-count-probe/data/lire-filtered-with-letters.parquet`, 176,609 inscriptions with ≥ 1 conservative letter):
+
+| Statistic | Value |
+|---|---|
+| Per-inscription letters, mean | 46.5 |
+| Per-inscription letters, median | 26 |
+| Per-inscription letters, max | 35,537 |
+| Corpus-wide CV² | 14.0 |
+| Corpus-wide DEFF | 15.0 |
+| Corpus-wide n_eff | 11,777 (6.7 % of n) |
+| Per-city median DEFF | 2.21 |
+| Per-city DEFF IQR | [1.76, 3.40] |
+| Per-city DEFF max | 57.7 |
+
+The median city's letter-mass SPA therefore has ≈ 0.45× the effective N of its inscription-count SPA. The corpus-wide figure also shows that a naive "treat total letters as a count" analysis would overstate effective N by ~697×.
+
+Worst offenders (graffiti-and-monument mixtures maximise length variance):
+
+| City | n | n_eff | DEFF |
+|---|---:|---:|---:|
+| Pompeii | 4,254 | 779 | 5.46 |
+| Ostia | 2,644 | 400 | 6.61 |
+| Mogontiacum | 2,392 | 341 | 7.02 |
+
+**Reachability consequence** (`scripts/letter-mass-reachability.py`; a city is letter-mass-eligible for a bracket iff `n_eff ≥` the Phase 1 threshold): at the urban-area 50 %-over-50-year thresholds (1,409–1,923 inscriptions; preregistration §6 line 408), **0 of 1,041 Rome-excluded urban-area cities are eligible under letter mass**, versus 5–7 under inscription count. Letter-mass temporal detection is therefore unreachable corpus-wide, not merely under-powered.
+
+**Why no simulation is needed.** The analytic translation models the design effect as pure effective-N deflation; the neglected heavy-tail effects widen the permutation null and can only reduce power further, so a full compound-process Monte Carlo cannot overturn "0 eligible." Full simulation is logged as an optional methodology-follow-up refinement, not built.
+
+### Why this matters
+
+(i) Justifies OSF Amendment 01 scoping letter-mass time-series/residual analyses as exploratory (unreachable), with confirmatory letter mass confined to the cross-sectional H3a + variance partition, where the design effect does not bite (it regresses per-city *totals*, not within-city timing).
+
+(ii) A genuine, slightly counterintuitive methods-paper contribution: *letter mass trades temporal detectability for content sensitivity.* The very property that makes letter mass a richer content measure — long inscriptions carry more information — is exactly what inflates the design effect and destroys temporal resolution.
+
+(iii) The design effect itself is a reportable artefact characterising when each unit is usable. The `DEFF` table and the per-city distribution are publishable diagnostics in their own right.
+
+### Caveats / methodological notes
+
+The analytic reachability argument assumes the design effect acts as pure effective-N deflation. This is the conservative (power-reducing) direction: any correlation structure among same-inscription letters, or additional heavy-tail effects in the permutation null, can only widen the null further. The "0 eligible" result is therefore robust to the simplifying assumption; it cannot be overturned by a more elaborate model.
+
+The n_eff calculation uses `letter_count_conservative` throughout, consistent with the two-measure framework's conservative branch. The interpretive-letter variant would produce similar or larger DEFF values (interpretive counts include reconstructed letters, which are correlated with conservative counts and would not systematically reduce CV²).
+
+---
+
+### Related observations and artefacts
+
+**Obs 58** (acts vs content reframe; commit `dd326dc`): this Obs extends the construct distinction to the detection-power layer. The reachability failure is a direct consequence of the construct difference Obs 58 identified.
+
+**Obs 59** (commit `de8fa8f`; Mundlak `f_within` +9.89 pp): the variance-partition corroboration of the two-measure framework. Obs 59 showed letter mass strips between-province habit noise; this Obs shows letter mass is simultaneously unreachable for within-city temporal detection. The two findings are not contradictory — they are different diagnostics of the same construct difference.
+
+**Obs 60** (commit `2f86c95`; `pilot_proxy` tier-composition shift): the prior-shape corroboration. Together Obs 59, 60, and 61 triangulate the "acts vs content" reframe across three independent diagnostics: variance partition, prior composition, and detection power.
+
+**OSF Amendment 01** (`planning/osf-amendment-2026-05-29-two-measure-framework.md` §A5.2/§A5.5): the amendment that scopes letter-mass temporal detection as exploratory on the basis of these reachability results.
+
+**Preregistration §6 line 408** (`planning/preregistration-draft.md`): the urban-area 50 %-over-50-year Phase 1 thresholds (exp-step 1,923, exp-gauss 1,854, cpl-3-step 1,409, cpl-3-gauss 1,549) against which `n_eff` was evaluated.
+
+**Artefacts**: `scripts/letter-mass-design-effect.py` (DEFF computation), `scripts/letter-mass-reachability.py` (city-level eligibility), `runs/2026-05-26-letter-count-probe/data/lire-filtered-with-letters.parquet` (input corpus, 176,609 inscriptions).
+
+---
+
+### Findable later
+
+`letter-mass`, `design-effect`, `kish-effective-sample-size`, `detection-power`, `reachability`, `heavy-tailed-weights`, `compound-sum`, `acts-vs-content`, `two-measure-framework`, `temporal-detectability`, `content-sensitivity`, `n_eff`, `CV-squared`, `Pompeii-DEFF`, `Ostia-DEFF`, `Mogontiacum-DEFF`, `unreachable-corpus-wide`, `OSF-amendment-01`, `analytic-reachability`, `letter-mass-reachability`, `letter-mass-design-effect`, `zero-eligible`, `DEFF-15`, `n_eff-11777`, `effective-sample-size`, `inscription-count-vs-letter-mass-power`
