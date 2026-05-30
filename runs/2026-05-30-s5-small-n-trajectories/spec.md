@@ -36,12 +36,16 @@ non-null), Rome-excluded:
 | Bucket | Cities | Disposition |
 |---|---|---|
 | N < 50 | 754 | below estimation floor — excluded |
-| **50 ≤ N < 1549** | **279** | **§5 small-N target set** |
+| **50 ≤ N < 1549** | **268** | **§5 small-N target set** (post-clip, exact-Rome) |
 | N ≥ 1549 | 7 | confirmatory-eligible (H3b); used here only as validation anchors |
 
-Target-set N: median 116, p75 204, p90 347, max 1020 (117 cities at N 50–100;
-124 at 100–300; 38 at 300–1549). Hierarchy: 46 provinces, median 4 cities each,
-**10 singletons**.
+Target-set N: median 116, p75 204, p90 347, max 1020 (pre-clip profile
+sub-buckets: 117 at N 50–100; 124 at 100–300; 38 at 300–1549). Hierarchy: 45
+provinces, median 4 cities each, **10 singletons**. The **268** target is the
+confirmed post-clip count under exact Rome-exclusion (commit `2c82a87`): the
+pre-clip profile gave 279/280; the Rome-regex fix restored Romula (+1) and 12
+cities cross below N=50 after envelope-clipping. The N-distribution sub-buckets
+are pre-clip-profile descriptives, refreshed at the production cache build.
 
 **Data preparation (pre-fit):**
 
@@ -164,7 +168,7 @@ and design-effect-noisy here.
   lire-filtered-with-letters.parquet`, 58 MB, not git-tracked → scp). No R /
   baorista install required for Layer A (baorista is only the separate
   Decision-3 cross-check).
-- **Size:** monolithic model ≈ 16 bins × (1 global + 46 province + 279 city)
+- **Size:** monolithic model ≈ 16 bins × (1 global + 45 province + 268 city)
   ≈ 5,200 latent rates + hyperparameters. Tractable; one model per unit
   (inscription, letter) × two bin widths (25y primary, 50y robustness) = 4 fits.
 - **Pre-launch gate:** smoke-test on a 3–5 city subset (one well-dated large
@@ -175,7 +179,7 @@ and design-effect-noisy here.
 
 - Per-city posterior trajectory shape with 95 % credible intervals (both units).
 - **Aggregate diagnostic:** posterior precision vs N (median CI width binned by
-  the N buckets in §2); trajectory-shape clustering across the 279 cities.
+  the N buckets in §2); trajectory-shape clustering across the 268 cities.
 - A negative result (small-N trajectories too uncertain to be informative below
   some N) is itself a reportable methodological finding (quantified by the
   subsample-recover calibration below).
@@ -220,7 +224,7 @@ and design-effect-noisy here.
 | Decision | Setting |
 |---|---|
 | Bin width | 25 years (16 bins), 50y robustness check |
-| Model structure | Monolithic hierarchical (all 279 cities + 46 provinces jointly) |
+| Model structure | Monolithic hierarchical (all 268 cities + 45 provinces jointly) |
 | Aoristic likelihood | Poisson-process aoristic, full level (inscription); NB/Gamma at smoke (letter); validated vs baorista on shape |
 | Hyperpriors | Variance components learnt; HalfNormal scales pinned by prior-predictive at smoke, committed pre-production (Shawn sanity-checks) |
 | Validation | Internal consistency (7 large) + Pompeii AD 79 external + thorough subsample-recover N∈{50–500} |
