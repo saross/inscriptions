@@ -1,0 +1,287 @@
+---
+title: "OSF Amendment 01 — Two-measure framework (epigraphic acts and epigraphic content)"
+amendment-number: 01
+status: DRAFT for Shawn's review and lodgement (not yet lodged)
+date-drafted: 2026-05-29
+preregistration: "https://osf.io/uycs6/ (lodged 2026-05-20; embargoed)"
+lodged-version: "git tag osf-lodgement-2026-05-20 (https://github.com/saross/inscriptions/tree/osf-lodgement-2026-05-20)"
+filed-under: "preregistration §7 / contingency clause (preregistration-draft.md line 423): substantive methodology changes after lodgement are filed as an OSF amendment before implementation."
+author: "Shawn Ross (with Claude Code as analyst/RSE)"
+gate: "BINDING — Stage 3 confirmatory fits under the two-measure framework must not run until this amendment is lodged."
+---
+
+# OSF Amendment 01 — Two-measure framework (epigraphic acts and epigraphic content)
+
+## A1. Identification and trigger
+
+This is the first amendment to the project's preregistration (Open Science
+Framework, OSF, record `osf.io/uycs6/`, lodged 2026-05-20, currently
+embargoed). It is filed under the preregistration's own contingency rule
+(`preregistration-draft.md` line 423): *"If substantive methodology changes
+are required after lodgement … an OSF amendment is filed before
+implementation."*
+
+**Trigger.** The 2026-05-26 letter-count probe
+(`runs/2026-05-26-letter-count-probe/REPORT.md`) and the methodological
+reframe it prompted, recorded as Observation 58 in the project working notes
+(`docs/notes/reflections/working-notes.md`, commit `dd326dc`) and
+corroborated by Observations 59 (`de8fa8f`) and 60 (`2f86c95`).
+
+## A2. Summary of the change
+
+The lodged preregistration treats **letter count** as a single §5
+pre-specified *exploratory* cross-check, reported alongside the
+inscription-count analyses but explicitly *"as a cross-check on the
+inscription-count results rather than a replacement for them"*
+(`preregistration-draft.md` line 388).
+
+This amendment replaces that framing with a **two-measure framework**:
+
+- **Inscription count** measures **epigraphic acts** (how often a community
+  inscribed). It remains the project's **primary-by-convention** measure: it
+  is the unit used by Hanson (2021), keeps the analysis comparable to the
+  field, and is unchanged by this amendment.
+- **Letter mass** measures **epigraphic content** (how much was inscribed).
+  It is **promoted from an exploratory cross-check to a co-registered
+  parallel confirmatory measure** of a *different construct* — not a rival
+  operationalisation of the same construct, and not a replacement for
+  inscription count.
+- The **delta between the two measures** (the content surplus or deficit per
+  act) becomes a **pre-specified derived quantity**, reported descriptively
+  as a second residual axis alongside the existing scaling residual.
+
+The two measures are analysed **in parallel**, each within its own
+confirmatory family, and reported **side by side**. No multiplicity
+correction is applied *across* the two units, for the reason given in §A5.3.
+
+## A3. Rationale
+
+Inscription count and letter mass are **not two ways of measuring the same
+thing**. A flat inscription count treats a long monumental dedication and a
+three-word funerary fragment as equivalent units; letter mass registers
+something of the quantity of information each carried. The lodged
+preregistration already states this disagreement with Hanson (2021), who
+identified total lettering as the methodologically desirable measure but
+rejected it as impractical for fragmentary material (Hanson 2021, p. 142).
+
+What the lodged preregistration did **not** do is follow the disagreement to
+its conclusion. If the two measures track partially different constructs —
+*acts* versus *content* — then asking "which is the better unit?" is the
+wrong question. Where they diverge is itself the finding, not a tie-breaker:
+terse frontier-military epigraphy deflates under letter mass; monumental and
+commercial epigraphy amplifies; high-count, low-content corpora (e.g.
+graffiti-rich assemblages) separate the two measures sharply. The project
+therefore adopts both measures and treats their **difference** as a third
+variable capturing inscription *style* and *function* that neither measure
+alone encodes. This is a larger and more defensible methodological
+contribution than substituting one unit for another.
+
+## A4. Relationship to already-observed exploratory results (transparency)
+
+We record explicitly what had been observed at the time this amendment was
+conceived, so that the promotion of letter mass to confirmatory status can be
+judged on its merits.
+
+The 2026-05-26 probe was an **exploratory** descriptive comparison run on
+LIRE v3.0 (it pre-dates and does not use the preregistered confirmatory
+pipeline). It found material divergence between the two units — a
+Hanson-style negative-binomial scaling exponent whose 95 % confidence
+intervals did not overlap between units, and substantial city- and
+province-level rank reshuffling (specifics in
+`runs/2026-05-26-letter-count-probe/REPORT.md` and the tables it cites). A
+subsequent Bayesian within–between (Mundlak) refit found the
+within-province population-attributable variance fraction `f_within` higher
+under letter mass.
+
+**This amendment is construct-driven, not result-driven**, on three checks
+that a reviewer can verify:
+
+1. **The framework refuses to pick a winner.** It does not adopt the measure
+   that "did better"; it retains inscription count as primary-by-convention
+   and adds letter mass as a parallel measure of a distinct construct. The
+   divergence the probe found is treated as corroboration of the construct
+   distinction, not as a reason to prefer one unit.
+2. **The confirmatory decision rules for the letter-mass analyses are
+   identical to the pre-existing inscription-count rules** (the same three-way
+   `f_within` verdict; the same recovery-grid validation gate). No rule is
+   tuned to the observed letter-mass result.
+3. **Letter-mass Stage 3 fits remain gated** on the letter-mass recovery-grid
+   simulation passing the same binding criteria as inscription mass (§A5.5).
+   The amendment does not licence reporting any letter-mass confirmatory
+   result that has not first cleared validation.
+
+## A5. Pre-specifications
+
+### A5.1 Measure definitions
+
+- **Inscription count (acts).** Unchanged from the lodged preregistration:
+  the per-subset, date-window-filtered inscription count specified in §3 and
+  Decision 22.
+- **Letter mass (content).** Summed **`clean_text_conservative`** characters
+  (Latin A–Z only; Greek excluded), per the existing definition at
+  `preregistration-draft.md` line 388. `clean_text_interpretive_word` is
+  retained as a sensitivity variant. **Scope limitation, stated plainly:**
+  because Greek is excluded, the content measure is *Latin* content; subsets
+  and regions with substantial Greek epigraphy are under-counted on the
+  content axis, and this is reported as a limitation wherever the content
+  measure is used.
+
+### A5.2 Confirmatory structure under two units (scope)
+
+The **letter-mass confirmatory family is deliberately bounded** to the
+cross-sectional analyses, to avoid requiring a new unit-specific power
+(reachability) simulation (see §A5.5 note):
+
+- **Confirmatory under letter mass:** the **H3a within–between
+  negative-binomial regression** (the three-way `f_within` verdict of
+  `preregistration-draft.md` line 397) and the **H3a variance partition**.
+- **Exploratory under letter mass (reported under both units, not
+  confirmatory):** H3c spatial-residual analyses, H3b deviation-detection,
+  and all §5 exploratories. Their confirmatory eligibility depends on
+  detection-power thresholds (Phase 1; §6, lines 408–410), which are
+  calibrated for an equal-weight *count* process and do **not** transfer to
+  letter mass — a *compound sum* of heavy-tailed per-inscription letter
+  counts. Empirically (`scripts/letter-mass-design-effect.py`), the
+  letter-weight Kish design effect is large: corpus-wide ~15, per-city median
+  ~2.2 (interquartile range ~1.8–3.4). The letter-mass detection SPA
+  therefore carries *fewer* effective observations than the inscription-count
+  SPA for the same inscriptions (≈ 0.45× at the median city), making
+  letter-mass temporal detection *less* powered, not more. An analytic
+  reachability translation (`scripts/letter-mass-reachability.py`) shows the
+  consequence is categorical: **no** city in the corpus clears the
+  preregistered urban-area detection thresholds under letter mass (0 of 1,041
+  Rome-excluded urban-area cities, versus 5–7 under inscription count) — even
+  Pompeii, Salona, and Ostia fall below the floor once weighted by content.
+  Letter-mass temporal detection is therefore not merely under-powered but
+  unreachable corpus-wide; it cannot be confirmatory and is reported
+  descriptively. Letter-mass time-series and residual analyses are
+  consequently exploratory in this paper.
+
+Inscription count retains its full pre-existing confirmatory family
+unchanged.
+
+### A5.3 Multiplicity
+
+**Each unit forms its own confirmatory family. No Holm–Bonferroni (or other)
+multiplicity correction is applied across the two units.**
+
+Justification: multiplicity correction guards against inflated
+false-positive rates when the *same* hypothesis is tested multiple ways. Here
+the two units operationalise **different constructs** (acts versus content)
+and therefore answer **different research questions**: "does within-province
+population explain variation in epigraphic *acts*?" and "…in epigraphic
+*content*?" are not two tests of one hypothesis. Correcting across them would
+penalise the project for asking two questions rather than one, and would
+misrepresent the inferential structure. Within each unit, the existing
+multiplicity policy is unchanged. The H3a verdict is rendered **separately and
+explicitly per unit**; the paper does not combine them into a single verdict.
+
+### A5.4 The inter-measure delta (derived, exploratory)
+
+A **pre-specified derived quantity**, the **content residual**, is computed
+and reported descriptively:
+
+- **Definition.** For the cross-sectional city set, fit `log(letter_mass) ~
+  log(inscription_count)` across cities; the per-city residual is the content
+  residual (positive = more content per act than the corpus norm; negative =
+  less). The project thereby has a **two-dimensional residual space**:
+  scaling residual (observed inscriptions minus what population predicts) ×
+  content residual (observed content minus what inscription count predicts).
+- **Status.** Exploratory and descriptive. **No pre-committed threshold and
+  no confirmatory verdict** attach to the delta; it is a novel quantity and is
+  reported as a map/descriptive characterisation and cross-tabulated against
+  the scaling residual. It does **not** trigger an OSF amendment.
+- **Subsumption.** The previously logged standalone "cumulative-totals Hanson
+  negative-binomial experiment (inscription count and letter count)" (the
+  project's tertiary backlog item 5) is **subsumed** into this two-measure
+  framework rather than run as a separate exploratory.
+
+### A5.5 Recovery-grid validation under two units (the gate)
+
+The lodged preregistration's H2.1 recovery-simulation gate
+(`preregistration-draft.md` §3 line 61; §4 line 334; §6 lines 395–396) —
+**(i)** ≥ 90 % of grid cells achieve per-cell α coverage and **(ii)**
+posterior-median Pearson *r* ≥ 0.95 between recovered and true genuine SPA in
+≥ 90 % of cells — now runs as **two parallel grids**, one per unit:
+
+- **Grid A — inscription mass** and **Grid B — letter-mass conservative**,
+  under the same corrected (F1+F3, empirical-Bayes) pipeline. Both are
+  specified and running at `runs/2026-05-26-recovery-grid-two-unit/`
+  (spec at `…/spec.md`).
+- **Gate rule.** A Stage 3 confirmatory fit under a given unit is permitted
+  only if **that unit's grid passes both binding criteria**. The outcome
+  branching is pinned in `…/spec.md` §5: both grids pass → Stage 3 proceeds
+  under both units; one passes → Stage 3 proceeds under that unit only; both
+  fail → the mixture is revised before any Stage 3 fit (per the lodged
+  preregistration's existing recovery-failure contingency, line 420).
+- **Note (why letter-mass confirmatory is scoped to the cross-section).** The
+  recovery grid validates the **mixture model** (the temporal deconvolution)
+  under each unit; it does **not** establish **detection-power** thresholds,
+  which are a separate Phase-1 product and cannot be re-used for letter mass.
+  Letter mass is a compound sum of heavy-tailed per-inscription letter counts
+  (per-city Kish design effect median ~2.2; §A5.2), so its temporal-detection
+  power is design-effect-limited and *lower* than inscription count's. The
+  cross-sectional H3a regresses per-city letter-mass *totals* on population
+  and does not use detection thresholds (see line 131), so the design effect
+  does not bear on it — confining the letter-mass *confirmatory* family to the
+  cross-section is therefore principled, not a convenience. An analytic reachability
+  translation (`scripts/letter-mass-reachability.py`) already shows
+  letter-mass temporal detection is unreachable for every urban-area city in
+  the corpus (0 of 1,041, versus 5–7 under inscription count); because the
+  neglected heavy-tail effects can only reduce power further, a full
+  compound-process simulation cannot overturn this. The simulation is
+  therefore logged as an optional methodology-follow-up refinement, not a
+  prerequisite; the paper reports the analytic reachability result.
+
+### A5.6 Exploratory analyses under both units
+
+Per Observation 58: the §5 pre-specified exploratory analyses are run under
+**both** units where applicable, with the per-subset delta reported as data.
+These remain exploratory (no confirmatory verdicts), exactly as in the lodged
+preregistration.
+
+## A6. What does NOT change
+
+- Inscription count remains the **primary-by-convention headline measure**;
+  comparability with Hanson (2021) is preserved.
+- The inscription-count confirmatory family, its decision rules, and its
+  multiplicity policy are **unchanged**.
+- The chronological envelope (50 BC – AD 350), the LIRE v3.0 freeze
+  (Decision 24), and all other lodged specifications are **unchanged**.
+- The recovery-grid binding criteria, R̂/ESS convergence gates, and PPC
+  trigger scheme are **unchanged**; they are simply applied per unit.
+
+## A7. Exact preregistration edits to apply on lodgement
+
+To be applied to `preregistration-draft.md` (the living `main` copy) in
+lockstep with lodgement; the lodged authority remains git tag
+`osf-lodgement-2026-05-20` until then:
+
+1. **§3 (H3a specification):** add letter mass as a co-registered parallel
+   confirmatory measure for H3a + variance partition, with the per-unit
+   separate-verdict and no-cross-unit-correction statement (§A5.2, §A5.3).
+2. **§5 line 388 (letter-count alternative analysis):** reframe from
+   "exploratory cross-check / lesser of two evils / not a replacement" to the
+   two-measure framework; cross-reference the content-residual derived
+   quantity.
+3. **§5:** add the content-residual derived quantity (§A5.4); note §5
+   exploratories run under both units; note subsumption of backlog item 5.
+4. **§6 effect-size table:** add (a) a letter-mass H3a `f_within` verdict row
+   (same three-way rule), (b) a second H2.1 row for the letter-mass recovery
+   grid, and (c) a content-residual descriptive row (no threshold).
+5. **§7 / §11:** record this amendment in the planned-deviations text and the
+   §11 post-lodgement amendment trail.
+6. **`preregistration-changelog.md`:** add a dated amendment section.
+
+## A8. Provenance
+
+- **Statistical reasoning recorded under the project's standing
+  critical-friend rule:** the no-cross-unit-correction decision (§A5.3) and
+  the scoping of the letter-mass confirmatory family to the cross-section
+  (§A5.2, §A5.5) are the two statistically load-bearing choices in this
+  amendment and are justified inline.
+- **Artefacts:** `runs/2026-05-26-letter-count-probe/` (probe);
+  `runs/2026-05-26-recovery-grid-two-unit/` (two-grid validation);
+  Observations 58–60 in `docs/notes/reflections/working-notes.md`.
+- **Repository state:** edits to be applied on `main`; a new lodgement tag
+  will be cut when the amendment is lodged to OSF.
