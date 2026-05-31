@@ -199,8 +199,10 @@ uncertainty.
 
 ```bash
 ssh zbook
-source ~/cc-scratch/s5/s5-env.sh          # threading + PYTENSOR_FLAGS + TMPDIR
-$PY runs/2026-05-30-s5-small-n-trajectories/code/orchestrate.py \
+# Tracked wrapper: sets threading / PYTENSOR_FLAGS / TMPDIR hygiene in the shell,
+# then execs orchestrate.py. Supersedes the untracked s5-env.sh; because the
+# launch command IS the wrapper, the environment can never be forgotten.
+bash runs/2026-05-30-s5-small-n-trajectories/code/run-production.sh \
     --confirm-production \
     --out-base runs/2026-05-30-s5-small-n-trajectories/code/production
 ```
@@ -208,7 +210,7 @@ $PY runs/2026-05-30-s5-small-n-trajectories/code/orchestrate.py \
 Dry run (prints plan + estimate, samples nothing):
 
 ```bash
-$PY runs/2026-05-30-s5-small-n-trajectories/code/orchestrate.py \
+bash runs/2026-05-30-s5-small-n-trajectories/code/run-production.sh \
     --bench-json runs/2026-05-30-s5-small-n-trajectories/code/benchmark-results.json
 ```
 
