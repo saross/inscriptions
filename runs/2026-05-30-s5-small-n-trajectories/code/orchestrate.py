@@ -472,8 +472,12 @@ def main() -> int:
     p.add_argument("--subsample-parallel", type=int, default=8)
     p.add_argument("--seed", type=int, default=2026)
     # Benchmark inputs for the dry-run estimate (seconds).
-    p.add_argument("--bench-json", type=Path, default=None,
-                   help="JSON of measured timings to populate the estimate.")
+    p.add_argument(
+        "--bench-json", type=Path,
+        default=Path(__file__).resolve().parent / "benchmark-results.json",
+        help="JSON of measured timings to populate the estimate (defaults to "
+             "benchmark-results.json beside this script; falls back to "
+             "provisional placeholders if absent).")
     args = p.parse_args()
 
     bench = None
