@@ -69,13 +69,55 @@ import pandas as pd
 
 ENV_LO: int = -50          # 50 BC, lower envelope edge.
 ENV_HI: int = 350          # AD 350, upper envelope edge.
-BIN_WIDTH: int = 25        # years per bin.
+BIN_WIDTH: int = 25        # DEFAULT years per bin (25y primary grid; spec §3).
 N_FLOOR: int = 50          # small-N estimation floor (Crema 2025).
 N_THRESHOLD: int = 1549    # confirmatory threshold (prereg §6); large anchors above.
 
-# Bin edges: -50, -25, 0, ..., 350  -> 17 edges, 16 bins.
-BIN_EDGES: np.ndarray = np.arange(ENV_LO, ENV_HI + BIN_WIDTH, BIN_WIDTH, dtype=float)
-N_BINS: int = len(BIN_EDGES) - 1  # == 16
+# Supported bin widths. 25y is the primary grid (16 bins); 50y is the
+# robustness check (8 bins). Both divide the 400-year envelope evenly and the
+# 50y edges are a SUBSET of the 25y edges (see ``make_grid`` / ``--verify``),
+# so the 50y grid NESTS the 25y grid: every 50y bin is exactly the union of two
+# adjacent 25y bins. This nesting is what makes the bin-width robustness check
+# a clean coarsening rather than an independent re-gridding (spec §3).
+SUPPORTED_BIN_WIDTHS: tuple[int, ...] = (25, 50)
+
+
+def make_grid(bin_width: int = BIN_WIDTH) -> tuple[np.ndarray, int]:
+    """Return ``(bin_edges, n_bins)`` for a given bin width over the envelope.
+
+    The envelope ``[ENV_LO, ENV_HI]`` (50 BC – AD 350, span 400 years) is divided
+    into equal-width bins. Bin ``t`` covers the half-open interval
+    ``[edge_t, edge_{t+1})``.
+
+    Args:
+        bin_width: Years per bin. Must divide the 400-year envelope span evenly
+            (25 -> 16 bins, 50 -> 8 bins). Other divisors of 400 (e.g. 100)
+            would also work but only 25 and 50 are used by §5.
+
+    Returns:
+        ``(bin_edges, n_bins)``: a length ``n_bins + 1`` float array of edges
+        (``ENV_LO, ENV_LO + bin_width, ..., ENV_HI``) and the bin count.
+
+    Raises:
+        ValueError: If ``bin_width`` does not divide the envelope span evenly.
+    """
+    span = ENV_HI - ENV_LO
+    if bin_width <= 0 or span % bin_width != 0:
+        raise ValueError(
+            f"bin_width={bin_width} must be a positive even divisor of the "
+            f"{span}-year envelope span; got remainder {span % bin_width}."
+        )
+    edges = np.arange(ENV_LO, ENV_HI + bin_width, bin_width, dtype=float)
+    return edges, len(edges) - 1
+
+
+# Module-level DEFAULT grid (25y, 16 bins). Kept as importable constants so the
+# downstream single-city / hierarchical models (which read ``dp.N_BINS``,
+# ``dp.BIN_EDGES``, ``dp.BIN_WIDTH``) continue to work unchanged at the primary
+# grid. The 50y grid is selected per-call via ``--bin-width`` / ``make_grid``.
+BIN_EDGES: np.ndarray
+N_BINS: int
+BIN_EDGES, N_BINS = make_grid(BIN_WIDTH)  # 17 edges, 16 bins.
 
 # Default corpus location (relative to the repo root).
 DEFAULT_PARQUET = Path(
@@ -126,7 +168,9 @@ def _most_common_province(values: pd.Series) -> object:
 # Filtering.
 # --------------------------------------------------------------------------- #
 
-def load_and_filter(parquet_path: Path) -> tuple[pd.DataFrame, dict]:
+def load_and_filter(
+    parquet_path: Path, *, letter_col: str = "letter_count_conservative"
+) -> tuple[pd.DataFrame, dict]:
     """Load the corpus and apply the §5 target-set filter + envelope clip.
 
     The Rome-exclusion uses an EXACT match (a city is Rome iff
@@ -146,8 +190,21 @@ def load_and_filter(parquet_path: Path) -> tuple[pd.DataFrame, dict]:
         ``stats`` is a dict of audit counts for the verification printout.
     """
     cols = [CITY_COL, POP_COL, PROV_COL, NB_COL, NA_COL]
-    df = pd.read_parquet(parquet_path, columns=cols)
-    stats: dict = {"rows_loaded": len(df)}
+    # Read the letter-count column too when present (for the letter-mass unit).
+    # Probe the schema first so a corpus without the column still loads.
+    import pyarrow.parquet as _pq
+    schema_names = set(_pq.read_schema(parquet_path).names)
+    has_letters = letter_col in schema_names
+    read_cols = cols + ([letter_col] if has_letters else [])
+    df = pd.read_parquet(parquet_path, columns=read_cols)
+    stats: dict = {"rows_loaded": len(df), "has_letter_col": bool(has_letters)}
+    if not has_letters:
+        df[letter_col] = np.nan  # letter unit unavailable; weight column absent.
+    # Normalise the letter weight: non-finite / non-positive -> 0 (those rows
+    # contribute no letter mass but still exist as inscription events).
+    lw = pd.to_numeric(df[letter_col], errors="coerce").to_numpy(dtype=float)
+    lw = np.where(np.isfinite(lw) & (lw > 0), lw, 0.0)
+    df = df.assign(letter_w=lw)
 
     # 1. Hanson-matched: city label AND population estimate both present.
     matched = df[df[CITY_COL].notna() & df[POP_COL].notna()].copy()
@@ -211,14 +268,20 @@ def load_and_filter(parquet_path: Path) -> tuple[pd.DataFrame, dict]:
 # Aoristic weighting.
 # --------------------------------------------------------------------------- #
 
-def aoristic_matrix(nb: np.ndarray, na: np.ndarray) -> np.ndarray:
+def aoristic_matrix(
+    nb: np.ndarray,
+    na: np.ndarray,
+    *,
+    bin_edges: np.ndarray | None = None,
+    bin_width: int | None = None,
+) -> np.ndarray:
     """Build the per-inscription aoristic bin-weight matrix.
 
     For inscription ``i`` with clipped interval ``[nb_i, na_i)`` and bin ``t``
     covering ``[edge_t, edge_{t+1})``, the weight is the fraction of bin ``t``
     covered by the interval::
 
-        a[i, t] = max(0, min(na_i, edge_{t+1}) - max(nb_i, edge_t)) / BIN_WIDTH
+        a[i, t] = max(0, min(na_i, edge_{t+1}) - max(nb_i, edge_t)) / bin_width
 
     This lies in ``[0, 1]``: 1.0 when the whole bin is inside the interval,
     0.0 when they are disjoint. It is the "fraction of bin covered" convention
@@ -227,17 +290,25 @@ def aoristic_matrix(nb: np.ndarray, na: np.ndarray) -> np.ndarray:
     Args:
         nb: 1-D array of clipped ``not_before`` values (length ``N``).
         na: 1-D array of clipped ``not_after`` values (length ``N``).
+        bin_edges: Bin-edge array (length ``n_bins + 1``). Defaults to the
+            module 25y grid (``BIN_EDGES``) for backward compatibility.
+        bin_width: Years per bin (the divisor). Defaults to the module 25y
+            ``BIN_WIDTH``. Must equal the spacing implied by ``bin_edges``.
 
     Returns:
-        Dense ``(N, N_BINS)`` float64 array of aoristic weights.
+        Dense ``(N, n_bins)`` float64 array of aoristic weights.
     """
+    if bin_edges is None:
+        bin_edges = BIN_EDGES
+    if bin_width is None:
+        bin_width = BIN_WIDTH
     nb = np.asarray(nb, dtype=float)[:, None]            # (N, 1)
     na = np.asarray(na, dtype=float)[:, None]            # (N, 1)
-    lo = BIN_EDGES[:-1][None, :]                         # (1, 16) bin lower edges
-    hi = BIN_EDGES[1:][None, :]                          # (1, 16) bin upper edges
-    overlap = np.minimum(na, hi) - np.maximum(nb, lo)    # (N, 16) raw overlap
+    lo = bin_edges[:-1][None, :]                         # (1, n_bins) lower edges
+    hi = bin_edges[1:][None, :]                          # (1, n_bins) upper edges
+    overlap = np.minimum(na, hi) - np.maximum(nb, lo)    # (N, n_bins) raw overlap
     overlap = np.clip(overlap, 0.0, None)                # disjoint -> 0
-    return overlap / BIN_WIDTH
+    return overlap / bin_width
 
 
 # --------------------------------------------------------------------------- #
@@ -259,22 +330,41 @@ def bucket_of(n: int) -> str:
     return "large_anchor"
 
 
-def prepare(parquet_path: Path, out_dir: Path) -> tuple[pd.DataFrame, dict]:
+def prepare(
+    parquet_path: Path,
+    out_dir: Path,
+    *,
+    bin_width: int = BIN_WIDTH,
+    letter_col: str = "letter_count_conservative",
+) -> tuple[pd.DataFrame, dict]:
     """Run the full data-prep pipeline and cache per-city aoristic matrices.
 
     Caches the aoristic matrix for every TARGET and LARGE-ANCHOR city (the
     cities that can actually be fitted); below-floor cities appear in the city
     index for completeness but get no cached matrix.
 
+    Each cached ``.npz`` also stores the per-inscription ``letter_w`` weight
+    (``letter_count_conservative``, NaN/missing -> 0) so the letter-mass model
+    variant (spec §A5.1 / Obs 61–62) can weight each inscription's aoristic row
+    by its letter count without re-reading the parquet. The inscription-count
+    unit ignores ``letter_w`` (every inscription weight 1).
+
     Args:
         parquet_path: Path to the filtered LIRE parquet.
         out_dir: Directory to write the cache into (created if absent).
+        bin_width: Years per bin (25 primary, 50 robustness; spec §3). Selects
+            the temporal grid via :func:`make_grid`.
+        letter_col: Parquet column holding the per-inscription letter count
+            (default ``letter_count_conservative``, the conservative measure).
 
     Returns:
         ``(city_index, stats)``: the per-city index frame and the audit stats.
     """
     out_dir.mkdir(parents=True, exist_ok=True)
-    df, stats = load_and_filter(parquet_path)
+    bin_edges, n_bins = make_grid(bin_width)
+    df, stats = load_and_filter(parquet_path, letter_col=letter_col)
+    stats["bin_width"] = bin_width
+    stats["n_bins"] = n_bins
 
     # Per-city counts and metadata. Province is the MOST-COMMON value across the
     # city's rows (alphabetical tiebreak), not the arbitrary first row (audit
@@ -311,39 +401,58 @@ def prepare(parquet_path: Path, out_dir: Path) -> tuple[pd.DataFrame, dict]:
         city_index.loc[city_index["bucket"] == "large_anchor", "city"]
     )
 
-    # Cache per-city aoristic matrices for fittable cities.
+    # Province / singleton structure over the TARGET set (the §5 hierarchy).
+    # A "singleton" province is one with exactly one TARGET city; these cities
+    # pool toward the global trajectory (spec §4). Counted here for the cache
+    # verification printout so the 45-provinces / 10-singletons claim is checked
+    # at build time rather than assumed.
+    target_idx = city_index[city_index["bucket"] == "target"]
+    prov_counts = target_idx["province"].value_counts()
+    stats["n_provinces_target"] = int(len(prov_counts))
+    stats["n_singleton_provinces"] = int((prov_counts == 1).sum())
+
+    # Cache per-city aoristic matrices for fittable cities, at the chosen grid.
     fittable = city_index[city_index["bucket"].isin(["target", "large_anchor"])]
     for city in fittable["city"]:
         sub = df[df[CITY_COL] == city]
         nb = sub["nb_clip"].to_numpy()
         na = sub["na_clip"].to_numpy()
-        a = aoristic_matrix(nb, na)
+        a = aoristic_matrix(nb, na, bin_edges=bin_edges, bin_width=bin_width)
         np.savez_compressed(
             out_dir / f"aoristic-{_safe_name(city)}.npz",
             city=np.array(city),
             province=np.array(str(meta_prov[city])),
             pop_est=np.array(float(meta_pop[city])),
             A=a.astype(np.float64),
+            # Per-inscription letter weight (letter_count_conservative), parallel
+            # to A's rows; 0 where the count was missing/non-positive. Used by
+            # the letter-mass model variant; ignored by the inscription unit.
+            letter_w=sub["letter_w"].to_numpy().astype(np.float64),
             nb_clip=nb.astype(np.int64),
             na_clip=na.astype(np.int64),
-            bin_edges=BIN_EDGES,
+            bin_edges=bin_edges,
+            bin_width=np.array(bin_width),
         )
 
     city_index.to_parquet(out_dir / "city-index.parquet", index=False)
 
-    # Aoristic sanity stats on the WHOLE surviving corpus (cheap, global).
-    a_all = aoristic_matrix(df["nb_clip"].to_numpy(), df["na_clip"].to_numpy())
+    # Aoristic sanity stats on the WHOLE surviving corpus (cheap, global), at
+    # the chosen grid.
+    a_all = aoristic_matrix(
+        df["nb_clip"].to_numpy(), df["na_clip"].to_numpy(),
+        bin_edges=bin_edges, bin_width=bin_width,
+    )
     stats["a_min"] = float(a_all.min())
     stats["a_max"] = float(a_all.max())
-    # Coverage identity on a sample row: sum_t a*BIN_WIDTH == clipped length.
+    # Coverage identity on a sample row: sum_t a*bin_width == clipped length.
     sample_i = 0
     samp_len = int(df["na_clip"].iloc[sample_i] - df["nb_clip"].iloc[sample_i])
-    samp_cov = float(a_all[sample_i].sum() * BIN_WIDTH)
+    samp_cov = float(a_all[sample_i].sum() * bin_width)
     stats["sample_clipped_length"] = samp_len
     stats["sample_aoristic_coverage"] = samp_cov
     # And the same identity across ALL rows (max abs error), as a strong check.
     lengths = (df["na_clip"].to_numpy() - df["nb_clip"].to_numpy()).astype(float)
-    cov = a_all.sum(axis=1) * BIN_WIDTH
+    cov = a_all.sum(axis=1) * bin_width
     stats["coverage_max_abs_err"] = float(np.max(np.abs(cov - lengths)))
 
     return city_index, stats
@@ -357,19 +466,30 @@ def load_city(out_dir: Path, city: str) -> dict:
         city: Exact city name (as in ``urban_context_city``).
 
     Returns:
-        Dict with keys ``city``, ``province``, ``pop_est``, ``A`` (N x 16),
-        ``nb_clip``, ``na_clip``, ``bin_edges``.
+        Dict with keys ``city``, ``province``, ``pop_est``, ``A`` (N x n_bins),
+        ``letter_w`` (N,), ``nb_clip``, ``na_clip``, ``bin_edges``, ``bin_width``.
+        ``letter_w`` is the per-inscription letter-count weight (0 where the
+        count was missing); older caches without it fall back to all-ones.
     """
     path = out_dir / f"aoristic-{_safe_name(city)}.npz"
     with np.load(path, allow_pickle=True) as z:
+        A = z["A"]
+        # Backward-compatible: older caches predate letter_w / bin_width.
+        letter_w = (
+            z["letter_w"] if "letter_w" in z.files
+            else np.ones(A.shape[0], dtype=np.float64)
+        )
+        bin_width = int(z["bin_width"]) if "bin_width" in z.files else BIN_WIDTH
         return {
             "city": str(z["city"]),
             "province": str(z["province"]),
             "pop_est": float(z["pop_est"]),
-            "A": z["A"],
+            "A": A,
+            "letter_w": np.asarray(letter_w, dtype=np.float64),
             "nb_clip": z["nb_clip"],
             "na_clip": z["na_clip"],
             "bin_edges": z["bin_edges"],
+            "bin_width": bin_width,
         }
 
 
@@ -382,8 +502,10 @@ def _print_verification(stats: dict) -> None:
     print("=" * 68)
     print("DATAPREP VERIFICATION  (§5 small-N trajectories, Layer A)")
     print("=" * 68)
+    _bw = stats.get("bin_width", BIN_WIDTH)
+    _nb = stats.get("n_bins", N_BINS)
     print(f"  envelope            : [{ENV_LO}, {ENV_HI}]  "
-          f"({N_BINS} bins x {BIN_WIDTH}y)")
+          f"({_nb} bins x {_bw}y)")
     print(f"  rows loaded         : {stats['rows_loaded']:>7}")
     print(f"  Hanson-matched      : {stats['rows_hanson_matched']:>7}")
     print(f"  Rome rows excluded  : {stats['rows_rome_excluded']:>7}")
@@ -418,7 +540,14 @@ def _print_verification(stats: dict) -> None:
     print(f"  below floor (N<50)  : {stats['n_below_floor']:>7}")
     print(f"  cities >1 province  : {stats['n_cities_multi_province']:>7}   "
           f"(province assigned by mode, alphabetical tiebreak)")
+    print(f"  provinces (target)  : {stats.get('n_provinces_target', '?'):>7}   "
+          f"(distinct provinces over the target set)")
+    print(f"  singleton provinces : {stats.get('n_singleton_provinces', '?'):>7}   "
+          f"(one target city; pool to global, spec §4)")
     print(f"  large-anchor names  : {stats['large_anchor_names']}")
+    print(f"  letter column       : "
+          f"{'present' if stats.get('has_letter_col') else 'ABSENT'}   "
+          f"(letter_count_conservative; letter-mass unit)")
     print("-" * 68)
     _a_ok = (
         "in [0,1] — OK"
@@ -433,13 +562,25 @@ def _print_verification(stats: dict) -> None:
                - stats["sample_clipped_length"]) < 1e-6
         else "MISMATCH"
     )
-    print(f"  sample row coverage : sum_t a*{BIN_WIDTH} = "
+    print(f"  sample row coverage : sum_t a*{_bw} = "
           f"{stats['sample_aoristic_coverage']:.4f}  vs clipped length "
           f"{stats['sample_clipped_length']}  "
           f"({_cov_ok})")
-    print(f"  coverage identity   : max |sum_t a*{BIN_WIDTH} - len| over all rows "
+    print(f"  coverage identity   : max |sum_t a*{_bw} - len| over all rows "
           f"= {stats['coverage_max_abs_err']:.2e}")
     print("=" * 68)
+
+
+def default_cache_dir(bin_width: int = BIN_WIDTH) -> Path:
+    """Canonical cache directory for a given bin width.
+
+    25y (primary) keeps the historical ``code/prepared`` path so existing
+    callers and caches are unaffected; coarser grids get a suffixed sibling
+    (e.g. ``code/prepared-50y``). All §5 scripts derive their default cache
+    location from this function, so the 25y / 50y split is consistent.
+    """
+    base = Path(__file__).resolve().parent
+    return base / ("prepared" if bin_width == BIN_WIDTH else f"prepared-{bin_width}y")
 
 
 def main() -> int:
@@ -450,9 +591,14 @@ def main() -> int:
         help="Path to the filtered LIRE parquet (default: repo-relative).",
     )
     parser.add_argument(
-        "--out-dir", type=Path,
-        default=Path(__file__).resolve().parent / "prepared",
-        help="Cache output directory (default: code/prepared).",
+        "--bin-width", type=int, default=BIN_WIDTH,
+        choices=SUPPORTED_BIN_WIDTHS,
+        help="Years per bin: 25 (primary, 16 bins) or 50 (robustness, 8 bins).",
+    )
+    parser.add_argument(
+        "--out-dir", type=Path, default=None,
+        help="Cache output directory (default: code/prepared for 25y, "
+             "code/prepared-<width>y otherwise).",
     )
     parser.add_argument(
         "--verify", action="store_true",
@@ -464,10 +610,11 @@ def main() -> int:
         print(f"FATAL: parquet not found at {args.parquet}")
         return 2
 
-    _city_index, stats = prepare(args.parquet, args.out_dir)
+    out_dir = args.out_dir or default_cache_dir(args.bin_width)
+    _city_index, stats = prepare(args.parquet, out_dir, bin_width=args.bin_width)
     if args.verify:
         _print_verification(stats)
-    print(f"\nCache written to: {args.out_dir.resolve()}")
+    print(f"\nCache written to: {out_dir.resolve()}")
     return 0
 
 

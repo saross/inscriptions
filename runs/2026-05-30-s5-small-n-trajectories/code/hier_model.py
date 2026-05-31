@@ -155,11 +155,19 @@ def assemble(out_dir: Path, cities: list[str]) -> HierData:
     prov_of: dict[str, str] = {}
     A_by_city: dict[str, np.ndarray] = {}
     N_list: list[int] = []
+    T: int | None = None  # bin count, inferred from the first matrix (grid-agnostic)
     for city in cities:
         b = dp.load_city(out_dir, city)
         A = np.asarray(b["A"], dtype=np.float64)
-        if A.ndim != 2 or A.shape[1] != T_BINS:
-            raise ValueError(f"{city}: A must be (N, {T_BINS}); got {A.shape}.")
+        if A.ndim != 2:
+            raise ValueError(f"{city}: A must be 2-D (N, T); got {A.shape}.")
+        if T is None:
+            T = A.shape[1]
+        elif A.shape[1] != T:
+            raise ValueError(
+                f"{city}: bin count {A.shape[1]} != {T} (mixed grids in one "
+                "subset — assemble a single bin-width cache at a time)."
+            )
         if np.any(A.sum(axis=1) <= 0):
             raise ValueError(f"{city}: has zero-mass inscription(s).")
         prov_of[city] = b["province"]
@@ -238,7 +246,7 @@ def build_model(
     """
     C = len(data.cities)
     P = len(data.prov_names)        # number of non-singleton provinces (u tiers)
-    T = T_BINS
+    T = data.A_all.shape[1]         # bin count, inferred from the data (grid-agnostic)
 
     alpha_mu = float(np.log(max(data.anchor_n_mean, 1.0) / T))
 
@@ -343,6 +351,7 @@ def fit(
     draws: int = 1000,
     tune: int = 1000,
     chains: int = 4,
+    cores: int | None = None,
     target_accept: float = 0.99,
     random_seed: int | None = None,
     progressbar: bool = False,
@@ -353,6 +362,8 @@ def fit(
     Args:
         data: Assembled :class:`HierData`.
         draws, tune, chains: Sampler sizing.
+        cores: Chains to run in parallel (``None`` -> = chains). Cap it when
+            several monolithic fits share the box under a process pool.
         target_accept: NUTS target acceptance (default 0.99; matches ``model.py``
             — the non-centred RW1 funnel needs it).
         random_seed: Seed.
@@ -368,6 +379,7 @@ def fit(
             draws=draws,
             tune=tune,
             chains=chains,
+            cores=cores if cores is not None else chains,
             target_accept=target_accept,
             random_seed=random_seed,
             progressbar=progressbar,

@@ -51,4 +51,11 @@ __pycache__/
 # §5 Layer-A derived data caches and Python build cruft (regenerable via
 # dataprep.py; kept out of git like the source parquet).
 runs/2026-05-30-s5-small-n-trajectories/code/prepared/
+runs/2026-05-30-s5-small-n-trajectories/code/prepared-50y/
 runs/2026-05-30-s5-small-n-trajectories/code/__pycache__/
+# §5 production posteriors + heavy PNG caches (regenerable via orchestrate.py;
+# NOT committed per the production brief — only code + small text artefacts are).
+runs/2026-05-30-s5-small-n-trajectories/code/production/
+runs/2026-05-30-s5-small-n-trajectories/code/*.nc
+runs/2026-05-30-s5-small-n-trajectories/code/letter-ppc.png
+runs/2026-05-30-s5-small-n-trajectories/code/subsample-recover.png

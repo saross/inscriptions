@@ -1,0 +1,64 @@
+{
+  "test_cities": [
+    "Pompeii",
+    "Capua",
+    "Lugdunum",
+    "Anagnia",
+    "Gabii"
+  ],
+  "N": [
+    4266,
+    918,
+    151,
+    71,
+    50
+  ],
+  "total_letters": [
+    83807.0,
+    43901.0,
+    15857.0,
+    4789.0,
+    2639.0
+  ],
+  "bin_width": 25,
+  "sampler": {
+    "draws": 1000,
+    "tune": 1000,
+    "chains": 4,
+    "target_accept": 0.99
+  },
+  "selected_form": "nb",
+  "selection_rationale": "form=nb: coverage 0.975 (target ~0.95), mean log10 PPI width 3.05, median |pp-z| 0.15, gates_pass=True.",
+  "forms": {
+    "gamma": {
+      "obs_form": "gamma",
+      "convergence": {
+        "max_rhat": 1.01,
+        "min_ess_bulk": 2012.0,
+        "n_divergences": 0,
+        "worst_rhat_param": "z_v[Gabii, 14]",
+        "worst_ess_param": "sigma_g"
+      },
+      "gates_pass": false,
+      "coverage": 0.925,
+      "mean_log10_ppi_width": 2.412695061735845,
+      "median_abs_pp_z": 0.16266455722907297,
+      "frac_cells_abs_z_gt3": 0.0
+    },
+    "nb": {
+      "obs_form": "nb",
+      "convergence": {
+        "max_rhat": 1.0,
+        "min_ess_bulk": 1251.0,
+        "n_divergences": 0,
+        "worst_rhat_param": "alpha_g",
+        "worst_ess_param": "sigma_g"
+      },
+      "gates_pass": true,
+      "coverage": 0.975,
+      "mean_log10_ppi_width": 3.05444279403869,
+      "median_abs_pp_z": 0.1532872471893963,
+      "frac_cells_abs_z_gt3": 0.0
+    }
+  }
+}

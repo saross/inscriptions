@@ -49,17 +49,20 @@ import numpy as np
 import pymc as pm
 import pytensor.tensor as pt
 
-T_BINS: int = 16  # number of temporal bins (must match dataprep N_BINS).
+T_BINS: int = 16  # DEFAULT number of temporal bins (25y grid); see build_model.
 
 
 def build_model(A: np.ndarray, *, level_sd: float = 1.0,
                 sigma_sd: float = 0.5) -> pm.Model:
     """Build the single-city no-pooling Poisson-aoristic model.
 
+    The number of bins ``T`` is INFERRED from ``A.shape[1]`` (16 at the 25y
+    grid, 8 at the 50y grid), so the same model serves both bin widths.
+
     Args:
-        A: Aoristic weight matrix, shape ``(N, T_BINS)``; ``A[i, t]`` is the
-            fraction of bin ``t`` covered by inscription ``i``'s clipped
-            interval (in ``[0, 1]``).
+        A: Aoristic weight matrix, shape ``(N, T)``; ``A[i, t]`` is the fraction
+            of bin ``t`` covered by inscription ``i``'s clipped interval (in
+            ``[0, 1]``). ``T`` is read from the matrix, not assumed.
         level_sd: Prior SD on the overall log-level ``alpha`` (default 1.0).
         sigma_sd: Scale of the HalfNormal prior on the RW innovation SD
             (default 0.5).
@@ -70,15 +73,14 @@ def build_model(A: np.ndarray, *, level_sd: float = 1.0,
         posterior extraction.
 
     Raises:
-        ValueError: If ``A`` is not 2-D with ``T_BINS`` columns, contains
-            negative entries, or has any inscription with zero total weight
-            (which would make ``log(per_insc)`` undefined).
+        ValueError: If ``A`` is not 2-D, contains negative entries, or has any
+            inscription with zero total weight (which would make
+            ``log(per_insc)`` undefined).
     """
     A = np.asarray(A, dtype=np.float64)
-    if A.ndim != 2 or A.shape[1] != T_BINS:
-        raise ValueError(
-            f"A must have shape (N, {T_BINS}); got {A.shape}."
-        )
+    if A.ndim != 2:
+        raise ValueError(f"A must be 2-D (N, T); got shape {A.shape}.")
+    T = A.shape[1]
     n_insc = A.shape[0]
     if n_insc == 0:
         raise ValueError("A has zero rows (no inscriptions).")
@@ -93,14 +95,14 @@ def build_model(A: np.ndarray, *, level_sd: float = 1.0,
         )
 
     # log(N / T) anchors alpha at the flat-rate level (counts spread evenly).
-    alpha_mu = float(np.log(n_insc / T_BINS))
+    alpha_mu = float(np.log(n_insc / T))
 
     with pm.Model() as model:
         a_data = pm.Data("A", A)  # (N, T) constant aoristic design matrix.
 
         # --- Non-centred RW1 shape (zero-sum) -------------------------------
         sigma = pm.HalfNormal("sigma", sigma_sd)
-        z_raw = pm.Normal("z_raw", 0.0, 1.0, shape=T_BINS)
+        z_raw = pm.Normal("z_raw", 0.0, 1.0, shape=T)
         z = pt.cumsum(z_raw) * sigma
         s = pm.Deterministic("s", z - pt.mean(z))  # zero-sum smooth deviation.
 
@@ -120,7 +122,8 @@ def build_model(A: np.ndarray, *, level_sd: float = 1.0,
 
 
 def fit(A: np.ndarray, *, draws: int = 1000, tune: int = 1000,
-        chains: int = 4, target_accept: float = 0.99,
+        chains: int = 4, cores: int | None = None,
+        target_accept: float = 0.99,
         random_seed: int | None = None, progressbar: bool = False,
         **model_kwargs):
     """Build and sample the single-city model.
@@ -130,6 +133,10 @@ def fit(A: np.ndarray, *, draws: int = 1000, tune: int = 1000,
         draws: Posterior draws per chain.
         tune: Tuning (warm-up) steps per chain.
         chains: Number of chains.
+        cores: Chains to run in parallel (``None`` -> pymc default = chains).
+            Set explicitly (e.g. ``cores=2``) when many fits run concurrently
+            under a process pool, so each fit's chain parallelism is capped and
+            the pool — not pymc — controls total core use.
         target_accept: NUTS target acceptance probability. Default 0.99: the
             non-centred RW1 has a mild funnel near ``sigma -> 0`` that produces
             occasional divergences at 0.95; raising to 0.99 clears them with no
@@ -148,6 +155,7 @@ def fit(A: np.ndarray, *, draws: int = 1000, tune: int = 1000,
             draws=draws,
             tune=tune,
             chains=chains,
+            cores=cores if cores is not None else chains,
             target_accept=target_accept,
             random_seed=random_seed,
             progressbar=progressbar,
