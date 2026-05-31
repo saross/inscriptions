@@ -175,11 +175,24 @@ def assemble(out_dir: Path, cities: list[str], *, bin_width: int | None = None) 
     prov_of: dict[str, str] = {}
     N_list, tot_list = [], []
     bw = bin_width
+    T: int | None = None  # bin count, inferred from the first matrix (grid-agnostic)
     for city in cities:
         b = dp.load_city(out_dir, city)
         if bw is None:
             bw = int(b["bin_width"])
         A = np.asarray(b["A"], dtype=np.float64)
+        if A.ndim != 2:
+            raise ValueError(f"{city}: A must be 2-D (N, T); got {A.shape}.")
+        # Mixed-grid guard (mirrors hier_model.assemble): every city's aoristic
+        # matrix must share the same bin count, else the later np.stack would
+        # raise an opaque shape error. Fail early with a clear message.
+        if T is None:
+            T = A.shape[1]
+        elif A.shape[1] != T:
+            raise ValueError(
+                f"{city}: bin count {A.shape[1]} != {T} (mixed grids in one "
+                "subset — assemble a single bin-width cache at a time)."
+            )
         w = np.asarray(b["letter_w"], dtype=np.float64)
         y = letter_spa(A, w, bw)
         if y.sum() <= 0:

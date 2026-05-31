@@ -6,9 +6,10 @@ model.py — §5 small-N city-trajectory harness, Layer A single-city model.
 
 The single-city, no-pooling Poisson-process aoristic model — the likelihood
 under test at the smoke stage. One model is built per city from its aoristic
-matrix ``A`` (shape ``N x 16``).
+matrix ``A`` (shape ``N x T``, where ``T`` is INFERRED from ``A.shape[1]`` — 16
+at the 25y grid, 8 at the 50y grid — never assumed).
 
-Model (per city with ``N`` inscriptions, ``T = 16`` bins):
+Model (per city with ``N`` inscriptions and ``T`` bins, ``T = A.shape[1]``):
 
 - Non-centred first-order random walk (RW1) for the log-rate *shape*::
 

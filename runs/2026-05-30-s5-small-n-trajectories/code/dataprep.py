@@ -90,8 +90,9 @@ def make_grid(bin_width: int = BIN_WIDTH) -> tuple[np.ndarray, int]:
     ``[edge_t, edge_{t+1})``.
 
     Args:
-        bin_width: Years per bin. Must divide the 400-year envelope span evenly
-            (25 -> 16 bins, 50 -> 8 bins). Other divisors of 400 (e.g. 100)
+        bin_width: Years per bin. Must be a whole-number (exact) divisor of the
+            400-year envelope span — i.e. divide it with zero remainder
+            (25 -> 16 bins, 50 -> 8 bins). Other exact divisors of 400 (e.g. 100)
             would also work but only 25 and 50 are used by §5.
 
     Returns:
@@ -99,13 +100,15 @@ def make_grid(bin_width: int = BIN_WIDTH) -> tuple[np.ndarray, int]:
         (``ENV_LO, ENV_LO + bin_width, ..., ENV_HI``) and the bin count.
 
     Raises:
-        ValueError: If ``bin_width`` does not divide the envelope span evenly.
+        ValueError: If ``bin_width`` is not a whole-number (exact) divisor of the
+            envelope span (leaves a non-zero remainder).
     """
     span = ENV_HI - ENV_LO
     if bin_width <= 0 or span % bin_width != 0:
         raise ValueError(
-            f"bin_width={bin_width} must be a positive even divisor of the "
-            f"{span}-year envelope span; got remainder {span % bin_width}."
+            f"bin_width={bin_width} must be a positive whole-number (exact) "
+            f"divisor of the {span}-year envelope span; got remainder "
+            f"{span % bin_width}."
         )
     edges = np.arange(ENV_LO, ENV_HI + bin_width, bin_width, dtype=float)
     return edges, len(edges) - 1
@@ -302,6 +305,17 @@ def aoristic_matrix(
         bin_edges = BIN_EDGES
     if bin_width is None:
         bin_width = BIN_WIDTH
+    # Guard the exported invariant: ``bin_width`` is the per-bin normalising
+    # divisor, so it MUST equal the spacing implied by ``bin_edges``. Mismatched
+    # (but individually plausible) values would silently mis-normalise every
+    # weight. Internal callers always pass a consistent pair; this protects
+    # external callers that supply the two args independently.
+    bin_edges = np.asarray(bin_edges, dtype=float)
+    assert np.allclose(np.diff(bin_edges), bin_width), (
+        f"bin_width={bin_width} does not match the spacing implied by "
+        f"bin_edges (diffs={np.unique(np.diff(bin_edges))}); the two args must "
+        "describe the same grid or normalisation is wrong."
+    )
     nb = np.asarray(nb, dtype=float)[:, None]            # (N, 1)
     na = np.asarray(na, dtype=float)[:, None]            # (N, 1)
     lo = bin_edges[:-1][None, :]                         # (1, n_bins) lower edges

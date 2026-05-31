@@ -36,8 +36,11 @@ Parallelism (zbook, 16 physical cores)
   process and samples its 4 chains across 4 cores -> 16 cores for ~4 concurrent
   fits. (25y inscription is the heaviest; 50y and letter are cheaper.)
 - Step 2: ``--subsample-parallel`` workers × ``--subsample-cores`` chains.
-- The orchestrator NEVER samples in its own process — it spawns the fit scripts /
-  workers. Nothing samples on import.
+- Steps 1–2 NEVER sample in the orchestrator's own process — they spawn the fit
+  scripts / pool workers. Step 3's anchor internal-consistency and Pompeii AD-79
+  checks DO call ``m.fit()`` in-process, but only AFTER the Step 1–2 process
+  pools have closed, under the same thread-pinned environment, so they never
+  contend with the spawned fits. Nothing samples on import.
 
 SAFETY
 ------
@@ -89,6 +92,13 @@ MONO_CONFIGS = [
 LETTER_OBS_FORM = "nb"  # selected by letter_ppc.py (see PRODUCTION-READY.md).
 
 PINNED_SCALES = {"s_g": 0.3, "s_u": 0.15, "s_v": 0.15}
+
+# Subsample-stage worker count. ONE source of truth shared by the production
+# run (the ``--subsample-parallel`` argparse default) and the dry-run estimate,
+# so the printed estimate models the SAME parallelism the run will actually use.
+# (Previously the estimate hard-coded 4 while the run defaulted to 8, over-
+# stating the subsample stage ~2x.)
+DEFAULT_SUBSAMPLE_PARALLEL = 8
 
 
 # --------------------------------------------------------------------------- #
@@ -338,8 +348,11 @@ def runtime_estimate(bench: dict | None) -> dict:
     mono_wall_serial = (t_mono25_insc + t_mono50_insc
                         + t_mono25_letter + t_mono50_letter)
     # Subsample grid: 7 donors x 5 N x 40 reps = 1400 fits, ~16-way parallel.
+    # Model the parallelism the PRODUCTION RUN will use (the shared default), NOT
+    # the benchmark probe's worker count — the estimate is about the production
+    # run, whose ``--subsample-parallel`` defaults to DEFAULT_SUBSAMPLE_PARALLEL.
     n_sub = 7 * 5 * 40
-    sub_parallel = b.get("subsample_parallel", 4)
+    sub_parallel = DEFAULT_SUBSAMPLE_PARALLEL
     sub_wall = n_sub * t_single / sub_parallel
     return {
         "t_single_s": t_single,
@@ -469,7 +482,8 @@ def main() -> int:
                    default=[50, 100, 200, 300, 500])
     p.add_argument("--subsample-reps", type=int, default=40)
     p.add_argument("--subsample-cores", type=int, default=2)
-    p.add_argument("--subsample-parallel", type=int, default=8)
+    p.add_argument("--subsample-parallel", type=int,
+                   default=DEFAULT_SUBSAMPLE_PARALLEL)
     p.add_argument("--seed", type=int, default=2026)
     # Benchmark inputs for the dry-run estimate (seconds).
     p.add_argument(
@@ -482,7 +496,17 @@ def main() -> int:
 
     bench = None
     if args.bench_json and args.bench_json.exists():
-        bench = json.loads(args.bench_json.read_text())
+        # Absence is already guarded by ``.exists()``; guard MALFORMED content
+        # too. A corrupt benchmark-results.json must fall back to provisional
+        # placeholders (and flag the estimate provisional) rather than crash even
+        # the dry run.
+        try:
+            bench = json.loads(args.bench_json.read_text())
+        except (json.JSONDecodeError, OSError, ValueError) as exc:
+            print(f"WARNING: could not parse {args.bench_json} ({exc}); "
+                  "falling back to provisional placeholder estimate.",
+                  file=sys.stderr)
+            bench = None
 
     if not args.confirm_production:
         print_plan(args.out_base, args, bench)

@@ -143,47 +143,66 @@ def _fit_subsample(args: dict) -> dict:
 
     Imports ``model`` inside the child so each worker has its own pymc/pytensor
     state. Thread pinning is inherited from the parent's environment.
+
+    FAULT TOLERANCE: the whole body is wrapped so a SINGLE failed fit (sampler
+    error, NaN, etc.) returns a marker dict (``ok=False`` with the traceback)
+    rather than raising — a propagating exception through ``fut.result()`` would
+    otherwise abort the entire ~1,400-fit grid and lose every completed fit. The
+    driver counts, logs, and excludes failures, then still writes the partial
+    results.
     """
-    import model as m  # noqa: E402  (local single-city model)
+    import traceback
 
     donor = args["donor"]
     n = args["n"]
     rep = args["rep"]
-    A_full = args["A_full"]              # (N_full, T) donor aoristic matrix
-    truth_shape = np.asarray(args["truth_shape"])
-    draws, tune, chains, cores = args["draws"], args["tune"], args["chains"], args["cores"]
-    target_accept = args["target_accept"]
-    seed = args["seed"]
+    try:
+        import model as m  # noqa: E402  (local single-city model)
 
-    rng = np.random.default_rng(seed)
-    N_full = A_full.shape[0]
-    k = min(n, N_full)
-    idx = rng.choice(N_full, size=k, replace=False)
-    A = A_full[idx]
-    # Guard zero-mass rows (should not occur; dataprep drops them).
-    A = A[A.sum(axis=1) > 0]
+        A_full = args["A_full"]          # (N_full, T) donor aoristic matrix
+        truth_shape = np.asarray(args["truth_shape"])
+        draws, tune, chains, cores = (
+            args["draws"], args["tune"], args["chains"], args["cores"])
+        target_accept = args["target_accept"]
+        seed = args["seed"]
 
-    t0 = time.perf_counter()
-    idata = m.fit(A, draws=draws, tune=tune, chains=chains, cores=cores,
-                  target_accept=target_accept,
-                  random_seed=int(rng.integers(0, 2**31 - 1)),
-                  progressbar=False)
-    wall = time.perf_counter() - t0
+        rng = np.random.default_rng(seed)
+        N_full = A_full.shape[0]
+        k = min(n, N_full)
+        idx = rng.choice(N_full, size=k, replace=False)
+        A = A_full[idx]
+        # Guard zero-mass rows (should not occur; dataprep drops them).
+        A = A[A.sum(axis=1) > 0]
 
-    lam = idata.posterior["lam"]
-    med = lam.median(("chain", "draw")).values
-    lo = lam.quantile(0.025, ("chain", "draw")).values
-    hi = lam.quantile(0.975, ("chain", "draw")).values
-    conv = m.convergence_summary(idata)
-    sc = score_against_truth(med, lo, hi, truth_shape)
+        t0 = time.perf_counter()
+        idata = m.fit(A, draws=draws, tune=tune, chains=chains, cores=cores,
+                      target_accept=target_accept,
+                      random_seed=int(rng.integers(0, 2**31 - 1)),
+                      progressbar=False)
+        wall = time.perf_counter() - t0
 
-    return {
-        "donor": donor, "n": n, "rep": rep, "N_realised": int(A.shape[0]),
-        "wall_s": wall, **sc,
-        "max_rhat": conv["max_rhat"], "min_ess_bulk": conv["min_ess_bulk"],
-        "n_divergences": conv["n_divergences"],
-        "gates_pass": bool(m.gates_pass(conv)),
-    }
+        lam = idata.posterior["lam"]
+        med = lam.median(("chain", "draw")).values
+        lo = lam.quantile(0.025, ("chain", "draw")).values
+        hi = lam.quantile(0.975, ("chain", "draw")).values
+        conv = m.convergence_summary(idata)
+        sc = score_against_truth(med, lo, hi, truth_shape)
+
+        return {
+            "ok": True,
+            "donor": donor, "n": n, "rep": rep, "N_realised": int(A.shape[0]),
+            "wall_s": wall, **sc,
+            "max_rhat": conv["max_rhat"], "min_ess_bulk": conv["min_ess_bulk"],
+            "n_divergences": conv["n_divergences"],
+            "gates_pass": bool(m.gates_pass(conv)),
+        }
+    except Exception as exc:  # noqa: BLE001 — one bad fit must not abort the grid
+        return {
+            "ok": False,
+            "donor": donor, "n": n, "rep": rep,
+            "error": f"{type(exc).__name__}: {exc}",
+            "traceback": traceback.format_exc(),
+        }
 
 
 # --------------------------------------------------------------------------- #
@@ -220,12 +239,20 @@ def aggregate(per_fit: list[dict]) -> dict:
     headline precision-vs-N curve pooled over donors, plus a coarse calibration
     N* = the smallest N at which pooled coverage >= 0.90 AND mean shape r >= 0.9
     (informative-recovery threshold; reported, not hard-coded into any claim).
+
+    Transparency: ``np.corrcoef`` returns NaN for a constant-shape rep (zero
+    variance), and pandas ``mean`` silently skips those NaNs, shrinking the
+    effective rep count behind a ``shape_r`` mean. We therefore COUNT the NaN
+    ``shape_r`` reps per cell (``shape_r_nan``) and overall (``shape_r_nan_total``)
+    so the dropped reps are visible rather than silent.
     """
     df = pd.DataFrame(per_fit)
+    shape_r_nan_total = int(df["shape_r"].isna().sum())
     cells = (
         df.groupby(["donor", "n"])
         .agg(coverage=("coverage", "mean"),
              shape_r=("shape_r", "mean"),
+             shape_r_nan=("shape_r", lambda s: int(s.isna().sum())),
              mean_ci_width=("mean_ci_width", "mean"),
              abs_peak_bias=("peak_bias", lambda s: float(np.mean(np.abs(s)))),
              reps=("rep", "count"),
@@ -251,6 +278,7 @@ def aggregate(per_fit: list[dict]) -> dict:
         "precision_vs_n": curve.to_dict(orient="records"),
         "calibration_n_star": n_star,
         "n_fits": int(len(df)),
+        "shape_r_nan_total": shape_r_nan_total,
     }
 
 
@@ -300,24 +328,50 @@ def run(out_dir: Path, donors: list[str], n_grid: list[int], reps: int,
                     "seed": int(rng.integers(0, 2**31 - 1)),
                 })
 
-    # 3. Run the grid in a process pool.
-    per_fit = []
+    # 3. Run the grid in a process pool. A single failed (donor, N, rep) fit is
+    #    recorded as a failure and EXCLUDED from the aggregate — it must not lose
+    #    every completed fit. Both the worker (catching its own exception) and
+    #    this loop (catching a worker that fails to even return) are guarded.
+    per_fit: list[dict] = []
+    failures: list[dict] = []
     t0 = time.perf_counter()
     with ProcessPoolExecutor(max_workers=n_parallel) as ex:
         futs = {ex.submit(_fit_subsample, t): t for t in tasks}
         done = 0
         for fut in as_completed(futs):
-            r = fut.result()
-            per_fit.append(r)
+            task = futs[fut]
+            try:
+                r = fut.result()
+            except Exception as exc:  # noqa: BLE001 — worker died before returning
+                r = {
+                    "ok": False, "donor": task["donor"], "n": task["n"],
+                    "rep": task["rep"], "error": f"{type(exc).__name__}: {exc}",
+                }
             done += 1
+            if not r.get("ok", True):
+                failures.append(r)
+                print(f"  [{done}/{len(tasks)}] FAILED {r['donor']:>14} "
+                      f"N={r['n']:>3} rep={r['rep']:>2}: "
+                      f"{r.get('error', 'unknown error')}")
+                continue
+            per_fit.append(r)
             print(f"  [{done}/{len(tasks)}] {r['donor']:>14} N={r['n']:>3} "
                   f"rep={r['rep']:>2}: cov={r['coverage']:.2f} r={r['shape_r']:.3f} "
                   f"width={r['mean_ci_width']:.4f} peakbias={r['peak_bias']:+d} "
                   f"rhat={r['max_rhat']:.3f} div={r['n_divergences']} "
                   f"({r['wall_s']:.0f}s)")
     grid_wall = time.perf_counter() - t0
+    if failures:
+        print(f"\n  WARNING: {len(failures)}/{len(tasks)} fits FAILED and were "
+              "excluded from the aggregate:")
+        for f in failures:
+            print(f"    - {f['donor']} N={f['n']} rep={f['rep']}: "
+                  f"{f.get('error', 'unknown error')}")
 
-    agg = aggregate(per_fit)
+    agg = aggregate(per_fit) if per_fit else {
+        "cells": [], "precision_vs_n": [], "calibration_n_star": None,
+        "n_fits": 0, "note": "all fits failed; no aggregate computed",
+    }
     print("\n" + "=" * 70)
     print("PRECISION-vs-N (pooled over donors)")
     print("=" * 70)
@@ -328,6 +382,10 @@ def run(out_dir: Path, donors: list[str], n_grid: list[int], reps: int,
               f"|peak bias| {row['abs_peak_bias']:.2f} bins")
     print(f"\n  calibration N* (coverage>=0.90 & shape r>=0.90): "
           f"{agg['calibration_n_star']}")
+    n_nan = agg.get("shape_r_nan_total", 0)
+    if n_nan:
+        print(f"  NOTE: {n_nan}/{len(per_fit)} reps had a constant-shape (NaN) "
+              "shape_r and were skipped from the shape_r means.")
     print(f"  grid wall: {grid_wall:.0f}s for {len(tasks)} fits "
           f"({grid_wall / max(len(tasks), 1):.1f}s/fit amortised across "
           f"{n_parallel} workers)")
@@ -339,6 +397,12 @@ def run(out_dir: Path, donors: list[str], n_grid: list[int], reps: int,
         "n_parallel": n_parallel, "grid_wall_s": grid_wall,
         "truth_convergence": {d: truth_conv[d] for d in donors},
         "aggregate": agg, "per_fit": per_fit,
+        "n_tasks": len(tasks), "n_failures": len(failures),
+        "failures": [
+            {"donor": f["donor"], "n": f["n"], "rep": f["rep"],
+             "error": f.get("error", "unknown error")}
+            for f in failures
+        ],
     }
     if results_path is not None:
         results_path.write_text(json.dumps(out, indent=2, default=float))
