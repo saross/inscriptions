@@ -143,3 +143,33 @@ last-updated: 2026-05-21
 **Lesson.** For substantial spec docs that gate downstream work (sapphire compute, multi-day analyses, paper-figure-candidate runs), staying malleable across a session's findings is more useful than locking the design at the start. The cost of mid-session edits is small (~ 5-10 min per expansion); the cost of locking-then-discovering-the-design-is-wrong is a full re-draft. The session's natural rhythm produces multiple decision-points and the spec should be allowed to absorb each as it arrives.
 
 **How to apply.** When a session is going to produce multiple substantive findings before a downstream-gating spec is needed, draft the spec as a working-document rather than locking it at the start. Surface each new finding's implications for the spec; ask Shawn to confirm or push-back on the change; update in-place. Sign off the spec only when the session's substantive findings are stable enough that downstream design is unlikely to be retroactively re-shaped. Anti-pattern: writing the spec at session-start to "have it locked early", then discovering a finding mid-session that should have reshaped it but already-committed-feels-too-strong-to-revise. Captured from the 2026-05-26 recovery-grid two-unit spec drafting, which evolved through three design phases mid-session.
+
+---
+
+## Obs 13 — 2026-06-01: "Quantify-then-decide" — Shawn grounds scope decisions in a cheap computed number before committing
+
+**Pattern.** Faced with whether to build a full compound-process power simulation for letter-mass time-series detection, Shawn chose "quantify first, then decide" — asking for the empirical design effect before committing to the build. The computed result (per-city Kish DEFF ≈ 2.4 → 0 of 1,044 urban-area cities reachable) then decided it cleanly: don't build, because a multi-day simulation would only confirm unreachability. The same move recurred on the bin-width choice (he confirmed a non-standard 25-y bin once the median-99-y-interval reasoning was on the table) and on accepting the three marginal-R̂ fits.
+
+**Lesson.** Shawn reliably prefers to see the number before the scope decision, and it consistently converts a hand-wavy argument into a decisive one. A few minutes of computation up front routinely averts a multi-day build or prevents committing to a wrong scope. This is a strength of the collaboration, not a delay.
+
+**How to apply.** When a build-or-scope decision rests on an unknown quantity that is cheaply computable, propose computing it first rather than arguing the decision in the abstract — and then present the decision AS the computed evidence ("0 of 1,044 → don't build"), not as a recommendation to be debated. Offer the quantification proactively when I notice a decision hinging on an un-measured quantity.
+
+---
+
+## Obs 14 — 2026-06-01: Shawn challenges "convenient" reasoning dressed as "principled"
+
+**Pattern.** When I scoped letter-mass time-series analyses as exploratory partly on "out of scope / avoids a multi-day power simulation" grounds, Shawn asked: "is there a principled reason not to run it, or just convenience?" That forced me to find and articulate the real statistical reason — letter mass is a *compound sum* of heavy-tailed per-inscription counts, so the count-based Phase-1 power machinery does not transfer (a design-effect argument). The sharpened reason both strengthened the OSF amendment's justification and was simply more honest; my initial wording had blurred principle and expedience together.
+
+**Lesson.** Shawn catches expedience masquerading as principle and presses on it, and the press is productive — it upgrades a defensible-but-soft justification into a rigorous one. The risk it guards against is a soft "out of scope" silently becoming the record's stated rationale.
+
+**How to apply.** Distinguish "principled" from "convenient" reasons explicitly and proactively, before being asked. If a scoping choice is partly convenience, say so plainly rather than dressing it as principle; when a genuine principled reason exists, lead with it and make it rigorous. Treat any "out of scope"/"avoids compute" justification as a flag to go find the real reason underneath.
+
+---
+
+## Obs 15 — 2026-06-01: Adversarial `/audit` as a standing pre-commit gate caught published-number errors just in time
+
+**Pattern.** Running `/audit` before lodging OSF Amendment 01 surfaced two input/unit-consistency bugs that had already propagated into Obs 61 and the amendment draft — a per-city design effect grouped by raw findspot rather than the `urban_context_city` analysis unit (2.21 vs the correct 2.38), and an over-broad `contains("rom")` Rome-exclusion that wrongly dropped Romula et al. (denominator 1,041 vs 1,044). Both were corrected *pre-lodgement*. A second `/audit` before the §5 production launch found robustness gaps (a malformed-JSON crash path, a non-fault-tolerant subsample grid) that were remediated before 5.7 h of compute was committed.
+
+**Lesson.** Treating `/audit` as a standing gate before outward-facing steps (lodging to a public record) and before expensive/long runs — not as an optional extra — repeatedly caught real issues at the cheapest possible moment. The cost (a few parallel audit agents) is trivial against lodging wrong figures or wasting a long run. Independent re-derivation at source (the obs-writer's verification plus my own `audit-verify-rome-and-deff.py`) confirmed each correction, so anti-confabulation discipline held under a very long, high-volume session.
+
+**How to apply.** Before lodging anything to a public/permanent record, or before launching an expensive or long-running job, run `/audit` by default. For any audit finding that touches a published number, re-derive it from source rather than trusting the finding — and correct the upstream artefacts (Obs, amendment, spec) before the record goes out, not after.
