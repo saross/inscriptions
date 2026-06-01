@@ -1,0 +1,544 @@
+{
+  "steps": {
+    "monolithic": {
+      "inscription-25y": {
+        "conv": {
+          "max_rhat": 1.0,
+          "min_ess_bulk": 2571.0,
+          "n_divergences": 0,
+          "worst_rhat_param": "alpha_g",
+          "worst_ess_param": "b_u[Latium et Campania / Regio I]"
+        },
+        "gates_pass": true,
+        "path": "/home/shawn/Code/inscriptions/runs/2026-05-30-s5-small-n-trajectories/code/production/monolithic-inscription-25y.nc"
+      },
+      "inscription-50y": {
+        "conv": {
+          "max_rhat": 1.01,
+          "min_ess_bulk": 948.0,
+          "n_divergences": 0,
+          "worst_rhat_param": "z_bu[Latium et Campania / Regio I]",
+          "worst_ess_param": "b_u[Latium et Campania / Regio I]"
+        },
+        "gates_pass": false,
+        "path": "/home/shawn/Code/inscriptions/runs/2026-05-30-s5-small-n-trajectories/code/production/monolithic-inscription-50y.nc"
+      },
+      "letter-25y": {
+        "conv": {
+          "max_rhat": 1.01,
+          "min_ess_bulk": 486.0,
+          "n_divergences": 0,
+          "worst_rhat_param": "sigma_v",
+          "worst_ess_param": "phi_disp"
+        },
+        "gates_pass": false,
+        "path": "/home/shawn/Code/inscriptions/runs/2026-05-30-s5-small-n-trajectories/code/production/monolithic-letter-25y.nc"
+      },
+      "letter-50y": {
+        "conv": {
+          "max_rhat": 1.01,
+          "min_ess_bulk": 938.0,
+          "n_divergences": 0,
+          "worst_rhat_param": "sigma_v",
+          "worst_ess_param": "phi_disp"
+        },
+        "gates_pass": false,
+        "path": "/home/shawn/Code/inscriptions/runs/2026-05-30-s5-small-n-trajectories/code/production/monolithic-letter-50y.nc"
+      }
+    },
+    "subsample_recover": {
+      "cells": [
+        {
+          "donor": "Aquileia",
+          "n": 50,
+          "coverage": 0.7375,
+          "shape_r": 0.4715950998427341,
+          "shape_r_nan": 0,
+          "mean_ci_width": 0.09243281708013484,
+          "abs_peak_bias": 2.225,
+          "reps": 40,
+          "frac_gates_pass": 0.925
+        },
+        {
+          "donor": "Aquileia",
+          "n": 100,
+          "coverage": 0.746875,
+          "shape_r": 0.5445674902873623,
+          "shape_r_nan": 0,
+          "mean_ci_width": 0.08484853728666428,
+          "abs_peak_bias": 2.075,
+          "reps": 40,
+          "frac_gates_pass": 0.85
+        },
+        {
+          "donor": "Aquileia",
+          "n": 200,
+          "coverage": 0.8078125,
+          "shape_r": 0.6755171491060993,
+          "shape_r_nan": 0,
+          "mean_ci_width": 0.08396604472124422,
+          "abs_peak_bias": 1.4,
+          "reps": 40,
+          "frac_gates_pass": 0.75
+        },
+        {
+          "donor": "Aquileia",
+          "n": 300,
+          "coverage": 0.8734375,
+          "shape_r": 0.7612052849037895,
+          "shape_r_nan": 0,
+          "mean_ci_width": 0.08257660406063314,
+          "abs_peak_bias": 0.925,
+          "reps": 40,
+          "frac_gates_pass": 0.925
+        },
+        {
+          "donor": "Aquileia",
+          "n": 500,
+          "coverage": 0.9453125,
+          "shape_r": 0.8674007135093864,
+          "shape_r_nan": 0,
+          "mean_ci_width": 0.07560729283395212,
+          "abs_peak_bias": 0.375,
+          "reps": 40,
+          "frac_gates_pass": 0.975
+        },
+        {
+          "donor": "Carnuntum (1)",
+          "n": 50,
+          "coverage": 0.796875,
+          "shape_r": 0.78432317420902,
+          "shape_r_nan": 0,
+          "mean_ci_width": 0.1454155988821493,
+          "abs_peak_bias": 1.275,
+          "reps": 40,
+          "frac_gates_pass": 0.975
+        },
+        {
+          "donor": "Carnuntum (1)",
+          "n": 100,
+          "coverage": 0.8296875,
+          "shape_r": 0.8274246647785535,
+          "shape_r_nan": 0,
+          "mean_ci_width": 0.12080336197476782,
+          "abs_peak_bias": 1.3,
+          "reps": 40,
+          "frac_gates_pass": 0.975
+        },
+        {
+          "donor": "Carnuntum (1)",
+          "n": 200,
+          "coverage": 0.9265625,
+          "shape_r": 0.8874787600442419,
+          "shape_r_nan": 0,
+          "mean_ci_width": 0.0983891043579822,
+          "abs_peak_bias": 1.3,
+          "reps": 40,
+          "frac_gates_pass": 1.0
+        },
+        {
+          "donor": "Carnuntum (1)",
+          "n": 300,
+          "coverage": 0.9734375,
+          "shape_r": 0.9243925052974502,
+          "shape_r_nan": 0,
+          "mean_ci_width": 0.08624502818288467,
+          "abs_peak_bias": 1.175,
+          "reps": 40,
+          "frac_gates_pass": 0.975
+        },
+        {
+          "donor": "Carnuntum (1)",
+          "n": 500,
+          "coverage": 0.9875,
+          "shape_r": 0.9595821855853993,
+          "shape_r_nan": 0,
+          "mean_ci_width": 0.07209293248631646,
+          "abs_peak_bias": 0.825,
+          "reps": 40,
+          "frac_gates_pass": 0.925
+        },
+        {
+          "donor": "Mogontiacum",
+          "n": 50,
+          "coverage": 0.9484375,
+          "shape_r": 0.9897270701275278,
+          "shape_r_nan": 0,
+          "mean_ci_width": 0.10082835913849046,
+          "abs_peak_bias": 0.0,
+          "reps": 40,
+          "frac_gates_pass": 1.0
+        },
+        {
+          "donor": "Mogontiacum",
+          "n": 100,
+          "coverage": 0.9671875,
+          "shape_r": 0.9962711168572786,
+          "shape_r_nan": 0,
+          "mean_ci_width": 0.07224794565194484,
+          "abs_peak_bias": 0.0,
+          "reps": 40,
+          "frac_gates_pass": 0.95
+        },
+        {
+          "donor": "Mogontiacum",
+          "n": 200,
+          "coverage": 0.9875,
+          "shape_r": 0.9984480576701831,
+          "shape_r_nan": 0,
+          "mean_ci_width": 0.053178160501796724,
+          "abs_peak_bias": 0.0,
+          "reps": 40,
+          "frac_gates_pass": 0.95
+        },
+        {
+          "donor": "Mogontiacum",
+          "n": 300,
+          "coverage": 0.9921875,
+          "shape_r": 0.9990950288010005,
+          "shape_r_nan": 0,
+          "mean_ci_width": 0.04283221060319329,
+          "abs_peak_bias": 0.0,
+          "reps": 40,
+          "frac_gates_pass": 0.925
+        },
+        {
+          "donor": "Mogontiacum",
+          "n": 500,
+          "coverage": 0.9921875,
+          "shape_r": 0.9994161216185017,
+          "shape_r_nan": 0,
+          "mean_ci_width": 0.03440994489617956,
+          "abs_peak_bias": 0.0,
+          "reps": 40,
+          "frac_gates_pass": 1.0
+        },
+        {
+          "donor": "Ostia",
+          "n": 50,
+          "coverage": 0.975,
+          "shape_r": 0.8651601102429337,
+          "shape_r_nan": 0,
+          "mean_ci_width": 0.12005125720247736,
+          "abs_peak_bias": 1.15,
+          "reps": 40,
+          "frac_gates_pass": 0.925
+        },
+        {
+          "donor": "Ostia",
+          "n": 100,
+          "coverage": 0.959375,
+          "shape_r": 0.8855151845361107,
+          "shape_r_nan": 0,
+          "mean_ci_width": 0.09640246264791932,
+          "abs_peak_bias": 1.15,
+          "reps": 40,
+          "frac_gates_pass": 0.975
+        },
+        {
+          "donor": "Ostia",
+          "n": 200,
+          "coverage": 0.971875,
+          "shape_r": 0.9383397564301033,
+          "shape_r_nan": 0,
+          "mean_ci_width": 0.07897131698831489,
+          "abs_peak_bias": 1.175,
+          "reps": 40,
+          "frac_gates_pass": 1.0
+        },
+        {
+          "donor": "Ostia",
+          "n": 300,
+          "coverage": 0.984375,
+          "shape_r": 0.9540110251987473,
+          "shape_r_nan": 0,
+          "mean_ci_width": 0.06976729318239977,
+          "abs_peak_bias": 1.125,
+          "reps": 40,
+          "frac_gates_pass": 0.975
+        },
+        {
+          "donor": "Ostia",
+          "n": 500,
+          "coverage": 0.990625,
+          "shape_r": 0.9736862257281189,
+          "shape_r_nan": 0,
+          "mean_ci_width": 0.05822089600013321,
+          "abs_peak_bias": 0.725,
+          "reps": 40,
+          "frac_gates_pass": 0.975
+        },
+        {
+          "donor": "Pompeii",
+          "n": 50,
+          "coverage": 0.3671875,
+          "shape_r": 0.9733030472210858,
+          "shape_r_nan": 0,
+          "mean_ci_width": 0.09811592375028913,
+          "abs_peak_bias": 0.0,
+          "reps": 40,
+          "frac_gates_pass": 1.0
+        },
+        {
+          "donor": "Pompeii",
+          "n": 100,
+          "coverage": 0.5546875,
+          "shape_r": 0.9855088713211864,
+          "shape_r_nan": 0,
+          "mean_ci_width": 0.0706210840472978,
+          "abs_peak_bias": 0.0,
+          "reps": 40,
+          "frac_gates_pass": 0.975
+        },
+        {
+          "donor": "Pompeii",
+          "n": 200,
+          "coverage": 0.8328125,
+          "shape_r": 0.994218958988907,
+          "shape_r_nan": 0,
+          "mean_ci_width": 0.0499593050760212,
+          "abs_peak_bias": 0.0,
+          "reps": 40,
+          "frac_gates_pass": 0.975
+        },
+        {
+          "donor": "Pompeii",
+          "n": 300,
+          "coverage": 0.8875,
+          "shape_r": 0.996424838813795,
+          "shape_r_nan": 0,
+          "mean_ci_width": 0.04010006581276991,
+          "abs_peak_bias": 0.0,
+          "reps": 40,
+          "frac_gates_pass": 1.0
+        },
+        {
+          "donor": "Pompeii",
+          "n": 500,
+          "coverage": 0.91875,
+          "shape_r": 0.9967671086537336,
+          "shape_r_nan": 0,
+          "mean_ci_width": 0.030950427385020563,
+          "abs_peak_bias": 0.0,
+          "reps": 40,
+          "frac_gates_pass": 0.925
+        },
+        {
+          "donor": "Puteoli",
+          "n": 50,
+          "coverage": 0.8859375,
+          "shape_r": 0.7078090710895844,
+          "shape_r_nan": 0,
+          "mean_ci_width": 0.13461428344633103,
+          "abs_peak_bias": 0.75,
+          "reps": 40,
+          "frac_gates_pass": 0.975
+        },
+        {
+          "donor": "Puteoli",
+          "n": 100,
+          "coverage": 0.89375,
+          "shape_r": 0.7897465715080447,
+          "shape_r_nan": 0,
+          "mean_ci_width": 0.11233696387556269,
+          "abs_peak_bias": 0.45,
+          "reps": 40,
+          "frac_gates_pass": 0.975
+        },
+        {
+          "donor": "Puteoli",
+          "n": 200,
+          "coverage": 0.9609375,
+          "shape_r": 0.9189838173957249,
+          "shape_r_nan": 0,
+          "mean_ci_width": 0.09319146386015902,
+          "abs_peak_bias": 0.05,
+          "reps": 40,
+          "frac_gates_pass": 0.975
+        },
+        {
+          "donor": "Puteoli",
+          "n": 300,
+          "coverage": 0.95625,
+          "shape_r": 0.9368403878055023,
+          "shape_r_nan": 0,
+          "mean_ci_width": 0.08184997144873286,
+          "abs_peak_bias": 0.0,
+          "reps": 40,
+          "frac_gates_pass": 0.925
+        },
+        {
+          "donor": "Puteoli",
+          "n": 500,
+          "coverage": 0.9875,
+          "shape_r": 0.9746375308902182,
+          "shape_r_nan": 0,
+          "mean_ci_width": 0.06866626526804441,
+          "abs_peak_bias": 0.0,
+          "reps": 40,
+          "frac_gates_pass": 0.925
+        },
+        {
+          "donor": "Salona",
+          "n": 50,
+          "coverage": 0.71875,
+          "shape_r": 0.5964209549208944,
+          "shape_r_nan": 0,
+          "mean_ci_width": 0.1253450168280549,
+          "abs_peak_bias": 2.875,
+          "reps": 40,
+          "frac_gates_pass": 0.925
+        },
+        {
+          "donor": "Salona",
+          "n": 100,
+          "coverage": 0.7640625,
+          "shape_r": 0.6905156288190853,
+          "shape_r_nan": 0,
+          "mean_ci_width": 0.11796835835330184,
+          "abs_peak_bias": 2.4,
+          "reps": 40,
+          "frac_gates_pass": 0.975
+        },
+        {
+          "donor": "Salona",
+          "n": 200,
+          "coverage": 0.8640625,
+          "shape_r": 0.8058825241698951,
+          "shape_r_nan": 0,
+          "mean_ci_width": 0.11206535480337818,
+          "abs_peak_bias": 1.475,
+          "reps": 40,
+          "frac_gates_pass": 0.925
+        },
+        {
+          "donor": "Salona",
+          "n": 300,
+          "coverage": 0.9171875,
+          "shape_r": 0.8661637728641292,
+          "shape_r_nan": 0,
+          "mean_ci_width": 0.10350235223789958,
+          "abs_peak_bias": 1.25,
+          "reps": 40,
+          "frac_gates_pass": 0.95
+        },
+        {
+          "donor": "Salona",
+          "n": 500,
+          "coverage": 0.9640625,
+          "shape_r": 0.9258577858471944,
+          "shape_r_nan": 0,
+          "mean_ci_width": 0.0977279459420383,
+          "abs_peak_bias": 0.925,
+          "reps": 40,
+          "frac_gates_pass": 0.95
+        }
+      ],
+      "precision_vs_n": [
+        {
+          "n": 50,
+          "coverage": 0.7756696428571429,
+          "shape_r": 0.7697626468076829,
+          "mean_ci_width": 0.11668617947541815,
+          "abs_peak_bias": 1.1821428571428572
+        },
+        {
+          "n": 100,
+          "coverage": 0.8165178571428572,
+          "shape_r": 0.8170785040153744,
+          "mean_ci_width": 0.09646124483392267,
+          "abs_peak_bias": 1.0535714285714286
+        },
+        {
+          "n": 200,
+          "coverage": 0.9073660714285714,
+          "shape_r": 0.8884098605435935,
+          "mean_ci_width": 0.08138867861555663,
+          "abs_peak_bias": 0.7714285714285715
+        },
+        {
+          "n": 300,
+          "coverage": 0.940625,
+          "shape_r": 0.9197332633834877,
+          "mean_ci_width": 0.07241050364693045,
+          "abs_peak_bias": 0.6392857142857142
+        },
+        {
+          "n": 500,
+          "coverage": 0.9694196428571429,
+          "shape_r": 0.9567639531189361,
+          "mean_ci_width": 0.06252510068738351,
+          "abs_peak_bias": 0.40714285714285714
+        }
+      ],
+      "calibration_n_star": 300,
+      "n_fits": 1400,
+      "shape_r_nan_total": 0
+    },
+    "diagnostics": {
+      "clustering": {
+        "n_clusters": 6,
+        "sizes": {
+          "0": 39,
+          "1": 24,
+          "2": 67,
+          "3": 71,
+          "4": 43,
+          "5": 24
+        },
+        "medoids": {
+          "0": "Dyrrachium",
+          "1": "Naissus",
+          "2": "Interamna Lirenas",
+          "3": "Parma",
+          "4": "Siscia",
+          "5": "Falerii Novi"
+        }
+      },
+      "anchor_internal_consistency": {
+        "Pompeii": {
+          "N": 4266,
+          "shape_r_vs_spa": 0.8259590948555339,
+          "gates_pass": true
+        },
+        "Salona": {
+          "N": 3452,
+          "shape_r_vs_spa": 0.687797692951702,
+          "gates_pass": false
+        },
+        "Ostia": {
+          "N": 2380,
+          "shape_r_vs_spa": 0.885081378942452,
+          "gates_pass": false
+        },
+        "Mogontiacum": {
+          "N": 2328,
+          "shape_r_vs_spa": 0.8897847848968888,
+          "gates_pass": true
+        },
+        "Aquileia": {
+          "N": 2023,
+          "shape_r_vs_spa": 0.8092671944146096,
+          "gates_pass": true
+        },
+        "Puteoli": {
+          "N": 1723,
+          "shape_r_vs_spa": 0.7388495020358605,
+          "gates_pass": true
+        },
+        "Carnuntum (1)": {
+          "N": 1574,
+          "shape_r_vs_spa": 0.81819439209905,
+          "gates_pass": true
+        }
+      },
+      "pompeii_ad79": {
+        "N": 4266,
+        "post79_mass": 5.0249471901888345,
+        "total_mass": 4261.841045520633,
+        "post79_frac": 0.0011790555153318673
+      }
+    }
+  },
+  "note": "Step 3 completed post-hoc by finish_diagnostics.py after the sklearn-missing crash; Steps 1\u20132 are the original 2026-05-31 run."
+}

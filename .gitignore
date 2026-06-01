@@ -55,7 +55,10 @@ runs/2026-05-30-s5-small-n-trajectories/code/prepared-50y/
 runs/2026-05-30-s5-small-n-trajectories/code/__pycache__/
 # §5 production posteriors + heavy PNG caches (regenerable via orchestrate.py;
 # NOT committed per the production brief — only code + small text artefacts are).
-runs/2026-05-30-s5-small-n-trajectories/code/production/
+# The small result JSONs in production/ ARE tracked (the research record); only
+# the multi-GB .nc posteriors and heavy PNGs are excluded.
+runs/2026-05-30-s5-small-n-trajectories/code/production/*.nc
+runs/2026-05-30-s5-small-n-trajectories/code/production/*.png
 runs/2026-05-30-s5-small-n-trajectories/code/*.nc
 runs/2026-05-30-s5-small-n-trajectories/code/letter-ppc.png
 runs/2026-05-30-s5-small-n-trajectories/code/subsample-recover.png
