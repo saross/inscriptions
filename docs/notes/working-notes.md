@@ -1691,3 +1691,53 @@ A code audit (`/audit` over the §5 harness + letter-mass scripts; verification 
 ### Findable later
 
 `correction`, `obs-61-correction`, `design-effect`, `analysis-unit`, `urban_context_city`, `rome-exclusion`, `denominator-1044`, `kish`, `audit`, `letter-mass`, `reachability`, `headline-robust`
+
+---
+
+## Obs 63 — 2026-06-01 [FINDING]: §5 small-N trajectory estimation has a reliability floor at N≈300 — the calibrated honest-negative-result
+
+The §5 Layer-A production run (`runs/2026-05-30-s5-small-n-trajectories/RESULTS.md`, commit `eb3aef3`) includes a subsample-and-recover calibration (spec §8a.3) that quantifies where small-N inscription-trajectory estimation can be trusted. Method: the 7 large anchors (N≥1549, e.g. Pompeii N=4266) have well-constrained full-N posterior trajectories taken as ground truth; each is randomly down-sampled to N∈{50, 100, 200, 300, 500} (~40 reps each; 1,400 standalone single-city fits; 0 failures) and re-estimated; recovery is scored by coverage (does the small-N 95 % CI contain the full-N truth), posterior-median shape Pearson r, mean CI width, and peak bias.
+
+### The finding
+
+**N\* = 300** (smallest N with coverage ≥ 0.90 AND shape r ≥ 0.90):
+
+| N | coverage | shape r | mean CI width | \|peak bias\| (bins) |
+|---|---|---|---|---|
+| 50 | 0.78 | 0.77 | 0.117 | 1.18 |
+| 100 | 0.82 | 0.82 | 0.096 | 1.05 |
+| 200 | 0.91 | 0.89 | 0.081 | 0.77 |
+| 300 | 0.94 | 0.92 | 0.072 | 0.64 |
+| 500 | 0.97 | 0.96 | 0.063 | 0.41 |
+
+Source: `runs/2026-05-30-s5-small-n-trajectories/code/production/subsample-recover-results.json`, field `aggregate.precision_vs_n`. Donors: Pompeii, Salona, Ostia, Mogontiacum, Aquileia, Puteoli, Carnuntum (1).
+
+Below ~300 inscriptions an individual city's trajectory is unreliable — the credible bands are over-confident (coverage < 0.90) and the recovered shape is noisy (r < 0.90). At/above 300, both metrics clear, so the trajectory is faithful with honestly-calibrated uncertainty. This is the preregistered honest-negative-result made quantitative — the §5 methodological deliverable: a citable reliability floor for small-N inscription SPA trajectory estimation.
+
+### Why this matters
+
+(i) **Quantifies the floor for paper citation.** The preregistration committed to reporting where §5 individual-city trajectories are and are not trustworthy. N\* = 300 is that threshold: anything the paper reports about small-N trajectories should carry this calibration result as the underpinning uncertainty statement.
+
+(ii) **Scopes the individual-curve vs aggregate reading.** Of the 268 §5 target cities, only ~38 have N ≥ 300; for the remaining majority, the individual curve sits below the strict floor and should be read through the pooled/aggregate lens (e.g. the 6-cluster trajectory grouping), not on its own.
+
+(iii) **Positions the result as a methods contribution.** The subsample-and-recover design itself — measuring coverage and shape r simultaneously against full-N ground truth, applied to a spatially structured Bayesian SPA model — is a transferable calibration protocol for inscription-corpus trajectory estimation.
+
+### Caveats / methodological notes
+
+**Conservative.** The calibration fits each subsample standalone (no pooling); the production trajectories use the full hierarchy (city pooled toward province), which can only improve small-N reliability. N\* = 300 is therefore a conservative lower bound; the pooled estimates likely remain trustworthy somewhat below it. The paper should note this when citing the floor.
+
+**Scope of donors.** The 7 donors are concentrated in the western Mediterranean / Danubian provinces. How well N\* generalises to cities with very different temporal distributions (e.g. strongly late-peaked Eastern corpora) is not tested here and is an acknowledged limitation.
+
+**Anchor anchor shape is treated as ground truth.** Each full-N anchor trajectory was accepted as "truth" after convergence checks (R̂, ESS, divergences) and the Pompeii AD-79 external validation. If an anchor's own shape estimate carries substantial uncertainty, coverage measurements will be conservative (the CI needs to contain a noisy target).
+
+### Related observations and artefacts
+
+**Obs 61** (letter mass is temporally weaker; `107226b`): companion §5 reachability finding concerning temporal-detection power for the letter-mass measure. Obs 61's "reachability" is about effective-N deflation under the design effect; this Obs is about estimation reliability above/below the N\* floor — related but distinct diagnostics.
+
+**Obs 62** (Obs 61 correction; per-city DEFF grouping + Rome-exclusion denominator corrected): confirms the corrected §5 city count is 268, consistent with the 268 target cities reported here.
+
+**Artefacts**: `runs/2026-05-30-s5-small-n-trajectories/RESULTS.md`, `runs/2026-05-30-s5-small-n-trajectories/code/production/subsample-recover-results.json`, `runs/2026-05-30-s5-small-n-trajectories/code/production/production-summary.json`, spec §8a.3; commit `eb3aef3`.
+
+### Findable later
+
+`s5-calibration`, `N-star-300`, `reliability-floor`, `subsample-recover`, `small-N-trajectory`, `honest-negative-result`, `coverage`, `shape-r`, `reachability`, `standalone-conservative`, `pooling`, `layer-a`, `precision-vs-N`, `calibration-n-star`, `subsample-and-recover`, `7-donors`, `1400-fits`, `Pompeii-4266`, `Carnuntum-1574`, `trajectory-estimation`, `s5-small-n`, `credible-bands`, `peak-bias`, `ground-truth`
