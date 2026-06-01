@@ -657,3 +657,23 @@ Single-day session, continuous (no compaction). Opened with the post-Martin reca
 ### Contextual assumptions
 
 The session opened with the Bayesian Mundlak's actual wall-clock (4.3 min) substantially below my pre-launch estimate (45 min) — the harness is well-tuned and my estimates were conservative. The recovery-grid two-unit launch authorisation was gated explicitly on Mundlak completion (per spec §10 Decision 4); that trigger fired at 02:56 UTC; harness-prep agent dispatched 4-5 h later (after Shawn's session re-engagement) with the spec's launch authorisation already locked. The Mundlak agent's dropped completion notification (documented failure mode) was handled by direct SSH check when Shawn asked for status — no friction. All session work happened on amd-tower; sapphire is doing the production compute under nohup. The harness-prep agent flagged the wall-clock estimate from spec §6 (~ 60 h) as too optimistic and reported ~ 76 h based on smoke-test timings; the deviation was surfaced rather than relaxed. Working tree clean at handoff; one outstanding state: sapphire's working tree diverges from `origin/HEAD` in the smoke-cell artefact deletions (intentional, per the harness's resumability skip logic; sapphire never pushes). All ~ 22 commits this session are on `origin/main`.
+
+---
+
+## 2026-05-29 → 2026-06-01 — §5 Layer-A concept-to-production, OSF Amendment 01, two /audit cycles
+
+**Done / produced.**
+
+- Grid-B status corrected (parallelism-double-counting ETA bug; true ~3 June). zbook upgraded to sapphire parity (pymc 6.0.1 / pytensor 3.0.3 / arviz 1.1.0) and made the §5 compute host.
+- **OSF Amendment 01** drafted (`planning/osf-amendment-2026-05-29-two-measure-framework.md`): parallel-co-registered two-measure framework; Martin/statistician references scrubbed; figures corrected pre-lodgement per audit (`b5b39dc` → `4fad07b`).
+- **Letter-mass design effect** quantified (`scripts/letter-mass-design-effect.py`, `letter-mass-reachability.py`, `audit-verify-rome-and-deff.py`): per-city DEFF ≈ 2.4; 0 of 1,044 urban-area cities reachable. Obs 61 (`107226b`), corrected by Obs 62 (`805c991`).
+- **§5 Layer-A built**: spec + open items resolved (`85c76a1`/`e687ecd`/`41cb028`); single-city + hierarchical smoke validated (`27b3576`/`a265074`); production infra + tracked launch wrapper (`a0ccf79`/`f5927b8`); two audit remediations (`2c82a87`/`687b96e`).
+- **Production run** on zbook (~5.7 h); crashed at Step 3 on an undeclared `scikit-learn`; fixed (`62f3266`) via `finish_diagnostics.py` (re-ran Step 3 only, from the saved posteriors).
+- **§5 results** (`eb3aef3`, `RESULTS.md`): primary inscription-25y PASSED (R̂ 1.0000, ESS 2571); 3 marginal fits at R̂ 1.0100 accepted-with-caveat; calibration **N\*=300**; Pompeii AD-79 post-79 mass 0.12 %; 6-cluster trajectory grouping. Obs 63 (`0dc72ad`) + Obs 64 (`dfd873e`).
+- **Handoff**: continuity updated (`628f801`); user-obs 13–15 (`8225c21`); craft candidates flagged to `~/personal-assistant/notes/_inbox.md`.
+
+**Open at session close.** OSF Amendment 01 lodgement (Shawn's action — Stage-3 gate); Grid B → cross-grid comparison + Stage-3 decision (~3 June); §5 Layer B (needs H3a `β_within`); dependency-hygiene follow-up (task #9); ceramics-aoristic diagnostics (task #6).
+
+### Contextual assumptions
+
+§5 Layer A is *exploratory* (not Stage-3 confirmatory), so it needed no amendment gate to run — that is why it could proceed while the amendment sits un-lodged. The four `.nc` posteriors (3.6 GB) are a **single copy on zbook** (Layer B's input); single-copy risk explicitly accepted by Shawn until Layer B runs. The run used `target_accept=0.99` (the non-centred RW funnel needs it); the three marginal R̂=1.0100 fits escalated once and still landed on the strict `<1.01` boundary — accepted for exploratory work. The production crash was an *undeclared* dependency (`scikit-learn` absent from `pyproject.toml`) on a venv built ad-hoc rather than via `uv sync` — drift, not a code bug. Grid B left entirely untouched on sapphire throughout (Shawn's instruction). ~25 commits, all on `origin/main`.
