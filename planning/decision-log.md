@@ -3070,3 +3070,104 @@ exploratory.**
 - A reviewer asks for a fourth weighting variant (e.g. log-
   population-weighted) — would prompt either an exploratory
   addition or a justified refusal.
+
+## Decision 33 — 2026-06-02: Recovery-grid binding-criterion metric correction (α demoted to diagnostic; operating-envelope reframe)
+
+**Status:** committed; provisional pending Martin's draft-stage sign-off;
+filed as OSF Amendment 01 §A5.5.1 (the amendment is not yet lodged, so the
+change is within the pre-lodgement window).
+**Decided by:** Shawn 2026-06-02 — the demote-α and operating-envelope-reframe
+choices were made this session after reviewing the evidence. Informed by the
+Grid A adjudication, a closed-loop prior-art scout, and a `/review-implementation`
+pass.
+
+### Context
+
+Adjudicating Grid A (inscription mass) of the two-unit recovery simulation
+returned a FAIL under the lodged binding criterion (42.7% both-pass). Diagnosis
+(re-verified from the stored posteriors) localised the failure to two
+mathematical/asymptotic defects rather than recovery failure:
+
+1. **Criterion (ii) is undefined for the flat genuine shape.** Pearson r against
+   a constant truth is `0/0`; all 75 `flat_baseline` cells auto-fail, capping
+   shape-pass at 83.3% irrespective of model quality.
+2. **Criterion (i) — exact 95% credible-interval coverage of the mixing weight
+   α — collapses at large N.** Holding (shape, α, tier) fixed and increasing N,
+   coverage falls from ~1.0 to ~0.0 while bias stays small and roughly constant
+   (posterior concentration / semiparametric Bernstein–von Mises). It measures
+   asymptotic interval calibration, not recovery adequacy.
+
+A prior-art scout established that **no surveyed community** (radiocarbon SPD via
+rcarbon/Crema 2022; the baorista Bayesian-aoristic analogue, Crema 2025;
+Bayesian-workflow SBC, Talts 2018 / Modrák 2025) gates on exact CI coverage of a
+mixing parameter; that flat/uniform is a standard *tested null* in SPD work; and
+that Wasserstein-1 is the theoretically-justified deconvolution-recovery metric
+(Rousseau & Scricciolo 2021). A `/review-implementation` pass additionally found
+that (a) SBC does **not** fit our fixed-true-value grid (it needs α drawn from
+the prior), so ROPE/tolerance is the right large-N-robust α check, not SBC;
+(b) posterior z-score carries the *same* large-N fragility as coverage; and
+(c) a single global Wasserstein-1 threshold is unfair across shapes, so a hybrid
+(patch only the undefined flat case) is cleaner. A preview (recomputed from
+stored posteriors, no re-fit) showed α is recoverable only to ≈±0.18 (90th-pct
+|bias| in the operating envelope) — so gating α honestly fails; gating on p_gen
+shape within the operating envelope passes at 91.9%.
+
+### Decision
+
+**Correct the recovery-grid binding criterion (OSF Amendment 01 §A5.5.1) and
+report the grid as a recoverability map with an operating envelope:**
+
+- **Shape gate (binding), hybrid:** Pearson r ≥ 0.95 for **non-flat** shapes
+  (**unchanged from lodged prereg**); Wasserstein-1 ≤ **T_flat = 10 y** for the
+  flat shape only. W1 reported supplementary for all shapes.
+- **Convergence precondition** (≥90% replicates, R̂ < 1.01) made an explicit gate.
+- **α demoted** from binding gate to a **quantified diagnostic** (report signed
+  bias and its ≈±0.18 precision); all α-derived paper claims hedged to that
+  precision. This is supported by the project already characterising the
+  convention component (`p_conv`) **descriptively** from raw interval structure
+  (the F1+F3 family classifier), so a precise model-derived α dial is not
+  required.
+- **Operating-envelope reframe:** the binding criterion is evaluated where the
+  deconvolution is identifiable (empirically α ≤ 0.70); cells with α ≥ 0.95 are a
+  reported stress sensitivity. Where the real corpus exceeds the envelope,
+  genuine-signal claims are flagged as degraded.
+
+### Consequences
+
+- **Thresholds pre-committed** (T_flat from well-recovered flat cells' max W1;
+  envelope from near-unidentifiability at α ≥ 0.95) before the headline verdict;
+  failing scenarios (full-grid, α-gated) reported alongside the passing one.
+- **Real-corpus check (diagnostic b, 2026-06-02):** the descriptive convention
+  fraction is **≈0.65 corpus-wide** (just inside the envelope) but **exceeds 0.70
+  across AD ~142–347** (21 of 80 bins) — so late-corpus genuine-signal claims sit
+  in the degraded zone and must be hedged. (`runs/2026-06-02-recovery-utility-
+  check/`.)
+- **Band-calibration check (diagnostic a, 2026-06-02):** the p_gen credible band
+  is honest for *smooth* timelines (≈0.99 pointwise 95% coverage) but
+  **overconfident for sharply-peaked timelines and degrades at large N** (mean
+  coverage 0.90 at N=2000 → 0.67 at N=50000; regnal_cluster 0.23 at N=50000) — the
+  same posterior-concentration mechanism, compounded by the GRW smoothness prior
+  not representing sharp features. The *median* (point) timeline stays trustworthy
+  (the gated quantity); reported *bands* for peaked regimes must be widened/caveated.
+  Logged as a limitation, not a new gate. (`runs/2026-06-02-recovery-utility-check/`.)
+- **Harness update pending:** `grid-summariser.py` / `compare-grids.py` still
+  compute the lodged criterion; they will be updated to §A5.5.1 (no re-fit needed:
+  W1 and α intervals are stored) once Martin signs off the α-diagnostic
+  operationalisation.
+
+### Provenance / links
+
+- OSF Amendment 01 §A5.5.1: `planning/osf-amendment-2026-05-29-two-measure-framework.md`.
+- Scout + review record: `planning/prior-art-scout-2026-06-02-recovery-validation-metrics.md`.
+- Utility review: `planning/recovery-grid-utility-review-2026-06-02.md`.
+- Grid A verdict: `runs/2026-05-26-recovery-grid-two-unit/inscription-mass/outputs/REPORT.md` (commit `0638093`).
+- Diagnostics: `runs/2026-06-02-recovery-utility-check/`.
+
+### Revisit triggers
+
+- Martin recommends a different α-diagnostic operationalisation or a different
+  operating-envelope cut.
+- The real-corpus fits land α materially above 0.70 even at empire level (would
+  widen the degraded-zone caveat).
+- The band-calibration check shows the p_gen bands are materially miscalibrated
+  (would require widening reported bands or a calibration adjustment).
