@@ -3,14 +3,25 @@ name = "inscriptions"
 version = "0.1.0"
 requires-python = ">=3.13"
 dependencies = [
+    "arviz>=1.1.0",
     "cmdstanpy>=1.3.0",
+    # netCDF I/O backend. arviz 1.x made the netCDF backend an *optional* extra,
+    # so it must be declared explicitly or a fresh env cannot read/write the
+    # project's HDF5-format .nc posteriors (the §5 monolithic fits + Layer B's
+    # input). h5netcdf (+ its h5py dependency) is the backend that wrote them.
+    "h5netcdf>=1.8.1",
+    # h5py is the HDF5 binding h5netcdf uses at runtime. h5netcdf 1.8.1 declares
+    # only numpy + packaging (the HDF5 library is the caller's choice: h5py or
+    # h5pyd), so it must be declared here or HDF5 .nc I/O fails at runtime even
+    # though the import of h5netcdf itself succeeds.
+    "h5py>=3.16.0",
     "joblib>=1.5.3",
     "matplotlib>=3.10.9",
     "numba>=0.65.1",
     "numpy>=2.4.4",
     "pandas>=3.0.2",
     "pyarrow>=24.0.0",
-    "pymc>=5.28.5",
+    "pymc>=6.0.1",
     "python-dotenv>=1.2.2",
     "pyzotero>=1.11.1",
     "requests>=2.33.1",
@@ -23,3 +34,11 @@ dependencies = [
 dev = [
     "pytest>=9.0.3",
 ]
+
+[tool.uv]
+# Pin pytensor to the version that actually produced the §5 Layer-A results
+# (validated on zbook: pymc 6.0.1 + pytensor 3.0.3). A clean resolve of
+# pymc>=6.0.1 floats pytensor to 3.0.4; pinning here keeps the locked
+# environment a faithful, reproducible image of the validated run rather than
+# one patch ahead of it. Lift this when deliberately upgrading + revalidating.
+constraint-dependencies = ["pytensor==3.0.3"]
