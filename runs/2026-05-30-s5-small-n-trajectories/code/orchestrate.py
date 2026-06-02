@@ -522,6 +522,9 @@ def run_diagnostics_only(out_base: Path, args) -> dict:
     if not sub_path.exists():
         raise SystemExit(f"FATAL: --resume-diagnostics: {sub_path} not found")
     sub = json.loads(sub_path.read_text())
+    if "aggregate" not in sub:
+        raise SystemExit(
+            f"FATAL: --resume-diagnostics: {sub_path.name} lacks 'aggregate'")
     summary["steps"]["subsample_recover"] = sub["aggregate"]
     print(f"  calibration N* = {sub['aggregate'].get('calibration_n_star')}, "
           f"n_failures = {sub.get('n_failures')}")
@@ -595,6 +598,10 @@ def main() -> int:
         import preflight
         return 0 if preflight.report() else 2
 
+    if args.resume_diagnostics:
+        run_diagnostics_only(args.out_base, args)
+        return 0
+
     bench = None
     if args.bench_json and args.bench_json.exists():
         # Absence is already guarded by ``.exists()``; guard MALFORMED content
@@ -608,10 +615,6 @@ def main() -> int:
                   "falling back to provisional placeholder estimate.",
                   file=sys.stderr)
             bench = None
-
-    if args.resume_diagnostics:
-        run_diagnostics_only(args.out_base, args)
-        return 0
 
     if not args.confirm_production:
         print_plan(args.out_base, args, bench)

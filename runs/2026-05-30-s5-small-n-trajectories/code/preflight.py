@@ -28,8 +28,8 @@ What it checks
 The third-party packages actually imported by the §5 code (enumerated from the
 source, not guessed): numpy, pandas, pyarrow (parquet I/O), pymc, pytensor,
 arviz, scikit-learn (k-means clustering), matplotlib (plots), and the
-h5netcdf + h5py pair (the HDF5 backend behind ``arviz.to_netcdf`` /
-``arviz.from_netcdf`` — the four monolithic posteriors are HDF5-format ``.nc``).
+h5netcdf + h5py pair (the HDF5 backend behind ``InferenceData.to_netcdf`` /
+``arviz.from_netcdf`` via xarray — the monolithic posteriors are HDF5 ``.nc``).
 
 This module does NOT check that pytensor can compile C extensions (that needs a
 C toolchain + Python dev headers; see ``PROVISIONING.md``). It checks imports
@@ -93,23 +93,31 @@ def check_imports() -> tuple[list[tuple[str, str, str, str]], list[str]]:
 
 
 def check_hdf5_backend() -> tuple[bool, str]:
-    """Verify the HDF5 backend works, not merely that h5py imports.
+    """Verify the real netCDF write path works, not merely that h5py imports.
 
-    arviz 1.x writes/reads ``.nc`` as HDF5 via h5netcdf -> h5py. h5py importing
-    is not sufficient: the binding to the underlying HDF5 C library can be
-    broken independently. Create an in-memory HDF5 file (no disk) and round-trip
-    a dataset — the cheapest decisive check of the path that actually fails.
+    arviz 1.x writes/reads ``.nc`` by delegating to xarray, which delegates to
+    the h5netcdf engine, which calls h5py. Importing h5py is not sufficient: the
+    binding to the underlying HDF5 C library, the h5netcdf<->h5py pairing, or
+    xarray's engine resolution can each break independently. Exercise the actual
+    substrate — an xarray Dataset round-tripped through the ``h5netcdf`` engine
+    to a temporary ``.nc`` and back — which is the path that fails when the
+    backend is missing or mismatched (the failure class this module exists for).
     """
-    try:
-        import h5py
-        import numpy as np
+    import os
+    import tempfile
 
-        with h5py.File("preflight-probe.h5", "w",
-                       driver="core", backing_store=False) as f:
-            f.create_dataset("probe", data=np.arange(4))
-            ok = tuple(f["probe"].shape) == (4,)
-        return ok, "h5py in-memory HDF5 round-trip OK" if ok else \
-            "h5py round-trip returned unexpected shape"
+    try:
+        import numpy as np
+        import xarray as xr
+
+        with tempfile.TemporaryDirectory() as tmp:
+            path = os.path.join(tmp, "preflight-probe.nc")
+            xr.Dataset({"probe": ("a", np.arange(4))}).to_netcdf(
+                path, engine="h5netcdf")
+            with xr.open_dataset(path, engine="h5netcdf") as back:
+                ok = int(back["probe"].sum()) == 6
+        return ok, ("xarray->h5netcdf->h5py .nc round-trip OK" if ok else
+                    "netCDF round-trip returned unexpected data")
     except Exception as exc:  # noqa: BLE001
         return False, f"HDF5 backend check failed: {exc!r}"
 
@@ -117,7 +125,7 @@ def check_hdf5_backend() -> tuple[bool, str]:
 def report() -> bool:
     """Print the version table + HDF5 check; return True iff the env is ready."""
     rows, missing = check_imports()
-    width = max(len(d) for d, _, _, _ in rows)
+    width = max((len(d) for d, _, _, _ in rows), default=0)
     print(f"§5 preflight — python {sys.version.split()[0]}")
     print("-" * 72)
     for dist, mod, ver, status in rows:
@@ -127,7 +135,11 @@ def report() -> bool:
     print(f"  HDF5 backend: {'OK' if hdf5_ok else 'FAIL'} — {hdf5_msg}")
     ready = not missing and hdf5_ok
     print("=" * 72)
-    print("READY" if ready else f"NOT READY — missing: {missing or '[HDF5]'}")
+    if ready:
+        print("READY")
+    else:
+        problems = list(missing) + ([] if hdf5_ok else ["HDF5-backend"])
+        print(f"NOT READY — problems: {problems}")
     return ready
 
 

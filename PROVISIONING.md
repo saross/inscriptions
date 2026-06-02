@@ -44,6 +44,7 @@ re-validating.
 2. **A C/C++ toolchain + Python development headers.** pytensor compiles C++ at
    runtime (NUTS sampling). It needs `g++`/`gcc` **and** `Python.h`. Two ways to
    satisfy the header requirement:
+
    - **Preferred:** let uv use a **uv-managed** CPython (`uv python install
      3.13`), which bundles the dev headers — no system `-dev` package needed.
    - **System Python:** install the headers, e.g. on Ubuntu
