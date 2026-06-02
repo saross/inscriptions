@@ -4,6 +4,12 @@
 finish_diagnostics.py — complete the §5 production run's Step 3 from saved output.
 =================================================================================
 
+SUPERSEDED (2026-06-02) by ``orchestrate.py --resume-diagnostics``, which
+generalises this one-off recovery into a first-class flag (and runs the same
+preflight check first). This file is retained as the historical artefact that
+produced the committed ``production-summary.json`` on 2026-06-01; for any future
+resume, prefer ``orchestrate.py --resume-diagnostics --out-base <dir>``.
+
 The 2026-05-31 production run completed Steps 1–2 (the four monolithic ``.nc``
 posteriors + the subsample-recover grid) but crashed at Step 3
 (``trajectory_clustering``) on a missing ``scikit-learn`` — an UNDECLARED

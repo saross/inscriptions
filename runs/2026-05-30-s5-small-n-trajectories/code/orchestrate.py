@@ -418,6 +418,8 @@ def print_plan(out_base: Path, args, bench: dict | None) -> None:
 
 def run_production(out_base: Path, args) -> dict:
     """The full production run (gated behind --confirm-production)."""
+    import preflight
+    preflight.assert_ready()  # fail fast on a missing dep BEFORE the ~5.7 h run
     out_base.mkdir(parents=True, exist_ok=True)
     summary = {"steps": {}}
 
@@ -461,6 +463,92 @@ def run_production(out_base: Path, args) -> dict:
     return summary
 
 
+def run_diagnostics_only(out_base: Path, args) -> dict:
+    """Re-run Step 3 diagnostics from saved outputs — Steps 1-2 are NOT re-fitted.
+
+    Generalises the one-off ``finish_diagnostics.py`` (which recovered the
+    2026-05-31 run after its post-sampling sklearn crash) into a first-class
+    ``--resume-diagnostics`` path. Use it whenever the four monolithic ``.nc``
+    posteriors + ``subsample-recover-results.json`` already exist in ``out_base``
+    but Step 3 (clustering + anchor consistency + Pompeii) needs to be (re)run —
+    e.g. after a Step-3 crash, or to recompute a diagnostic without paying the
+    ~5.7 h of fitting again.
+
+    The anchor / Pompeii checks DO re-fit those few standalone cities (~15-25
+    min; the anchors are not in the monolithic target-set fit), but the 268-city
+    monolithic fits and the ~1400-fit subsample grid are loaded from disk, never
+    re-sampled. Writes ``production-summary.json`` (overwrites any existing one),
+    matching ``run_production``'s structure with a provenance ``note``.
+    """
+    import preflight
+    preflight.assert_ready()  # the anchor/Pompeii re-fits + clustering need deps
+    import arviz as az
+    import hier_model
+    import letter_model
+
+    if not out_base.exists():
+        raise SystemExit(f"FATAL: --resume-diagnostics: {out_base} not found")
+
+    # Unit -> module, for convergence_summary / gates_pass on each saved fit.
+    mono_modules = {"inscription": hier_model, "letter": letter_model}
+    summary = {"steps": {}, "note": (
+        "Step 3 (re)run by orchestrate.py --resume-diagnostics; Steps 1-2 "
+        "loaded from saved outputs, not re-fitted.")}
+
+    # Step 1, reconstructed: load each .nc and recompute its convergence verdict.
+    print("=== Step 1 (reconstructed from saved .nc) ===")
+    mono = {}
+    for c in MONO_CONFIGS:
+        tag = f"{c['unit']}-{c['bin_width']}y"
+        p = out_base / f"monolithic-{tag}.nc"
+        if not p.exists():
+            mono[tag] = {"error": f"missing {p.name}"}
+            print(f"  {tag}: MISSING {p.name}")
+            continue
+        mod = mono_modules[c["unit"]]
+        idata = az.from_netcdf(str(p))
+        conv = mod.convergence_summary(idata)
+        mono[tag] = {"convergence": conv, "gates_pass": bool(mod.gates_pass(conv)),
+                     "save_path": str(p)}
+        del idata  # bound memory: one 0.6-1.2 GB posterior at a time
+        print(f"  {tag}: gates_pass={mono[tag]['gates_pass']} "
+              f"rhat={conv['max_rhat']:.4f} ess={conv['min_ess_bulk']:.0f} "
+              f"div={conv['n_divergences']}")
+    summary["steps"]["monolithic"] = mono
+
+    # Step 2, loaded: the existing subsample-recover aggregate.
+    print("=== Step 2 (loaded subsample-recover results) ===")
+    sub_path = out_base / "subsample-recover-results.json"
+    if not sub_path.exists():
+        raise SystemExit(f"FATAL: --resume-diagnostics: {sub_path} not found")
+    sub = json.loads(sub_path.read_text())
+    summary["steps"]["subsample_recover"] = sub["aggregate"]
+    print(f"  calibration N* = {sub['aggregate'].get('calibration_n_star')}, "
+          f"n_failures = {sub.get('n_failures')}")
+
+    # Step 3, (re)run: clustering (loads the primary .nc) + the standalone
+    # anchor / Pompeii re-fits. Identical calls to run_production's Step 3.
+    print("=== Step 3 (clustering + anchor consistency + Pompeii) ===")
+    cache25 = dp.default_cache_dir(25)
+    diag = {}
+    primary = out_base / "monolithic-inscription-25y.nc"
+    if primary.exists():
+        diag["clustering"] = trajectory_clustering(primary, "lam")
+        print(f"  clustering sizes={diag['clustering'].get('sizes')}")
+    diag["anchor_internal_consistency"] = anchor_internal_consistency(
+        cache25, args.draws, args.tune, args.chains, args.subsample_cores,
+        args.target_accept, args.seed)
+    diag["pompeii_ad79"] = pompeii_ad79_external(
+        cache25, args.draws, args.tune, args.chains, args.subsample_cores,
+        args.target_accept, args.seed)
+    summary["steps"]["diagnostics"] = diag
+
+    (out_base / "production-summary.json").write_text(
+        json.dumps(summary, indent=2, default=float))
+    print(f"\nProduction summary -> {out_base / 'production-summary.json'}")
+    return summary
+
+
 def main() -> int:
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--confirm-production", action="store_true",
@@ -468,6 +556,15 @@ def main() -> int:
                         "+ estimate and exits (dry run).")
     p.add_argument("--out-base", type=Path,
                    default=Path(__file__).resolve().parent / "production")
+    p.add_argument("--check-env", action="store_true",
+                   help="Run the preflight import + HDF5-backend check and exit "
+                        "(no sampling). Use when provisioning a new host.")
+    p.add_argument("--resume-diagnostics", action="store_true",
+                   help="Skip Steps 1-2; (re)run Step 3 diagnostics from the "
+                        "saved .nc + subsample JSON in --out-base. Re-fits only "
+                        "the few anchor/Pompeii cities (~15-25 min), never the "
+                        "268-city monolithic fits. Generalises "
+                        "finish_diagnostics.py.")
     # Monolithic sampler config (production defaults: tune/draws 1000, 4 chains).
     p.add_argument("--draws", type=int, default=1000)
     p.add_argument("--tune", type=int, default=1000)
@@ -494,6 +591,10 @@ def main() -> int:
              "provisional placeholders if absent).")
     args = p.parse_args()
 
+    if args.check_env:
+        import preflight
+        return 0 if preflight.report() else 2
+
     bench = None
     if args.bench_json and args.bench_json.exists():
         # Absence is already guarded by ``.exists()``; guard MALFORMED content
@@ -507,6 +608,10 @@ def main() -> int:
                   "falling back to provisional placeholder estimate.",
                   file=sys.stderr)
             bench = None
+
+    if args.resume_diagnostics:
+        run_diagnostics_only(args.out_base, args)
+        return 0
 
     if not args.confirm_production:
         print_plan(args.out_base, args, bench)

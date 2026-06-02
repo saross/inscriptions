@@ -53,6 +53,17 @@ if [[ ! -f "${ORCH}" ]]; then
 fi
 
 cd "${REPO_ROOT}"
+
+# Pre-flight dependency check: import every runtime package + verify the HDF5
+# netCDF backend BEFORE anything samples. The wrapper-level guard against the
+# 2026-05-31 failure (a 5.7 h run that crashed at the final step on a missing
+# scikit-learn). Set SKIP_PREFLIGHT=1 to bypass (e.g. to read the dry-run plan
+# on a host without the full stack). orchestrate.py also asserts this internally.
+if [[ "${SKIP_PREFLIGHT:-0}" != "1" ]]; then
+    echo "[run-production] preflight: verifying environment ..."
+    "${PY}" "${CODE_DIR}/preflight.py"
+fi
+
 echo "[run-production] repo=${REPO_ROOT}"
 echo "[run-production] PY=${PY}"
 echo "[run-production] TMPDIR=${TMPDIR}  PYTENSOR_FLAGS=${PYTENSOR_FLAGS}"
