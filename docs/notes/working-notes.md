@@ -1802,3 +1802,72 @@ Median r ≈ 0.82 (range 0.69–0.89). Source: `production-summary.json`, field 
 ### Findable later
 
 `pompeii-ad79`, `external-validation`, `terminus`, `eruption`, `vesuvius`, `s5-layer-a`, `aoristic`, `poisson-aoristic`, `icar`, `anchor-internal-consistency`, `salona`, `trajectory`, `validation`, `shape-r`, `post79-mass`, `post79-fraction`, `temporal-mass-leakage`, `production-diagnostics`, `pompeii-ad79-check`, `ad79`, `layer-a-production`, `mogontiacum`, `ostia`, `aquileia`, `puteoli`, `carnuntum`, `smoke-run-corroboration`, `8a2`, `8a1`
+
+## Obs 65 — 2026-06-02 [GOTCHA]: arviz 1.x makes the netCDF backend optional — a lock refresh silently stripped the ability to read the project's own HDF5 posteriors
+
+While refreshing `uv.lock` to the pymc-6 stack (task #9, PR #5, merged `4df6d47..ad3457b`), a clean dependency resolve produced an environment that imported every package successfully yet **could not read the §5 `.nc` posteriors**. The cause is a quiet consequence of the arviz 0.x → 1.x major refactor.
+
+### The finding
+
+arviz 0.23.x hard-depended on a netCDF backend, so h5netcdf + h5py were always present transitively. arviz 1.1.0 makes the netCDF backend an **optional extra**, and `h5netcdf` 1.8.1 itself declares only `numpy` + `packaging` — leaving the HDF5 binding (h5py or h5pyd) to the caller. So a clean resolve of `pymc>=6.0.1` (which pulls arviz 1.1.0) **dropped both h5netcdf and h5py** from the lock. The four §5 monolithic posteriors are HDF5-format `.nc` (magic bytes `\x89HDF`), written via `InferenceData.to_netcdf` → xarray → h5netcdf → h5py. In the stripped environment every `import` succeeds and an import-only check passes, but `az.from_netcdf(...)` fails at runtime — Layer B's input would be unreadable.
+
+zbook avoided the failure only because it still had h5py 3.16.0 + h5netcdf 1.8.1 as **leftovers** from the arviz-0.x era; a fresh host provisioned from the clean lock would not.
+
+**Fix**: declare `h5netcdf>=1.8.1` and `h5py>=3.16.0` directly in `pyproject.toml` (commit `4df6d47`), so the backend is locked regardless of arviz's optionality.
+
+### Why this matters
+
+(i) **A "clean" lock can be functionally broken in ways imports don't reveal.** The env looks healthy until it tries the actual I/O path. The §5 `preflight.py` check was therefore strengthened to round-trip a real `xarray → h5netcdf → .nc` write+read (not merely import h5py), so this class is caught before any sampling (`ad3457b`).
+
+(ii) **General pattern for major-version dependency bumps.** When a major version moves functionality from a hard dependency to an optional extra, refreshing a lock can quietly remove capability the old lock provided implicitly. After such a bump, verify the *real* operation (here, netCDF I/O), not just that the top-level package imports.
+
+(iii) **Backups inherit the caveat.** The backed-up `.nc` (rpi-qnap, 2026-06-02) carry a MANIFEST recording that they need arviz ≥ 1.x + h5netcdf + h5py to read — a future restorer on a bare or older env would otherwise hit the same wall.
+
+### Caveats / methodological notes
+
+The HDF5-vs-classic-netCDF distinction is load-bearing: classic netCDF could be read by scipy alone, but these are HDF5, so an HDF5 binding is mandatory. The project standardised on h5netcdf (what zbook validated), not netcdf4.
+
+### Related observations and artefacts
+
+**Obs 66** (host stack split): the companion provenance finding from the same session. **Artefacts**: `pyproject.toml`, `runs/2026-05-30-s5-small-n-trajectories/code/preflight.py`, `PROVISIONING.md`; PR #5 (`4df6d47..ad3457b`).
+
+### Findable later
+
+`arviz`, `arviz-1x`, `netcdf`, `hdf5`, `h5netcdf`, `h5py`, `optional-extra`, `uv-lock`, `dependency-hygiene`, `pymc-6`, `lock-refresh`, `backend`, `to-netcdf`, `from-netcdf`, `preflight`, `provisioning`, `major-version-bump`, `silent-breakage`, `reproducibility`, `s5-posteriors`, `task-9`, `pr-5`
+
+## Obs 66 — 2026-06-02 [PROVENANCE]: the project's Bayesian results currently span two stacks — §5 on pymc-6 / arviz-1.1, the recovery grids on pymc-5.28 / arviz-0.23
+
+A side-effect discovery while refreshing the dependency lock (task #9): the project's two main Bayesian work-products were produced on **different major versions** of the core stack.
+
+### The finding
+
+Installed versions, read at source (`.venv` on each host), not from notes:
+
+| host | role | python | pymc | pytensor | arviz |
+|---|---|---|---|---|---|
+| zbook | §5 Layer-A | 3.13.7 | 6.0.1 | 3.0.3 | 1.1.0 |
+| sapphire | recovery grids A + B | 3.13 | 5.28.5 | 2.38.3 | 0.23.4 |
+
+The two recovery grids (inscription + letter, the 2026-05-26 two-unit re-simulation) ran on the **same** sapphire stack, so they are mutually consistent and the cross-grid comparison is internally clean. **§5 is the outlier** — it ran on the newer pymc-6 stack on zbook.
+
+PR #5 **standardised the project on pymc-6**: `uv.lock` now pins pymc 6.0.1 / pytensor 3.0.3 / arviz 1.1.0. The sapphire upgrade (`uv sync --frozen`) is queued for **after Grid B finishes** (never mid-run) — documented in `PROVISIONING.md`.
+
+### Why this matters
+
+(i) **Provenance for the write-up.** Any results table should record which stack produced which number; the recovery-grid and §5 results cross a pymc-major boundary. Benign (they answer different questions) but should be stated, not hidden.
+
+(ii) **Cross-readability constraint.** The §5 `.nc` are arviz-1.1 HDF5 (Obs 65); sapphire's arviz 0.23 may not read them, so **Layer B must run on zbook (or a pymc-6 host) until sapphire is upgraded** — a concrete scheduling constraint.
+
+(iii) **The recovery grids need no re-run.** Because both grids share one stack, there is no need to re-run Grid A under pymc-6 to match Grid B — they are already on the same footing. Only §5 ↔ recovery-grid comparisons cross the version boundary.
+
+### Caveats / methodological notes
+
+The split is partly transient: once sapphire is upgraded post-Grid-B, new work converges on pymc-6. But the *completed* artefacts (Grids A/B on 5.28; §5 on 6.0.1) are fixed historical facts and keep their provenance regardless of later upgrades.
+
+### Related observations and artefacts
+
+**Obs 65** (arviz-1.x optional backend): the companion dependency finding. **Artefacts**: `uv.lock`, `pyproject.toml`, `PROVISIONING.md`; PR #5 (`4df6d47..ad3457b`); §5 posteriors backup MANIFEST (rpi-qnap).
+
+### Findable later
+
+`provenance`, `pymc-6`, `pymc-5`, `arviz-1x`, `arviz-0x`, `pytensor`, `stack-split`, `reproducibility`, `recovery-grid`, `s5-layer-a`, `zbook`, `sapphire`, `host-parity`, `layer-b`, `cross-run-consistency`, `version-pinning`, `task-9`, `pr-5`, `uv-lock`
