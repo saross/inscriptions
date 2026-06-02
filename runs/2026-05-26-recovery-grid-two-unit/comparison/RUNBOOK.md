@@ -65,6 +65,30 @@ is one-command-ready.
 
 ---
 
+## ⚠ Criterion superseded (2026-06-02) — read before adjudicating
+
+The harness (`grid-summariser.py`, `compare-grids.py`) currently computes the
+**lodged** binding criterion (exact 95%-CI α-coverage + Pearson *r* ≥ 0.95).
+That criterion has been **superseded** by the metric correction in **OSF
+Amendment 01 §A5.5.1** (drafted 2026-06-02; see
+`planning/osf-amendment-2026-05-29-two-measure-framework.md` and the evidence at
+`planning/prior-art-scout-2026-06-02-recovery-validation-metrics.md`):
+
+- **Shape gate (hybrid):** Pearson *r* ≥ 0.95 for non-flat shapes (unchanged);
+  Wasserstein-1 ≤ T_flat = 10 y for the flat shape (Pearson undefined there).
+- **Convergence precondition** made explicit (≥90% replicates, R̂ < 1.01).
+- **α demoted** from binding gate to a quantified diagnostic (90th-pct |bias|
+  ≈ 0.18).
+- **Operating-envelope reframe:** gate evaluated for α ≤ 0.70; α ≥ 0.95 reported
+  as stress sensitivity. Grid A preview under the corrected criterion: **91.9%
+  PASS** in the operating envelope (vs 42.7% under the lodged criterion).
+
+**Therefore:** the harness output is the *old-criterion reference*. Before the
+headline two-grid adjudication, **update the harness to the §A5.5.1 criterion**
+(the next coding step; W1 and α intervals are already stored, so no re-fit) —
+and only after the amendment's α-diagnostic operationalisation has Martin's
+draft-stage sign-off. Run both old and corrected for transparency.
+
 ## What was done 2026-06-02 (already committed)
 
 - **Grid A verdict:** FAIL. `REPORT.md` + `grid-summary.parquet` +

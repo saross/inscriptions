@@ -3,6 +3,8 @@ title: "OSF Amendment 01 — Two-measure framework (epigraphic acts and epigraph
 amendment-number: 01
 status: DRAFT for Shawn's review and lodgement (not yet lodged)
 date-drafted: 2026-05-29
+date-updated: "2026-06-02 (added §A5.5.1: recovery-grid binding-criterion metric correction, surfaced by the Grid A adjudication)"
+scope: "Two-measure framework (acts vs content) + recovery-grid binding-criterion clarification (§A5.5.1)"
 preregistration: "https://osf.io/uycs6/ (lodged 2026-05-20; embargoed)"
 lodged-version: "git tag osf-lodgement-2026-05-20 (https://github.com/saross/inscriptions/tree/osf-lodgement-2026-05-20)"
 filed-under: "preregistration §7 / contingency clause (preregistration-draft.md line 423): substantive methodology changes after lodgement are filed as an OSF amendment before implementation."
@@ -26,6 +28,14 @@ implementation."*
 reframe it prompted, recorded as Observation 58 in the project working notes
 (`docs/notes/reflections/working-notes.md`, commit `dd326dc`) and
 corroborated by Observations 59 (`de8fa8f`) and 60 (`2f86c95`).
+
+**Second trigger (2026-06-02; §A5.5.1).** Adjudicating Grid A of the two-unit
+recovery simulation exposed that the lodged recovery-grid binding criterion is
+mathematically undefined for the flat genuine shape and gates on exact α
+credible-interval coverage that collapses at large *N* for asymptotic reasons
+unrelated to recovery. The metric correction is folded into this amendment as
+§A5.5.1 rather than filed separately, since both changes concern the same
+recovery-grid / Stage-3 gate.
 
 ## A2. Summary of the change
 
@@ -53,6 +63,16 @@ This amendment replaces that framing with a **two-measure framework**:
 The two measures are analysed **in parallel**, each within its own
 confirmatory family, and reported **side by side**. No multiplicity
 correction is applied *across* the two units, for the reason given in §A5.3.
+
+This amendment additionally **clarifies the recovery-grid binding criterion**
+(§A5.5.1, a metric correction surfaced when Grid A was adjudicated on
+2026-06-02): the lodged criterion is undefined for the flat genuine shape
+(Pearson *r* on a constant target) and gates on exact α credible-interval
+coverage, which collapses at large *N* for asymptotic reasons unrelated to
+recovery. The corrected criterion patches the flat case with Wasserstein-1,
+keeps Pearson *r* ≥ 0.95 for all other shapes, demotes α to a quantified
+diagnostic, and reports the grid as a recoverability map with a stated
+operating envelope.
 
 ## A3. Rationale
 
@@ -234,6 +254,95 @@ posterior-median Pearson *r* ≥ 0.95 between recovered and true genuine SPA in
   therefore logged as an optional methodology-follow-up refinement, not a
   prerequisite; the paper reports the analytic reachability result.
 
+### A5.5.1 Binding-criterion clarification (metric correction)
+
+Adjudicating Grid A (inscription mass) on completion (2026-06-02;
+`runs/2026-05-26-recovery-grid-two-unit/inscription-mass/outputs/REPORT.md`)
+exposed two defects in the lodged binding criterion as written — both
+*mathematical / asymptotic*, not recovery failures. This subsection corrects
+them. The correction was checked against field practice by a closed-loop
+prior-art scout and an implementation review
+(`planning/prior-art-scout-2026-06-02-recovery-validation-metrics.md`).
+
+**The two defects.**
+
+1. **Criterion (ii) is undefined for the flat genuine shape.** Pearson *r*
+   between a recovered curve and a *constant* true SPA is `0/0` (the truth has
+   zero variance). All 75 `flat_baseline` cells return `nan` and fail
+   mechanically, capping achievable shape-pass at 83.3% — independent of model
+   quality, and identically for both units. The model in fact recovers flatness
+   well (≈99% cell coverage; small Wasserstein-1).
+2. **Criterion (i) — exact 95%-CI coverage of α — collapses at large *N*.**
+   Holding (shape, α, tier) fixed and increasing *N*, cell coverage falls from
+   ~1.0 to ~0.0 while the α bias stays small and roughly constant — the standard
+   posterior-concentration / semiparametric Bernstein–von Mises effect (the
+   interval narrows below a fixed small bias). It measures asymptotic interval
+   calibration, not recovery adequacy. No surveyed community (radiocarbon SPD,
+   baorista, Bayesian-workflow SBC) gates on exact CI coverage of a mixing
+   parameter.
+
+**The corrected criterion.** The recovery grid is reported as a
+**recoverability map** with a stated **operating envelope** (consistent with the
+project's reachability-guide methodology), not a binary whole-grid pass/fail.
+Within the operating envelope:
+
+- **Precondition — convergence.** A cell is eligible only if ≥90% of its
+  replicates converge (max R̂ < 1.01; divergence count within the lodged
+  threshold). This makes the existing convergence requirement an explicit gate.
+- **Binding criterion — genuine-SPA (`p_gen`) shape recovery (hybrid).** In ≥90%
+  of eligible cells: posterior-median Pearson *r* ≥ 0.95 for **non-flat** genuine
+  shapes (**unchanged from the lodged preregistration**); and, for the
+  **flat_baseline** shape only (where Pearson *r* is undefined), Wasserstein-1
+  between posterior-median recovered and true SPA ≤ **T_flat = 10 years**
+  (the maximum W1 among well-recovered flat cells is 9.8 y; rounded up).
+  Wasserstein-1 is additionally reported for *all* shapes as a supplementary
+  distribution-sensitive metric. A single global W1 threshold is *not* used,
+  because W1 magnitude depends on the true shape's geometry (good-recovery W1
+  ranges ≈0.8–24 across shapes) and would penalise high-spread shapes; only the
+  *undefined* flat case is patched.
+- **Operating envelope.** The binding criterion is evaluated where the
+  deconvolution is identifiable: empirically **α ≤ 0.70** across all shapes and
+  sample sizes. Cells with α ≥ 0.95 (≤5% genuine signal; near-unidentifiable;
+  degraded convergence) are reported as a **stress-test sensitivity, not gated**.
+  Where the *real* corpus α exceeds the envelope (plausible in late,
+  template-dominated sub-periods), genuine-signal claims for those regimes are
+  flagged as degraded-recovery, not reported as validated.
+- **α (mixing weight) — diagnostic, not gate.** α recovery is reported as a
+  **quantified diagnostic** (signed bias and its distribution), not a binding
+  gate. Rationale: (a) exact CI coverage of a mixing weight is not field-standard
+  and collapses at large *N* under negligible bias; (b) α is recoverable only to
+  a practical tolerance (operating-envelope 90th-percentile |bias| ≈ **0.18**),
+  which supports the coarse, directional convention-fraction statements the paper
+  makes but not a tight gate. **All α-derived claims in the paper are hedged to
+  this demonstrated recovery precision.**
+
+**Outcome under the corrected criterion (transparency).** Under the lodged
+criterion Grid A returned 42.7% both-pass; under the corrected criterion it
+passes the binding shape recovery at **91.9%** within the operating envelope
+(convergence + hybrid shape). Grid B (letter mass) is adjudicated identically on
+completion. These figures are a preview recomputed from the stored Grid A
+posteriors; the finalised adjudication re-runs the corrected criterion on both
+grids' stored outputs (no re-fitting required, because W1 and the α intervals are
+already stored per cell/replicate).
+
+**Metric-correction-driven, not verdict-driven (the integrity checks a reviewer
+can verify).** Mirroring §A4:
+
+1. The correction targets two *mathematical / asymptotic* defects (undefined-on-
+   flat; coverage-collapse-at-large-*N*), identified from the failure structure
+   independently of the verdict, and confirmed field-standard by a prior-art
+   scout + implementation review (artefacts above).
+2. The non-flat shape criterion is **unchanged** from the lodged preregistration
+   (Pearson *r* ≥ 0.95); only the *undefined* flat case is patched (W1), and α is
+   moved to a diagnostic.
+3. Thresholds (T_flat = 10 y from well-recovered flat cells; operating envelope
+   α ≤ 0.70 from near-unidentifiability at α ≥ 0.95) are set from theory and the
+   known-good sub-grid **before** the headline two-grid verdict; the failing
+   scenarios (full-grid; α-gated) are reported alongside the passing one.
+
+**Statistician sign-off** (Martin, at draft): the exact operationalisation of the
+α diagnostic and the operating-envelope cut are flagged for a second opinion.
+
 ### A5.6 Exploratory analyses under both units
 
 Per Observation 58: the §5 pre-specified exploratory analyses are run under
@@ -249,8 +358,13 @@ preregistration.
   multiplicity policy are **unchanged**.
 - The chronological envelope (50 BC – AD 350), the LIRE v3.0 freeze
   (Decision 24), and all other lodged specifications are **unchanged**.
-- The recovery-grid binding criteria, R̂/ESS convergence gates, and PPC
-  trigger scheme are **unchanged**; they are simply applied per unit.
+- The recovery-grid is applied per unit; the R̂/ESS convergence gates and PPC
+  trigger scheme are **unchanged**. The recovery-grid **binding criteria are
+  clarified** (metric correction) per §A5.5.1: the undefined-on-flat Pearson
+  case is patched with Wasserstein-1, exact α-coverage is replaced by an α
+  diagnostic, and the grid is reported as a recoverability map with a stated
+  operating envelope. The non-flat shape criterion (Pearson *r* ≥ 0.95) is
+  unchanged.
 
 ## A7. Exact preregistration edits to apply on lodgement
 
@@ -270,9 +384,16 @@ lockstep with lodgement; the lodged authority remains git tag
 4. **§6 effect-size table:** add (a) a letter-mass H3a `f_within` verdict row
    (same three-way rule), (b) a second H2.1 row for the letter-mass recovery
    grid, and (c) a content-residual descriptive row (no threshold).
-5. **§7 / §11:** record this amendment in the planned-deviations text and the
+5. **§3 line 61 / §4 line 334 / §6 lines 395–396 (recovery-grid binding
+   criterion):** apply the §A5.5.1 metric correction — patch the flat-shape
+   case with Wasserstein-1 (T_flat = 10 y), retain Pearson *r* ≥ 0.95 for
+   non-flat shapes, make the convergence precondition explicit, demote exact
+   α-coverage to an α-recovery diagnostic, and reframe the gate as a
+   recoverability map with a stated operating envelope (α ≤ 0.70). Update both
+   H2.1 rows in the §6 table accordingly.
+6. **§7 / §11:** record this amendment in the planned-deviations text and the
    §11 post-lodgement amendment trail.
-6. **`preregistration-changelog.md`:** add a dated amendment section.
+7. **`preregistration-changelog.md`:** add a dated amendment section.
 
 ## A8. Provenance
 
@@ -284,5 +405,16 @@ lockstep with lodgement; the lodged authority remains git tag
 - **Artefacts:** `runs/2026-05-26-letter-count-probe/` (probe);
   `runs/2026-05-26-recovery-grid-two-unit/` (two-grid validation);
   Observations 58–60 in `docs/notes/reflections/working-notes.md`.
+- **Binding-criterion clarification (§A5.5.1):** the metric correction is
+  driven by the Grid A adjudication
+  (`runs/2026-05-26-recovery-grid-two-unit/inscription-mass/outputs/REPORT.md`,
+  committed `0638093`; harness committed `4a3a8d2`), a closed-loop prior-art
+  scout, and an implementation review, both recorded at
+  `planning/prior-art-scout-2026-06-02-recovery-validation-metrics.md`. Field
+  basis: no surveyed community gates on exact CI coverage of a mixing weight;
+  Wasserstein-1 is theoretically justified for deconvolution recovery (Rousseau
+  & Scricciolo 2021); flat/uniform is a standard tested null in radiocarbon SPD
+  work (Crema 2022). This is the second statistically load-bearing change in the
+  amendment (with §A5.3) and is flagged for statistician sign-off at draft.
 - **Repository state:** edits to be applied on `main`; a new lodgement tag
   will be cut when the amendment is lodged to OSF.
