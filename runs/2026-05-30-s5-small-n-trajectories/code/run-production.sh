@@ -58,7 +58,8 @@ cd "${REPO_ROOT}"
 # netCDF backend BEFORE anything samples. The wrapper-level guard against the
 # 2026-05-31 failure (a 5.7 h run that crashed at the final step on a missing
 # scikit-learn). Set SKIP_PREFLIGHT=1 to bypass (e.g. to read the dry-run plan
-# on a host without the full stack). orchestrate.py also asserts this internally.
+# on a host without the full stack). orchestrate.py also asserts this for the
+# production and --resume-diagnostics paths (the dry-run plan does not).
 if [[ "${SKIP_PREFLIGHT:-0}" != "1" ]]; then
     echo "[run-production] preflight: verifying environment ..."
     "${PY}" "${CODE_DIR}/preflight.py"
