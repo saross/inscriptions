@@ -67,6 +67,11 @@ RHAT_GATE = 1.01
 PEARSON_PASS = 0.95
 CELL_PASS_FRAC = 0.90
 
+# Default worker count leaves headroom for SSH + system responsiveness
+# (2026-06-03: n_jobs=16 saturated zbook to the point SSH could not handshake;
+# Shawn's guidance — keep a few cores free). Capped at 14.
+DEFAULT_JOBS = min(14, max(1, (os.cpu_count() or 8) - 4))
+
 
 def _build_cells(grid_code: str, design_json: str) -> list[dict]:
     """Construct cells at the study's (shape × α × N) from the design specs.
@@ -176,7 +181,8 @@ def _parse_args() -> argparse.Namespace:
     p.add_argument("--grid-code", required=True, type=Path)
     p.add_argument("--output-dir", required=True, type=Path)
     p.add_argument("--n-reps", type=int, default=50)
-    p.add_argument("--n-jobs", type=int, default=16)
+    p.add_argument("--n-jobs", type=int, default=DEFAULT_JOBS,
+                   help="parallel fits; default leaves headroom for ssh/system.")
     p.add_argument("--smoke", action="store_true")
     return p.parse_args()
 
