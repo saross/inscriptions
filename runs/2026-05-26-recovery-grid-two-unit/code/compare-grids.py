@@ -78,6 +78,13 @@ import pandas as pd  # noqa: E402
 GLOBAL_FRAC_PASS = 0.90
 FLAT_SHAPE = "flat_baseline"
 
+# Corrected binding criterion (Decision 33 / §A5.5.1); mirrors grid-summariser.py.
+SHAPE_PEARSON_PASS = 0.95
+T_FLAT_YEARS = 10.0
+ALPHA_ENVELOPE = 0.70
+ALPHA_STRESS = 0.95
+CONVERGENCE_FRAC = 0.90
+
 # Canonical axis orders for stable, readable heatmaps.
 ALPHA_ORDER = [0.05, 0.30, 0.50, 0.70, 0.95]
 SHAPE_ORDER = [
@@ -112,7 +119,61 @@ def load_grid_summary(grid_dir: Path) -> pd.DataFrame:
             df["alpha_coverage_pass"].astype(bool)
             & df["pearson_r_pass"].astype(bool)
         )
-    return df
+    return _ensure_corrected_flags(df)
+
+
+def _ensure_corrected_flags(df: pd.DataFrame) -> pd.DataFrame:
+    """Ensure the §A5.5.1 corrected per-cell flags exist (recompute if absent).
+
+    grid-summariser.py writes these columns into grid-summary.parquet; this is a
+    fallback for any parquet produced before that change.
+    """
+    needed = {"convergence_eligible", "shape_pass_corrected",
+              "cell_pass_corrected", "in_envelope"}
+    if needed.issubset(df.columns):
+        return df
+    out = df.copy()
+    is_flat = out["shape_name"] == FLAT_SHAPE
+    out["convergence_eligible"] = out["convergence_pass_rate"] >= CONVERGENCE_FRAC
+    out["shape_pass_corrected"] = (
+        (is_flat & (out["median_wasserstein_1_pgen"] <= T_FLAT_YEARS))
+        | (~is_flat & (out["median_pearson_r_pgen"] >= SHAPE_PEARSON_PASS))
+    )
+    out["cell_pass_corrected"] = (
+        out["convergence_eligible"] & out["shape_pass_corrected"]
+    )
+    out["in_envelope"] = out["alpha_true"] <= ALPHA_ENVELOPE
+    return out
+
+
+def grid_verdict_corrected(df: pd.DataFrame) -> dict:
+    """Corrected §A5.5.1 verdict for one grid: headline B + diagnostic A.
+
+    Headline B = clean-pass (convergence AND hybrid shape) over all in-envelope
+    cells (the binding figure). Diagnostic A = shape-pass among convergence-
+    eligible in-envelope cells (nan if none converge -- as for letter-mass).
+    """
+    env = df[df["in_envelope"]]
+    n_env = int(len(env))
+    elig = env["convergence_eligible"].astype(bool)
+    n_elig = int(elig.sum())
+    clean = env["cell_pass_corrected"].astype(bool)
+    shape = env["shape_pass_corrected"].astype(bool)
+    headline_b = float(clean.mean()) if n_env else float("nan")
+    diagnostic_a = float(shape[elig].mean()) if n_elig else float("nan")
+    return {
+        "n_envelope": n_env,
+        "n_eligible": n_elig,
+        "n_excluded_nonconv": int((~elig).sum()),
+        "n_clean_pass": int(clean.sum()),
+        "headline_b": headline_b,
+        "diagnostic_a": diagnostic_a,
+        "validated": bool(n_env and headline_b >= GLOBAL_FRAC_PASS),
+        "excluded_by_shape": {
+            str(k): int(v)
+            for k, v in env[~elig]["shape_name"].value_counts().items()
+        },
+    }
 
 
 def grid_verdict(df: pd.DataFrame, exclude_flat: bool = False) -> dict:
@@ -175,17 +236,32 @@ def build_comparison(
         "convergence_pass_rate",
         "n_divergences_total",
         "both_pass",
+        "cell_pass_corrected",
     ]
     a = df_a[keep].copy()
     b = df_b[keep].copy()
     merged = a.merge(
         b, on=keys, suffixes=(f"_{name_a}", f"_{name_b}"), how="inner"
     )
+    # in_envelope is a pure function of alpha_true (a join key), so recompute it
+    # unsuffixed rather than carrying two identical suffixed copies.
+    merged["in_envelope"] = merged["alpha_true"] <= ALPHA_ENVELOPE
+    # Lodged four-way (prereg both_pass).
     merged["classification"] = [
         _classify(ba, bb, name_a, name_b)
         for ba, bb in zip(
             merged[f"both_pass_{name_a}"].astype(bool),
             merged[f"both_pass_{name_b}"].astype(bool),
+        )
+    ]
+    # Corrected four-way (cell_pass_corrected), restricted to the operating
+    # envelope; out-of-envelope (stress) cells are labelled separately.
+    merged["classification_corrected"] = [
+        (_classify(ca, cb, name_a, name_b) if ie else "stress(out-of-env)")
+        for ie, ca, cb in zip(
+            merged["in_envelope"],
+            merged[f"cell_pass_corrected_{name_a}"].astype(bool),
+            merged[f"cell_pass_corrected_{name_b}"].astype(bool),
         )
     ]
     return merged
@@ -384,7 +460,15 @@ def make_report(
         va_nf["validated"], vb_nf["validated"], name_a, name_b
     )
 
+    # Corrected criterion (Decision 33 / §A5.5.1) — the binding verdict.
+    cva = grid_verdict_corrected(df_a)
+    cvb = grid_verdict_corrected(df_b)
+    branch_c, path_text_c = determine_outcome_branch(
+        cva["validated"], cvb["validated"], name_a, name_b
+    )
+
     counts = merged["classification"].value_counts().to_dict()
+    counts_c = merged["classification_corrected"].value_counts().to_dict()
 
     L: list[str] = []
     L.append("# Cross-grid comparison — two-unit recovery simulation")
@@ -413,8 +497,71 @@ def make_report(
     )
     L.append("")
 
-    # ---- Headline verdicts --------------------------------------------- #
-    L.append("## 1. Per-grid verdicts")
+    # ---- Binding verdict: corrected criterion (Decision 33 / §A5.5.1) --- #
+    def _cv_row(label: str, cv: dict) -> str:
+        a_val = cv["diagnostic_a"]
+        a_str = f"{a_val:.1%}" if a_val == a_val else "n/a (no convergent cells)"
+        return (
+            f"| {label} | **{cv['headline_b']:.1%}** "
+            f"({cv['n_clean_pass']}/{cv['n_envelope']}) | {a_str} "
+            f"| {cv['n_excluded_nonconv']} | "
+            f"{'PASS' if cv['validated'] else 'FAIL'} |"
+        )
+
+    L.append("## 1. Binding verdict — corrected criterion (Decision 33 / §A5.5.1)")
+    L.append("")
+    L.append(
+        "The **binding** cross-grid verdict uses the corrected criterion: a "
+        f"convergence precondition (≥ {CONVERGENCE_FRAC:.0%} of replicates) + a "
+        f"hybrid shape gate (median Pearson r ≥ {SHAPE_PEARSON_PASS:.2f} for "
+        f"non-flat shapes; Wasserstein-1 ≤ {T_FLAT_YEARS:.0f} y for flat_baseline), "
+        f"α demoted to a diagnostic, within the operating envelope "
+        f"(α ≤ {ALPHA_ENVELOPE:.2f}). Headline **B** = clean-pass (convergence AND "
+        "shape) over all in-envelope cells (binding); **A** = shape-pass among "
+        "convergence-eligible cells. The lodged criterion is retained as a "
+        "reference in §1R."
+    )
+    L.append("")
+    L.append("| Grid | headline B (binding) | diagnostic A | conv-excluded | Verdict |")
+    L.append("|---|---|---|---|---|")
+    L.append(_cv_row(f"{name_a}-mass", cva))
+    L.append(_cv_row(f"{name_b}-mass", cvb))
+    L.append("")
+    L.append(f"**Outcome branch (binding): {branch_c}.** {path_text_c}")
+    L.append("")
+    L.append("### 1a. Four-way cell classification (corrected, operating envelope)")
+    L.append("")
+    L.append("| classification | n cells |")
+    L.append("|---|---|")
+    for key in [
+        "both-pass", f"{name_a}-only", f"{name_b}-only", "both-fail",
+        "stress(out-of-env)",
+    ]:
+        L.append(f"| {key} | {counts_c.get(key, 0)} |")
+    L.append("")
+    if cva["n_excluded_nonconv"] and set(cva["excluded_by_shape"]) == {FLAT_SHAPE}:
+        L.append(
+            f"> **{name_a}-mass flat-null note.** Its {cva['n_excluded_nonconv']} "
+            "convergence-excluded in-envelope cells are all `flat_baseline` — a "
+            "flat-null sampling quirk (flatness still recovered correctly), the "
+            f"entire gap between B ({cva['headline_b']:.1%}) and A "
+            f"({cva['diagnostic_a']:.1%}). Deferred re-fit logged in the backlog."
+        )
+        L.append("")
+    if cvb["n_eligible"] == 0:
+        L.append(
+            f"> **{name_b}-mass convergence note.** **No** in-envelope cell reaches "
+            f"the {CONVERGENCE_FRAC:.0%} convergence precondition (max "
+            f"convergence_pass_rate < {CONVERGENCE_FRAC:.2f}); the heavy-tailed "
+            "letter-count likelihood produces severe divergences. Letter-mass fails "
+            "on convergence before shape recovery is even assessable, so diagnostic "
+            "A is undefined. This is consistent with inscription count being the "
+            "primary unit of analysis (Obs 61)."
+        )
+        L.append("")
+
+    # ---- Lodged-criterion reference verdicts --------------------------- #
+    L.append("## 1R. Per-grid verdicts — LODGED criterion (reference only)")
     L.append("")
     L.append(
         "**Binding rule (prereg §4 / spec §5):** a unit is validated only "
@@ -647,14 +794,21 @@ def main() -> int:
 
     # Console summary.
     va, vb = grid_verdict(df_a), grid_verdict(df_b)
+    cva, cvb = grid_verdict_corrected(df_a), grid_verdict_corrected(df_b)
     branch, _ = determine_outcome_branch(
         va["validated"], vb["validated"], name_a, name_b
     )
-    print(f"[compare] {name_a}-mass: {'PASS' if va['validated'] else 'FAIL'} "
-          f"(cov {va['frac_cov']:.1%}, r {va['frac_r']:.1%})")
-    print(f"[compare] {name_b}-mass: {'PASS' if vb['validated'] else 'FAIL'} "
-          f"(cov {vb['frac_cov']:.1%}, r {vb['frac_r']:.1%})")
-    print(f"[compare] as-written outcome branch: {branch}")
+    branch_c, _ = determine_outcome_branch(
+        cva["validated"], cvb["validated"], name_a, name_b
+    )
+    print(f"[compare] CORRECTED (binding) {name_a}-mass: "
+          f"{'PASS' if cva['validated'] else 'FAIL'} (headline B "
+          f"{cva['headline_b']:.1%})")
+    print(f"[compare] CORRECTED (binding) {name_b}-mass: "
+          f"{'PASS' if cvb['validated'] else 'FAIL'} (headline B "
+          f"{cvb['headline_b']:.1%})")
+    print(f"[compare] corrected outcome branch: {branch_c}")
+    print(f"[compare] lodged (reference) branch: {branch}")
     print(f"[compare] wrote {comp_path}")
     print(f"[compare] wrote {figs_dir / 'fig-pass-rate-heatmap.png'}")
     print(f"[compare] wrote {report_path}")
