@@ -10,19 +10,19 @@
   ],
   "n": 2000,
   "unit": "letter",
-  "n_replicates": 5,
+  "n_replicates": 100,
   "alpha_coverage": 0.0,
   "alpha_coverage_pass": false,
-  "median_pearson_r_pgen": 0.8187485219729007,
-  "mean_pearson_r_pgen": 0.8215390603590867,
+  "median_pearson_r_pgen": 0.743351247950903,
+  "mean_pearson_r_pgen": 0.7069623771050284,
   "pearson_r_pass": false,
-  "median_wasserstein_1_pgen": 16.829441443054638,
-  "convergence_pass_rate": 1.0,
+  "median_wasserstein_1_pgen": 19.289028892407067,
+  "convergence_pass_rate": 0.59,
   "n_divergences_total": 0,
-  "mean_fit_seconds": 54.44890394210815,
+  "mean_fit_seconds": 78.47131014108658,
   "per_tier_coverage": [
-    0.8,
-    1.0,
-    1.0
+    0.63,
+    0.91,
+    0.87
   ]
 }
