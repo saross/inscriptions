@@ -2,7 +2,7 @@
 title: "Spec — recovery-grid harness update to the Decision-33 / §A5.5.1 corrected criterion"
 author: "Claude (Opus 4.8, 1M context), on Shawn's brief"
 date: 2026-06-03
-status: DRAFT — awaiting Shawn sign-off (and Martin draft-stage nod on the α-diagnostic + envelope cut)
+status: APPROVED 2026-06-03 by Shawn — §6 denominator = (A) eligible-in-envelope; implement once Grid B finishes (Martin draft-stage nod still pending, non-blocking for adjudication)
 scope: "grid-summariser.py + compare-grids.py — adjudication-criterion change only; no re-fit"
 supersedes-criterion-in: "runs/2026-05-26-recovery-grid-two-unit/code/{grid-summariser.py, compare-grids.py}"
 ---
