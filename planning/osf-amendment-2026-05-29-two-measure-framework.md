@@ -3,8 +3,8 @@ title: "OSF Amendment 01 — Two-measure framework (epigraphic acts and epigraph
 amendment-number: 01
 status: DRAFT for Shawn's review and lodgement (not yet lodged)
 date-drafted: 2026-05-29
-date-updated: "2026-06-02 (added §A5.5.1: recovery-grid binding-criterion metric correction, surfaced by the Grid A adjudication)"
-scope: "Two-measure framework (acts vs content) + recovery-grid binding-criterion clarification (§A5.5.1)"
+date-updated: "2026-06-03 (finalised §A5.5.1 against the COMPLETED two-grid adjudication — inscription PASS / letter FAIL; added §A5.7 subset-specific deconvolution (Decision 34) + the measured reachability floor; recorded the flat-null convergence limitation and the headline-B/diagnostic-A reporting). Prior: 2026-06-02 (added §A5.5.1)."
+scope: "Two-measure framework (acts vs content) + recovery-grid binding-criterion clarification finalised against the completed two-grid adjudication (§A5.5.1) + subset-specific deconvolution and the measured reachability floor (§A5.7, Decision 34)"
 preregistration: "https://osf.io/uycs6/ (lodged 2026-05-20; embargoed)"
 lodged-version: "git tag osf-lodgement-2026-05-20 (https://github.com/saross/inscriptions/tree/osf-lodgement-2026-05-20)"
 filed-under: "preregistration §7 / contingency clause (preregistration-draft.md line 423): substantive methodology changes after lodgement are filed as an OSF amendment before implementation."
@@ -36,6 +36,19 @@ credible-interval coverage that collapses at large *N* for asymptotic reasons
 unrelated to recovery. The metric correction is folded into this amendment as
 §A5.5.1 rather than filed separately, since both changes concern the same
 recovery-grid / Stage-3 gate.
+
+**Third trigger (2026-06-03; §A5.5.1 finalisation + §A5.7).** Both recovery
+grids are now complete (Grid A 2026-05-27; Grid B 2026-06-03) and have been
+adjudicated under the corrected criterion: **Grid A (inscription) PASSes; Grid B
+(letter) FAILs** — no letter-mass cell clears the convergence precondition.
+§A5.5.1 is finalised here with those results (replacing the 2026-06-02 preview).
+Separately, a strategic decision on where the method's utility lies (Decision 34)
+pins **how a subset SPA is de-fogged** — by a *subset-specific* mixture fit, not
+by imposing the empire-wide convention shape — and a small-N reachability study
+(2026-06-03) measured the minimum subset size at which that subset-specific
+deconvolution recovers reliably. Both are pre-specified here as **§A5.7**, since
+they govern the same Stage-3 H3b mechanism this amendment otherwise leaves
+under-specified.
 
 ## A2. Summary of the change
 
@@ -72,7 +85,17 @@ coverage, which collapses at large *N* for asymptotic reasons unrelated to
 recovery. The corrected criterion patches the flat case with Wasserstein-1,
 keeps Pearson *r* ≥ 0.95 for all other shapes, demotes α to a quantified
 diagnostic, and reports the grid as a recoverability map with a stated
-operating envelope.
+operating envelope. **Both grids are now adjudicated under the corrected
+criterion (§A5.5.1): inscription mass PASSes (the gate is met for the
+inscription unit); letter mass FAILs (its fits do not converge), so Stage-3
+mixture-deconvolution work proceeds under inscription mass only.**
+
+Finally, this amendment **pre-specifies how a subset SPA is de-fogged**
+(§A5.7, Decision 34): by a **subset-specific** mixture fit — the model learns
+the subset's own convention mix from the subset's own data — **not** by imposing
+the empire-wide convention shape on every subset. A reachability study measured
+the minimum subset size at which this recovers reliably, defining the
+operating boundary for the paper's core subset re-application case.
 
 ## A3. Rationale
 
@@ -226,15 +249,25 @@ posterior-median Pearson *r* ≥ 0.95 between recovered and true genuine SPA in
 ≥ 90 % of cells — now runs as **two parallel grids**, one per unit:
 
 - **Grid A — inscription mass** and **Grid B — letter-mass conservative**,
-  under the same corrected (F1+F3, empirical-Bayes) pipeline. Both are
-  specified and running at `runs/2026-05-26-recovery-grid-two-unit/`
-  (spec at `…/spec.md`).
-- **Gate rule.** A Stage 3 confirmatory fit under a given unit is permitted
-  only if **that unit's grid passes both binding criteria**. The outcome
-  branching is pinned in `…/spec.md` §5: both grids pass → Stage 3 proceeds
-  under both units; one passes → Stage 3 proceeds under that unit only; both
-  fail → the mixture is revised before any Stage 3 fit (per the lodged
-  preregistration's existing recovery-failure contingency, line 420).
+  under the same corrected (F1+F3, empirical-Bayes) pipeline, at
+  `runs/2026-05-26-recovery-grid-two-unit/` (spec at `…/spec.md`). **Both grids
+  are complete** (Grid A finished 2026-05-27; Grid B 2026-06-03) and are
+  adjudicated under the corrected criterion in §A5.5.1.
+- **Gate rule.** A Stage 3 confirmatory fit that **uses the temporal mixture
+  deconvolution** under a given unit is permitted only if **that unit's grid
+  passes the binding criterion** (§A5.5.1). The outcome branching is pinned in
+  `…/spec.md` §5: both grids pass → both units; one passes → that unit only;
+  both fail → the mixture is revised before any Stage 3 fit (lodged
+  recovery-failure contingency, line 420).
+- **Realised outcome (2026-06-03): Grid A PASS / Grid B FAIL** (§A5.5.1) → the
+  temporal mixture deconvolution is validated for **inscription mass only**.
+  This is fully anticipated by §A5.2: the letter-mass *confirmatory* family was
+  already bounded to the cross-sectional H3a (per-city totals regressed on
+  population), which does **not** use the temporal mixture deconvolution;
+  letter-mass temporal/detection analyses were already exploratory. Grid B's
+  failure therefore **reinforces** the existing scope rather than changing it —
+  no letter-mass temporal-deconvolution confirmatory was ever claimed, and the
+  letter-mass H3a cross-sectional confirmatory is unaffected.
 - **Note (why letter-mass confirmatory is scoped to the cross-section).** The
   recovery grid validates the **mixture model** (the temporal deconvolution)
   under each unit; it does **not** establish **detection-power** thresholds,
@@ -289,9 +322,9 @@ Within the operating envelope:
 - **Precondition — convergence.** A cell is eligible only if ≥90% of its
   replicates converge (max R̂ < 1.01; divergence count within the lodged
   threshold). This makes the existing convergence requirement an explicit gate.
-- **Binding criterion — genuine-SPA (`p_gen`) shape recovery (hybrid).** In ≥90%
-  of eligible cells: posterior-median Pearson *r* ≥ 0.95 for **non-flat** genuine
-  shapes (**unchanged from the lodged preregistration**); and, for the
+- **Per-cell shape gate — genuine-SPA (`p_gen`) shape recovery (hybrid).**
+  posterior-median Pearson *r* ≥ 0.95 for **non-flat** genuine shapes
+  (**unchanged from the lodged preregistration**); and, for the
   **flat_baseline** shape only (where Pearson *r* is undefined), Wasserstein-1
   between posterior-median recovered and true SPA ≤ **T_flat = 10 years**
   (the maximum W1 among well-recovered flat cells is 9.8 y; rounded up).
@@ -300,6 +333,15 @@ Within the operating envelope:
   because W1 magnitude depends on the true shape's geometry (good-recovery W1
   ranges ≈0.8–24 across shapes) and would penalise high-spread shapes; only the
   *undefined* flat case is patched.
+- **Grid-level pass rule (headline B).** A unit's grid **passes** if **≥ 90 % of
+  all in-envelope cells are clean passes** — i.e. they both meet the convergence
+  precondition AND pass the shape gate. Counting non-converging cells as
+  failures (rather than dropping them) is the conservative choice and keeps any
+  convergence pathology visible in the headline figure. A **diagnostic figure
+  (A)** — the shape-pass rate among the convergence-*eligible* in-envelope cells
+  only — is reported alongside; B and A coincide except where convergence
+  failures cluster (on Grid A, entirely in the flat null — see the limitation
+  below).
 - **Operating envelope.** The binding criterion is evaluated where the
   deconvolution is identifiable: empirically **α ≤ 0.70** across all shapes and
   sample sizes. Cells with α ≥ 0.95 (≤5% genuine signal; near-unidentifiable;
@@ -316,14 +358,46 @@ Within the operating envelope:
   makes but not a tight gate. **All α-derived claims in the paper are hedged to
   this demonstrated recovery precision.**
 
-**Outcome under the corrected criterion (transparency).** Under the lodged
-criterion Grid A returned 42.7% both-pass; under the corrected criterion it
-passes the binding shape recovery at **91.9%** within the operating envelope
-(convergence + hybrid shape). Grid B (letter mass) is adjudicated identically on
-completion. These figures are a preview recomputed from the stored Grid A
-posteriors; the finalised adjudication re-runs the corrected criterion on both
-grids' stored outputs (no re-fitting required, because W1 and the α intervals are
-already stored per cell/replicate).
+**Finalised adjudication (2026-06-03; transparency).** Both grids' stored
+outputs were re-scored under the corrected criterion (no re-fitting — W1, α
+intervals, and convergence are stored per cell). Each grid carries 450 cells
+(3 tiers × 5 α × 6 shapes × 5 N); the operating envelope (α ≤ 0.70) holds 360.
+
+- **Grid A — inscription mass: PASS.** Headline **B = 91.9 %** (331/360
+  in-envelope cells are clean passes); diagnostic **A = 98.5 %** (331/336
+  shape-pass among the 336 convergence-eligible in-envelope cells). Under the
+  *lodged* criterion the same grid (whole-grid both-pass) returned only 42.7 %;
+  the difference is the §A5.5.1 metric correction and operating-envelope reframe
+  re-scoring the **same** stored fits — not any change to the fits.
+- **Grid B — letter mass: FAIL.** Headline **B = 0.0 %**: **no** in-envelope
+  cell reaches the 90 % convergence precondition (the maximum cell convergence
+  rate is 0.80; divergences run to ~13,000 per cell), so diagnostic A is
+  undefined (no eligible cells). This is a genuine sampling failure: letter mass
+  is a *compound sum* of heavy-tailed per-inscription letter counts whose
+  likelihood geometry the NUTS sampler cannot navigate reliably. It empirically
+  confirms the analytic finding that letter-mass temporal detection is
+  unreachable corpus-wide (§A5.2), and is consistent with inscription count
+  being the primary unit of analysis.
+
+**Outcome branch: PASS / FAIL** → the temporal mixture deconvolution proceeds
+under **inscription mass only**; letter mass is reported as a documented
+limitation (its cross-sectional H3a confirmatory does not use the mixture and is
+unaffected — §A5.5).
+
+**Flat-null convergence limitation (the B ↔ A gap on Grid A).** The entire gap
+between Grid A's headline B (91.9 %) and diagnostic A (98.5 %) is **24
+in-envelope cells, all `flat_baseline`**, that fail the convergence precondition.
+They fail on a tiny fraction of divergent draws (≈ 0.002–0.009 % of draws; the
+gate is zero-tolerance on divergences) while **recovering flatness correctly**
+(W1 ≤ 10 y). Under a flat genuine SPA the genuine-signal latent is
+near-unidentified, so the (already non-centred) Gaussian-random-walk geometry
+produces a few divergences even though the recovered curve is right. We report B
+as the conservative headline (these cells count as failures) and A as the
+diagnostic (recovery quality where the fit is trustworthy); both clear the 90 %
+bar, so the verdict is robust to the choice. A diagnostic re-fit to resolve the
+flat-null sampling geometry is logged as a deferred refinement
+(`planning/backlog-2026-05-03.md`, §Phase-2 refinements); it would collapse B
+and A but does not affect the verdict.
 
 **Metric-correction-driven, not verdict-driven (the integrity checks a reviewer
 can verify).** Mirroring §A4:
@@ -340,8 +414,14 @@ can verify).** Mirroring §A4:
    known-good sub-grid **before** the headline two-grid verdict; the failing
    scenarios (full-grid; α-gated) are reported alongside the passing one.
 
-**Statistician sign-off** (Martin, at draft): the exact operationalisation of the
-α diagnostic and the operating-envelope cut are flagged for a second opinion.
+**Statistician sign-off** (Martin, at draft): flagged for a second opinion —
+(a) the exact operationalisation of the α diagnostic; (b) the operating-envelope
+cut (α ≤ 0.70); (c) the headline-B (clean-pass over all in-envelope cells) versus
+diagnostic-A (shape-pass among convergent cells) reporting choice and the
+zero-tolerance divergence gate behind the flat-null limitation; and (d) the
+reading that the recovery-grid gate bears only on mixture-dependent
+(temporal-deconvolution) analyses, so Grid B's failure does not touch the
+letter-mass cross-sectional H3a confirmatory.
 
 ### A5.6 Exploratory analyses under both units
 
@@ -349,6 +429,62 @@ Per Observation 58: the §5 pre-specified exploratory analyses are run under
 **both** units where applicable, with the per-subset delta reported as data.
 These remain exploratory (no confirmatory verdicts), exactly as in the lodged
 preregistration.
+
+### A5.7 Subset deconvolution — subset-specific fits and the reachability floor (Decision 34)
+
+The lodged preregistration scans mixture-corrected SPAs on subsets (H3b) but does
+not pin **how** a subset SPA is corrected, and the Stage-3 convention component
+`p_conv` is estimated corpus-wide. The only specified path was therefore to impose
+the empire-average convention shape on every subset. This amendment pre-specifies
+the mechanism (Decision 34).
+
+- **Subset SPAs are de-fogged by a subset-specific mixture fit.** The model
+  (`build_model_f1_f3`) learns the subset's *own* convention mix (`tier_weights`,
+  the editorial-template composition) from the subset's own data; only the
+  universal template-width *basis* is fixed, never corpus content. **The
+  empire-wide `p_conv` is NOT imposed on subsets.** A subset with its own
+  convention profile (a Greek-East province, an epitaph-heavy subcategory) is
+  fitted on its own terms. This supersedes the H3b
+  "empire-correction-applied-to-subsets" reading; it is the methodological core
+  of the paper's re-application case (a coherent subcorpus gets a de-fogged
+  temporal trajectory with honest uncertainty, where before there was an
+  artefact-contaminated histogram). The empire-scale fit remains a proof of
+  concept and a candidate empire-level proxy, not the engine of subset analysis.
+- **Feasibility is N-dependent; the floor is measured.** A standalone per-subset
+  fit is harder to identify at small N. The small-N reachability study
+  (`runs/2026-06-03-small-n-reachability/`; 4,200 fits over 84 cells = 3 shapes ×
+  4 α × 7 N, scored under the §A5.5.1 criterion) measured the minimum subset size
+  N at which subset-specific deconvolution recovers reliably. **Within the
+  operating envelope (α ≤ 0.70), reliable recovery has a worst-case floor of
+  N ≈ 2,000**, falling to **N ≈ 500** for the easiest subsets (low convention
+  fraction α ≈ 0.30, smooth or rise-and-fall signals). Two α = 0.70 cells remain
+  unreached even at N = 2,000, and the α = 0.85 stress row is unreached
+  throughout. Mean shape-recovery rate (α ≤ 0.70) rises 12 % (N = 50) → 94 %
+  (N = 2,000); convergence ≈ 100 %; mean |α-bias| ≈ 0.13 (inside the ±0.18
+  envelope precision). This replaces the prereg's rough "unidentified below
+  N ≈ 100" prior with a measured reachability map
+  (`…/outputs/REPORT.md`, `…/outputs/figures/reachability-map.png`).
+- **Below the floor.** A subset below its reachability floor is not de-fogged on
+  its own; the fall-backs are partial-pooling of the convention across subsets (a
+  §5-style borrow), the §5 hierarchical aoristic trajectory model, or descriptive
+  reporting. These are out of scope for confirmatory H3b and reported as such.
+- **Eligibility.** H3b subset deconvolutions are gated by **both** the measured
+  reachability floor (this subsection) and the existing Phase-1 detection
+  thresholds. The paper reports, per subset, whether it clears the floor; the
+  motivating ~2,000-inscription mother–daughter corpus sits at the worst-case
+  floor (feasible, near the boundary).
+
+**A note on credible bands (limitation carried forward).** The recovered `p_gen`
+credible band is honest for smooth timelines but **overconfident for
+sharply-peaked signals, and degrades with N**: in the band-calibration diagnostic
+(`runs/2026-06-02-recovery-utility-check/`) mean pointwise 95 % coverage falls
+from ≈ 0.90 at N = 2,000 to ≈ 0.67 at N = 50,000 (worst for `regnal_cluster`) —
+the same posterior-concentration mechanism that demoted α, compounded by the
+Gaussian-random-walk smoothness prior being unable to represent sharp features.
+The **median** (point) timeline — the gated quantity — stays trustworthy;
+reported **bands** in peaked regimes are widened/caveated. The real corpus has
+sharp regnal clustering, so this is material and is reported as a limitation, not
+a new gate.
 
 ## A6. What does NOT change
 
@@ -389,32 +525,58 @@ lockstep with lodgement; the lodged authority remains git tag
    case with Wasserstein-1 (T_flat = 10 y), retain Pearson *r* ≥ 0.95 for
    non-flat shapes, make the convergence precondition explicit, demote exact
    α-coverage to an α-recovery diagnostic, and reframe the gate as a
-   recoverability map with a stated operating envelope (α ≤ 0.70). Update both
-   H2.1 rows in the §6 table accordingly.
-6. **§7 / §11:** record this amendment in the planned-deviations text and the
+   recoverability map with a stated operating envelope (α ≤ 0.70). State the
+   grid-level pass rule as **headline B** (≥ 90 % of all in-envelope cells are
+   clean passes — converge AND pass the shape gate), with **diagnostic A**
+   (shape-pass among convergence-eligible cells) reported alongside; record the
+   realised outcome (**Grid A PASS / Grid B FAIL → mixture deconvolution under
+   inscription mass only**) and the flat-null convergence limitation. Update
+   both H2.1 rows in the §6 table accordingly.
+6. **§3 / H3b mechanism (Decision 34; §A5.7):** specify that subset SPAs are
+   de-fogged by a **subset-specific** mixture fit (the model learns the subset's
+   own convention mix; the empire-wide `p_conv` is **not** imposed on subsets),
+   superseding the "empire-correction-applied-to-subsets" reading; gate H3b
+   subset deconvolutions on the **measured reachability floor** (§A5.7;
+   worst-case N ≈ 2,000 within α ≤ 0.70) in addition to the existing Phase-1
+   detection thresholds; note the below-floor fall-backs.
+7. **§7 / §11:** record this amendment in the planned-deviations text and the
    §11 post-lodgement amendment trail.
-7. **`preregistration-changelog.md`:** add a dated amendment section.
+8. **`preregistration-changelog.md`:** add a dated amendment section.
 
 ## A8. Provenance
 
 - **Statistical reasoning recorded under the project's standing
-  critical-friend rule:** the no-cross-unit-correction decision (§A5.3) and
-  the scoping of the letter-mass confirmatory family to the cross-section
-  (§A5.2, §A5.5) are the two statistically load-bearing choices in this
-  amendment and are justified inline.
+  critical-friend rule:** the load-bearing choices in this amendment are the
+  no-cross-unit-correction decision (§A5.3); the scoping of the letter-mass
+  confirmatory family to the cross-section (§A5.2, §A5.5); the §A5.5.1 metric
+  correction with its headline-B / diagnostic-A reporting and flat-null
+  treatment; and the subset-specific deconvolution mechanism (§A5.7,
+  Decision 34). All are justified inline; the §A5.5.1 and §A5.7 statistical
+  items are flagged for Martin's draft-stage sign-off.
 - **Artefacts:** `runs/2026-05-26-letter-count-probe/` (probe);
-  `runs/2026-05-26-recovery-grid-two-unit/` (two-grid validation);
-  Observations 58–60 in `docs/notes/reflections/working-notes.md`.
-- **Binding-criterion clarification (§A5.5.1):** the metric correction is
-  driven by the Grid A adjudication
-  (`runs/2026-05-26-recovery-grid-two-unit/inscription-mass/outputs/REPORT.md`,
-  committed `0638093`; harness committed `4a3a8d2`), a closed-loop prior-art
-  scout, and an implementation review, both recorded at
-  `planning/prior-art-scout-2026-06-02-recovery-validation-metrics.md`. Field
+  `runs/2026-05-26-recovery-grid-two-unit/` (two-grid validation + the finalised
+  cross-grid adjudication, `comparison/COMPARISON-REPORT.md`);
+  `runs/2026-06-03-small-n-reachability/` (the reachability floor);
+  `runs/2026-06-02-recovery-utility-check/` (band-calibration + real-corpus α
+  diagnostics); Observations 58–60 and 67–69 in
+  `docs/notes/reflections/working-notes.md`.
+- **Binding-criterion clarification (§A5.5.1):** the metric correction is driven
+  by the Grid A adjudication, a closed-loop prior-art scout, and an
+  implementation review
+  (`planning/prior-art-scout-2026-06-02-recovery-validation-metrics.md`). Field
   basis: no surveyed community gates on exact CI coverage of a mixing weight;
   Wasserstein-1 is theoretically justified for deconvolution recovery (Rousseau
   & Scricciolo 2021); flat/uniform is a standard tested null in radiocarbon SPD
-  work (Crema 2022). This is the second statistically load-bearing change in the
-  amendment (with §A5.3) and is flagged for statistician sign-off at draft.
-- **Repository state:** edits to be applied on `main`; a new lodgement tag
-  will be cut when the amendment is lodged to OSF.
+  work (Crema 2022). **Finalised against the completed two-grid adjudication
+  2026-06-03** (harness updated to compute the corrected criterion alongside the
+  lodged one, with a built-in regression check reproducing the Grid A figures
+  B 91.9 % / A 98.5 %; cross-grid adjudication committed `1bf791f`). The
+  flat-null sampling limitation and its deferred re-fit are logged at
+  `planning/backlog-2026-05-03.md` (§Phase-2 refinements).
+- **Subset deconvolution + reachability floor (§A5.7; Decision 34):** the
+  subset-specific-fit decision and the measured floor are recorded in the
+  decision log (Decision 34) and `runs/2026-06-03-small-n-reachability/`
+  (4,200-fit study; floor + map committed `5601b04`); the paper-facing rationale
+  is `planning/paper-significance-and-applications-2026-06-03.md`.
+- **Repository state:** edits to be applied on `main`; a new lodgement tag will
+  be cut when the amendment is lodged to OSF.
