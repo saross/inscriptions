@@ -3171,3 +3171,76 @@ report the grid as a recoverability map with an operating envelope:**
   widen the degraded-zone caveat).
 - The band-calibration check shows the p_gen bands are materially miscalibrated
   (would require widening reported bands or a calibration adjustment).
+
+## Decision 34 — 2026-06-03: Subset analyses use subset-specific deconvolution; do NOT de-fog subsets with the empire-wide p_conv
+
+**Status:** decided by Shawn 2026-06-03; supersedes the prereg's implicit
+"empire-correction-applied-to-subsets" framing for H3b; amendment-relevant
+(to be folded into an OSF amendment alongside the §A5.5.1 criterion clarification).
+**Decided by:** Shawn 2026-06-03, in the strategic discussion of where the
+method's utility lies.
+
+### Context
+
+Verifying the H3b mechanism (2026-06-03) found that the prereg says H3b "scans
+mixture-corrected SPAs on subsets" but **does not pin how** a subset SPA is
+corrected, and that the Stage-3 convention component `p_conv` is **corpus-wide-
+fixed** (Stage-3 plan risk ii: province-/type-level convention heterogeneity "not
+yet absorbed"). So the only specified path was to impose the empire-average
+convention shape on every subset.
+
+Shawn's position: **the empire-scale fit is a valuable proof-of-concept and
+narrowly useful in its own right (e.g. as a population / information-flow proxy
+after cohort de-skewing), but the real research payoff is at the subset level** —
+provinces, cities, regions, and inscription subcategories. The motivating
+re-application case is a collaborator's ~2,000 mother–daughter inscriptions, for
+which the desired contribution is a **temporal element beyond eyeballing
+histograms**. Imposing the corpus-average convention structure on a subset that
+may have its own convention profile (e.g. a Greek-East province, an epitaph-heavy
+subcategory) is an unvalidated approximation and undercuts the subset payoff.
+
+### Decision
+
+**Subset SPAs are de-fogged by a subset-specific mixture fit** (the model learns
+the subset's own convention mix — `build_model_f1_f3` already learns
+`tier_weights`, i.e. the convention composition, from the subset's own data; only
+the universal template-width *basis* is fixed, not corpus content). **The empire-
+wide `p_conv` is NOT applied to subsets.** The empire fit remains a proof-of-
+concept and a candidate empire-scale proxy (see the significance/applications
+note), not the engine of subset analysis.
+
+### Consequences
+
+- **Feasibility is N-dependent.** A standalone per-subset fit is harder to
+  identify at small N. The **small-N deconvolution-reachability study** (spec'd
+  2026-06-03, `runs/2026-06-03-small-n-reachability/spec.md`) measures the floor —
+  the minimum subset N at which subset-specific deconvolution recovers reliably
+  under the Decision-33 criterion. This replaces the prereg's rough "unidentified
+  below N≈100" prior with a measured reachability map.
+- **Below the floor:** fall-back options (partial-pooling of convention across
+  subsets — a §5-style borrow; or descriptive reporting; or the §5 hierarchical
+  trajectory model). Out of scope for the reachability study; logged for later.
+- **Prereg/amendment:** this supersedes the H3b "empire-correction-applied"
+  reading and the "per-city mixture not pursued" framing. Fold into the OSF
+  amendment (with §A5.5.1). H3b subsets become per-subset fits gated by the
+  measured reachability floor (and by the existing Phase-1 detection thresholds).
+- **Paper framing:** the subset-level temporal de-fogging is the **core
+  re-application case** that justifies the detailed JAMT methods presentation and
+  a reusable/repurposable codebase (see
+  `planning/paper-significance-and-applications-2026-06-03.md`).
+
+### Provenance / links
+
+- H3b mechanism verification: prereg §"Scope of the mixture correction" (line 35),
+  H3b §(lines 96–99); Stage-3 plan exec-summary risk (ii)
+  (`planning/h2.1-stage-3-implementation-plan-2026-05-25.md`).
+- Reachability study: `runs/2026-06-03-small-n-reachability/spec.md`.
+- Significance/applications: `planning/paper-significance-and-applications-2026-06-03.md`.
+
+### Revisit triggers
+
+- The reachability floor turns out so high that few real subsets qualify — would
+  promote the pooled-convention fall-back from "later" to "needed."
+- A subset class is found to have a convention profile so different from the
+  corpus that even subset-specific fitting with the universal template basis is
+  inadequate (would motivate per-class convention bases).
