@@ -2,7 +2,7 @@
 title: "Spec — recovery-grid harness update to the Decision-33 / §A5.5.1 corrected criterion"
 author: "Claude (Opus 4.8, 1M context), on Shawn's brief"
 date: 2026-06-03
-status: APPROVED 2026-06-03 by Shawn — §6 denominator = (A) eligible-in-envelope; implement once Grid B finishes (Martin draft-stage nod still pending, non-blocking for adjudication)
+status: APPROVED 2026-06-03 (REVISED) — report BOTH; HEADLINE B (all-in-envelope, 91.9% on Grid A); A (eligible-in-envelope, 98.5%) reported as diagnostic. CORRECTION: this spec's original §6 wrongly claimed denominator A reproduces the 91.9% preview — it does not. 91.9% = B (331/360); 98.5% = A (331/336). The A↔B gap is 24 flat_baseline cells failing the zero-tolerance divergence gate (a mild flat-null sampling quirk; recovery correct); logged for re-fit (backlog-2026-05-03 §Phase-2 refinements). Martin draft-stage nod still pending (non-blocking).
 scope: "grid-summariser.py + compare-grids.py — adjudication-criterion change only; no re-fit"
 supersedes-criterion-in: "runs/2026-05-26-recovery-grid-two-unit/code/{grid-summariser.py, compare-grids.py}"
 ---
@@ -94,12 +94,22 @@ in-envelope:
   `validated = mean(cell_pass_corrected | in_envelope) ≥ 0.90`
   (non-converged cells count as failures).
 
-**Built-in correctness check:** whichever denominator is chosen, re-running the
-updated `grid-summariser.py` over Grid A's stored summaries **must reproduce the
-§A5.5.1 preview of 91.9% within-envelope shape-pass**. If it does not, the
-denominator/partition is wrong. (This is the cheapest possible regression test
-and should be asserted in the script's stdout.) → *Shawn to confirm A vs B; I'll
-wire the 91.9% reproduction as a hard assertion either way.*
+**RESOLVED 2026-06-03 (corrects an error in this section's original framing).**
+The two denominators do NOT both reproduce 91.9% — that claim was wrong. On Grid A:
+**A = 331/336 = 98.5%** (shape-pass among convergence-eligible in-envelope cells);
+**B = 331/360 = 91.9%** (clean-pass — convergence AND shape — over all in-envelope
+cells; the §A5.5.1 figure of record). The entire A↔B gap is **24 `flat_baseline`
+cells** that fail the zero-tolerance divergence gate (`n_divergences == 0`) at a
+tiny divergence rate (≈0.002–0.009 %); all 24 recover flatness correctly. This is
+a flat-null sampling quirk (funnel under no-signal truth, persisting after the F3
+non-centred GRW), logged for a diagnostic re-fit (`backlog-2026-05-03.md`
+§Phase-2 refinements).
+
+**Decision (Shawn, 2026-06-03):** report **both**; **headline B (91.9%)** —
+conservative, keeps the flat-null quirk visible, matches the record; **A (98.5%)**
+reported as a diagnostic ("recovery among convergent fits"). Verdict is PASS under
+both (≥ 90%). **Regression check:** assert the harness reproduces BOTH 91.9% (B)
+and 98.5% (A) on Grid A, else the partition is wrong.
 
 ## 7. `grid-summariser.py` changes
 
