@@ -320,3 +320,18 @@ The structured session-reflection (Entry 9) carries the considered account. This
 - **Deferral as the right call under warm context.** Asked whether to build the comparison harness "while warm," I decomposed it: warm context helps the *writedown* (handoff), not the forward work (orthogonal to what was loaded, and better built near Grid B completion where it is testable). Recommended stop-and-handoff over momentum.
 
 *Memo to future me:* the reflex this session earned is **"check the real operation, not a proxy for it"** — the analogue, one layer in, of last session's "check the environment, not just the code." And: read installed versions at source before trusting any continuity claim about the stack.
+
+## 2026-06-02 → 2026-06-03 — Entry 10: in-stream notes from the adjudicate→diagnose→reframe→strategise arc
+
+*Decision-chain texture; outcomes in session-log + Decisions 33–34.*
+
+- **Adjudicate before accepting.** The handoff said "Grid A done (rc=0)"; I checked and found it had *fit* but never been *scored* — no REPORT, no verdict. The whole session pivoted on running the summariser, not assuming completion meant adjudication. "Done" is not "verdicted."
+- **Decompose a FAIL before reacting to it.** Grid A FAILed at 42.7%. Rather than launch a model-revision, I re-derived the per-cell failure structure: the smoking gun was coverage collapsing with N while α-bias stayed flat (1.00→0.11 coverage at near-constant ~0.05 bias) — the signature of a *metric* artefact (posterior concentration / BvM), not a fit failure. The decomposition is what made the fix principled instead of panicked.
+- **Verify the field before changing a preregistered criterion.** Ran a closed-loop prior-art scout + a `/review-implementation` rather than asserting the new metric. The scout confirmed our exact-CI-coverage gate is idiosyncratic; the review caught that SBC *doesn't fit* a fixed-true-value grid (needs θ~prior) and that the posterior z-score carries the *same* large-N fragility — i.e. it killed two plausible-but-wrong alternatives before they reached the amendment.
+- **Let the free preview overturn the prior — including mine.** I'd concurred with Shawn's lean to keep α gated; the bias-tolerance preview (90th-pct |bias| 0.18; would need δ≈0.20 to pass) reversed me, and I said so in writing. Computing the cheap check beat defending either of our priors.
+- **Read the source, not the memory.** Twice: the H3b subset mechanism (the prereg had already decided "no per-city mixture, unidentified <100" — I'd framed it as an open gap) and the epitaph type-skew (recalled 56%/18%, actual 39.3%/9.0%). Both load-bearing for the answers I gave; both right only because I checked.
+- **Measure the property you're about to claim.** I'd written "trust the shape" then ran the band-calibration probe I'd flagged as unmeasured — it showed the band overconfident for peaked signals at large N, qualifying my own claim. Flagging a gap ≠ closing it.
+- **Pre-launch review held even under a directive to run.** Specced the small-N reachability study, smoke-tested it, *then* launched — and pre-wrote the report-generator before the data landed, which is the only reason the zbook crash didn't strand the deliverable.
+- **The host I can't see.** `n_jobs=16` thrashed zbook off the network at 99.5%; Shawn (local, watching the fan) diagnosed it faster than I could remotely. A laptop compute host is a thing you cannot fully observe — leave it headroom.
+
+*Memo to future me:* the reflexes this session earned — **"a FAIL is a diagnosis, not a verdict; decompose before reacting"**, **"the cheap check beats defending the prior — even your own, even one you just stated"**, and operationally, **leave a laptop a few cores so you don't lose your eyes on it mid-run.**
