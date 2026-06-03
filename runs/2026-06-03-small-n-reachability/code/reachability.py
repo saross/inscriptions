@@ -17,6 +17,11 @@ coverage (diagnostic), and Wasserstein-1 (supplementary). A cell **passes** if
 ≥ 90 % of replicates converge AND ≥ 90 % reach Pearson r ≥ 0.95. The reachability
 floor per (shape, α) is the smallest passing N.
 
+**Resumable.** Every completed fit is checkpointed to an append-only JSONL log
+(``reachability-records.jsonl``) the instant it returns, so an interrupted run
+resumes from where it stopped rather than restarting; re-launch with the same
+``--output-dir`` to continue, or delete the log for a clean run.
+
 The grid's design.json only carries N ∈ {2000, 10000, 50000}, so cells at the new
 small N values are constructed directly from the design's shape specs + the
 pilot_proxy tier vector, with fresh cell indices and a distinct base seed
@@ -38,6 +43,7 @@ Claude (Opus 4.8, 1M context), 2026-06-03, on Shawn's brief.
 from __future__ import annotations
 
 import argparse
+import json
 import os
 import sys
 import warnings
@@ -175,6 +181,28 @@ def _worker(task: dict) -> dict:
     }
 
 
+def _load_records(path: Path) -> list[dict]:
+    """Read all completed-fit metric dicts from a checkpoint JSONL log.
+
+    Tolerates a truncated final line (an append interrupted mid-write): parsing
+    stops at the first undecodable line, so the single fit it represents is
+    simply re-run on resume. Returns an empty list if the log does not exist.
+    """
+    records: list[dict] = []
+    if not path.exists():
+        return records
+    with path.open(encoding="utf-8") as fh:
+        for line in fh:
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                records.append(json.loads(line))
+            except json.JSONDecodeError:
+                break
+    return records
+
+
 def _parse_args() -> argparse.Namespace:
     p = argparse.ArgumentParser(description="Small-N deconvolution reachability.")
     p.add_argument("--design-json", required=True, type=Path)
@@ -211,22 +239,47 @@ def main() -> int:
          "scratch_root": str(scratch), "replicate": r}
         for c in cells for r in range(n_reps)
     ]
+    # --- Resumable checkpoint log (one JSON line per completed fit) ---------- #
+    # Each fit's metrics are appended to an append-only log the instant the fit
+    # returns (write + flush + fsync), so an interrupted run — machine hang,
+    # reboot, OOM — loses at most the fits still in flight, not the whole run.
+    # Re-launching with the same --output-dir reads the log, skips fits already
+    # recorded, and resumes; delete the .jsonl to force a clean re-run. Smoke
+    # uses a separate log so its 2-cell subset never shadows a real run's
+    # identical cell_ids. (2026-06-03 incident: a 4189/4200 in-memory run was
+    # lost to a power-cycle — this log is the fix.)
+    ckpt = args.output_dir / ("reachability-records.smoke.jsonl" if args.smoke
+                              else "reachability-records.jsonl")
+    done = {(r["cell_id"], r["replicate"]) for r in _load_records(ckpt)}
+    pending = [t for t in tasks if (t["cell_id"], t["replicate"]) not in done]
     print(f"[reach] {len(cells)} cells x {n_reps} reps = {len(tasks)} fits "
           f"(n_jobs={n_jobs})")
+    if done:
+        print(f"[reach] resuming from {ckpt.name}: {len(done)} fits already "
+              f"done, {len(pending)} remaining")
 
-    records = []
-    if n_jobs == 1:
-        for t in tasks:
-            records.append(_worker(t))
-    else:
-        with ProcessPoolExecutor(max_workers=n_jobs) as ex:
-            futs = [ex.submit(_worker, t) for t in tasks]
-            for i, f in enumerate(as_completed(futs), 1):
-                records.append(f.result())
-                if i % 50 == 0 or i == len(tasks):
-                    print(f"[reach] {i}/{len(tasks)} fits complete")
+    with ckpt.open("a", encoding="utf-8") as log:
+        def _checkpoint(rec: dict) -> None:
+            """Append one fit's metrics and force them to stable storage."""
+            log.write(json.dumps(rec) + "\n")
+            log.flush()
+            os.fsync(log.fileno())
 
-    df = pd.DataFrame(records)
+        if n_jobs == 1:
+            for i, t in enumerate(pending, 1):
+                _checkpoint(_worker(t))
+                if i % 50 == 0 or i == len(pending):
+                    print(f"[reach] {i}/{len(pending)} new fits complete")
+        else:
+            with ProcessPoolExecutor(max_workers=n_jobs) as ex:
+                futs = [ex.submit(_worker, t) for t in pending]
+                for i, f in enumerate(as_completed(futs), 1):
+                    _checkpoint(f.result())
+                    if i % 50 == 0 or i == len(pending):
+                        print(f"[reach] {i}/{len(pending)} new fits complete")
+
+    # Aggregate from the full checkpoint log (resumed + newly completed fits).
+    df = pd.DataFrame(_load_records(ckpt))
     df.to_parquet(args.output_dir / "reachability-replicates.parquet", index=False)
 
     agg = (df.groupby(["shape_name", "alpha_true", "n"]).agg(
