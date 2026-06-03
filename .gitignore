@@ -13,15 +13,25 @@ runs/**/run.pid
 # per-replicate synthetic data (45,000 / grid) and per-replicate posterior
 # fits (45,000 / grid) regenerate deterministically from base_seed +
 # cell_index + replicate; bulk would push the repo past the GitHub limit.
-# Cell-summary JSON + grid-state.json + REPORT.md ARE committed. The
-# smoke-test cell (shape=rise_and_fall_alpha=0.50_tier=uniform_N=2000)
-# is committed as a research record of the pre-launch gates via the
-# explicit re-include below.
+# grid-state.json, REPORT.md, and tables/grid-summary.parquet ARE committed.
+# Per-cell summary JSONs are NOT committed (Shawn 2026-06-03): their content is
+# preserved compactly in tables/grid-summary.parquet, so the 450 redundant JSONs
+# per grid are gitignored below. The smoke-test cell
+# (shape=rise_and_fall_alpha=0.50_tier=uniform_N=2000) stays committed as a
+# research record of the pre-launch gates, via the explicit re-includes below.
 runs/2026-05-26-recovery-grid-two-unit/*/data/synthetic-cells/*/
 runs/2026-05-26-recovery-grid-two-unit/*/outputs/cell-fits/*/
 runs/2026-05-26-recovery-grid-two-unit/*/outputs/cell-logs/
+runs/2026-05-26-recovery-grid-two-unit/*/outputs/cell-summaries/*
 !runs/2026-05-26-recovery-grid-two-unit/*/data/synthetic-cells/shape=rise_and_fall_alpha=0.50_tier=uniform_N=2000/
 !runs/2026-05-26-recovery-grid-two-unit/*/outputs/cell-fits/shape=rise_and_fall_alpha=0.50_tier=uniform_N=2000/
+!runs/2026-05-26-recovery-grid-two-unit/*/outputs/cell-summaries/shape=rise_and_fall_alpha=0.50_tier=uniform_N=2000-summary.json
+
+# Diagnostic-run NUTS logs + regenerable scratch synth (results CSV/parquet/PNG
+# ARE committed; the verbose sampler logs and scratch are not).
+runs/2026-06-02-recovery-utility-check/outputs/*.log
+runs/2026-06-03-small-n-reachability/outputs/*.log
+runs/2026-06-03-small-n-reachability/outputs/scratch/
 
 # Intermediate filtered LIRE corpora (~ 60 MB each). Reconstructable from the
 # original LIRE_v3-0.parquet via the run's filter script. Live on sapphire too
