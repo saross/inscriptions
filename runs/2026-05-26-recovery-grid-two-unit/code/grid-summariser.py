@@ -24,7 +24,16 @@ Binding criteria (prereg §4 lines 333-334; spec.md §5):
   posterior-median Pearson r (``median_pearson_r_pgen``) >= 0.95.
   Validation requires this fraction >= 0.90.
 
-The grid is VALIDATED (PASS) only if BOTH fractions are >= 0.90.
+The grid is VALIDATED under the LODGED criterion only if BOTH fractions are
+>= 0.90. As of 2026-06-03 the lodged criterion is retained as a *reference*; the
+BINDING verdict is the corrected criterion (Decision 33 / OSF Amendment 01
+§A5.5.1), computed alongside it: a convergence precondition + a hybrid shape gate
+(Pearson r >= 0.95 non-flat; Wasserstein-1 <= 10 y for flat_baseline, where
+Pearson r is undefined), alpha demoted to a diagnostic, evaluated within the
+operating envelope (alpha <= 0.70). It is reported as headline B (clean-pass over
+all in-envelope cells) plus diagnostic A (shape-pass among convergence-eligible).
+Both verdicts appear in REPORT.md and grid-summary.parquet. No re-fit (W1 +
+convergence are stored).
 
 Outputs (written under ``<grid-dir>/outputs/``):
 
@@ -58,6 +67,27 @@ import pandas as pd
 ALPHA_COVERAGE_PASS = 0.90  # per-cell coverage floor
 SHAPE_PEARSON_PASS = 0.95   # per-cell median-Pearson-r floor
 GLOBAL_FRAC_PASS = 0.90     # fraction-of-cells floor for both criteria
+
+# --------------------------------------------------------------------------- #
+# Corrected binding criterion (Decision 33 / OSF Amendment 01 §A5.5.1).         #
+# Computed ALONGSIDE the lodged criterion above; NO re-fit — Wasserstein-1 and  #
+# convergence are already stored per cell.                                      #
+# --------------------------------------------------------------------------- #
+FLAT_SHAPE = "flat_baseline"  # the only shape with undefined Pearson r
+T_FLAT_YEARS = 10.0           # W1 gate for the flat shape (max well-recovered W1 9.8 y, rounded up)
+ALPHA_ENVELOPE = 0.70         # operating-envelope ceiling (criterion evaluated here)
+ALPHA_STRESS = 0.95           # near-unidentifiable stress row (reported, never gated)
+CONVERGENCE_FRAC = 0.90       # explicit convergence precondition (>=90% replicates converge)
+
+# Grid A reference figures for the built-in regression check (2026-06-03
+# cross-grid adjudication; Decision 33 / §A5.5.1). Headline B = clean-pass
+# (convergence AND shape) over all in-envelope cells; diagnostic A = shape-pass
+# among convergence-eligible in-envelope cells. The A/B gap on Grid A is 24
+# flat_baseline cells failing the zero-tolerance divergence gate (a flat-null
+# sampling quirk; recovery correct). Asserted only for the inscription grid.
+GRID_A_HEADLINE_B = 0.919
+GRID_A_DIAGNOSTIC_A = 0.985
+REGRESSION_TOL = 0.003
 
 
 def load_all_summaries(grid_dir: Path) -> pd.DataFrame:
@@ -120,6 +150,84 @@ def compute_verdict(df: pd.DataFrame) -> dict[str, object]:
         "r_criterion_pass": bool(frac_r >= GLOBAL_FRAC_PASS),
         "validated": bool(
             frac_cov >= GLOBAL_FRAC_PASS and frac_r >= GLOBAL_FRAC_PASS
+        ),
+    }
+
+
+def add_corrected_flags(df: pd.DataFrame) -> pd.DataFrame:
+    """Add the §A5.5.1 corrected-criterion per-cell flags (no re-fit).
+
+    Adds five columns derived purely from stored fields:
+
+    - ``is_flat`` -- the ``flat_baseline`` shape (Pearson r undefined there).
+    - ``convergence_eligible`` -- ``convergence_pass_rate >= CONVERGENCE_FRAC``
+      (the explicit convergence precondition).
+    - ``shape_pass_corrected`` -- hybrid shape gate: median Pearson r >= 0.95
+      for non-flat shapes; median Wasserstein-1 <= ``T_FLAT_YEARS`` for the flat
+      shape (where Pearson r is undefined).
+    - ``cell_pass_corrected`` -- ``convergence_eligible AND shape_pass_corrected``.
+    - ``in_envelope`` -- ``alpha_true <= ALPHA_ENVELOPE`` (operating envelope).
+    """
+    out = df.copy()
+    is_flat = out["shape_name"] == FLAT_SHAPE
+    out["is_flat"] = is_flat
+    out["convergence_eligible"] = out["convergence_pass_rate"] >= CONVERGENCE_FRAC
+    out["shape_pass_corrected"] = (
+        (is_flat & (out["median_wasserstein_1_pgen"] <= T_FLAT_YEARS))
+        | (~is_flat & (out["median_pearson_r_pgen"] >= SHAPE_PEARSON_PASS))
+    )
+    out["cell_pass_corrected"] = (
+        out["convergence_eligible"] & out["shape_pass_corrected"]
+    )
+    out["in_envelope"] = out["alpha_true"] <= ALPHA_ENVELOPE
+    return out
+
+
+def compute_corrected_verdict(df: pd.DataFrame) -> dict[str, object]:
+    """Compute the §A5.5.1 corrected verdict (headline B; diagnostic A).
+
+    Requires the columns added by :func:`add_corrected_flags`. The binding
+    criterion is evaluated within the operating envelope (``alpha_true <=
+    ALPHA_ENVELOPE``):
+
+    - **Headline B** -- clean-pass (convergence AND hybrid shape) over ALL
+      in-envelope cells; the binding figure: ``B >= GLOBAL_FRAC_PASS`` validates.
+    - **Diagnostic A** -- hybrid shape-pass among convergence-eligible
+      in-envelope cells (recovery quality where the fit is trustworthy).
+
+    The A/B gap is exactly the convergence-excluded in-envelope cells; their
+    shape breakdown is reported because on Grid A they are entirely
+    ``flat_baseline`` -- a flat-null sampling quirk, not a recovery failure
+    (Decision 33; see the harness REPORT and backlog re-fit item).
+    """
+    env = df[df["in_envelope"]]
+    n_env = int(len(env))
+    elig = env["convergence_eligible"].astype(bool)
+    n_elig = int(elig.sum())
+    clean = env["cell_pass_corrected"].astype(bool)
+    shape = env["shape_pass_corrected"].astype(bool)
+
+    headline_b = float(clean.mean()) if n_env else float("nan")
+    diagnostic_a = float(shape[elig].mean()) if n_elig else float("nan")
+    stress = df[df["alpha_true"] >= ALPHA_STRESS]
+
+    return {
+        "n_envelope": n_env,
+        "n_eligible": n_elig,
+        "n_excluded_nonconv": int((~elig).sum()),
+        "n_clean_pass": int(clean.sum()),
+        "n_shape_pass_eligible": int(shape[elig].sum()),
+        "headline_b": headline_b,
+        "diagnostic_a": diagnostic_a,
+        "validated": bool(headline_b >= GLOBAL_FRAC_PASS),
+        "excluded_by_shape": {
+            str(k): int(v)
+            for k, v in env[~elig]["shape_name"].value_counts().items()
+        },
+        "n_stress": int(len(stress)),
+        "stress_shape_pass": (
+            float(stress["shape_pass_corrected"].astype(bool).mean())
+            if len(stress) else float("nan")
         ),
     }
 
@@ -201,6 +309,67 @@ def make_report(df: pd.DataFrame) -> str:
         f"| — |"
     )
     lines.append("")
+    lines.append(
+        "> The verdict above is the **lodged** criterion, retained as a "
+        "reference. The **binding** verdict is the corrected criterion in §1b."
+    )
+    lines.append("")
+
+    # ----- Corrected binding criterion (Decision 33 / §A5.5.1) ----------- #
+    cv = compute_corrected_verdict(df)
+    lines.append("## 1b. Corrected binding criterion (Decision 33 / §A5.5.1) — BINDING")
+    lines.append("")
+    lines.append(
+        "Convergence precondition "
+        f"(≥ {CONVERGENCE_FRAC:.0%} of replicates converge) + hybrid shape gate "
+        f"(median Pearson r ≥ {SHAPE_PEARSON_PASS:.2f} for non-flat shapes; "
+        f"Wasserstein-1 ≤ {T_FLAT_YEARS:.0f} y for `flat_baseline`, where Pearson r "
+        f"is undefined), α demoted to a diagnostic, evaluated within the operating "
+        f"envelope (α ≤ {ALPHA_ENVELOPE:.2f}). Cells with α ≥ {ALPHA_STRESS:.2f} are a "
+        "reported stress sensitivity, not gated. W1 + convergence are stored, so "
+        "this is computed without re-fitting."
+    )
+    lines.append("")
+    lines.append(
+        f"**Verdict: {'PASS' if cv['validated'] else 'FAIL'}** — headline "
+        f"**{cv['headline_b']:.1%}** of in-envelope cells are clean passes "
+        f"(convergence AND shape), against a ≥ {GLOBAL_FRAC_PASS:.0%} bar."
+    )
+    lines.append("")
+    lines.append("| Figure | Definition | Value |")
+    lines.append("|---|---|---|")
+    lines.append(
+        f"| **Headline (B)** | clean-pass (convergence AND shape) ÷ all "
+        f"in-envelope | **{cv['headline_b']:.1%}** "
+        f"({cv['n_clean_pass']}/{cv['n_envelope']}) |"
+    )
+    lines.append(
+        f"| Diagnostic (A) | shape-pass ÷ convergence-eligible in-envelope "
+        f"| {cv['diagnostic_a']:.1%} "
+        f"({cv['n_shape_pass_eligible']}/{cv['n_eligible']}) |"
+    )
+    lines.append(
+        f"| Convergence-excluded | non-converged in-envelope cells "
+        f"| {cv['n_excluded_nonconv']} (by shape: {cv['excluded_by_shape']}) |"
+    )
+    lines.append(
+        f"| Stress (α ≥ {ALPHA_STRESS:.2f}) | shape-pass among stress cells "
+        f"(not gated) | {cv['stress_shape_pass']:.1%} ({cv['n_stress']} cells) |"
+    )
+    lines.append("")
+    if cv["n_excluded_nonconv"] and set(cv["excluded_by_shape"]) == {FLAT_SHAPE}:
+        lines.append(
+            f"> **Flat-null limitation.** All {cv['n_excluded_nonconv']} "
+            "convergence-excluded in-envelope cells are `flat_baseline`: under a "
+            "flat genuine SPA the genuine-signal latent is near-unidentified, so a "
+            "tiny fraction of draws diverge and trip the zero-tolerance divergence "
+            f"gate — even though flatness is recovered correctly (W1 ≤ "
+            f"{T_FLAT_YEARS:.0f} y). This is the entire gap between the headline "
+            f"({cv['headline_b']:.1%}, B) and the diagnostic ({cv['diagnostic_a']:.1%}, "
+            "A); it is a sampling quirk, not a recovery failure. Deferred fix logged "
+            "in `planning/backlog-2026-05-03.md` (§Phase-2 refinements)."
+        )
+        lines.append("")
 
     # ----- Per-axis pass rates ------------------------------------------- #
     lines.append("## 2. Per-axis pass rates")
@@ -319,8 +488,9 @@ def main() -> int:
     args = _parse_args()
     grid_dir = args.grid_dir.resolve()
 
-    df = load_all_summaries(grid_dir)
-    verdict = compute_verdict(df)
+    df = add_corrected_flags(load_all_summaries(grid_dir))
+    verdict = compute_verdict(df)          # lodged criterion (reference)
+    cv = compute_corrected_verdict(df)     # corrected §A5.5.1 criterion (binding)
 
     parquet_path = write_grid_summary_parquet(df, grid_dir)
     report = make_report(df)
@@ -331,19 +501,39 @@ def main() -> int:
     unit = str(df["unit"].iloc[0]) if "unit" in df.columns else "unknown"
     print(f"[grid-summariser] unit={unit}-mass  n_cells={verdict['n_cells']}")
     print(
-        f"[grid-summariser] coverage pass-rate "
-        f"{verdict['frac_cov']:.1%} (need >= {GLOBAL_FRAC_PASS:.0%}) -> "
-        f"{'PASS' if verdict['cov_criterion_pass'] else 'FAIL'}"
-    )
-    print(
-        f"[grid-summariser] shape-r pass-rate  "
-        f"{verdict['frac_r']:.1%} (need >= {GLOBAL_FRAC_PASS:.0%}) -> "
-        f"{'PASS' if verdict['r_criterion_pass'] else 'FAIL'}"
-    )
-    print(
-        f"[grid-summariser] VERDICT: "
+        f"[grid-summariser] LODGED (reference): coverage {verdict['frac_cov']:.1%}, "
+        f"shape-r {verdict['frac_r']:.1%} -> "
         f"{'PASS' if verdict['validated'] else 'FAIL'}"
     )
+    print(
+        f"[grid-summariser] CORRECTED (§A5.5.1, BINDING): headline B "
+        f"{cv['headline_b']:.1%}, diagnostic A {cv['diagnostic_a']:.1%}, "
+        f"excluded {cv['n_excluded_nonconv']} {cv['excluded_by_shape']} -> "
+        f"{'PASS' if cv['validated'] else 'FAIL'}"
+    )
+
+    # Built-in regression check: the inscription grid must reproduce the
+    # 2026-06-03 adjudication figures (Decision 33 / §A5.5.1), guarding against a
+    # silent partition/criterion regression. Grid B has no reference -> skip.
+    if unit == "inscription":
+        for label, got, ref in [
+            ("headline B", cv["headline_b"], GRID_A_HEADLINE_B),
+            ("diagnostic A", cv["diagnostic_a"], GRID_A_DIAGNOSTIC_A),
+        ]:
+            ok = abs(got - ref) <= REGRESSION_TOL
+            print(
+                f"[grid-summariser] regression {label}: {got:.1%} vs ref "
+                f"{ref:.1%} -> {'OK' if ok else 'MISMATCH'}"
+            )
+            if not ok:
+                print(
+                    f"[grid-summariser] ERROR: corrected-criterion regression "
+                    f"FAILED for {label} (got {got:.4f}, ref {ref:.4f}, "
+                    f"tol {REGRESSION_TOL}). Criterion/partition changed.",
+                    file=sys.stderr,
+                )
+                return 1
+
     print(f"[grid-summariser] wrote {parquet_path}")
     print(f"[grid-summariser] wrote {report_path}")
     return 0

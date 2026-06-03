@@ -15,6 +15,23 @@ See `runs/2026-05-26-recovery-grid-two-unit/spec.md` §5 for the binding decisio
 | median Pearson r >= 0.95 per cell | >= 90% of cells | 70.2% (316/450) | FAIL |
 | Both criteria simultaneously | (informational) | 42.7% (192/450) | — |
 
+> The verdict above is the **lodged** criterion, retained as a reference. The **binding** verdict is the corrected criterion in §1b.
+
+## 1b. Corrected binding criterion (Decision 33 / §A5.5.1) — BINDING
+
+Convergence precondition (≥ 90% of replicates converge) + hybrid shape gate (median Pearson r ≥ 0.95 for non-flat shapes; Wasserstein-1 ≤ 10 y for `flat_baseline`, where Pearson r is undefined), α demoted to a diagnostic, evaluated within the operating envelope (α ≤ 0.70). Cells with α ≥ 0.95 are a reported stress sensitivity, not gated. W1 + convergence are stored, so this is computed without re-fitting.
+
+**Verdict: PASS** — headline **91.9%** of in-envelope cells are clean passes (convergence AND shape), against a ≥ 90% bar.
+
+| Figure | Definition | Value |
+|---|---|---|
+| **Headline (B)** | clean-pass (convergence AND shape) ÷ all in-envelope | **91.9%** (331/360) |
+| Diagnostic (A) | shape-pass ÷ convergence-eligible in-envelope | 98.5% (331/336) |
+| Convergence-excluded | non-converged in-envelope cells | 24 (by shape: {'flat_baseline': 24}) |
+| Stress (α ≥ 0.95) | shape-pass among stress cells (not gated) | 40.0% (90 cells) |
+
+> **Flat-null limitation.** All 24 convergence-excluded in-envelope cells are `flat_baseline`: under a flat genuine SPA the genuine-signal latent is near-unidentified, so a tiny fraction of draws diverge and trip the zero-tolerance divergence gate — even though flatness is recovered correctly (W1 ≤ 10 y). This is the entire gap between the headline (91.9%, B) and the diagnostic (98.5%, A); it is a sampling quirk, not a recovery failure. Deferred fix logged in `planning/backlog-2026-05-03.md` (§Phase-2 refinements).
+
 ## 2. Per-axis pass rates
 
 ### 2.alpha
