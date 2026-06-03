@@ -3211,12 +3211,22 @@ note), not the engine of subset analysis.
 
 ### Consequences
 
-- **Feasibility is N-dependent.** A standalone per-subset fit is harder to
-  identify at small N. The **small-N deconvolution-reachability study** (spec'd
-  2026-06-03, `runs/2026-06-03-small-n-reachability/spec.md`) measures the floor —
-  the minimum subset N at which subset-specific deconvolution recovers reliably
-  under the Decision-33 criterion. This replaces the prereg's rough "unidentified
-  below N≈100" prior with a measured reachability map.
+- **Feasibility is N-dependent — floor now MEASURED (2026-06-03).** A standalone
+  per-subset fit is harder to identify at small N. The **small-N deconvolution-
+  reachability study** (`runs/2026-06-03-small-n-reachability/`; 4,200 fits across
+  84 cells = 3 shapes × 4 α × 7 N, checkpointed) measured the floor under the
+  Decision-33 criterion. **Within the operating envelope (α ≤ 0.70), reliable
+  recovery has a worst-case floor of N ≈ 2000**, dropping to **N ≈ 500** for the
+  easiest subsets (α ≈ 0.30, smooth_growth / rise_and_fall); two α = 0.70 cells
+  (regnal_cluster, smooth_growth) are **unreached even at N = 2000**, and the
+  α = 0.85 stress row is unreached throughout. Mean shape-recovery rate (α ≤ 0.70)
+  climbs 12 % (N=50) → 94 % (N=2000); convergence ≈ 100 %; band coverage degrades
+  0.98 → 0.88 with N (the Decision-33 band-overconfidence finding) and mean
+  |α-bias| ≈ 0.13 (inside the ±0.18 envelope precision). This replaces the
+  prereg's rough "unidentified below N≈100" prior with a measured reachability map
+  (`outputs/REPORT.md`, `outputs/figures/reachability-map.png`). The ~2,000
+  mother–daughter motivating corpus sits **right at this worst-case floor** —
+  feasible but near the boundary.
 - **Below the floor:** fall-back options (partial-pooling of convention across
   subsets — a §5-style borrow; or descriptive reporting; or the §5 hierarchical
   trajectory model). Out of scope for the reachability study; logged for later.
