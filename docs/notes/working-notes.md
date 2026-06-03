@@ -1871,3 +1871,46 @@ The split is partly transient: once sapphire is upgraded post-Grid-B, new work c
 ### Findable later
 
 `provenance`, `pymc-6`, `pymc-5`, `arviz-1x`, `arviz-0x`, `pytensor`, `stack-split`, `reproducibility`, `recovery-grid`, `s5-layer-a`, `zbook`, `sapphire`, `host-parity`, `layer-b`, `cross-run-consistency`, `version-pinning`, `task-9`, `pr-5`, `uv-lock`
+
+## Obs 67 — 2026-06-02 [METHODOLOGY / CORRECTION]: Grid A's recovery FAIL is predominantly a metric artefact, not a fit failure
+
+Adjudicating Grid A (inscription-mass) of the two-unit recovery grid under the lodged binding criterion returned **FAIL** — coverage 69.8%, shape-r 70.2%, both-pass 42.7% (vs 40.9% in 2026-05-22; the F1+F3 fixes were only marginal). Re-deriving the per-cell failure structure showed the FAIL is **predominantly a metric problem**, not a model failure:
+
+- **Criterion (ii) is undefined for the flat genuine shape.** Pearson r against a constant truth is `0/0`; all 75 `flat_baseline` cells return `nan` and fail mechanically, capping achievable shape-pass at 375/450 = 83.3% irrespective of model quality. The model recovers flatness *well* (~99% coverage, small W-1).
+- **Criterion (i) — exact 95%-CI coverage of α — collapses at large N.** Holding (shape, α, tier) fixed and raising N, cell coverage falls ~1.0 → ~0.0 while the α bias stays small and roughly constant (e.g. regnal_cluster α=0.70: bias 0.004 → 0.053, coverage 1.00 → 0.11). This is posterior concentration / semiparametric Bernstein–von Mises — it measures asymptotic interval calibration, not recovery adequacy.
+- **The quantity we consume recovers well throughout:** posterior-median Pearson r between recovered and true `p_gen` ≈ 0.998.
+
+A verified prior-art scout confirmed no surveyed community (radiocarbon SPD / rcarbon, baorista, Bayesian-workflow SBC) gates on exact CI-coverage of a mixing weight; flat is a *standard tested null*; Wasserstein-1 is the theoretically-justified deconvolution metric (Rousseau & Scricciolo 2021). Under the corrected criterion (Decision 33: hybrid shape gate Pearson r ≥ 0.95 non-flat / W-1 ≤ 10 y flat; convergence precondition; α demoted to a quantified diagnostic; operating envelope α ≤ 0.70), Grid A **PASSes at 91.9%** in the operating envelope. **Artefacts**: `runs/2026-05-26-recovery-grid-two-unit/inscription-mass/outputs/REPORT.md` + `tables/grid-summary.parquet` (commit `0638093`); Decision 33; OSF Amendment 01 §A5.5.1; `planning/prior-art-scout-2026-06-02-recovery-validation-metrics.md`.
+
+### Findable later
+
+`recovery-grid`, `mixture-model`, `deconvolution`, `pearson-r`, `flat-baseline`, `undefined-metric`, `alpha-coverage`, `bernstein-von-mises`, `posterior-concentration`, `wasserstein-1`, `decision-33`, `amendment-01`, `criterion-clarification`, `p-gen`, `operating-envelope`, `prior-art-scout`, `grid-a`, `inscription-mass`
+
+## Obs 68 — 2026-06-02 [LIMITATION]: the recovered genuine-SPA credible band is overconfident for sharply-peaked signals, and degrades with N
+
+The recovery grid validated `p_gen` *shape* recovery (Pearson r ≈ 0.998) but stored only the posterior **median** curve, not the band. A re-fit band-calibration diagnostic (12 cells × 30 reps, zbook; `runs/2026-06-02-recovery-utility-check/`) measured the per-bin credible band's pointwise coverage of the true `p_gen`:
+
+| shape | N=2000 | N=50000 |
+|---|---|---|
+| smooth_growth | ~0.99 | ~0.99 |
+| rise_and_fall | 0.77 | 0.55 |
+| regnal_cluster | 0.89 | **0.23** |
+
+Mean pointwise 95% coverage falls 0.90 (N=2k) → 0.67 (N=50k). **The band is honest for smooth signals but overconfident for sharply-peaked ones, degrading with N** — the same posterior-concentration effect that broke α, compounded by the Gaussian-random-walk smoothness prior being unable to represent sharp features (so the posterior concentrates confidently on a too-smooth curve and the narrow band misses the peaks). Pearson r is shift/scale-invariant, so it certifies the *curve* while saying nothing about the *band*. **Consequence for the paper:** report the recovered median timeline (the gated, trustworthy quantity), but do not present its credible band at face value in peaked regimes — the real corpus has sharp regnal clustering (AD ~77 / 122 / 212). Logged as a limitation, not a new gate; deferred fix is a roughness-tolerant `p_gen` prior. **Artefacts**: `runs/2026-06-02-recovery-utility-check/outputs/band-calibration-by-cell.csv`.
+
+### Findable later
+
+`band-calibration`, `credible-interval`, `coverage`, `overconfident`, `posterior-concentration`, `grw`, `smoothness-prior`, `peaked-signal`, `regnal-cluster`, `pearson-r`, `p-gen`, `point-vs-interval`, `uncertainty-presentation`, `roughness-prior`, `large-n`
+
+## Obs 69 — 2026-06-02 [PROVENANCE / LIMITATION]: the real corpus sits just inside the recovery envelope globally, but the late corpus (AD ~142–347) is in the degraded-recovery zone; narrow-dating is strongly type-skewed
+
+The descriptive convention-mass fraction of the real LIRE corpus (F1+F3 family aoristic mass / total, the same definition the model's `p_conv` is built from; `runs/2026-06-02-recovery-utility-check/code/real-corpus-convention-fraction.py`):
+
+- **Corpus-wide ≈ 0.65** — *just inside* the α ≤ 0.70 operating envelope, with little margin (F1_round century templates alone are 59.5% of aoristic mass).
+- **21 of 80 time-bins exceed 0.70, spanning AD ~142–347** — the late corpus is in the degraded-recovery zone, so genuine-signal claims for the mid-2nd to 4th centuries (often the historically richest period) need explicit hedging. Dips at the era boundary and regnal years (AD ~77, ~212) are precisely-dated material, a sanity check that the classifier captures something real.
+
+Separately, **narrow-dating is strongly correlated with inscription type** (verified on `type_of_inscription_clean`): epitaphs are 39.3% of the corpus but only 9.0% of narrow-dated inscriptions (0.23×), while honorific (3.15×) and building/dedicatory (2.73×) are over-represented. So discarding template-dated inscriptions ("throw away the slabs") loses 82.5% of the corpus *and* introduces a severe selection bias toward public/official inscriptions — the mixture/aoristic approach (which keeps all data and uses the narrow-dated as a calibration cohort) is preferable on both power and bias grounds. The type-skew means the calibration cohort itself needs post-stratification reweighting (backlog). **Artefacts**: `runs/2026-06-02-recovery-utility-check/outputs/convention-fraction-{by-bin.csv,over-time.png}`.
+
+### Findable later
+
+`convention-fraction`, `operating-envelope`, `real-corpus`, `late-corpus`, `degraded-recovery`, `aoristic`, `family-classifier`, `f1-f3`, `type-skew`, `epitaph`, `selection-bias`, `calibration-cohort`, `post-stratification`, `throw-away-the-slabs`, `discard-vs-decompose`, `p-conv`
