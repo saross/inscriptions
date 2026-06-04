@@ -10,10 +10,10 @@ an amendment governs the recovery-grid criterion and subset deconvolution.
 The paragraph below is written in PLAIN PROSE (no Markdown emphasis markers) to
 match the voice and rendering of the existing summary field.
 
-ACTION AT LODGEMENT: replace "2026-06-XX" with the actual lodgement date.
+Lodgement date set to 2026-06-04 (matches git tag osf-amendment-01-2026-06-04).
 -->
 
-Amendment 01 (lodged 2026-06-XX) extends this protocol with a two-measure
+Amendment 01 (lodged 2026-06-04) extends this protocol with a two-measure
 framework: epigraphic acts (inscription count, the unchanged primary-by-convention
 measure) and epigraphic content (letter mass), promoting letter mass from an
 exploratory cross-check to a co-registered parallel confirmatory measure for H3a,

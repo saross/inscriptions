@@ -1,7 +1,7 @@
 OSF JUSTIFICATION — Amendment 01: Two-measure framework (epigraphic acts and epigraphic content)
 
 [Paste this text into the OSF "justification" field. Plain text — the field does
-not render Markdown. Replace "2026-06-XX" / "<lodgement-date>" at lodgement.
+not render Markdown. Lodgement date: 2026-06-04 (git tag osf-amendment-01-2026-06-04).
 Full detail is in the attached amendment (PDF); the Markdown source is attached
 as a second file for machine and LLM readability.]
 

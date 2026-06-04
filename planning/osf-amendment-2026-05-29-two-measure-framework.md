@@ -636,7 +636,7 @@ copy is maintained separately; the lodged authority remains git tag
   is `planning/paper-significance-and-applications-2026-06-03.md`.
 - **Repository state:** the amendment text and its supporting artefacts are
   committed on `main`; the lodged repository state is anchored by a new git tag,
-  `osf-amendment-01-<lodgement-date>` (cut at lodgement, mirroring
+  `osf-amendment-01-2026-06-04` (cut at lodgement, mirroring
   `osf-lodgement-2026-05-20`). This git tag is the project's own reproducibility
   anchor and is **distinct from** the OSF-assigned registration/amendment
   identifier, which OSF generates on approval.
