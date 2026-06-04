@@ -78,3 +78,6 @@ runs/2026-05-30-s5-small-n-trajectories/code/production/*.png
 runs/2026-05-30-s5-small-n-trajectories/code/*.nc
 runs/2026-05-30-s5-small-n-trajectories/code/letter-ppc.png
 runs/2026-05-30-s5-small-n-trajectories/code/subsample-recover.png
+
+# H3a confirmatory: large InferenceData (regenerable from committed seed+code)
+runs/2026-06-04-h3a-confirmatory/outputs/*.nc

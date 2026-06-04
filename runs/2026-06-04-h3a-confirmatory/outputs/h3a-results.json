@@ -1,0 +1,165 @@
+{
+  "sampling": {
+    "tune": 6000,
+    "draws": 3000,
+    "chains": 4,
+    "target_accept": 0.97,
+    "seed": 20260604
+  },
+  "primary": {
+    "n_cities": 1044,
+    "n_provinces": 56,
+    "convergence": {
+      "max_rhat": 1.0,
+      "min_ess_bulk": 1660.0,
+      "n_divergences": 0,
+      "rhat_argmax": "alpha_0",
+      "ess_argmin": "sigma_prov"
+    },
+    "f_within_unweighted": {
+      "median": 0.2989204388553127,
+      "ci_lo": 0.2397320481157514,
+      "ci_hi": 0.36507666937399985,
+      "p_gt_005": 1.0,
+      "p_gt_010": 1.0,
+      "p_gt_020": 0.9995833333333334,
+      "verdict": "supported"
+    },
+    "f_within_population_weighted": {
+      "median": 0.4940740540092473,
+      "ci_lo": 0.3948334999806031,
+      "ci_hi": 0.6088948198274342,
+      "p_gt_005": 1.0,
+      "p_gt_010": 1.0,
+      "p_gt_020": 1.0,
+      "verdict": "supported"
+    },
+    "f_within_inscription_weighted": {
+      "median": 0.4194711936244751,
+      "ci_lo": 0.3354376531276354,
+      "ci_hi": 0.5138988280037251,
+      "p_gt_005": 1.0,
+      "p_gt_010": 1.0,
+      "p_gt_020": 1.0,
+      "verdict": "supported"
+    },
+    "betas": {
+      "beta_within": {
+        "median": 0.5869170609413196,
+        "ci_lo": 0.5187384617723132,
+        "ci_hi": 0.6573599538135705
+      },
+      "beta_between": {
+        "median": -0.2421294082027126,
+        "ci_lo": -0.700654390373221,
+        "ci_hi": 0.23781998645970714
+      },
+      "sigma_prov": {
+        "median": 1.078354785889271,
+        "ci_lo": 0.8721409001237158,
+        "ci_hi": 1.3525291530864507
+      },
+      "dispersion": {
+        "median": 0.6877390165345065,
+        "ci_lo": 0.6349894348611227,
+        "ci_hi": 0.7438225732747367
+      },
+      "alpha_0": {
+        "median": 5.491985967885187,
+        "ci_lo": 1.6619968739870619,
+        "ci_hi": 9.194989902932571
+      }
+    },
+    "bayes_r2": {
+      "response_scale": {
+        "median": 0.13343636471664044,
+        "ci_lo": 0.09088355349981736,
+        "ci_hi": 0.2010701197888447
+      },
+      "latent_scale": {
+        "median": 0.4734812848427551,
+        "ci_lo": 0.4342761133864281,
+        "ci_hi": 0.5090278803684616
+      }
+    },
+    "ols_loglog": {
+      "intercept": 0.44362902107325525,
+      "slope": 0.2839922030003124,
+      "slope_se": 0.045365510874306146,
+      "slope_ci95": [
+        0.19507580168667238,
+        0.37290860431395245
+      ],
+      "r_squared": 0.03624596862351037,
+      "n": 1044,
+      "hanson_2021_beta": 0.672
+    }
+  },
+  "sensitivity_C_standardised": {
+    "convergence": {
+      "max_rhat": 1.0,
+      "min_ess_bulk": 1617.0,
+      "n_divergences": 0
+    },
+    "f_within_unweighted": {
+      "median": 0.2983556372307511,
+      "ci_lo": 0.23651337794989621,
+      "ci_hi": 0.36354241198087767,
+      "p_gt_005": 1.0,
+      "p_gt_010": 1.0,
+      "p_gt_020": 0.9993333333333333,
+      "verdict": "supported"
+    },
+    "betas_standardised": {
+      "beta_within": {
+        "median": 0.6361561204813782,
+        "ci_lo": 0.5611378551090908,
+        "ci_hi": 0.7109328433416462
+      },
+      "beta_between": {
+        "median": -0.1937634162067179,
+        "ci_lo": -0.4579578290823187,
+        "ci_hi": 0.06736783467811795
+      }
+    },
+    "predictor_sd": {
+      "within": 1.0849730641170685,
+      "between": 0.5041905626073806
+    },
+    "beta_within_implied_unstd": 0.5863335611922039
+  },
+  "sensitivity_B_latin": {
+    "n_cities": 817,
+    "n_provinces": 39,
+    "convergence": {
+      "max_rhat": 1.0,
+      "min_ess_bulk": 2038.0,
+      "n_divergences": 0
+    },
+    "gate_met": true,
+    "f_within_unweighted": {
+      "median": 0.4804105258980826,
+      "ci_lo": 0.40060410502506316,
+      "ci_hi": 0.5658416537106857,
+      "p_gt_005": 1.0,
+      "p_gt_010": 1.0,
+      "p_gt_020": 1.0,
+      "verdict": "supported"
+    },
+    "betas": {
+      "beta_within": {
+        "median": 0.7331364238458952,
+        "ci_lo": 0.6483019282765288,
+        "ci_hi": 0.8197959920333592
+      },
+      "beta_between": {
+        "median": 0.03583763235899691,
+        "ci_lo": -0.4759134200790686,
+        "ci_hi": 0.5662785089115804
+      }
+    }
+  },
+  "sensitivity_A_with_zeros": {
+    "note": "0 structural zeros added -- all 1,044 Hanson cities have >=1 date-window inscription; identical to PRIMARY, not re-fit."
+  }
+}
