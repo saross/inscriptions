@@ -79,14 +79,20 @@ ALPHA_ENVELOPE = 0.70         # operating-envelope ceiling (criterion evaluated 
 ALPHA_STRESS = 0.95           # near-unidentifiable stress row (reported, never gated)
 CONVERGENCE_FRAC = 0.90       # explicit convergence precondition (>=90% replicates converge)
 
-# Grid A reference figures for the built-in regression check (2026-06-03
-# cross-grid adjudication; Decision 33 / §A5.5.1). Headline B = clean-pass
-# (convergence AND shape) over all in-envelope cells; diagnostic A = shape-pass
-# among convergence-eligible in-envelope cells. The A/B gap on Grid A is 24
-# flat_baseline cells failing the zero-tolerance divergence gate (a flat-null
-# sampling quirk; recovery correct). Asserted only for the inscription grid.
-GRID_A_HEADLINE_B = 0.919
-GRID_A_DIAGNOSTIC_A = 0.985
+# Grid A reference figures for the built-in regression check (Decision 33 /
+# §A5.5.1). Headline B = clean-pass (convergence AND shape) over all in-envelope
+# cells; diagnostic A = shape-pass among convergence-eligible in-envelope cells.
+#
+# Under the field-standard convergence gate (R-hat / bulk-ESS only; cell_lib.
+# convergence_pass, refined 2026-06-04) the A/B gap CLOSES: the 24 flat_baseline
+# cells that the earlier zero-tolerance divergence gate had excluded all pass
+# R-hat / bulk-ESS, so headline B = diagnostic A = 98.6% (355/360 in-envelope
+# cells; the 5 non-passers are bimodal_alpha=0.70_N=2000 cells failing on genuine
+# shape, not convergence). The pre-2026-06-04 figures were B = 91.9% / A = 98.5%.
+# Re-derived in-pipeline by reaggregate.py (no re-fit). Asserted only for the
+# inscription grid.
+GRID_A_HEADLINE_B = 0.986
+GRID_A_DIAGNOSTIC_A = 0.986
 REGRESSION_TOL = 0.003
 
 
@@ -195,10 +201,13 @@ def compute_corrected_verdict(df: pd.DataFrame) -> dict[str, object]:
     - **Diagnostic A** -- hybrid shape-pass among convergence-eligible
       in-envelope cells (recovery quality where the fit is trustworthy).
 
-    The A/B gap is exactly the convergence-excluded in-envelope cells; their
-    shape breakdown is reported because on Grid A they are entirely
-    ``flat_baseline`` -- a flat-null sampling quirk, not a recovery failure
-    (Decision 33; see the harness REPORT and backlog re-fit item).
+    The A/B gap is exactly the convergence-excluded in-envelope cells. Under the
+    field-standard gate (cell_lib.convergence_pass; R-hat / bulk-ESS only) Grid A
+    has NO such cells -- A and B coincide at 98.6% -- because the 24
+    ``flat_baseline`` cells the earlier zero-tolerance divergence gate excluded
+    all pass R-hat / bulk-ESS (Decision 33 / §A5.5.1; the benign-divergence
+    refinement of 2026-06-04). Any residual gap under this gate would be genuine
+    R-hat / bulk-ESS non-convergence, reported by shape below.
     """
     env = df[df["in_envelope"]]
     n_env = int(len(env))
@@ -357,17 +366,18 @@ def make_report(df: pd.DataFrame) -> str:
         f"(not gated) | {cv['stress_shape_pass']:.1%} ({cv['n_stress']} cells) |"
     )
     lines.append("")
-    if cv["n_excluded_nonconv"] and set(cv["excluded_by_shape"]) == {FLAT_SHAPE}:
+    if cv["n_excluded_nonconv"]:
         lines.append(
-            f"> **Flat-null limitation.** All {cv['n_excluded_nonconv']} "
-            "convergence-excluded in-envelope cells are `flat_baseline`: under a "
-            "flat genuine SPA the genuine-signal latent is near-unidentified, so a "
-            "tiny fraction of draws diverge and trip the zero-tolerance divergence "
-            f"gate — even though flatness is recovered correctly (W1 ≤ "
-            f"{T_FLAT_YEARS:.0f} y). This is the entire gap between the headline "
-            f"({cv['headline_b']:.1%}, B) and the diagnostic ({cv['diagnostic_a']:.1%}, "
-            "A); it is a sampling quirk, not a recovery failure. Deferred fix logged "
-            "in `planning/backlog-2026-05-03.md` (§Phase-2 refinements)."
+            f"> **Convergence-excluded cells.** {cv['n_excluded_nonconv']} "
+            "in-envelope cell(s) fall below the convergence precondition "
+            f"(< {CONVERGENCE_FRAC:.0%} of replicates pass R̂ / bulk-ESS) and so are "
+            f"excluded from the headline (B {cv['headline_b']:.1%}) but not from the "
+            f"diagnostic (A {cv['diagnostic_a']:.1%}); by shape: "
+            f"{cv['excluded_by_shape']}. Under the field-standard gate (R̂ / bulk-ESS "
+            "only; divergences are recorded but not auto-failing — "
+            "`cell_lib.convergence_pass`, Decision 33 / §A5.5.1) these are genuine "
+            "sampling-convergence failures, not the benign flat-null divergences the "
+            "earlier zero-tolerance gate tripped on."
         )
         lines.append("")
 

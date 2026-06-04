@@ -45,6 +45,49 @@ import numpy as np
 
 
 # ---------------------------------------------------------------------------
+# Convergence gate (canonical, single source of truth).
+# ---------------------------------------------------------------------------
+# Field-standard, benign-divergence-tolerant per-replicate convergence gate
+# (Decision 33 / OSF Amendment 01 §A5.5.1, refined 2026-06-04): R-hat +
+# bulk-ESS only. Divergences are NOT a per-replicate zero-tolerance auto-fail —
+# that was stricter than field practice (Stan diagnostics guidance;
+# Betancourt 2017: investigate, don't auto-reject; Vehtari et al. 2021; no
+# surveyed source endorses a divergence-rate threshold) and it failed benign
+# flat-null divergences. Divergence counts are still recorded per replicate and
+# assessed for benignity (scattered + recovery-unaffected) at the grid level.
+#
+# This gate is THE single definition consumed by BOTH the fitter (``fit.py``,
+# at fit time) and the aggregator (``aggregate.py``, which re-derives the
+# per-replicate verdict from the stored raw R-hat / bulk-ESS so a gate change
+# re-aggregates WITHOUT re-fitting). They previously each carried their own
+# copy; the drift between them — fit.py changed to drop divergences, aggregate.py
+# still averaging the fit-time-stored verdict — was the 2026-06-04 "harness
+# emits 91.9% but the data scores 98.6%" bug. Keep it here, import it there.
+RHAT_GATE = 1.01  # per-replicate max R-hat must be strictly below this
+ESS_GATE = 400    # per-replicate min bulk-ESS must be at least this
+
+
+def convergence_pass(max_rhat: float, min_ess_bulk: float) -> bool:
+    """Field-standard per-replicate convergence verdict (R-hat + bulk-ESS only).
+
+    Parameters
+    ----------
+    max_rhat : float
+        The maximum R-hat across the replicate's monitored parameters.
+    min_ess_bulk : float
+        The minimum bulk effective sample size across those parameters.
+
+    Returns
+    -------
+    bool
+        ``True`` iff ``max_rhat < RHAT_GATE`` and ``min_ess_bulk >= ESS_GATE``.
+        Divergences are deliberately excluded (see module note above); they are
+        recorded separately and assessed for benignity at the grid level.
+    """
+    return bool(max_rhat < RHAT_GATE and min_ess_bulk >= ESS_GATE)
+
+
+# ---------------------------------------------------------------------------
 # Envelope (5-year binning, AD-50 to AD 350, 80 bins) — frozen from design.json.
 # ---------------------------------------------------------------------------
 @dataclass(frozen=True)

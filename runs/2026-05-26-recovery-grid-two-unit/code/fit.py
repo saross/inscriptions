@@ -36,7 +36,7 @@ import arviz as az  # noqa: E402
 import pymc as pm  # noqa: E402
 from scipy.stats import pearsonr, wasserstein_distance  # noqa: E402
 
-from cell_lib import Envelope, build_model_f1_f3  # noqa: E402
+from cell_lib import Envelope, build_model_f1_f3, convergence_pass  # noqa: E402
 
 
 # NUTS settings (locked per spec §3.1).
@@ -46,9 +46,10 @@ DEFAULT_N_CHAINS = 4
 DEFAULT_TARGET_ACCEPT = 0.95
 DEFAULT_CORES = 1
 
-# Convergence gates (prereg §3 line 208).
-RHAT_GATE = 1.01
-ESS_GATE = 400
+# Convergence gate (RHAT_GATE / ESS_GATE / convergence_pass) is the canonical
+# definition in cell_lib.py, imported above and shared with aggregate.py so the
+# fitter and the (re-)aggregator can never diverge. See cell_lib for the
+# field-standard / benign-divergence rationale (Decision 33 / §A5.5.1).
 
 
 def _flat_var(idata: az.InferenceData, name: str) -> np.ndarray:
@@ -100,17 +101,11 @@ def summarise_posterior(
         for k in range(len(truth_tier))
     ]
 
-    # Convergence gate (Decision 33 / OSF Amendment 01 §A5.5.1, refined
-    # 2026-06-04): R-hat + bulk-ESS only. Divergences are NOT a per-replicate
-    # zero-tolerance auto-fail — that was stricter than field practice (Stan
-    # diagnostics guidance; Betancourt 2017: investigate, don't auto-reject; no
-    # surveyed source endorses a divergence-rate threshold) and it failed benign
-    # flat-null divergences. n_divergences is still recorded and assessed for
-    # benignity (scattered + recovery-unaffected) at the grid level.
-    convergence_pass = bool(
-        max_rhat < RHAT_GATE
-        and min_ess_bulk >= ESS_GATE
-    )
+    # Convergence gate: the canonical field-standard gate from cell_lib
+    # (R-hat + bulk-ESS only; divergences recorded but not auto-failing — see
+    # cell_lib.convergence_pass for the Decision 33 / §A5.5.1 rationale). Both
+    # this fitter and aggregate.py call the same function.
+    convergence = convergence_pass(max_rhat, min_ess_bulk)
 
     return {
         "alpha_true": alpha_true,
@@ -131,7 +126,7 @@ def summarise_posterior(
         "min_ess_bulk": min_ess_bulk,
         "min_ess_tail": min_ess_tail,
         "n_divergences": n_divergences,
-        "convergence_pass": convergence_pass,
+        "convergence_pass": convergence,
     }
 
 

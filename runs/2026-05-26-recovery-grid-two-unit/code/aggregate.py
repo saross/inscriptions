@@ -9,9 +9,23 @@ re-simulation. Roll all per-replicate posterior parquets within one cell
 into a per-cell summary JSON containing the prereg-binding pass / fail
 flags. Schema matches the 2026-05-22 aggregator.
 
+Convergence re-derivation (no re-fit)
+-------------------------------------
+``convergence_pass_rate`` is recomputed here from each replicate's stored
+raw diagnostics (``max_rhat``, ``min_ess_bulk``) via the canonical
+``cell_lib.convergence_pass`` gate — it is NOT the mean of the per-replicate
+``convergence_pass`` field stored in the posteriors. That stored field records
+the *fit-time* verdict; re-deriving from the raw diagnostics lets a gate change
+re-aggregate the grid without re-fitting (Decision 33 / §A5.5.1, refined
+2026-06-04). Reading the stored field instead was the 2026-06-04 bug where the
+harness emitted 91.9% while the data scored 98.6%. The two values coincide for
+any replicate whose fit-time gate matched the current gate; they differ only for
+replicates that diverged but passed R-hat / bulk-ESS (old gate FAIL, new PASS).
+
 Author / Date
 -------------
 Claude (Opus 4.7, 1M context), 2026-05-26, on Shawn's brief.
+Convergence re-derivation added 2026-06-04 (Opus 4.8, 1M context).
 """
 
 from __future__ import annotations
@@ -22,6 +36,8 @@ from typing import Any
 
 import numpy as np
 import pandas as pd
+
+from cell_lib import convergence_pass
 
 # Per-cell pass thresholds (prereg-binding; unchanged from 2026-05-22).
 ALPHA_COVERAGE_PASS = 0.90
@@ -52,7 +68,16 @@ def aggregate_cell(
     median_pearson = float(df["pearson_r_pgen"].median())
     median_w1 = float(df["wasserstein_1_pgen"].median())
     mean_pearson = float(df["pearson_r_pgen"].mean())
-    convergence_pass_rate = float(df["convergence_pass"].mean())
+    # Re-derive convergence from the stored RAW diagnostics under the current
+    # canonical gate (cell_lib.convergence_pass) — NOT the mean of the fit-time
+    # `convergence_pass` field, which encodes whatever gate was live at fit time.
+    # This makes a gate change re-aggregate without re-fitting (see module
+    # docstring; Decision 33 / §A5.5.1).
+    convergence_recomputed = df.apply(
+        lambda row: convergence_pass(row["max_rhat"], row["min_ess_bulk"]),
+        axis=1,
+    )
+    convergence_pass_rate = float(convergence_recomputed.mean())
     n_divergences_total = int(df["n_divergences"].sum())
     mean_fit_seconds = float(df["fit_seconds"].mean())
 

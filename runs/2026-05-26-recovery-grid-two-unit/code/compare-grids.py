@@ -539,24 +539,29 @@ def make_report(
     ]:
         L.append(f"| {key} | {counts_c.get(key, 0)} |")
     L.append("")
-    if cva["n_excluded_nonconv"] and set(cva["excluded_by_shape"]) == {FLAT_SHAPE}:
+    if cva["n_excluded_nonconv"]:
         L.append(
-            f"> **{name_a}-mass flat-null note.** Its {cva['n_excluded_nonconv']} "
-            "convergence-excluded in-envelope cells are all `flat_baseline` — a "
-            "flat-null sampling quirk (flatness still recovered correctly), the "
-            f"entire gap between B ({cva['headline_b']:.1%}) and A "
-            f"({cva['diagnostic_a']:.1%}). Deferred re-fit logged in the backlog."
+            f"> **{name_a}-mass convergence note.** {cva['n_excluded_nonconv']} "
+            "in-envelope cell(s) fall below the convergence precondition "
+            f"(< {CONVERGENCE_FRAC:.0%} of replicates pass R̂ / bulk-ESS), the gap "
+            f"between B ({cva['headline_b']:.1%}) and A ({cva['diagnostic_a']:.1%}); "
+            f"by shape: {cva['excluded_by_shape']}. Under the field-standard gate "
+            "(R̂ / bulk-ESS only; divergences recorded, not auto-failing — Decision 33 "
+            "/ §A5.5.1) these are genuine non-convergence, not the benign flat-null "
+            "divergences the earlier zero-tolerance gate tripped on."
         )
         L.append("")
     if cvb["n_eligible"] == 0:
         L.append(
             f"> **{name_b}-mass convergence note.** **No** in-envelope cell reaches "
             f"the {CONVERGENCE_FRAC:.0%} convergence precondition (max "
-            f"convergence_pass_rate < {CONVERGENCE_FRAC:.2f}); the heavy-tailed "
-            "letter-count likelihood produces severe divergences. Letter-mass fails "
-            "on convergence before shape recovery is even assessable, so diagnostic "
-            "A is undefined. This is consistent with inscription count being the "
-            "primary unit of analysis (Obs 61)."
+            f"convergence_pass_rate < {CONVERGENCE_FRAC:.2f}) under the field-standard "
+            "R̂ / bulk-ESS gate; the heavy-tailed letter-count likelihood produces "
+            "genuine sampling-convergence failures (poor mixing / low bulk-ESS), not "
+            "merely benign divergences. Letter-mass fails on convergence before shape "
+            "recovery is even assessable, so diagnostic A is undefined. This is "
+            "consistent with inscription count being the primary unit of analysis "
+            "(Obs 61)."
         )
         L.append("")
 
