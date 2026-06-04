@@ -12,7 +12,7 @@ The **binding** cross-grid verdict uses the corrected criterion: a convergence p
 
 | Grid | headline B (binding) | diagnostic A | conv-excluded | Verdict |
 |---|---|---|---|---|
-| inscription-mass | **91.9%** (331/360) | 98.5% | 24 | PASS |
+| inscription-mass | **98.6%** (355/360) | 98.6% | 0 | PASS |
 | letter-mass | **0.0%** (0/360) | n/a (no convergent cells) | 360 | FAIL |
 
 **Outcome branch (binding): PASS / FAIL.** letter-mass calibration cohort lacks identifiability. Investigate the heavy-tail letter-count distribution (try a 99th-pct cap as sensitivity) and the cohort size. Stage 3 launches under inscription-mass only; letter-mass reported as a limitation.
@@ -22,14 +22,12 @@ The **binding** cross-grid verdict uses the corrected criterion: a convergence p
 | classification | n cells |
 |---|---|
 | both-pass | 0 |
-| inscription-only | 331 |
+| inscription-only | 355 |
 | letter-only | 0 |
-| both-fail | 29 |
+| both-fail | 5 |
 | stress(out-of-env) | 90 |
 
-> **inscription-mass flat-null note.** Its 24 convergence-excluded in-envelope cells are all `flat_baseline` — a flat-null sampling quirk (flatness still recovered correctly), the entire gap between B (91.9%) and A (98.5%). Deferred re-fit logged in the backlog.
-
-> **letter-mass convergence note.** **No** in-envelope cell reaches the 90% convergence precondition (max convergence_pass_rate < 0.90); the heavy-tailed letter-count likelihood produces severe divergences. Letter-mass fails on convergence before shape recovery is even assessable, so diagnostic A is undefined. This is consistent with inscription count being the primary unit of analysis (Obs 61).
+> **letter-mass convergence note.** **No** in-envelope cell reaches the 90% convergence precondition (max convergence_pass_rate < 0.90) under the field-standard R̂ / bulk-ESS gate; the heavy-tailed letter-count likelihood produces genuine sampling-convergence failures (poor mixing / low bulk-ESS), not merely benign divergences. Letter-mass fails on convergence before shape recovery is even assessable, so diagnostic A is undefined. This is consistent with inscription count being the primary unit of analysis (Obs 61).
 
 ## 1R. Per-grid verdicts — LODGED criterion (reference only)
 
@@ -97,7 +95,7 @@ Filter views available in `cell-pass-comparison.parquet`: `both-pass` (good), `i
 ## 4. Figures
 
 - `figures/fig-pass-rate-heatmap.png` — side-by-side (α × shape) both-pass-rate heatmaps, shared 0–1 colour scale (paper-figure candidate).
-- `figures/fig-alpha-bias-by-tier.png` — NOT produced (alpha-bias.parquet missing for one/both grids; run `collect-alpha-bias.py` per grid, then re-run this script).
+- `figures/fig-alpha-bias-by-tier.png` — recovered-α bias by tier and unit (paper-figure candidate).
 
 ## 5. Wasserstein-1 supplementary
 

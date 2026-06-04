@@ -19,7 +19,7 @@
   "median_wasserstein_1_pgen": 19.289028892407067,
   "convergence_pass_rate": 0.59,
   "n_divergences_total": 0,
-  "mean_fit_seconds": 78.47131014108658,
+  "mean_fit_seconds": 78.04044989347457,
   "per_tier_coverage": [
     0.63,
     0.91,
