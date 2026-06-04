@@ -34,6 +34,10 @@ runs/2026-06-03-small-n-reachability/outputs/*.log
 # Checkpoint log (operational; identical records to the committed replicates.parquet).
 runs/2026-06-03-small-n-reachability/outputs/*.jsonl
 runs/2026-06-03-small-n-reachability/outputs/scratch/
+# 2026-06-04 finer-alpha envelope run (results CSV/parquet committed; logs/jsonl/scratch not).
+runs/2026-06-04-envelope-finer-alpha/outputs/*.log
+runs/2026-06-04-envelope-finer-alpha/outputs/*.jsonl
+runs/2026-06-04-envelope-finer-alpha/outputs/scratch/
 
 # Intermediate filtered LIRE corpora (~ 60 MB each). Reconstructable from the
 # original LIRE_v3-0.parquet via the run's filter script. Live on sapphire too

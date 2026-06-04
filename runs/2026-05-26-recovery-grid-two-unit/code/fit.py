@@ -100,10 +100,16 @@ def summarise_posterior(
         for k in range(len(truth_tier))
     ]
 
+    # Convergence gate (Decision 33 / OSF Amendment 01 §A5.5.1, refined
+    # 2026-06-04): R-hat + bulk-ESS only. Divergences are NOT a per-replicate
+    # zero-tolerance auto-fail — that was stricter than field practice (Stan
+    # diagnostics guidance; Betancourt 2017: investigate, don't auto-reject; no
+    # surveyed source endorses a divergence-rate threshold) and it failed benign
+    # flat-null divergences. n_divergences is still recorded and assessed for
+    # benignity (scattered + recovery-unaffected) at the grid level.
     convergence_pass = bool(
         max_rhat < RHAT_GATE
         and min_ess_bulk >= ESS_GATE
-        and n_divergences == 0
     )
 
     return {

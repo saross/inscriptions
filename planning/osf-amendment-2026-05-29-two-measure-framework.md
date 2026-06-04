@@ -357,12 +357,20 @@ Within the operating envelope:
   would diverge only for a unit with genuinely non-converging (R̂/ESS-failing)
   in-envelope cells.
 - **Operating envelope.** The binding criterion is evaluated where the
-  deconvolution is identifiable: empirically **α ≤ 0.70** across all shapes and
-  sample sizes. Cells with α ≥ 0.95 (≤5% genuine signal; near-unidentifiable;
-  degraded convergence) are reported as a **stress-test sensitivity, not gated**.
+  deconvolution is identifiable: empirically **α ≤ 0.70**. A finer-α run
+  (2026-06-04; α ∈ {0.70 … 0.90} at N = 2,000;
+  `runs/2026-06-04-envelope-finer-alpha/`) shows recovery declines **gradually
+  and shape-dependently** above the cut rather than at a sharp cliff — mean
+  shape-recovery 83 % (α = 0.70) → 67 % (0.75) → 44 % (0.80) → 17 % (0.90), with
+  simple trends (smooth_growth) holding to ≈ 0.80 and multimodal shapes
+  (regnal_cluster) collapsing by ≈ 0.75–0.80. So α ≤ 0.70 is the last
+  broadly-reliable region (≥ 90 % in the full grid's shape/tier/N mix), and
+  recovery within (0.50, 0.70) is already shape-dependent and is read off the
+  recoverability map per shape. Cells with α ≥ 0.95 (≤ 5 % genuine signal;
+  near-unidentifiable) are reported as a **stress-test sensitivity, not gated**.
   Where the *real* corpus α exceeds the envelope (plausible in late,
   template-dominated sub-periods), genuine-signal claims for those regimes are
-  flagged as degraded-recovery, not reported as validated.
+  flagged as degraded-recovery, not validated.
 - **α (mixing weight) — diagnostic, not gate.** α recovery is reported as a
   **quantified diagnostic**, not a binding gate. Rationale: (a) exact CI coverage
   of a mixing weight is not field-standard and collapses at large *N* under
