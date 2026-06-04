@@ -59,9 +59,9 @@ implementation."*
 
 **Trigger.** The 2026-05-26 letter-count probe
 (`runs/2026-05-26-letter-count-probe/REPORT.md`) and the methodological
-reframe it prompted, recorded as Observation 58 in the project working notes
-(`docs/notes/reflections/working-notes.md`, commit `dd326dc`) and
-corroborated by Observations 59 (`de8fa8f`) and 60 (`2f86c95`).
+reframe it prompted, recorded in the project working notes
+(`docs/notes/reflections/working-notes.md`; commits `dd326dc`, `de8fa8f`,
+`2f86c95`).
 
 **Second trigger (2026-06-02; §A5.5.1).** Adjudicating Grid A of the two-unit
 recovery simulation exposed that the lodged recovery-grid binding criterion is
@@ -478,7 +478,7 @@ can verify).** Mirroring §A4:
 
 ### A5.6 Exploratory analyses under both units
 
-Per Observation 58: the §5 pre-specified exploratory analyses are run under
+The §5 pre-specified exploratory analyses are run under
 **both** units where applicable, with the per-subset delta reported as data.
 These remain exploratory (no confirmatory verdicts), exactly as in the lodged
 preregistration.
@@ -612,8 +612,8 @@ copy is maintained separately; the lodged authority remains git tag
   cross-grid adjudication, `comparison/COMPARISON-REPORT.md`);
   `runs/2026-06-03-small-n-reachability/` (the reachability floor);
   `runs/2026-06-02-recovery-utility-check/` (band-calibration + real-corpus α
-  diagnostics); Observations 58–60 and 67–69 in
-  `docs/notes/reflections/working-notes.md`.
+  diagnostics); the project working notes
+  (`docs/notes/reflections/working-notes.md`).
 - **Binding-criterion clarification (§A5.5.1):** the metric correction is driven
   by the Grid A adjudication
   (`planning/prior-art-scout-2026-06-02-recovery-validation-metrics.md`). Field
