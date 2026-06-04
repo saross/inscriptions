@@ -3,7 +3,7 @@ priority: 2
 scope: in-stream-reference
 title: "Preregistration — Change Log and Editorial Commentary"
 audience: "Shawn, Adela, future CC instances; OSF reviewers if useful as provenance"
-status: living; maintained until OSF lodgement, then superseded by an errata document
+status: living; maintained through OSF lodgement, with post-lodgement amendments appended below as an errata trail
 started: 2026-05-14
 ---
 
@@ -865,6 +865,44 @@ forward depends on Martin's response time:
    2× / 1.5× severity cutoffs + posterior-predictive Moran's I
    bounds + template-dictionary inclusion threshold) is committed
    in parallel with lodgement, before any Phase 2 analysis runs.
+
+---
+
+## Post-lodgement amendments (errata trail)
+
+The preregistration was lodged on OSF on **2026-05-20** (`osf.io/uycs6/`,
+embargoed; git tag `osf-lodgement-2026-05-20`). The Purpose note above anticipated
+a *separate* errata document for post-lodgement changes; in practice the trail is
+kept here, appended below, so the document history stays in one place. Such
+changes are governed by OSF's amendment mechanism and the preregistration's §7
+contingency rules.
+
+### Amendment 01 — Two-measure framework (lodged 2026-06-04)
+
+- **Change.** Promotes letter mass (epigraphic *content*) from an exploratory
+  cross-check to a co-registered parallel confirmatory measure for H3a, alongside
+  inscription count (epigraphic *acts*); each unit forms its own confirmatory
+  family with no cross-unit multiplicity correction. Clarifies the H2.1
+  recovery-grid binding criterion (reported as a recoverability map with an
+  operating envelope α ≤ 0.70; a Wasserstein-1 patch for the undefined flat-shape
+  Pearson case; α demoted to a shape-conditioned diagnostic) and records the
+  realised two-grid outcome — **inscription-mass grid PASS, letter-mass grid
+  FAIL** → temporal mixture deconvolution validated for inscription mass only.
+  Pre-specifies subset-specific deconvolution gated by a measured reachability
+  floor (worst-case N ≈ 2,000 within the envelope). Implements **Decision 34**.
+- **Why an amendment.** Substantive post-lodgement methodology change, filed
+  under the §7 contingency clause (`preregistration-draft.md` line 423) before
+  implementation.
+- **How lodged.** OSF does not permit new file uploads to a submitted
+  registration or its updates, so the amendment was lodged in the registration
+  update's *justification* field and linked, version-pinned, at git tag
+  `osf-amendment-01-2026-06-04`. Full text:
+  `planning/osf-amendment-2026-05-29-two-measure-framework.md` (and `.pdf`);
+  paste-ready justification and the summary addendum alongside in `planning/`.
+- **Anchors.** git tag `osf-amendment-01-2026-06-04` = `08a9720`; amendment
+  finalised `270faea` (plus this session's lodgement-kit commits); "acts vs
+  content" reframe observations `dd326dc`, `de8fa8f`, `2f86c95`; cross-grid
+  adjudication `1bf791f`; reachability floor `5601b04`.
 
 ---
 
