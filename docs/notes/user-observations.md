@@ -211,3 +211,27 @@ last-updated: 2026-05-21
 **Lesson.** When the technical work invites a "so what," the answer is often not a better metric but the human's domain judgment about *where* the method earns its keep. I can optimise the instrument; Shawn knows which subcorpora the field actually wants a temporal handle on, and that knowledge is what makes the method *useful* rather than merely correct. The division of labour that worked: I diagnose and build; he points the capability at the question that matters.
 
 **How to apply.** When a result is technically sound but its significance feels thin, surface the "so what" explicitly and invite the domain reframe rather than reaching for more technical polish. Treat the human's "the payoff is over *there*" as a first-class design input — it can reshape scope, decisions, and the paper's framing more than any internal optimisation. And carry the corollary into the writing: a method's *reachability map* (where it works) is a contribution in its own right, not a hedge.
+
+## Obs 20 — 2026-06-04: "Give me grounds, not a choice" converts a reporting decision into an empirical question — and the data can then dissolve it
+
+**Pattern.** Rather than accept my reported recommendations for the four flagged criterion decisions (e.g. the headline-B vs diagnostic-A reporting choice), Shawn asked for *principled grounds* — how a statistical SME would frame each, what tests or heuristics settle them. That reframing converted "which option do we report?" into "what does the field standard / the data actually say?" The empirical answer — the zero-tolerance divergence gate is non-standard, and the flat-null divergences are benign — then dissolved the headline-B decision entirely (Grid A re-scored 92 % → 99 %), retiring a "limitation" and a queued re-fit.
+
+**Lesson.** Asking for grounds rather than a pick is a high-leverage steer. A reported *choice* anchors on the option-set I have already framed; "give me the principled grounds" forces the question up a level, where the framing itself can be wrong. The decision I had carefully built — and Shawn had signed off — was downstream of a threshold neither of us had interrogated, and only the demand for grounds surfaced it.
+
+**How to apply.** When I present a decision as a choice between options, treat the option-set itself as potentially the thing to question. Offer the grounds proactively — how a domain expert frames it, what cheap test would settle it — not just a recommendation. And when the human asks for grounds, read it as a signal that the framing, not merely the pick, is in scope.
+
+## Obs 21 — 2026-06-04: Plain-language explanation as a comprehension gate, not just a courtesy
+
+**Pattern.** The recurring "explain it to a history undergrad" requests (the A-vs-B denominators; the end-of-session walkthrough) are a check on whether *I* understand the statistics well enough to make them legible — not only an accessibility aid for Shawn. He noted he used the same test on Martin when Martin was his undergraduate statistics RA. The A-vs-B denominator structure became fully clear to me *in the act* of rendering it plainly.
+
+**Lesson.** Being asked to explain plainly is a quality gate that cuts both ways. If I cannot render a statistical decision in undergrad-legible terms, I probably do not fully understand it — and the gaps surface in the attempt. Plain-language is diagnostic of comprehension, which is why the project's standing "non-specialist register for stats" rule is partly an anti-confabulation device, not just a courtesy.
+
+**How to apply.** Treat "explain it plainly" as a test to pass, not a chore to discharge. Use the plain-language register as a self-check before asserting I understand something: if the plain version comes out hand-wavy, dig until it does not. The legibility *is* the verification.
+
+## Obs 22 — 2026-06-04: Audience-protection over self-disclosure — strip process clutter that derails engagement, not to hide it
+
+**Pattern.** Shawn had me strip the internal-tooling references (prior-art scout, implementation review), the statistician-sign-off framing, and the mother–daughter corpus from the OSF amendment — explicitly *not* to conceal LLM use (he is likely to publish a paper on LLM use for this project) but because these "how the sausage is made" details are illegible to an external reviewer and risk triggering arguments about LLM use rather than engagement with the core argument. We kept commit-hash provenance (stable, useful) and dropped the tooling-process narrative (distracting).
+
+**Lesson.** Transparency and audience-fit are separable goods. The reasoning is fully recorded — in commits, internal docs, and the planned LLM-use paper; the *preregistration* is a different artefact with a different reader, and process-clutter there is a liability rather than a virtue. Shawn has a sharp read on what derails an external reader versus what informs them.
+
+**How to apply.** Match provenance to audience. In a reviewer-facing document, cite stable anchors (commit hashes, public literature, run-dir artefacts) and the *findings*; omit the internal process that produced them (which agent ran, which review pass) unless the document's purpose *is* that process. "We're not hiding it — it's just the wrong audience for it."
