@@ -3073,9 +3073,9 @@ exploratory.**
 
 ## Decision 33 — 2026-06-02: Recovery-grid binding-criterion metric correction (α demoted to diagnostic; operating-envelope reframe)
 
-**Status:** committed; provisional pending Martin's draft-stage sign-off;
-filed as OSF Amendment 01 §A5.5.1 (the amendment is not yet lodged, so the
-change is within the pre-lodgement window).
+**Status:** committed; **lodged in OSF Amendment 01 §A5.5.1 on 2026-06-04**
+(Stage-3 launch gate cleared); provisional pending Martin's draft-stage
+sign-off.
 **Decided by:** Shawn 2026-06-02 — the demote-α and operating-envelope-reframe
 choices were made this session after reviewing the evidence. Informed by the
 Grid A adjudication, a closed-loop prior-art scout, and a `/review-implementation`

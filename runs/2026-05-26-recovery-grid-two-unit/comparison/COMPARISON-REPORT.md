@@ -2,9 +2,9 @@
 
 Head-to-head of **inscription-mass** (Grid A) and **letter-mass** (Grid B) recovery grids. See `runs/2026-05-26-recovery-grid-two-unit/spec.md` §5 for the binding decision rule and outcome-branching.
 
-## 0. HARD GATE — OSF Amendment 01 not yet lodged
+## 0. OSF gate — Amendment 01 LODGED 2026-06-04 (cleared)
 
-The Stage-3 launch path named in this report is a **recommendation only**. Per the project standing rule (memory `2026-05-26-40ce5927fddc`), **no Stage-3 confirmatory work may begin until OSF Amendment 01 is lodged** — even a both-PASS verdict does not authorise launch. Confirm lodgement with Shawn before any confirmatory-claim-producing run.
+**OSF Amendment 01 is lodged (2026-06-04), so the Stage-3 launch gate is cleared.** The standing rule (memory `2026-05-26-40ce5927fddc`) was that no Stage-3 confirmatory work may begin until the amendment is lodged; that condition is now satisfied. The launch path named below (inscription-mass only — letter-mass FAILs recovery) is therefore actionable. The lodged amendment encodes the two-measure framework + the §A5.5.1 corrected criterion + §A5.7; any further criterion change would be a new amendment, not this harness's to make.
 
 ## 1. Binding verdict — corrected criterion (Decision 33 / §A5.5.1)
 

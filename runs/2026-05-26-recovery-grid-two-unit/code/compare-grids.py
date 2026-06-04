@@ -39,9 +39,10 @@ Design notes
   comparison is legible. The flat-excluded view is NOT a substitute for
   the prereg-binding rule; any criterion change is an OSF-amendment
   decision, not this harness's to make.
-- HARD GATE: the Stage-3 launch path this report names is a RECOMMENDATION
-  only. No Stage-3 confirmatory work may begin until OSF Amendment 01 is
-  lodged (project standing rule; memory 2026-05-26-40ce5927fddc).
+- OSF gate (CLEARED): OSF Amendment 01 was lodged 2026-06-04, satisfying the
+  standing rule (memory 2026-05-26-40ce5927fddc) that gated Stage-3 confirmatory
+  work on lodgement. The Stage-3 launch path this report names (inscription-mass
+  only) is now actionable.
 
 Usage
 -----
@@ -484,16 +485,18 @@ def make_report(
         L.append(f"> ⚠️ **{partial_note}**")
         L.append("")
 
-    # ---- OSF hard-gate banner (always first, always loud) -------------- #
-    L.append("## 0. HARD GATE — OSF Amendment 01 not yet lodged")
+    # ---- OSF gate banner (always first, always loud) ------------------- #
+    L.append("## 0. OSF gate — Amendment 01 LODGED 2026-06-04 (cleared)")
     L.append("")
     L.append(
-        "The Stage-3 launch path named in this report is a **recommendation "
-        "only**. Per the project standing rule (memory "
-        "`2026-05-26-40ce5927fddc`), **no Stage-3 confirmatory work may "
-        "begin until OSF Amendment 01 is lodged** — even a both-PASS "
-        "verdict does not authorise launch. Confirm lodgement with Shawn "
-        "before any confirmatory-claim-producing run."
+        "**OSF Amendment 01 is lodged (2026-06-04), so the Stage-3 launch gate "
+        "is cleared.** The standing rule (memory `2026-05-26-40ce5927fddc`) was "
+        "that no Stage-3 confirmatory work may begin until the amendment is "
+        "lodged; that condition is now satisfied. The launch path named below "
+        "(inscription-mass only — letter-mass FAILs recovery) is therefore "
+        "actionable. The lodged amendment encodes the two-measure framework + the "
+        "§A5.5.1 corrected criterion + §A5.7; any further criterion change would "
+        "be a new amendment, not this harness's to make."
     )
     L.append("")
 

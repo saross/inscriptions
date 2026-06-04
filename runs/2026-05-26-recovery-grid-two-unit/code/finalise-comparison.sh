@@ -48,6 +48,5 @@ echo "[finalise] cross-grid comparison"
 
 echo "=========================================================="
 echo "[finalise] DONE. Read: $RUN_ROOT/comparison/COMPARISON-REPORT.md"
-echo "[finalise] HARD GATE: Stage-3 launch is gated on OSF Amendment 01"
-echo "[finalise]            (not lodged as of 2026-06-02). Verdict yields a"
-echo "[finalise]            RECOMMENDED path only — confirm with Shawn."
+echo "[finalise] OSF gate CLEARED: Amendment 01 lodged 2026-06-04 — Stage-3"
+echo "[finalise]            launch path (inscription-mass only) is now actionable."

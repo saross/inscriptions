@@ -1,7 +1,7 @@
 ---
 title: "OSF Amendment 01 — Two-measure framework (epigraphic acts and epigraphic content)"
 amendment-number: 01
-status: DRAFT for Shawn's review and lodgement (not yet lodged)
+status: LODGED 2026-06-04 (OSF; Stage-3 launch gate cleared)
 date-drafted: 2026-05-29
 date-updated: "2026-06-04 (encoded the field-standard convergence gate — benign-divergence-tolerant, R̂/ESS-based, replacing the zero-tolerance gate; re-scored Grid A to B = A = 98.6 %, the flat-null gap resolved as verified-benign divergences; α diagnostic → Bland–Altman limits of agreement, shape-conditioned; checked against published Bayesian-workflow practice; clarified the §A8 repository-state provenance line — the git lodgement tag is the reproducibility anchor, distinct from the OSF-assigned identifier). Prior: 2026-06-03 (finalised §A5.5.1 + added §A5.7 against the completed adjudication); 2026-06-02 (added §A5.5.1)."
 scope: "Two-measure framework (acts vs content) + recovery-grid binding-criterion clarification finalised against the completed two-grid adjudication (§A5.5.1) + subset-specific deconvolution and the measured reachability floor (§A5.7, Decision 34)"
@@ -9,7 +9,7 @@ preregistration: "https://osf.io/uycs6/ (lodged 2026-05-20; embargoed)"
 lodged-version: "git tag osf-lodgement-2026-05-20 (https://github.com/saross/inscriptions/tree/osf-lodgement-2026-05-20)"
 filed-under: "preregistration §7 / contingency clause (preregistration-draft.md line 423): substantive methodology changes after lodgement are filed as an OSF amendment before implementation."
 author: "Shawn Ross (with Claude Code as analyst/RSE)"
-gate: "BINDING — Stage 3 confirmatory fits under the two-measure framework must not run until this amendment is lodged."
+gate: "CLEARED 2026-06-04 — the amendment is lodged; Stage 3 confirmatory fits under the two-measure framework (inscription-mass only, per the cross-grid adjudication) may now proceed."
 ---
 
 # OSF Amendment 01 — Two-measure framework (epigraphic acts and epigraphic content)
