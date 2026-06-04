@@ -556,14 +556,16 @@ lockstep with lodgement; the lodged authority remains git tag
 5. **§3 line 61 / §4 line 334 / §6 lines 395–396 (recovery-grid binding
    criterion):** apply the §A5.5.1 metric correction — patch the flat-shape
    case with Wasserstein-1 (T_flat = 10 y), retain Pearson *r* ≥ 0.95 for
-   non-flat shapes, make the convergence precondition explicit, demote exact
-   α-coverage to an α-recovery diagnostic, and reframe the gate as a
-   recoverability map with a stated operating envelope (α ≤ 0.70). State the
-   grid-level pass rule as **headline B** (≥ 90 % of all in-envelope cells are
-   clean passes — converge AND pass the shape gate), with **diagnostic A**
-   (shape-pass among convergence-eligible cells) reported alongside; record the
-   realised outcome (**Grid A PASS / Grid B FAIL → mixture deconvolution under
-   inscription mass only**) and the flat-null convergence limitation. Update
+   non-flat shapes, make the convergence precondition explicit (R̂ < 1.01 and
+   bulk-ESS ≥ 400, with divergences handled benign-tolerantly per
+   Stan/Betancourt — not a zero-tolerance auto-fail), demote exact α-coverage to
+   a shape-conditioned α-recovery diagnostic (Bland–Altman limits of agreement),
+   and reframe the gate as a recoverability map with a stated operating envelope
+   (α ≤ 0.70). State the grid-level pass rule as **headline B** (≥ 90 % of all
+   in-envelope cells are clean passes — converge AND pass the shape gate), with
+   **diagnostic A** (shape-pass among convergence-eligible cells) reported
+   alongside; record the realised outcome (**Grid A PASS, B = A = 98.6 % /
+   Grid B FAIL → mixture deconvolution under inscription mass only**). Update
    both H2.1 rows in the §6 table accordingly.
 6. **§3 / H3b mechanism (Decision 34; §A5.7):** specify that subset SPAs are
    de-fogged by a **subset-specific** mixture fit (the model learns the subset's
