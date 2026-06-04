@@ -711,3 +711,22 @@ Branched + PR'd the migration, which Shawn corrected as over-ceremony for solo r
 ### Contextual assumptions
 
 The session spanned 2026-06-02 (resume, after the dependency-hygiene session) into 2026-06-03. The 91.9%-PASS preview used a bias-tolerance proxy for the α-calibration gate (conservative; the tolerance-coverage variant converges with it at large N) and the hybrid shape gate, computed from stored posteriors — no re-fit. Band-calibration + reachability fits ran on zbook under pymc 6.0.1 vs the grid's pymc-5.28 (model identical; calibration transfers — flagged). The amendment is drafted, not lodged — Stage-3 work stays gated. The reachability run is a `nohup` process: the zbook network drop did not kill it; results write to disk at completion and are safe once zbook is reachable. ~10 commits, all on `origin/main`.
+
+## 2026-06-03 → 2026-06-04 — reachability floor → Stage-3 adjudication → field-standard criterion → lodge-ready amendment
+
+**Reachability floor (the handoff's first action).** zbook had rebooted; the original small-N run was unrecoverable (no checkpointing — 4,189 in-memory fits lost). Added a resumable JSONL checkpoint to `reachability.py` (`a0458fa`), smoke-verified, re-ran on zbook (n_jobs=14, 4,200 fits, ~25 min). **Floor measured:** within α ≤ 0.70, worst-case **N ≈ 2,000**; as low as ~500 for easy (low-α, simple-shape) subsets; α = 0.70 partly unreached, α = 0.85 unreached. Wired into the significance note + Decision 34 (`5601b04`).
+
+**Stage-3 cross-grid adjudication.** Grid B (letter-mass) finished on sapphire (`GRID-B-END rc=0`, 0 failures). Updated the harness (`grid-summariser.py`, `compare-grids.py`) to the Decision-33 / §A5.5.1 corrected criterion alongside the lodged one (`4aa837b`, `1bf791f`). **Verdict: inscription PASS / letter FAIL → Stage 3 under inscription-mass only.** Grid B fails on convergence (no cell ≥ 0.90; R̂/ESS, not just divergences).
+
+**Field-standard criterion refinement (the session's pivot).** The corrected-criterion A-vs-B gap (91.9 % vs 98.5 %) traced to a zero-tolerance divergence gate. A literature scout (Stan/Betancourt) + direct re-score established the flat-null divergences are benign (Mann–Whitney p ≈ 0.36; all 24 cells pass R̂/ESS). Changed the gate to field-standard benign-tolerant (`fit.py`); **Grid A re-scores to B = A = 98.6 %**, flat-null limitation dissolved, backlog re-fit retired. α-diagnostic reframed to Bland–Altman limits of agreement, shape-conditioned. A finer-α run (sapphire) confirmed α ≤ 0.70 as the operating-envelope cut (gradual, shape-dependent decline above it).
+
+**Amendment (OSF Amendment 01).** Fully encoded the 2026-06-04 findings into §A5.5.1 + §A5.7; added a plain-language summary; reframed A7 as a fresh section-keyed upload (not in-place edits); stripped internal-tooling / statistician / mother–daughter references for external readers (`efbcd9c`, `270faea`). **Lodge-ready** (Shawn lodging it).
+
+**Grounding + bibliography.** Wrote the statistical-grounds memo for the four flagged decisions (data + SME framing + recommendations). Verified 12 sources (CrossRef/arXiv; corrected Modrák → 2025, Crema → 2020-online); staged to My Library > staging > `2026-06-04-bayesian-workflow-conventions-divergences-recovery` (12/12; script `524ea32`).
+
+**Infrastructure.** Both compute hosts (sapphire 72-behind, zbook 27-behind) caught up to `main` via verified `git reset --hard` preserving gitignored outputs. Corrected a stale 5-replicate Grid B exemplar to the real 100-replicate value.
+
+### Contextual assumptions
+- The amendment's 98.6 % is verified by direct re-score from stored per-replicate R̂/ESS (no re-fit). The committed harness still emits 91.9 % (old cell-summaries); making `grid-summariser`/`compare-grids` reproduce 98.6 % in-pipeline (re-aggregate cell-summaries under the new `fit.py` gate) is the deferred next step. Decision 33 / Obs 67 still cite 91.9 % as historical and want a 2026-06-04 annotation.
+- zbook's live memory split (32 GB VRAM / 94 GB RAM) contradicts the network-resources doc; possibly altered by the power-cycle — flagged for Shawn's BIOS check.
+- sapphire is now on pymc 6.0.1 (talk-prep venv); the grids ran on 5.28 — committed-artefact provenance unchanged.
