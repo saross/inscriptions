@@ -14,6 +14,40 @@ gate: "BINDING — Stage 3 confirmatory fits under the two-measure framework mus
 
 # OSF Amendment 01 — Two-measure framework (epigraphic acts and epigraphic content)
 
+## Plain-language summary
+
+Roman inscriptions are mostly dated by convention ("1st century AD") rather than
+to a year — a kind of dating **fog**. This project builds and validates a
+statistical tool that **de-fogs** a corpus: it recovers the real timeline of
+inscribing activity from the foggy dates, with honest uncertainty. In plain
+terms, this amendment does four things:
+
+1. **Two measures, not one.** We count epigraphic activity two ways — number of
+   *inscriptions* (acts of inscribing) and amount of *text* (letter mass) — and
+   treat them as measuring *different things* (how often vs how much), reported
+   side by side rather than one replacing the other.
+2. **We say exactly when the de-fogging tool can be trusted.** Tested on
+   simulated data with known answers, it works reliably for **inscription
+   counting** but **not for letter counting** (the letter totals are too lopsided
+   for the computation to behave). It needs a reasonably large group (roughly
+   **2,000+** inscriptions in hard cases, fewer in easy ones) and breaks down once
+   more than about **70 %** of the dating is fog. These boundaries are reported as
+   the tool's "spec sheet."
+3. **We corrected our own grading.** A first quality check was stricter than any
+   standard statistical practice — it failed test cases for tiny, *harmless*
+   computational hiccups. We verified the hiccups were harmless and relaxed the
+   rule to the field standard, and the tool's validated pass rate rose
+   accordingly (Grid A to ≈ 99 %). We also stopped treating the "fog fraction" as
+   a precise number: it is only roughly recoverable, so we report it as a bounded,
+   shape-dependent estimate used for coarse, directional statements only.
+4. **Subsets are de-fogged on their own terms.** Applied to a subset (a province,
+   an inscription category), the tool learns *that subset's* own cataloguing
+   conventions rather than assuming the empire-wide pattern.
+
+Every threshold and rule above is justified against published statistical
+practice (cited in §A5.5.1 and the provenance), so the choices rest on field
+standards, not our preferences. The technical statement follows.
+
 ## A1. Identification and trigger
 
 This is the first amendment to the project's preregistration (Open Science
