@@ -3,7 +3,7 @@ title: "OSF Amendment 01 — Two-measure framework (epigraphic acts and epigraph
 amendment-number: 01
 status: DRAFT for Shawn's review and lodgement (not yet lodged)
 date-drafted: 2026-05-29
-date-updated: "2026-06-03 (finalised §A5.5.1 against the COMPLETED two-grid adjudication — inscription PASS / letter FAIL; added §A5.7 subset-specific deconvolution (Decision 34) + the measured reachability floor; recorded the flat-null convergence limitation and the headline-B/diagnostic-A reporting). Prior: 2026-06-02 (added §A5.5.1)."
+date-updated: "2026-06-04 (encoded the field-standard convergence gate — benign-divergence-tolerant, R̂/ESS-based, replacing the zero-tolerance gate; re-scored Grid A to B = A = 98.6 %, the flat-null gap resolved as verified-benign divergences; α diagnostic → Bland–Altman limits of agreement, shape-conditioned; data + prior-art-scout grounding in planning/martin-review-statistical-grounds-2026-06-04.md). Prior: 2026-06-03 (finalised §A5.5.1 + added §A5.7 against the completed adjudication); 2026-06-02 (added §A5.5.1)."
 scope: "Two-measure framework (acts vs content) + recovery-grid binding-criterion clarification finalised against the completed two-grid adjudication (§A5.5.1) + subset-specific deconvolution and the measured reachability floor (§A5.7, Decision 34)"
 preregistration: "https://osf.io/uycs6/ (lodged 2026-05-20; embargoed)"
 lodged-version: "git tag osf-lodgement-2026-05-20 (https://github.com/saross/inscriptions/tree/osf-lodgement-2026-05-20)"
@@ -41,14 +41,13 @@ recovery-grid / Stage-3 gate.
 grids are now complete (Grid A 2026-05-27; Grid B 2026-06-03) and have been
 adjudicated under the corrected criterion: **Grid A (inscription) PASSes; Grid B
 (letter) FAILs** — no letter-mass cell clears the convergence precondition.
-§A5.5.1 is finalised here with those results (replacing the 2026-06-02 preview).
-Separately, a strategic decision on where the method's utility lies (Decision 34)
-pins **how a subset SPA is de-fogged** — by a *subset-specific* mixture fit, not
-by imposing the empire-wide convention shape — and a small-N reachability study
-(2026-06-03) measured the minimum subset size at which that subset-specific
-deconvolution recovers reliably. Both are pre-specified here as **§A5.7**, since
-they govern the same Stage-3 H3b mechanism this amendment otherwise leaves
-under-specified.
+§A5.5.1 is finalised here with those results. Separately, a strategic decision on 
+where the method's utility lies (Decision 34) pins **how a subset SPA is de-fogged** 
+— by a *subset-specific* mixture fit, not by imposing the empire-wide convention 
+shape — and a small-N reachability study (2026-06-03) measured the minimum subset 
+size at which that subset-specific deconvolution recovers reliably. Both are 
+pre-specified here as **§A5.7**, since they govern the same Stage-3 H3b mechanism 
+this amendment otherwise leaves under-specified.
 
 ## A2. Summary of the change
 
@@ -66,9 +65,9 @@ This amendment replaces that framing with a **two-measure framework**:
   field, and is unchanged by this amendment.
 - **Letter mass** measures **epigraphic content** (how much was inscribed).
   It is **promoted from an exploratory cross-check to a co-registered
-  parallel confirmatory measure** of a *different construct* — not a rival
-  operationalisation of the same construct, and not a replacement for
-  inscription count.
+  parallel confirmatory measure** of a *different construct* — neither a rival
+  operationalisation of the same construct, nor a replacement for inscription 
+  count.
 - The **delta between the two measures** (the content surplus or deficit per
   act) becomes a **pre-specified derived quantity**, reported descriptively
   as a second residual axis alongside the existing scaling residual.
@@ -102,10 +101,10 @@ operating boundary for the paper's core subset re-application case.
 Inscription count and letter mass are **not two ways of measuring the same
 thing**. A flat inscription count treats a long monumental dedication and a
 three-word funerary fragment as equivalent units; letter mass registers
-something of the quantity of information each carried. The lodged
-preregistration already states this disagreement with Hanson (2021), who
-identified total lettering as the methodologically desirable measure but
-rejected it as impractical for fragmentary material (Hanson 2021, p. 142).
+the quantity of information each carried. The lodged preregistration already 
+states this disagreement with Hanson (2021), who identified total lettering 
+as the methodologically desirable measure but rejected it as impractical for 
+fragmentary material (Hanson 2021, p. 142).
 
 What the lodged preregistration did **not** do is follow the disagreement to
 its conclusion. If the two measures track partially different constructs —
@@ -234,7 +233,8 @@ and reported descriptively:
 - **Status.** Exploratory and descriptive. **No pre-committed threshold and
   no confirmatory verdict** attach to the delta; it is a novel quantity and is
   reported as a map/descriptive characterisation and cross-tabulated against
-  the scaling residual. It does **not** trigger an OSF amendment.
+  the scaling residual. It does **not** trigger additional preregistration 
+  amendments.
 - **Subsumption.** The previously logged standalone "cumulative-totals Hanson
   negative-binomial experiment (inscription count and letter count)" (the
   project's tertiary backlog item 5) is **subsumed** into this two-measure
@@ -319,9 +319,22 @@ prior-art scout and an implementation review
 project's reachability-guide methodology), not a binary whole-grid pass/fail.
 Within the operating envelope:
 
-- **Precondition — convergence.** A cell is eligible only if ≥90% of its
-  replicates converge (max R̂ < 1.01; divergence count within the lodged
-  threshold). This makes the existing convergence requirement an explicit gate.
+- **Precondition — convergence.** A cell is eligible only if ≥ 90 % of its
+  replicates meet **R̂ < 1.01 and bulk-ESS ≥ 400** (the lodged convergence
+  thresholds; Vehtari et al. 2021). **Divergences are handled per field standard**
+  (Stan diagnostics guidance; Betancourt 2017), *not* as a per-replicate
+  zero-tolerance auto-fail: a few scattered post-warmup divergences are
+  investigated, not automatically rejected. A cell whose replicates carry
+  divergences remains eligible if those divergences are **benign** — low-rate and
+  not degrading recovery (the recovery of diverging replicates is statistically
+  indistinguishable from non-diverging ones) — and is failed only if they are
+  **clustered or step-size-persistent** (recovery-degrading). This replaces an
+  earlier zero-tolerance divergence gate (`n_divergences == 0` per replicate),
+  which the prior-art scout (2026-06-04) confirmed is stricter than any field
+  source endorses (no surveyed authority specifies a divergence-rate threshold;
+  the standard is contextual investigation). On Grid A the only divergent cells
+  are the flat null, and their divergences are verified benign (§"Flat-null
+  divergences are benign", below), so they pass the precondition.
 - **Per-cell shape gate — genuine-SPA (`p_gen`) shape recovery (hybrid).**
   posterior-median Pearson *r* ≥ 0.95 for **non-flat** genuine shapes
   (**unchanged from the lodged preregistration**); and, for the
@@ -337,11 +350,12 @@ Within the operating envelope:
   all in-envelope cells are clean passes** — i.e. they both meet the convergence
   precondition AND pass the shape gate. Counting non-converging cells as
   failures (rather than dropping them) is the conservative choice and keeps any
-  convergence pathology visible in the headline figure. A **diagnostic figure
+  genuine convergence pathology visible in the headline. A **diagnostic figure
   (A)** — the shape-pass rate among the convergence-*eligible* in-envelope cells
-  only — is reported alongside; B and A coincide except where convergence
-  failures cluster (on Grid A, entirely in the flat null — see the limitation
-  below).
+  only — is reported alongside. Under the field-standard convergence gate above,
+  B and A **coincide** on Grid A (no benign-divergence exclusions remain); they
+  would diverge only for a unit with genuinely non-converging (R̂/ESS-failing)
+  in-envelope cells.
 - **Operating envelope.** The binding criterion is evaluated where the
   deconvolution is identifiable: empirically **α ≤ 0.70** across all shapes and
   sample sizes. Cells with α ≥ 0.95 (≤5% genuine signal; near-unidentifiable;
@@ -350,54 +364,61 @@ Within the operating envelope:
   template-dominated sub-periods), genuine-signal claims for those regimes are
   flagged as degraded-recovery, not reported as validated.
 - **α (mixing weight) — diagnostic, not gate.** α recovery is reported as a
-  **quantified diagnostic** (signed bias and its distribution), not a binding
-  gate. Rationale: (a) exact CI coverage of a mixing weight is not field-standard
-  and collapses at large *N* under negligible bias; (b) α is recoverable only to
-  a practical tolerance (operating-envelope 90th-percentile |bias| ≈ **0.18**),
-  which supports the coarse, directional convention-fraction statements the paper
-  makes but not a tight gate. **All α-derived claims in the paper are hedged to
-  this demonstrated recovery precision.**
+  **quantified diagnostic**, not a binding gate. Rationale: (a) exact CI coverage
+  of a mixing weight is not field-standard and collapses at large *N* under
+  negligible bias; (b) the recovery error is *structural* — it does **not** shrink
+  with *N*. Following method-comparison practice (Bland–Altman limits of
+  agreement; Kruschke ROPE), recovery precision is reported as **95 % limits of
+  agreement ≈ [−0.22, +0.17]** (mean signed bias −0.02 — a slight under-estimate),
+  and is **conditioned on the data-generating shape**, since it varies ≈ 4× by
+  shape complexity: 90th-percentile |bias| ≈ **0.07–0.11** for smooth/flat shapes,
+  rising to **≈ 0.18–0.27** for multimodal shapes (bimodal, regnal_cluster). **All
+  α-derived claims in the paper are hedged to this demonstrated, shape-conditioned
+  recovery precision** — coarse directional convention-fraction statements are
+  supported; a tight α dial is not.
 
 **Finalised adjudication (2026-06-03; transparency).** Both grids' stored
 outputs were re-scored under the corrected criterion (no re-fitting — W1, α
 intervals, and convergence are stored per cell). Each grid carries 450 cells
 (3 tiers × 5 α × 6 shapes × 5 N); the operating envelope (α ≤ 0.70) holds 360.
 
-- **Grid A — inscription mass: PASS.** Headline **B = 91.9 %** (331/360
-  in-envelope cells are clean passes); diagnostic **A = 98.5 %** (331/336
-  shape-pass among the 336 convergence-eligible in-envelope cells). Under the
-  *lodged* criterion the same grid (whole-grid both-pass) returned only 42.7 %;
-  the difference is the §A5.5.1 metric correction and operating-envelope reframe
-  re-scoring the **same** stored fits — not any change to the fits.
+- **Grid A — inscription mass: PASS.** Headline **B = 98.6 %** (355/360
+  in-envelope cells are clean passes), which **equals diagnostic A**: under the
+  field-standard convergence gate all 360 in-envelope cells are eligible, and the
+  only 5 failures are non-flat cells missing the Pearson gate at α = 0.70. Under
+  the *lodged* criterion the same grid (whole-grid both-pass) returned only
+  42.7 %; the difference is the §A5.5.1 metric correction and operating-envelope
+  reframe re-scoring the **same** stored fits — not any change to the fits.
 - **Grid B — letter mass: FAIL.** Headline **B = 0.0 %**: **no** in-envelope
-  cell reaches the 90 % convergence precondition (the maximum cell convergence
-  rate is 0.80; divergences run to ~13,000 per cell), so diagnostic A is
-  undefined (no eligible cells). This is a genuine sampling failure: letter mass
-  is a *compound sum* of heavy-tailed per-inscription letter counts whose
-  likelihood geometry the NUTS sampler cannot navigate reliably. It empirically
-  confirms the analytic finding that letter-mass temporal detection is
-  unreachable corpus-wide (§A5.2), and is consistent with inscription count
-  being the primary unit of analysis.
+  cell reaches the 90 % convergence precondition — and crucially this holds **even
+  under the field-standard gate** (dropping the divergence requirement recovers
+  **zero** letter cells), so letter mass fails on **R̂/ESS**, not merely on
+  divergences. It is a genuine sampling failure: letter mass is a *compound sum*
+  of heavy-tailed per-inscription letter counts (divergences run to ~13,000 per
+  cell; median recovered Pearson *r* ≈ 0.76) whose likelihood geometry the NUTS
+  sampler cannot navigate reliably. It empirically confirms the analytic finding
+  that letter-mass temporal detection is unreachable corpus-wide (§A5.2), and is
+  consistent with inscription count being the primary unit of analysis.
 
 **Outcome branch: PASS / FAIL** → the temporal mixture deconvolution proceeds
 under **inscription mass only**; letter mass is reported as a documented
 limitation (its cross-sectional H3a confirmatory does not use the mixture and is
 unaffected — §A5.5).
 
-**Flat-null convergence limitation (the B ↔ A gap on Grid A).** The entire gap
-between Grid A's headline B (91.9 %) and diagnostic A (98.5 %) is **24
-in-envelope cells, all `flat_baseline`**, that fail the convergence precondition.
-They fail on a tiny fraction of divergent draws (≈ 0.002–0.009 % of draws; the
-gate is zero-tolerance on divergences) while **recovering flatness correctly**
-(W1 ≤ 10 y). Under a flat genuine SPA the genuine-signal latent is
-near-unidentified, so the (already non-centred) Gaussian-random-walk geometry
-produces a few divergences even though the recovered curve is right. We report B
-as the conservative headline (these cells count as failures) and A as the
-diagnostic (recovery quality where the fit is trustworthy); both clear the 90 %
-bar, so the verdict is robust to the choice. A diagnostic re-fit to resolve the
-flat-null sampling geometry is logged as a deferred refinement
-(`planning/backlog-2026-05-03.md`, §Phase-2 refinements); it would collapse B
-and A but does not affect the verdict.
+**Flat-null divergences are benign (resolved 2026-06-04, not a limitation).** An
+earlier draft reported a B↔A gap on Grid A from 24 flat-null cells failing a
+zero-tolerance divergence gate. That gate is replaced by the field-standard
+convergence treatment above, and the underlying question is settled empirically.
+Across the 6,000 in-envelope flat replicates, 10.2 % carry ≥ 1 divergence (median
+1; maximum rate 0.36 % of draws); these diverging replicates recover the flat
+shape **no worse** than the non-diverging ones (median W1 0.59 vs 0.55; **99.7 %**
+vs 97.8 % within the W1 ≤ 10 y gate; Mann–Whitney *p* ≈ 0.36) and all pass
+R̂/ESS. By the Stan/Betancourt spatial-and-recovery criterion these are scattered
+false-positive divergences, not pathological ones, so the cells are eligible and
+Grid A's B and A coincide at **98.6 %**. (Mechanism: under a flat genuine SPA the
+GRW genuine-signal latent is near-unidentified even after non-centred
+reparameterisation, producing occasional benign divergences; documented as a
+known, harmless model property — no re-fit is required.)
 
 **Metric-correction-driven, not verdict-driven (the integrity checks a reviewer
 can verify).** Mirroring §A4:
@@ -414,12 +435,16 @@ can verify).** Mirroring §A4:
    known-good sub-grid **before** the headline two-grid verdict; the failing
    scenarios (full-grid; α-gated) are reported alongside the passing one.
 
-**Statistician sign-off** (Martin, at draft): flagged for a second opinion —
-(a) the exact operationalisation of the α diagnostic; (b) the operating-envelope
-cut (α ≤ 0.70); (c) the headline-B (clean-pass over all in-envelope cells) versus
-diagnostic-A (shape-pass among convergent cells) reporting choice and the
-zero-tolerance divergence gate behind the flat-null limitation; and (d) the
-reading that the recovery-grid gate bears only on mixture-dependent
+**Statistician sign-off** (Martin, at draft). Four choices — each now grounded in
+data + a 2026-06-04 prior-art scout of Bayesian-workflow practice, recorded in
+`planning/martin-review-statistical-grounds-2026-06-04.md` — are flagged for his
+confirmation: (a) the α-diagnostic operationalisation (Bland–Altman limits of
+agreement, shape-conditioned); (b) the operating-envelope cut (α ≤ 0.70 — the last
+α clearing the 90 % shape bar, with a finer-α run locating the cliff between 0.70
+and 0.85); (c) the **field-standard benign-divergence convergence gate** that
+replaces the zero-tolerance gate (R̂/ESS + a scattered-and-recovery-unaffected
+benign check, per Stan/Betancourt; the flat-null divergences are verified benign);
+and (d) the reading that the recovery-grid gate bears only on mixture-dependent
 (temporal-deconvolution) analyses, so Grid B's failure does not touch the
 letter-mass cross-sectional H3a confirmatory.
 
@@ -570,8 +595,12 @@ lockstep with lodgement; the lodged authority remains git tag
   work (Crema 2022). **Finalised against the completed two-grid adjudication
   2026-06-03** (harness updated to compute the corrected criterion alongside the
   lodged one, with a built-in regression check reproducing the Grid A figures
-  B 91.9 % / A 98.5 %; cross-grid adjudication committed `1bf791f`). The
-  flat-null sampling limitation and its deferred re-fit are logged at
+  B 91.9 % / A 98.5 % under the then-current zero-tolerance gate — superseded
+  2026-06-04 by the field-standard gate, re-scoring Grid A to B = A = 98.6 %
+  (grounding: `planning/martin-review-statistical-grounds-2026-06-04.md`);
+  cross-grid adjudication committed `1bf791f`). The
+  earlier flat-null limitation is **resolved** (divergences verified benign; the
+  re-fit is retired); its history is logged at
   `planning/backlog-2026-05-03.md` (§Phase-2 refinements).
 - **Subset deconvolution + reachability floor (§A5.7; Decision 34):** the
   subset-specific-fit decision and the measured floor are recorded in the
