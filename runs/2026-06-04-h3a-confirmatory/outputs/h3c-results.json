@@ -1,0 +1,50 @@
+{
+  "confirmatory_rule": "Moran's I > 0 at p < 0.05 in >= 2 of {5, 8, 10}",
+  "n_k_passing": 0,
+  "verdict": "not-supported",
+  "interpretive_case_k8": "confirmatory rule does NOT pass (<2 of {5,8,10} significant)",
+  "primary_k": 8,
+  "n_permutations": 999,
+  "n_posterior_I_draws": 2000,
+  "per_k": {
+    "5": {
+      "moran_I_posterior_mean_resid": 0.00968838875255172,
+      "p_sim_one_sided": 0.249,
+      "z_sim": 0.5884429658189618,
+      "expected_I": -0.0009587727708533077,
+      "passes_rule": false,
+      "posterior_I_2.5pct": 0.012211438979853528,
+      "posterior_I_50pct": 0.02419046147724148,
+      "posterior_I_97.5pct": 0.038883200306984854,
+      "posterior_frac_above_0": 1.0
+    },
+    "8": {
+      "moran_I_posterior_mean_resid": -0.0020159566669992615,
+      "p_sim_one_sided": 0.499,
+      "z_sim": -0.08421519525466707,
+      "expected_I": -0.0009587727708533077,
+      "passes_rule": false,
+      "posterior_I_2.5pct": 0.0007566230203878114,
+      "posterior_I_50pct": 0.011494449426079294,
+      "posterior_I_97.5pct": 0.024436612422880182,
+      "posterior_frac_above_0": 0.985
+    },
+    "10": {
+      "moran_I_posterior_mean_resid": -0.004491140569815507,
+      "p_sim_one_sided": 0.426,
+      "z_sim": -0.2684921698020275,
+      "expected_I": -0.0009587727708533077,
+      "passes_rule": false,
+      "posterior_I_2.5pct": -0.0017906954518092815,
+      "posterior_I_50pct": 0.008430805187631852,
+      "posterior_I_97.5pct": 0.021323379024793174,
+      "posterior_frac_above_0": 0.9455
+    }
+  },
+  "hanson_2021_reference": {
+    "residual_moran_I": 0.046,
+    "z": 4.571,
+    "p": "<0.0001",
+    "raw_count_moran_I": -0.006
+  }
+}

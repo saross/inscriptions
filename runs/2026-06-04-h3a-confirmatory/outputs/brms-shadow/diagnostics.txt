@@ -1,0 +1,12 @@
+H3a brms Mundlak shadow — diagnostics
+Date: 2026-06-04 12:47:02.447114
+Backend: cmdstanr
+N rows: 1044
+Max Rhat: 1.001308
+Min ESS_bulk: 1853.474
+Divergences: 0
+b_Intercept (median): 6.574622
+b_log_pop_within (median): 0.5868506
+b_log_pop_prov_mean (median): -0.3754315
+f_within (median): 0.2987138
+f_within 95% CI: [0.2375907, 0.3659524]
