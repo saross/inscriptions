@@ -79,7 +79,8 @@ CELL_PASS_FRAC = 0.90
 DEFAULT_JOBS = min(14, max(1, (os.cpu_count() or 8) - 4))
 
 
-def _build_cells(grid_code: str, design_json: str) -> list[dict]:
+def _build_cells(grid_code: str, design_json: str,
+                 alphas: list[float] = ALPHAS, ns: list[int] = NS) -> list[dict]:
     """Construct cells at the study's (shape × α × N) from the design specs.
 
     Pulls the shape spec dicts and the pilot_proxy tier vector from the grid's
@@ -106,8 +107,8 @@ def _build_cells(grid_code: str, design_json: str) -> list[dict]:
 
     cells, idx = [], 0
     for shape in SHAPES:
-        for alpha in ALPHAS:
-            for n in NS:
+        for alpha in alphas:
+            for n in ns:
                 cells.append({
                     "cell_index": idx,
                     "cell_id": f"shape={shape}_alpha={alpha}_tier={TIER_NAME}_N={n}",
@@ -211,6 +212,10 @@ def _parse_args() -> argparse.Namespace:
     p.add_argument("--n-reps", type=int, default=50)
     p.add_argument("--n-jobs", type=int, default=DEFAULT_JOBS,
                    help="parallel fits; default leaves headroom for ssh/system.")
+    p.add_argument("--alphas", type=str, default=None,
+                   help="comma-separated alpha values; overrides the default grid.")
+    p.add_argument("--ns", type=str, default=None,
+                   help="comma-separated N values; overrides the default grid.")
     p.add_argument("--smoke", action="store_true")
     return p.parse_args()
 
@@ -218,7 +223,10 @@ def _parse_args() -> argparse.Namespace:
 def main() -> int:
     args = _parse_args()
     grid_code = str(args.grid_code.resolve())
-    cells = _build_cells(grid_code, str(args.design_json.resolve()))
+    alphas = ([float(a) for a in args.alphas.split(",")] if args.alphas else ALPHAS)
+    ns = ([int(n) for n in args.ns.split(",")] if args.ns else NS)
+    cells = _build_cells(grid_code, str(args.design_json.resolve()),
+                         alphas=alphas, ns=ns)
 
     args.output_dir.mkdir(parents=True, exist_ok=True)
     scratch = args.output_dir / "scratch"
