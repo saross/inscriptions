@@ -553,10 +553,13 @@ a new gate.
   operating envelope. The non-flat shape criterion (Pearson *r* ≥ 0.95) is
   unchanged.
 
-## A7. Changes by preregistration section (a fresh upload, not in-place edits)
+## A7. Changes by preregistration section (a standalone addition, not in-place edits)
 
-The lodged preregistration cannot be edited in place; this amendment is uploaded
-to OSF as a **standalone addition**. The list below keys the amendment's changes
+The lodged preregistration cannot be edited in place; this amendment is lodged to OSF as a **standalone addition**.
+Because OSF does not permit new file uploads to a submitted registration or its
+updates, the amendment text is provided in the registration update's
+justification field and linked, version-pinned, at the git tag in §A8, rather
+than attached as a file. The list below keys the amendment's changes
 to the lodged preregistration's sections, for the reader's cross-reference — it
 is **not** a set of in-place edits to the original. (The project's living working
 copy is maintained separately; the lodged authority remains git tag
