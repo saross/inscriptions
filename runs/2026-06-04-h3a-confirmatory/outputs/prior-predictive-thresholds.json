@@ -1,0 +1,18 @@
+{
+  "status": "OK",
+  "s_pp": 1000,
+  "random_seed": 20260604,
+  "n_cities": 1044,
+  "n_provinces": 56,
+  "count_cap_p99": 1884325825.6200001,
+  "tail_count_bound": 134563096060.91183,
+  "ppc_mean_ref": 762346212.3072816,
+  "prior_predictive_median_per_city": 1.0,
+  "prior_predictive_max": 6057311728916.0,
+  "sanity_gate": [
+    0.1,
+    10000.0
+  ],
+  "sanity_pass": true,
+  "derivation": "count_cap_p99 = 99th pct of prior-predictive per-city counts across all draws x cities; tail_count_bound = 99.9th pct; predictor-only (no observed y); committed before posterior fit."
+}

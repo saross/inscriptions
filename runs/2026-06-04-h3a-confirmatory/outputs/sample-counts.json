@@ -1,0 +1,21 @@
+{
+  "filtered_rows": 180609,
+  "row_targets_observed": {
+    "total_filtered": 180609,
+    "rome_only": 65435,
+    "rome_excluded": 115174,
+    "hanson_city_assigned_filtered": 140575
+  },
+  "primary_n_cities": 1044,
+  "primary_n_provinces": 56,
+  "with_zeros_n_cities": 1044,
+  "with_zeros_n_structural_zeros": 0,
+  "latin_n_cities": 817,
+  "latin_n_provinces": 39,
+  "primary_count_summary": {
+    "min": 1,
+    "median": 15.0,
+    "mean": 71.97318007662835,
+    "max": 4508
+  }
+}
