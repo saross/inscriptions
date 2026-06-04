@@ -3081,6 +3081,21 @@ choices were made this session after reviewing the evidence. Informed by the
 Grid A adjudication, a closed-loop prior-art scout, and a `/review-implementation`
 pass.
 
+> **Update 2026-06-04 — the 91.9% Grid A figure below is historical (now 98.6%).**
+> The convergence precondition was sharpened to a *field-standard* gate after the
+> 2026-06-02 preview reported below. The 91.9% used a zero-tolerance divergence
+> gate later found non-standard (Stan diagnostics guidance; Betancourt 2017;
+> Vehtari et al. 2021 — no source endorses a divergence-rate threshold; see
+> working-notes Obs 70). Under the R̂ / bulk-ESS-only gate the 24 excluded
+> `flat_baseline` cells all converge, so Grid A headline **B = diagnostic A =
+> 98.6% (355/360)** within the operating envelope (the 5 non-passers are
+> `bimodal_α=0.70_N=2000` genuine-shape failures). The harness was corrected the
+> same day to re-derive convergence from the stored per-replicate R̂ / bulk-ESS
+> (no re-fit) and now reproduces 98.6% in-pipeline with a passing regression check
+> (commits `4f96e47` code, `0a15667` re-aggregated artefacts). The gate change is
+> encoded in OSF Amendment 01 §A5.5.1 + §A5.7; cross-grid verdict (inscription
+> PASS / letter FAIL → Stage 3 inscription-mass only) is unaffected.
+
 ### Context
 
 Adjudicating Grid A (inscription mass) of the two-unit recovery simulation
@@ -3110,7 +3125,9 @@ the prior), so ROPE/tolerance is the right large-N-robust α check, not SBC;
 (patch only the undefined flat case) is cleaner. A preview (recomputed from
 stored posteriors, no re-fit) showed α is recoverable only to ≈±0.18 (90th-pct
 |bias| in the operating envelope) — so gating α honestly fails; gating on p_gen
-shape within the operating envelope passes at 91.9%.
+shape within the operating envelope passes at 91.9% (this 2026-06-02 preview
+figure is superseded — now 98.6% under the field-standard gate; see the
+2026-06-04 update note above).
 
 ### Decision
 
