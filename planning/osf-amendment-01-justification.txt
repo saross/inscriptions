@@ -1,0 +1,58 @@
+OSF JUSTIFICATION — Amendment 01: Two-measure framework (epigraphic acts and epigraphic content)
+
+[Paste this text into the OSF "justification" field. Plain text — the field does
+not render Markdown. Replace "2026-06-XX" / "<lodgement-date>" at lodgement.
+Full detail is in the attached amendment (PDF); the Markdown source is attached
+as a second file for machine and LLM readability.]
+
+------------------------------------------------------------------------------
+
+This is the first amendment to the project's preregistration (osf.io/uycs6,
+lodged 2026-05-20, embargoed). It is filed under the preregistration's own
+contingency rule, which requires substantive post-lodgement methodology changes
+to be lodged as an OSF amendment before implementation. It is a binding gate:
+Stage 3 confirmatory fits under the revised framework do not run until this
+amendment is lodged.
+
+The amendment makes three connected changes.
+
+(1) Two-measure framework. The lodged protocol treated letter count as a single
+exploratory cross-check on inscription count. This amendment promotes letter mass
+(epigraphic content — how much was inscribed) to a co-registered parallel
+confirmatory measure for H3a, alongside inscription count (epigraphic acts — how
+often a community inscribed), which remains the primary-by-convention measure and
+is unchanged. Because the two units operationalise different constructs, each
+forms its own confirmatory family with no cross-unit multiplicity correction, and
+their per-act difference (the content residual) is added as a pre-specified
+descriptive derived quantity. The promotion is construct-driven, not
+result-driven: the confirmatory decision rules for letter mass are identical to
+the pre-existing inscription-count rules, and no rule is tuned to any observed
+letter-mass result.
+
+(2) Recovery-grid binding-criterion clarification. Adjudicating the completed
+recovery simulation exposed two mathematical/asymptotic defects in the lodged
+validation criterion as written: Pearson r is undefined for the flat genuine
+shape (correlation against a constant target), and exact credible-interval
+coverage of the mixing weight collapses at large N for reasons unrelated to
+recovery. The criterion is corrected — the flat case is patched with
+Wasserstein-1, Pearson r >= 0.95 is retained for all non-flat shapes, the mixing
+weight is reported as a shape-conditioned diagnostic rather than a gate, and the
+grid is reported as a recoverability map with a stated operating envelope
+(alpha <= 0.70). Under the corrected criterion the inscription-mass grid passes
+and the letter-mass grid fails its convergence precondition, so the temporal
+mixture deconvolution is validated for inscription mass only. This is anticipated
+by change (1): the letter-mass confirmatory family was already bounded to the
+cross-sectional H3a, which does not use the temporal deconvolution, so the
+letter-mass grid's failure reinforces the existing scope rather than altering it.
+
+(3) Subset deconvolution mechanism. The amendment pre-specifies that subset
+production timelines are de-fogged by a subset-specific mixture fit — the model
+learns each subset's own cataloguing-convention mix from the subset's own data —
+rather than by imposing the empire-wide convention shape on every subset. Subset
+deconvolutions are gated by a measured reachability floor (worst-case N of about
+2,000 inscriptions within the operating envelope) in addition to the existing
+detection-power thresholds.
+
+Full detail, rationale, the integrity checks a reviewer can verify, and the
+provenance trail are in the attached amendment document (PDF). The Markdown source
+of the amendment is also attached for machine and LLM readability.

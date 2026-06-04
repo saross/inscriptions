@@ -3,7 +3,7 @@ title: "OSF Amendment 01 — Two-measure framework (epigraphic acts and epigraph
 amendment-number: 01
 status: DRAFT for Shawn's review and lodgement (not yet lodged)
 date-drafted: 2026-05-29
-date-updated: "2026-06-04 (encoded the field-standard convergence gate — benign-divergence-tolerant, R̂/ESS-based, replacing the zero-tolerance gate; re-scored Grid A to B = A = 98.6 %, the flat-null gap resolved as verified-benign divergences; α diagnostic → Bland–Altman limits of agreement, shape-conditioned; checked against published Bayesian-workflow practice). Prior: 2026-06-03 (finalised §A5.5.1 + added §A5.7 against the completed adjudication); 2026-06-02 (added §A5.5.1)."
+date-updated: "2026-06-04 (encoded the field-standard convergence gate — benign-divergence-tolerant, R̂/ESS-based, replacing the zero-tolerance gate; re-scored Grid A to B = A = 98.6 %, the flat-null gap resolved as verified-benign divergences; α diagnostic → Bland–Altman limits of agreement, shape-conditioned; checked against published Bayesian-workflow practice; clarified the §A8 repository-state provenance line — the git lodgement tag is the reproducibility anchor, distinct from the OSF-assigned identifier). Prior: 2026-06-03 (finalised §A5.5.1 + added §A5.7 against the completed adjudication); 2026-06-02 (added §A5.5.1)."
 scope: "Two-measure framework (acts vs content) + recovery-grid binding-criterion clarification finalised against the completed two-grid adjudication (§A5.5.1) + subset-specific deconvolution and the measured reachability floor (§A5.7, Decision 34)"
 preregistration: "https://osf.io/uycs6/ (lodged 2026-05-20; embargoed)"
 lodged-version: "git tag osf-lodgement-2026-05-20 (https://github.com/saross/inscriptions/tree/osf-lodgement-2026-05-20)"
@@ -634,5 +634,9 @@ copy is maintained separately; the lodged authority remains git tag
   decision log (Decision 34) and `runs/2026-06-03-small-n-reachability/`
   (4,200-fit study; floor + map committed `5601b04`); the paper-facing rationale
   is `planning/paper-significance-and-applications-2026-06-03.md`.
-- **Repository state:** edits to be applied on `main`; a new lodgement tag will
-  be cut when the amendment is lodged to OSF.
+- **Repository state:** the amendment text and its supporting artefacts are
+  committed on `main`; the lodged repository state is anchored by a new git tag,
+  `osf-amendment-01-<lodgement-date>` (cut at lodgement, mirroring
+  `osf-lodgement-2026-05-20`). This git tag is the project's own reproducibility
+  anchor and is **distinct from** the OSF-assigned registration/amendment
+  identifier, which OSF generates on approval.
