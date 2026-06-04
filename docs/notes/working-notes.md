@@ -2029,3 +2029,47 @@ The compound-sum likelihood (sum of heavy-tailed per-inscription counts) is stru
 ### Findable later
 
 `letter-mass`, `grid-b`, `rhat`, `ess`, `bulk-ess`, `convergence-failure`, `nuts-sampling`, `hmc-divergences`, `compound-sum`, `heavy-tailed`, `letter-count`, `compound-likelihood`, `temporal-detection`, `unreachable`, `inscription-mass-only`, `decision-34`, `h3a-unaffected`, `cross-sectional`, `zero-cells`, `obs-61`, `obs-67`, `obs-70`, `amendment-01`, `a5-2`, `a5-5`, `0-0-percent`, `adjudication`, `1bf791f`
+
+## Obs 73 — 2026-06-04 [METHODOLOGY / INTERPRETATION]: why the `p_gen` band's coverage falls with N — GRW-prior misspecification compounding posterior concentration, not a tunable N
+
+This Obs deepens Obs 68 (which recorded the band-overconfidence limitation) by giving the mechanism, and corrects a natural misreading that there is an "ideal N" at which the calibration problem goes away. The diagnostic is the same 12-cell × 30-rep band-calibration run (`runs/2026-06-02-recovery-utility-check/`); the new reading is of what the per-shape split at matched N reveals.
+
+Two effects of growing N act independently on the recovered `p_gen` 95% credible band.
+
+**Effect 1 — the band narrows universally.** Posterior concentration (Bernstein–von Mises) shrinks the band regardless of signal shape. At α = 0.3, moving from N = 2,000 to N = 50,000 reduces `band_width` approximately three-fold for every shape tested:
+
+| shape | N=2,000 band_width | N=50,000 band_width | ratio |
+|---|---|---|---|
+| smooth_growth | 0.0083 | 0.0028 | ~3× |
+| regnal_cluster | 0.0115 | 0.0032 | ~3.6× |
+| rise_and_fall | 0.0077 | 0.0027 | ~2.9× |
+
+This is the same mechanism that demoted α from a binding gate to a diagnostic (Obs 67 / Decision 33): with enough data the posterior becomes very tight — and tight is not the same as correct.
+
+**Effect 2 — the band's centre is biased for sharp features, and that bias does not shrink with N.** The Gaussian-random-walk (GRW) smoothness prior structurally cannot represent a sharp regnal spike; the posterior median sits on a smeared version of the truth. That smearing is a property of the model class, not of sample size, so it does not reduce as N grows.
+
+Combining the two effects: the standard deviation of the posterior shrinks (effect 1) while the bias in its centre stays fixed (effect 2). The bias-to-SD ratio therefore grows with N; eventually the true peak sits outside the now-narrow band and coverage collapses. The band becomes more confident about a slightly wrong answer.
+
+The decisive evidence that this is prior misspecification rather than pure posterior concentration is the per-shape split at α = 0.3 (matched N, matched ~3× band-narrowing):
+
+| shape | N=2,000 cov95 | N=50,000 cov95 | verdict |
+|---|---|---|---|
+| smooth_growth | 0.998 | 0.990 | holds |
+| rise_and_fall | 0.769 | 0.545 | collapses |
+| regnal_cluster | 0.894 | 0.230 | collapses |
+
+If the degradation were pure posterior concentration, all shapes would degrade together. Instead, only the shapes the GRW prior cannot represent lose coverage — smooth signals hold near-nominal coverage even at N = 50,000, while regnal_cluster reaches 0.230 at the same N. The Obs 68 means (≈ 0.90 → ≈ 0.67 across the six shape × α cells) are averages over this heterogeneous picture; regnal_cluster at 0.230 is the worst single case.
+
+**This is a failure of the uncertainty band, not the point estimate.** The posterior median still passes the r ≥ 0.95 shape gate (peak in the right place). Honest caveat: "median trustworthy" means shape-trustworthy (timeline correlation); the smoothing prior does slightly attenuate the sharpest peak amplitudes even in the median, so a claim depending on a peak's exact height (not its timing or trajectory) warrants caution for the point estimate too.
+
+**N is not a tunable optimum.** The small-N and large-N problems are different failure modes on different quantities. Small N is a reachability/power problem: the model cannot recover the signal at all, but the bands are honestly wide (Obs 71; worst-case floor N* ≈ 2,000 within the §5 operating envelope). Large N is a calibration problem: the point estimate is excellent but the band is overconfident for peaked signals. These live on different axes — "can I detect it?" vs "is my stated uncertainty honest?" — so there is no N at which both are simultaneously perfect. And N is not a dial: it is however many inscriptions a city or subset actually has. N = 2,000 appears in both studies because it is the smallest grid value tested for band calibration, not because it is optimal.
+
+The upshot (which is encoded in the OSF Amendment 01 limitation note): report the recovered median timeline (robust across N, the gated quantity); where the genuine signal is sharply peaked — the real corpus has strong regnal clustering (Obs 69) — widen or caveat the band rather than trusting its stated width; do not engineer N downward to improve calibration. Deferred fix: a roughness-tolerant `p_gen` prior (backlog).
+
+### Related observations and artefacts
+
+**Obs 68** (the band-overconfidence limitation this Obs explains the mechanism of): recorded the calibration failure and logged it as a limitation; this Obs supplies the causal decomposition into bias and variance components. **Obs 67 + Decision 33** (the same Bernstein–von Mises mechanism that demoted α from binding gate to diagnostic): effect 1 above is the α-demotion mechanism applied to band width rather than coverage. **Obs 69** (the real corpus has sharp regnal clustering): makes this band limitation materially relevant — it is not a theoretical edge case. **Obs 71** (small-N reachability floor): the complementary failure mode on the other axis; together Obs 71 and Obs 73 define the two-sided problem that rules out N as a tuning lever. **Artefacts**: `runs/2026-06-02-recovery-utility-check/outputs/band-calibration-by-cell.csv`; `runs/2026-06-02-recovery-utility-check/code/band-calibration.py`.
+
+### Findable later
+
+`band-calibration`, `coverage-vs-n`, `posterior-concentration`, `bernstein-von-mises`, `model-misspecification`, `grw-prior`, `smoothness-prior`, `peaked-signal`, `regnal-cluster`, `bias-variance`, `band-width`, `point-vs-interval`, `median-vs-band`, `n-not-a-dial`, `reachability-vs-calibration`, `roughness-prior`, `large-n`, `alpha-demotion`, `obs-68-deepens`, `obs-67`, `obs-69`, `obs-71`, `smooth-growth`, `rise-and-fall`, `cov95`, `0-230`, `0-998`, `bias-to-sd-ratio`
