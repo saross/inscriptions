@@ -57,11 +57,24 @@ import h3a_common as H
 warnings.filterwarnings("ignore", category=FutureWarning)
 warnings.filterwarnings("ignore", category=UserWarning)
 
-# Sampling settings (prereg §4 / spec §4 step 2). tune raised to 3,000.
-N_TUNE = 3_000
-N_DRAW = 2_000
+# Sampling settings (prereg §4 / spec §4 step 2).
+#
+# The spec's starting point was tune=3,000 / draws=2,000 / target_accept=0.95.
+# At those settings the global intercept alpha_0 (and, marginally, the
+# between-province slope beta_between) landed at R-hat = 1.0100 -- exactly AT
+# the strict prereg gate (< 1.01), which arviz rounds to 1.01 and the gate
+# therefore fails. This is the known slow-mixing of the global mean against
+# the 56 province random intercepts in a hierarchical model (already mitigated
+# by the non-centred parameterisation). Per the spec ("if marginal, raise
+# tune/investigate; HALT if unmet -- do NOT relax the gate"), the fix is to
+# spend MORE warmup + draws, NOT to loosen the gate: tune 3,000 -> 6,000,
+# draws 2,000 -> 3,000, target_accept 0.95 -> 0.97. At these settings the
+# precise max R-hat is 1.00 (clears < 1.01 unambiguously), min ESS-bulk ~1,660,
+# 0 divergences. The gate is met by better sampling, not by weakening it.
+N_TUNE = 6_000
+N_DRAW = 3_000
 N_CHAINS = 4
-TARGET_ACCEPT = 0.95
+TARGET_ACCEPT = 0.97
 RANDOM_SEED = 20_260_604  # confirmatory-run seed
 
 # Convergence gates (prereg §4) --- HARD-STOP if unmet.
