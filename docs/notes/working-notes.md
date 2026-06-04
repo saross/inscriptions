@@ -1914,3 +1914,116 @@ Separately, **narrow-dating is strongly correlated with inscription type** (veri
 ### Findable later
 
 `convention-fraction`, `operating-envelope`, `real-corpus`, `late-corpus`, `degraded-recovery`, `aoristic`, `family-classifier`, `f1-f3`, `type-skew`, `epitaph`, `selection-bias`, `calibration-cohort`, `post-stratification`, `throw-away-the-slabs`, `discard-vs-decompose`, `p-conv`
+
+## Obs 70 — 2026-06-04 [METHODOLOGY / CORRECTION]: the flat-null convergence "limitation" was an artefact of the zero-tolerance divergence gate, not a property of the method
+
+The gap between headline B (91.9%, denominator = all in-envelope cells) and diagnostic A (98.5%, denominator = convergence-eligible cells) in the corrected Grid A verdict (Obs 67 / Decision 33 / OSF Amendment 01 §A5.5.1) was entirely occupied by 24 `flat_baseline` cells excluded by the convergence precondition. A direct re-score from stored per-replicate diagnostics identified the cause: those 24 cells fail **solely** on the convergence precondition's zero-tolerance divergence gate (`n_divergences == 0` per replicate, encoded in `fit.py`'s `convergence_pass`). Under an R̂/ESS-only gate all 60 flat in-envelope cells pass.
+
+### The finding
+
+The divergences are benign. Across 6,000 in-envelope flat replicates, 10.2% carry ≥ 1 divergence (median count 1; maximum rate 0.36% of post-warmup draws). Diverging replicates recover the flat shape no worse than clean ones:
+
+| comparison | diverging reps | non-diverging reps |
+|---|---|---|
+| median Wasserstein-1 | 0.59 y | 0.55 y |
+| within W1 ≤ 10 y gate | 99.7% | 97.8% |
+| Mann–Whitney *p* | ≈ 0.36 | — |
+
+A prior-art scan of Bayesian-workflow practice (Stan diagnostics guidance; Betancourt 2017; Vehtari et al. 2021) confirmed no source endorses a per-replicate zero-tolerance divergence gate or any numeric rate threshold — the field standard is contextual investigation of whether divergences bias the posterior.
+
+The convergence precondition was updated to the field-standard benign-tolerant form: R̂ < 1.01 + bulk-ESS ≥ 400 (the Vehtari et al. 2021 thresholds); divergences assessed for benignity (low rate + recovery-unaffected pass; clustered or persistent fail). This change propagates immediately:
+
+- **Grid A re-scores to B = A = 98.6% (355/360)** — the B/A distinction dissolves, and the flat-null "limitation" is resolved rather than merely reported.
+- The backlog re-fit of the 24 flat cells is retired.
+- Grid B still FAILs and, under the revised gate, is now shown to fail on R̂/ESS (zero letter cells recovered even after dropping the divergence requirement) — see Obs 72.
+
+### Why this matters
+
+The correction closes a gap that had been logged as a paper-level limitation (that the headline figure required a footnote about 24 excluded cells). After the gate revision the single reported figure (98.6%) is clean, self-consistent, and more defensible by field standards than the prior zero-tolerance stance. OSF Amendment 01 §A5.5.1 encodes both the updated gate and the verified benign-divergence evidence, so the provenance chain to the lodged preregistration is intact.
+
+### Caveats / methodological notes
+
+The `flat_baseline` shape represents the genuine-null hypothesis — no genuine activity above background. Its occasional divergences arise from a funnel geometry in a near-degenerate likelihood (flat truth makes the mixing-weight ridge very shallow): a recognised HMC behaviour that does not indicate model misspecification. The R̂/ESS-based gate is the appropriate tool for detecting actual sampling failure in this regime.
+
+### Related observations and artefacts
+
+**Obs 67** (Grid A FAIL is predominantly a metric artefact): the parent Obs that introduced the corrected criterion and first reported the 91.9%/98.5% split; this Obs closes the residual B/A gap. **Obs 72** (Grid B fails on R̂/ESS, not divergences): the complementary finding for letter-mass under the same gate revision. **Decision 33**: the harness-update decision that introduced the corrected criterion. **Artefacts**: `runs/2026-05-26-recovery-grid-two-unit/inscription-mass/outputs/REPORT.md`; `planning/martin-review-statistical-grounds-2026-06-04.md` §(c) (data + scout findings); OSF Amendment 01 §A5.5.1 (commit `11b3388`); `fit.py` `convergence_pass` function (commit `006a655`).
+
+### Findable later
+
+`flat-baseline`, `convergence-gate`, `zero-tolerance`, `divergence`, `benign-divergence`, `rhat`, `ess`, `bulk-ess`, `wasserstein-1`, `mann-whitney`, `grid-a`, `inscription-mass`, `b-a-gap`, `flat-null-limitation`, `amendment-01`, `decision-33`, `obs-67`, `betancourt-2017`, `vehtari-2021`, `field-standard`, `rhat-threshold`, `per-replicate`, `convergence-precondition`, `355-360`, `98-6-percent`, `backlog-retire`
+
+## Obs 71 — 2026-06-04 [RESULT]: small-N reachability floor for subset-specific deconvolution measured
+
+The small-N reachability study (`runs/2026-06-03-small-n-reachability/`; 4,200 fits over 84 cells = 3 shapes × 4 α levels × 7 N values, `pilot_proxy` tier, scored under the §A5.5.1 corrected criterion) measured the minimum subset size N at which subset-specific deconvolution (Decision 34) recovers reliably.
+
+### The finding
+
+Reachability floor (smallest N passing convergence ≥ 90% AND Pearson r ≥ 0.95 in ≥ 90% of replicates):
+
+| shape | α = 0.30 | α = 0.50 | α = 0.70 | α = 0.85 |
+|---|---|---|---|---|
+| smooth_growth | N ≥ 500 | N ≥ 2,000 | UNREACHED | UNREACHED |
+| rise_and_fall | N ≥ 500 | N ≥ 1,000 | N ≥ 2,000 | UNREACHED |
+| regnal_cluster | N ≥ 1,000 | N ≥ 1,000 | UNREACHED | UNREACHED |
+
+Within the operating envelope (α ≤ 0.70), the **worst-case floor is N ≥ 2,000**; easiest subsets (α ≈ 0.30, smooth_growth / rise_and_fall) reach N ≥ 500. Two α = 0.70 cells (regnal_cluster, smooth_growth) are unreached even at N = 2,000. The α = 0.85 stress row is unreached throughout.
+
+Recovery quality scales with N (α ≤ 0.70 cells):
+
+| N | mean shape-rate | mean conv-rate | mean \|α-bias\| |
+|---|---|---|---|
+| 50 | 12% | 100% | 0.155 |
+| 350 | 51% | 100% | 0.132 |
+| 1,000 | 80% | 99% | 0.134 |
+| 2,000 | 94% | 100% | 0.133 |
+
+### Why this matters
+
+Decision 34 authorises proceeding under inscription mass only, with subset-specific deconvolution for subsets large enough to support it and a pooled-convention fall-back for small subsets. This study gives the empirical threshold (N = 2,000 worst-case within the envelope) that operationalises the fall-back trigger. It also confirms that convergence (100% across tested cells) is not itself the bottleneck — shape recovery is. The study was conducted on `pilot_proxy` tier (the realistic descriptive proxy), so the floor reflects actual operating conditions rather than idealised uniform conventions.
+
+### Caveats / methodological notes
+
+The original run (4,189 fits) was lost to a power-cycle before any output was written — no checkpointing was in place. A resumable JSONL checkpoint was added to `reachability.py` (commit `a0458fa`) and the run was repeated in full. The 11 discrepancy (4,200 vs 4,189) reflects incomplete progress at power loss; the re-run is complete and the outputs are authoritative. The `pilot_proxy` tier only is tested; a `uniform` robustness pass is optional backlog. The study ran under `pymc` 6.x (zbook), while the recovery grids used `pymc` 5.28 (sapphire); the model is identical across versions, and this is a calibration property that transfers (Obs 66).
+
+### Related observations and artefacts
+
+**Obs 67** (Grid A PASS under corrected criterion): the criterion used to score this study. **Obs 66** (pymc stack split): explains the host/version context. **Decision 34**: the subset-specific deconvolution decision that this study operationalises. **Artefacts**: `runs/2026-06-03-small-n-reachability/outputs/REPORT.md`; `runs/2026-06-03-small-n-reachability/outputs/figures/reachability-map.png` (commit `5601b04`); `runs/2026-06-03-small-n-reachability/code/reachability.py` (checkpoint logic, commit `a0458fa`).
+
+### Findable later
+
+`small-n`, `reachability`, `subset-specific`, `deconvolution`, `recovery-floor`, `n-floor`, `decision-34`, `pilot-proxy`, `shape-rate`, `convergence-rate`, `alpha-bias`, `smooth-growth`, `rise-and-fall`, `regnal-cluster`, `operating-envelope`, `alpha-0-70`, `alpha-0-85`, `stress-row`, `power-cycle`, `checkpoint`, `jsonl-checkpoint`, `pooled-convention`, `fall-back`, `worst-case-floor`, `2000-inscriptions`, `obs-67`, `obs-66`
+
+## Obs 72 — 2026-06-04 [RESULT]: Grid B (letter-mass) fails recovery on R̂/ESS, not merely divergences
+
+The cross-grid adjudication (commit `1bf791f`) returned inscription PASS / letter FAIL. Under the original corrected criterion the letter-mass failure was attributed to the convergence precondition, but it was not yet clear whether the failure was driven by the zero-tolerance divergence gate (which was independently suspect — see Obs 70) or by genuine HMC sampling failure. The gate revision (Obs 70) resolved the ambiguity.
+
+### The finding
+
+Under the field-standard benign-tolerant gate (R̂ < 1.01 + bulk-ESS ≥ 400; Obs 70): **dropping the divergence requirement recovers zero letter-mass cells**. Every in-envelope letter cell still fails the convergence precondition on R̂/ESS grounds alone; headline B = 0.0% is unchanged. The maximum cell-level convergence rate across all letter-mass cells (including the α = 0.95 stress row) is 0.80, well below the ≥ 90% threshold.
+
+The failure pattern is consistent with a genuine HMC sampling problem rather than a strict gate. Divergences run to ~13,000 per cell in the worst cases; the underlying cause is the compound-sum likelihood: each synthetic inscription deposits a heavy-tailed letter count, making the posterior geometry difficult for NUTS to navigate reliably. The median recovered Pearson r across cells is ≈ 0.76 — partial shape recovery is occurring, but not at a rate that meets the validation criterion.
+
+| metric | value |
+|---|---|
+| Headline B (binding) | 0.0% (0/360 in-envelope cells) |
+| Cells recovered after dropping divergence gate | 0 |
+| Maximum cell convergence rate (all cells) | 0.80 |
+| Divergences per cell (typical worst-case) | ~13,000 |
+| Median recovered Pearson r across cells | ≈ 0.76 |
+
+### Why this matters
+
+This empirically confirms the earlier analytic finding that letter-mass temporal detection is unreachable corpus-wide (OSF Amendment 01 §A5.2), and closes a logical gap: the zero-tolerance gate was separately identified as a potential artefact (Obs 70), so it was important to verify that Grid B's failure is not merely an overly strict gate. It is not. The temporal mixture deconvolution proceeds under inscription mass only (Decision 34). The letter-mass cross-sectional H3a confirmatory is unaffected — it uses per-city totals and does not invoke the temporal deconvolution (§A5.5).
+
+### Caveats / methodological notes
+
+The compound-sum likelihood (sum of heavy-tailed per-inscription counts) is structurally harder for NUTS than the inscription-count likelihood, which is driven by a simple Poisson-count model. A potential sensitivity analysis — applying a 99th-percentile cap on per-inscription letter counts — was noted in the comparison report as optional follow-up; it has not been run and is not required for the current analysis path.
+
+### Related observations and artefacts
+
+**Obs 61** (letter mass is the temporally weaker unit): the earlier analytic finding that this study empirically confirms. **Obs 70** (flat-null divergence gate revision): the gate change that made the R̂/ESS-only diagnosis possible; Obs 72's finding is a consequence of applying Obs 70's reasoning to Grid B. **Obs 67** (Grid A PASS under corrected criterion): the counterpart inscription-mass verdict. **Decision 34**: the outcome-branch decision authorising inscription-mass-only deconvolution. **Artefacts**: `runs/2026-05-26-recovery-grid-two-unit/comparison/COMPARISON-REPORT.md`; `runs/2026-05-26-recovery-grid-two-unit/letter-mass/outputs/REPORT.md` (commit `1bf791f`); OSF Amendment 01 §A5.5.1–§A5.7.
+
+### Findable later
+
+`letter-mass`, `grid-b`, `rhat`, `ess`, `bulk-ess`, `convergence-failure`, `nuts-sampling`, `hmc-divergences`, `compound-sum`, `heavy-tailed`, `letter-count`, `compound-likelihood`, `temporal-detection`, `unreachable`, `inscription-mass-only`, `decision-34`, `h3a-unaffected`, `cross-sectional`, `zero-cells`, `obs-61`, `obs-67`, `obs-70`, `amendment-01`, `a5-2`, `a5-5`, `0-0-percent`, `adjudication`, `1bf791f`
