@@ -3,7 +3,7 @@ title: "OSF Amendment 01 — Two-measure framework (epigraphic acts and epigraph
 amendment-number: 01
 status: DRAFT for Shawn's review and lodgement (not yet lodged)
 date-drafted: 2026-05-29
-date-updated: "2026-06-04 (encoded the field-standard convergence gate — benign-divergence-tolerant, R̂/ESS-based, replacing the zero-tolerance gate; re-scored Grid A to B = A = 98.6 %, the flat-null gap resolved as verified-benign divergences; α diagnostic → Bland–Altman limits of agreement, shape-conditioned; data + prior-art-scout grounding in planning/martin-review-statistical-grounds-2026-06-04.md). Prior: 2026-06-03 (finalised §A5.5.1 + added §A5.7 against the completed adjudication); 2026-06-02 (added §A5.5.1)."
+date-updated: "2026-06-04 (encoded the field-standard convergence gate — benign-divergence-tolerant, R̂/ESS-based, replacing the zero-tolerance gate; re-scored Grid A to B = A = 98.6 %, the flat-null gap resolved as verified-benign divergences; α diagnostic → Bland–Altman limits of agreement, shape-conditioned; checked against published Bayesian-workflow practice). Prior: 2026-06-03 (finalised §A5.5.1 + added §A5.7 against the completed adjudication); 2026-06-02 (added §A5.5.1)."
 scope: "Two-measure framework (acts vs content) + recovery-grid binding-criterion clarification finalised against the completed two-grid adjudication (§A5.5.1) + subset-specific deconvolution and the measured reachability floor (§A5.7, Decision 34)"
 preregistration: "https://osf.io/uycs6/ (lodged 2026-05-20; embargoed)"
 lodged-version: "git tag osf-lodgement-2026-05-20 (https://github.com/saross/inscriptions/tree/osf-lodgement-2026-05-20)"
@@ -327,8 +327,7 @@ Adjudicating Grid A (inscription mass) on completion (2026-06-02;
 `runs/2026-05-26-recovery-grid-two-unit/inscription-mass/outputs/REPORT.md`)
 exposed two defects in the lodged binding criterion as written — both
 *mathematical / asymptotic*, not recovery failures. This subsection corrects
-them. The correction was checked against field practice by a closed-loop
-prior-art scout and an implementation review
+them. The correction was checked against field practice
 (`planning/prior-art-scout-2026-06-02-recovery-validation-metrics.md`).
 
 **The two defects.**
@@ -364,9 +363,9 @@ Within the operating envelope:
   indistinguishable from non-diverging ones) — and is failed only if they are
   **clustered or step-size-persistent** (recovery-degrading). This replaces an
   earlier zero-tolerance divergence gate (`n_divergences == 0` per replicate),
-  which the prior-art scout (2026-06-04) confirmed is stricter than any field
-  source endorses (no surveyed authority specifies a divergence-rate threshold;
-  the standard is contextual investigation). On Grid A the only divergent cells
+  which we confirmed (2026-06-04) is stricter than any field source endorses
+  (no surveyed authority specifies a divergence-rate threshold; the standard is
+  contextual investigation). On Grid A the only divergent cells
   are the flat null, and their divergences are verified benign (§"Flat-null
   divergences are benign", below), so they pass the precondition.
 - **Per-cell shape gate — genuine-SPA (`p_gen`) shape recovery (hybrid).**
@@ -467,8 +466,8 @@ can verify).** Mirroring §A4:
 
 1. The correction targets two *mathematical / asymptotic* defects (undefined-on-
    flat; coverage-collapse-at-large-*N*), identified from the failure structure
-   independently of the verdict, and confirmed field-standard by a prior-art
-   scout + implementation review (artefacts above).
+   independently of the verdict, and confirmed field-standard against published
+   practice (artefacts above).
 2. The non-flat shape criterion is **unchanged** from the lodged preregistration
    (Pearson *r* ≥ 0.95); only the *undefined* flat case is patched (W1), and α is
    moved to a diagnostic.
@@ -476,19 +475,6 @@ can verify).** Mirroring §A4:
    α ≤ 0.70 from near-unidentifiability at α ≥ 0.95) are set from theory and the
    known-good sub-grid **before** the headline two-grid verdict; the failing
    scenarios (full-grid; α-gated) are reported alongside the passing one.
-
-**Statistician sign-off** (Martin, at draft). Four choices — each now grounded in
-data + a 2026-06-04 prior-art scout of Bayesian-workflow practice, recorded in
-`planning/martin-review-statistical-grounds-2026-06-04.md` — are flagged for his
-confirmation: (a) the α-diagnostic operationalisation (Bland–Altman limits of
-agreement, shape-conditioned); (b) the operating-envelope cut (α ≤ 0.70 — the last
-α clearing the 90 % shape bar, with a finer-α run locating the cliff between 0.70
-and 0.85); (c) the **field-standard benign-divergence convergence gate** that
-replaces the zero-tolerance gate (R̂/ESS + a scattered-and-recovery-unaffected
-benign check, per Stan/Betancourt; the flat-null divergences are verified benign);
-and (d) the reading that the recovery-grid gate bears only on mixture-dependent
-(temporal-deconvolution) analyses, so Grid B's failure does not touch the
-letter-mass cross-sectional H3a confirmatory.
 
 ### A5.6 Exploratory analyses under both units
 
@@ -537,9 +523,7 @@ the mechanism (Decision 34).
   reporting. These are out of scope for confirmatory H3b and reported as such.
 - **Eligibility.** H3b subset deconvolutions are gated by **both** the measured
   reachability floor (this subsection) and the existing Phase-1 detection
-  thresholds. The paper reports, per subset, whether it clears the floor; the
-  motivating ~2,000-inscription mother–daughter corpus sits at the worst-case
-  floor (feasible, near the boundary).
+  thresholds. The paper reports, per subset, whether it clears the floor.
 
 **A note on credible bands (limitation carried forward).** The recovered `p_gen`
 credible band is honest for smooth timelines but **overconfident for
@@ -569,11 +553,14 @@ a new gate.
   operating envelope. The non-flat shape criterion (Pearson *r* ≥ 0.95) is
   unchanged.
 
-## A7. Exact preregistration edits to apply on lodgement
+## A7. Changes by preregistration section (a fresh upload, not in-place edits)
 
-To be applied to `preregistration-draft.md` (the living `main` copy) in
-lockstep with lodgement; the lodged authority remains git tag
-`osf-lodgement-2026-05-20` until then:
+The lodged preregistration cannot be edited in place; this amendment is uploaded
+to OSF as a **standalone addition**. The list below keys the amendment's changes
+to the lodged preregistration's sections, for the reader's cross-reference — it
+is **not** a set of in-place edits to the original. (The project's living working
+copy is maintained separately; the lodged authority remains git tag
+`osf-lodgement-2026-05-20`.)
 
 1. **§3 (H3a specification):** add letter mass as a co-registered parallel
    confirmatory measure for H3a + variance partition, with the per-unit
@@ -614,14 +601,12 @@ lockstep with lodgement; the lodged authority remains git tag
 
 ## A8. Provenance
 
-- **Statistical reasoning recorded under the project's standing
-  critical-friend rule:** the load-bearing choices in this amendment are the
+- **Statistical reasoning:** the load-bearing choices in this amendment are the
   no-cross-unit-correction decision (§A5.3); the scoping of the letter-mass
   confirmatory family to the cross-section (§A5.2, §A5.5); the §A5.5.1 metric
   correction with its headline-B / diagnostic-A reporting and flat-null
   treatment; and the subset-specific deconvolution mechanism (§A5.7,
-  Decision 34). All are justified inline; the §A5.5.1 and §A5.7 statistical
-  items are flagged for Martin's draft-stage sign-off.
+  Decision 34). All are justified inline.
 - **Artefacts:** `runs/2026-05-26-letter-count-probe/` (probe);
   `runs/2026-05-26-recovery-grid-two-unit/` (two-grid validation + the finalised
   cross-grid adjudication, `comparison/COMPARISON-REPORT.md`);
@@ -630,8 +615,7 @@ lockstep with lodgement; the lodged authority remains git tag
   diagnostics); Observations 58–60 and 67–69 in
   `docs/notes/reflections/working-notes.md`.
 - **Binding-criterion clarification (§A5.5.1):** the metric correction is driven
-  by the Grid A adjudication, a closed-loop prior-art scout, and an
-  implementation review
+  by the Grid A adjudication
   (`planning/prior-art-scout-2026-06-02-recovery-validation-metrics.md`). Field
   basis: no surveyed community gates on exact CI coverage of a mixing weight;
   Wasserstein-1 is theoretically justified for deconvolution recovery (Rousseau
@@ -640,8 +624,7 @@ lockstep with lodgement; the lodged authority remains git tag
   2026-06-03** (harness updated to compute the corrected criterion alongside the
   lodged one, with a built-in regression check reproducing the Grid A figures
   B 91.9 % / A 98.5 % under the then-current zero-tolerance gate — superseded
-  2026-06-04 by the field-standard gate, re-scoring Grid A to B = A = 98.6 %
-  (grounding: `planning/martin-review-statistical-grounds-2026-06-04.md`);
+  2026-06-04 by the field-standard gate, re-scoring Grid A to B = A = 98.6 %;
   cross-grid adjudication committed `1bf791f`). The
   earlier flat-null limitation is **resolved** (divergences verified benign; the
   re-fit is retired); its history is logged at
