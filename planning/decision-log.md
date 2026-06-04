@@ -3276,8 +3276,8 @@ note), not the engine of subset analysis.
 
 **Status:** committed; consistent with the lodged prereg + OSF Amendment 01
 (§A5.7 already names `build_model_f1_f3` with learned `tier_weights`). No new
-amendment required. One sub-question (the H2 → H3a data dependency) is **under
-discussion** and will be lodged separately.
+amendment required. Sub-question 3 (the H2 → H3a data dependency) is **RESOLVED
+2026-06-04** — see the addendum at the end of this decision.
 **Decided by:** Shawn 2026-06-04, on the pre-launch reconciliation review of the
 2026-05-25 Stage-3 implementation plan against Decisions 33 + 34 and the
 completed two-unit recovery grid.
@@ -3324,12 +3324,10 @@ overtaken by events:
    *Watch-out:* report it as a sensitivity only, and keep the prior wide enough that
    it cannot manufacture the result it is meant to test against — it is a robustness
    check on the learned-`p_conv` primary, not a competing headline.
-3. **(UNDER DISCUSSION — not yet lodged.)** Whether `data/processed/city_level_for_h3a.parquet`
-   is the temporal-mixture-deconvolved output or simply the date-window-filtered
-   city counts. Decision 22 has H3a (cross-sectional Hanson scaling) using
-   date-window-filtered counts, with the mixture correcting *temporal* analyses
-   only (H3b / §5) — which would mean H2's deconvolution does **not** feed H3a. To
-   be resolved and lodged as a Decision-35 addendum.
+3. **(RESOLVED 2026-06-04 — see addendum below.)** Whether
+   `data/processed/city_level_for_h3a.parquet` is the temporal-mixture-deconvolved
+   output or the date-window-filtered city counts. Resolved against the prereg:
+   it is the date-window-filtered counts; the mixture does NOT feed H3a.
 4. **H2 scope for this paper = empire + province + city** analysis units
    (inscription-mass only — letter-mass FAILed recovery, Obs 72). Other named
    subsets (e.g. the ~2,000 mother–daughter corpus, the motivating re-application
@@ -3374,3 +3372,41 @@ overtaken by events:
 - If the empire-level empirical-Bayes sensitivity materially diverges from the
   learned-`p_conv` primary, that divergence becomes a reported finding (and a prompt
   to ask which is mis-specified), not a silent discard.
+
+### Addendum 2026-06-04 — sub-question 3 (H2 ↔ H3a) resolved; sequencing = cross-sectional first
+
+**Resolution (from the lodged prereg; nothing new to decide, only to record).**
+H3a uses **date-window-filtered counts**; the Bayesian mixture is **not** applied
+to H3a's input. Prereg §"Scope of the mixture correction" (line 35): "H3a and H3c
+are cross-sectional analyses operating on date-window-filtered counts — H3a
+directly"; §3 line 229: "`y_c` is the per-city inscription count under the 50 BC –
+AD 350 date-window filter. The Bayesian mixture is *not* applied to `y_c`";
+Decision 22 (the originating decision). Therefore:
+
+- `data/processed/city_level_for_h3a.parquet` = per-city **date-window-filtered
+  count + Hanson (2016) population + province label** — a filter-and-join data-prep
+  product, **NOT** a mixture/deconvolution output. The priority-queue phrasing "H2
+  (mixture) outputs `city_level_for_h3a.parquet`" was loose; it bundled this cheap
+  prep under the "H2" label. The two are distinct artefacts.
+- The mixture's empire-level posterior α is reported as **descriptive context**
+  beside H3a, but neither H3a's confirmatory decision rule nor H3c's residuals are
+  gated on it (prereg line 35 / 229).
+
+**Consequence — two decoupled tracks; primary result does not wait on the mixture.**
+
+- *Cross-sectional track:* date-window city-count prep → **H3a** (primary
+  confirmatory result) → **H3c** (Pearson residuals from H3a). No mixture needed.
+  Largely already built as preliminary/probe work: `runs/2026-05-21-talk-prep/code/`
+  (`01-filter-and-prep.py`, `03-hanson-nbr-bootstrap.py`, `05-h3a-bayesian-mundlak.py`)
+  and the letter-mass counterpart in `runs/2026-05-26-letter-count-probe/code/`.
+- *Temporal track:* **H2.1 mixture deconvolution** (`build_model_f1_f3`, per unit)
+  → **H3b** deviation-detection + **§5** trajectories. Mixture needed.
+
+**Sequencing decision (Shawn, 2026-06-04): cross-sectional track FIRST.** Bring the
+existing talk-prep H3a up to preregistered confirmatory standard (canonical
+`city_level_for_h3a.parquet`; exact prereg priors; full PPC suite; brms shadow;
+§5 variance partition; three-way decision rule; then H3c). The H2.1 mixture
+(the methodological contribution, for H3b/§5) follows. Rationale: front-loads the
+paper's headline confirmatory result, which is nearly in hand and independent of
+the harder mixture build. Next artefact: an audit of the talk-prep H3a code against
+the prereg, then the H3a confirmatory launch spec for sign-off.
