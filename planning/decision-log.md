@@ -3271,3 +3271,106 @@ note), not the engine of subset analysis.
 - A subset class is found to have a convention profile so different from the
   corpus that even subset-specific fitting with the universal template basis is
   inadequate (would motivate per-class convention bases).
+
+## Decision 35 — 2026-06-04: H2 production model is the validated `build_model_f1_f3`; the empirical-Bayes calibration-cohort redesign is retired as primary (kept descriptive + one empire-level sensitivity); H2 scope = empire + province + city
+
+**Status:** committed; consistent with the lodged prereg + OSF Amendment 01
+(§A5.7 already names `build_model_f1_f3` with learned `tier_weights`). No new
+amendment required. One sub-question (the H2 → H3a data dependency) is **under
+discussion** and will be lodged separately.
+**Decided by:** Shawn 2026-06-04, on the pre-launch reconciliation review of the
+2026-05-25 Stage-3 implementation plan against Decisions 33 + 34 and the
+completed two-unit recovery grid.
+
+### Context
+
+The Stage-3 implementation plan (`planning/h2.1-stage-3-implementation-plan-2026-05-25.md`)
+was built around an **empirical-Bayes calibration-cohort** model redesign: *fix*
+`p_conv` from the Stage 1 corpus estimate (SCUBIDO) and *centre* `p_gen` on the
+Stage 2 cohort shape (BUMPER), to break the α–shape likelihood ridge behind the
+2026-05-22 recovery FAIL. The pre-launch reconciliation review found that redesign
+overtaken by events:
+
+1. **The recovery grid validated a different (simpler) model.** `cell_lib.build_model_f1_f3`
+   — the one that scored 98.6 % (Grid A) — *learns* `tier_weights ~ Dirichlet([1,1,1])`
+   and uses a *zero-mean* GRW `p_gen`; only F1 (α ~ Beta(1,1)) and F3 (non-centred
+   GRW reparameterisation) differ from the lodged-prereg model. It does **not** use
+   the empirical-Bayes priors. The empirical-Bayes redesign has never had a recovery
+   validation.
+2. **Decision 33 dissolved its rationale.** The 2026-05-22 FAIL was predominantly a
+   *metric* artefact; with the corrected criterion + F1+F3 the simple model passes,
+   and α is demoted to a diagnostic (±0.18) — so "fix α-recovery bias" (the plan's
+   stated goal) is no longer the target.
+3. **Decision 34 contradicts fixed `p_conv`.** Subsets must learn their own
+   convention mix; the empire-wide `p_conv` is not imposed. The plan's fixed-corpus-
+   `p_conv` design is exactly what Decision 34 rules out, and Decision 34 (and OSF
+   Amendment 01 §A5.7) name `build_model_f1_f3` explicitly.
+
+### Decision
+
+1. **Production model (confirmed).** H2 uses the validated `build_model_f1_f3`:
+   learned `tier_weights` (convention mix) over the fixed universal template-width
+   `tier_basis`; zero-mean non-centred GRW `p_gen`; α ~ Beta(1,1); default PyMC
+   NUTS. The empirical-Bayes calibration-cohort model redesign is **retired as the
+   primary**. The 2026-05-25 Stage-3 plan is **superseded** by this decision (a
+   pointer banner is added to that file).
+2. **Empirical-Bayes artefacts retained, but not as the primary fitted model.**
+   The Stage 1 `p_conv` and Stage 2 `p_gen` empirical estimates are kept (a) as the
+   project's **descriptive** characterisation of the convention component (the
+   paper's account of the editorial-template structure; cf. Decision 33), and (b) as
+   a **single optional empire-level informative-prior sensitivity** — the one level
+   at which a corpus-wide `p_conv`/`p_gen` is defensible (no subset-heterogeneity
+   objection at the empire scale). Not run on provinces/cities/subsets (Decision 34).
+   *Watch-out:* report it as a sensitivity only, and keep the prior wide enough that
+   it cannot manufacture the result it is meant to test against — it is a robustness
+   check on the learned-`p_conv` primary, not a competing headline.
+3. **(UNDER DISCUSSION — not yet lodged.)** Whether `data/processed/city_level_for_h3a.parquet`
+   is the temporal-mixture-deconvolved output or simply the date-window-filtered
+   city counts. Decision 22 has H3a (cross-sectional Hanson scaling) using
+   date-window-filtered counts, with the mixture correcting *temporal* analyses
+   only (H3b / §5) — which would mean H2's deconvolution does **not** feed H3a. To
+   be resolved and lodged as a Decision-35 addendum.
+4. **H2 scope for this paper = empire + province + city** analysis units
+   (inscription-mass only — letter-mass FAILed recovery, Obs 72). Other named
+   subsets (e.g. the ~2,000 mother–daughter corpus, the motivating re-application
+   case) are **held for later**.
+
+### Consequences
+
+- **Lodged-record consistency.** OSF Amendment 01 §A5.7 already describes
+  `build_model_f1_f3` with learned `tier_weights`, so the production model is
+  amendment-consistent; no new amendment is needed for this decision. Two minor
+  wording notes (no action on the lodged deposit; for paper-language accuracy
+  only): (i) the amendment's parenthetical "(F1+F3, empirical-Bayes) pipeline"
+  (line 286) loosely labels the model "empirical-Bayes" — the *primary* is the
+  learned-`p_conv` F1+F3 model, and the paper should use that accurate description,
+  reserving "empirical-Bayes" for the optional empire-level sensitivity. (ii) The
+  lodged prereg (§3 line 206) states α ~ Beta(2,2); the production model uses F1's
+  Beta(1,1), which the amendment references via "F1+F3" and the validated grid — a
+  minor prior refinement, not a new substantive change (F1 follow-up: Δα ≈ +0.025).
+- **Reporting discipline (carried from Obs 68 / 73).** Report the posterior-median
+  `p_gen` timeline (the gated quantity); widen/caveat the credible band in peaked
+  regimes — the real corpus has sharp regnal clustering and the late corpus
+  (AD ~142–347) sits in the degraded-recovery zone (Obs 69).
+- **Reachability gating (Decision 34).** Province/city fits are gated by the
+  measured reachability floor (worst-case N ≈ 2000 in-envelope); units below the
+  floor fall back to date-window-filtered counts or the §5 hierarchical model.
+- **Next artefact.** Once sub-question (3) is resolved, write the H2 launch spec
+  (validated model + Decision-34 scoping + real-corpus data prep) for sign-off.
+
+### Provenance / links
+
+- Reconciliation review: this session (2026-06-04), against
+  `planning/h2.1-stage-3-implementation-plan-2026-05-25.md` (superseded).
+- Validated model: `runs/2026-05-26-recovery-grid-two-unit/code/cell_lib.py`
+  (`build_model_f1_f3`); Grid A 98.6 % (`…/comparison/COMPARISON-REPORT.md`).
+- Upstream decisions: Decision 33 (criterion correction; α demoted); Decision 34
+  (subset-specific deconvolution); Decision 22 (H3a date-window counts — bears on
+  sub-question 3); OSF Amendment 01 §A5.5.1 / §A5.7.
+
+### Revisit triggers
+
+- Sub-question (3) resolution may add an addendum.
+- If the empire-level empirical-Bayes sensitivity materially diverges from the
+  learned-`p_conv` primary, that divergence becomes a reported finding (and a prompt
+  to ask which is mis-specified), not a silent discard.
