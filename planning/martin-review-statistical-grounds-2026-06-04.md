@@ -184,3 +184,56 @@ H3a specification; no threshold or literature is strictly required.
   domain of validity for a recovery simulation — would let the amendment **cite**
   the field standard rather than reason to it. Recommended before lodgement for
   (c) especially.
+
+---
+
+## References (verified 2026-06-04 against CrossRef / arXiv)
+
+The literature these decisions rest on, for the staging Zotero library. DOIs
+re-queried against CrossRef 2026-06-04; two details corrected vs the scout draft
+(flagged ⚠).
+
+**DOI-verified (CrossRef):**
+
+1. Bland, J.M. & Altman, D.G. (1986). *Statistical methods for assessing
+   agreement between two methods of clinical measurement.* The Lancet.
+   `10.1016/S0140-6736(86)90837-8` — α limits-of-agreement reporting.
+2. Kruschke, J.K. (2018). *Rejecting or Accepting Parameter Values in Bayesian
+   Estimation.* Advances in Methods and Practices in Psychological Science.
+   `10.1177/2515245918771304` — ROPE.
+3. Vehtari, A., Gelman, A., Simpson, D., Carpenter, B. & Bürkner, P.-C. (2021).
+   *Rank-Normalization, Folding, and Localization: An Improved R̂…* Bayesian
+   Analysis. `10.1214/20-BA1221` — R̂/ESS convergence thresholds.
+4. Schad, D.J., Betancourt, M. & Vasishth, S. (2021). *Toward a principled
+   Bayesian workflow in cognitive science.* Psychological Methods.
+   `10.1037/met0000275` — condition-dependent recovery reporting.
+5. Modrák, M., Moon, A.H., Kim, S., Bürkner, P.-C., et al. (**2025** ⚠ — CrossRef
+   issued-year 2025, not 2023). *Simulation-Based Calibration Checking for
+   Bayesian Computation.* Bayesian Analysis. `10.1214/23-BA1404` — SBC checking.
+6. Crema, E.R. & Bevan, A. (**2020/2021** ⚠ — CrossRef issued 2020 online, print
+   2021). *Inference from Large Sets of Radiocarbon Dates: Software and Methods.*
+   Radiocarbon. `10.1017/RDC.2020.95` — SPD operating-envelope analogue.
+
+**arXiv preprints (canonical; arXiv API rate-limited at verification — IDs
+confirmed by the scout):**
+
+7. Talts, S., Betancourt, M., Simpson, D., Vehtari, A. & Gelman, A. (2018).
+   *Validating Bayesian Inference Algorithms with Simulation-Based Calibration.*
+   `arXiv:1804.06788` — SBC.
+8. Gelman, A., Vehtari, A., Simpson, D., et al. (2020). *Bayesian Workflow.*
+   `arXiv:2011.01808` — workflow.
+
+**Web case studies / docs (no DOI — add as webpage/blogPost, not via the
+DOI batch script):**
+
+9. Betancourt, M. (2017). *Diagnosing Biased Inference with Divergences.*
+   `https://betanalpha.github.io/assets/case_studies/divergences_and_bias.html`
+   — the primary divergence biasing-vs-benign criterion.
+10. Betancourt, M. *Identifying Bayesian Mixture Models.* Stan case study.
+    `https://mc-stan.org/learn-stan/case-studies/identifying_mixture_models.html`
+    — mixture identifiability boundary.
+11. Stan Development Team. *Runtime warnings and convergence problems.* Stan docs.
+    `https://mc-stan.org/learn-stan/diagnostics-warnings.html` — divergence
+    guidance ("few + good R̂/ESS = often good enough").
+12. Modrák, M. (2018). *Taming Divergences in Stan Models.* Blog.
+    `https://www.martinmodrak.cz/2018/02/19/taming-divergences-in-stan-models/`.
