@@ -1,0 +1,58 @@
+{
+  "frame": "latin (817 cities / 39 provinces)",
+  "status": "PRELIMINARY -- pending OSF Amendment 02 (Decision 36 amendment-gate)",
+  "confirmatory_rule": "Moran's I > 0 at p < 0.05 in >= 2 of {5, 8, 10}",
+  "n_k_passing": 0,
+  "verdict": "not-supported",
+  "interpretive_case_k8": "confirmatory rule does NOT pass (<2 of {5,8,10} significant)",
+  "primary_k": 8,
+  "n_permutations": 999,
+  "n_posterior_I_draws": 2000,
+  "n_cities": 817,
+  "n_provinces": 39,
+  "per_k": {
+    "5": {
+      "moran_I_posterior_mean_resid": 0.022530167301799055,
+      "p_sim_one_sided": 0.13,
+      "z_sim": 1.1515109515570783,
+      "expected_I": -0.0012254901960784314,
+      "passes_rule": false,
+      "posterior_I_2.5pct": 0.022602931909698996,
+      "posterior_I_50pct": 0.03669840334309471,
+      "posterior_I_97.5pct": 0.053564956055668536,
+      "posterior_frac_above_0": 1.0
+    },
+    "8": {
+      "moran_I_posterior_mean_resid": 0.01225467025081675,
+      "p_sim_one_sided": 0.184,
+      "z_sim": 0.8483393380858436,
+      "expected_I": -0.0012254901960784314,
+      "passes_rule": false,
+      "posterior_I_2.5pct": 0.013984053602399888,
+      "posterior_I_50pct": 0.025421256482810253,
+      "posterior_I_97.5pct": 0.039675292636147656,
+      "posterior_frac_above_0": 1.0
+    },
+    "10": {
+      "moran_I_posterior_mean_resid": 0.009159207195397166,
+      "p_sim_one_sided": 0.239,
+      "z_sim": 0.6681262591979807,
+      "expected_I": -0.0012254901960784314,
+      "passes_rule": false,
+      "posterior_I_2.5pct": 0.010911833459149768,
+      "posterior_I_50pct": 0.02197313923657273,
+      "posterior_I_97.5pct": 0.035840693903589335,
+      "posterior_frac_above_0": 1.0
+    }
+  },
+  "hanson_2021_reference": {
+    "residual_moran_I": 0.046,
+    "z": 4.571,
+    "p": "<0.0001",
+    "raw_count_moran_I": -0.006
+  },
+  "empire_frame_comparator": {
+    "verdict": "not-supported",
+    "source": "runs/2026-06-04-h3a-confirmatory/outputs/h3c-results.json"
+  }
+}

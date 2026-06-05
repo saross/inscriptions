@@ -1,0 +1,22 @@
+{
+  "frame": "latin (817 cities / 39 provinces)",
+  "status": "PRELIMINARY -- pending OSF Amendment 02 (Decision 36 amendment-gate)",
+  "method": "OLS log-log: log(inscription_count) ~ log(urban_context_pop_est), unweighted, per-city (identical to 02-h3a-fit.py::ols_loglog)",
+  "ols_loglog": {
+    "intercept": -0.9051292330341213,
+    "slope": 0.5047377500213492,
+    "slope_se": 0.05437450238188552,
+    "slope_ci95": [
+      0.3981637253528536,
+      0.6113117746898449
+    ],
+    "r_squared": 0.09561712979289994,
+    "n": 817,
+    "hanson_2021_beta": 0.672
+  },
+  "contrasts": {
+    "hanson_2021_beta": 0.672,
+    "empire_frame_slope": 0.2839922030003124,
+    "empire_frame_source": "runs/2026-06-04-h3a-confirmatory/outputs/h3a-results.json (primary.ols_loglog.slope)"
+  }
+}
