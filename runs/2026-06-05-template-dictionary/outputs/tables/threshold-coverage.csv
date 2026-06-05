@@ -1,0 +1,11 @@
+frame,threshold,n_templates,inscriptions_covered,pct_of_corpus,pct_of_convention_pool
+empire,50,204,153458,84.97,89.05
+empire,100,126,147833,81.85,85.78
+empire,200,80,141231,78.2,81.95
+empire,500,48,131404,72.76,76.25
+empire,1000,31,119419,66.12,69.3
+latin,50,167,89260,81.41,85.33
+latin,100,105,84957,77.48,81.22
+latin,200,65,79103,72.14,75.62
+latin,500,38,70281,64.1,67.19
+latin,1000,22,59610,54.37,56.99

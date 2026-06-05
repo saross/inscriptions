@@ -1,0 +1,13 @@
+frame,cat_group,n_templates,inscriptions,pct_of_convention_pool
+empire,other,4328,59762,34.68
+empire,multi_century,45,43022,24.96
+empire,century,4,41516,24.09
+empire,half_century,7,17166,9.96
+empire,bc_ad_boundary,365,6139,3.56
+empire,reign,71,4725,2.74
+latin,other,3504,44192,42.25
+latin,multi_century,43,22447,21.46
+latin,century,4,21266,20.33
+latin,half_century,7,8691,8.31
+latin,bc_ad_boundary,298,4504,4.31
+latin,reign,59,3500,3.35
