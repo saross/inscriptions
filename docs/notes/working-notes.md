@@ -2073,3 +2073,21 @@ The upshot (which is encoded in the OSF Amendment 01 limitation note): report th
 ### Findable later
 
 `band-calibration`, `coverage-vs-n`, `posterior-concentration`, `bernstein-von-mises`, `model-misspecification`, `grw-prior`, `smoothness-prior`, `peaked-signal`, `regnal-cluster`, `bias-variance`, `band-width`, `point-vs-interval`, `median-vs-band`, `n-not-a-dial`, `reachability-vs-calibration`, `roughness-prior`, `large-n`, `alpha-demotion`, `obs-68-deepens`, `obs-67`, `obs-69`, `obs-71`, `smooth-growth`, `rise-and-fall`, `cov95`, `0-230`, `0-998`, `bias-to-sd-ratio`
+
+## Obs 74 — 2026-06-05 [RESULT]: H3c(i) capitals over-produce (replicates Hanson 2021); H3c(ii) clustering does not — the Mundlak intercepts absorb the spatial structure
+
+H3c(i) — the binding provincial-capital residual contrast (Decision 23: `P(contrast_s>0) ≥ 0.95`, draw-wise) — was found **unrun** by the 2026-06-05 prereg-completeness audit (the H3a confirmatory run had done only H3c(ii) Moran's I) and closed using the **OXREP-authoritative** capital indicator (Hanson 2016 Civic-Status "Provincial capital" — the dataset Hanson 2021 used), with the book/Barrington AD-117 set as a sensitivity.
+
+**Provincial capitals over-produce inscriptions: SUPPORTED in all four cells** (OXREP + AD-117 × empire + Latin), `P(contrast>0) = 1.000` throughout. OXREP primary: empire median contrast **+0.96 [0.74, 1.21]**, Latin **+1.08 [0.81, 1.41]**; capitals' posterior-mean Pearson residual **+0.91** (empire) / **+1.03** (Latin) vs non-capitals **≈ −0.05**. This **replicates Hanson 2021's capital over-production** (answers SR2(i)). In contrast, **H3c(ii) residual spatial clustering is NOT-supported** (Moran's I ≈ 0, both frames). The two cohere via one mechanism: the **Mundlak province random intercepts absorb the broad spatial structure** (residual Moran's I ≈ 0), while the **within-province capital-vs-peer level difference is left in the residuals** (strong capital contrast). Robust to capital definition (OXREP 62 vs AD-117 39 in the empire frame) and to frame. Preliminary; Latin frame amendment-gated (Amendment 02). **Artefacts**: `runs/2026-06-04-h3a-confirmatory/outputs/REPORT-h3c-i-capital-contrast.md`; `h3c-i-results-{oxrep-primary,ad117-sensitivity}.json` (commits `fb1e98a`, `fffb639`); capital indicator `data/processed/provincial-capitals.csv` (OXREP) + `-ad117.csv`. Cross-ref: Decision 23 (H3c split); Decision 36 (Latin frame); the H3a confirmatory REPORT.
+
+### Findable later
+
+`h3c-i`, `provincial-capital`, `capital-contrast`, `hanson-2021`, `replication`, `sr2`, `morans-i`, `h3c-ii`, `mundlak`, `province-intercept`, `oxrep`, `capital-over-production`, `draw-wise-contrast`, `non-replication`, `spatial-autocorrelation`
+
+## Obs 75 — 2026-06-05 [RESULT]: the Latin-province frame strengthens the population signal vs empire-wide — a coverage-confound corroboration
+
+Restricting the cross-sectional analyses to Latin-speaking provinces (Decision 36; the coverage rationale — LIRE = "Latin Inscriptions of the Roman Empire" under-covers Greek-speaking provinces, where Latin inscriptions are a minority) **strengthens the within-province population effect**: H3a `f_within` **0.299 [0.240, 0.365]** (empire, 1,044 cities) → **0.480 [0.401, 0.566]** (Latin, 817 cities); the SR1 OLS log-log slope **0.284** (empire) → **0.505 [0.398, 0.611]** (Latin), markedly closer to Hanson 2021's β = 0.672 (though the 95 % CI still excludes 0.672). A telling corroboration of the coverage argument: of all **65 provinces only 20 clear N ≥ 2,000, and just 1 of those is non-Latin** — Greek provinces are sparsely covered in LIRE. Both `f_within` verdicts SUPPORTED. Preliminary; Latin frame amendment-gated. **Artefacts**: `runs/2026-06-04-h3a-confirmatory/outputs/REPORT.md` + `REPORT-latin-h3c-sr1.md`; Decision 36. Cross-ref: Obs 74 (same-frame H3c(i)/H3c(ii)); Decision 36.
+
+### Findable later
+
+`latin-provinces`, `coverage-confound`, `f-within`, `sr1`, `hanson-scaling`, `decision-36`, `amendment-02`, `lire`, `greek-provinces`, `within-province`, `frame-choice`, `0-505-vs-0-672`

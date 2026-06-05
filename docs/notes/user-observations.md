@@ -235,3 +235,19 @@ last-updated: 2026-05-21
 **Lesson.** Transparency and audience-fit are separable goods. The reasoning is fully recorded — in commits, internal docs, and the planned LLM-use paper; the *preregistration* is a different artefact with a different reader, and process-clutter there is a liability rather than a virtue. Shawn has a sharp read on what derails an external reader versus what informs them.
 
 **How to apply.** Match provenance to audience. In a reviewer-facing document, cite stable anchors (commit hashes, public literature, run-dir artefacts) and the *findings*; omit the internal process that produced them (which agent ran, which review pass) unless the document's purpose *is* that process. "We're not hiding it — it's just the wrong audience for it."
+
+## Obs 23 — 2026-06-05: the human supplied the corrective forcing functions — the audit and the authoritative source — where I'd have proceeded on a weaker basis
+
+**Pattern.** Twice this session the corrective move came from Shawn at exactly the point where I would have carried on. (a) The **prereg-completeness audit** ("one more look to make sure we haven't missed any obligations") — which found that **H3c(i), a binding confirmatory test, had never been run** in a track I'd just called "nearly done", plus the H2.1 template-dictionary prerequisite. (b) The pointer to the **OXREP cities database** — which gave H3c(i) Hanson's *own* authoritative provincial-capital classification (the same one Hanson 2021 used), superseding the book/Barrington list an agent had begun assembling.
+
+**Lesson.** Both were mine to seek unprompted. The standing "verify / go to the authoritative source" affordances exist, but this session they were exercised more by the human than self-directedly. The audit-before-declaring-done and go-to-the-replication-target's-own-dataset moves are reflexes I should own, not wait to be handed.
+
+**How to apply.** Before declaring a phase complete, run the obligations/spec-completeness audit *myself* as a gate. When a classification or indicator is needed to *replicate* a prior result, seek the replication target's original dataset first, rather than reconstructing it from a book or secondary source.
+
+## Obs 24 — 2026-06-05: "nearly done" was a state-claim from memory, not from the record — completeness is a hypothesis to verify
+
+**Pattern.** I told Shawn the cross-sectional track was "nearly done" after the H3a and Latin runs. A systematic audit then showed it was missing **H3c(i)**, a binding confirmatory test. The claim came from momentum and memory, not from checking against the committed obligation set.
+
+**Lesson.** "This phase is done" is a *hypothesis*, not an *observation* — it warrants verification against the obligation set, the same discipline I already apply to a cited number (re-read it at source). Confident completeness claims are a confabulation-class risk pitched at the level of project state rather than a single fact.
+
+**How to apply.** Gate any "done / nearly done" assertion on an explicit obligations check; don't speak phase-completion without it. The obligations audit is to project-state what source-re-reading is to a specific figure.
