@@ -1,3 +1,14 @@
+# ==============================================================================
+# SUPERSEDED 2026-06-05 (Decision 35 / 36). DO NOT USE.
+# This is the original 2026-04-25 brms shadow. It is doubly stale:
+#   (1) it fits the POOLED model `count ~ log_pop + (1|province)`, not the
+#       confirmatory WITHIN-BETWEEN (Mundlak) decomposition (Decision 12), so it
+#       cannot produce beta_within / beta_between / f_within; and
+#   (2) its input contract assumes an "H2-corrected inscription count", but H3a
+#       uses date-window-filtered counts (Decision 22 / Decision 35 addendum).
+# The live first-class shadow is `scripts/h3a_brms_shadow.R` (Mundlak; promoted
+# from the H3a confirmatory blind run). Retained here for the research record.
+# ==============================================================================
 # ------------------------------------------------------------------------------
 # h3a_brms_shadow.R — R/brms cross-language validation shadow for H3a
 #

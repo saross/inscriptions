@@ -29,13 +29,13 @@ The interpretive question — what inscription production proxies (urban-informa
 
 - `planning/` — the preregistration, decision log, changelog, OSF supplementary upload, conference-talk planning, and the prior-art scouts.
 - `runs/` — per-run artefacts (specification, code, outputs, REPORT.md) for each analysis stage.
-- `scripts/` — long-lived helper scripts (e.g., `h3a_brms_shadow.R`, `zotero_batch_add.py`).
+- `scripts/` — long-lived helper scripts. `h3a_brms_shadow.R` is the R/brms cross-language shadow of the H3a within-between (Mundlak) negative-binomial regression: it refits the preregistered model (priors matched to the pymc primary, including the `1/shape` Jacobian) and writes `beta_within`, `beta_between`, `f_within`, and Bayesian R² for a posterior-level agreement check against the pymc primary, plus R-native legibility for co-authors. Run as `Rscript scripts/h3a_brms_shadow.R [INPUT_PARQUET] [OUTPUT_DIR]`. (The earlier pooled-model shadow is retired to `archive/superseded-code/`.) Other helpers include `zotero_batch_add.py`.
 - `archive/` — superseded notebooks and historical materials; reference only.
 - `docs/notes/reflections/` — the living continuity document and working-notes log.
 
 ## Reproducibility
 
-- **Code**: Python 3.13 with `numpy`, `scipy`, `pandas`, `pyarrow`, `pymc`, `statsmodels`, `libpysal`. R 4.4.3 with `cmdstanr`, `brms`, `baorista`, `nimble` for shadow validation and Bayesian-aoristic cross-checks.
+- **Code**: Python 3.13 with `numpy`, `scipy`, `pandas`, `pyarrow`, `pymc`, `statsmodels`, `libpysal`, `esda` (the latter two for H3c spatial autocorrelation — Moran's I). R 4.4.3 with `cmdstanr`, `brms`, `posterior`, `arrow`, `baorista`, `nimble` for shadow validation and Bayesian-aoristic cross-checks.
 - **Environment**: pinned via `pyproject.toml` and `uv.lock`.
 - **Data**: LIRE v3.0 (Kaše, Heřmánková & Sobotková 2023, Zenodo DOI `10.5281/zenodo.8431452`; CC-BY-4.0). Hanson (2016) OXREP Roman Cities Dataset (tDAR record 448563) for `urban_context_pop_est`.
 - **Seeds**: fixed random seed `20260425` for the Phase 1 simulation; per-stage seeds documented in each `runs/<date>-<name>/spec.md`.
