@@ -3493,3 +3493,83 @@ the original prereg, I just missed it."
   coverage — would reopen the empire-wide frame as a defensible primary.
 - The Latin-only-*inscriptions* frame is revisited if the bilingual / classification
   issues prove tractable and a reviewer presses for it.
+
+## Decision 37 — 2026-06-05: H2.1 temporal-mixture launch design (D1–D6 from the walkthrough) + cross-sectional sign-off
+
+**Status:** committed; the design inputs for the (not-yet-written) H2.1 launch
+spec. Captured here because the six decisions were worked through interactively
+and otherwise live only in the session transcript. Nothing has been launched —
+the H2.1 run is gated on (a) the template-dictionary scan (prerequisite, below)
+and (b) Shawn's sign-off of the launch spec.
+**Decided by:** Shawn 2026-06-05, in a decision-by-decision walkthrough.
+
+**Cross-sectional-track sign-off (2026-06-05).** Shawn signed off the
+cross-sectional track: **H3a** (f_within SUPPORTED), **H3c(i)** (capital contrast
+SUPPORTED — capitals over-produce, OXREP-authoritative + AD-117 sensitivity),
+**H3c(ii)** (Moran's I NOT-supported), **SR1** (OLS comparator), **SR2** (i+ii).
+**Empire-frame results are now final**; **Latin-frame results remain
+amendment-gated** (pending OSF Amendment 02, Decision 36) and must not leave the
+repo as confirmatory until it is lodged.
+
+### The six H2.1 launch decisions
+
+- **D1 — unit set.** Empire-aggregate (180,609; secondary/context) + Latin-aggregate
+  (109,646; primary) + the **19 Latin provinces clearing N ≥ 2,000** + the **5 Latin
+  cities clearing N ≥ 2,000** (Ostia, Mogontiacum, Aquileia, Pompeii, Salona). Gate
+  = deconvolution-reachability floor **N ≥ 2,000** (Decision 34); the 2 grey-band
+  provinces (1,549–2,000) are a caveated option. Sub-floor units fall back to
+  date-window counts / §5 (not a standalone mixture). ~26 primary fits.
+- **D2 — H2.1 → H3b interface.** H2.1 hands H3b the **posterior-median** corrected
+  genuine SPA; H3b's permutation envelope is the uncertainty representation — **no
+  mixture-posterior propagation** (prereg line 35; Obs 68/73). Follow-up: a
+  **raw-SPA-vs-corrected-SPA** H3b comparison (the GRW attenuates sharp peaks, so
+  corrected may be conservative at the Antonine probe). H2.1 ⟂ §5 (complementary
+  coverage; optional high-N cross-check on the 5 cities). **Reconcile the 39-vs-41
+  Latin-province list in Amendment 02.**
+- **D3 — bins.** 5-year bins / 80 bins / 50 BC – AD 350 (the recovery-validated
+  configuration). No coarser-bin variant.
+- **D4 — empire-level empirical-Bayes sensitivity.** One EB run on the
+  empire-aggregate with corpus-wide Stage-1/2 priors, **informative-but-wide**
+  (Dirichlet η ≈ 200·w_emp + 1.5× σ — data-dominated, can't manufacture the result);
+  judged by Pearson r / Wasserstein-1 vs the learned-p_conv primary. Latin-re-derived
+  EB deferred (run only if the empire EB diverges or a reviewer presses).
+- **D5 — real-data acceptance (no ground truth).** Reportability gates: convergence
+  (`cell_lib.convergence_pass`, R̂/bulk-ESS) AND operating envelope (N ≥ 2,000 AND
+  posterior α ≤ 0.70). No-truth evidence: descriptive-`p_conv` consistency (model
+  convention vs the F1+F3 family-mass fraction) + posterior-predictive adequacy.
+  Reporting: posterior-median SPA; caveat bands in peaked regimes (Obs 68/73); flag
+  the late corpus AD ~142–347 as `p_conv`-dominated (Obs 69); α with ±0.18 precision
+  (Decision 33). Tiers: reportable / caveated / fall-back.
+- **D6 — run plan.** Sapphire; validated sampler (`build_model_f1_f3` defaults;
+  raise tune if a unit fails convergence, never relax the gate); **non-blind** (no
+  preliminary real-corpus mixture exists). Observation model = **largest-remainder
+  rounding** of the per-bin aoristic-mass SPA to integer counts summing to N_eff
+  (prereg line 183), then `y ~ Multinomial(N_eff, p_mix)`. **Full-scope
+  supplementaries** (Shawn): aoristic-MC (Decision 28) on **all 26 units** + the
+  Dirichlet-multinomial and rescaled-NegBin model-comparison fits (Decision 19);
+  pin N_MC ∈ [20,50] + the 1.5× divergence flag in the design artefact.
+  **Parallelism capped at 12 physical cores** (`n_jobs=12`, `taskset -c 0-11`,
+  `PYTENSOR_FLAGS=mode=FAST_RUN,allow_gc=False`; 2026-05-22 SMT lesson). ~800 fits,
+  ~1 h parallelised.
+
+### Audit-driven additions the launch spec must also fold in (2026-06-05 audit)
+
+- **Template-dictionary empirical scan — PREREQUISITE** (audit A2; Decision 20;
+  prereg line 202). Scan LIRE exact-match interval templates; include templates with
+  N ≥ a threshold to be **pinned from the empirical template-frequency distribution**
+  and committed as the design artefact **before** the real-data mixture fit. The
+  recovery grid used synthetic/proxy bases; no real-LIRE three-tier mixture has run.
+- **Trapezoidal-aoristic sensitivity** (audit C11) on the empire SPA + every
+  H3-eligible subset (empire r = 0.94 < 0.95 already trips "report alongside
+  uniform").
+- **H2.2 / H2.3 / H2.4 consistency checks + empire-α descriptive context** (audit
+  C13–C16) — all off the same real-data fit.
+- Latin-province focus (Decision 36) shapes the unit set; production model =
+  `build_model_f1_f3` (Decision 35).
+
+### Next-session actions (the H2.1 prep arc)
+
+1. Template-dictionary empirical scan (propose + commit the N-threshold design
+   artefact). 2. Write the H2.1 launch spec from D1–D6 + the audit additions →
+   Shawn sign-off. 3. Launch H2.1 on sapphire. (Separately, Shawn: draft + lodge
+   **OSF Amendment 02** — Latin-primary frame + 39-vs-41 reconciliation.)
