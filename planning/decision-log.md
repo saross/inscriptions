@@ -3410,3 +3410,86 @@ existing talk-prep H3a up to preregistered confirmatory standard (canonical
 paper's headline confirmatory result, which is nearly in hand and independent of
 the harder mixture build. Next artefact: an audit of the talk-prep H3a code against
 the prereg, then the H3a confirmatory launch spec for sign-off.
+
+## Decision 36 — 2026-06-05: Latin-speaking provinces are the first-class frame for hypothesis-testing; empire-wide is secondary/context (→ OSF Amendment 02)
+
+**Status:** committed; **reshapes the primary analysis frame → requires OSF
+Amendment 02** (Shawn approved 2026-06-05). The Latin-primary confirmatory results
+are **amendment-gated**: no Latin-primary confirmatory claim leaves the repository
+until Amendment 02 is lodged (standing amendment-gate rule, memory
+`2026-05-26-40ce5927fddc`). The empire-wide H3a result remains within the original
+lodged prereg's "all cities" text and is retained as secondary/context.
+**Decided by:** Shawn 2026-06-05, reviewing the H3a confirmatory result (Latin-only
+`f_within` 0.480 vs empire-wide 0.299) against the dataset-coverage rationale.
+
+### Context
+
+The H3a blind run showed the within-province population effect is markedly stronger
+on the Latin-province subset (`f_within` 0.480, β_within 0.733; 817 cities / 39
+provinces) than empire-wide (0.299, β_within 0.587; 1,044 cities / 56 provinces).
+More importantly, there is a **coverage confound** in the empire-wide frame: the
+dataset is **LIRE — "Latin Inscriptions of the Roman Empire"**, drawn from the
+larger **LIST — "Latin Inscriptions through Space and Time"**. In Greek-speaking
+provinces, Latin inscriptions are a distinct minority, so LIRE captures only a
+non-representative Latin slice of those provinces' epigraphic production; Greek
+epigraphic coverage is inconsistent and **new Greek datasets are in production**.
+Empire-wide hypothesis-testing therefore mixes well-covered Latin provinces with
+poorly-covered Greek ones — a confound for any claim about epigraphic *production*.
+
+Note the irony: the prereg's stale parenthetical "~815 cities" figure **was** the
+Latin-province filter (the 2024-notebook province→language map). So the Latin frame
+was latent in the prereg's own number; the over-broad "all cities" text (1,044) was
+the reading that introduced the confound. Shawn: "it should have been specified in
+the original prereg, I just missed it."
+
+### Decision
+
+1. **Latin-speaking provinces are the primary / first-class frame** for the
+   hypothesis-testing analyses — **H3a (primary), H3b, H3c, and SR1**. Empire-wide
+   results are reported as **secondary / context**, with the coverage caveat stated.
+2. **Unit = Latin-speaking provinces, not Latin-only inscriptions.** Latin-only
+   *inscriptions* was considered but rejected for now (bilingual / mixed contexts,
+   language-classification noise, and it abandons the provincial-coverage logic that
+   is the actual motivation). The province-level frame is chosen; the **primary
+   rationale is coverage** (the dataset is approximately complete for Latin
+   provinces, incomplete for Greek ones). Operational definition: the
+   province→language map at
+   `runs/2026-06-04-h3a-confirmatory/data/province-language-map.csv` (39 Latin
+   provinces / 817 cities; to be promoted to a first-class tracked artefact).
+3. **Rerun H3c + SR1 on the Latin subset.** The Latin H3a `f_within` (0.480) is
+   already computed (blind-run Sensitivity B); H3c (Moran's I on Latin residuals)
+   and SR1 (OLS log-log on Latin) are the outstanding pieces — cheap, off the
+   existing Latin posterior (`idata-latin.nc` on sapphire). Run as the focused
+   follow-up that finalises the cross-sectional track under the Latin frame.
+4. **The H2.1 temporal track also focuses on Latin provinces** — informs the H2.1
+   unit-set open decision (do not spend the mixture on Greek-province units whose
+   coverage is the confound).
+
+### Consequences
+
+- **OSF Amendment 02** (to draft): reframe the primary hypothesis-testing frame to
+  Latin-speaking provinces; H3a/H3b/H3c/SR1 primary-on-Latin; empire-wide secondary
+  with the coverage caveat. Justification strengthened by the prereg's own ~815
+  (Latin) figure. Until lodged, the Latin-primary numbers stay "preliminary".
+- **Empire-wide H3a (`f_within` 0.299) is verified and retained as secondary/
+  context** — within the original lodged prereg text, so not itself amendment-gated.
+- **Latin-frame headline (preliminary, pending Amendment 02 + the Latin H3c/SR1
+  rerun):** `f_within` 0.480 [0.401, 0.566], β_within 0.733 [0.648, 0.820].
+- **The province→language map becomes a first-class artefact** (it defines the
+  frame); copy it from the run dir to a tracked, documented location.
+- The flexible-dispersion model refinement (a separate future improvement) is logged
+  in the backlog (Phase 3).
+
+### Provenance / links
+
+- H3a REPORT: `runs/2026-06-04-h3a-confirmatory/outputs/REPORT.md` (Sensitivity B).
+- Frame definition: `runs/2026-06-04-h3a-confirmatory/data/province-language-map.csv`.
+- Upstream: Decision 22 (date-window counts); Decision 35 + addendum (model + H3a-first).
+- Downstream: OSF Amendment 02 (to draft); the Latin H3c/SR1 rerun task.
+
+### Revisit triggers
+
+- The in-production Greek datasets arrive and materially improve Greek-province
+  coverage — would reopen the empire-wide frame as a defensible primary.
+- The Latin-only-*inscriptions* frame is revisited if the bilingual / classification
+  issues prove tractable and a reviewer presses for it.
