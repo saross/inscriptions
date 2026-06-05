@@ -162,6 +162,21 @@ Order: letter-count probe (in flight) → H2 → H3a (with brms shadow + varianc
 
 ---
 
+## Deferred PREREGISTERED §5 / sensitivity batch (post-H2.1) — from the 2026-06-05 completeness audit
+
+Per Shawn's 2026-06-05 instruction: **defer to post-H2.1**, recorded here so a future session can run them as a batch. These are **preregistered** §5 exploratory / sensitivity obligations that the 2026-06-05 prereg-completeness audit found UNACCOUNTED (pre-specified, no artefact). **The durable per-item register — with prereg line references, type, and status — is `planning/prereg-obligations-audit-2026-06-05.md`** (audit items B4, C11, D11, D12, D13, H5, H7). Several depend on the real-data mixture or the finalised Latin H3a, so they sit naturally after the H2.1 run.
+
+1. [ ] **Hanson-population measurement-error sensitivity** (audit D11; §5; Decision 26/B9): re-fit H3a with a lognormal ME layer on `log_pop`, σ_pop ∈ {0.1, 0.2, 0.3}; report `f_within` per σ_pop; material-divergence flagged (no amendment). Cheap; run on the Latin-primary + empire frames.
+2. [ ] **Scaling-residual sensitivity for H3a** (audit D12; §5 line 380): per-city residuals from a fitted power-law inscriptions ∝ pop^β; re-run H3a on residuals.
+3. [ ] **§5 temporal habit-removed residual trajectory analysis** (audit H5; §5 lines 358–364; Decision 13): habit-decomposition + foundation-date / independent-anchor validation (epigraphic-habit-lag estimate) — DISTINCT from the small-N trajectory work (Layer A, done). No run exists.
+4. [ ] **§5 per-decadal chronological resolution of H3c residuals** (audit H7; §5 line 384).
+5. [ ] **Phase-1 stratified-sampling sensitivity** (audit B4; §5 line 357): recompute Phase-1 thresholds under province-/city-proportional draws; report deltas to the bootstrap primary. Low-stakes; post-hoc replay from persisted parquet.
+6. [ ] **α-as-translator sensitivity for H3a** (audit D13; §5 line 382): per-city posterior mixture α as an NBR covariate, N ≥ 100 cities — **needs the H2.1 mixture's per-city α**, so genuinely post-H2.1.
+
+The **trapezoidal-aoristic sensitivity** (audit C11) is also outstanding — and partly tripped (empire-SPA Pearson r = 0.94 < 0.95 already obliges "report trapezoidal alongside uniform") — but it is folded into the **H2.1 launch spec** (run on the empire SPA + every H3-eligible subset), not this deferred batch.
+
+---
+
 ## Tertiary / future-work analyses (not preregistered)
 
 Logged for later consideration. Not part of the 2026-05-19 OSF lodgement; would be filed as post-lodgement OSF amendments or as follow-up paper material if pursued.
