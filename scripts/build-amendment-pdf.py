@@ -100,11 +100,27 @@ def render_frontmatter(frontmatter_lines: list[str]) -> str:
     return "\n".join(rendered) + "\n\n---\n\n"
 
 
-def build_pdf(md_path: Path) -> Path:
+def extract_title(frontmatter_lines: list[str], fallback: str) -> str:
+    """Return the ``title`` value from the frontmatter, else ``fallback``.
+
+    Lets one builder serve every amendment: the PDF metadata title is taken from
+    the markdown's own ``title:`` field rather than hard-coded per amendment.
+    """
+    for line in frontmatter_lines:
+        key, sep, value = line.partition(":")
+        if sep and key.strip() == "title":
+            return value.strip().strip('"').strip("'")
+    return fallback
+
+
+def build_pdf(md_path: Path, title: str | None = None) -> Path:
     """Transform frontmatter and invoke Pandoc to produce the PDF.
 
     Args:
         md_path: Path to the amendment markdown file.
+        title: Override for the PDF metadata title. If ``None``, the title is
+            taken from the markdown frontmatter's ``title:`` field, falling back
+            to the Amendment 01 string for backward compatibility.
 
     Returns:
         The path to the generated PDF.
@@ -117,6 +133,10 @@ def build_pdf(md_path: Path) -> Path:
 
     md_text = md_path.read_text(encoding="utf-8")
     frontmatter_lines, body = split_frontmatter(md_text)
+    if title is None:
+        title = extract_title(
+            frontmatter_lines, "OSF Amendment 01 — Two-measure framework"
+        )
     transformed = render_frontmatter(frontmatter_lines) + body
 
     pdf_path = md_path.with_suffix(".pdf")
@@ -144,7 +164,7 @@ def build_pdf(md_path: Path) -> Path:
             "urlcolor=blue",
             f"--include-in-header={header_tex}",
             "--metadata",
-            "title=OSF Amendment 01 — Two-measure framework",
+            f"title={title}",
             "-o",
             str(pdf_path),
         ]
@@ -161,13 +181,17 @@ def main() -> None:
     """Parse arguments and build the amendment PDF."""
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("markdown", type=Path, help="Path to the amendment .md file")
+    parser.add_argument(
+        "--title", default=None,
+        help="PDF metadata title (default: the markdown's own title: frontmatter).",
+    )
     args = parser.parse_args()
 
     md_path: Path = args.markdown
     if not md_path.exists():
         sys.exit(f"markdown not found: {md_path}")
 
-    pdf_path = build_pdf(md_path)
+    pdf_path = build_pdf(md_path, title=args.title)
     print(f"Built {pdf_path} ({pdf_path.stat().st_size:,} bytes)")
 
 
