@@ -1,0 +1,67 @@
+{
+  "unit": "inscription",
+  "base_seed": 20260606,
+  "pilot_proxy": [
+    0.55,
+    0.3,
+    0.15
+  ],
+  "started_at": "2026-06-06 04:45:26",
+  "total_cells": 8,
+  "n_jobs": 8,
+  "n_replicates_per_cell": 100,
+  "design_path": "runs/2026-06-06-convention-basis-redesign/design.json",
+  "completed_cells": [
+    {
+      "cell_id": "shape=rise_and_fall_alpha=0.95_tier=multicentury_heavy_N=2000",
+      "alpha_coverage": 1.0,
+      "median_pearson_r_pgen": 0.5659014797776042,
+      "mean_fit_seconds": 15.614200975894928
+    },
+    {
+      "cell_id": "shape=flat_baseline_alpha=0.95_tier=multicentury_heavy_N=2000",
+      "alpha_coverage": 0.99,
+      "median_pearson_r_pgen": NaN,
+      "mean_fit_seconds": 16.02034154653549
+    },
+    {
+      "cell_id": "shape=regnal_cluster_alpha=0.95_tier=multicentury_heavy_N=2000",
+      "alpha_coverage": 1.0,
+      "median_pearson_r_pgen": 0.3362218316063723,
+      "mean_fit_seconds": 16.50620719909668
+    },
+    {
+      "cell_id": "shape=bimodal_alpha=0.95_tier=multicentury_heavy_N=2000",
+      "alpha_coverage": 1.0,
+      "median_pearson_r_pgen": 0.283380396532563,
+      "mean_fit_seconds": 16.559047338962554
+    },
+    {
+      "cell_id": "shape=rise_and_fall_alpha=0.95_tier=multicentury_heavy_N=10000",
+      "alpha_coverage": 0.81,
+      "median_pearson_r_pgen": 0.8381577645655083,
+      "mean_fit_seconds": 18.09400009393692
+    },
+    {
+      "cell_id": "shape=flat_baseline_alpha=0.95_tier=multicentury_heavy_N=10000",
+      "alpha_coverage": 0.99,
+      "median_pearson_r_pgen": NaN,
+      "mean_fit_seconds": 19.27958925962448
+    },
+    {
+      "cell_id": "shape=bimodal_alpha=0.95_tier=multicentury_heavy_N=10000",
+      "alpha_coverage": 0.99,
+      "median_pearson_r_pgen": 0.5605265355432452,
+      "mean_fit_seconds": 21.120621693134307
+    },
+    {
+      "cell_id": "shape=regnal_cluster_alpha=0.95_tier=multicentury_heavy_N=10000",
+      "alpha_coverage": 0.97,
+      "median_pearson_r_pgen": 0.8161193010488834,
+      "mean_fit_seconds": 22.69115519285202
+    }
+  ],
+  "failed_cells": [],
+  "finished_at": "2026-06-06 05:23:56",
+  "total_wall_seconds": 2310.1085619926453
+}

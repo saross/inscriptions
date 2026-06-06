@@ -1,0 +1,10 @@
+[orch] unit=inscription launching grid: 8 cells x 100 replicates; n_jobs=8; cores_per_fit=1; n_chains=4; n_draws=2000; n_tune=1000; target_accept=0.95
+[orch] inscription progress: 1/8  completed=1  failed=0  elapsed=1606s  per-cell=1606s  remaining~1405s (0.39h)
+[orch] inscription progress: 2/8  completed=2  failed=0  elapsed=1644s  per-cell=822s  remaining~617s (0.17h)
+[orch] inscription progress: 3/8  completed=3  failed=0  elapsed=1694s  per-cell=565s  remaining~353s (0.10h)
+[orch] inscription progress: 4/8  completed=4  failed=0  elapsed=1698s  per-cell=425s  remaining~212s (0.06h)
+[orch] inscription progress: 5/8  completed=5  failed=0  elapsed=1852s  per-cell=370s  remaining~139s (0.04h)
+[orch] inscription progress: 6/8  completed=6  failed=0  elapsed=1970s  per-cell=328s  remaining~82s (0.02h)
+[orch] inscription progress: 7/8  completed=7  failed=0  elapsed=2154s  per-cell=308s  remaining~38s (0.01h)
+[orch] inscription progress: 8/8  completed=8  failed=0  elapsed=2310s  per-cell=289s  remaining~0s (0.00h)
+[orch] inscription grid run complete: 8 ok, 0 failed, wall=2310s (0.64h)

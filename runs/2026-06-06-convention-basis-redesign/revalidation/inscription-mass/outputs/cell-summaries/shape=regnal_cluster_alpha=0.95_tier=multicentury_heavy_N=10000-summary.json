@@ -1,0 +1,28 @@
+{
+  "cell_id": "shape=regnal_cluster_alpha=0.95_tier=multicentury_heavy_N=10000",
+  "shape_name": "regnal_cluster",
+  "alpha_true": 0.95,
+  "tier_weights_name": "multicentury_heavy",
+  "tier_weights_true": [
+    0.1,
+    0.1,
+    0.8
+  ],
+  "n": 10000,
+  "unit": "inscription",
+  "n_replicates": 100,
+  "alpha_coverage": 0.97,
+  "alpha_coverage_pass": true,
+  "median_pearson_r_pgen": 0.8161193010488834,
+  "mean_pearson_r_pgen": 0.7939732095874532,
+  "pearson_r_pass": false,
+  "median_wasserstein_1_pgen": 22.689685420708088,
+  "convergence_pass_rate": 1.0,
+  "n_divergences_total": 0,
+  "mean_fit_seconds": 22.69115519285202,
+  "per_tier_coverage": [
+    0.99,
+    0.98,
+    0.99
+  ]
+}

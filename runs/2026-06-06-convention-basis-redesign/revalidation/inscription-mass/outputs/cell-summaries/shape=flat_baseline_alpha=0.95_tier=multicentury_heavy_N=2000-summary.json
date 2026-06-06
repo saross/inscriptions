@@ -1,0 +1,28 @@
+{
+  "cell_id": "shape=flat_baseline_alpha=0.95_tier=multicentury_heavy_N=2000",
+  "shape_name": "flat_baseline",
+  "alpha_true": 0.95,
+  "tier_weights_name": "multicentury_heavy",
+  "tier_weights_true": [
+    0.1,
+    0.1,
+    0.8
+  ],
+  "n": 2000,
+  "unit": "inscription",
+  "n_replicates": 100,
+  "alpha_coverage": 0.99,
+  "alpha_coverage_pass": true,
+  "median_pearson_r_pgen": NaN,
+  "mean_pearson_r_pgen": NaN,
+  "pearson_r_pass": false,
+  "median_wasserstein_1_pgen": 17.366684662625758,
+  "convergence_pass_rate": 1.0,
+  "n_divergences_total": 0,
+  "mean_fit_seconds": 16.02034154653549,
+  "per_tier_coverage": [
+    1.0,
+    0.99,
+    0.97
+  ]
+}
