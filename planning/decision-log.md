@@ -3573,3 +3573,175 @@ repo as confirmatory until it is lodged.
    artefact). 2. Write the H2.1 launch spec from D1–D6 + the audit additions →
    Shawn sign-off. 3. Launch H2.1 on sapphire. (Separately, Shawn: draft + lodge
    **OSF Amendment 02** — Latin-primary frame + 39-vs-41 reconciliation.)
+
+---
+
+## Decision 38 — 2026-06-06: Convention component is an empirical calendar-slab basis (no reign tier); reigns/dynasties/events are genuine-but-aoristic; fine-grained brackets ride as a sensitivity band; recovery re-validation + OSF amendment gate the H2.1 fit
+
+**Status:** committed (design decision). **Supersedes** Decision 20's tier typing
+(century / half-century / **reign**) and, specifically, the reign-interval-slab
+*convention* tier. **Refines** Decision 37 (the H2.1 launch spec must be rewritten
+around this, and the launch is now additionally gated on the recovery
+re-validation below).
+**Decided by:** Shawn 2026-06-06, in an extended decision-by-decision walkthrough
+with CC. Grounded by: the template-dictionary scan (`runs/2026-06-05-template-dictionary/`,
+commit `6d8950f`); a source re-read of the F1/F2_Other/F3/Tight/Big family
+classifier and of `build_model_f1_f3` / `build_tier_basis`; the Stage-1 empirical
+`p_conv` 9-slab decomposition (`runs/2026-05-24-empirical-pconv/`); and a
+verified lit-scout on epigraphic dating practice (report
+`/tmp/lit-scout-verifier/report-20260605-224611.md`; key works below).
+
+### Context
+
+- **The curated 3-tier basis is empirically inadequate (Decision 20 revisit
+  trigger fired).** The template-dictionary scan found multi-century slabs are
+  ~31 % of the F1+F3 convention pool and were **entirely absent** from the curated
+  century / half-century / reign dictionary (the single most frequent template
+  corpus-wide is `[301, 500]`, 8.8 %); reign templates are only ~2.7 %. The
+  recovery grid (Grid A 98.6 %) ran on **synthetic proxy** tier weights over the
+  curated basis — no real-LIRE three-tier mixture has ever been fit.
+- **What the production model actually is.** `cell_lib.build_model_f1_f3` learns
+  `tier_weights ~ Dirichlet` over a fixed `tier_basis`; it does **not** use the
+  family classifier, and Decision 35 retired the empirical-Bayes fixed-`p_conv`
+  redesign (the Stage-1/2 empirical estimates survive only as descriptive context
+  + the optional empire-level EB sensitivity, Decision 37 D4). The Stage-1
+  decomposition already splits F1+F3 into 9 width-based slab-types and already
+  **excludes** reigns (F2_Other) — i.e. it already embodies the principle below,
+  but on the population the production basis should adopt.
+- **The reign contradiction.** The lodged prereg + Decision 20 place a
+  reign-interval slab tier *inside* `p_conv` (convention). This contradicts (a)
+  the family classifier, which holds reigns out as F2_Other ("signal-but-aoristic"),
+  and (b) the conceptual reality. The classifier itself splits reigns
+  inconsistently by width-accident: `[117, 138]` (Hadrian) → F2_Other (held out),
+  but `[161, 180]` (Marcus, decade-aligned) → F3 (convention). No prior decision or
+  amendment resolved this.
+- **The grid-quantisation model of "convention" (the conceptual core).**
+  Convention is **not** signal-free. Every recorded date carries evidential
+  anchoring (Cooley 2012 — letterforms, onomastics/prosopography, formulae,
+  consular dates, find-context). What makes a date *conventional* is the
+  **arbitrary rounding of genuine-but-coarse evidence onto the BC/AD calendrical
+  lattice** (centuries, half-centuries). That snapping introduces two artefacts:
+  (i) **per-inscription distortion** — a true off-grid range (e.g. a letterform in
+  use ~AD 178–323, perhaps trapezoidally) is truncated/shifted to a round century
+  (`[200, 299]`) and flattened to uniform-within-bin; and (ii) **cross-inscription
+  artificial alignment** — many different true distributions snap to the *same*
+  bin, manufacturing the plateau-step pile-ups at century boundaries that the SPA
+  shows. The discriminator between convention and genuine is therefore **grid-
+  snapping (observable as grid-alignment)**, not criterion-type (which was dropped
+  from LIRE — `raw_dating` preserves only the numeric range). This is distinct
+  from radiocarbon SPD (genuine measurement/calibration uncertainty; no arbitrary
+  rounding), and is likely **shared with ceramic typological dating** (round-period
+  pinning) — which strengthens the methods-bridge framing.
+
+### Options considered (tier structure)
+
+- **A — keep the curated 3 tiers (century / half-century / reign).** Rejected:
+  empirically broken (no home for the ~31 % multi-century mass; over-weights reign).
+- **B — expand to ~5 typed tiers.** Faithful but changes the learned-weight count
+  → full recovery re-validation and a larger amendment.
+- **C — single combined fixed-shape convention (estimate α only).** Most
+  parsimonious but discards the prereg-committed learned tier weights.
+- **D — empirical calendar-slab basis grouped to ~3 structural tiers (chosen).**
+  Adopts the Stage-1 slab shapes, drops the reign tier, keeps the learned-weight
+  count near the recovery-validated 3.
+
+### Decision
+
+1. **Historical-anchor principle (generalisable).** Date assignments tied to real
+   historical events — **reigns, dynasties, datable events** — are
+   **genuine-but-aoristic** ("Flavian" carries signal that "second half of the
+   first century" does not). Pure calendar-segment rounding (Nth century /
+   half-century / quarter-century / decade-window) is **convention**. Year-precise
+   `[t, t]` remain genuine (unchanged).
+2. **Grid-quantisation reframing.** Reframe the artefact (prereg/paper §2) as
+   *genuine-but-coarse evidence quantised onto the BC/AD calendar grid*, not
+   "editorial rounding ≈ no information"; retire the last trace of the
+   "midpoint-spike" story. Redescribe `p_gen` as *"the temporal distribution with
+   the calendar-grid quantisation removed"* — and state the honest limit: the
+   method **un-snaps the collective** (removes the aggregate boundary pile-ups and
+   flat-within-bin shape under the GRW smoothness prior); it does **not**
+   reconstruct any single inscription's true off-grid latent distribution.
+3. **Convention basis = empirical calendar slab-types**, built frequency-weighted
+   from the F1+F3 **calendar** population (quarter / half / century / 1.5- / 2- /
+   3-century + calendar decade-windows), with reign/dynasty/event intervals
+   **removed via a curated historical-anchor interval list** so the split is
+   **non-width-accidental** (this fixes the `[161, 180]`-type leak). **No reign
+   tier** — reign/dynasty/event mass has no matching basis slab and flows to
+   genuine.
+4. **Tier grouping for the learned weights: ~3 structural tiers** (e.g. sub-century
+   / century / multi-century), not 9 free weights — the multi-century plateaus are
+   collinear and the recovery-hard case. The exact count is **settled by the
+   re-validation** (a tight `Dirichlet(η·w_empirical)` over 9 shapes is the
+   alternative the re-validation can test).
+5. **Decadal + quarter-century brackets = sensitivity band** (~4–5 % of the
+   corpus), not a hard classification: they are grid-snapped (convention side) but
+   **low-distortion** (fine grid), so deconvolving vs not barely moves the result.
+   Report both as a robustness band (the ceramics stacked-band idiom).
+   *Empirical confirmation:* the event-leak into convention is ~0.1 % (essentially
+   `[161, 180]`/`[161, 200]`); F2_Other (9.6 %) already correctly holds the
+   reign/dynasty/event content out.
+6. **Recovery RE-VALIDATION required before H2.1.** Grid A's 98.6 % validated the
+   *old* basis shapes and does **not** transfer to a multi-century-bearing basis (a
+   long flat envelope-edge plateau is confusable with genuine quiescence —
+   plausibly *harder* to recover). Re-generate synthetics from the new empirical
+   basis; run an **α = 0.95 × multi-century × peaked-genuine stress-triage first**,
+   then the full grid only if it passes.
+7. **Novelty positioning (verified).** The bracket-level convention-vs-genuine
+   deconvolution **survives a verified forward-citation pre-emption chain** from
+   Crema 2025. **Cite-and-distinguish** the nearest competitor — Tobalina-Pulido &
+   Martín-Rodilla 2026 (`10.5334/jcaa.220`), a fuzzy-logic framework that
+   *quantifies/propagates* inherited dating uncertainty but does **not** deconvolve
+   convention from genuine spread. Method-level warrant: **Crema 2025**
+   (`10.1111/arcm.12984`, Bayesian critique of the uniform-aoristic assumption).
+   Dating-method authority: **Cooley 2012** (`10.1017/cbo9781139020442`); current
+   inscription-dating monograph **Hartmann 2025** (`10.46771/978-3-96769-729-2`).
+8. **OSF amendment required before the H2.1 fit.** Redefining the convention typing
+   (→ calendar-slab, no reign tier), the basis-construction method, and the
+   reign→genuine reclassification is a substantive model-structure change.
+   **Separable from Amendment 02** (Latin-primary frame): the signed-off
+   cross-sectional results use date-window counts, not mixture output (audit C16 /
+   Decision 35 addendum), so Amendment 02 can lodge independently while the
+   convention-model change rides its own amendment before H2.1.
+
+### Consequences
+
+- The H2.1 launch spec (Decision 37) is rewritten around this basis; the launch
+  gate becomes **template-dictionary scan (done) → curated historical-anchor list →
+  empirical calendar-slab basis (grouped ~3) → recovery re-validation (stress-triage
+  → full grid) → OSF amendment → Shawn sign-off**.
+- New work: (a) build the curated historical-anchor interval list (small; drawn
+  from the F2_Other set + the calendar-aligned leaks); (b) rebuild the tier basis
+  empirically (calendar slabs only, frequency-weighted, grouped ~3); (c) re-run
+  recovery.
+- The **EDH dating-criteria enrichment** (re-joining criteria via `EDH-ID`) is the
+  empirical gold standard for the convention/genuine line but is **parked** pending
+  the SDAM reply (Shawn queried them 2026-06-05 re: why the criteria were dropped
+  from LIRE). It is a *citation-of-data* situation — no DOI'd EDH taxonomy paper
+  exists; cite the EDH data dump + a methodology chapter.
+- §2 reframed (grid-quantisation); the trapezoidal-aoristic sensitivity (Decision 4
+  / audit C11) is the adjacent within-interval-shape question and remains in the
+  launch spec.
+
+### Revisit triggers
+
+- The recovery re-validation fails at the new basis (poor α-recovery at the
+  multi-century stress cells) → reconsider tier count/structure (fewer tiers;
+  tighter empirical-anchored Dirichlet; or move the hardest multi-century shapes to
+  a fixed component).
+- The SDAM reply enables the EDH-criteria enrichment → the direct dating-criteria
+  classification may supersede the grid-alignment heuristic.
+- A deeper pre-emption chain or peer review surfaces a genuine prior bracket-level
+  convention/genuine deconvolution → revisit the novelty framing.
+
+### References
+
+- `runs/2026-06-05-template-dictionary/` (scan; commit `6d8950f`);
+  `runs/2026-05-24-empirical-pconv/` (Stage-1 9-slab decomposition);
+  `runs/2026-05-26-recovery-grid-two-unit/code/cell_lib.py`
+  (`build_model_f1_f3`, `build_tier_basis`).
+- Decisions 4, 19, 20, 33, 34, 35, 37; prereg §3 lines 196–210, §2 line 25.
+- Verified lit-scout report `/tmp/lit-scout-verifier/report-20260605-224611.md`;
+  BibTeX `/tmp/lit-scout-bibtex-20260605-224611.bib`. Key citations: Crema 2025
+  (`10.1111/arcm.12984`), Cooley 2012 (`10.1017/cbo9781139020442`), Hartmann 2025
+  (`10.46771/978-3-96769-729-2`), Tobalina-Pulido & Martín-Rodilla 2026
+  (`10.5334/jcaa.220`).
