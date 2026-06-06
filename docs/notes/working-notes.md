@@ -2091,3 +2091,56 @@ Restricting the cross-sectional analyses to Latin-speaking provinces (Decision 3
 ### Findable later
 
 `latin-provinces`, `coverage-confound`, `f-within`, `sr1`, `hanson-scaling`, `decision-36`, `amendment-02`, `lire`, `greek-provinces`, `within-province`, `frame-choice`, `0-505-vs-0-672`
+
+## Obs 76 — 2026-06-06 [METHODOLOGY / CORRECTION]: template-dictionary empirical scan fires Decision 20's revisit trigger — curated 3-tier basis is empirically inadequate; multi-century slabs dominate the convention pool and were entirely absent from the dictionary; recovery re-validation now gates H2.1
+
+The H2.1 prerequisite scan (prereg line 202; Decision 20; audit A2; Decision 37 next-session action 1) was run on 2026-06-05 as `runs/2026-06-05-template-dictionary/` (commit `6d8950f`). It enumerates exact `[not_before, not_after]` templates from the LIRE corpus under the pre-registration empire filter (180,609 inscriptions; confirmed) and the Decision 36 Latin frame (109,646 inscriptions; confirmed). Year-precise `[t, t]` templates are excluded from the convention pool per Decision 20 (8,279 inscriptions, 4.58 % of empire corpus; remain in `genuine_SPA`).
+
+### The finding
+
+The curated 3-tier dictionary (century / half-century / reign, Decision 20) is **empirically broken** as a description of the real LIRE convention pool. Key numbers from the empire-frame category-mass table (`tables/category-mass.csv`):
+
+| category | templates | inscriptions | % of convention pool |
+|---|---:|---:|---:|
+| other | 4,328 | 59,762 | 34.68 % |
+| multi_century | 45 | 43,022 | 24.96 % |
+| century | 4 | 41,516 | 24.09 % |
+| half_century | 7 | 17,166 | 9.96 % |
+| bc_ad_boundary | 365 | 6,139 | 3.56 % |
+| reign | 71 | 4,725 | 2.74 % |
+
+Three structural failures of the curated basis:
+
+1. **Multi-century slabs (24.96 % of the full empire convention pool) were entirely absent from the curated dictionary.** The earlier empirical-Bayes Stage-1 analysis (`runs/2026-05-24-empirical-pconv/`) computed the same quantity over the 119,142 F1+F3 inscriptions specifically and found two_century + one_and_a_half_century + three_century = 35.93 % of the F1+F3 convention pool. The single most frequent template corpus-wide is `[301, 500]` (N = 15,926, 8.82 % of corpus) — a Late-Antique 200-year slab that deposits convention mass only on AD 301–350 (env-overlap = 0.25). No multi-century tier existed in Decision 20's dictionary to absorb any of this mass.
+
+2. **Reign templates are only 2.74 % of the empire convention pool** (N = 4,725 across 71 distinct reign-interval templates), meaning the curated basis — which gave reigns a full dedicated tier alongside century and half-century — grossly over-weighted their empirical contribution to convention mass.
+
+3. **The dominant templates by count** (top 3 from `tables/templates-empire.csv`): `[301, 500]` (8.82 %), `[101, 200]` (7.37 %), `[301, 400]` (6.01 %). The century class collectively accounts for ~24 %, and the multi-century class for ~25 % — the two are roughly equal, not a 3:1 hierarchy as the curated basis assumed.
+
+An important reconciliation: Decision 20's context (line 1671 of `planning/decision-log.md`) records "`[1, 100]` 26.3 % of corpus". The direct re-scan gives `[1, 100]` = 10,807 (5.98 %). The earlier ~26 % figure described the century-template *class* collectively, not `[1, 100]` alone — a stale specific the REPORT explicitly corrects.
+
+### Why this matters
+
+Decision 20's revisit trigger has fired: the tier structure needs revision before the H2.1 real-data mixture fit. **Decision 38** (commit `66e751a`, 2026-06-06) resolves this by replacing the curated 3-tier basis with an **empirical calendar-slab basis** grouped to ~3 structural tiers (no reign tier — reigns are genuine-but-aoristic and flow to `p_gen`). The reign contradiction is also resolved: the family classifier had been inconsistently placing some reign windows in F3 (convention) because their width happened to match decade-aligned templates — Decision 38 fixes this with a curated historical-anchor interval list, making the split non-width-accidental.
+
+The consequence for H2.1 is an additional gate: **Grid A's 98.6 % recovery PASS (355/360 cells; Obs 67 + Obs 70) was validated against the old curated basis with synthetic proxy tier weights — no real-LIRE three-tier mixture has ever been fit.** The new empirical basis changes the `tier_basis` the model learns weights over; the recovery simulation must be re-run against the new basis shapes before H2.1 can proceed. Recovery re-validation plus an OSF amendment gate the H2.1 fit (Decision 38).
+
+The Stage-1 9-slab `p_conv` decomposition (`runs/2026-05-24-empirical-pconv/`) already embodies the empirical-basis principle: it computed a frequency-weighted vector from the F1+F3 calendar population, already excluding reigns, and already found the two-century slab at 23.69 % and the three-century slab at 4.95 %. Decision 38 adopts this decomposition's population as the new basis, grouped into ~3 structural tiers.
+
+### Caveats / methodological notes
+
+The `[301, 500]` dominance reflects Late-Antique dating practice: the LIRE corpus extends to AD 500, and coarse 200-year slabs are the editors' default for uncertain late inscriptions. Its env-overlap = 0.25 means only one-quarter of the template's width falls inside the \[50 BC, AD 350\] operating envelope — but the mass it deposits on AD 301–350 is real convention signal that the curated basis was missing entirely.
+
+The `other` category (34.68 %) contains templates that fit none of the four named categories. PART 2 of the scan (tier-structure decision and `design.json` commit) must resolve how to handle these — candidate treatments include a fine-grid sensitivity band (Decision 38 D5 for decadal/quarter-century brackets) or a residual-band policy. The `other` total is dominated by templates like `[1, 79]` (N = 3,202), `[151, 250]` (N = 2,782), and `[71, 130]` (N = 2,220) that are neither clean calendar slabs nor reign windows.
+
+**On the ~31 % figure in Decision 38's context text (line 3598 of `planning/decision-log.md`)**: the decision text states "multi-century slabs are ~31 % of the F1+F3 convention pool". The source files give 24.96 % of the full empire convention pool (`tables/category-mass.csv`) and ~35.93 % of the F1+F3 pool specifically (two_century + one_and_a_half_century + three_century from `runs/2026-05-24-empirical-pconv/outputs/REPORT.md`). The ~31 % figure in the decision text does not reproduce from either source and should be treated as a rounded approximation in the decision narrative; the paper-load-bearing numbers are 24.96 % (full pool) and ~36 % (F1+F3 pool).
+
+### Related observations and artefacts
+
+**Obs 40** (2026-05-17 diagnostic triplet — the slab structure emerged from falsifying the anchor-year framing): records how the template-interval structure of Decision 20 was first established; this Obs documents the empirical test that shows that structure was itself incomplete. **Obs 54** (family classifier: F1_round + F3_periodic = 119,142 F1+F3 inscriptions; multi-century slabs are a substantial share of F1_round): the classifier whose F1+F3 pool is the basis for the empirical-pconv Stage-1 analysis this Obs cites. **Obs 55** (empirical-Bayes calibration-cohort pivot; Stage-1 9-slab `p_conv`): the Stage-1 analysis that first revealed the multi-century dominance in the F1+F3 pool and that the best curated-basis choice was L1 = 0.31 from empirical truth. **Obs 60** (letter-mass reshapes the editorial-template tier composition): the `pilot_proxy` tier-vector analysis that used the curated 3-tier basis — its weights are now known to be operating on a structurally inadequate basis. **Obs 67** (Grid A 98.6 % PASS under corrected criterion) + **Obs 70** (the 98.6 % is the revised headline after the zero-tolerance gate was corrected): the recovery-grid validation result that does NOT transfer to the new empirical basis and must be re-run. **Obs 69** (the late corpus AD ~142–347 is in the degraded-recovery zone): the `[301, 500]` slab found here deposits mass squarely in this zone, making the basis-inadequacy consequential for the recovery-relevant region. **Decision 38** (convention = empirical calendar-slab basis, no reign tier; recovery re-validation + OSF amendment gate H2.1): the decision this scan fired.
+
+**Artefacts**: `runs/2026-06-05-template-dictionary/outputs/REPORT.md`; `runs/2026-06-05-template-dictionary/outputs/tables/category-mass.csv`; `runs/2026-06-05-template-dictionary/outputs/tables/templates-empire.csv`; `runs/2026-06-05-template-dictionary/outputs/tables/templates-latin.csv`; `runs/2026-06-05-template-dictionary/outputs/tables/threshold-coverage.csv` (commit `6d8950f`). Decision 38 (commit `66e751a`). Decision 20 (`planning/decision-log.md`). `runs/2026-05-24-empirical-pconv/outputs/REPORT.md` (Stage-1 9-slab `p_conv`; anchor for the F1+F3 multi-century percentages).
+
+### Findable later
+
+`template-dictionary`, `template-dictionary-scan`, `h2.1-prereq`, `decision-20-revisit`, `curated-basis-inadequate`, `multi-century-slab`, `multi-century-absent`, `convention-pool`, `f1-f3-convention-pool`, `301-500`, `late-antique`, `200-year-slab`, `15926`, `8-82-percent`, `reign-tier`, `reign-overweighted`, `2-74-percent`, `24-96-percent`, `category-mass`, `tier-structure`, `no-reign-tier`, `decision-38`, `empirical-calendar-slab`, `recovery-revalidation`, `grid-a-does-not-transfer`, `98-6-percent-invalid-for-new-basis`, `h2.1-gate`, `osf-amendment`, `part-2-design-json`, `threshold-coverage`, `n-threshold`, `year-precise-excluded`, `empire-180609`, `latin-109646`, `template-enumeration`, `obs-40`, `obs-54`, `obs-55`, `obs-60`, `obs-67`, `obs-69`, `obs-70`, `6d8950f`, `66e751a`
