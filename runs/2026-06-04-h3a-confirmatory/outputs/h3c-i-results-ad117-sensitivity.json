@@ -4,7 +4,7 @@
   "capitals_csv": "provincial-capitals-ad117.csv",
   "source_of_capital_indicator": "Standard AD-117 (death of Trajan) province->capital set, cross-checked against the Barrington Atlas (Talbert 2000) place-identifications; fallback per brief because Hanson 2016 publishes the COUNT (40 capitals in AD 117, Fig. 120) but no extractable named list. See build_provincial_capitals.py docstring.",
   "residual_definition": "Pearson, r_c,s = (y_c - mu_c,s) / sqrt(mu_c,s + mu_c,s^2/phi_s) --- identical to H3c(ii) (04-h3c.py / 05-h3c-sr1-latin.py)",
-  "status": "PRELIMINARY --- pending sign-off; Latin frame pending OSF Amendment 02 (Decision 36 amendment-gate)",
+  "status": "CONFIRMATORY --- cross-sectional track signed off 2026-06-05 (Decision 37); Latin frame OSF Amendment 02 lodged 2026-06-06 (Decision 36 gate cleared)",
   "empire": {
     "frame": "empire",
     "confirmatory_rule": "P(contrast_s > 0) >= 0.95 over draws (draw-wise posterior contrast; NOT a t-test; Decision 23)",
@@ -62,7 +62,7 @@
       "Viminacium (1)",
       "Virunum"
     ],
-    "status": "PRELIMINARY --- pending Shawn's sign-off"
+    "status": "CONFIRMATORY --- signed off 2026-06-05 (Decision 37)"
   },
   "latin": {
     "frame": "latin",
@@ -109,6 +109,6 @@
       "Viminacium (1)",
       "Virunum"
     ],
-    "status": "PRELIMINARY --- pending Shawn's sign-off AND pending OSF Amendment 02 (Decision 36 amendment-gate)"
+    "status": "CONFIRMATORY --- signed off 2026-06-05 (Decision 37) AND OSF Amendment 02 lodged 2026-06-06 (Decision 36 gate cleared)"
   }
 }

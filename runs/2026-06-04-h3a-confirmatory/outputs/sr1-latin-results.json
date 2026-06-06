@@ -1,6 +1,6 @@
 {
   "frame": "latin (817 cities / 39 provinces)",
-  "status": "PRELIMINARY -- pending OSF Amendment 02 (Decision 36 amendment-gate)",
+  "status": "CONFIRMATORY -- OSF Amendment 02 lodged 2026-06-06 (Decision 36 gate cleared); cross-sectional track signed off 2026-06-05 (Decision 37)",
   "method": "OLS log-log: log(inscription_count) ~ log(urban_context_pop_est), unweighted, per-city (identical to 02-h3a-fit.py::ols_loglog)",
   "ols_loglog": {
     "intercept": -0.9051292330341213,

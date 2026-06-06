@@ -1,9 +1,10 @@
-# Latin-frame H3c + SR1 — REPORT (preliminary, pending OSF Amendment 02)
+# Latin-frame H3c + SR1 — REPORT (confirmatory; OSF Amendment 02 lodged 2026-06-06)
 
-**Status:** PRELIMINARY — pending **OSF Amendment 02**. Under Decision 36 the
-Latin-speaking-provinces frame is the new first-class hypothesis-testing frame,
-and it is **amendment-gated**: no Latin-primary confirmatory claim leaves the
-repository until Amendment 02 is lodged. Nothing here is "final".
+**Status:** CONFIRMATORY — **OSF Amendment 02 lodged 2026-06-06** (Decision 36
+gate cleared). Under Decision 36 the Latin-speaking-provinces frame is the new
+first-class hypothesis-testing frame; the cross-sectional track was signed off
+2026-06-05 (Decision 37). These Latin-primary results may now leave the
+repository as confirmatory.
 
 **Run:** `runs/2026-06-04-h3a-confirmatory/` · branch `main` · compute host
 `sapphire` · LIRE v3.0 · date window 50 BC – AD 350 (overlap).
@@ -160,6 +161,6 @@ the Decision-36 reframing:
   does not seed the permutation null). All point estimates, posterior-I
   intervals, R², and the verdict are identical across hosts.
 
-**Label:** all results above are **preliminary — pending OSF Amendment 02**
-(Decision 36 amendment-gate; the Latin frame is the new primary and is
-amendment-gated).
+**Label:** all results above are **confirmatory — OSF Amendment 02 lodged
+2026-06-06** (Decision 36 gate cleared; cross-sectional track signed off
+2026-06-05, Decision 37).

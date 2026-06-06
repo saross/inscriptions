@@ -1,6 +1,6 @@
-# H3c(i) — provincial-capital residual contrast — REPORT (preliminary)
+# H3c(i) — provincial-capital residual contrast — REPORT (confirmatory)
 
-**Status:** PRELIMINARY — pending Shawn's sign-off. The **Latin frame** is additionally **pending OSF Amendment 02** (Decision 36 amendment-gate); nothing here is final.
+**Status:** CONFIRMATORY — cross-sectional track signed off 2026-06-05 (Decision 37); the **Latin frame**'s **OSF Amendment 02 lodged 2026-06-06** (Decision 36 gate cleared).
 
 **What this closes.** The 2026-06-05 preregistration-completeness audit (`planning/prereg-obligations-audit-2026-06-05.md`, F1) found that **H3c(i) — a binding confirmatory test — had never been run**: the H3a confirmatory run computed only H3c(ii) Moran's I. This report runs it, on both frames, off the existing H3a posteriors (no re-fit). It also answers secondary question **SR2(i)** (do provincial capitals over-produce inscriptions?).
 
@@ -34,4 +34,4 @@ Posterior-mean Pearson residuals (OXREP primary): capitals **+0.91** (empire) / 
 - Code: `code/06-h3c-i-capital-contrast.py` (parametrised: `--capitals-csv`, `--label`); `code/build-provincial-capitals-oxrep.py`; `code/build-provincial-capitals-ad117.py`.
 - Indicators: `data/processed/provincial-capitals.csv` (OXREP primary); `data/processed/provincial-capitals-ad117.csv` (sensitivity). Source data: `data/hanson2016_*_oxrep.csv` (OXREP, downloaded 2026-06-05).
 - Results: `outputs/h3c-i-results-oxrep-primary.json`, `outputs/h3c-i-results-ad117-sensitivity.json`. Posteriors: `outputs/idata-{primary,latin}.nc` (sapphire; no re-fit).
-- **Label:** preliminary — pending sign-off; Latin frame pending OSF Amendment 02.
+- **Label:** confirmatory — signed off 2026-06-05 (Decision 37); Latin frame's OSF Amendment 02 lodged 2026-06-06.
