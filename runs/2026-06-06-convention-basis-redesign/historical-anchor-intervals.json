@@ -1,0 +1,56 @@
+{
+  "artefact_id": "2026-06-06-historical-anchor-intervals",
+  "schema_version": "1.0",
+  "decision": 38,
+  "purpose": "Curated list of date-interval templates tied to real historical anchors (imperial reigns, dynasties, datable events). Per Decision 38 (historical-anchor principle) these carry genuine evidential signal ('Flavian' means something that 'second half of the first century' does not) and are therefore classified genuine-but-aoristic, NOT editorial convention. The list is used to (a) strip width-accidental reign/event leaks from the F1+F3 convention pool so the convention/genuine split is non-width-accidental, and (b) define the genuine-but-aoristic class for reporting.",
+  "scope_note": "Under the Decision 38 / Option-2 basis (fine brackets EXCLUDED from primary convention), the only empirical leaks ([161,180] and [161,200]) both fall in the fine-bracket widths (19, 39) that are already excluded from the primary p_conv. Hence this list's NUMERICAL role is confined to the add-the-fine-brackets-back SENSITIVITY variant: when fine brackets are moved into convention for the robustness band, anchor-matching intervals are first stripped so the sensitivity test adds only genuine calendar windows, not reign-anchored ranges. The 5 core slabs (widths 49/99/149/199/299) are anchor-clean by construction (zero canonical-reign matches at those widths under 25-year alignment; verified 2026-06-06).",
+  "match_rule": {
+    "endpoint_tolerance_years": 1,
+    "rule": "An inscription template [not_before, not_after] matches an anchor [lo, hi] iff |not_before - lo| <= tol AND |not_after - hi| <= tol.",
+    "applies_to": "F1_round and F3_periodic inscriptions (the convention pool). Matched inscriptions are reclassified to genuine-but-aoristic.",
+    "tolerance_rationale": "Conventional accession/death years vary by a year across sources; +/-1 matches the family-classifier's round_aligned convention (scan_templates.py REIGN_TOL)."
+  },
+  "empirical_leak_measured_2026_06_06": {
+    "corpus": "prereg-filtered empire frame, 180,609 rows; F1+F3 pool = 117,768",
+    "total_leak_inscriptions": 129,
+    "total_leak_pct_of_pool": 0.1095,
+    "breakdown": [
+      {"anchor": "Aurelian-Marcus", "interval": [161, 180], "width_excl": 19, "slab": "twenty_year_window", "n": 129}
+    ],
+    "note": "Only [161,180] matches a canonical anchor within the F1+F3 pool. It is a 20-year window (fine bracket) -> already excluded from primary convention under Option 2. [161,200] (40-y window) is anchored on Marcus's accession but is not a clean reign interval; it is likewise a fine bracket and excluded from primary convention. Source: runs/2026-06-06-convention-basis-redesign/outputs/tables/anchor-leak.csv."
+  },
+  "intervals": [
+    {"name": "Augustan", "type": "reign", "lo": -27, "hi": 14, "note": "Accession (27 BC) to death (AD 14)."},
+    {"name": "Tiberian", "type": "reign", "lo": 14, "hi": 37, "note": "Tiberius."},
+    {"name": "Caligulan", "type": "reign", "lo": 37, "hi": 41, "note": "Gaius (Caligula)."},
+    {"name": "Claudian", "type": "reign", "lo": 41, "hi": 54, "note": "Claudius."},
+    {"name": "Neronian", "type": "reign", "lo": 54, "hi": 68, "note": "Nero."},
+    {"name": "Vespasianic", "type": "reign", "lo": 69, "hi": 79, "note": "Vespasian."},
+    {"name": "Domitianic", "type": "reign", "lo": 81, "hi": 96, "note": "Domitian."},
+    {"name": "Nervan-Trajanic", "type": "dynasty", "lo": 96, "hi": 117, "note": "Nerva-Trajan span."},
+    {"name": "Trajanic", "type": "reign", "lo": 98, "hi": 117, "note": "Trajan."},
+    {"name": "Hadrianic", "type": "reign", "lo": 117, "hi": 138, "note": "Hadrian. Classified F2_Other by width-accident (width 21) -> already held out of convention."},
+    {"name": "Antonine-Pius", "type": "reign", "lo": 138, "hi": 161, "note": "Antoninus Pius."},
+    {"name": "Aurelian-Marcus", "type": "reign", "lo": 161, "hi": 180, "note": "Marcus Aurelius. THE empirical leak: width 19, decade-aligned -> F3_periodic. 129 inscriptions. Fine bracket; excluded from primary convention under Option 2."},
+    {"name": "Commodan", "type": "reign", "lo": 180, "hi": 192, "note": "Commodus."},
+    {"name": "Septimius-Severus", "type": "reign", "lo": 193, "hi": 211, "note": "Septimius Severus."},
+    {"name": "Caracallan", "type": "reign", "lo": 212, "hi": 217, "note": "Caracalla (sole)."},
+    {"name": "Flavian", "type": "dynasty", "lo": 69, "hi": 96, "note": "Flavian dynasty (Vespasian-Titus-Domitian)."},
+    {"name": "Antonine-broad", "type": "dynasty", "lo": 138, "hi": 192, "note": "Antonine dynasty span. Width 54 -> Big -> already genuine."},
+    {"name": "Severan-dynasty", "type": "dynasty", "lo": 193, "hi": 235, "note": "Severan dynasty. Width 42 -> F2_Other -> already genuine."},
+    {"name": "Soldier-emperors", "type": "dynasty", "lo": 235, "hi": 284, "note": "Crisis of the third century. Width 49 but not 25-aligned -> Big -> already genuine."},
+    {"name": "Tetrarchic", "type": "dynasty", "lo": 284, "hi": 305, "note": "Diocletianic Tetrarchy."},
+    {"name": "Constantinian", "type": "dynasty", "lo": 306, "hi": 337, "note": "Constantine. Mostly beyond the AD 350 envelope's centre of mass."}
+  ],
+  "events_policy": {
+    "rationale": "Datable historical events (a colony's foundation, a war, a specific consulship, a building dedication) in epigraphic practice almost always produce YEAR-PRECISE [t, t] dates or odd-width ranges, which the family classifier already places in Tight (<=4 y) or F2_Other -> already genuine. No clean event interval coincides with an F1 calendar-slab width under 25-year alignment. Hence events require no explicit interval entries to be correctly classified genuine; they are covered by the Tight/F2_Other families. This policy is documented so a reviewer sees events were considered, not omitted.",
+    "explicit_event_intervals": []
+  },
+  "provenance": {
+    "built": "2026-06-06",
+    "author": "Claude Code (Opus 4.8, 1M context) on Shawn Ross's brief",
+    "source_dictionary": "runs/2026-06-05-template-dictionary/code/scan_templates.py :: CANONICAL_REIGNS (descriptive-labelling list); promoted here to a committed genuine-but-aoristic anchor list per Decision 38 step 1.",
+    "leak_measurement": "runs/2026-06-06-convention-basis-redesign/code/01-verify-convention-population.py -> outputs/tables/anchor-leak.csv",
+    "status": "PROPOSAL pending Shawn sign-off; not yet wired into a production fit."
+  }
+}

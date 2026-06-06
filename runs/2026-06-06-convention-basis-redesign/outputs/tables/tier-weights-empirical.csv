@@ -1,0 +1,7 @@
+frame,tier,n_inscriptions,empirical_weight
+empire,sub_century,20084,0.184
+empire,century,47004,0.4306
+empire,multi_century,42060,0.3853
+latin,sub_century,9662,0.1705
+latin,century,25404,0.4484
+latin,multi_century,21587,0.381
