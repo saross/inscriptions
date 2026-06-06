@@ -86,10 +86,12 @@ def main() -> None:
     with tempfile.TemporaryDirectory() as tmp:
         build_md = Path(tmp) / "body.md"
         build_md.write_text(body, encoding="utf-8")
-        # markdown -> plain; wrap to a generous column so prose stays readable.
+        # markdown -> plain; --wrap=none keeps each paragraph as ONE line (no
+        # hard mid-paragraph newlines) so the OSF justification field, which
+        # soft-wraps, renders normal word wrap rather than ragged 90-col breaks.
         res = subprocess.run(
             [str(PANDOC), str(build_md), "-f", "gfm", "-t", "plain",
-             "--columns=90", "-o", "-"],
+             "--wrap=none", "-o", "-"],
             capture_output=True, text=True,
         )
         if res.returncode != 0:
