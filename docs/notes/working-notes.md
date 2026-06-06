@@ -2144,3 +2144,67 @@ The `other` category (34.68 %) contains templates that fit none of the four name
 ### Findable later
 
 `template-dictionary`, `template-dictionary-scan`, `h2.1-prereq`, `decision-20-revisit`, `curated-basis-inadequate`, `multi-century-slab`, `multi-century-absent`, `convention-pool`, `f1-f3-convention-pool`, `301-500`, `late-antique`, `200-year-slab`, `15926`, `8-82-percent`, `reign-tier`, `reign-overweighted`, `2-74-percent`, `24-96-percent`, `category-mass`, `tier-structure`, `no-reign-tier`, `decision-38`, `empirical-calendar-slab`, `recovery-revalidation`, `grid-a-does-not-transfer`, `98-6-percent-invalid-for-new-basis`, `h2.1-gate`, `osf-amendment`, `part-2-design-json`, `threshold-coverage`, `n-threshold`, `year-precise-excluded`, `empire-180609`, `latin-109646`, `template-enumeration`, `obs-40`, `obs-54`, `obs-55`, `obs-60`, `obs-67`, `obs-69`, `obs-70`, `6d8950f`, `66e751a`
+
+## Obs 77 — 2026-06-06 [METHODOLOGY / CONCEPTUAL]: grid-snapping is the observable discriminator between convention and genuine — the conceptual core of Decision 38, and a reframing of the plateau-step SPA artefact
+
+This Obs pairs with Obs 76 (the empirical basis-inadequacy finding) and records the companion conceptual move settled in Decision 38: what makes a date "conventional" is not the absence of evidential signal but the act of snapping genuine-but-coarse evidence onto the BC/AD calendrical lattice. Grid-alignment is the observable shadow of that snapping, separating reign-irregular (genuine-but-aoristic) from decade-/century-aligned (convention) intervals. The empirical consequence — that the event-leak into the convention pool from the family classifier is ~0.1 % — grounds Decision 38's two settled positions: the historical-anchor principle and the decadal + quarter-century sensitivity band.
+
+### The finding
+
+**Convention is genuine-but-coarse evidence rounded onto the BC/AD calendar grid, not signal-free noise.** Every recorded date carries evidential anchoring (letterforms, onomastics/prosopography, formulae, consular dates, find-context — Cooley 2012). What makes a date *conventional* is the **arbitrary rounding of genuine-but-coarse evidence onto the calendrical lattice** (centuries, half-centuries, decade-windows). This snapping introduces two artefacts simultaneously:
+
+1. **Per-inscription distortion**: a true off-grid range (e.g. a letterform in use ~AD 178–323) is truncated/shifted to a round century (`[200, 299]`) and flattened to uniform-within-bin. The genuine latent distribution is not recovered by deconvolution of a *single* inscription — the method un-snaps the **collective** (removes aggregate boundary pile-ups and flat-within-bin shape under the GRW smoothness prior).
+2. **Cross-inscription artificial alignment**: many different true distributions snap to the *same* bin, manufacturing the plateau-step pile-ups at century boundaries visible in the observed SPA. This is the mechanistic explanation for the step structure first described in Obs 40 and for the AD ~142–347 convention-dominance reported in Obs 69.
+
+**Grid-alignment is the observable discriminator** — and it is the only available proxy for the dating criterion, because LIRE's `raw_dating` column preserves only the numeric range (`not_before`, `not_after`); the EDH Datierungskriterien field was dropped in the LIRE compilation. The `classify_family` function (`runs/2026-05-24-type-stratified-narrow-spas/code/analyse-cohorts.py`, lines 108–142) operationalises this: F1_round requires width ∈ {24, 49, 99, 149, 199, 299} AND both endpoints `round_aligned(25)` (allowing ±1 for the inclusive-endpoint convention); F3_periodic requires width ∈ {19, 29, 39} AND both endpoints `round_aligned(10)`.
+
+Concretely, this separates:
+
+| example | class | fate |
+|---|---|---|
+| `[117, 138]` Hadrian; `[212, 217]` Caracalla | F2_Other (width/alignment off-grid) | genuine-but-aoristic → `p_gen` |
+| `[131, 170]`; `[161, 200]` | F3_periodic (dr ∈ {39}, both endpoints round_aligned(10)) | convention pool |
+| `[101, 200]`; `[1, 100]` | F1_round (dr ∈ {99}, both endpoints round_aligned(25)) | convention pool |
+
+The inconsistency the discriminator exposes: `[161, 180]` (Marcus Aurelius, AD 161–180) classifies as F3_periodic (dr = 19, `round_aligned(10)` satisfied by the ±1 off-by-one allowance), not F2_Other — because its width accidentally matches a decade-aligned window. Decision 38's fix is a **curated historical-anchor interval list** that strips named reign/dynasty/event intervals from the convention pool before computing the empirical basis, making the split non-width-accidental.
+
+**Empirical event-leak (empire prereg-filtered corpus; `runs/2026-06-06-convention-basis-redesign/`):**
+
+| frame | anchor | interval | N in F1+F3 | % of F1+F3 pool |
+|---|---|---|---:|---:|
+| empire | Aurelian-Marcus | `[161, 180]` | 129 | 0.11 % |
+| empire | *(total canonical leak)* | — | 129 | 0.11 % |
+| latin | Aurelian-Marcus | `[161, 180]` | 95 | 0.15 % |
+| latin | *(total canonical leak)* | — | 95 | 0.15 % |
+
+The F2_Other family (genuine-but-aoristic, empire prereg-filtered) is **17,354 inscriptions** (9.61 % of the 180,609-inscription empire frame), confirming that the classifier already holds the vast majority of reign/dynasty/event content out of the convention pool. The residual canonical leak is 129 inscriptions (0.11 %) — effectively only `[161, 180]`.
+
+A second width-accidental F3 interval worth noting: `[161, 200]` (N = 99 in the empire template scan, `runs/2026-06-05-template-dictionary/outputs/tables/templates-empire.csv`) falls in F3_periodic (dr = 39, both endpoints round_aligned(10) with the ±1 tolerance), but is **not** a canonical reign anchor and therefore does not appear in the formal anchor-leak table. Whether to include it on the historical-anchor removal list is a PART-2 design question; its mass (99 inscriptions) is small either way.
+
+### Why this matters
+
+Decision 38 settles two positions grounded by this conceptual reframing:
+
+1. **Historical-anchor principle**: date assignments tied to reigns, dynasties, or datable events are **genuine-but-aoristic** (they carry signal that "second half of the first century" does not). Pure calendar-segment rounding is **convention**. This resolves the reign contradiction in the prereg and Decision 20 (which placed a reign-interval slab tier *inside* `p_conv`), and it fixes the width-accidental misclassification (`[161, 180]` → F3 by the current classifier, but canonical-reign by the historical-anchor principle).
+
+2. **Decadal + quarter-century sensitivity band**: decade-aligned and quarter-century brackets (~4–5 % of the corpus) are grid-snapped (convention side) but **low-distortion** — artefact magnitude scales with grid coarseness, so deconvolving fine brackets barely moves the result. Report both (with and without) as a robustness band. The tiny event-leak (0.11 %) from a canonical reign interval that happens to land on the decade grid is the empirical confirmation that this sensitivity band is bounded and can safely ride as a check rather than a classification gate.
+
+**For the paper (§2 reframe):** `p_gen` should be described as *"the temporal distribution with the calendar-grid quantisation removed"*, not "the distribution absent convention signal". The method un-snaps the collective convention mass; it does not reconstruct any single inscription's true off-grid latent distribution. This is methodologically distinct from radiocarbon SPD (genuine measurement/calibration uncertainty; no arbitrary rounding) and potentially shared with ceramic typological dating (round-period pinning) — which strengthens the methods-bridge framing and the Crema 2025 cite-and-distinguish positioning.
+
+### Caveats / methodological notes
+
+The Datierungskriterien field (EDH's taxonomised dating rationale — letterforms, titulature, prosopography, etc.) would be the empirical gold standard for the convention/genuine classification; it was dropped from LIRE. Shawn queried the SDAM team on 2026-06-05; pending their reply, the grid-alignment heuristic is the best available proxy. If Datierungskriterien are recoverable via re-join on `EDH-ID`, a direct comparison could validate or supersede the heuristic — this is Decision 38's parked enrichment path.
+
+The `round_aligned(x, mod)` function permits ±1 off-by-one (i.e. `x % mod ∈ {0, 1, mod − 1}`) to accommodate LIRE's inclusive-endpoint convention (an inscription "from the first century" is encoded `[1, 100]`, with 1 and 100 both endpoints of the interval rather than 0 and 99). This is why `[161, 180]` qualifies for F3_periodic: `161 % 10 = 1` (passes the ±1 allowance) and `180 % 10 = 0`. The same ±1 tolerance accounts for the small discrepancy between the template-scan count (128 for `[161, 180]`) and the anchor-leak count (129): the leak script matches with `REIGN_TOL = 1` on both endpoints.
+
+The F2_Other count of 17,354 is from the **prereg-filtered** corpus (180,609 inscriptions). The 2026-05-24 type-stratified REPORT gives 17,528 at 9.59 % for the unfiltered corpus (182,853 inscriptions) — the difference is expected and the correct reference population for H2.1 is the prereg-filtered count.
+
+### Related observations and artefacts
+
+**Obs 76** (template-dictionary empirical scan fires Decision 20 revisit trigger — the curated 3-tier basis is empirically inadequate): the companion empirical finding; this Obs provides the conceptual discriminator and the convention/genuine reframing that Decision 38 is built on. These two Obs together constitute the grounding for Decision 38. **Obs 40** (2026-05-17 diagnostic triplet — anchor-year intuition falsified; the slab structure emerged from the SPA): records the origin of Decision 20's slab framing; the grid-snapping model here extends and supersedes that framing from a descriptive slab typology to a principled causal account. **Obs 54** (family classifier doubles calibration-cohort size at higher purity — interval structure, not just width, is the right partition): the `classify_family` function whose F1/F2_Other/F3 logic this Obs dissects; the inconsistency this Obs identifies (width-accidental reign classification) motivates the historical-anchor fix. **Obs 69** (the late corpus AD ~142–347 is in the degraded-recovery zone; convention fraction ≈ 0.65 corpus-wide, exceeds 0.70 in 21 of 80 time-bins): records the SPA-level consequence of grid-snapping — the plateau-step convention dominance in the late corpus is directly caused by the `[301, 500]` and century-slab pile-ups that the snapping mechanism (this Obs) explains. **Obs 35** (editorial-convention artefact is endpoint rounding; the SPA plateau-steps at century boundaries): the empirical detection of endpoint rounding and the plateau-step artefact that is mechanistically grounded here.
+
+**Artefacts**: `runs/2026-06-06-convention-basis-redesign/outputs/tables/family-split.csv` (F2_Other = 17,354; empire prereg-filtered; uncommitted as of 2026-06-06); `runs/2026-06-06-convention-basis-redesign/outputs/tables/anchor-leak.csv` (canonical-reign leak = 129 inscriptions, 0.11 %; uncommitted); `runs/2026-06-05-template-dictionary/outputs/tables/templates-empire.csv` (raw F3 counts for `[161, 180]` N = 128, `[161, 200]` N = 99; commit `6d8950f`). Decision 38 (`planning/decision-log.md`, commit `66e751a`). `runs/2026-05-24-type-stratified-narrow-spas/code/analyse-cohorts.py` (lines 108–142; `classify_family` / `round_aligned`).
+
+### Findable later
+
+`grid-snapping`, `grid-alignment`, `convention-discriminator`, `historical-anchor-principle`, `genuine-but-aoristic`, `convention-vs-genuine`, `round_aligned`, `off-by-one`, `inclusive-endpoint`, `classify-family`, `f2-other`, `f3-periodic`, `f1-round`, `width-accidental`, `reign-misclassification`, `161-180`, `161-200`, `marcus-aurelius`, `anchor-leak`, `event-leak`, `0-11-percent`, `129-inscriptions`, `17354`, `9-61-percent`, `datierungskriterien`, `raw-dating-dropped`, `sdam-reply`, `edh-criteria`, `calendar-grid-quantisation`, `p-gen-reframe`, `un-snaps-the-collective`, `plateau-step-mechanism`, `bc-ad-lattice`, `century-boundary-pile-up`, `aoristic-convention`, `sensitivity-band`, `decadal-brackets`, `quarter-century`, `4-5-percent`, `cooley-2012`, `crema-2025`, `ceramic-dating`, `decision-38`, `obs-76`, `obs-40`, `obs-54`, `obs-69`, `obs-35`, `66e751a`, `6d8950f`, `convention-basis-redesign`
