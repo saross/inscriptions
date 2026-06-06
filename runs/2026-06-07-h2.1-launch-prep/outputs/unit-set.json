@@ -1,0 +1,160 @@
+{
+  "artefact_id": "2026-06-07-h2.1-unit-set",
+  "binds": {
+    "decisions": [
+      34,
+      36,
+      37
+    ],
+    "decision_37": "D1"
+  },
+  "reachability_floor": 2000,
+  "grey_band_lower": 1549,
+  "corpus": {
+    "filtered_empire": 180609,
+    "latin_frame": 109646
+  },
+  "aggregates": {
+    "empire": {
+      "n": 180609,
+      "role": "secondary/context (incl. Rome)"
+    },
+    "latin": {
+      "n": 109646,
+      "role": "primary (39 Latin provinces, Rome excluded)"
+    }
+  },
+  "latin_provinces_reportable": {
+    "count": 19,
+    "units": [
+      {
+        "province": "Latium et Campania / Regio I",
+        "n": 18512
+      },
+      {
+        "province": "Dalmatia",
+        "n": 7088
+      },
+      {
+        "province": "Hispania citerior",
+        "n": 6312
+      },
+      {
+        "province": "Germania superior",
+        "n": 5874
+      },
+      {
+        "province": "Venetia et Histria / Regio X",
+        "n": 5872
+      },
+      {
+        "province": "Dacia",
+        "n": 4870
+      },
+      {
+        "province": "Britannia",
+        "n": 4647
+      },
+      {
+        "province": "Pannonia superior",
+        "n": 4460
+      },
+      {
+        "province": "Samnium / Regio IV",
+        "n": 4187
+      },
+      {
+        "province": "Africa proconsularis",
+        "n": 3518
+      },
+      {
+        "province": "Germania inferior",
+        "n": 3390
+      },
+      {
+        "province": "Apulia et Calabria / Regio II",
+        "n": 3132
+      },
+      {
+        "province": "Pannonia inferior",
+        "n": 3132
+      },
+      {
+        "province": "Numidia",
+        "n": 3014
+      },
+      {
+        "province": "Etruria / Regio VII",
+        "n": 2801
+      },
+      {
+        "province": "Umbria / Regio VI",
+        "n": 2763
+      },
+      {
+        "province": "Noricum",
+        "n": 2761
+      },
+      {
+        "province": "Baetica",
+        "n": 2593
+      },
+      {
+        "province": "Transpadana / Regio XI",
+        "n": 2434
+      }
+    ]
+  },
+  "latin_cities_reportable": {
+    "count": 5,
+    "field": "urban_context_city",
+    "units": [
+      {
+        "city": "Pompeii",
+        "n": 4508,
+        "province": "Latium et Campania / Regio I"
+      },
+      {
+        "city": "Salona",
+        "n": 3465,
+        "province": "Dalmatia"
+      },
+      {
+        "city": "Ostia",
+        "n": 2644,
+        "province": "Latium et Campania / Regio I"
+      },
+      {
+        "city": "Mogontiacum",
+        "n": 2398,
+        "province": "Germania superior"
+      },
+      {
+        "city": "Aquileia",
+        "n": 2034,
+        "province": "Venetia et Histria / Regio X"
+      }
+    ]
+  },
+  "grey_band_provinces": {
+    "count": 2,
+    "units": [
+      {
+        "province": "Moesia inferior",
+        "n": 1952
+      },
+      {
+        "province": "Lusitania",
+        "n": 1685
+      }
+    ]
+  },
+  "n_primary_fits": 26,
+  "sub_floor_policy": "units < 1,549 fall back to date-window counts / \u00a75 (not a standalone mixture)",
+  "provenance": {
+    "built": "2026-06-07",
+    "script": "runs/2026-06-07-h2.1-launch-prep/code/verify-unit-set.py",
+    "lire": "archive/data-2026-04-22/LIRE_v3-0.parquet",
+    "frame": "runs/2026-06-04-h3a-confirmatory/data/province-language-map.csv"
+  }
+}
