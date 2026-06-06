@@ -3413,12 +3413,23 @@ the prereg, then the H3a confirmatory launch spec for sign-off.
 
 ## Decision 36 — 2026-06-05: Latin-speaking provinces are the first-class frame for hypothesis-testing; empire-wide is secondary/context (→ OSF Amendment 02)
 
-**Status:** committed; **reshapes the primary analysis frame → requires OSF
-Amendment 02** (Shawn approved 2026-06-05). The Latin-primary confirmatory results
-are **amendment-gated**: no Latin-primary confirmatory claim leaves the repository
-until Amendment 02 is lodged (standing amendment-gate rule, memory
-`2026-05-26-40ce5927fddc`). The empire-wide H3a result remains within the original
-lodged prereg's "all cities" text and is retained as secondary/context.
+**Status:** committed; **reshapes the primary analysis frame → required OSF
+Amendment 02** (Shawn approved 2026-06-05). **Amendment 02 LODGED 2026-06-06**
+(git tag `osf-amendment-02-2026-06-06`; package
+`planning/osf-amendment-2026-06-06-latin-frame.{md,pdf}`,
+`osf-amendment-02-justification.txt`, `osf-amendment-02-summary-addendum.md`) →
+**the Latin-frame confirmatory gate is CLEARED**: the Latin-primary confirmatory
+results (H3a `f_within` 0.480, SR1 0.505, H3c(i) capital SUPPORTED, H3c(ii)
+not-supported) may now leave the repository as confirmatory. The 39-vs-41
+province reconciliation is resolved in the amendment §A5.3
+(`runs/2026-06-06-amendment-02-prep/`): Italia + Alpes Graiae classify Latin but
+contribute zero Hanson-matched cities, so the realised frame is 817 cities / 39
+provinces with no result impact. The empire-wide H3a result remains within the
+original lodged prereg's "all cities" text and is retained as secondary/context.
+**Follow-up:** the `PRELIMINARY -- pending OSF Amendment 02` labels in the Latin
+result artefacts (`runs/2026-06-04-h3a-confirmatory/outputs/` h3c-latin /
+sr1-latin / REPORT-latin-h3c-sr1 / REPORT-h3c-i-capital-contrast) can now be
+flipped to confirmatory.
 **Decided by:** Shawn 2026-06-05, reviewing the H3a confirmatory result (Latin-only
 `f_within` 0.480 vs empire-wide 0.299) against the dataset-coverage rationale.
 

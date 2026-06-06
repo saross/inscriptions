@@ -24,14 +24,14 @@ FULL AMENDMENT (reproduced in plain text from the Markdown source)
 
 title: OSF Amendment 02 — Latin-speaking provinces as the primary hypothesis-testing frame
 amendment-number: 02
-status: DRAFT for Shawn's review and lodgement (not yet lodged)
+status: LODGED 2026-06-06 (OSF; Latin-frame confirmatory gate cleared)
 date-drafted: 2026-06-06
 scope: Reframe the primary cross-sectional hypothesis-testing frame (H3a, H3b, H3c, SR1) from empire-wide to Latin-speaking provinces, on a dataset-coverage rationale; retain empire-wide results as secondary/context; promote the province→language map to a first-class tracked artefact; reconcile the realised 39-province frame against the lodged prereg's 41-province figure.
 preregistration: https://osf.io/uycs6/ (lodged 2026-05-20; embargoed)
 lodged-version: git tag osf-lodgement-2026-05-20 (https://github.com/saross/inscriptions/tree/osf-lodgement-2026-05-20)
 filed-under: preregistration §7 / contingency clause (preregistration-draft.md line 423): substantive methodology changes after lodgement are filed as an OSF amendment before implementation.
 author: Shawn Ross (with Claude Code as analyst/RSE)
-gate: BINDING — Latin-frame confirmatory claims (H3a/H3b/H3c/SR1 on the Latin-speaking-province subset) must not leave the repository as confirmatory until this amendment is lodged. The empire-wide H3a result is within the original lodged prereg text and is NOT gated by this amendment.
+gate: CLEARED 2026-06-06 — the amendment is lodged; Latin-frame confirmatory claims (H3a/H3b/H3c/SR1 on the Latin-speaking-province subset) may now leave the repository as confirmatory. The empire-wide H3a result was within the original lodged prereg text and was never gated by this amendment.
 relationship: Independent of Amendment 01 (two-measure framework, lodged 2026-06-04) and of the forthcoming convention-model amendment (Decision 38 empirical convention basis, which gates the H2.1 temporal-mixture fit). All three are separable; this one concerns only the cross-sectional hypothesis-testing frame, which uses date-window-filtered counts, not mixture output.
 
 ------------------------------------------------------------------------
