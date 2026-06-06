@@ -1,0 +1,317 @@
+---
+title: "OSF Amendment 02 — Latin-speaking provinces as the primary hypothesis-testing frame"
+amendment-number: 02
+status: DRAFT for Shawn's review and lodgement (not yet lodged)
+date-drafted: 2026-06-06
+scope: "Reframe the primary cross-sectional hypothesis-testing frame (H3a, H3b, H3c, SR1) from empire-wide to Latin-speaking provinces, on a dataset-coverage rationale; retain empire-wide results as secondary/context; promote the province→language map to a first-class tracked artefact; reconcile the realised 39-province frame against the lodged prereg's 41-province figure."
+preregistration: "https://osf.io/uycs6/ (lodged 2026-05-20; embargoed)"
+lodged-version: "git tag osf-lodgement-2026-05-20 (https://github.com/saross/inscriptions/tree/osf-lodgement-2026-05-20)"
+filed-under: "preregistration §7 / contingency clause (preregistration-draft.md line 423): substantive methodology changes after lodgement are filed as an OSF amendment before implementation."
+author: "Shawn Ross (with Claude Code as analyst/RSE)"
+gate: "BINDING — Latin-frame confirmatory claims (H3a/H3b/H3c/SR1 on the Latin-speaking-province subset) must not leave the repository as confirmatory until this amendment is lodged. The empire-wide H3a result is within the original lodged prereg text and is NOT gated by this amendment."
+relationship: "Independent of Amendment 01 (two-measure framework, lodged 2026-06-04) and of the forthcoming convention-model amendment (Decision 38 empirical convention basis, which gates the H2.1 temporal-mixture fit). All three are separable; this one concerns only the cross-sectional hypothesis-testing frame, which uses date-window-filtered counts, not mixture output."
+---
+
+# OSF Amendment 02 — Latin-speaking provinces as the primary hypothesis-testing frame
+
+## Plain-language summary
+
+This project measures how much of the city-to-city variation in Roman
+inscription production is explained by city population, and whether that pattern
+reproduces a published finding (Hanson 2021). The dataset we use, LIRE ("Latin
+Inscriptions of the Roman Empire"), is what its name says: a corpus of *Latin*
+inscriptions. In the Latin-speaking western provinces it is close to complete; in
+the Greek-speaking east, Latin inscriptions are a minority of what was actually
+produced, so LIRE captures only a non-representative slice of those provinces'
+epigraphy (and dedicated Greek corpora are still being built). An empire-wide
+analysis therefore mixes well-covered Latin provinces with poorly-covered Greek
+ones — a coverage artefact, not a fact about the ancient world.
+
+This amendment makes one change: it promotes the **Latin-speaking provinces** to
+the primary frame for the hypothesis-testing analyses, and demotes the
+empire-wide analysis to reported-but-secondary context (with the coverage caveat
+stated). It does not change a single model, decision rule, or threshold. The
+empire-wide result is kept and reported, not hidden. Two supporting points: (1)
+the rationale is about data coverage, which is true regardless of what any result
+shows; and (2) the lodged preregistration's own "~815 cities" figure already
+**was** the Latin-province filter — the Latin frame was latent in the prereg's own
+number, and the broader "all cities" reading is what introduced the coverage
+confound. The amendment also reconciles a bookkeeping discrepancy (the prereg
+quotes 41 Latin provinces; the realised analysis frame has 39) and shows it
+changes no result. The technical statement follows.
+
+## A1. Identification and trigger
+
+This is the second amendment to the project's preregistration (Open Science
+Framework, OSF, record osf.io/uycs6/, lodged 2026-05-20, currently embargoed). It
+is filed under the preregistration's own contingency rule
+(`preregistration-draft.md` line 423): "If substantive methodology changes are
+required after lodgement … an OSF amendment is filed before implementation."
+
+It is a **binding gate** for the Latin frame only: Latin-speaking-province
+confirmatory claims (H3a, H3b, H3c, SR1) do not leave the project repository as
+confirmatory until this amendment is lodged. The empire-wide H3a result is within
+the original lodged preregistration's text ("all cities") and is **not** gated by
+this amendment — it is retained and reported as secondary/context.
+
+**Trigger.** The H3a confirmatory run (a blind fit, the analyst writing it kept
+separate from the talk-preliminary thread) produced the within-province
+population-attributable variance fraction `f_within` on two frames: empire-wide
+and a Latin-speaking-province subset. Reviewing the two, two things became clear:
+(i) the empire-wide frame carries a structural **dataset-coverage confound** (LIRE
+under-represents Greek-province epigraphy), which makes the Latin-province frame
+the methodologically defensible primary; and (ii) the preregistration's own
+city-count figure ("~815") was, on inspection, already the Latin-province filter —
+so the reframe corrects an under-specification in the lodged document rather than
+introducing a new analysis. Decision 36 (`planning/decision-log.md`) records the
+deliberation.
+
+## A2. Summary of the change
+
+The amendment makes **one** connected change, with one bookkeeping reconciliation.
+
+**(1) Latin-speaking provinces become the primary hypothesis-testing frame.** For
+the cross-sectional confirmatory analyses — **H3a** (the primary confirmatory
+result), **H3b**, **H3c(i)/(ii)**, and **SR1** — the primary unit set is the
+Latin-speaking provinces of LIRE v3.0 (Rome excluded), defined by the project's
+province→language classification. Empire-wide results are reported as
+**secondary/context**, with the coverage caveat stated. The unit is
+**Latin-speaking *provinces*, not Latin-only *inscriptions*** — the rationale is
+provincial *coverage* (the dataset is approximately complete for Latin provinces,
+incomplete for Greek ones), so the province-level frame is the one that matches
+the rationale; a language-of-inscription filter was considered and rejected
+(bilingual/mixed contexts, language-classification noise, and it abandons the
+coverage logic that is the actual motivation).
+
+**(2) Frame-definition reconciliation (41 → 39).** The lodged prereg (§2) defines
+the Latin/"Western-Empire" subset as **41 LIRE provinces** (Rome excluded), from
+the 2024 exploratory notebook's `province_language_map`. The realised primary
+frame is **39 provinces / 817 cities**. §A5.3 reconciles the difference from
+evidence and shows it moves no result.
+
+This is a change of **analysis frame**, not of model, estimand, or decision rule.
+Every model specification, prior, confirmatory rule, and threshold in the lodged
+protocol is unchanged (§A6).
+
+## A3. Rationale
+
+**The dataset is a Latin corpus.** LIRE — "Latin Inscriptions of the Roman
+Empire" (Kaše, Heřmánková & Sobotková, Zenodo DOI 10.5281/zenodo.8431452) — is
+drawn from the larger LIST ("Latin Inscriptions through Space and Time"). In
+Greek-speaking provinces, Latin inscriptions are a distinct minority of epigraphic
+production, so LIRE captures only a non-representative Latin slice of those
+provinces; Greek epigraphic coverage in the corpus is inconsistent, and dedicated
+Greek datasets are still in production. Empire-wide hypothesis-testing therefore
+pools well-covered Latin provinces with poorly-covered Greek ones — a confound for
+any claim about epigraphic *production* (as opposed to *Latin*-epigraphic
+production). The Latin-speaking-province frame removes the confound by restricting
+to the part of the empire the dataset actually covers well.
+
+**The prereg's own number already was the Latin filter.** The lodged
+preregistration twice anchors the cross-sectional sample at "~815 cities" (§"the
+cross-city H3a … uses *all* ~815 cities with Hanson population estimates after
+Rome-exclusion"). The realised empire-wide ("all cities") frame is **1,044**
+cities; the realised **Latin**-province frame is **817**. The prereg's "~815" is
+the Latin filter, not the empire-wide count — the Latin frame was latent in the
+lodged document's own figure. The over-broad "all cities" reading is what
+introduced the confound. As recorded in Decision 36: "it should have been
+specified in the original prereg, I just missed it." The reframe therefore
+*corrects an under-specification* rather than swapping in a new, post-hoc choice.
+
+**This is coverage-driven, not result-driven (see §A4).** The coverage argument is
+true independent of any result; the empire-wide result is retained and reported;
+no decision rule is tuned to any observed Latin-frame number.
+
+## A4. Relationship to already-observed results (transparency)
+
+Full disclosure, because the reframe follows a run whose results are already
+seen: on the Latin-province frame the within-province population effect is
+**stronger** than empire-wide (`f_within` 0.480 vs 0.299; see §A5.4). A reviewer
+is entitled to ask whether the frame was chosen because it gave the larger number.
+Four points bear on that, and we state them rather than hide them:
+
+1. **The rationale is independent of the result.** The coverage confound (LIRE
+   under-covers Greek epigraphy) is a property of the *dataset*, established by
+   what LIRE is, not by any `f_within` value. It would be the reason to prefer the
+   Latin frame whether the Latin `f_within` came out larger, smaller, or equal.
+2. **The prereg's own "~815" was the Latin filter** (§A3) — the Latin frame is the
+   lodged document's latent sample, not a new construct introduced to chase a
+   result.
+3. **The empire-wide result is retained and reported**, as secondary/context with
+   the coverage caveat (§A5.5). Nothing is suppressed; both frames appear in the
+   paper.
+4. **No decision rule changes.** The three-way `f_within` rule, the H3c rules, and
+   SR1's comparator are identical to the lodged protocol (§A6). The Latin verdict
+   is read off the same machinery, not a frame-tuned one.
+
+The honest summary: the frame change is a methodological correction with an
+independent justification; it happens to *raise* the headline effect, and we
+report both frames so the reader can see exactly that.
+
+## A5. Pre-specifications
+
+### A5.1 Primary frame definition
+
+The primary hypothesis-testing frame is the set of LIRE v3.0 **Latin-speaking
+provinces**, Rome excluded, defined by the project's province→language
+classification, operationalised as the committed artefact
+`runs/2026-06-04-h3a-confirmatory/data/province-language-map.csv` (the externalised,
+LIRE-`province`-field-aligned form of the 2024 notebook's `province_language_map`,
+`archive/2026-04-22-inscriptions-spa.ipynb` cell 54). The map is **promoted to a
+first-class, tracked, documented artefact** (it defines the frame). A city enters
+the frame if its modal province is Latin-classified, it has a Hanson (2016)
+urban-population estimate, and it is not Rome — identical to the lodged sample
+construction, restricted to Latin provinces.
+
+**Realised primary frame: 817 cities across 39 Latin provinces.** The three
+frontier classifications flagged in the lodged prereg §9 (Moesia Inferior, Moesia
+Superior, Sicilia — administrative-Latin but with significant bilingual/Greek
+populations) remain Latin by the same judgement call, and remain flagged as a
+known scope choice; a sensitivity excluding the three is available if a reviewer
+presses (lodged prereg §9 revisit trigger, unchanged).
+
+### A5.2 Which analyses are reframed
+
+| Analysis | Lodged frame | Amended primary frame | Empire-wide |
+|---|---|---|---|
+| H3a (`f_within`, primary confirmatory) | empire-wide ("all cities") | **Latin provinces** | retained, secondary/context |
+| H3b (deviation-detection on corrected SPAs) | empire + Western subset | **Latin provinces** primary | empire reported as context |
+| H3c(i) capital contrast; H3c(ii) Moran's I | empire-wide | **Latin provinces** | retained, secondary/context |
+| SR1 (OLS log-log scaling comparator) | empire-wide | **Latin provinces** | retained, secondary/context |
+
+H3b's Crisis-of-the-Third-Century probe already named a "Western-Empire
+(`province_language == 'Latin'`)" provincial subset in the lodged prereg (§2/§5);
+this amendment promotes that same Latin frame from a *subset probe within* an
+empire-wide analysis to the *primary* frame across the cross-sectional tests.
+
+### A5.3 Frame-count reconciliation (41 → 39), from evidence
+
+The lodged prereg (§2) states the Latin/Western-Empire subset "covers 41 LIRE
+provinces (after Rome-exclusion)". The realised primary frame is **39 provinces**.
+The difference is fully accounted for and **changes no result**:
+
+- The "41" is the count of Latin-classified provinces in the 2024 notebook's
+  `province_language_map` (cell 54), Rome excluded.
+- Rebuilding the map against LIRE v3.0's actual `province` field values
+  (`reconcile-province-maps.py`) shows the gap is two provinces that classify
+  Latin but contribute **zero Hanson-matched cities** to the population-scaling
+  frame, plus one spelling normalisation:
+  1. **Italia** — LIRE `province` value "Italia" carries **1** inscription; Italian
+     provenances are coded to the eleven Augustan regions (all 11 are in the
+     frame), so "Italia" as a standalone province is redundant and empty of signal.
+     0 Hanson-matched cities.
+  2. **Alpes Graiae** — 77 inscriptions, but **0** carry a Hanson urban-population
+     estimate (0 distinct `urban_context_city` with a population join), so it
+     contributes **0 Hanson-matched cities** to the H3a/SR1/H3c city frame. Its
+     three sibling Alpine provinces (Alpes Cottiae, Alpes Maritimae, Alpes
+     Poeninae) each contribute exactly one city and are in the frame.
+  3. **Lugdunensis → Lugudunensis** — a 1:1 spelling normalisation to LIRE's field
+     value (LIRE "Lugudunensis": 746 inscriptions; "Lugdunensis": 0). Same
+     province, no count change; documented in the map header.
+
+So **41 Latin-classified provinces − Italia − Alpes Graiae (both 0 cities) = 39
+provinces with ≥ 1 Hanson-matched city**. The realised frame is 817 cities / 39
+provinces whether or not Italia and Alpes Graiae are listed in the map, because
+neither contributes a city to the population-scaling sample. The reconciliation is
+a frame-*count* clarification, not a sample change. (Reproduced by
+`runs/2026-06-06-amendment-02-prep/code/reconcile-province-maps.py` →
+`outputs/province-reconciliation.csv`.)
+
+### A5.4 Realised primary results (Latin frame) — preliminary pending lodgement
+
+Computed and convergence-clean (max R̂ 1.00, min bulk-ESS 2,038, 0 divergences on
+the Latin fit); reported here for transparency, and confirmatory on lodgement.
+
+| Test | Latin frame (817 / 39) | Empire-wide (1,044 / 56), secondary |
+|---|---|---|
+| **H3a `f_within`** (unweighted) | **0.480, 95% CI [0.401, 0.566]** — SUPPORTED (P>0.05/0.10/0.20 all 1.000) | 0.299 [0.240, 0.365] — SUPPORTED |
+| β_within | 0.733 [0.648, 0.820] | 0.587 [0.519, 0.657] |
+| **SR1** (OLS log-log slope) | **0.505 [0.398, 0.611]** | 0.284 |
+| **H3c(i)** capital contrast (OXREP) | **+1.081 [+0.806, +1.408], P=1.000 — SUPPORTED** | +0.964 [+0.736, +1.213], SUPPORTED |
+| **H3c(ii)** Moran's I (k∈{5,8,10}) | **NOT supported** (0 of 3 k significant) | not supported |
+
+Reading: restricting to the well-covered Latin provinces *strengthens* the
+within-province population effect and the scaling slope; the Hanson-2021
+capital-over-production replication holds on both frames; the residual-clustering
+half does not replicate on either (the Mundlak province intercepts absorb the
+broad spatial structure). SR1's Latin slope (0.505) sits between the empire-frame
+slope (0.284) and Hanson 2021's β (0.672), and within Carleton et al. (2025)'s
+0.3–0.5 elite-subset range — context, not a confirmatory target.
+
+### A5.5 Empire-wide results are retained as secondary/context
+
+The empire-wide H3a (`f_within` 0.299) and the empire-wide H3c/SR1 results are
+**within the original lodged prereg's "all cities" scope**, are independently
+verified, and are **retained and reported as secondary/context** alongside the
+Latin-frame primary, each with the coverage caveat stated. They are not gated by
+this amendment and are not withdrawn.
+
+### A5.6 Reporting
+
+The paper reports the Latin-frame result as the primary confirmatory finding and
+the empire-wide result as secondary, with the coverage caveat ("LIRE under-covers
+Greek-province epigraphy; the empire-wide frame mixes well- and poorly-covered
+provinces") stated wherever the empire-wide number appears. No multiplicity
+correction is introduced between frames: the Latin frame is the primary
+confirmatory test and the empire-wide frame is descriptive context, not a second
+confirmatory family.
+
+## A6. What does NOT change
+
+- **No model changes.** The H3a Bayesian within-between (Mundlak) negative-binomial
+  regression, its priors, and the `f_within` estimand are exactly as lodged
+  (Decision 12; lodged prereg §3).
+- **No decision-rule changes.** The three-way `f_within` rule, the H3c(i)
+  posterior-contrast rule (`P(contrast>0) ≥ 0.95`), the H3c(ii) Moran's-I rule
+  (`I>0 at p<0.05 in ≥2 of {5,8,10}`), and SR1's OLS-log-log comparator are
+  unchanged.
+- **No estimand, threshold, prior, or seed changes.**
+- **No change to the date-window scope.** H3a/H3c/SR1 operate on date-window-filtered
+  (50 BC – AD 350) counts, as lodged; this amendment does not touch the temporal
+  mixture (that is the separate, forthcoming convention-model amendment, Decision
+  38).
+- **Rome remains excluded**, as lodged.
+
+## A7. Changes by preregistration section (a standalone addition, not in-place edits)
+
+Following the project convention (lodged prereg §11 provenance; Amendment 01 §A7),
+these are recorded as amendment additions, not edits to the lodged text:
+
+- **§2 (Data / subsets).** The Latin-speaking-province subset, lodged as a
+  Western-Empire *subset* for H3b's Crisis probe ("41 LIRE provinces, Rome
+  excluded"), is **promoted to the primary frame** for H3a/H3b/H3c/SR1. The
+  operational definition is the committed, LIRE-field-aligned province→language map
+  (39 Latin provinces / 817 cities; reconciliation in §A5.3). The map is a
+  first-class tracked artefact.
+- **§"Research question" / §3 (H3a).** "Within-province spatial variation in Latin
+  inscription production" is primarily estimated on the **Latin-speaking-province**
+  frame; the empire-wide estimate is reported as secondary/context with the
+  coverage caveat.
+- **§3 (H3b, H3c, SR1).** Primary frame = Latin-speaking provinces; empire-wide =
+  secondary/context.
+- **§9 (Known limitations).** Adds the dataset-coverage rationale (LIRE under-covers
+  Greek epigraphy) as the stated reason for the Latin-primary frame; the three
+  frontier-province judgement calls (Moesia Inferior/Superior, Sicilia) remain
+  flagged, now as part of the primary frame.
+
+## A8. Provenance
+
+- **Decision record:** Decision 36 (`planning/decision-log.md`); cross-sectional
+  sign-off Decision 37 (empire-frame final; Latin-frame amendment-gated).
+- **Frame artefact:** `runs/2026-06-04-h3a-confirmatory/data/province-language-map.csv`.
+- **Reconciliation:** `runs/2026-06-06-amendment-02-prep/code/reconcile-province-maps.py`
+  → `outputs/province-reconciliation.csv`.
+- **Results:** `runs/2026-06-04-h3a-confirmatory/outputs/` — `REPORT.md` (H3a, both
+  frames), `REPORT-latin-h3c-sr1.md`, `REPORT-h3c-i-capital-contrast.md`,
+  `h3a-results.json`, `h3c-latin-results.json`, `sr1-latin-results.json`,
+  `h3c-i-results-oxrep-primary.json`; posteriors `idata-{primary,latin}.nc`.
+- **Lodged authority:** the original supplementary (git tag
+  `osf-lodgement-2026-05-20`) remains the lodged authority for all unchanged
+  specifications. This amendment is hosted version-pinned at the project repository
+  and reproduced in the OSF justification field.
+- **Repository-state provenance:** the git lodgement tag for this amendment is the
+  reproducibility anchor, distinct from any OSF-assigned amendment identifier.
+- **Independence:** separable from Amendment 01 (two-measure framework, lodged
+  2026-06-04) and from the forthcoming convention-model amendment (Decision 38);
+  the cross-sectional tests reframed here use date-window-filtered counts, not
+  mixture output.
