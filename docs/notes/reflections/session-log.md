@@ -730,3 +730,24 @@ The session spanned 2026-06-02 (resume, after the dependency-hygiene session) in
 - The amendment's 98.6 % is verified by direct re-score from stored per-replicate R̂/ESS (no re-fit). The committed harness still emits 91.9 % (old cell-summaries); making `grid-summariser`/`compare-grids` reproduce 98.6 % in-pipeline (re-aggregate cell-summaries under the new `fit.py` gate) is the deferred next step. Decision 33 / Obs 67 still cite 91.9 % as historical and want a 2026-06-04 annotation.
 - zbook's live memory split (32 GB VRAM / 94 GB RAM) contradicts the network-resources doc; possibly altered by the power-cycle — flagged for Shawn's BIOS check.
 - sapphire is now on pymc 6.0.1 (talk-prep venv); the grids ran on 5.28 — committed-artefact provenance unchanged.
+
+## 2026-06-05 → 2026-06-06 — H2.1 prerequisite scan → genuine/conventional settled (Decision 38) → lit-scout grounding → tooling hardening + hygiene
+
+Resumed inscriptions at the H2.1 prep gate. The session settled the genuine-vs-conventional question and hardened/cleaned the literature-and-Zotero tooling.
+
+**Template-dictionary scan (the H2.1 prerequisite).** Built + ran `runs/2026-06-05-template-dictionary/` (`6d8950f`): empire (180,609) + Latin (109,646, reproduced exactly) exact-template enumeration. Found the curated 3-tier convention basis empirically inadequate — multi-century slabs ~31% of the convention pool and absent; reign ~2.7%; `[301,500]` the single most frequent template (8.8%). Reconciled the family classifier (F1/F2_Other/F3/Tight/Big), the Stage-1 9-slab empirical p_conv, and a lodged-prereg reign contradiction via fan-out explore agents.
+
+**Decision 38 (`66e751a`).** Historical-anchor principle (reigns/dynasties/events → genuine-but-aoristic; calendar-segment rounding → convention); grid-quantisation reframing of "convention"; convention basis = empirical calendar slab-types grouped to ~3 tiers, **no reign tier**; decadal + quarter-century as a sensitivity band; **recovery re-validation now precedes H2.1** (the 98.6% does not transfer); cite-and-distinguish novelty positioning; OSF amendment required (separable from Amendment 02). Supersedes Decision 20's tier typing; refines Decision 37.
+
+**Lit-scout (verified) + two deeper chains.** `/lit-scout` proposer+verifier (19 rows, clean) + a Crema-2025 forward chain + an EDH-heiDOK backward chain (both verified). Novelty survives the pre-emption check; nearest competitor = Tobalina-Pulido & Martín-Rodilla 2026 (`10.5334/jcaa.220`, fuzzy-logic uncertainty *quantification*, not deconvolution). Warrant = Crema 2025; dating-method authority = Cooley 2012 + Hartmann 2025. EDH Datierungskriterien = cite-the-data (`zenodo.3575154` + Grieshaber + EpiDoc Guidelines; the EpiDoc `@evidence` list maps ~1:1 onto the EDH criteria).
+
+**Zotero staging.** 9 epigraphic-dating references staged to `My Library > staging > 2026-06-06-epigraphic-dating-methodology` (`5c6cddd`, `e94b240`, `c2a6ea9`).
+
+**Tooling hardening (personal-assistant).** `lit-search.py` 429 retry/backoff + per-host pacing (`fbe743c`, pushed to main). Importer `lit-scout-zotero-import.py` 429 resilience + explicit DataCite source (chain CrossRef→DataCite→OpenAlex, DataCite authoritative for datasets): implemented on a worktree-isolated branch (`2140b21`, 83 assertions), reviewed, merged to personal-assistant main (`6d25850`).
+
+**Tooling hygiene (inscriptions).** Archived the five bespoke Zotero staging one-offs to `archive/superseded-code/zotero-staging/`; created `inscriptions/CLAUDE.md` externalising the canonical shared tooling + the correct pattern + its known gaps; fixed the README's stale mention (`ca974d3`).
+
+### Contextual assumptions
+- Two parallel sessions were live: Shawn's warm-context review of the scan (which caught two errors in my fresh-session proposal — threshold-routing contamination and spot-check-vs-re-validation) and another branch (`fix/litscout-zotero-arxiv-doi`) Shawn merged mid-session. personal-assistant was under concurrent auto-sync (main advanced during agent runs); every agent commit was re-verified at source and scoped with explicit pathspecs.
+- Semantic Scholar rate-limited (HTTP 429) repeatedly across the session — the motivation for the retry/pacing work.
+- H2.1 remains gated: still pending are the curated historical-anchor interval list, the empirical calendar-slab basis rebuild, the recovery re-validation (α=0.95 × multi-century stress-triage first), and the OSF amendment. Parked: the EDH dating-criteria enrichment (awaiting SDAM reply) and OSF Amendment 02 (Latin frame).
