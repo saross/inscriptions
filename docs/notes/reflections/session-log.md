@@ -751,3 +751,24 @@ Resumed inscriptions at the H2.1 prep gate. The session settled the genuine-vs-c
 - Two parallel sessions were live: Shawn's warm-context review of the scan (which caught two errors in my fresh-session proposal — threshold-routing contamination and spot-check-vs-re-validation) and another branch (`fix/litscout-zotero-arxiv-doi`) Shawn merged mid-session. personal-assistant was under concurrent auto-sync (main advanced during agent runs); every agent commit was re-verified at source and scoped with explicit pathspecs.
 - Semantic Scholar rate-limited (HTTP 429) repeatedly across the session — the motivation for the retry/pacing work.
 - H2.1 remains gated: still pending are the curated historical-anchor interval list, the empirical calendar-slab basis rebuild, the recovery re-validation (α=0.95 × multi-century stress-triage first), and the OSF amendment. Parked: the EDH dating-criteria enrichment (awaiting SDAM reply) and OSF Amendment 02 (Latin frame).
+
+## 2026-06-06 → 2026-06-07 — Decision-38 gate executed → re-validation triage PASS + full grid launched → OSF Amendment 02 LODGED → H2.1 launch-prep drafted
+
+Resumed inscriptions at the H2.1 prep gate and executed the Decision-38 redesign end to end, lodged Amendment 02, and staged the H2.1 launch.
+
+**Decision-38 basis built (Option 2).** Shawn chose 3 learned tiers from the 5 core calendar slabs (sub-century [half-50] / century / multi-century [150+200+300]); the 4 fine brackets excluded from primary `p_conv` → add-them-back sensitivity band. Built the curated historical-anchor list (`historical-anchor-intervals.json`) and the empirical, frequency-weighted, per-frame basis (`design.json`, empire + Latin); reign leak = 129 (`[161,180]`, 0.11%) stripped; empirical tier weights [0.184, 0.431, 0.385]. `runs/2026-06-06-convention-basis-redesign/` (`6e1354b`).
+
+**Recovery re-validation.** Wrote the spec (stress-triage first; `75e9088`). Stage-1 triage (8 cells, sapphire) PASS: convergence 1.00; α recovered to +0.029 at the worst corner — the multi-century plateau is attributed to convention, not confused for genuine quiescence (Decision-38 §6 fear resolved). The one sub-0.90 α-coverage cell was the benign large-N collapse Amendment 01 §A5.5.1 already documents; corrected the spec gate to the Amendment-01 criterion (α = diagnostic; shape + convergence binding) (`f90e6c1`, `d93598c`; `STAGE1-TRIAGE-REPORT.md`). Shawn signed off → full grid (450 cells, fresh harness copy, PID 1681813) launched; ~144/450 at close, 0 failed.
+
+**OSF Amendment 02 (Latin frame) LODGED 2026-06-06** (tag `osf-amendment-02-2026-06-06`). Prepared the 4-artefact package mirroring A01 (`c4c40dc`; word-wrap fix for OSF pasting `472f146`; LODGED status `ce963de`). Resolved the 39-vs-41 province reconciliation from evidence (`runs/2026-06-06-amendment-02-prep/`, `d82834c`): Italia (N=1) + Alpes Graiae (N=77) classify Latin but contribute 0 Hanson-matched cities → realised frame 817/39, no result impact; Lugdunensis→Lugudunensis spelling. Decision 36 gate cleared; 14 PRELIMINARY labels flipped to confirmatory across 6 Latin result artefacts (`ebbf332`). Generalised the PDF builder to read its title from frontmatter (`86dead0`).
+
+**Git tidy.** Extended `.gitignore` to the revalidation run dir per the 2026-05-26 heuristic (bulk ignored; grid-state + REPORT + 8 triage summaries tracked); repo 0 untracked (`c32f0a7`).
+
+**H2.1 launch-prep** (`runs/2026-06-07-h2.1-launch-prep/`). Verified + pinned the unit set: 26 primary fits (empire 180,609 + Latin 109,646 + 19 provinces + 5 cities at N≥2,000; grey-band Moesia inferior + Lusitania), matching Decision 37 D1 exactly (`1e11414`). Drafted the H2.1 launch spec (`9f00f26`) and the Amendment 03 convention-model skeleton (`edf4cd9`), both with grid-dependent sections placeheld. Updated continuity (`a8369d5`).
+
+### Contextual assumptions
+- The full grid runs on sapphire independently of the session; its verdict (the H2.1 gate) was still pending at close. ETA ~12 h total — much faster than the spec's conservative ~1–1.5 day figure (fast N=2k/10k cells + 12-way parallelism + 8 pre-done triage cells).
+- ssh-launched background jobs timed out the ssh client twice but `nohup` detached the runs; verified single-orchestrator at source before trusting each launch.
+- Sapphire's working tree holds the actively-written grid outputs untracked, blocking pulls; left unreconciled on purpose (don't disturb a running grid) — resolve once it exits (SHA-verify-then-remove-then-pull, as done earlier this session).
+- The spec's α-coverage gate was corrected mid-session to the lodged Amendment 01 §A5.5.1 criterion after the triage exposed the inconsistency.
+- Amendment 03's `justification.txt`/`summary-addendum`/PDF are deliberately not yet generated — they derive from the finalised §A5.5, which awaits the grid verdict.
