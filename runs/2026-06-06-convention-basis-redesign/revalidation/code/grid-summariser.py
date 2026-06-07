@@ -89,8 +89,15 @@ CONVERGENCE_FRAC = 0.90       # explicit convergence precondition (>=90% replica
 # R-hat / bulk-ESS, so headline B = diagnostic A = 98.6% (355/360 in-envelope
 # cells; the 5 non-passers are bimodal_alpha=0.70_N=2000 cells failing on genuine
 # shape, not convergence). The pre-2026-06-04 figures were B = 91.9% / A = 98.5%.
-# Re-derived in-pipeline by reaggregate.py (no re-fit). Asserted only for the
-# inscription grid.
+# Re-derived in-pipeline by reaggregate.py (no re-fit).
+#
+# DESIGN-SPECIFIC GUARD. These figures belong to the *2026-05-22 / 2026-05-26
+# validated design*. They are a regression guard for a re-run of THAT design, not
+# a target for a different convention basis. The 2026-06-06 Decision-38
+# re-validation deliberately rebuilds the tier basis, so its headline is a fresh
+# MEASUREMENT, not a Grid-A regression target ("Grid A 98.6% does not transfer").
+# Hence the hard-assert below is OPT-IN via --assert-grid-a-regression; by default
+# the Grid-A delta is surfaced as informational context and never aborts scoring.
 GRID_A_HEADLINE_B = 0.986
 GRID_A_DIAGNOSTIC_A = 0.986
 REGRESSION_TOL = 0.003
@@ -490,6 +497,17 @@ def _parse_args() -> argparse.Namespace:
             "are read from <grid-dir>/outputs/cell-summaries/)."
         ),
     )
+    parser.add_argument(
+        "--assert-grid-a-regression",
+        action="store_true",
+        help=(
+            "Hard-assert the inscription headline B / diagnostic A reproduce the "
+            "validated 2026-05-22/26 Grid-A figures (exit 1 on mismatch). Use ONLY "
+            "when re-running that exact design. For a new convention basis (e.g. the "
+            "2026-06-06 Decision-38 re-validation) leave this OFF: the headline is a "
+            "fresh measurement, not a regression target."
+        ),
+    )
     return parser.parse_args()
 
 
@@ -522,27 +540,42 @@ def main() -> int:
         f"{'PASS' if cv['validated'] else 'FAIL'}"
     )
 
-    # Built-in regression check: the inscription grid must reproduce the
-    # 2026-06-03 adjudication figures (Decision 33 / §A5.5.1), guarding against a
-    # silent partition/criterion regression. Grid B has no reference -> skip.
+    # Built-in regression check — DESIGN-SPECIFIC, OPT-IN. The GRID_A_* references
+    # are the 2026-06-03 adjudication figures for the *validated 2026-05-22/26
+    # design* (Decision 33 / §A5.5.1); they guard a re-run of THAT design against a
+    # silent partition/criterion regression. A *different* convention basis (the
+    # 2026-06-06 Decision-38 re-validation) has no such reference — its headline is
+    # a fresh measurement ("Grid A 98.6% does not transfer"). So: hard-assert (exit
+    # 1 on mismatch) only when the caller opts in via --assert-grid-a-regression;
+    # otherwise surface the Grid-A delta as informational context and never abort.
     if unit == "inscription":
         for label, got, ref in [
             ("headline B", cv["headline_b"], GRID_A_HEADLINE_B),
             ("diagnostic A", cv["diagnostic_a"], GRID_A_DIAGNOSTIC_A),
         ]:
-            ok = abs(got - ref) <= REGRESSION_TOL
-            print(
-                f"[grid-summariser] regression {label}: {got:.1%} vs ref "
-                f"{ref:.1%} -> {'OK' if ok else 'MISMATCH'}"
-            )
-            if not ok:
+            delta = got - ref
+            ok = abs(delta) <= REGRESSION_TOL
+            if args.assert_grid_a_regression:
                 print(
-                    f"[grid-summariser] ERROR: corrected-criterion regression "
-                    f"FAILED for {label} (got {got:.4f}, ref {ref:.4f}, "
-                    f"tol {REGRESSION_TOL}). Criterion/partition changed.",
-                    file=sys.stderr,
+                    f"[grid-summariser] regression {label}: {got:.1%} vs Grid-A ref "
+                    f"{ref:.1%} -> {'OK' if ok else 'MISMATCH'}"
                 )
-                return 1
+                if not ok:
+                    print(
+                        f"[grid-summariser] ERROR: corrected-criterion regression "
+                        f"FAILED for {label} (got {got:.4f}, ref {ref:.4f}, "
+                        f"tol {REGRESSION_TOL}). Criterion/partition changed.",
+                        file=sys.stderr,
+                    )
+                    return 1
+            else:
+                print(
+                    f"[grid-summariser] basis-shift {label}: {got:.1%} "
+                    f"(Grid-A {ref:.1%}; Δ {delta:+.1%}) -- informational; this "
+                    f"design's headline is a measurement, not a Grid-A regression "
+                    f"target. Pass --assert-grid-a-regression only when re-running "
+                    f"the validated Grid-A design."
+                )
 
     print(f"[grid-summariser] wrote {parquet_path}")
     print(f"[grid-summariser] wrote {report_path}")
