@@ -1,12 +1,12 @@
 # H2.1 temporal-mixture — launch spec
 
 **Date:** 2026-06-07 · **Author:** Claude Code (Opus 4.8) on Shawn Ross's brief
-**Status:** **DRAFT — for Shawn sign-off.** Gate (a) is now CLEARED: the Decision-38
-recovery re-validation **PASSED** (full grid, B = 96.4 %; 2026-06-08;
-`runs/2026-06-06-convention-basis-redesign/revalidation/FULL-GRID-REPORT.md`), and
-the grid-dependent acceptance lines (§7) are filled from it. Launch remains gated
-on (b) the Decision-38 convention-model OSF amendment being lodged, and (c) this
-sign-off.
+**Status:** **SIGNED OFF (Shawn 2026-06-08).** Gate (a) CLEARED (re-validation
+**PASSED**, B = 96.4 %; `FULL-GRID-REPORT.md`) and gate (c) CLEARED (this sign-off,
+with grey-band included caveated, all six supplementaries, `women.csv` deferred,
+`TMPDIR`-on-disk guard added). **The one remaining gate is (b): Shawn lodges the
+Decision-38 convention-model OSF amendment (Amendment 03).** The production fit
+must not run until A03 is lodged; the harness may be built + smoke-tested before.
 **Binds:** Decisions **37 (D1–D6)**, **38** (empirical convention basis), 33, 34,
 35, 36; the lodged prereg §3 + Amendments 01/02; the 2026-06-05 prereg-completeness
 audit.
@@ -24,8 +24,8 @@ analysis (SPA) of inscription dates, and hands the corrected curves to H3b.
 | Template-dictionary scan (prereg line 202) | **DONE** (`runs/2026-06-05-template-dictionary/`, `6d8950f`) |
 | Convention basis rebuilt (Decision 38, Option 2) | **DONE** (`runs/2026-06-06-convention-basis-redesign/design.json`) |
 | Recovery re-validation (Decision 38 §6) | **PASS** — Stage-1 triage PASS; full grid 450/0, B = 96.4 % (2026-06-08, `FULL-GRID-REPORT.md`) |
-| Decision-38 convention-model OSF amendment | **DRAFT complete (§A5.5 filled), awaiting lodgement** |
-| This launch spec sign-off | **pending Shawn** |
+| Decision-38 convention-model OSF amendment | **DRAFT complete (§A5.5 filled), awaiting lodgement — THE ONE OPEN GATE** |
+| This launch spec sign-off | **CLEARED** (Shawn 2026-06-08) |
 
 No production mixture fit runs until all five clear. (Amendment 02, Latin-frame
 cross-sectional, is already lodged and is independent of this temporal track.)
@@ -46,10 +46,19 @@ all clearing the N ≥ 2,000 deconvolution-reachability floor (Decision 34):
 - **5 Latin cities** (`urban_context_city`) N ≥ 2,000, Rome excluded: Pompeii
   (4,508), Salona (3,465), Ostia (2,644), Mogontiacum (2,398), Aquileia (2,034).
 
-**Grey-band (caveated option, N ∈ [1,549, 2,000)):** Moesia inferior (1,952),
-Lusitania (1,685). Run only if Shawn wants them, flagged as below the validated
-floor. **Sub-floor units (< 1,549)** fall back to date-window counts / §5 — not a
+**Grey-band — INCLUDED caveated (Shawn 2026-06-08; N ∈ [1,549, 2,000)):** Moesia
+inferior (1,952), Lusitania (1,685) — run as **caveated-tier** (below the validated
+N≈2,000 floor), bringing the run to **28 fits (26 primary + 2 grey-band)**.
+**Sub-floor units (< 1,549)** fall back to date-window counts / §5 — not a
 standalone mixture (prereg "Scope of the mixture correction").
+
+**Deferred exploratory candidate (Shawn 2026-06-08):** the wife/daughter thematic
+subset (`data/women.csv` — 893 wife + 504 daughter roles over 1,284 inscriptions,
+**~1,200 in-envelope**) is sub-floor *and* thematic (outside the preregistered
+geographic confirmatory frame). Revisit as a dedicated **exploratory worked
+example**, not in this confirmatory run. Prep notes for then: the file is
+gzip-compressed (despite the `.csv` name), is person-role-level (dedup to the 1,284
+inscriptions), and its dating schema should be checked against LIRE before an SPA.
 
 ## 3. Model (Decision 35 + Decision 38)
 
@@ -168,9 +177,16 @@ high-N cross-check on the 5 cities).
 
 - **Host:** sapphire; `taskset -c 0-11`, `PYTENSOR_FLAGS=mode=FAST_RUN,allow_gc=False`,
   BLAS threads pinned to 1; **`n_jobs=12`** (the 2026-05-22 SMT lesson).
-- **Scale:** 26 primary fits × (primary + aoristic-MC + Dirichlet-MM + NegBin) +
-  the empire EB + trapezoidal + fine-bracket-sensitivity ≈ **~800 fits, ~1 h
-  parallelised** (Decision 37 D6 estimate).
+- **Scratch/temp on disk (the 2026-06-08 disk lesson):** export **`TMPDIR` to a
+  disk-backed path** (e.g. `/home/shawn/.cache/inscriptions-pytensor-tmp`, on the
+  264 GB root fs) so PyTensor's numba compile temp files do not fill the 31 GB
+  RAM-backed tmpfs `/tmp` — the cause of the re-validation's 12-cell ENOSPC failure.
+  **Pre-flight assert:** refuse to launch if `TMPDIR` free space < 20 GB
+  (halt-and-report, per the standing rule).
+- **Scale:** 28 fits (26 primary + 2 grey-band) × (primary + aoristic-MC +
+  Dirichlet-MM + NegBin) + the empire EB + trapezoidal + fine-bracket-sensitivity
+  ≈ **~850 fits, ~1 h parallelised** (Decision 37 D6 estimate; all six
+  supplementaries confirmed in scope, Shawn 2026-06-08).
 - **Hard stops (standing rules):** do not silently negotiate scope down to fit a
   time budget; do not relax the convergence gate; halt and report on any unit that
   fails convergence after a `n_tune` bump.
@@ -179,8 +195,8 @@ high-N cross-check on the 5 cities).
 
 ## 10. Pre-launch checklist
 - [x] 2026-06-08 Recovery re-validation full grid **PASS** (B = 96.4 %; `FULL-GRID-REPORT.md`) — gate.
-- [ ] Decision-38 convention-model OSF amendment **lodged** — Shawn.
-- [ ] This spec signed off — Shawn.
+- [ ] Decision-38 convention-model OSF amendment **lodged** — Shawn (still open — the one gate left before the production fit).
+- [x] 2026-06-08 This spec **signed off — Shawn** (grey-band included caveated; all six supplementaries; `women.csv` deferred; `TMPDIR`-on-disk guard added).
 - [x] 2026-06-08 Fill the §7 grid-dependent lines from the re-validation REPORT (envelope + α LoA).
 - [ ] Build the H2.1 production harness (adapt the validated `build_model_f1_f3`
       pipeline to real-unit SPAs + the largest-remainder observation model + the
