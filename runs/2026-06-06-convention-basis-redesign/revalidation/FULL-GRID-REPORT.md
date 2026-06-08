@@ -128,7 +128,8 @@ hedged by the operating envelope + the shape-conditioned α LoA.
   `tables/grid-summary.parquet`.
 - α bias / LoA: `tables/alpha-bias.parquet`, `tables/alpha-loa-summary.json`
   (`code/compute-alpha-loa.py`).
-- Grid state (final, 450/0): `inscription-mass/outputs/grid-state.json`;
+- Grid state (final, 450/0): `inscription-mass/outputs/grid-state-final.json`
+  (the live `grid-state.json` is a gitignored runtime file per the 2026-06-08 rule);
   pre-rerun snapshot `grid-state.before-rerun-2026-06-08.json` (on sapphire).
 - Per-cell summaries (450) + per-replicate posteriors: on sapphire (gitignored bulk).
 - Stage-1 triage: `STAGE1-TRIAGE-REPORT.md`.

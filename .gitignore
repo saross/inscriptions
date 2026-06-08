@@ -9,11 +9,19 @@ data/LIST_v1-2.parquet
 runs/**/cell-results.parquet
 runs/**/run.pid
 
+# Recovery-grid state file — RULE (defined 2026-06-08, Shawn): grid-state.json is
+# a LIVE orchestration file (rewritten continuously during a run, goes stale, and
+# collides on concurrent pulls), so it is NOT tracked. The committed run record is
+# grid-state-final.json — a run-close snapshot (`cp grid-state.json
+# grid-state-final.json`) — alongside REPORT.md + tables/. grid-state-final.json
+# is NOT matched by the pattern below and stays tracked.
+runs/**/grid-state.json
+
 # Recovery-grid two-unit re-simulation (2026-05-26): production
 # per-replicate synthetic data (45,000 / grid) and per-replicate posterior
 # fits (45,000 / grid) regenerate deterministically from base_seed +
 # cell_index + replicate; bulk would push the repo past the GitHub limit.
-# grid-state.json, REPORT.md, and tables/grid-summary.parquet ARE committed.
+# grid-state-final.json (run-close snapshot), REPORT.md, and tables/grid-summary.parquet ARE committed (live grid-state.json is ignored — see the rule near the top).
 # Per-cell summary JSONs are NOT committed (Shawn 2026-06-03): their content is
 # preserved compactly in tables/grid-summary.parquet, so the 450 redundant JSONs
 # per grid are gitignored below. The smoke-test cell
@@ -85,7 +93,7 @@ runs/2026-06-04-h3a-confirmatory/outputs/*.nc
 # Decision-38 recovery re-validation (2026-06-06): per-replicate synthetic data
 # + posterior fits regenerate deterministically from base_seed + cell_index +
 # replicate; the 450-cell bulk lives on sapphire, like the 2026-05-26 grid.
-# Tracked research record: grid-state.json, STAGE1-TRIAGE-REPORT.md, the eventual
+# Tracked research record: grid-state-final.json, STAGE1-TRIAGE-REPORT.md, the eventual
 # tables/grid-summary.parquet, and the 8 already-committed Stage-1 triage
 # cell-summaries (the gate record — git keeps already-tracked files). Operational
 # orchestrator/full-grid logs and the 442 production cell-summaries are not.
