@@ -1,12 +1,12 @@
 # H2.1 temporal-mixture — launch spec
 
 **Date:** 2026-06-07 · **Author:** Claude Code (Opus 4.8) on Shawn Ross's brief
-**Status:** **DRAFT — for Shawn sign-off.** Launch is gated on (a) the Decision-38
-recovery re-validation passing (full grid running, PID 1681813; verdict pending —
-`runs/2026-06-06-convention-basis-redesign/revalidation/`), (b) the Decision-38
-convention-model OSF amendment being lodged, and (c) this sign-off. The
-grid-dependent acceptance lines (§7) are placeheld pending the re-validation
-REPORT.
+**Status:** **DRAFT — for Shawn sign-off.** Gate (a) is now CLEARED: the Decision-38
+recovery re-validation **PASSED** (full grid, B = 96.4 %; 2026-06-08;
+`runs/2026-06-06-convention-basis-redesign/revalidation/FULL-GRID-REPORT.md`), and
+the grid-dependent acceptance lines (§7) are filled from it. Launch remains gated
+on (b) the Decision-38 convention-model OSF amendment being lodged, and (c) this
+sign-off.
 **Binds:** Decisions **37 (D1–D6)**, **38** (empirical convention basis), 33, 34,
 35, 36; the lodged prereg §3 + Amendments 01/02; the 2026-06-05 prereg-completeness
 audit.
@@ -23,8 +23,8 @@ analysis (SPA) of inscription dates, and hands the corrected curves to H3b.
 |---|---|
 | Template-dictionary scan (prereg line 202) | **DONE** (`runs/2026-06-05-template-dictionary/`, `6d8950f`) |
 | Convention basis rebuilt (Decision 38, Option 2) | **DONE** (`runs/2026-06-06-convention-basis-redesign/design.json`) |
-| Recovery re-validation (Decision 38 §6) | **RUNNING** — Stage-1 triage PASS; full grid PID 1681813 (verdict pending) |
-| Decision-38 convention-model OSF amendment | **DRAFTED, awaiting grid verdict + lodgement** |
+| Recovery re-validation (Decision 38 §6) | **PASS** — Stage-1 triage PASS; full grid 450/0, B = 96.4 % (2026-06-08, `FULL-GRID-REPORT.md`) |
+| Decision-38 convention-model OSF amendment | **DRAFT complete (§A5.5 filled), awaiting lodgement** |
 | This launch spec sign-off | **pending Shawn** |
 
 No production mixture fit runs until all five clear. (Amendment 02, Latin-frame
@@ -126,13 +126,14 @@ Run on the same real-data fits:
    Latin-re-derived EB deferred (run only if the empire EB diverges or a reviewer
    presses).
 
-## 7. Acceptance — no ground truth (Decision 37 D5) · grid-dependent lines placeheld
+## 7. Acceptance — no ground truth (Decision 37 D5) · filled from the re-validation
 
 **Reportability gates (per unit):**
 - **convergence** — `cell_lib.convergence_pass` (max R̂ < 1.01 ∧ min bulk-ESS ≥ 400);
-- **operating envelope** — **N ≥ 2,000 AND posterior α ≤ 0.70** ⟵ *the α ≤ 0.70
-  ceiling is the re-validation-demonstrated envelope; `[CONFIRM from the full-grid
-  REPORT: the α / shape-recovery map and the exact reportable envelope]`.*
+- **operating envelope** — **N ≥ 2,000 AND posterior α ≤ 0.70** ⟵ *CONFIRMED by the
+  full grid: clean-pass B = 96.4 % within α ≤ 0.70, degrading sharply only at the
+  out-of-envelope α = 0.95 stress row; no basis to tighten or loosen the ceiling
+  (`FULL-GRID-REPORT.md` §3).*
 
 **No-truth evidence (reported per unit):**
 - descriptive-`p_conv` consistency — the model's learned convention fraction vs the
@@ -143,8 +144,10 @@ Run on the same real-data fits:
 - posterior-**median** corrected genuine SPA (the H3b hand-off, §8);
 - **α reported as a shape-conditioned diagnostic** (Bland–Altman limits of
   agreement), **not a precise dial** — Amendment 01 §A5.5.1; coarse directional
-  convention-fraction statements only; ± precision per the re-validation map
-  `[CONFIRM from REPORT; cf. Decision 33's ±0.18]`;
+  convention-fraction statements only; ± precision from the re-validation:
+  in-envelope 95 % LoA **[−0.12, +0.13]** (mean signed bias +0.005), shape-conditioned
+  **±0.09** (smooth/flat) to **±0.18** (multimodal) — within Decision 33's ±0.18
+  envelope (`FULL-GRID-REPORT.md` §4; `tables/alpha-loa-summary.json`);
 - caveat bands in peaked-genuine regimes (Obs 68/73 — the GRW attenuates sharp
   peaks, so the corrected SPA may be conservative at the Antonine probe);
 - flag the late corpus (AD ~142–347) as `p_conv`-dominated (Obs 69).
@@ -175,10 +178,10 @@ high-N cross-check on the 5 cities).
   + per-unit progress on sapphire.
 
 ## 10. Pre-launch checklist
-- [ ] Recovery re-validation full grid **PASS** (verdict + REPORT) — gate.
+- [x] 2026-06-08 Recovery re-validation full grid **PASS** (B = 96.4 %; `FULL-GRID-REPORT.md`) — gate.
 - [ ] Decision-38 convention-model OSF amendment **lodged** — Shawn.
 - [ ] This spec signed off — Shawn.
-- [ ] Fill the §7 grid-dependent lines from the re-validation REPORT.
+- [x] 2026-06-08 Fill the §7 grid-dependent lines from the re-validation REPORT (envelope + α LoA).
 - [ ] Build the H2.1 production harness (adapt the validated `build_model_f1_f3`
       pipeline to real-unit SPAs + the largest-remainder observation model + the
       per-frame basis selection) → smoke-test → launch on sapphire.

@@ -1,7 +1,7 @@
 ---
 title: "OSF Amendment 03 — Convention component is an empirical calendar-slab basis (grid-quantisation reframe; no reign tier)"
 amendment-number: 03
-status: DRAFT (skeleton) — awaiting the recovery re-validation verdict, then Shawn's review and lodgement (not yet lodged)
+status: DRAFT (complete) — §A5.5 filled with the full-grid PASS (2026-06-08); awaiting Shawn's review and lodgement (not yet lodged)
 date-drafted: 2026-06-07
 scope: "Redefine the H2.1 mixture's editorial-convention component (p_conv) as an empirical calendar-slab basis with NO reign tier; reclassify reigns/dynasties/datable events as genuine-but-aoristic; reframe the artefact as grid-quantisation of genuine-but-coarse evidence onto the BC/AD calendar lattice; ride decadal/quarter-century brackets as a sensitivity band. Gated on a fresh recovery re-validation."
 preregistration: "https://osf.io/uycs6/ (lodged 2026-05-20; embargoed)"
@@ -10,7 +10,7 @@ filed-under: "preregistration §7 / contingency clause (preregistration-draft.md
 author: "Shawn Ross (with Claude Code as analyst/RSE)"
 gate: "BINDING — the H2.1 temporal-mixture production fit must not run until this amendment is lodged. The cross-sectional track (H3a/H3c/SR1, Amendments 01/02) uses date-window counts, not mixture output, and is NOT gated by this amendment."
 relationship: "Independent of Amendment 01 (two-measure framework, lodged 2026-06-04) and Amendment 02 (Latin-primary frame, lodged 2026-06-06). Both used date-window counts; this one concerns only the temporal mixture's convention component. Separable lodgement."
-skeleton-note: "DRAFT SKELETON written 2026-06-07 while the recovery re-validation full grid runs (PID 1681813). §A5.5 (re-validation result) is PLACEHELD pending the grid verdict + REPORT; the justification.txt, summary-addendum, and PDF are generated once §A5.5 is filled and Shawn signs off."
+skeleton-note: "§A5.5 filled 2026-06-08 from the full-grid PASS (B = 96.4 %; FULL-GRID-REPORT.md). justification.txt + summary-addendum generated this session; PDF pending. Awaiting Shawn's review + lodgement."
 ---
 
 # OSF Amendment 03 — Convention component is an empirical calendar-slab basis (grid-quantisation reframe; no reign tier)
@@ -158,7 +158,7 @@ barely moves the result. They are **excluded from the primary `p_conv`** and add
 back as a reported robustness band (the ceramics stacked-band idiom), not a hard
 classification.
 
-### A5.5 Recovery re-validation (the gate) — **[PENDING FULL-GRID VERDICT]**
+### A5.5 Recovery re-validation (the gate) — **PASS** (triage + full grid)
 
 Grid A's 98.6 % validated the *old* basis shapes and does **not** transfer to a
 multi-century-bearing basis (a long flat envelope-edge plateau is confusable with
@@ -171,9 +171,23 @@ stress-triage first**, then the full grid.
   multi-century plateau is attributed to convention, *not* confused for genuine
   quiescence. Scored under the Amendment 01 §A5.5.1 criterion (α-coverage = a
   shape-conditioned diagnostic, not a gate; shape + convergence binding).
-- **Stage-2 full grid: `[PENDING — PID 1681813; insert the 450-cell verdict, the
-  shape-recovery map, the demonstrated operating envelope (α ≤ 0.70), and the
-  REPORT path once the grid completes]`.**
+- **Stage-2 full grid: PASS** (450 cells, 0 failed; sapphire, 2026-06-08). Headline
+  **B = 96.4 %** of in-envelope (α ≤ 0.70) cells are clean passes (convergence AND
+  shape), against the ≥ 90 % bar; diagnostic A = 97.2 %. The 13 in-envelope
+  non-passes (3 non-converged + 10 shape-misses) concentrate in the peaked shapes
+  (`regnal_cluster`, large-N `bimodal`); **the `multicentury_heavy` tier is NOT a
+  systematic failure** (it clean-passes at the same rate as every other tier), so
+  the §6 plateau-confusion failure mode is **absent at scale**, and α is recovered
+  essentially unbiased (mean signed bias +0.005). The operating envelope (α ≤ 0.70)
+  is confirmed; shape recovery collapses only at the out-of-envelope α = 0.95
+  stress row. α-recovery precision (Bland–Altman 95 % LoA, in-envelope) is
+  **[−0.12, +0.13]** pooled — shape-conditioned ±0.09 (smooth/flat) to ±0.18
+  (multimodal) — **within Decision 33's ±0.18 envelope**, so the lodged
+  shape-conditioned α-hedge carries over unchanged. Basis-shift vs the validated
+  Grid A: 96.4 % vs 98.6 % (Δ −2.2 %; informational, not a regression target).
+  REPORT: `runs/2026-06-06-convention-basis-redesign/revalidation/FULL-GRID-REPORT.md`
+  (auto-tables `inscription-mass/outputs/REPORT.md`; α LoA
+  `tables/alpha-loa-summary.json`).
 
 ### A5.6 Novelty positioning (verified)
 
