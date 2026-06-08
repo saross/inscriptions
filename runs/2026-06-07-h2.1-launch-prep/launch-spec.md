@@ -193,14 +193,20 @@ high-N cross-check on the 5 cities).
 - Commit the design + this spec **before** launch; resumable per-unit; `STATUS.txt`
   + per-unit progress on sapphire.
 
-## 10. Pre-launch checklist
+## 10. Pre-launch checklist — ALL GATES CLEARED; PRIMARY RUN COMPLETE
 - [x] 2026-06-08 Recovery re-validation full grid **PASS** (B = 96.4 %; `FULL-GRID-REPORT.md`) — gate.
-- [ ] Decision-38 convention-model OSF amendment **lodged** — Shawn (still open — the one gate left before the production fit).
+- [x] 2026-06-08 Decision-38 convention-model OSF amendment **lodged — Shawn**.
 - [x] 2026-06-08 This spec **signed off — Shawn** (grey-band included caveated; all six supplementaries; `women.csv` deferred; `TMPDIR`-on-disk guard added).
 - [x] 2026-06-08 Fill the §7 grid-dependent lines from the re-validation REPORT (envelope + α LoA).
-- [ ] Build the H2.1 production harness (adapt the validated `build_model_f1_f3`
-      pipeline to real-unit SPAs + the largest-remainder observation model + the
-      per-frame basis selection) → smoke-test → launch on sapphire.
+- [x] 2026-06-08 Build the H2.1 production harness (`code/{h2_lib,fit-unit,run-h2}.py`,
+      `8c8151f`) → smoke-test (`code/smoke-{data,fit}.py`) → **PRIMARY run COMPLETE**:
+      28/28 units, 0 failed, all converged, wall 98 s
+      (`outputs/production/SUMMARY.md`, `4c30c20`). Tiers: 21 reportable + 1
+      secondary, 6 caveated (4 α>0.70 incl. the Latin aggregate, 2 grey-band).
+- [ ] **Staged next wave (supervised):** the six §6 supplementaries — fine-bracket
+      band, aoristic-MC, DM + NegBin (need new builders), trapezoidal,
+      H2.2/2.3/2.4 + empire-α, empire-EB. Run with Shawn's review (not unsupervised).
+- [ ] H3b hand-off: per-unit `corrected_genuine_spa` from `outputs/production/units/`.
 
 ## 11. Provenance
 - Unit set: `runs/2026-06-07-h2.1-launch-prep/{outputs/unit-set.json,code/verify-unit-set.py}`.
