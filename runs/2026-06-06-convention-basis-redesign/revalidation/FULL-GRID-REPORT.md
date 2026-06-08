@@ -1,11 +1,10 @@
-# Full-grid recovery re-validation — REPORT (DRAFT SKELETON)
+# Full-grid recovery re-validation — REPORT
 
-**Status:** DRAFT SKELETON written 2026-06-07 while the full grid runs
-(sapphire PID 1681813, ~150/450 at scaffold time, 0 failed). Every
-verdict-dependent value below is an explicit `[PENDING]` placeholder — **do not
-quote any number from this file until the grid has finished and the summariser
-has been run.** This scaffold exists so the post-grid scoring + amendment/spec
-fill is mechanical (fill-in-the-numbers), not so the verdict can be pre-judged.
+**Status:** COMPLETE — verdict **PASS** (Amendment-01 §A5.5.1 binding criterion).
+Scored 2026-06-08 over the clean 450-cell grid (after the 12-cell disk-failure
+re-run; see §0.1). Numbers below are read from the summariser output
+(`inscription-mass/outputs/REPORT.md`, `tables/grid-summary.parquet`) and the
+α-LoA artefact (`tables/alpha-loa-summary.json`), all committed alongside.
 
 **Author:** Claude Code (Opus 4.8) on Shawn Ross's brief.
 **Design:** `runs/2026-06-06-convention-basis-redesign/design.json`
@@ -14,146 +13,122 @@ fill is mechanical (fill-in-the-numbers), not so the verdict can be pre-judged.
 
 ---
 
-## 0. Scoring runbook (run these, in order, once the grid EXITS)
+## 0. Provenance
 
-The grid is finished when `grid-state.json` has `finished_at != null` **and**
-`len(completed_cells) == 450` **and** `failed_cells == []`. Verify first:
+### 0.1 Run history (the grid ran in two passes)
 
-```bash
-ssh sapphire 'cd ~/Code/inscriptions/runs/2026-06-06-convention-basis-redesign; \
-  python3 -c "import json; d=json.load(open(\"revalidation/inscription-mass/outputs/grid-state.json\")); \
-  print(\"finished:\", d[\"finished_at\"], \"completed:\", len(d[\"completed_cells\"]), \"failed:\", len(d[\"failed_cells\"]))"'
-```
+- **Full grid, pass 1** (PID 1681813): launched 2026-06-06 13:45 UTC, finished
+  2026-06-08 00:26 UTC, wall 34.7 h. **438 ok / 12 failed.** All 12 failures were
+  `smooth_decline` cells that hit `OSError [Errno 28] No space left` during a
+  transient ~1h40m window (2026-06-07 15:53–17:34 UTC) when PyTensor's numba
+  compile temp files filled the 31 GB RAM-backed `tmpfs` `/tmp`. An
+  **infrastructure failure, independent of the model**; integrity check confirmed
+  the 438 good cells each carry exactly 100 replicates (no silent truncation).
+- **Re-run, pass 2** (PID 1810768): the 12 failed cells re-run 2026-06-08 with
+  `TMPDIR` redirected to the 264 GB root disk (the fix). **450 ok / 0 failed**,
+  wall 1.05 h. Deterministic seeds (`cell_seed = base_seed + cell_index`) ⇒ the
+  re-run reproduces the synthetics that would have run — not a retry-until-pass.
+  Original failure state preserved at `grid-state.before-rerun-2026-06-08.json`.
 
-Then score (note: `--assert-grid-a-regression` is **OFF** by default and must
-STAY off — this is a *new* basis, so the Grid-A 98.6 % figure is a reference
-delta, not a pass target; the regression hard-abort was scoped to opt-in on
-2026-06-07 precisely for this run):
+### 0.2 Scoring
 
-```bash
-ssh sapphire 'cd ~/Code/inscriptions/runs/2026-06-06-convention-basis-redesign/revalidation; \
-  ~/.local/bin/uv run python code/grid-summariser.py \
-    --grid-dir inscription-mass'
-```
-
-This writes `inscription-mass/outputs/REPORT.md` (the auto-tables) and
-`inscription-mass/outputs/tables/grid-summary.parquet`, and prints the headline.
-**The auto-`REPORT.md` is the source of every number below.** This
-hand-written file wraps it with interpretation, the envelope read, the
-recommendation, and the amendment/spec field-mapping.
-
-**Extra step the summariser does NOT do — the α ±precision (Bland–Altman LoA).**
-Launch-spec §7 line 147 wants the α limits-of-agreement (cf. Decision 33's
-±0.18). The cell-summary JSON stores `alpha_coverage`, not the recovered-α draws,
-so the LoA must be computed from the in-envelope per-replicate posteriors
-(α ≤ 0.70 cells) on sapphire. Either (a) compute the in-envelope mean α-bias ±
-1.96·SD of (α̂ − α_true) across replicates, or (b) if that analysis is deferred,
-quote Decision 33's ±0.18 as the reference LoA and state that the new-basis LoA
-is reported in a follow-up. Decide at fill time; flag which was used.
+Scored with `code/grid-summariser.py` (the opt-in-regression fix, commit
+`5494347`; `--assert-grid-a-regression` left **off** — this basis's headline is a
+measurement, not a Grid-A regression target). Binding criterion = Amendment 01
+§A5.5.1: convergence precondition (≥ 90 % replicates pass R̂ < 1.01 ∧ bulk-ESS
+≥ 400) + hybrid shape gate (median Pearson r ≥ 0.95 non-flat; Wasserstein-1
+≤ 10 y for `flat_baseline`), α-coverage demoted to a shape-conditioned
+**diagnostic**, evaluated within the operating envelope (α ≤ 0.70); ≥ 90 % of
+in-envelope cells must clean-pass.
 
 ---
 
-## 1. Headline verdict — `[PENDING]`
+## 1. Headline verdict — **PASS**
 
-Binding criterion = Amendment 01 §A5.5.1 (corrected): convergence precondition
-(≥ 90 % replicates pass R̂ < 1.01 ∧ bulk-ESS ≥ 400) + hybrid shape gate
-(median Pearson r ≥ 0.95 non-flat; Wasserstein-1 ≤ 10 y for `flat_baseline`),
-α-coverage demoted to a shape-conditioned **diagnostic**, evaluated within the
-operating envelope (α ≤ 0.70); ≥ 90 % of in-envelope cells must clean-pass.
+| Figure | Value | Bar |
+|---|---|---|
+| **Headline B** (clean-pass ÷ in-envelope) | **96.4 %** (347/360) | ≥ 90 % → **PASS** |
+| Diagnostic A (shape-pass ÷ convergence-eligible in-envelope) | 97.2 % (347/357) | — |
+| Convergence-excluded in-envelope | 3 cells, all `regnal_cluster` | — |
+| Stress row (α = 0.95, never gated) | shape-pass 17.8 % (90 cells) | reported only |
+| Basis-shift vs Grid A | 96.4 % vs 98.6 % (Δ **−2.2 %**) | informational |
 
-- **Verdict: `[PENDING — PASS / FAIL]`.**
-- **Headline B (binding):** `[PENDING]` % of in-envelope cells clean-pass
-  (`[PENDING n_clean]/[PENDING n_envelope]`), against the ≥ 90 % bar.
-- **Diagnostic A:** `[PENDING]` % shape-pass among convergence-eligible
-  in-envelope cells.
-- **Basis-shift vs Grid A:** Grid-A headline was 98.6 %; this basis is
-  `[PENDING]` % (Δ `[PENDING]`). Informational — *not* a regression target.
-- **Convergence-excluded in-envelope cells:** `[PENDING]` (by shape: `[PENDING]`).
-- **Stress row (α ≥ 0.95, never gated):** shape-pass `[PENDING]` %.
+The 13 in-envelope non-clean-passes are **3 non-converged + 10 shape-misses**,
+concentrated in `regnal_cluster` (the sharp-spike shape) and a few large-N
+`bimodal` cells — the expected hard corners, comfortably inside the 10 %
+tolerance. The lodged-reference criterion "FAILs" (coverage 71.8 %, shape-r
+65.8 %) exactly as Amendment 01 anticipated — that's the demoted exact-α-coverage
++ strict-Pearson rule (large-N coverage collapse; `flat_baseline` Pearson
+undefined), not binding.
 
-> If FAIL: **halt** — do not lodge Amendment 03 or launch H2.1. Diagnose which
-> axis fails (see §2) and report to Shawn. A FAIL most plausibly localises to the
-> multi-century-heavy tier or the peaked-genuine shapes at small N (the
-> Decision-38 §6 fear); characterise it, do not negotiate the criterion.
+## 2. Shape-recovery map (per-axis pattern)
 
-## 2. Shape-recovery map (the per-axis pattern) — `[PENDING]`
+Per-axis pass rates (lodged-criterion descriptive columns, from the auto-REPORT
+§2; the binding clean-pass is the §1 headline). Reads that matter:
 
-Lift the four per-axis tables verbatim from the auto-`REPORT.md` §2 (pass rates
-by **alpha**, **shape**, **tier_weights**, **N**). This is the "shape-recovery
-map" Amendment 03 §A5.5 Stage-2 asks for. Key reads to extract:
+- **By α** — shape recovery is strong across the envelope (shape-pass 76–83 % at
+  α ∈ {0.05, 0.3, 0.5, 0.7}) and **collapses only at the α = 0.95 stress row**
+  (7 %), which is out of the operating envelope by design (5 % genuine mass).
+- **By tier_weights** — `multicentury_heavy` shape-pass **64 %**, statistically
+  indistinguishable from every other tier (64–69 %). **The multi-century tier is
+  NOT a systematic failure** — see §4.
+- **By shape** — `rise_and_fall`/`smooth_*` strong (76–84 %); `regnal_cluster`
+  and `bimodal` are the weaker peaked shapes. `flat_baseline` reads 0 % here
+  *only* because Pearson r is undefined for a flat signal; under the binding gate
+  it is scored on Wasserstein-1 (≤ 10 y), which it passes (W1 mostly < 2 y).
+- **By N** — the large-N α-coverage decline (91 % → 57 % from N=2 000 → 50 000)
+  is the benign, documented coverage collapse under negligible bias (demoted to
+  diagnostic), not a recovery failure.
 
-- **By α:** confirm clean-pass is high across α ≤ 0.70 and degrades only at α ∈
-  {0.95} (expected — outside envelope). `[PENDING table]`
-- **By tier_weights:** confirm `multicentury_heavy` is not a systematic failure
-  (the §6 fear) within the envelope. `[PENDING table]`
-- **By shape:** confirm peaked shapes (`bimodal`, `regnal_cluster`) recover
-  within the envelope; note any small-N caveat. `[PENDING table]`
-- **By N:** note the large-N α-coverage collapse is benign (diagnostic only).
-  `[PENDING table]`
+## 3. Operating envelope (α ≤ 0.70) — CONFIRMED
 
-## 3. Operating envelope (α ≤ 0.70) — `[PENDING]`
+The α ≤ 0.70 ceiling holds: clean-pass is 96.4 % within it, and shape recovery
+degrades sharply only at α = 0.95 (outside). No basis to tighten or loosen the
+launch-spec's envelope (N ≥ 2 000 ∧ posterior α ≤ 0.70).
 
-State the demonstrated reportable envelope. The spec sets N ≥ 2 000 ∧ posterior
-α ≤ 0.70. Confirm from the map whether α ≤ 0.70 is the right ceiling or whether
-the data support tightening/loosening it. `[PENDING — confirm or adjust; this is
-the value launch-spec §7 line 133–135 consumes]`
+## 4. α recovery (Bland–Altman LoA) — within Decision 33's ±0.18 envelope
 
-## 4. Interpretation — `[PENDING]`
+In-envelope (α ≤ 0.70), posterior-median estimator, per-cell signed bias
+(`tables/alpha-loa-summary.json`, via `code/compute-alpha-loa.py`):
 
-Does the full grid corroborate the triage's resolution of the Decision-38 §6
-fear (multi-century plateau attributed to convention, not confused for genuine
-quiescence) at scale and across shapes? `[PENDING prose, grounded in §2]`
+| | New basis | Decision 33 / Grid A |
+|---|---|---|
+| Mean signed bias | **+0.005** (essentially unbiased) | −0.02 |
+| 95 % LoA (pooled) | **[−0.12, +0.13]** (±0.123) | [−0.22, +0.17] (±0.18) |
+| 90th-pct \|bias\| smooth/flat | **0.073** (LoA ±0.09) | 0.07–0.11 |
+| 90th-pct \|bias\| multimodal (bimodal, regnal_cluster) | **0.130** (LoA ±0.18) | 0.18–0.27 |
 
-## 5. Recommendation — `[PENDING]`
+The new basis recovers α **slightly better than** the validated Grid A and sits
+**inside the ±0.18 envelope**. The shape-conditioned hedge carries over: ±0.09 in
+smooth/flat regimes, ±0.18 in peaked regimes. α-derived claims stay coarse and
+directional — not a tight dial.
 
-`[PENDING — on PASS: proceed to fill Amendment 03 §A5.5 + launch-spec §7, lodge,
-sign off, launch. On FAIL: halt + diagnose.]`
+## 5. Interpretation — the Decision-38 §6 fear is resolved at scale
 
-## 6. Artefacts
+The §6 fear was that the new multi-century tier (a long flat body + an AD 300–350
+envelope-edge plateau) would be mistaken for genuine quiescence, under-attributing
+to convention. The full grid corroborates the triage's negative finding **at
+scale and across all shapes**: `multicentury_heavy` clean-passes at the same rate
+as every other tier within the envelope, and α is recovered essentially unbiased
+(+0.005). The plateau is attributed to convention, not confused for genuine
+signal. Convergence is ≥ 0.90 in 357/360 in-envelope cells (the 3 exceptions are
+`regnal_cluster`, the known-hard peaked shape, not the multi-century tier).
 
-- Auto-tables + parquet: `inscription-mass/outputs/REPORT.md`,
-  `inscription-mass/outputs/tables/grid-summary.parquet`.
-- Per-cell summaries: `inscription-mass/outputs/cell-summaries/` (450 cells).
-- Grid state: `inscription-mass/outputs/grid-state.json`.
-- Per-replicate posteriors: on sapphire (for the α LoA step).
+## 6. Recommendation
+
+**PASS — proceed.** Fill Amendment 03 §A5.5 + launch-spec §7 from this verdict
+(done, this session); generate + lodge Amendment 03; sign off the launch spec;
+build + launch the H2.1 26-unit fit. The weak corners (peaked shapes at large N;
+the α = 0.95 stress row) are out-of-envelope or within tolerance and are already
+hedged by the operating envelope + the shape-conditioned α LoA.
+
+## 7. Artefacts (committed)
+
+- Auto-tables: `inscription-mass/outputs/REPORT.md`,
+  `tables/grid-summary.parquet`.
+- α bias / LoA: `tables/alpha-bias.parquet`, `tables/alpha-loa-summary.json`
+  (`code/compute-alpha-loa.py`).
+- Grid state (final, 450/0): `inscription-mass/outputs/grid-state.json`;
+  pre-rerun snapshot `grid-state.before-rerun-2026-06-08.json` (on sapphire).
+- Per-cell summaries (450) + per-replicate posteriors: on sapphire (gitignored bulk).
 - Stage-1 triage: `STAGE1-TRIAGE-REPORT.md`.
-
----
-
-## 7. Downstream field-mapping (post-PASS fill templates)
-
-Copy these into the two target files once §1–§5 are filled. Placeholders map 1:1
-onto §1–§3 above.
-
-### 7a. → Amendment 03 §A5.5 Stage-2 bullet
-File: `planning/osf-amendment-2026-06-07-convention-basis.md` (line ~174).
-Replace the `[PENDING — PID 1681813; …]` bullet with:
-
-> - **Stage-2 full grid: `[PASS/FAIL]`** (450 cells, 0 failed; sapphire). Headline
->   B `[X]` % of in-envelope (α ≤ 0.70) cells clean-pass (convergence AND shape),
->   against the ≥ 90 % bar; diagnostic A `[Y]` %. The multi-century-heavy tier
->   `[does not / does]` systematically fail within the envelope — the §6
->   plateau-confusion failure mode is `[absent / present]` at scale. Shape recovery
->   holds for peaked genuine signals within the envelope `[caveat at small N if
->   any]`. Basis-shift vs Grid A: `[Δ]`. REPORT:
->   `runs/2026-06-06-convention-basis-redesign/revalidation/FULL-GRID-REPORT.md`
->   (+ auto-tables `inscription-mass/outputs/REPORT.md`).
-
-Then flip the YAML `status:` and the `skeleton-note:` to reflect §A5.5 filled.
-
-### 7b. → Launch-spec §7
-File: `runs/2026-06-07-h2.1-launch-prep/launch-spec.md`.
-
-- **Line ~134–135 (envelope):** replace `[CONFIRM from the full-grid REPORT…]`
-  with the demonstrated envelope from §3 (e.g. "confirmed: N ≥ 2 000 ∧ posterior
-  α ≤ 0.70; clean-pass `[X]` % within it").
-- **Line ~147 (α ±precision):** replace `[CONFIRM from REPORT; cf. Decision 33's
-  ±0.18]` with the new-basis α LoA from the runbook §0 extra step, OR retain
-  Decision 33's ±0.18 as the cited reference with a note that the new-basis LoA
-  follows. State which.
-- Tick §10 pre-launch boxes: re-validation PASS (line 178); §7 filled (line 181).
-
-### 7c. → Continuity + Decision log
-- Continuity frontmatter + a new session-history entry: verdict, REPORT path,
-  amendment lodged, sign-off, launch.
-- Decision 38 in `planning/decision-log.md`: append the re-validation outcome.
