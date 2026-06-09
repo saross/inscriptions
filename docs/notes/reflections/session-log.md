@@ -793,3 +793,26 @@ A marathon execution-and-discovery session. Commits `b206626..418f822`, all push
 - The two scouts could not query the Zotero library (a missing `httpx` dep in their env), so the "all candidates NEW" dedup is **unconfirmed** — verify before staging.
 - Sapphire git was left **behind origin with untracked diagnostic outputs** throughout (agents read existing committed inputs + ran scp'd code from `~/h2-smoke` scratch); reconcile (SHA-verify-remove-pull) before the next sapphire compute run.
 - The H3b draft and the joint-model design are explicitly FOR REVIEW / next-session — not finalised; H3b's identifiable-unit set (agent gap<0.20 → 17) differs slightly from the finalise set (gap≤0.25 → 16) pending reconciliation.
+
+## 2026-06-09 — joint identifiability-remediation BUILT + POC'd → design PIVOTED → audited → full recovery grid LAUNCHED
+
+Remote-control session. New run dir `runs/2026-06-09-joint-identifiability/`. Commits `44c7aa1..ef10c58` (+ this reflect), all pushed.
+
+**Sapphire git reconciled** at the top (was 15 behind; SHA-verify-remove-pull on 6 identical H2.1 outputs → ff-pull; later a second reconcile for the committed POC outputs). Now 0/0 at the grid-harness commit.
+
+**Built the joint model** (`code/joint_lib.py`): `build_model_joint` = temporal block byte-identical to `build_model_f1_f3` + a classification binomial `k ~ Binomial(N, α·θ_conv + (1−α)·θ_gen)` sharing α. Grid-alignment indicator (rule C = F1∨F3 ∨ round-endpoint Big). **θ calibrated** from the 19 production-identifiable units (`calibrate_theta.py` → `theta-calibration.json`): rule C θ_conv 0.945, θ_gen 0.155, RMSE 0.12; classification-implied α lands inside the [shared, per-unit] bracket for every under-identified unit.
+
+**Local recovery POC on sapphire** (`POC-REPORT.md`; amd-tower lacks `python3-dev` for the PyTensor C backend): **Exp 1** shared basis + classification FAILS confounded cells (α≈0); **Exp 2** per-unit basis (true shape) + classification recovers (|bias| ≤ 0.07); **Exp 3** per-unit basis (estimated/contaminated shape) + classification recovers (|bias| ≤ 0.12). **Design PIVOTED** to per-unit basis + classification (reverses Amendment 03's shared basis). **κ-sweep** (`poc-kappa-check.json`): widening the θ prior amplifies the residual bias → keep κ=40. Findings grounded in the statistical trio (Feller/Gustafson/Huang & Bandeen-Roche), verified from authoritative abstracts (`priority-papers-status.md`).
+
+**Decisions (Shawn):** per-unit + classification is the LEAD; **hybrid (Option 3)** spec'd as the *preregistered robustness check* (`hybrid-robustness-spec.md`, global θ estimated, α independent — no pooling); κ=40; the prereg is to be amended (sweeping all changes since the last lodged amendment) before Option 3; the hybrid gets one pilot fit to measure compute before its full validation.
+
+**Pre-launch `/audit`** (Shawn's gate; 4 parallel subagents): cleared `joint_lib`/`grid_lib`; fixed `run_joint_grid` (atomic `os.replace` writes, validity-gated resume, crashed-worker isolation, converged-subset aggregates, divergence surfacing, shared-basis baseline on confounded cells) + `aggregate_joint_grid` (3-conjunct C2, failed-cell reporting). Smoke-tested (stride-43 7-cell slice, 4 ident + 3 confounded): 0 failures, atomic writes confirmed, aggregator correct (lead |bias| 0.072 vs baseline 0.202 on confounded).
+
+**Full grid LAUNCHED** on sapphire (PID 1899820): 300 cells × 100 reps + baseline on 90 confounded ≈ 39,000 fits; ETA ~16–18 h; resumable; STATUS `outputs/grid-STATUS.txt`, log `outputs/full-grid.log`, per-cell JSON `outputs/grid/` (all gitignored — only `grid-VERDICT.md` + `grid-summary.json` get committed). Obs 83–86 logged (`ef10c58`). Continuity + prereg-note banner + `.gitignore` committed.
+
+### Contextual assumptions
+- The full grid runs on sapphire independently of the session; the verdict (the joint-model gate) is pending at close (~16–18 h out). `aggregate_joint_grid.py` produces the verdict when cells complete.
+- The ~16–18 h ETA corrects the "~1 h" first quoted to Shawn (the original full-grid-spec under-counted: 100 reps × 300 cells × lead + 90-confounded baseline; the N=15000 fits run ~30 s each).
+- Live grid outputs are deliberately gitignored (regenerable; grid-state retention rule); the next session commits only the verdict + summary snapshots after the run.
+- 762 stale untracked files from the superseded 2026-05-26 two-unit grid remain on sapphire (regenerable; not deleted — flagged for optional cleanup, harmless to the resumable reconcile pattern).
+- Full-text reading of the 3 NEW statistical papers + canonical Zotero staging (a minimal lit-scout-iterate workspace → the shared importer, NOT a bespoke script) are tracked follow-ups; the dedup itself is done.
