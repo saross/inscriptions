@@ -5,3 +5,8 @@
 outputs/grid/
 outputs/full-grid.log
 outputs/grid-STATUS.txt
+# Transient operational traces from the 2026-06-10 memory-incident recovery
+# (regenerable; the findings are summarised in MEMORY-FIX-AND-RUN-STATUS.md).
+outputs/full-grid-memwatch.log
+outputs/pilot/
+outputs/measure/
