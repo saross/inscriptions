@@ -2358,3 +2358,156 @@ Seven open questions (OQ-1 through OQ-8) gate confirmatory reading: the principa
 ### Findable later
 
 `h3b`, `h3b-draft`, `deviation-detection`, `exploratory`, `decision-15`, `no-confirmatory-family`, `holm-stale`, `exponential-null-saturated`, `cpl-3`, `cpl3-null`, `rise-and-fall`, `roman-spa`, `antonine-probe`, `antonine-deficit`, `ad-168`, `167-5`, `duncan-jones-2018`, `antonine-plague`, `crisis-probe`, `crisis-third-century`, `diffuse-signal`, `7-of-17`, `9-of-17`, `empire-aggregate`, `latin-aggregate`, `oq-a`, `oq-1`, `oq-2`, `oq-6`, `asclepius-subset`, `military-administration-subset`, `deferred-subsets`, `per-subset-deconvolution`, `reachability`, `lusitania-threshold`, `oq-3`, `gap-criterion`, `17-identifiable`, `obs-80`, `obs-69`, `obs-78`, `deviations-table`, `identifiability-split`, `replication-antonine`
+
+## Obs 83 — 2026-06-09 [METHODOLOGY / RESULT]: the joint identifiability-remediation design pivots from the shared basis to a flexible per-unit basis + classification likelihood
+
+### The finding
+
+The remediation proposed in Obs 81 — bringing the grid-alignment classification in as a second likelihood term informing α — only works with a **flexible per-unit convention basis**, NOT the shared Decision-38 / Amendment-03 basis. Local recovery proof-of-concept (6 realistic synthetic cells, N = 2,000 per cell, 1 replicate each; run on sapphire; `runs/2026-06-09-joint-identifiability/outputs/POC-REPORT.md`):
+
+**Experiment 1 — shared basis + classification (the originally-planned lead): FAILS confounded cells.**
+
+| cell | α_true | shared-only | **shared + classification** | bias |
+|---|---|---|---|---|
+| conf_a0.2 | 0.2 | 0.00 | **0.00** | −0.20 |
+| conf_a0.4 | 0.4 | 0.00 | **0.00** | −0.40 |
+| conf_a0.6 | 0.6 | 0.00 | **0.00** | −0.60 |
+
+No better than the shared-basis baseline. The classification binomial is overpowered by a confidently-wrong temporal multinomial (see Obs 84 for the mechanism).
+
+**Experiment 2 — per-unit basis from the TRUE convention shape + classification: RECOVERS.**
+
+| cell | α_true | per-unit-only | **per-unit + classification** | bias |
+|---|---|---|---|---|
+| ident_a0.3 | 0.3 | 0.37 (+0.07) | **0.32 [0.25, 0.38]** | +0.02 |
+| ident_a0.6 | 0.6 | 0.63 (+0.03) | **0.61 [0.55, 0.68]** | +0.01 |
+| conf_a0.2 | 0.2 | 0.38 (+0.18) | **0.26 [0.19, 0.33]** | +0.06 |
+| conf_a0.4 | 0.4 | 0.52 (+0.12) | **0.45 [0.38, 0.52]** | +0.05 |
+| conf_a0.6 | 0.6 | 0.74 (+0.14) | **0.67 [0.60, 0.76]** | +0.07 |
+| conf_regnal_a0.5 | 0.5 | 0.53 (+0.03) | **0.51 [0.45, 0.57]** | +0.01 |
+
+6/6 pass (|bias| ≤ 0.07 confounded; ≤ 0.02 identifiable); 6/6 cover α_true at 95 %. The classification term reins in the per-unit basis's over-attribution (per-unit-only reaches +0.12 to +0.18 on the confounded cells; +classification → +0.05 to +0.07).
+
+**Experiment 3 — per-unit basis from the production-realistic ESTIMATED (contaminated) grid-aligned-subset shape + classification: RECOVERS.**
+
+| cell | α_true | **per-unit(est) + classification** | bias | cover95 |
+|---|---|---|---|---|
+| ident_a0.3 | 0.3 | 0.35 [0.27, 0.43] | +0.05 | ✓ |
+| ident_a0.6 | 0.6 | 0.65 [0.57, 0.73] | +0.05 | ✓ |
+| conf_a0.2 | 0.2 | 0.27 [0.19, 0.35] | +0.07 | ✓ |
+| conf_a0.4 | 0.4 | 0.49 [0.41, 0.59] | +0.09 | ✗ (marginal) |
+| conf_a0.6 | 0.6 | 0.72 [0.62, 0.83] | +0.12 | ✗ (marginal) |
+| conf_regnal_a0.5 | 0.5 | 0.55 [0.49, 0.63] | +0.05 | ✓ |
+
+6/6 within the |bias| < 0.18 gate; coverage clean for 4/6, marginal for the two high-α confounded cells (a +0.09 to +0.12 residual positive bias from estimated-basis contamination — see Obs 86). Still a decisive improvement on shared-basis under-attribution (−0.20 to −0.60) and per-unit-only over-attribution (+0.12 to +0.18).
+
+**This reverses Amendment 03's shared-basis choice.** The classification likelihood supplies the over-attribution control that the shared basis was adopted to provide — making a per-unit basis safe. Shawn agreed 2026-06-09: per-unit + classification is the lead. θ calibrated from the 19 identifiable units under rule C: θ_conv μ = 0.945, θ_gen μ = 0.155, RMSE = 0.12, κ = 40 (`outputs/theta-calibration.json`). Full recovery grid launched on sapphire: 300 cells × 100 reps + baseline on 90 confounded = 39,000 fits (`full-grid-spec.md`).
+
+### Why this matters
+
+This is the validated form of the remediation and the central methodological result of the session. It determines the production refit (re-fit all 28 H2.1 units under the joint model) and the next OSF amendment, which explicitly reverses Amendment 03's shared-basis choice. The novel core — a temporal-frequency mixture whose mixing weight is identified by a classification likelihood — is confirmed on POC evidence; the full grid is the replicate-level validation gate.
+
+### Caveats / methodological notes
+
+POC = one replicate per cell; convergence not audited per cell (point estimates only). The confounded `%win` = 1.00 is the stress corner; realistic frontier units (~0.88–0.90) are easier. Experiments 1 and 2 use the true convention shape; only Experiment 3 uses the observable estimate. The full grid (currently running on sapphire) supplies replicate-level bias/coverage and the convergence gate. The design change reverses a lodged OSF decision; a formal amendment is required before production use of results.
+
+### Related observations and artefacts
+
+**Obs 81** (informed-α prior refuted; joint-likelihood remediation proposed — this Obs is the POC that pivots its basis from shared to per-unit): the prior session's finding that motivated this work and first named the joint-likelihood approach. **Obs 80** (H2.1 production α under-identified for temporally-concentrated units): the production finding this remediation addresses. **Obs 77** (grid-snapping is the observable discriminator between convention and genuine): the conceptual basis for using grid-alignment classification as the identification instrument. **Obs 84** (why the shared basis is confidently wrong, not merely flat): the theoretical mechanism explaining Experiment 1's failure.
+
+**Artefacts**: `runs/2026-06-09-joint-identifiability/outputs/POC-REPORT.md`; `runs/2026-06-09-joint-identifiability/outputs/poc-recovery.json`; `runs/2026-06-09-joint-identifiability/outputs/poc-perunit-joint.json`; `runs/2026-06-09-joint-identifiability/outputs/poc-estimated-basis.json`; `runs/2026-06-09-joint-identifiability/outputs/theta-calibration.json`; `runs/2026-06-09-joint-identifiability/code/joint_lib.py`; `runs/2026-06-09-joint-identifiability/spec.md`; `runs/2026-06-09-joint-identifiability/full-grid-spec.md`.
+
+### Findable later
+
+`joint-model`, `design-pivot`, `per-unit-basis`, `classification-likelihood`, `shared-basis-fails`, `over-attribution-control`, `reverses-amendment-03`, `theta-calibration`, `rule-C`, `theta-conv-0-945`, `theta-gen-0-155`, `kappa-40`, `poc-recovery`, `poc-perunit-joint`, `poc-estimated-basis`, `39000-fits`, `300-cells`, `stress-corner`, `confounded-cells`, `identifiable-cells`, `6-of-6-pass`, `concomitant-variable`, `confidently-wrong-overpowered`, `classification-binomial`, `temporal-multinomial`, `obs-81`, `obs-80`, `obs-77`, `obs-84`, `amendment-03-reversed`, `production-refit`, `osf-amendment`, `per-unit-estimated-shape`, `aligned-subset-spa`, `theta-calibration-19-units`
+
+## Obs 84 — 2026-06-09 [METHODOLOGY / THEORY]: why the shared basis fails — a confidently-wrong likelihood (weak separation), not mere flatness
+
+### The finding
+
+The mechanism behind Obs 83 Experiment 1. With the shared basis too broad for a temporally-concentrated unit, α > 0 forces convention mass **outside** the unit's data window: the shared Latin basis carries ~36 % of its mass before AD 100, where a frontier unit has almost none. The 80-bin × N-count temporal multinomial penalises that shape misfit enormously. The result is not that the likelihood is merely **flat** in α (the under-identification picture) — it is **confidently wrong**: it prefers α = 0. This is Feller et al. 2016's weak-separation threshold-estimator behaviour (`10.48550/arxiv.1602.06595`): in finite samples the maximum likelihood estimator behaves like a threshold estimator that can give strong evidence that the means are equal when the truth is otherwise. A single classification binomial over N trials cannot overpower an 80-bin multinomial in that confidently-wrong regime.
+
+A **flexible per-unit basis** removes the shape misfit, turning the problem back into genuine partial-identification (Gustafson 2010, `10.2202/1557-4679.1206`: the large-sample posterior's support is the identification region, which the prior cannot shrink — you must add an independent observable). Once the problem is genuinely partially identified, the classification covariate can restore identifiability (Huang & Bandeen-Roche 2004, `10.1007/bf02295837`: theory for identification of latent-class models with covariate effects on class membership).
+
+The three statistical DOIs were verified against authoritative CrossRef / DataCite abstracts this session (`outputs/priority-papers-status.md`). All three papers are NEW to the Zotero library (confirmed against `~/Zotero/zotero.sqlite`); Zotero staging is a tracked follow-up.
+
+### Why this matters
+
+This is the paper's explanatory hook for the pivot — it distinguishes "the temporal likelihood is flat" (false for the shared basis) from "it is confidently wrong" (true), which is why both the informed prior (Obs 81) AND the shared-basis + classification design (Obs 83 Experiment 1) failed, and why a flexible convention shape is a necessary precondition before the classification term can bite. The three-citation spine (Feller for the confidently-wrong mechanism; Gustafson for why a prior cannot fix partial-ID; Huang & Bandeen-Roche for why a likelihood term can) is cite-ready for the methods section.
+
+### Caveats / methodological notes
+
+Claims grounded in authoritative CrossRef / DataCite abstracts; full texts of Gustafson 2010 and Huang & Bandeen-Roche 2004 (paywalled) not yet read this session — full-text reading is a tracked follow-up (Feller is open via arXiv). Feller's preferred citation may be the *Ann. Appl. Stat.* 2019 journal version; the arXiv / DataCite DOI (`10.48550/arxiv.1602.06595`) is what is verified here. The "~36 % before AD 100" figure for the shared Latin basis is stated in POC-REPORT.md §Exp 1; it describes the specific broad-slab basis used in the POC, not a property of every possible shared basis.
+
+### Related observations and artefacts
+
+**Obs 83** (the pivot this mechanism explains): the POC result whose Experiment 1 failure this Obs accounts for theoretically. **Obs 81** (the Feller / Gustafson / Huang & Bandeen-Roche citations first introduced, and the informed-prior refutation): the prior session's theoretical framing; this Obs extends it from the prior to the joint-likelihood case. **Obs 80** (the under-identification this ultimately addresses): the production finding.
+
+**Artefacts**: `runs/2026-06-09-joint-identifiability/outputs/priority-papers-status.md`; `runs/2026-06-09-joint-identifiability/outputs/POC-REPORT.md` (Experiment 1 mechanism section); `planning/scout-2026-06-09-identifiability-remediation-SYNTHESIS.md`.
+
+### Findable later
+
+`confidently-wrong-likelihood`, `weak-separation`, `feller-2016`, `feller-threshold-estimator`, `ann-appl-stat-2019`, `arxiv-1602-06595`, `gustafson-2010`, `identification-region`, `partial-identification`, `huang-bandeen-roche-2004`, `covariate-on-membership`, `shape-misfit`, `36-percent-before-ad-100`, `shared-basis-too-broad`, `temporal-multinomial-overpowers`, `classification-binomial-overpowered`, `why-shared-basis-fails`, `explanatory-hook`, `methods-section`, `three-citation-spine`, `feller-gustafson-hrb`, `prior-cannot-shrink-identification-region`, `confidently-wrong-vs-flat`, `obs-83`, `obs-81`, `obs-80`, `priority-papers-status`, `zotero-new-papers`, `full-text-follow-up`
+
+## Obs 85 — 2026-06-09 [METHODOLOGY]: widening the θ prior is counterproductive — the marginal high-α coverage is contamination bias, not CI under-dispersion
+
+### The finding
+
+An evidence-based course-correction. We expected widening the θ prior (κ 40 → 20 → 12) to widen the α credible interval and fix the marginal high-α coverage seen in Obs 83 Experiment 3. The κ-sweep on the estimated basis (`outputs/poc-kappa-check.json`) showed the opposite — widening **amplifies** a small positive bias:
+
+| cell | α_true | κ = 40 | κ = 20 | κ = 12 |
+|---|---|---|---|---|
+| conf_a0.2 | 0.2 | 0.27 [0.19, 0.34] ✓ | 0.33 ✗ | 0.50 ✗ |
+| conf_a0.4 | 0.4 | 0.49 [0.41, 0.59] (+0.09) | 0.54 | 0.59 |
+| conf_a0.6 | 0.6 | 0.72 [0.62, 0.83] (+0.12) | 0.76 | 0.78 (+0.18) |
+| ident_a0.6 | 0.6 | 0.65 ✓ | 0.66 ✓ | 0.67 ✓ |
+
+(α_med rounded to 2 d.p. from `poc-kappa-check.json`; identifiable cell is stable across all three κ.)
+
+**Diagnosis.** The marginal coverage at high-α confounded cells is a positive **bias** from estimated-basis contamination (Obs 86), not CI under-dispersion. The grid-aligned-subset SPA ≈ α·θ_conv·p_conv + (1−α)·θ_gen·p_gen, so the convention basis carries a faint copy of the genuine peak; this lets the convention component over-reach. A *tighter* θ prior anchors α to the classification signal and limits the contamination-driven over-attribution; a *looser* prior lets α float up.
+
+**Decision:** keep κ = 40; do NOT widen. The full recovery grid sweeps κ ∈ {40, 80} (tighter) as a sensitivity check — widening is ruled out by this sweep.
+
+### Why this matters
+
+This is a documented reversal of a jointly-agreed plan on empirical evidence — the critical-friend discipline working as intended. Attempting to fix a bias by widening a prior is a standard wrong instinct; the κ-sweep makes the mechanism visible. The reversal also localises the residual-bias source to estimated-basis contamination (Obs 86) rather than to sampler or prior specification, pointing at the principled fix.
+
+### Caveats / methodological notes
+
+The κ-sweep is one replicate per cell on four focus cells at the stress corner (`%win` = 1.00); the full-grid κ-sensitivity arm (κ ∈ {40, 80} on confounded cells) is the replicate-level confirmation. The identifiable cell (ident_a0.6) is stable across all three κ values (α_med 0.65–0.67), confirming the effect is specific to the contaminated confounded regime. The table above shows α_med only (no CI for the κ = 20 and κ = 12 rows); full posterior summaries are in `poc-kappa-check.json`.
+
+### Related observations and artefacts
+
+**Obs 83** (the per-unit + classification design these θ priors serve): the design whose marginal high-α coverage prompted the κ-sweep. **Obs 86** (the contamination this bias arises from): the principled source of the residual and the escalation path. **Obs 81** (the informed-prior refutation — same "prior cannot fix it" theme): a parallel earlier lesson that adding prior information does not resolve structural misfit.
+
+**Artefacts**: `runs/2026-06-09-joint-identifiability/outputs/poc-kappa-check.json`; `runs/2026-06-09-joint-identifiability/outputs/POC-REPORT.md` (κ postscript); `runs/2026-06-09-joint-identifiability/code/poc_kappa_check.py`.
+
+### Findable later
+
+`theta-prior`, `kappa-sweep`, `kappa-40`, `kappa-20`, `kappa-12`, `widening-counterproductive`, `contamination-bias`, `not-ci-underdispersion`, `evidence-based-reversal`, `critical-friend`, `prior-amplifies-bias`, `conf-a0-2-kappa-sweep`, `conf-a0-6-kappa-sweep`, `ident-stable-across-kappa`, `stress-corner-kappa`, `poc-kappa-check`, `tighter-prior`, `kappa-80-sensitivity`, `theta-prior-anchors-alpha`, `obs-83`, `obs-86`, `obs-81`, `jointly-agreed-reversal`, `course-correction`
+
+## Obs 86 — 2026-06-09 [METHODOLOGY]: the estimated per-unit basis carries genuine-peak contamination; the cross-classified time × alignment model is the principled fix (full-grid arm D-B)
+
+### The finding
+
+In production the per-unit convention basis is the aoristic SPA of the grid-aligned-inscription subset. In expectation that SPA is ∝ α·θ_conv·p_conv + (1−α)·θ_gen·p_gen — i.e., **contaminated** by genuine inscriptions that happen to be grid-aligned (at rate θ_gen). That faint copy of the genuine peak lets the convention component over-reach, giving a +0.09 to +0.12 over-attribution at the stress corner (`%win` = 1.00; Obs 83 Experiment 3, conf_a0.4 and conf_a0.6). The residual is a characterised limitation — within the |bias| < 0.18 gate — and is to be reported, not tuned away.
+
+The principled fix is a **cross-classified time × alignment** model: observe the grid-aligned-subset and non-aligned-subset temporal SPAs as **separate** multinomials sharing (α, p_conv, p_gen, θ), so the model *separates* the contamination instead of inheriting it through a fixed contaminated basis. This approach likely removes the residual bias. It has been added to the full recovery grid as a head-to-head arm (`full-grid-spec.md` §1 / §2, decision D-B): {fixed estimated basis — the lead; cross-classified — the candidate refinement}. The cross-classified form will be adopted as the refined lead only if it materially beats the simpler one on the bias surface.
+
+### Why this matters
+
+This Obs characterises the lead design's known residual limitation honestly and pre-registers the principled escalation path. The contamination mechanism is clear (the aligned-subset SPA is a mixture, not a pure convention SPA), the magnitude is known (+0.09 to +0.12 at the stress corner; milder at realistic %win ≈ 0.88), and the full-grid D-B arm will determine whether the simpler fixed-basis design is adequate or whether the cross-classified model is needed. Reporting the contamination mechanism also explains why the κ-sweep (Obs 85) amplified rather than fixed the marginal coverage — the bias source is structural, not sampler-level.
+
+### Caveats / methodological notes
+
+The cross-classified model is not yet built or validated; it is a grid arm and a decision (D-B), not a committed production change. The +0.09/+0.12 figures are at the stress corner (`%win` = 1.00); realistic frontier units with `%win` ~0.88–0.90 are milder. The magnitude of the contamination effect depends on θ_gen (rate at which genuine inscriptions land on the grid) — the θ-mismatch robustness arm in the full grid (`full-grid-spec.md` §2) characterises sensitivity to this. Until the cross-classified arm is validated, the fixed-estimated-basis design remains the lead.
+
+### Related observations and artefacts
+
+**Obs 83** (the estimated-basis lead whose residual this Obs characterises): the Experiment 3 result where the +0.09/+0.12 over-attribution first appeared. **Obs 85** (the κ reversal that localised this bias — widening the θ prior amplified rather than fixed it, confirming the source is contamination, not CI under-dispersion): the diagnostic that identified contamination as the root cause.
+
+**Artefacts**: `runs/2026-06-09-joint-identifiability/outputs/poc-estimated-basis.json`; `runs/2026-06-09-joint-identifiability/outputs/POC-REPORT.md` (Experiment 3 + Conclusions + κ postscript); `runs/2026-06-09-joint-identifiability/full-grid-spec.md` (§1 D-B); `runs/2026-06-09-joint-identifiability/code/poc_estimated_basis.py`.
+
+### Findable later
+
+`estimated-basis`, `contamination-bias`, `aligned-subset-spa`, `genuine-peak-contamination`, `theta-gen-contamination`, `over-attribution`, `cross-classified-model`, `time-x-alignment`, `separate-multinomials`, `decision-D-B`, `full-grid-arm`, `refined-lead`, `candidate-refinement`, `head-to-head-arm`, `stress-corner-bias`, `poc-estimated-basis`, `plus-0-09-plus-0-12`, `characterised-limitation`, `obs-83`, `obs-85`, `theta-mismatch-robustness`, `kappa-reversal-localised-contamination`
