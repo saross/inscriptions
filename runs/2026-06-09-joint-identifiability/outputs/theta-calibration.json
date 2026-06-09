@@ -1,0 +1,532 @@
+{
+  "generated": "2026-06-09",
+  "source_summary": "/home/shawn/Code/inscriptions/runs/2026-06-07-h2.1-launch-prep/outputs/production/summary-final.json",
+  "lead_rule": "C",
+  "calibration": {
+    "A": {
+      "theta_gen": 0.15,
+      "theta_conv": 0.92,
+      "rmse": 0.1191,
+      "n_calib": 19
+    },
+    "C": {
+      "theta_gen": 0.155,
+      "theta_conv": 0.945,
+      "rmse": 0.1201,
+      "n_calib": 19
+    },
+    "D": {
+      "theta_gen": 0.105,
+      "theta_conv": 0.89,
+      "rmse": 0.1169,
+      "n_calib": 19
+    }
+  },
+  "n_identifiable_calib": 19,
+  "units": [
+    {
+      "name": "empire-aggregate",
+      "kind": "aggregate",
+      "n_rows": 180609,
+      "under_identified": false,
+      "alpha_shared": 0.672,
+      "alpha_perunit": 0.68,
+      "aligned_frac": {
+        "A": 0.6520605285450891,
+        "C": 0.6679179885830717,
+        "D": 0.6203899030502356
+      },
+      "implied_alpha": {
+        "A": 0.6520266604481677,
+        "C": 0.6492632766874324,
+        "D": 0.6565476471977523
+      }
+    },
+    {
+      "name": "latin-aggregate",
+      "kind": "aggregate",
+      "n_rows": 109646,
+      "under_identified": false,
+      "alpha_shared": 0.811,
+      "alpha_perunit": 0.815,
+      "aligned_frac": {
+        "A": 0.5721412545829305,
+        "C": 0.5920416613465151,
+        "D": 0.536854969629535
+      },
+      "implied_alpha": {
+        "A": 0.5482353955622474,
+        "C": 0.55321729284369,
+        "D": 0.550133719273293
+      }
+    },
+    {
+      "name": "Latium et Campania / Regio I",
+      "kind": "province",
+      "n_rows": 18512,
+      "under_identified": false,
+      "alpha_shared": 0.672,
+      "alpha_perunit": 0.621,
+      "aligned_frac": {
+        "A": 0.43836430423509076,
+        "C": 0.4507886776145203,
+        "D": 0.40055099394987037
+      },
+      "implied_alpha": {
+        "A": 0.3744990964092088,
+        "C": 0.37441604761331687,
+        "D": 0.376498081464803
+      }
+    },
+    {
+      "name": "Dalmatia",
+      "kind": "province",
+      "n_rows": 7088,
+      "under_identified": false,
+      "alpha_shared": 0.739,
+      "alpha_perunit": 0.97,
+      "aligned_frac": {
+        "A": 0.7975451467268623,
+        "C": 0.8376128668171557,
+        "D": 0.8244920993227991
+      },
+      "implied_alpha": {
+        "A": 0.8409677230218991,
+        "C": 0.864066920021716,
+        "D": 0.9165504449971963
+      }
+    },
+    {
+      "name": "Hispania citerior",
+      "kind": "province",
+      "n_rows": 6312,
+      "under_identified": false,
+      "alpha_shared": 0.632,
+      "alpha_perunit": 0.789,
+      "aligned_frac": {
+        "A": 0.6741128010139417,
+        "C": 0.6834600760456274,
+        "D": 0.6348225602027884
+      },
+      "implied_alpha": {
+        "A": 0.6806659753427814,
+        "C": 0.6689368051210473,
+        "D": 0.6749331977105585
+      }
+    },
+    {
+      "name": "Germania superior",
+      "kind": "province",
+      "n_rows": 5874,
+      "under_identified": false,
+      "alpha_shared": 0.364,
+      "alpha_perunit": 0.514,
+      "aligned_frac": {
+        "A": 0.3838951310861423,
+        "C": 0.3958120531154239,
+        "D": 0.338100102145046
+      },
+      "implied_alpha": {
+        "A": 0.3037599105014836,
+        "C": 0.30482538369040996,
+        "D": 0.29694280528031336
+      }
+    },
+    {
+      "name": "Venetia et Histria / Regio X",
+      "kind": "province",
+      "n_rows": 5872,
+      "under_identified": true,
+      "alpha_shared": 0.452,
+      "alpha_perunit": 0.809,
+      "aligned_frac": {
+        "A": 0.7973433242506812,
+        "C": 0.8286784741144414,
+        "D": 0.7471049046321526
+      },
+      "implied_alpha": {
+        "A": 0.8407056159099757,
+        "C": 0.852757562170179,
+        "D": 0.8179680313785384
+      }
+    },
+    {
+      "name": "Dacia",
+      "kind": "province",
+      "n_rows": 4870,
+      "under_identified": false,
+      "alpha_shared": 0.001,
+      "alpha_perunit": 0.344,
+      "aligned_frac": {
+        "A": 0.1492813141683778,
+        "C": 0.16570841889117044,
+        "D": 0.13080082135523613
+      },
+      "implied_alpha": {
+        "A": 0.0,
+        "C": 0.013554960621734734,
+        "D": 0.03286728835061928
+      }
+    },
+    {
+      "name": "Britannia",
+      "kind": "province",
+      "n_rows": 4647,
+      "under_identified": true,
+      "alpha_shared": 0.002,
+      "alpha_perunit": 0.793,
+      "aligned_frac": {
+        "A": 0.3036367548956316,
+        "C": 0.3750806972240155,
+        "D": 0.3032063697008823
+      },
+      "implied_alpha": {
+        "A": 0.19952825311120986,
+        "C": 0.2785831610430576,
+        "D": 0.2524921907017609
+      }
+    },
+    {
+      "name": "Pannonia superior",
+      "kind": "province",
+      "n_rows": 4460,
+      "under_identified": false,
+      "alpha_shared": 0.735,
+      "alpha_perunit": 0.864,
+      "aligned_frac": {
+        "A": 0.6426008968609865,
+        "C": 0.6636771300448431,
+        "D": 0.614798206278027
+      },
+      "implied_alpha": {
+        "A": 0.6397414244947878,
+        "C": 0.6438951013225861,
+        "D": 0.6494244665962127
+      }
+    },
+    {
+      "name": "Samnium / Regio IV",
+      "kind": "province",
+      "n_rows": 4187,
+      "under_identified": true,
+      "alpha_shared": 0.272,
+      "alpha_perunit": 0.86,
+      "aligned_frac": {
+        "A": 0.7867208024838787,
+        "C": 0.8139479340816814,
+        "D": 0.7234296632433723
+      },
+      "implied_alpha": {
+        "A": 0.8269101330959464,
+        "C": 0.8341113089641536,
+        "D": 0.7878084882081176
+      }
+    },
+    {
+      "name": "Africa proconsularis",
+      "kind": "province",
+      "n_rows": 3518,
+      "under_identified": false,
+      "alpha_shared": 0.473,
+      "alpha_perunit": 0.808,
+      "aligned_frac": {
+        "A": 0.5383740761796475,
+        "C": 0.5528709494030699,
+        "D": 0.5002842524161455
+      },
+      "implied_alpha": {
+        "A": 0.5043819171164253,
+        "C": 0.5036341131684429,
+        "D": 0.5035468183645165
+      }
+    },
+    {
+      "name": "Germania inferior",
+      "kind": "province",
+      "n_rows": 3390,
+      "under_identified": false,
+      "alpha_shared": 0.502,
+      "alpha_perunit": 0.754,
+      "aligned_frac": {
+        "A": 0.6867256637168142,
+        "C": 0.6949852507374631,
+        "D": 0.6415929203539823
+      },
+      "implied_alpha": {
+        "A": 0.6970463165153432,
+        "C": 0.68352563384489,
+        "D": 0.6835578603235444
+      }
+    },
+    {
+      "name": "Apulia et Calabria / Regio II",
+      "kind": "province",
+      "n_rows": 3132,
+      "under_identified": false,
+      "alpha_shared": 0.634,
+      "alpha_perunit": 0.666,
+      "aligned_frac": {
+        "A": 0.64272030651341,
+        "C": 0.659323116219668,
+        "D": 0.5878033205619413
+      },
+      "implied_alpha": {
+        "A": 0.6398965019654675,
+        "C": 0.6383836914173012,
+        "D": 0.6150360771489698
+      }
+    },
+    {
+      "name": "Pannonia inferior",
+      "kind": "province",
+      "n_rows": 3132,
+      "under_identified": true,
+      "alpha_shared": 0.147,
+      "alpha_perunit": 0.751,
+      "aligned_frac": {
+        "A": 0.5964240102171137,
+        "C": 0.6024904214559387,
+        "D": 0.5434227330779055
+      },
+      "implied_alpha": {
+        "A": 0.5797714418404074,
+        "C": 0.5664435714632134,
+        "D": 0.5585002969145293
+      }
+    },
+    {
+      "name": "Numidia",
+      "kind": "province",
+      "n_rows": 3014,
+      "under_identified": true,
+      "alpha_shared": 0.166,
+      "alpha_perunit": 0.515,
+      "aligned_frac": {
+        "A": 0.48905109489051096,
+        "C": 0.4907100199071002,
+        "D": 0.4641672196416722
+      },
+      "implied_alpha": {
+        "A": 0.44032609726040395,
+        "C": 0.42494939228746864,
+        "D": 0.4575378594161429
+      }
+    },
+    {
+      "name": "Etruria / Regio VII",
+      "kind": "province",
+      "n_rows": 2801,
+      "under_identified": false,
+      "alpha_shared": 0.6,
+      "alpha_perunit": 0.841,
+      "aligned_frac": {
+        "A": 0.5894323455908604,
+        "C": 0.6137093895037486,
+        "D": 0.5483755801499465
+      },
+      "implied_alpha": {
+        "A": 0.5706913579102084,
+        "C": 0.5806447968401881,
+        "D": 0.56480965624197
+      }
+    },
+    {
+      "name": "Umbria / Regio VI",
+      "kind": "province",
+      "n_rows": 2763,
+      "under_identified": true,
+      "alpha_shared": 0.429,
+      "alpha_perunit": 0.7,
+      "aligned_frac": {
+        "A": 0.7115454216431415,
+        "C": 0.7256605139341296,
+        "D": 0.6431415128483532
+      },
+      "implied_alpha": {
+        "A": 0.7292797683677162,
+        "C": 0.7223550809292778,
+        "D": 0.6855305896157365
+      }
+    },
+    {
+      "name": "Noricum",
+      "kind": "province",
+      "n_rows": 2761,
+      "under_identified": false,
+      "alpha_shared": 0.88,
+      "alpha_perunit": 0.829,
+      "aligned_frac": {
+        "A": 0.7095255342267295,
+        "C": 0.7366896052155016,
+        "D": 0.6823614632379572
+      },
+      "implied_alpha": {
+        "A": 0.7266565379567916,
+        "C": 0.7363159559689894,
+        "D": 0.7354923098572703
+      }
+    },
+    {
+      "name": "Baetica",
+      "kind": "province",
+      "n_rows": 2593,
+      "under_identified": false,
+      "alpha_shared": 0.433,
+      "alpha_perunit": 0.649,
+      "aligned_frac": {
+        "A": 0.6023910528345545,
+        "C": 0.6104897801774007,
+        "D": 0.47165445430003855
+      },
+      "implied_alpha": {
+        "A": 0.5875208478370838,
+        "C": 0.5765693419967097,
+        "D": 0.46707573796183255
+      }
+    },
+    {
+      "name": "Transpadana / Regio XI",
+      "kind": "province",
+      "n_rows": 2434,
+      "under_identified": false,
+      "alpha_shared": 0.639,
+      "alpha_perunit": 0.927,
+      "aligned_frac": {
+        "A": 0.8184059161873459,
+        "C": 0.8290879211175021,
+        "D": 0.7884141331142153
+      },
+      "implied_alpha": {
+        "A": 0.8680596314121376,
+        "C": 0.8532758495158254,
+        "D": 0.8705912523747965
+      }
+    },
+    {
+      "name": "Pompeii",
+      "kind": "city",
+      "n_rows": 4508,
+      "under_identified": false,
+      "alpha_shared": 0.001,
+      "alpha_perunit": 0.003,
+      "aligned_frac": {
+        "A": 0.049689440993788817,
+        "C": 0.05035492457852706,
+        "D": 0.009982253771073648
+      },
+      "implied_alpha": {
+        "A": 0.0,
+        "C": 0.0,
+        "D": 0.0
+      }
+    },
+    {
+      "name": "Salona",
+      "kind": "city",
+      "n_rows": 3465,
+      "under_identified": true,
+      "alpha_shared": 0.538,
+      "alpha_perunit": 0.995,
+      "aligned_frac": {
+        "A": 0.86002886002886,
+        "C": 0.9015873015873016,
+        "D": 0.8914862914862914
+      },
+      "implied_alpha": {
+        "A": 0.9221154026348832,
+        "C": 0.9450472171991159,
+        "D": 1.0
+      }
+    },
+    {
+      "name": "Ostia",
+      "kind": "city",
+      "n_rows": 2644,
+      "under_identified": true,
+      "alpha_shared": 0.335,
+      "alpha_perunit": 0.775,
+      "aligned_frac": {
+        "A": 0.5790468986384266,
+        "C": 0.5847201210287444,
+        "D": 0.5416036308623298
+      },
+      "implied_alpha": {
+        "A": 0.5572037644654891,
+        "C": 0.5439495202895498,
+        "D": 0.5561829692513754
+      }
+    },
+    {
+      "name": "Mogontiacum",
+      "kind": "city",
+      "n_rows": 2398,
+      "under_identified": false,
+      "alpha_shared": 0.112,
+      "alpha_perunit": 0.216,
+      "aligned_frac": {
+        "A": 0.13636363636363635,
+        "C": 0.14178482068390325,
+        "D": 0.10967472894078399
+      },
+      "implied_alpha": {
+        "A": 0.0,
+        "C": 0.0,
+        "D": 0.005955068714374516
+      }
+    },
+    {
+      "name": "Aquileia",
+      "kind": "city",
+      "n_rows": 2034,
+      "under_identified": false,
+      "alpha_shared": 0.639,
+      "alpha_perunit": 0.881,
+      "aligned_frac": {
+        "A": 0.8328416912487709,
+        "C": 0.8672566371681416,
+        "D": 0.8013765978367748
+      },
+      "implied_alpha": {
+        "A": 0.8868073912321701,
+        "C": 0.9015906799596729,
+        "D": 0.8871039462888851
+      }
+    },
+    {
+      "name": "Moesia inferior",
+      "kind": "province",
+      "n_rows": 1952,
+      "under_identified": true,
+      "alpha_shared": 0.05,
+      "alpha_perunit": 0.87,
+      "aligned_frac": {
+        "A": 0.5486680327868853,
+        "C": 0.5660860655737705,
+        "D": 0.4974385245901639
+      },
+      "implied_alpha": {
+        "A": 0.5177506919310199,
+        "C": 0.5203621083212284,
+        "D": 0.499921687376005
+      }
+    },
+    {
+      "name": "Lusitania",
+      "kind": "province",
+      "n_rows": 1685,
+      "under_identified": false,
+      "alpha_shared": 0.522,
+      "alpha_perunit": 0.804,
+      "aligned_frac": {
+        "A": 0.6979228486646885,
+        "C": 0.7038575667655786,
+        "D": 0.628486646884273
+      },
+      "implied_alpha": {
+        "A": 0.7115881151489462,
+        "C": 0.6947564136273147,
+        "D": 0.6668619705532141
+      }
+    }
+  ]
+}
