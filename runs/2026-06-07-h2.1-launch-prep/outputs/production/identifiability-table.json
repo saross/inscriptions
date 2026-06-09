@@ -1,0 +1,292 @@
+[
+  {
+    "name": "Moesia inferior",
+    "kind": "province",
+    "n_eff": 1728,
+    "f1f3_frac": 0.599,
+    "alpha_shared": 0.05,
+    "alpha_perunit": 0.87,
+    "swing": 0.821,
+    "identifiable": false
+  },
+  {
+    "name": "Britannia",
+    "kind": "province",
+    "n_eff": 4407,
+    "f1f3_frac": 0.307,
+    "alpha_shared": 0.002,
+    "alpha_perunit": 0.793,
+    "swing": 0.791,
+    "identifiable": false
+  },
+  {
+    "name": "Pannonia inferior",
+    "kind": "province",
+    "n_eff": 2812,
+    "f1f3_frac": 0.639,
+    "alpha_shared": 0.147,
+    "alpha_perunit": 0.751,
+    "swing": 0.605,
+    "identifiable": false
+  },
+  {
+    "name": "Samnium / Regio IV",
+    "kind": "province",
+    "n_eff": 3952,
+    "f1f3_frac": 0.794,
+    "alpha_shared": 0.272,
+    "alpha_perunit": 0.86,
+    "swing": 0.588,
+    "identifiable": false
+  },
+  {
+    "name": "Salona",
+    "kind": "city",
+    "n_eff": 2890,
+    "f1f3_frac": 0.86,
+    "alpha_shared": 0.538,
+    "alpha_perunit": 0.995,
+    "swing": 0.457,
+    "identifiable": false
+  },
+  {
+    "name": "Ostia",
+    "kind": "city",
+    "n_eff": 2316,
+    "f1f3_frac": 0.636,
+    "alpha_shared": 0.335,
+    "alpha_perunit": 0.775,
+    "swing": 0.44,
+    "identifiable": false
+  },
+  {
+    "name": "Venetia et Histria / Regio X",
+    "kind": "province",
+    "n_eff": 5560,
+    "f1f3_frac": 0.815,
+    "alpha_shared": 0.452,
+    "alpha_perunit": 0.809,
+    "swing": 0.358,
+    "identifiable": false
+  },
+  {
+    "name": "Numidia",
+    "kind": "province",
+    "n_eff": 2726,
+    "f1f3_frac": 0.538,
+    "alpha_shared": 0.166,
+    "alpha_perunit": 0.515,
+    "swing": 0.348,
+    "identifiable": false
+  },
+  {
+    "name": "Dacia",
+    "kind": "province",
+    "n_eff": 4717,
+    "f1f3_frac": 0.151,
+    "alpha_shared": 0.001,
+    "alpha_perunit": 0.344,
+    "swing": 0.343,
+    "identifiable": false
+  },
+  {
+    "name": "Africa proconsularis",
+    "kind": "province",
+    "n_eff": 2967,
+    "f1f3_frac": 0.585,
+    "alpha_shared": 0.473,
+    "alpha_perunit": 0.808,
+    "swing": 0.335,
+    "identifiable": false
+  },
+  {
+    "name": "Transpadana / Regio XI",
+    "kind": "province",
+    "n_eff": 2200,
+    "f1f3_frac": 0.816,
+    "alpha_shared": 0.639,
+    "alpha_perunit": 0.927,
+    "swing": 0.288,
+    "identifiable": false
+  },
+  {
+    "name": "Lusitania",
+    "kind": "province",
+    "n_eff": 1578,
+    "f1f3_frac": 0.723,
+    "alpha_shared": 0.522,
+    "alpha_perunit": 0.804,
+    "swing": 0.283,
+    "identifiable": false
+  },
+  {
+    "name": "Italia (excl. Rome)",
+    "kind": "aggregate",
+    "n_eff": 40499,
+    "f1f3_frac": 0.621,
+    "alpha_shared": 0.532,
+    "alpha_perunit": 0.81,
+    "swing": 0.278,
+    "identifiable": false
+  },
+  {
+    "name": "Umbria / Regio VI",
+    "kind": "province",
+    "n_eff": 2572,
+    "f1f3_frac": 0.73,
+    "alpha_shared": 0.429,
+    "alpha_perunit": 0.7,
+    "swing": 0.271,
+    "identifiable": false
+  },
+  {
+    "name": "Germania inferior",
+    "kind": "province",
+    "n_eff": 3261,
+    "f1f3_frac": 0.705,
+    "alpha_shared": 0.502,
+    "alpha_perunit": 0.754,
+    "swing": 0.252,
+    "identifiable": false
+  },
+  {
+    "name": "Etruria / Regio VII",
+    "kind": "province",
+    "n_eff": 2426,
+    "f1f3_frac": 0.614,
+    "alpha_shared": 0.6,
+    "alpha_perunit": 0.841,
+    "swing": 0.242,
+    "identifiable": false
+  },
+  {
+    "name": "Aquileia",
+    "kind": "city",
+    "n_eff": 1885,
+    "f1f3_frac": 0.85,
+    "alpha_shared": 0.639,
+    "alpha_perunit": 0.881,
+    "swing": 0.242,
+    "identifiable": false
+  },
+  {
+    "name": "Dalmatia",
+    "kind": "province",
+    "n_eff": 6325,
+    "f1f3_frac": 0.807,
+    "alpha_shared": 0.739,
+    "alpha_perunit": 0.97,
+    "swing": 0.231,
+    "identifiable": false
+  },
+  {
+    "name": "Baetica",
+    "kind": "province",
+    "n_eff": 2449,
+    "f1f3_frac": 0.626,
+    "alpha_shared": 0.433,
+    "alpha_perunit": 0.649,
+    "swing": 0.216,
+    "identifiable": false
+  },
+  {
+    "name": "Hispania citerior",
+    "kind": "province",
+    "n_eff": 6011,
+    "f1f3_frac": 0.689,
+    "alpha_shared": 0.632,
+    "alpha_perunit": 0.789,
+    "swing": 0.156,
+    "identifiable": true
+  },
+  {
+    "name": "Germania superior",
+    "kind": "province",
+    "n_eff": 5570,
+    "f1f3_frac": 0.401,
+    "alpha_shared": 0.364,
+    "alpha_perunit": 0.514,
+    "swing": 0.149,
+    "identifiable": true
+  },
+  {
+    "name": "Pannonia superior",
+    "kind": "province",
+    "n_eff": 4174,
+    "f1f3_frac": 0.678,
+    "alpha_shared": 0.735,
+    "alpha_perunit": 0.864,
+    "swing": 0.128,
+    "identifiable": true
+  },
+  {
+    "name": "Mogontiacum",
+    "kind": "city",
+    "n_eff": 2325,
+    "f1f3_frac": 0.139,
+    "alpha_shared": 0.112,
+    "alpha_perunit": 0.216,
+    "swing": 0.104,
+    "identifiable": true
+  },
+  {
+    "name": "Apulia et Calabria / Regio II",
+    "kind": "province",
+    "n_eff": 3013,
+    "f1f3_frac": 0.656,
+    "alpha_shared": 0.634,
+    "alpha_perunit": 0.666,
+    "swing": 0.032,
+    "identifiable": true
+  },
+  {
+    "name": "empire-aggregate",
+    "kind": "aggregate",
+    "n_eff": 151361,
+    "f1f3_frac": 0.646,
+    "alpha_shared": 0.672,
+    "alpha_perunit": 0.68,
+    "swing": 0.009,
+    "identifiable": true
+  },
+  {
+    "name": "latin-aggregate",
+    "kind": "aggregate",
+    "n_eff": 101066,
+    "f1f3_frac": 0.593,
+    "alpha_shared": 0.811,
+    "alpha_perunit": 0.815,
+    "swing": 0.004,
+    "identifiable": true
+  },
+  {
+    "name": "Pompeii",
+    "kind": "city",
+    "n_eff": 4247,
+    "f1f3_frac": 0.05,
+    "alpha_shared": 0.001,
+    "alpha_perunit": 0.003,
+    "swing": 0.003,
+    "identifiable": true
+  },
+  {
+    "name": "Latium et Campania / Regio I",
+    "kind": "province",
+    "n_eff": 17037,
+    "f1f3_frac": 0.456,
+    "alpha_shared": 0.672,
+    "alpha_perunit": 0.621,
+    "swing": -0.051,
+    "identifiable": true
+  },
+  {
+    "name": "Noricum",
+    "kind": "province",
+    "n_eff": 2600,
+    "f1f3_frac": 0.749,
+    "alpha_shared": 0.88,
+    "alpha_perunit": 0.829,
+    "swing": -0.051,
+    "identifiable": true
+  }
+]
