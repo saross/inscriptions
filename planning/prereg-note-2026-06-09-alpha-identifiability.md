@@ -8,6 +8,18 @@ relates-to: "Amendment 03 (osf-amendment-2026-06-07-convention-basis); H2.1 prod
 
 # Prereg note (DRAFT) — α identifiability limit of the shared convention basis
 
+> **⚠ "Planned remediation" (§ below) is SUPERSEDED (2026-06-09).** That section
+> still describes the **informed-α prior**, which has since been **REFUTED** (a prior
+> over a partially-identified region is never updated by data — Gustafson 2010;
+> `runs/2026-06-09-informed-alpha/`). The actual remediation is the **joint model**
+> (flexible per-unit basis + grid-alignment **classification likelihood** sharing α),
+> validated by POC and under full recovery-grid validation —
+> `runs/2026-06-09-joint-identifiability/` (`POC-REPORT.md`, `full-grid-spec.md`). The
+> diagnosis (§§ "The limitation" / "The diagnostic" / "Reporting responses adopted")
+> still stands. This note is folded into the next OSF amendment, which **reverses
+> Amendment 03's shared basis**. Read the diagnosis here; take the remediation from the
+> joint-identifiability run.
+
 ## What prompted this
 
 The H2.1 temporal-mixture production run (2026-06-08; 28 units, all converged)

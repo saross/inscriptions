@@ -1,0 +1,7 @@
+# Live recovery-grid outputs — regenerable (deterministic seeds); NOT tracked,
+# mirroring the project's grid-state retention rule (live state gitignored; only
+# the run-close snapshot is committed). The tracked snapshots are
+# outputs/grid-VERDICT.md and outputs/grid-summary.json (commit those after the run).
+outputs/grid/
+outputs/full-grid.log
+outputs/grid-STATUS.txt
