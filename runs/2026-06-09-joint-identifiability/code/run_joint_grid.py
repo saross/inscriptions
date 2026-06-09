@@ -18,11 +18,23 @@ Robustness (post-audit 2026-06-09): atomic per-cell writes (`os.replace`), valid
 resume (a cell is "done" only if its JSON parses AND has ≥ 1 usable replicate), and
 crashed-worker isolation (one dead worker does not abort the run).
 
+Memory safety (2026-06-10, after a 60+ GB OOM that aborted the first full run at 10/300
+cells): the pool uses the **spawn** start method with `max_tasks_per_child` (default 1) so
+each worker is recycled after every cell — its PyMC / PyTensor allocations are returned to
+the OS instead of accumulating across cells (the proximate cause of the OOM was long-lived
+fork workers never releasing memory). Within a cell, `gc.collect()` runs after every
+replicate, and the old `allow_gc=False` PyTensor flag is **no longer used** (it traded
+memory for a little speed and fed the leak). Point `TMPDIR` at a root-filesystem directory
+(NOT the inode-limited `/tmp` tmpfs) — the PyTensor compile stack leaks small temp files
+there and exhausted the tmpfs inode table on a prior multi-day run.
+
 Usage
 -----
-    PATH=~/.local/bin:$PATH PYTENSOR_FLAGS=mode=FAST_RUN,allow_gc=False \
+    PATH=~/.local/bin:$PATH TMPDIR=$HOME/tmp_grid_scratch \
+    PYTENSOR_FLAGS=mode=FAST_RUN \
     taskset -c 0-11 uv run python code/run_joint_grid.py \
-        --n-jobs 12 [--n-reps 100] [--cells-limit N] [--cell-stride S]
+        --n-jobs 12 [--max-tasks-per-child 1] [--n-reps 100] \
+        [--cells-limit N] [--cell-stride S]
 
 `--cells-limit` / `--cell-stride` / `--n-reps` are for SMOKE-TESTING (a tiny slice
 end-to-end). The full run uses the defaults (100 reps, all 300 cells).
@@ -33,7 +45,9 @@ Author / Date — Claude Code (Opus 4.8) on Shawn's brief, 2026-06-09. UK/Aus En
 from __future__ import annotations
 
 import argparse
+import gc
 import json
+import multiprocessing as mp
 import os
 import sys
 import time
@@ -140,6 +154,11 @@ def run_cell(cell: dict, n_reps: int) -> dict:
             except Exception as exc:  # noqa: BLE001
                 rec["baseline_error"] = repr(exc)[:200]
         reps.append(rec)
+        # Force collection of this replicate's PyMC / PyTensor objects now (the model and
+        # idata fit_joint built are already out of scope), rather than letting their cyclic
+        # references accumulate across the cell's replicates. This bounds within-cell memory
+        # growth; the across-cell bound is the spawn + max_tasks_per_child recycling below.
+        gc.collect()
 
     # Aggregate the LEAD over CONVERGED replicates (fall back to all-ok if none converged).
     ok = [x["joint"] for x in reps if "joint" in x]
@@ -211,6 +230,9 @@ def write_status(done: int, total: int, t0: float, slice_note: str, extra: str =
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--n-jobs", type=int, default=12)
+    ap.add_argument("--max-tasks-per-child", type=int, default=1,
+                    help="recycle each worker process after this many cells to bound "
+                         "memory (forces the 'spawn' start method; 1 = freshest / safest)")
     ap.add_argument("--n-reps", type=int, default=G.N_REPS_DEFAULT)
     ap.add_argument("--cells-limit", type=int, default=None, help="smoke-test: first N cells")
     ap.add_argument("--cell-stride", type=int, default=1, help="smoke-test: every Sth cell")
@@ -238,7 +260,13 @@ def main() -> None:
 
     t0 = time.time()
     failed_cells: list[str] = []
-    with ProcessPoolExecutor(max_workers=args.n_jobs) as ex:
+    # spawn + max_tasks_per_child: each worker is replaced after `max_tasks_per_child`
+    # cells, so PyMC / PyTensor memory is released to the OS instead of accumulating (the
+    # 2026-06-09 run OOM'd at 60+ GB with long-lived fork workers). spawn is mandatory here
+    # — ProcessPoolExecutor forbids max_tasks_per_child with the default fork context.
+    with ProcessPoolExecutor(max_workers=args.n_jobs,
+                             max_tasks_per_child=args.max_tasks_per_child,
+                             mp_context=mp.get_context("spawn")) as ex:
         futs = {ex.submit(_worker, (c, args.n_reps)): c for c in todo}
         for fut in as_completed(futs):
             cell = futs[fut]
