@@ -1,0 +1,79 @@
+{
+  "window": [
+    235.0,
+    284.0
+  ],
+  "empire_aggregate": {
+    "window": [
+      235.0,
+      284.0
+    ],
+    "any_out_of_envelope": true,
+    "n_bins_out": 10,
+    "out_bin_years": [
+      237.5,
+      242.5,
+      247.5,
+      252.5,
+      257.5,
+      262.5,
+      267.5,
+      272.5,
+      277.5,
+      282.5
+    ],
+    "out_signs": [
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1
+    ],
+    "direction": "deficit",
+    "peak_relative_departure": -0.5971819446181724,
+    "peak_year": 282.5,
+    "descriptive_bracket": "\u2265 50% (deficit)",
+    "global_pval": 0.0
+  },
+  "western_empire_provincial_latin_aggregate": {
+    "window": [
+      235.0,
+      284.0
+    ],
+    "any_out_of_envelope": true,
+    "n_bins_out": 9,
+    "out_bin_years": [
+      242.5,
+      247.5,
+      252.5,
+      257.5,
+      262.5,
+      267.5,
+      272.5,
+      277.5,
+      282.5
+    ],
+    "out_signs": [
+      -1,
+      -1,
+      1,
+      1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1
+    ],
+    "direction": "mixed",
+    "peak_relative_departure": -0.6812004752244719,
+    "peak_year": 282.5,
+    "descriptive_bracket": "\u2265 50% (deficit)",
+    "global_pval": 0.0
+  },
+  "note": "Western-Empire-provincial subset = latin-aggregate (province_language=='Latin' AND province!='Roma'; Rome excluded by construction). Diffuse multi-decade decline; no magnitude pre-committed."
+}

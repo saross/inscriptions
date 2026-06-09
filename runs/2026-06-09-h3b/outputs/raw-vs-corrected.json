@@ -1,0 +1,155 @@
+[
+  {
+    "name": "empire-aggregate",
+    "corrected_exp_pval": 0.0,
+    "raw_exp_pval": 0.0,
+    "corrected_antonine_out": true,
+    "raw_antonine_out": true,
+    "corrected_crisis_out": true,
+    "raw_crisis_out": true
+  },
+  {
+    "name": "latin-aggregate",
+    "corrected_exp_pval": 0.0,
+    "raw_exp_pval": 0.0,
+    "corrected_antonine_out": true,
+    "raw_antonine_out": true,
+    "corrected_crisis_out": true,
+    "raw_crisis_out": true
+  },
+  {
+    "name": "Latium et Campania / Regio I",
+    "corrected_exp_pval": 0.0,
+    "raw_exp_pval": 0.0,
+    "corrected_antonine_out": true,
+    "raw_antonine_out": true,
+    "corrected_crisis_out": true,
+    "raw_crisis_out": true
+  },
+  {
+    "name": "Dalmatia",
+    "corrected_exp_pval": 0.0,
+    "raw_exp_pval": 0.0,
+    "corrected_antonine_out": true,
+    "raw_antonine_out": true,
+    "corrected_crisis_out": true,
+    "raw_crisis_out": true
+  },
+  {
+    "name": "Hispania citerior",
+    "corrected_exp_pval": 0.0,
+    "raw_exp_pval": 0.0,
+    "corrected_antonine_out": true,
+    "raw_antonine_out": true,
+    "corrected_crisis_out": true,
+    "raw_crisis_out": true
+  },
+  {
+    "name": "Germania superior",
+    "corrected_exp_pval": 0.0,
+    "raw_exp_pval": 0.0,
+    "corrected_antonine_out": false,
+    "raw_antonine_out": true,
+    "corrected_crisis_out": true,
+    "raw_crisis_out": true
+  },
+  {
+    "name": "Dacia",
+    "corrected_exp_pval": 0.0,
+    "raw_exp_pval": 0.0,
+    "corrected_antonine_out": true,
+    "raw_antonine_out": true,
+    "corrected_crisis_out": true,
+    "raw_crisis_out": true
+  },
+  {
+    "name": "Pannonia superior",
+    "corrected_exp_pval": 0.0,
+    "raw_exp_pval": 0.0,
+    "corrected_antonine_out": false,
+    "raw_antonine_out": true,
+    "corrected_crisis_out": true,
+    "raw_crisis_out": true
+  },
+  {
+    "name": "Africa proconsularis",
+    "corrected_exp_pval": 0.0,
+    "raw_exp_pval": 0.0,
+    "corrected_antonine_out": true,
+    "raw_antonine_out": true,
+    "corrected_crisis_out": true,
+    "raw_crisis_out": true
+  },
+  {
+    "name": "Apulia et Calabria / Regio II",
+    "corrected_exp_pval": 0.0,
+    "raw_exp_pval": 0.0,
+    "corrected_antonine_out": true,
+    "raw_antonine_out": true,
+    "corrected_crisis_out": true,
+    "raw_crisis_out": true
+  },
+  {
+    "name": "Etruria / Regio VII",
+    "corrected_exp_pval": 0.0,
+    "raw_exp_pval": 0.027,
+    "corrected_antonine_out": true,
+    "raw_antonine_out": true,
+    "corrected_crisis_out": true,
+    "raw_crisis_out": false
+  },
+  {
+    "name": "Noricum",
+    "corrected_exp_pval": 0.0,
+    "raw_exp_pval": 0.0,
+    "corrected_antonine_out": true,
+    "raw_antonine_out": true,
+    "corrected_crisis_out": true,
+    "raw_crisis_out": false
+  },
+  {
+    "name": "Baetica",
+    "corrected_exp_pval": 0.0,
+    "raw_exp_pval": 0.0,
+    "corrected_antonine_out": true,
+    "raw_antonine_out": true,
+    "corrected_crisis_out": true,
+    "raw_crisis_out": true
+  },
+  {
+    "name": "Transpadana / Regio XI",
+    "corrected_exp_pval": 0.0,
+    "raw_exp_pval": 0.0,
+    "corrected_antonine_out": true,
+    "raw_antonine_out": true,
+    "corrected_crisis_out": true,
+    "raw_crisis_out": true
+  },
+  {
+    "name": "Pompeii",
+    "corrected_exp_pval": 0.0,
+    "raw_exp_pval": 0.0,
+    "corrected_antonine_out": true,
+    "raw_antonine_out": true,
+    "corrected_crisis_out": true,
+    "raw_crisis_out": true
+  },
+  {
+    "name": "Mogontiacum",
+    "corrected_exp_pval": 0.0,
+    "raw_exp_pval": 0.0,
+    "corrected_antonine_out": true,
+    "raw_antonine_out": true,
+    "corrected_crisis_out": true,
+    "raw_crisis_out": true
+  },
+  {
+    "name": "Italia (excl. Rome)",
+    "corrected_exp_pval": 0.0,
+    "raw_exp_pval": 0.0,
+    "corrected_antonine_out": true,
+    "raw_antonine_out": true,
+    "corrected_crisis_out": true,
+    "raw_crisis_out": true
+  }
+]

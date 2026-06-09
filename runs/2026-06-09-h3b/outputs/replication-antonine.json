@@ -1,0 +1,55 @@
+{
+  "window": [
+    165.0,
+    180.0
+  ],
+  "empire_aggregate": {
+    "window": [
+      165.0,
+      180.0
+    ],
+    "any_out_of_envelope": true,
+    "n_bins_out": 3,
+    "out_bin_years": [
+      167.5,
+      172.5,
+      177.5
+    ],
+    "out_signs": [
+      -1,
+      -1,
+      -1
+    ],
+    "direction": "deficit",
+    "peak_relative_departure": -0.36007399171794,
+    "peak_year": 167.5,
+    "descriptive_bracket": "\u2265 20% (deficit)",
+    "global_pval": 0.0
+  },
+  "latin_aggregate": {
+    "window": [
+      165.0,
+      180.0
+    ],
+    "any_out_of_envelope": true,
+    "n_bins_out": 3,
+    "out_bin_years": [
+      167.5,
+      172.5,
+      177.5
+    ],
+    "out_signs": [
+      -1,
+      -1,
+      -1
+    ],
+    "direction": "deficit",
+    "peak_relative_departure": -0.7675422326543307,
+    "peak_year": 167.5,
+    "descriptive_bracket": "\u2265 50% (deficit)",
+    "global_pval": 0.0
+  },
+  "asclepius_cult_subset": "NOT BUILT \u2014 needs per-subset deconvolution + Phase-1 reachability + LIRE membership rule (OQ-6)",
+  "military_administration_subset": "NOT BUILT \u2014 same dependency (OQ-6)",
+  "note": "Glomb et al. 2022 null at small N vs Duncan-Jones 2018 abrupt post-AD-167 cessation; no magnitude pre-committed (prereg line 101)."
+}
