@@ -2236,3 +2236,125 @@ So **41 Latin-classified − Italia − Alpes Graiae (both 0 cities) = 39 provin
 ### Findable later
 
 `39-vs-41`, `latin-provinces`, `province-language-map`, `alpes-graiae`, `italia`, `lugudunensis`, `lugdunensis`, `spelling-normalisation`, `0-hanson-cities`, `urban-context-pop-est`, `realised-frame`, `817-cities`, `39-provinces`, `41-provinces`, `frame-reconciliation`, `no-result-impact`, `downstream-impact-check`, `cell-54`, `province_language_map`, `western-empire-subset`, `augustan-regions`, `amendment-02`, `decision-36`, `decision-37-d2`, `reconcile-province-maps`, `d82834c`, `ce963de`
+
+## Obs 80 — 2026-06-08 [RESULT / METHODOLOGY]: H2.1 production α is under-identified for temporally-concentrated units; final frame is 16 confirmatory / 4 caveated-high-α / 9 under-identified
+
+### The finding
+
+The H2.1 temporal-mixture production run (28 units + 'Italia excl. Rome' = unit 29; 0 failed; all converged) returned convention fractions α that are **systematically too low for ~9 temporally-concentrated units** — predominantly frontier/military provinces (Moesia inferior, Britannia, Pannonia inferior, Numidia, Dacia) plus ports and Italian regions (Salona, Ostia, Samnium, Venetia et Histria). The structural cause: their round-period datings cluster in the same narrow occupation window (≈ AD 100–300) as their genuine signal, so the smooth GRW `p_gen` absorbs the convention mass and α collapses.
+
+Diagnostic signature: the shared-basis α falls far below the unit's F1+F3 (grid-aligned) family-mass fraction **and** a per-unit-basis refit produces a large α swing. Moesia inferior is the clearest exemplar: shared-basis α 0.05 vs F1+F3 family fraction 0.60 vs per-unit refit α 0.87 (+0.82 swing). Controls (empire-aggregate, Latium et Campania, Noricum) are basis-stable (|swing| ≤ 0.05).
+
+| tier | N units | operative flag |
+|---|---:|---|
+| confirmatory | 16 | gap ≤ ~0.20; α basis-stable |
+| caveated-high-α | 4 | Dalmatia, latin-aggregate, Pannonia superior, Noricum |
+| under-identified | 9 | gap > ~0.25 confirmed by swing > 0.20 |
+
+The confirmatory-eligible set (16 units): empire-aggregate, Latium et Campania, Hispania citerior, Germania superior, Dacia, Africa proconsularis, Germania inferior, Apulia et Calabria, Etruria, Baetica, Transpadana, Pompeii, Mogontiacum, Aquileia, Lusitania, Italia (excl. Rome).
+
+**Pompeii α ≈ 0.001 is CORRECT** (genuine pre-AD-79 precision; only 5 % round-period family mass, concentrated pre-eruption; the model passes this validation unprompted). Italia (excl. Rome) aggregates the 11 Augustan regiones (N ≈ 40,499) and is identifiable (gap 0.09) where the constituent regiones individually are not.
+
+**Reporting change:** α is now stated as a two-bound sensitivity range [shared-basis, per-unit-basis] for flagged units; identifiable units retain a point estimate. The H3b corrected-genuine-SPA hand-off for under-identified units retains convention masquerading as genuine and is treated as exploratory only.
+
+### Why this matters
+
+This is a structural identifiability limit, not a fitting artefact: the shared-basis homogeneity assumption (Decision 38 / Amendment 03 §3) breaks for period-concentrated units. The limit is **larger than** the documented α-diagnostic imprecision (Amendment 01's ±0.18 limits of agreement): Moesia inferior's range spans ≈ 0.82. The preregistered method stands where α is identifiable; this Obs quantifies the boundary and documents the conservative reporting adopted in the interim. The planned remediation (Obs 81) is gated on its own recovery validation.
+
+### Caveats / methodological notes
+
+The H3b identifiable set in the companion draft run (Obs 82) uses the gap criterion (gap < 0.20 → 17 units), which differs from the swing criterion used to populate `identifiability-table.json` (swing > 0.20 → 9 units flagged as under-identified in the production SUMMARY-FINAL). The two criteria disagree on 8 borderline units (Dalmatia, Hispania citerior, Dacia, Africa proconsularis, Baetica, Etruria, Transpadana, Italia). This is an open question (OQ-2 in the H3b spec) that must be resolved before any confirmatory reading.
+
+### Related observations and artefacts
+
+**Obs 78** (Decision-38 basis recovery re-validation: stress-triage passes; α-coverage is a large-N diagnostic, not a gate): the recovery validation that preceded the production run; the production data shows the real-world manifestation of the peaked-genuine hard corner foreshadowed there. **Obs 77** (grid-snapping is the observable discriminator between convention and genuine): the conceptual grounding for the identifiability flag — the grid-alignment family fraction is the independent signal the temporal shape ignores. **Obs 76** (empirical multi-century-bearing basis): the basis used in this production run.
+
+**Artefacts**: `runs/2026-06-07-h2.1-launch-prep/outputs/production/SUMMARY-FINAL.md`; `runs/2026-06-07-h2.1-launch-prep/outputs/production/DIAGNOSTIC-alpha-identifiability-REPORT.md`; `runs/2026-06-07-h2.1-launch-prep/outputs/production/identifiability-table.md`; `runs/2026-06-07-h2.1-launch-prep/outputs/production/identifiability-table.json`. Pre-registration note (DRAFT): `planning/prereg-note-2026-06-09-alpha-identifiability.md`.
+
+### Findable later
+
+`h2.1-production`, `alpha-under-identified`, `period-concentrated`, `temporally-concentrated`, `frontier-provinces`, `shared-basis`, `identifiability-limit`, `two-bound-alpha`, `alpha-range`, `moesia-inferior`, `0-05-vs-0-87`, `britannia`, `pannonia-inferior`, `samnium`, `salona`, `ostia`, `numidia`, `dacia`, `venetia-et-histria`, `umbria`, `pompeii-validation`, `alpha-zero`, `genuine-precision`, `italia-aggregate`, `40499`, `gap-criterion`, `swing-criterion`, `oq-2`, `confirmatory-16`, `caveated-4`, `under-identified-9`, `grw-absorbs`, `convention-masquerades-as-genuine`, `amendment-03`, `decision-38`, `obs-78`, `obs-77`, `obs-76`, `obs-81`, `obs-82`, `summary-final`, `diagnostic-alpha-identifiability-report`, `identifiability-table`
+
+## Obs 81 — 2026-06-09 [METHODOLOGY / THEORY]: the informed-α prior is refuted; the principled remediation is a joint classification-as-likelihood model
+
+### The finding
+
+A wide/tight informed prior on α **cannot fix the under-identification** at any tested concentration (κ ∈ {4, 6, 8, 10, 20}) or sample size (N ∈ {1,500, 2,500, 10,000}). Prototype and small-N re-test results from `runs/2026-06-09-informed-alpha/`:
+
+| N | α_true | prior | α_med | bias |
+|---|---|---|---|---|
+| 1,500 | 0.60 | flat | 0.034 | −0.566 |
+| 1,500 | 0.60 | informed_exact_κ=20 | 0.205 | −0.395 |
+| 2,500 | 0.60 | flat | 0.035 | −0.565 |
+| 2,500 | 0.60 | informed_exact_κ=20 | 0.205 | −0.395 |
+
+The shape-pairing probe (`code/shape_pairing_probe.py`) is decisive: with the shared (broad) basis, α_bias ≈ −0.56 whether the prior is flat (α_med 0.039) or informed with κ=6 (α_med 0.071). Switch to a narrow (per-unit) basis and α_bias collapses to ≈ +0.01 regardless of prior. **The lever is the convention shape/location, not the prior.**
+
+Statistical theory explains this cleanly. For a partially-identified parameter, the prior over the identification region is **never updated by the data** (Gustafson 2010, `10.2202/1557-4679.1206`; Giacomini & Kitagawa 2021, `10.3982/ecta16773`). Under weak component separation the likelihood is confidently wrong — a threshold estimator that declares components identical when they are not (Feller et al. 2016, `10.48550/arxiv.1602.06595`; *Ann. Appl. Stat.* 2019).
+
+**The principled remediation is to bring the grid-alignment classification in as a second likelihood term** informing α — established practice in the concomitant-variable / latent-class-with-covariates tradition (Dayton & Macready 1988; Huang & Bandeen-Roche 2004 provide the identification theory, `10.1007/bf02295837`; implemented in FlexMix / Grün & Leisch 2008; Bayesian instance: Berrettini et al. 2024). The archaeological structural archetype is the OxCal outlier model (Bronk Ramsey 2009, `10.1017/S0033822200034093`): a two-component reliable/unreliable mixture with per-sample quality weights inside one Bayesian model. The novel core is a **joint temporal-frequency mixture that uses the classification covariate as the identification instrument** — no published work combines a temporal-axis frequency mixture with a classification-as-likelihood identifiability fix.
+
+To build + recovery-validate next session, then OSF amendment.
+
+### Why this matters
+
+This closes the informed-prior path and opens the joint-likelihood path on firm theoretical and empirical ground. The two-citation argument — Feller + Gustafson for why a prior cannot work; Huang & Bandeen-Roche for why a likelihood term can — is cite-ready for the methods section. The novel-core gap (no prior temporal-axis mixture uses classification as the identification instrument) is confirmed on both statistical and archaeological sides: statistical concomitant-variable work is almost all cross-sectional; archaeological work filters upstream or stratifies post-hoc, but does not jointly estimate both shapes.
+
+### Caveats / methodological notes
+
+All 28 informed-prior fits converge cleanly (max R̂ ≤ 1.005; zero divergences), confirming the failure is structural, not a sampler pathology. The small-N advantage of the informed prior is real but inconsequential: at κ=20 and N=1,500, α_med rises from 0.034 to 0.205 for α_true=0.60 — a gain in the posterior mean, but still a bias of −0.40. Zotero dedup for the cited papers is unconfirmed (the scout env lacked the `httpx` dependency); Surovell 2009 and Bayliss 2015 may already be in the library. Feller 2016 is cited via the arXiv/DataCite DOI; the journal version (*Ann. Appl. Stat.* 2019) may be preferable for the paper.
+
+### Related observations and artefacts
+
+**Obs 80** (H2.1 production α under-identified for temporally-concentrated units — the problem this Obs addresses): the production finding that triggered the remediation investigation. **Obs 77** (grid-snapping is the observable discriminator): the conceptual basis for why the classification variable is the natural identification instrument. **Obs 78** (stress-triage passes, but α-coverage is a large-N diagnostic): confirms the recovery framework can detect genuine quiescence; the joint-likelihood model must also pass this test.
+
+**Artefacts**: `runs/2026-06-09-informed-alpha/code/recovery_test.py`; `runs/2026-06-09-informed-alpha/code/small_n_retest.py`; `runs/2026-06-09-informed-alpha/code/shape_pairing_probe.py`; `runs/2026-06-09-informed-alpha/outputs/recovery-results.json`; `runs/2026-06-09-informed-alpha/outputs/small-n-retest.json`; `runs/2026-06-09-informed-alpha/outputs/small-n-retest-note.md`; `runs/2026-06-09-informed-alpha/outputs/shape-pairing-results.json`. Scout synthesis: `planning/scout-2026-06-09-identifiability-remediation-SYNTHESIS.md`. Pre-registration note: `planning/prereg-note-2026-06-09-alpha-identifiability.md`.
+
+### Findable later
+
+`informed-prior`, `informed-alpha`, `alpha-prior-refuted`, `prior-cannot-fix-partial-id`, `gustafson-2010`, `giacomini-kitagawa-2021`, `feller-2016`, `weak-separation`, `confidently-wrong`, `concomitant-variable`, `latent-class-with-covariates`, `huang-bandeen-roche-2004`, `classification-as-likelihood`, `joint-likelihood`, `identification-instrument`, `oxcal-outlier`, `bronk-ramsey-2009`, `two-component-mixture`, `dayton-macready-1988`, `berrettini-2024`, `flexmix`, `novel-core`, `temporal-axis-mixture`, `shape-pairing-probe`, `narrow-basis-vs-broad-basis`, `lever-is-shape-not-prior`, `small-n-retest`, `k20-bias-minus-0-40`, `shape-pairing-results`, `joint-model`, `classification-covariate`, `obs-80`, `obs-77`, `obs-78`, `recovery-validation-gate`, `osf-amendment`
+
+## Obs 82 — 2026-06-09 [RESULT / METHODOLOGY]: H3b is preregistered exploratory; draft run shows an Antonine deficit in both aggregates; exponential null is saturated on the Roman SPA
+
+### The finding
+
+H3b is pre-specified **EXPLORATORY** deviation-detection (Decision 15; preregistration §4). It carries **no Holm-corrected confirmatory family**; any prior reference to "Holm-Bonferroni confirmatory" wording for H3b is stale and superseded by this Obs and the H3b spec. Holm correction is computed descriptively only in the draft run.
+
+Draft run: `runs/2026-06-09-h3b/` (DRAFT-FOR-REVIEW — open questions in `h3b-spec.md` §10 gate any confirmatory reading). 17 identifiable units under the gap criterion (gap < 0.20); identifiability split in `outputs/identifiability-split.json`.
+
+**Key methodological finding — exponential null is saturated.** Under the exponential null, every unit returns global *p* = 0.000 (e.g. empire: 79/80 bins out-of-envelope). The Roman SPA is a strong rise-and-fall curve; a single-rate exponential cannot represent it, so essentially the whole curve "deviates". The exponential null confirms only that the corpus is not featureless-exponential; it **cannot localise events**. **Read deviations off the CPL-3 null** (continuous piecewise-linear, 3 knots), which absorbs the rise-and-fall trend and isolates genuine departures.
+
+**Antonine probe (AD 165–180) — CPL-3 null:**
+
+Both aggregates show an out-of-envelope **deficit centred at AD ~168** under both nulls — directionally consistent with the Antonine Plague mortality signal and Duncan-Jones (2018)'s abrupt post-AD-167 cessation of military diplomas.
+
+| level | null | direction | descriptive bracket | peak yr |
+|---|---|---|---|---|
+| empire-aggregate | CPL-3 | deficit | ≥ 20 % deficit | 167.5 |
+| latin-aggregate | CPL-3 | deficit | ≥ 50 % deficit | 167.5 |
+
+Antonine out-of-envelope in 7/17 identifiable units (empire-aggregate, latin-aggregate, Germania superior, Dacia, Pannonia superior, Africa proconsularis, Noricum).
+
+**Crisis probe (AD 235–284) — CPL-3 null — weaker / diffuse:**
+
+Crisis window is messier (mixed direction; CPL-3 and exponential nulls disagree on sign in some bins) — consistent with a diffuse multi-decade decline rather than a sharp event, and with the late-corpus convention-domination caveat (Obs 69: AD ~142–347 is `p_conv`-dominated even in the corrected curve). Crisis out-of-envelope in 9/17 identifiable units.
+
+**Asclepius-cult + military-administration subsets are deferred** — they require per-subset deconvolution, per-subset Phase-1 reachability, and a LIRE membership rule (no clean Asclepius / military-diploma flag in LIRE `inscr_type` or `type_of_inscription_*` columns). Confirm deferral and supply membership definitions before next session.
+
+### Why this matters
+
+The exponential-saturation finding (OQ-A) is a necessary methodological disclosure: the Phase-1 power study used a featureless base and so the exponential was a sensible primary null there. On the real rise-and-fall Roman corpus the convention inverts. This must be resolved before any confirmatory reading and reported clearly in the paper's methods section. The Antonine deficit direction is consistent across both aggregates and both nulls — the most stable signal in the draft run.
+
+### Caveats / methodological notes
+
+Seven open questions (OQ-1 through OQ-8) gate confirmatory reading: the principal ones are the confirmatory status / Holm-family question (OQ-1), the identifiability criterion (gap vs swing, OQ-2; see also Obs 80 caveat), which null is operative on real data (OQ-A), and the Antonine subset-membership definitions (OQ-6). The identifiable set under the gap criterion (17 units) includes units the swing criterion flags as under-identified (Dalmatia, Africa proconsularis, etc.) — the H3b draft results for those units should be treated with additional caution until OQ-2 is resolved. Lusitania (N = 1,578) is below the CPL-3 reachability threshold used in Phase 1 (OQ-3).
+
+### Related observations and artefacts
+
+**Obs 80** (H2.1 production α under-identified — establishes which units feed the H3b confirmatory set): the corrected-genuine-SPA hand-off used here; under-identified units are exploratory-only in H3b. **Obs 69** (the late corpus AD ~142–347 is `p_conv`-dominated): the convention-domination caveat that makes the Crisis probe the weaker of the two windows. **Obs 78** (recovery re-validation; α-coverage is a large-N diagnostic): the recovery framework whose code is reused in the H3b harness.
+
+**Artefacts**: `runs/2026-06-09-h3b/REPORT.md` (DRAFT-FOR-REVIEW); `runs/2026-06-09-h3b/h3b-spec.md`; `runs/2026-06-09-h3b/outputs/deviations.json`; `runs/2026-06-09-h3b/outputs/deviations-table.csv`; `runs/2026-06-09-h3b/outputs/identifiability-split.json`; `runs/2026-06-09-h3b/outputs/replication-antonine.json`; `runs/2026-06-09-h3b/outputs/replication-crisis.json`.
+
+### Findable later
+
+`h3b`, `h3b-draft`, `deviation-detection`, `exploratory`, `decision-15`, `no-confirmatory-family`, `holm-stale`, `exponential-null-saturated`, `cpl-3`, `cpl3-null`, `rise-and-fall`, `roman-spa`, `antonine-probe`, `antonine-deficit`, `ad-168`, `167-5`, `duncan-jones-2018`, `antonine-plague`, `crisis-probe`, `crisis-third-century`, `diffuse-signal`, `7-of-17`, `9-of-17`, `empire-aggregate`, `latin-aggregate`, `oq-a`, `oq-1`, `oq-2`, `oq-6`, `asclepius-subset`, `military-administration-subset`, `deferred-subsets`, `per-subset-deconvolution`, `reachability`, `lusitania-threshold`, `oq-3`, `gap-criterion`, `17-identifiable`, `obs-80`, `obs-69`, `obs-78`, `deviations-table`, `identifiability-split`, `replication-antonine`
