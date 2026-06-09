@@ -772,3 +772,24 @@ Resumed inscriptions at the H2.1 prep gate and executed the Decision-38 redesign
 - Sapphire's working tree holds the actively-written grid outputs untracked, blocking pulls; left unreconciled on purpose (don't disturb a running grid) — resolve once it exits (SHA-verify-then-remove-then-pull, as done earlier this session).
 - The spec's α-coverage gate was corrected mid-session to the lodged Amendment 01 §A5.5.1 criterion after the triage exposed the inconsistency.
 - Amendment 03's `justification.txt`/`summary-addendum`/PDF are deliberately not yet generated — they derive from the finalised §A5.5, which awaits the grid verdict.
+
+## 2026-06-08 → 2026-06-09 — full-grid PASS → Amendment 03 LODGED → H2.1 production run done + finalised → α-identifiability found, diagnosed, literature-grounded → joint-model scoped
+
+A marathon execution-and-discovery session. Commits `b206626..418f822`, all pushed.
+
+**Full grid PASS.** The 450-cell re-validation finished 438/450 with 12 `smooth_decline` cells failing on a transient tmpfs ENOSPC (PyTensor numba temp files filled the 31 GB RAM-backed `/tmp`); re-ran the 12 with `TMPDIR` on the 264 GB root disk → 450/0 (deterministic seeds). Verdict **B = 96.4 %** under the Amendment-01 §A5.5.1 criterion (`FULL-GRID-REPORT.md`); the summariser's Grid-A regression assert scoped opt-in (`5494347`); α-recovery LoA [−0.12, +0.13], within Decision 33's ±0.18 (`compute-alpha-loa.py`).
+
+**grid-state retention rule** (Shawn, once-and-for-all): live `grid-state.json` gitignored; tracked record = `grid-state-final.json` run-close snapshot; 4 runs migrated (`b206626`).
+
+**Amendment 03 (convention-model)** §A5.5 filled + 4-artefact package built (`build-justification.py` + the PDF builder) + **LODGED by Shawn**.
+
+**H2.1 PRODUCTION RUN** (`runs/2026-06-07-h2.1-launch-prep/`): built the harness (`code/{h2_lib,fit-unit,run-h2}.py`) reusing the recovery-validated `build_model_f1_f3` + `aoristic_spa`; smoke-tested; ran 28 units (+ **Italia excl. Rome** = unit-29, N 40,499), 0 failed, all converged, wall 98 s (`8c8151f`, `4c30c20`). Finalised with the identifiability flag + two-bound α (`finalise-results.py`, `8a31edf`): **16 confirmatory-eligible, 4 caveated-high-α, 9 under-identified** (`SUMMARY-FINAL.md`).
+
+**α-identifiability diagnostic** (`DIAGNOSTIC-alpha-identifiability-REPORT.md`, `identifiability-table.*`): for temporally-concentrated frontier units convention & genuine are confounded in time → α under-attributes (Moesia inf shared 0.05 vs per-unit-basis 0.87 vs 60 % grid-aligned); flag = shared α far below the grid-alignment family fraction. **informed-α prototype + small-N re-test** (`runs/2026-06-09-informed-alpha/`): a prior cannot fix a confidently-wrong likelihood at any width/N — REFUTED; the lever is the convention shape/location. **H3b DRAFT** (`runs/2026-06-09-h3b/`): exploratory per Decision 15 (not confirmatory); Antonine deficit ~AD 168; CPL-3 null. **prereg note** drafted (`planning/prereg-note-2026-06-09-alpha-identifiability.md`). **Two scouts** (`planning/scout-2026-06-09-...-SYNTHESIS.md`): the joint-likelihood remediation (classification as a 2nd likelihood term) is established practice (concomitant-variable mixtures; OxCal outlier model); novel core = joint temporal-frequency mixture with classification as the identification instrument.
+
+### Contextual assumptions
+- Heavy reliance on parallel background agents (H3b, informed-α prototype, small-N re-test, 2 scouts) per Shawn's standing "use agents / manage context" instruction; each agent's claims (esp. DOIs and the H3b-exploratory prereg reading) were independently re-verified at source before being trusted or relayed.
+- All agent work was committed by the main loop (agents instructed not to run git) to avoid index races on the shared working tree.
+- The two scouts could not query the Zotero library (a missing `httpx` dep in their env), so the "all candidates NEW" dedup is **unconfirmed** — verify before staging.
+- Sapphire git was left **behind origin with untracked diagnostic outputs** throughout (agents read existing committed inputs + ran scp'd code from `~/h2-smoke` scratch); reconcile (SHA-verify-remove-pull) before the next sapphire compute run.
+- The H3b draft and the joint-model design are explicitly FOR REVIEW / next-session — not finalised; H3b's identifiable-unit set (agent gap<0.20 → 17) differs slightly from the finalise set (gap≤0.25 → 16) pending reconciliation.
