@@ -1,0 +1,91 @@
+{
+  "generated": "2026-06-09",
+  "config": {
+    "N": 2000,
+    "draws": 1500,
+    "theta_prior_kappa": 40,
+    "theta_conv_true": 0.95,
+    "theta_gen_true": 0.15,
+    "per_unit_basis": "EXPECTED aligned-subset shape (contaminated, observable)"
+  },
+  "results": [
+    {
+      "cell": "ident_a0.3",
+      "regime": "identifiable",
+      "alpha_true": 0.3,
+      "k_frac": 0.372,
+      "perunit_joint_est": {
+        "alpha_med": 0.34789093624391276,
+        "alpha_lo": 0.2724885834119246,
+        "alpha_hi": 0.4278960463422839,
+        "max_rhat": 1.0022076644944613,
+        "min_ess": 6544.180618276289
+      }
+    },
+    {
+      "cell": "ident_a0.6",
+      "regime": "identifiable",
+      "alpha_true": 0.6,
+      "k_frac": 0.629,
+      "perunit_joint_est": {
+        "alpha_med": 0.6468277570226577,
+        "alpha_lo": 0.5720840523307947,
+        "alpha_hi": 0.7299087312405451,
+        "max_rhat": 1.0006912649401853,
+        "min_ess": 5388.649036786478
+      }
+    },
+    {
+      "cell": "conf_a0.2",
+      "regime": "confounded",
+      "alpha_true": 0.2,
+      "k_frac": 0.31,
+      "perunit_joint_est": {
+        "alpha_med": 0.2729236107437478,
+        "alpha_lo": 0.1871581648173422,
+        "alpha_hi": 0.3459559571200263,
+        "max_rhat": 1.000192454710204,
+        "min_ess": 5032.279608214303
+      }
+    },
+    {
+      "cell": "conf_a0.4",
+      "regime": "confounded",
+      "alpha_true": 0.4,
+      "k_frac": 0.475,
+      "perunit_joint_est": {
+        "alpha_med": 0.48650345607489554,
+        "alpha_lo": 0.4121280572546939,
+        "alpha_hi": 0.5938094757792374,
+        "max_rhat": 1.000834538253534,
+        "min_ess": 5375.415796073409
+      }
+    },
+    {
+      "cell": "conf_a0.6",
+      "regime": "confounded",
+      "alpha_true": 0.6,
+      "k_frac": 0.627,
+      "perunit_joint_est": {
+        "alpha_med": 0.7205222564075208,
+        "alpha_lo": 0.6231584891967876,
+        "alpha_hi": 0.8327083907979866,
+        "max_rhat": 1.000484638737403,
+        "min_ess": 2872.379786593494
+      }
+    },
+    {
+      "cell": "conf_regnal_a0.5",
+      "regime": "confounded",
+      "alpha_true": 0.5,
+      "k_frac": 0.545,
+      "perunit_joint_est": {
+        "alpha_med": 0.5538676831632983,
+        "alpha_lo": 0.48851383878791993,
+        "alpha_hi": 0.6314338329115982,
+        "max_rhat": 1.000688988033959,
+        "min_ess": 5506.211514707911
+      }
+    }
+  ]
+}

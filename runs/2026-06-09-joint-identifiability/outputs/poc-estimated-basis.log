@@ -1,0 +1,43 @@
+Initializing NUTS using jitter+adapt_diag...
+Multiprocess sampling (4 chains in 4 jobs)
+NUTS: [alpha, tier_weights, sigma_smooth, z_pgen, theta_conv, theta_gen]
+ESTIMATED-BASIS variant (aligned-subset shape): N=2000, draws=1500
+
+cell               reg          aT   k/N   | perunit_JOINT(est)  
+Sampling 4 chains for 1_000 tune and 1_500 draw iterations (4_000 + 6_000 draws total) took 3 seconds.
+Initializing NUTS using jitter+adapt_diag...
+Multiprocess sampling (4 chains in 4 jobs)
+NUTS: [alpha, tier_weights, sigma_smooth, z_pgen, theta_conv, theta_gen]
+ident_a0.3         identifiable 0.3  0.37  | 0.35[0.27,0.43]
+Sampling 4 chains for 1_000 tune and 1_500 draw iterations (4_000 + 6_000 draws total) took 3 seconds.
+Initializing NUTS using jitter+adapt_diag...
+Multiprocess sampling (4 chains in 4 jobs)
+NUTS: [alpha, tier_weights, sigma_smooth, z_pgen, theta_conv, theta_gen]
+ident_a0.6         identifiable 0.6  0.63  | 0.65[0.57,0.73]
+Sampling 4 chains for 1_000 tune and 1_500 draw iterations (4_000 + 6_000 draws total) took 4 seconds.
+Initializing NUTS using jitter+adapt_diag...
+Multiprocess sampling (4 chains in 4 jobs)
+NUTS: [alpha, tier_weights, sigma_smooth, z_pgen, theta_conv, theta_gen]
+conf_a0.2          confounded   0.2  0.31  | 0.27[0.19,0.35]
+Sampling 4 chains for 1_000 tune and 1_500 draw iterations (4_000 + 6_000 draws total) took 4 seconds.
+Initializing NUTS using jitter+adapt_diag...
+Multiprocess sampling (4 chains in 4 jobs)
+NUTS: [alpha, tier_weights, sigma_smooth, z_pgen, theta_conv, theta_gen]
+conf_a0.4          confounded   0.4  0.48  | 0.49[0.41,0.59]
+Sampling 4 chains for 1_000 tune and 1_500 draw iterations (4_000 + 6_000 draws total) took 3 seconds.
+Initializing NUTS using jitter+adapt_diag...
+Multiprocess sampling (4 chains in 4 jobs)
+NUTS: [alpha, tier_weights, sigma_smooth, z_pgen, theta_conv, theta_gen]
+conf_a0.6          confounded   0.6  0.63  | 0.72[0.62,0.83]
+Sampling 4 chains for 1_000 tune and 1_500 draw iterations (4_000 + 6_000 draws total) took 4 seconds.
+conf_regnal_a0.5   confounded   0.5  0.55  | 0.55[0.49,0.63]
+
+--- verdict: estimated (aligned-subset) shape + classification ---
+  ident_a0.3         [ident]  bias +0.05  cover95 True  PASS
+  ident_a0.6         [ident]  bias +0.05  cover95 True  PASS
+  conf_a0.2          [conf ]  bias +0.07  cover95 True  PASS
+  conf_a0.4          [conf ]  bias +0.09  cover95 False  PASS
+  conf_a0.6          [conf ]  bias +0.12  cover95 False  PASS
+  conf_regnal_a0.5   [conf ]  bias +0.05  cover95 True  PASS
+
+Wrote /home/shawn/Code/inscriptions/runs/2026-06-09-joint-identifiability/outputs/poc-estimated-basis.json

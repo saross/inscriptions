@@ -1,0 +1,91 @@
+Initializing NUTS using jitter+adapt_diag...
+Multiprocess sampling (4 chains in 4 jobs)
+NUTS: [alpha, tier_weights, sigma_smooth, z_pgen]
+POC: N=2000, draws=1500, θ priors C (conv μ=0.945, gen μ=0.155, κ=40); gen-truth θ=(0.95,0.15)
+
+cell               reg          aT   c%win g%win k/N   | shared         perunit        JOINT           
+Sampling 4 chains for 1_000 tune and 1_500 draw iterations (4_000 + 6_000 draws total) took 3 seconds.
+Initializing NUTS using jitter+adapt_diag...
+Multiprocess sampling (4 chains in 4 jobs)
+NUTS: [alpha, tier_weights, sigma_smooth, z_pgen]
+Sampling 4 chains for 1_000 tune and 1_500 draw iterations (4_000 + 6_000 draws total) took 3 seconds.
+Initializing NUTS using jitter+adapt_diag...
+Multiprocess sampling (4 chains in 4 jobs)
+NUTS: [alpha, tier_weights, sigma_smooth, z_pgen, theta_conv, theta_gen]
+Sampling 4 chains for 1_000 tune and 1_500 draw iterations (4_000 + 6_000 draws total) took 4 seconds.
+Initializing NUTS using jitter+adapt_diag...
+Multiprocess sampling (4 chains in 4 jobs)
+NUTS: [alpha, tier_weights, sigma_smooth, z_pgen]
+ident_a0.3         identifiable 0.3  0.63  0.33  0.37  | 0.08[0.01,0.21] 0.37[0.27,0.45] 0.16[0.04,0.29]
+Sampling 4 chains for 1_000 tune and 1_500 draw iterations (4_000 + 6_000 draws total) took 4 seconds.
+Initializing NUTS using jitter+adapt_diag...
+Multiprocess sampling (4 chains in 4 jobs)
+NUTS: [alpha, tier_weights, sigma_smooth, z_pgen]
+Sampling 4 chains for 1_000 tune and 1_500 draw iterations (4_000 + 6_000 draws total) took 3 seconds.
+Initializing NUTS using jitter+adapt_diag...
+Multiprocess sampling (4 chains in 4 jobs)
+NUTS: [alpha, tier_weights, sigma_smooth, z_pgen, theta_conv, theta_gen]
+Sampling 4 chains for 1_000 tune and 1_500 draw iterations (4_000 + 6_000 draws total) took 4 seconds.
+Initializing NUTS using jitter+adapt_diag...
+Multiprocess sampling (4 chains in 4 jobs)
+NUTS: [alpha, tier_weights, sigma_smooth, z_pgen]
+ident_a0.6         identifiable 0.6  0.63  0.33  0.63  | 0.09[0.01,0.22] 0.63[0.53,0.71] 0.28[0.11,0.44]
+Sampling 4 chains for 1_000 tune and 1_500 draw iterations (4_000 + 6_000 draws total) took 4 seconds.
+Initializing NUTS using jitter+adapt_diag...
+Multiprocess sampling (4 chains in 4 jobs)
+NUTS: [alpha, tier_weights, sigma_smooth, z_pgen]
+Sampling 4 chains for 1_000 tune and 1_500 draw iterations (4_000 + 6_000 draws total) took 3 seconds.
+Initializing NUTS using jitter+adapt_diag...
+Multiprocess sampling (4 chains in 4 jobs)
+NUTS: [alpha, tier_weights, sigma_smooth, z_pgen, theta_conv, theta_gen]
+Sampling 4 chains for 1_000 tune and 1_500 draw iterations (4_000 + 6_000 draws total) took 4 seconds.
+Initializing NUTS using jitter+adapt_diag...
+Multiprocess sampling (4 chains in 4 jobs)
+NUTS: [alpha, tier_weights, sigma_smooth, z_pgen]
+conf_a0.2          confounded   0.2  1.00  0.99  0.31  | 0.00[0.00,0.01] 0.38[0.26,0.47] 0.00[0.00,0.01]
+Sampling 4 chains for 1_000 tune and 1_500 draw iterations (4_000 + 6_000 draws total) took 4 seconds.
+Initializing NUTS using jitter+adapt_diag...
+Multiprocess sampling (4 chains in 4 jobs)
+NUTS: [alpha, tier_weights, sigma_smooth, z_pgen]
+Sampling 4 chains for 1_000 tune and 1_500 draw iterations (4_000 + 6_000 draws total) took 3 seconds.
+Initializing NUTS using jitter+adapt_diag...
+Multiprocess sampling (4 chains in 4 jobs)
+NUTS: [alpha, tier_weights, sigma_smooth, z_pgen, theta_conv, theta_gen]
+Sampling 4 chains for 1_000 tune and 1_500 draw iterations (4_000 + 6_000 draws total) took 4 seconds.
+Initializing NUTS using jitter+adapt_diag...
+Multiprocess sampling (4 chains in 4 jobs)
+NUTS: [alpha, tier_weights, sigma_smooth, z_pgen]
+conf_a0.4          confounded   0.4  1.00  0.99  0.47  | 0.00[0.00,0.01] 0.52[0.41,0.62] 0.00[0.00,0.01]
+Sampling 4 chains for 1_000 tune and 1_500 draw iterations (4_000 + 6_000 draws total) took 4 seconds.
+Initializing NUTS using jitter+adapt_diag...
+Multiprocess sampling (4 chains in 4 jobs)
+NUTS: [alpha, tier_weights, sigma_smooth, z_pgen]
+Sampling 4 chains for 1_000 tune and 1_500 draw iterations (4_000 + 6_000 draws total) took 3 seconds.
+Initializing NUTS using jitter+adapt_diag...
+Multiprocess sampling (4 chains in 4 jobs)
+NUTS: [alpha, tier_weights, sigma_smooth, z_pgen, theta_conv, theta_gen]
+Sampling 4 chains for 1_000 tune and 1_500 draw iterations (4_000 + 6_000 draws total) took 4 seconds.
+Initializing NUTS using jitter+adapt_diag...
+Multiprocess sampling (4 chains in 4 jobs)
+NUTS: [alpha, tier_weights, sigma_smooth, z_pgen]
+conf_a0.6          confounded   0.6  1.00  0.99  0.63  | 0.00[0.00,0.01] 0.74[0.65,0.83] 0.00[0.00,0.01]
+Sampling 4 chains for 1_000 tune and 1_500 draw iterations (4_000 + 6_000 draws total) took 4 seconds.
+Initializing NUTS using jitter+adapt_diag...
+Multiprocess sampling (4 chains in 4 jobs)
+NUTS: [alpha, tier_weights, sigma_smooth, z_pgen]
+Sampling 4 chains for 1_000 tune and 1_500 draw iterations (4_000 + 6_000 draws total) took 4 seconds.
+Initializing NUTS using jitter+adapt_diag...
+Multiprocess sampling (4 chains in 4 jobs)
+NUTS: [alpha, tier_weights, sigma_smooth, z_pgen, theta_conv, theta_gen]
+Sampling 4 chains for 1_000 tune and 1_500 draw iterations (4_000 + 6_000 draws total) took 4 seconds.
+conf_regnal_a0.5   confounded   0.5  1.00  0.93  0.55  | 0.04[0.00,0.09] 0.53[0.44,0.60] 0.06[0.01,0.12]
+
+Wrote /home/shawn/Code/inscriptions/runs/2026-06-09-joint-identifiability/outputs/poc-recovery.json
+
+--- verdict (criteria 1–2) ---
+  ident_a0.3         [ident]  joint bias -0.14  cover95 False  PASS (do-no-harm)
+  ident_a0.6         [ident]  joint bias -0.32  cover95 False  CHECK (do-no-harm)
+  conf_a0.2          [conf ]  shared bias -0.20 → joint bias -0.20  cover95 False  improved False  CHECK
+  conf_a0.4          [conf ]  shared bias -0.40 → joint bias -0.40  cover95 False  improved False  CHECK
+  conf_a0.6          [conf ]  shared bias -0.60 → joint bias -0.60  cover95 False  improved False  CHECK
+  conf_regnal_a0.5   [conf ]  shared bias -0.46 → joint bias -0.44  cover95 False  improved False  CHECK

@@ -1,0 +1,67 @@
+Initializing NUTS using jitter+adapt_diag...
+Multiprocess sampling (4 chains in 4 jobs)
+NUTS: [alpha, tier_weights, sigma_smooth, z_pgen]
+PERUNIT-JOINT variant: N=2000, draws=1500, θ priors C κ=40
+
+cell               reg          aT   k/N   | perunit_only     perunit_JOINT   
+Sampling 4 chains for 1_000 tune and 1_500 draw iterations (4_000 + 6_000 draws total) took 3 seconds.
+Initializing NUTS using jitter+adapt_diag...
+Multiprocess sampling (4 chains in 4 jobs)
+NUTS: [alpha, tier_weights, sigma_smooth, z_pgen, theta_conv, theta_gen]
+Sampling 4 chains for 1_000 tune and 1_500 draw iterations (4_000 + 6_000 draws total) took 3 seconds.
+Initializing NUTS using jitter+adapt_diag...
+Multiprocess sampling (4 chains in 4 jobs)
+NUTS: [alpha, tier_weights, sigma_smooth, z_pgen]
+ident_a0.3         identifiable 0.3  0.37  | 0.37[0.27,0.45]  0.32[0.25,0.38]
+Sampling 4 chains for 1_000 tune and 1_500 draw iterations (4_000 + 6_000 draws total) took 3 seconds.
+Initializing NUTS using jitter+adapt_diag...
+Multiprocess sampling (4 chains in 4 jobs)
+NUTS: [alpha, tier_weights, sigma_smooth, z_pgen, theta_conv, theta_gen]
+Sampling 4 chains for 1_000 tune and 1_500 draw iterations (4_000 + 6_000 draws total) took 3 seconds.
+Initializing NUTS using jitter+adapt_diag...
+Multiprocess sampling (4 chains in 4 jobs)
+NUTS: [alpha, tier_weights, sigma_smooth, z_pgen]
+ident_a0.6         identifiable 0.6  0.63  | 0.63[0.53,0.71]  0.61[0.55,0.68]
+Sampling 4 chains for 1_000 tune and 1_500 draw iterations (4_000 + 6_000 draws total) took 3 seconds.
+Initializing NUTS using jitter+adapt_diag...
+Multiprocess sampling (4 chains in 4 jobs)
+NUTS: [alpha, tier_weights, sigma_smooth, z_pgen, theta_conv, theta_gen]
+Sampling 4 chains for 1_000 tune and 1_500 draw iterations (4_000 + 6_000 draws total) took 3 seconds.
+Initializing NUTS using jitter+adapt_diag...
+Multiprocess sampling (4 chains in 4 jobs)
+NUTS: [alpha, tier_weights, sigma_smooth, z_pgen]
+conf_a0.2          confounded   0.2  0.31  | 0.38[0.26,0.47]  0.26[0.19,0.33]
+Sampling 4 chains for 1_000 tune and 1_500 draw iterations (4_000 + 6_000 draws total) took 3 seconds.
+Initializing NUTS using jitter+adapt_diag...
+Multiprocess sampling (4 chains in 4 jobs)
+NUTS: [alpha, tier_weights, sigma_smooth, z_pgen, theta_conv, theta_gen]
+Sampling 4 chains for 1_000 tune and 1_500 draw iterations (4_000 + 6_000 draws total) took 3 seconds.
+Initializing NUTS using jitter+adapt_diag...
+Multiprocess sampling (4 chains in 4 jobs)
+NUTS: [alpha, tier_weights, sigma_smooth, z_pgen]
+conf_a0.4          confounded   0.4  0.48  | 0.52[0.41,0.62]  0.45[0.38,0.52]
+Sampling 4 chains for 1_000 tune and 1_500 draw iterations (4_000 + 6_000 draws total) took 3 seconds.
+Initializing NUTS using jitter+adapt_diag...
+Multiprocess sampling (4 chains in 4 jobs)
+NUTS: [alpha, tier_weights, sigma_smooth, z_pgen, theta_conv, theta_gen]
+Sampling 4 chains for 1_000 tune and 1_500 draw iterations (4_000 + 6_000 draws total) took 3 seconds.
+Initializing NUTS using jitter+adapt_diag...
+Multiprocess sampling (4 chains in 4 jobs)
+NUTS: [alpha, tier_weights, sigma_smooth, z_pgen]
+conf_a0.6          confounded   0.6  0.63  | 0.74[0.65,0.83]  0.67[0.60,0.76]
+Sampling 4 chains for 1_000 tune and 1_500 draw iterations (4_000 + 6_000 draws total) took 4 seconds.
+Initializing NUTS using jitter+adapt_diag...
+Multiprocess sampling (4 chains in 4 jobs)
+NUTS: [alpha, tier_weights, sigma_smooth, z_pgen, theta_conv, theta_gen]
+Sampling 4 chains for 1_000 tune and 1_500 draw iterations (4_000 + 6_000 draws total) took 4 seconds.
+conf_regnal_a0.5   confounded   0.5  0.55  | 0.53[0.45,0.60]  0.51[0.45,0.57]
+
+--- verdict: per-unit shape + classification ---
+  ident_a0.3         [ident]  perunit_only bias +0.07 → perunit_JOINT bias +0.02  cover95 True  PASS
+  ident_a0.6         [ident]  perunit_only bias +0.03 → perunit_JOINT bias +0.01  cover95 True  PASS
+  conf_a0.2          [conf ]  perunit_only bias +0.18 → perunit_JOINT bias +0.06  cover95 True  PASS
+  conf_a0.4          [conf ]  perunit_only bias +0.12 → perunit_JOINT bias +0.05  cover95 True  PASS
+  conf_a0.6          [conf ]  perunit_only bias +0.14 → perunit_JOINT bias +0.07  cover95 True  PASS
+  conf_regnal_a0.5   [conf ]  perunit_only bias +0.03 → perunit_JOINT bias +0.01  cover95 True  PASS
+
+Wrote /home/shawn/Code/inscriptions/runs/2026-06-09-joint-identifiability/outputs/poc-perunit-joint.json

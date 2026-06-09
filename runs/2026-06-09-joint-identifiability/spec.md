@@ -1,5 +1,14 @@
 # Joint identifiability-remediation model — design spec
 
+> **⚠ SUPERSEDED IN PART by the POC (2026-06-09).** This spec led with a **shared
+> basis** + classification term (§4); the proof-of-concept (`outputs/POC-REPORT.md`)
+> showed that **fails** for confounded units and the design **pivoted** to a
+> **flexible per-unit basis** + classification term. Read this for the problem
+> statement, the theory (§2), the grid-alignment indicator (§3), and the θ-calibration
+> (§4.1) — all still current — but take the validated model and grid from
+> `full-grid-spec.md`. The §4 *temporal-block* and the classification term are unchanged;
+> only the basis (shared → per-unit) changed.
+
 **Status:** DRAFT for Shawn sign-off before the full recovery-validation grid.
 **Date:** 2026-06-09 · **Author:** Claude Code (Opus 4.8, 1M context) on Shawn's brief.
 **Supersedes (as the remediation lever):** the informed-α *prior* — REFUTED

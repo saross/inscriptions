@@ -1,0 +1,133 @@
+{
+  "generated": "2026-06-09",
+  "config": {
+    "N": 2000,
+    "draws": 1500,
+    "theta_prior_kappa": 40,
+    "theta_conv_true": 0.95,
+    "theta_gen_true": 0.15,
+    "per_unit_basis": "true convention shape (idealised estimate)"
+  },
+  "results": [
+    {
+      "cell": "ident_a0.3",
+      "regime": "identifiable",
+      "alpha_true": 0.3,
+      "k_frac": 0.372,
+      "perunit_only": {
+        "alpha_med": 0.3696301800949197,
+        "alpha_lo": 0.2679786287149825,
+        "alpha_hi": 0.45382887828031543,
+        "max_rhat": 1.0008697768987707,
+        "min_ess": 6747.629488473224
+      },
+      "perunit_joint": {
+        "alpha_med": 0.32459447693954246,
+        "alpha_lo": 0.25246435378333676,
+        "alpha_hi": 0.3833589680727088,
+        "max_rhat": 1.0006615822968954,
+        "min_ess": 6558.409812356039
+      }
+    },
+    {
+      "cell": "ident_a0.6",
+      "regime": "identifiable",
+      "alpha_true": 0.6,
+      "k_frac": 0.629,
+      "perunit_only": {
+        "alpha_med": 0.6338914493349075,
+        "alpha_lo": 0.5340755907435399,
+        "alpha_hi": 0.708477994900283,
+        "max_rhat": 0.9998763621513262,
+        "min_ess": 4981.888015455174
+      },
+      "perunit_joint": {
+        "alpha_med": 0.614857564554461,
+        "alpha_lo": 0.5511713294850455,
+        "alpha_hi": 0.6754348191441443,
+        "max_rhat": 1.0005546241280985,
+        "min_ess": 6044.238678994415
+      }
+    },
+    {
+      "cell": "conf_a0.2",
+      "regime": "confounded",
+      "alpha_true": 0.2,
+      "k_frac": 0.31,
+      "perunit_only": {
+        "alpha_med": 0.38168513784926095,
+        "alpha_lo": 0.26071639216160253,
+        "alpha_hi": 0.4734703876447057,
+        "max_rhat": 1.0005242758514084,
+        "min_ess": 5282.9481795907095
+      },
+      "perunit_joint": {
+        "alpha_med": 0.26467782431318915,
+        "alpha_lo": 0.18728732420894034,
+        "alpha_hi": 0.3257829651173645,
+        "max_rhat": 1.0001187024610185,
+        "min_ess": 5714.060505430437
+      }
+    },
+    {
+      "cell": "conf_a0.4",
+      "regime": "confounded",
+      "alpha_true": 0.4,
+      "k_frac": 0.475,
+      "perunit_only": {
+        "alpha_med": 0.5215071406066659,
+        "alpha_lo": 0.4132138619446458,
+        "alpha_hi": 0.6203464077154286,
+        "max_rhat": 1.0010828623917862,
+        "min_ess": 4837.575354955585
+      },
+      "perunit_joint": {
+        "alpha_med": 0.45131245879404946,
+        "alpha_lo": 0.3832804931163173,
+        "alpha_hi": 0.5207493418504552,
+        "max_rhat": 1.0010081626768395,
+        "min_ess": 6298.230086443741
+      }
+    },
+    {
+      "cell": "conf_a0.6",
+      "regime": "confounded",
+      "alpha_true": 0.6,
+      "k_frac": 0.627,
+      "perunit_only": {
+        "alpha_med": 0.7409069194884043,
+        "alpha_lo": 0.650611186136438,
+        "alpha_hi": 0.831134191522811,
+        "max_rhat": 1.0015244559160956,
+        "min_ess": 2826.35673097216
+      },
+      "perunit_joint": {
+        "alpha_med": 0.6694614068831084,
+        "alpha_lo": 0.5978487405869986,
+        "alpha_hi": 0.7577192531117808,
+        "max_rhat": 1.0002033121818297,
+        "min_ess": 4344.887493519092
+      }
+    },
+    {
+      "cell": "conf_regnal_a0.5",
+      "regime": "confounded",
+      "alpha_true": 0.5,
+      "k_frac": 0.545,
+      "perunit_only": {
+        "alpha_med": 0.5274244400923278,
+        "alpha_lo": 0.4462979752930091,
+        "alpha_hi": 0.6023672906986806,
+        "max_rhat": 1.0009679546927621,
+        "min_ess": 6081.794554791319
+      },
+      "perunit_joint": {
+        "alpha_med": 0.5128865961213513,
+        "alpha_lo": 0.4502065605066796,
+        "alpha_hi": 0.5689264418107411,
+        "max_rhat": 1.000510677296919,
+        "min_ess": 4481.508597996769
+      }
+    }
+  ]
+}
