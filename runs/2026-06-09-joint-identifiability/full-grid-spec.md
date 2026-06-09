@@ -29,6 +29,21 @@ The only production-pipeline change vs H2.1 is: (a) build each unit's convention
 from its grid-aligned-subset SPA; (b) pass `k_aligned`, `n_rows`. Everything else
 (sampler, convergence gate, extraction) is unchanged.
 
+**θ-prior κ = 40 confirmed (NOT widened).** Shawn and I initially agreed to widen the θ
+prior to κ≈12; the empirical κ-sweep (`outputs/POC-REPORT.md` postscript) showed widening
+*amplifies* a small positive bias rather than fixing the marginal high-α coverage — the
+residual is estimated-basis *contamination* bias, not CI under-dispersion. **Keep κ = 40**;
+the grid sweeps κ ∈ {40, 80} (tighter) as a sensitivity, not wider.
+
+**Estimated-basis contamination — principled fix to evaluate (D-B).** The per-unit basis
+from the aligned-subset SPA carries a faint copy of the genuine peak (`∝ α·θ_conv·p_conv +
+(1−α)·θ_gen·p_gen`), giving a +0.09/+0.12 over-attribution at the stress corner. A fully
+**cross-classified time × alignment** model — aligned-subset and non-aligned-subset
+temporal SPAs as *separate* multinomials sharing (α, p_conv, p_gen, θ) — separates the
+contamination instead of inheriting it, and likely removes the residual bias. The grid
+evaluates {fixed estimated basis (lead), cross-classified} so we adopt the cross-classified
+form as the lead only if it materially beats the simpler one on the bias surface.
+
 **Decision needed (D-A): the per-unit-basis shape parameterisation** — single row
 (SPA of aligned subset) vs the 3-row ±shift bracket the POC used (a little shape freedom).
 Recommend the bracket; the grid tests both.
@@ -51,7 +66,11 @@ a reference arm on a 1-in-5 subsample.
 **Robustness arms (smaller, layered):**
 - **θ-mismatch** (spec §7d): generate with θ_gen_true ∈ {0.15, 0.25}, θ_conv_true ∈
   {0.95, 0.90}; fit with the calibrated priors. ~600 fits.
-- **κ-sensitivity:** θ-prior κ ∈ {20, 40, 80} on the confounded cells. ~600 fits.
+- **κ-sensitivity:** θ-prior κ ∈ {40, 80} on the confounded cells (tighter only — the
+  κ-sweep ruled out widening). ~400 fits.
+- **Cross-classified time × alignment variant (D-B):** the contamination-separating model
+  (§1), evaluated head-to-head with the fixed-estimated-basis lead on the confounded +
+  identifiable cells. ~600 fits.
 - **Tier 2 interval-level** (spec §5): draw per-inscription intervals from a slab
   dictionary + genuine generator, classify with the real `aligned_i` rule, aoristic-SPA →
   (y, k). The cleanest test that the estimated shape + the binomial assumption are not
@@ -104,16 +123,27 @@ describes the refuted informed-α *prior*):
 The pivoted design is *more* faithful to the concomitant-variable mixture than the
 shared-basis version (a flexible mixture whose weight is identified by a covariate). The
 remaining methodological exposure is the **residual positive bias** under the estimated
-shape (POC +0.05 to +0.12) — the grid must characterise it, and we should pre-commit to
-reporting it (not tuning it away). The **hierarchical-over-units** alternative (partial-pool
-θ and α; estimate θ rather than calibrate-then-fix) stays logged as the more-powerful
-extension; lead with per-unit joint fits (cheap, matches the production harness).
+shape (POC +0.05 to +0.12) — the grid must characterise it, and we pre-commit to reporting
+it (not tuning it away). The empirical κ-sweep already corrected one mistaken instinct
+(widening the θ prior *amplifies* this bias). The **hybrid-over-units** model (global θ
+estimated, α independent) is spec'd as a preregistered robustness check —
+`hybrid-robustness-spec.md` — not as the lead.
 
-## 7. Sign-off questions for Shawn
+## 7. Decisions — agreed + outstanding
 
-- **(Q1)** Approve the **design pivot** — per-unit basis + classification, reversing
-  Amendment 03's shared basis — as the remediation to validate?
-- **(Q2)** Approve the **full grid** (≈ 8–9k fits, ~1 h sapphire compute) as specified,
-  or trim/extend any axis?
-- **(Q3)** D-A: single-row vs 3-row-bracket per-unit basis (recommend bracket; grid tests both).
-- **(Q4)** Stage + read the 6 priority papers now (SYNTHESIS read-lists) or after the grid?
+**Agreed (Shawn, 2026-06-09):**
+- Design pivot to per-unit basis + classification — approved *in principle*.
+- Lead = Option 2 (per-unit + classification); **hybrid (Option 3) spec'd as a
+  preregistered robustness check** (`hybrid-robustness-spec.md`).
+- θ-prior κ = 40 (NOT widened — the κ-sweep reversed the widen-prior plan; §1).
+
+**Outstanding for sign-off:**
+- **(Q-launch)** Approve launching the **full grid** (≈ 8–9k fits, ~1 h sapphire compute)
+  as specified — this is the compute + Amendment-03-reversal commitment.
+- **(D-A)** per-unit basis = single-row vs 3-row-bracket (recommend bracket; grid tests both).
+- **(D-B)** the **estimated-basis contamination** residual (+0.09/+0.12 at the stress
+  corner): accept-and-report, or build + validate the **cross-classified time × alignment**
+  model (§1) as the refined lead? (Grid evaluates both; the question is which we adopt as
+  primary if both pass.)
+- Papers: dedup done; full-text read + canonical Zotero staging tracked as follow-ups
+  (`outputs/priority-papers-status.md`).

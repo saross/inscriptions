@@ -127,3 +127,31 @@ shared-basis under-attribution (−0.20 to −0.60) and per-unit-only over-attri
   specifically to avoid per-unit over-attribution). The POC shows the classification term
   supplies the missing over-attribution control — so a per-unit basis becomes safe — but
   this reverses a lodged design decision and needs Shawn's sign-off + an OSF amendment.
+
+## Postscript — θ-prior κ sweep (2026-06-09): widening the prior is COUNTERPRODUCTIVE
+
+`code/poc_kappa_check.py` → `poc-kappa-check.json`. We tested widening the θ prior
+(κ 40 → 20 → 12) on the estimated basis, expecting it to widen the α CI and fix the
+marginal high-α coverage. **It does the opposite** — it amplifies the positive bias:
+
+| cell | α_true | κ=40 | κ=20 | κ=12 |
+|---|---|---|---|---|
+| conf_a0.2 | 0.2 | 0.27 [0.19,0.34] ✓ | 0.33 ✗ | 0.50 ✗ |
+| conf_a0.4 | 0.4 | 0.49 [0.41,0.59] (+0.09) | 0.54 | 0.59 |
+| conf_a0.6 | 0.6 | 0.72 [0.62,0.83] (+0.12) | 0.76 | 0.78 |
+| ident_a0.6 | 0.6 | 0.65 ✓ | 0.66 ✓ | 0.67 ✓ |
+
+**Diagnosis.** The marginal coverage is a small *positive bias*, not CI under-dispersion.
+Its source is the **estimated-basis contamination**: the grid-aligned-subset SPA ≈
+`α·θ_conv·p_conv + (1−α)·θ_gen·p_gen`, so the convention basis carries a faint copy of the
+genuine peak, letting the convention component over-reach. A *tighter* θ prior anchors α
+to the classification signal and limits the over-attribution; a *looser* prior lets it
+float up. **Keep κ = 40** (do not widen). The +0.09/+0.12 residual is a *characterised
+limitation* at the stress corner (`%win` 1.00; real units ~0.88 are milder), within the
+|bias| < 0.18 gate, to be mapped on the full grid.
+
+**Principled fix (candidate for the full grid / refined lead):** a fully cross-classified
+**time × alignment** model — observe the aligned-subset and non-aligned-subset temporal
+SPAs separately, both as multinomials sharing (α, p_conv, p_gen, θ), so the model
+*separates* the contamination instead of inheriting it via a fixed basis. Likely removes
+the residual bias; needs its own validation. Logged for the full-grid decision.
