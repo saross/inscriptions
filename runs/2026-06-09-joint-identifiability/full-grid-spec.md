@@ -52,16 +52,20 @@ Recommend the bracket; the grid tests both.
 
 | axis | levels | n |
 |---|---|---|
-| regime / convention `%win` | identifiable (0.55, 0.63), confounded (0.85, 0.95, 1.00) | 5 |
+| recipe / convention `%win` | broad_early 0.53, broad 0.63, mid_conc 0.83, conc 0.95, stress 1.00 | 5 |
 | α_true | 0.0, 0.2, 0.4, 0.6, 0.8 | 5 |
-| genuine shape | gaussian-early, gaussian-inwin, regnal-cluster, broad/uniform | 4 |
+| genuine shape | gauss_early, gauss_inwin, regnal, broad_gen | 4 |
 | N | 1500, 2800, 15000 | 3 |
-| replicates | per cell | 20 |
+| replicates | per cell | **100** (lodged convention, Decision 27) |
 
-Base grid = 5 × 5 × 4 × 3 = **300 cells × 20 = 6,000 fits** (matches the recovery-grid
-scale). Convention basis fed to the fit is the **estimated (contaminated) aligned-subset
-shape** (POC Experiment 3) — the production-realistic case — with the *true*-shape fit as
-a reference arm on a 1-in-5 subsample.
+Base grid = 5 × 5 × 4 × 3 = **300 cells**; 210 identifiable, 90 confounded (concentrated
+convention AND genuine in-window). Convention basis fed to the fit is the **estimated
+(contaminated) aligned-subset shape** (POC Experiment 3) — the production-realistic case.
+On the **90 confounded cells the shared-basis baseline is also fit** per replicate (so the
+grid itself demonstrates the lead is *materially better than baseline*, C2). Fit count:
+300 × 100 (lead) + 90 × 100 (baseline) = **39,000 fits**. At ~14 s/fit (cores=1) with
+`--n-jobs 12`, wall-clock ≈ **12 h — an overnight run** (NOT the ~1 h first quoted; that
+under-counted reps × models). Resumable at cell granularity.
 
 **Robustness arms (smaller, layered):**
 - **θ-mismatch** (spec §7d): generate with θ_gen_true ∈ {0.15, 0.25}, θ_conv_true ∈
