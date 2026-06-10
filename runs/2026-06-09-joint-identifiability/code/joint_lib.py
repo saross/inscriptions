@@ -290,6 +290,10 @@ def build_model_joint(y: np.ndarray, k_aligned: int, n_rows: int,
     Returns
     -------
     model : pymc.Model
+        ``y`` and ``k_aligned`` are wrapped in mutable ``pm.Data`` ("y_data", "k_data"),
+        so a caller may build the model once per cell and swap each replicate's data via
+        ``pm.set_data({"y_data": ..., "k_data": ...})`` without rebuilding the graph — this
+        is what stops the per-fit PyTensor recompile/leak. A single build+sample is unchanged.
     """
     import pymc as pm
     import pytensor.tensor as pt
@@ -319,7 +323,12 @@ def build_model_joint(y: np.ndarray, k_aligned: int, n_rows: int,
         unnorm = pt.exp(log_pgen_centered)
         p_gen = pm.Deterministic("p_gen", unnorm / pt.sum(unnorm))
         p_mix = alpha * p_conv + (1.0 - alpha) * p_gen
-        pm.Multinomial("y_obs", n=n_total, p=p_mix, observed=y)
+        # Observed counts as a MUTABLE container so a caller can build the model ONCE per
+        # cell and swap y across replicates with pm.set_data — this keeps the graph constant
+        # so PyTensor reuses the cached compiled logp instead of recompiling (and retaining
+        # ~32 MB) every fit. For a single build+sample it is identical to `observed=y`.
+        y_data = pm.Data("y_data", np.asarray(y, dtype="int64"))
+        pm.Multinomial("y_obs", n=n_total, p=p_mix, observed=y_data)
 
         # ---- NEW: classification binomial sharing alpha ----
         theta_conv = pm.Beta("theta_conv", a_conv, b_conv)
@@ -327,6 +336,8 @@ def build_model_joint(y: np.ndarray, k_aligned: int, n_rows: int,
         pi_align = pm.Deterministic(
             "pi_align", alpha * theta_conv + (1.0 - alpha) * theta_gen
         )
-        pm.Binomial("k_obs", n=int(n_rows), p=pi_align, observed=int(k_aligned))
+        # k_aligned likewise mutable (swapped per replicate alongside y_data).
+        k_data = pm.Data("k_data", np.asarray(int(k_aligned), dtype="int64"))
+        pm.Binomial("k_obs", n=int(n_rows), p=pi_align, observed=k_data)
 
     return model

@@ -101,11 +101,17 @@ def _alpha_from_idata(idata, var_names) -> dict:
     }
 
 
-def fit_joint(y: np.ndarray, k: int, n_rows: int, basis: np.ndarray, seed: int) -> dict:
-    """One LEAD (joint) fit → α median/CI + convergence (cores=1)."""
+def fit_joint_on_model(model, y: np.ndarray, k: int, seed: int) -> dict:
+    """One LEAD (joint) fit on a PRE-BUILT per-cell model, swapping this replicate's
+    (y, k) via pm.set_data → α median/CI + convergence (cores=1). Building the model once
+    per cell and set_data-ing here — rather than rebuilding it every replicate — keeps the
+    PyTensor graph constant so the compiled logp is reused instead of recompiled; that is
+    what removes the ~32 MB/fit leak (see MEMORY-FIX-AND-RUN-STATUS.md §3/§5). Replicate
+    determinism is unchanged: the only per-fit inputs are (y, k) and the explicit seed."""
     import pymc as pm
-    model = J.build_model_joint(y, k, n_rows, basis, THETA_CONV_AB, THETA_GEN_AB)
     with model:
+        pm.set_data({"y_data": np.asarray(y, dtype="int64"),
+                     "k_data": np.asarray(int(k), dtype="int64")})
         with warnings.catch_warnings():
             warnings.simplefilter("ignore")
             idata = pm.sample(draws=G.DRAWS, tune=G.TUNE, chains=G.CHAINS, cores=1,
@@ -134,13 +140,19 @@ def run_cell(cell: dict, n_reps: int) -> dict:
     basis = G.estimated_basis(p_conv, p_gen, cell["alpha_true"])
     a_true = cell["alpha_true"]
     is_conf = cell["regime"] == "confounded"
+    # Build the joint model ONCE for this cell; each replicate's (y, k) is swapped via
+    # pm.set_data inside fit_joint_on_model (no per-fit rebuild → no recompile leak). The
+    # rep-0 draw is only the initial placeholder data; every replicate then set_data's its
+    # own draw, so results are identical to building a fresh model per replicate.
+    y0, k0 = G.generate(cell, p_conv, p_gen, 0)
+    joint_model = J.build_model_joint(y0, k0, cell["N"], basis, THETA_CONV_AB, THETA_GEN_AB)
     reps = []
     for r in range(n_reps):
         y, k = G.generate(cell, p_conv, p_gen, r)
         data_seed = (G.BASE_SEED + cell["cell_index"]) * 1000 + r
         rec: dict = {"rep": r, "k_frac": round(k / cell["N"], 4)}
         try:
-            res = fit_joint(y, k, cell["N"], basis, data_seed + 500_000)
+            res = fit_joint_on_model(joint_model, y, k, data_seed + 500_000)
             res["bias"] = res["alpha_med"] - a_true
             res["cover95"] = bool(res["alpha_lo"] <= a_true <= res["alpha_hi"])
             rec["joint"] = res
@@ -154,10 +166,10 @@ def run_cell(cell: dict, n_reps: int) -> dict:
             except Exception as exc:  # noqa: BLE001
                 rec["baseline_error"] = repr(exc)[:200]
         reps.append(rec)
-        # Force collection of this replicate's PyMC / PyTensor objects now (the model and
-        # idata fit_joint built are already out of scope), rather than letting their cyclic
-        # references accumulate across the cell's replicates. This bounds within-cell memory
-        # growth; the across-cell bound is the spawn + max_tasks_per_child recycling below.
+        # Reclaim this replicate's idata (and, on confounded cells, the per-rep baseline
+        # model, which is still rebuilt) now rather than letting it accumulate across the
+        # loop. The joint model is built once per cell + reused via set_data, so the dominant
+        # per-fit recompile leak is gone; this gc.collect() is belt-and-braces for the rest.
         gc.collect()
 
     # Aggregate the LEAD over CONVERGED replicates (fall back to all-ok if none converged).
