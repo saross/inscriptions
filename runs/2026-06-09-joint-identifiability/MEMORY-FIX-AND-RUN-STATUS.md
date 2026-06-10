@@ -89,20 +89,30 @@ a new compiled module → ~32 MB retained per fit).
 - **Diagnostic trace:** `outputs/full-grid-memwatch.log` (memAvail / top-RSS / pyProcs /
   tmpInodes / cellsDone every 60 s).
 
-## 5. Recommended proper fix (do with Shawn — touches the validated model)
+## 5. Proper fix — DONE (2026-06-10, with Shawn): build-once + set_data
 
-Eliminate the per-fit leak by **building each cell's model once and swapping data across
-replicates** instead of rebuilding per replicate: make `y`, `k`, `n_rows` `pm.Data`
-(mutable) in `build_model_joint`, and in `run_cell` build once → loop reps with
-`pm.set_data(...)` → `pm.sample`. No recompilation → per-cell RSS stays ~flat (~0.5–1 GB)
-→ `--n-jobs 12` becomes safe → ~13 h runs. **This changes `build_model_joint`, which is
-byte-identical to the recovery-validated `build_model_f1_f3` temporal block, so it must be
-re-validated** (compare a handful of cells' α posteriors against the current build before
-trusting it). That validation is why it was *not* done autonomously overnight.
+The per-fit leak was eliminated at source (commit `fad6fd5`, `/audit`-clean): `y` and
+`k_aligned` are now mutable `pm.Data` ("y_data"/"k_data") in `build_model_joint`, and
+`run_cell` builds each cell's joint model **once** then swaps each replicate's data via
+`fit_joint_on_model` + `pm.set_data`. The graph is constant across reps, so PyTensor reuses
+the cached compiled logp instead of recompiling — confirmed by gate 2: the worst cell's RSS
+now climbs to **~2 GB** (extrapolated, 100 reps) vs **6.7 GB** before, and per-fit time is
+uniform (no recompile). **Scope: joint model only** (`joint_lib.py`, zero external
+dependents); the shared `build_model_f1_f3` (imported by H2.1 + 5 other runs) was left
+untouched, so it still rebuilds per rep on the 90 confounded cells — that residual is the
+~16 MB/rep climb in the worst-cell trace and is harmless at n_jobs=12.
 
-Secondary options if the set_data refactor is undesirable: (a) split each cell into
-rep-chunks as separate pool tasks so recycling happens mid-cell; (b) clear PyTensor's
-in-memory module cache per replicate (version-dependent API). Both are lower-value than (5).
+**Revalidation (gate 1, `validate_setdata.py` + `determinism_test.py`):** the new code is
+bit-**reproducible** (new-vs-new = 0.000) but **not bit-identical** to the old
+build-fresh-per-rep path (old-vs-new max |Δα| ≈ 2×10⁻³ identifiable / 7×10⁻³ confounded,
+convergence flags all match). The delta is a method-specific NUTS-trajectory difference
+(shared-variable graph vs constant-baked graph — the *same* posterior, a different but
+equally valid seeded path), ~25–100× below the bias thresholds and within per-cell MC error.
+
+**Decision (Shawn, 2026-06-10): RESTART** rather than mix methods. The 116 partial
+old-method cells were discarded and the full **300-cell** grid relaunched from scratch with
+the new code at **n_jobs=12** under the 50 GB cgroup cap (~13–14 h), so the entire grid is
+one consistent, bit-reproducible method. Result config supersedes §4's n_jobs=6.
 
 ## 6. Follow-ups for Shawn
 
