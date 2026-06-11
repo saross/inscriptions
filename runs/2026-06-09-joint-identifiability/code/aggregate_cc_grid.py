@@ -105,6 +105,22 @@ def pilot_report() -> None:
         for a in ARMS:
             sub = [c for c in arms[a].values() if c["regime"] == regime]
             lines.append(f"| {a} | {regime} {fmt(regime_stats(sub))}|")
+
+    # Boundary-coverage breakdown: an equal-tailed 95% CI can NEVER cover a
+    # boundary truth (alpha_lo > 0 always), so alpha_true = 0 cells report
+    # coverage ~0 by construction — separate them so the headline is readable.
+    lines += ["", "## Coverage breakdown — boundary artefact (α_true = 0 cells "
+              "cannot be covered by an equal-tailed CI)", "",
+              "| arm | coverage (α = 0 cells) | coverage (α > 0 cells) |",
+              "|---|---|---|"]
+    for a in ("lead",) + ARMS:
+        cells_a = ([c for cid, c in lead.items() if cid in pilot_ids] if a == "lead"
+                   else list(arms[a].values()))
+        zero = [c["coverage_rate"] for c in cells_a if c["alpha_true"] == 0.0]
+        nonz = [c["coverage_rate"] for c in cells_a if c["alpha_true"] > 0.0]
+        z = f"{float(np.mean(zero)):.3f} (n={len(zero)})" if zero else "·"
+        nz = f"{float(np.mean(nonz)):.3f} (n={len(nonz)})" if nonz else "·"
+        lines.append(f"| {a} | {z} | {nz} |")
     lines += ["", "## Per-cell α median-bias (cc arms vs lead)", "",
               "| cell | regime | α | lead | tiers3 | library | free |",
               "|---|---|---|---|---|---|---|"]
@@ -164,11 +180,16 @@ def full_verdict(mode: str) -> None:
         b = np.abs([c["bias_median"] for c in ident])
         cov = np.array([c["coverage_rate"] for c in ident])
         c1 = int(np.sum((b < 0.12) & (cov >= 0.90)))
+        nz = [c["coverage_rate"] for c in ident if c["alpha_true"] > 0.0]
+        nz_note = (f"- coverage on α>0 cells only: {float(np.mean(nz)):.3f} (n={len(nz)}) — "
+                   "α=0 cells cannot be covered by an equal-tailed CI (boundary artefact)"
+                   if nz else "")
         lines += ["## C1 — do-no-harm (identifiable)",
                   f"- passing (|median bias|<0.12 AND coverage>=0.90): **{c1}/{len(ident)}** "
                   f"({100*c1/len(ident):.0f}%)  [lead: 37/210, 18%]",
                   f"- mean |median bias| {b.mean():.3f} [lead 0.075]; "
-                  f"mean coverage {cov.mean():.3f} [lead 0.374]", ""]
+                  f"mean coverage {cov.mean():.3f} [lead 0.374]"] \
+            + ([nz_note] if nz_note else []) + [""]
 
     # C2 — pulled-to-truth (confounded); baseline reused from the lead grid files.
     c2 = 0
