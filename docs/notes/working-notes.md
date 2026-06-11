@@ -2511,3 +2511,69 @@ The cross-classified model is not yet built or validated; it is a grid arm and a
 ### Findable later
 
 `estimated-basis`, `contamination-bias`, `aligned-subset-spa`, `genuine-peak-contamination`, `theta-gen-contamination`, `over-attribution`, `cross-classified-model`, `time-x-alignment`, `separate-multinomials`, `decision-D-B`, `full-grid-arm`, `refined-lead`, `candidate-refinement`, `head-to-head-arm`, `stress-corner-bias`, `poc-estimated-basis`, `plus-0-09-plus-0-12`, `characterised-limitation`, `obs-83`, `obs-85`, `theta-mismatch-robustness`, `kappa-reversal-localised-contamination`
+
+## Obs 87 — 2026-06-11 [RESULT / METHODOLOGY]: joint recovery grid VERDICT — resolves confounded under-attribution but is NOT do-no-harm (+0.07 estimated-basis contamination)
+
+### The finding
+
+The 300-cell joint-model recovery-validation grid completed in full (single bit-reproducible method; `build-once + set_data`; n_jobs=12; wall-clock ~25.1 h; 0 worker errors; 0 failed cells). Scored against `runs/2026-06-09-joint-identifiability/full-grid-spec.md` §3; verdict committed in `runs/2026-06-09-joint-identifiability/outputs/grid-VERDICT.md` and `grid-summary.json` (commit `18dac46`).
+
+**C2 — pulled-to-truth (confounded cells): PASS — 64/90 (71 %).**
+
+| metric | lead | shared-basis baseline |
+|---|---|---|
+| mean \|median α bias\| | **0.066** | 0.362 |
+| cells passing C2 | **64/90 (71 %)** | — |
+| worst positive median bias | +0.164 | — |
+
+The joint model resolves the frontier-unit under-attribution it was built for: ~5× better than the shared-basis baseline on the confounded cells.
+
+**C1 — do-no-harm (identifiable cells): FAILS — 37/210 (18 %).**
+
+| metric | value |
+|---|---|
+| cells passing C1 (bias < 0.12 AND coverage ≥ 0.90) | **37/210 (18 %)** |
+| mean \|median bias\| | 0.075 (below 0.12 threshold) |
+| mean coverage | 0.374 (well below 0.90 threshold) |
+
+The failure is driven entirely by **coverage** (mean 0.374), not bias. The cause is a systematic, near-uniform +0.06–+0.08 over-attribution bias across the full %win × α surface (bias map below), combined with over-confident credible intervals that therefore fail to bracket the truth. The bias is the estimated-basis contamination characterised in Obs 86.
+
+**Bias surface — mean(median bias) by %win × α_true** (from `grid-VERDICT.md`):
+
+| %win \ α | 0.0 | 0.2 | 0.4 | 0.6 | 0.8 |
+|---|---|---|---|---|---|
+| 0.53 | +0.08 | +0.08 | +0.08 | +0.08 | +0.06 |
+| 0.63 | +0.08 | +0.07 | +0.07 | +0.07 | +0.06 |
+| 0.83 | +0.08 | +0.07 | +0.07 | +0.07 | +0.06 |
+| 0.95 | +0.08 | +0.07 | +0.08 | +0.08 | +0.06 |
+| 1.00 | +0.08 | +0.07 | +0.08 | +0.08 | +0.06 |
+
+The contamination is near-uniform across the %win and α surface; it is not confined to the stress corner.
+
+**C4 — convergence: marginal.** 252/300 cells (84 %) at convergence_rate ≥ 0.95; mean rate 0.950.
+
+**Grid scope** (from `full-grid-spec.md` §2): %win ∈ {0.527, 0.631, 0.834, 0.951, 1.00}; α_true ∈ {0.0, 0.2, 0.4, 0.6, 0.8}; N ∈ {1,500, 2,800, 15,000}; 100 reps per cell; 0 replicate failures.
+
+### Why this matters
+
+This is the gate result for the production refit. The verdict is honest but not a clean pass: the joint model is validated for its primary purpose (recovering α in confounded units) but fails the do-no-harm criterion on identifiable units — the criterion that would allow production use without further work.
+
+The ~+0.07 over-attribution on identifiable units is exactly the estimated-basis contamination exposure pre-committed to reporting in `full-grid-spec.md` §6 (the "we pre-commit to reporting it, not tuning it away" clause). The bias magnitude and surface shape match the POC's +0.05–+0.12 prediction (Obs 86); the grid has now characterised it at replicate scale across the full parameter space.
+
+**Consequence: the planned production refit of the 28 H2.1 units is paused.** The next step is to evaluate the cross-classified time × alignment arm (D-B; spec at `runs/2026-06-09-joint-identifiability/cross-classified-spec.md`, commit `37a94c5`), which identifies p_conv / p_gen from the aligned-vs-non-aligned subset contrast directly — rather than inheriting a contaminated fixed basis — head-to-head against this lead grid. Only if D-B materially reduces the bias surface does it replace the lead; if not, the fixed-estimated-basis design proceeds to production with the +0.07 contamination explicitly disclosed in the paper.
+
+### Caveats / methodological notes
+
+The grid ran the **estimated (contaminated) basis** — the production-realistic case (Obs 83 Experiment 3) — not the true per-unit shape. Results on identifiable cells therefore include the inherent contamination of the observable basis, not a model defect. The C1 failure is structural, not a sampler or prior issue (the κ-sweep in Obs 85 ruled that out). Robustness arms (θ-mismatch, κ-sensitivity, cross-classified) and the Tier-2 interval-level arm are not yet run; the verdict above is for the base 300-cell grid only.
+
+The convergence result (C4: 84 %, mean 0.950) is marginal. Individual low-convergence cells are not disaggregated here; they are in `grid-summary.json`. The build-once + set_data fix (commit `fad6fd5`) produced results that are bit-reproducible across runs but not bit-identical to the original build-fresh-per-rep path (max |Δα| ≈ 2×10⁻³ identifiable / 7×10⁻³ confounded, ~25–100× below the bias thresholds); the entire 300-cell grid uses the new method consistently.
+
+### Related observations and artefacts
+
+**Obs 86** (estimated-basis contamination characterised — +0.09/+0.12 at the stress corner, cross-classified D-B as the principled fix; this Obs is the grid-scale confirmation of that diagnosis): the POC finding this verdict validates and extends to the full bias surface. **Obs 83** (the per-unit + classification design and POC, the pivoted lead whose full validation this is): the design specification. **Obs 85** (κ-sweep localised the C1 failure to contamination bias, not CI under-dispersion): the prior diagnostic that correctly predicted the coverage-not-bias failure mode now seen at grid scale. **Obs 84** (why the shared basis fails — the confidently-wrong mechanism): the theoretical background for why the lead is a necessary improvement over the shared baseline, even with the contamination caveat.
+
+**Artefacts**: `runs/2026-06-09-joint-identifiability/outputs/grid-VERDICT.md` (commit `18dac46`); `runs/2026-06-09-joint-identifiability/outputs/grid-summary.json`; `runs/2026-06-09-joint-identifiability/full-grid-spec.md` §3 (acceptance criteria) + §6 (pre-committed reporting rule); `runs/2026-06-09-joint-identifiability/cross-classified-spec.md` (commit `37a94c5`); `runs/2026-06-09-joint-identifiability/MEMORY-FIX-AND-RUN-STATUS.md` (run provenance, memory-incident recovery, set_data fix).
+
+### Findable later
+
+`joint-recovery-grid`, `verdict`, `300-cells`, `full-grid`, `C1-fails`, `C2-pass`, `do-no-harm-failure`, `coverage-failure`, `identifiable-cells`, `confounded-cells`, `estimated-basis-contamination`, `plus-0-07-over-attribution`, `near-uniform-bias`, `bias-surface`, `win-pct-vs-alpha`, `37-of-210`, `64-of-90`, `18-percent-pass`, `71-percent-pass`, `mean-coverage-0-374`, `mean-bias-0-075`, `mean-bias-0-066`, `baseline-0-362`, `5x-better-than-baseline`, `production-refit-paused`, `cross-classified-arm`, `D-B`, `time-x-alignment`, `contamination-not-tuned-away`, `pre-committed-reporting`, `convergence-marginal`, `84-percent-convergence`, `build-once-set-data`, `bit-reproducible`, `fad6fd5`, `18dac46`, `37a94c5`, `n-jobs-12`, `25-1-hours`, `zero-worker-errors`, `zero-failed-cells`, `obs-86`, `obs-83`, `obs-85`, `obs-84`, `grid-VERDICT`, `grid-summary`
