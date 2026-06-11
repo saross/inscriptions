@@ -341,3 +341,133 @@ def build_model_joint(y: np.ndarray, k_aligned: int, n_rows: int,
         pm.Binomial("k_obs", n=int(n_rows), p=pi_align, observed=k_data)
 
     return model
+
+
+# --------------------------------------------------------------------------- #
+# The CROSS-CLASSIFIED time × alignment model (D-B).                            #
+# --------------------------------------------------------------------------- #
+def build_model_cross_classified(y_aligned: np.ndarray, y_nonaligned: np.ndarray,
+                                 k_cc: int, n_rows: int,
+                                 tier_basis: np.ndarray | None,
+                                 theta_conv_ab: tuple[float, float],
+                                 theta_gen_ab: tuple[float, float],
+                                 pconv_mode: str = "library"):
+    """Cross-classified time × alignment model (``cross-classified-spec.md`` §1).
+
+    The EXACT likelihood of the per-inscription generative process (type ~
+    Bernoulli(α); bin ~ p_type; aligned ~ Bernoulli(θ_type)), by the standard
+    lumping/thinning factorisation (signoff §1)::
+
+        w_a        = α·θ_conv + (1−α)·θ_gen                       # P(aligned)
+        p_aligned   = (α·θ_conv·p_conv     + (1−α)·θ_gen·p_gen)     / w_a
+        p_nonalign  = (α·(1−θ_conv)·p_conv + (1−α)·(1−θ_gen)·p_gen) / (1−w_a)
+        k_cc       ~ Binomial(n_rows, w_a)
+        y_aligned  ~ Multinomial(k_cc,          p_aligned)
+        y_nonalign ~ Multinomial(n_rows − k_cc, p_nonalign)
+
+    No estimated (contaminated) basis enters: ``p_conv`` and ``p_gen`` are
+    identified by the CONTRAST between the two alignment subsets. The α prior,
+    GRW ``p_gen`` block, and θ priors are verbatim from ``build_model_joint``.
+
+    Parameters
+    ----------
+    y_aligned, y_nonaligned : (N_BINS,) int arrays
+        Per-bin counts of the aligned / non-aligned subsets (``grid_lib.generate_cc``).
+    k_cc : int
+        Total aligned count; must equal ``y_aligned.sum()``.
+    n_rows : int
+        Total inscriptions; must equal ``y_aligned.sum() + y_nonaligned.sum()``.
+    tier_basis : (n_tiers, N_BINS) float array, or None
+        Convention basis for ``pconv_mode`` ``"tiers3"`` (the shared Amendment-03
+        3-tier basis) or ``"library"`` (the deterministic slab library); must be
+        None for ``"free"``.
+    theta_conv_ab, theta_gen_ab : (a, b)
+        Beta shape parameters for the θ priors.
+    pconv_mode : str
+        ``"tiers3"`` | ``"library"`` — ``p_conv = tier_weights · tier_basis``
+        (Dirichlet weights); ``"free"`` — ``p_conv`` gets its own non-centred GRW
+        mirroring ``p_gen`` (signoff §2 arms).
+
+    Returns
+    -------
+    model : pymc.Model
+        ``y_aligned``, ``y_nonaligned``, and ``k_cc`` are mutable ``pm.Data``
+        ("y_al_data", "y_non_data", "k_data") — build once per cell, swap each
+        replicate via ``pm.set_data`` (the lead's set_data lesson; spec §4).
+    """
+    import pymc as pm
+    import pytensor.tensor as pt
+
+    if pconv_mode not in ("tiers3", "library", "free"):
+        raise ValueError(f"unknown pconv_mode {pconv_mode!r}")
+    if pconv_mode == "free":
+        if tier_basis is not None:
+            raise ValueError("tier_basis must be None for pconv_mode='free'")
+    elif tier_basis is None:
+        raise ValueError(f"tier_basis is required for pconv_mode={pconv_mode!r}")
+    a_conv, b_conv = theta_conv_ab
+    a_gen, b_gen = theta_gen_ab
+    if min(a_conv, b_conv, a_gen, b_gen) <= 0:
+        raise ValueError("theta Beta parameters must all be > 0")
+    y_aligned = np.asarray(y_aligned, dtype="int64")
+    y_nonaligned = np.asarray(y_nonaligned, dtype="int64")
+    if int(y_aligned.sum()) != int(k_cc):
+        raise ValueError(f"y_aligned sums to {int(y_aligned.sum())}, not k_cc={k_cc}")
+    if int(y_aligned.sum() + y_nonaligned.sum()) != int(n_rows):
+        raise ValueError("aligned + non-aligned counts do not sum to n_rows")
+    n_bins = int(y_aligned.size)
+    if tier_basis is not None:
+        assert tier_basis.shape[1] == n_bins, "tier_basis shape mismatch"
+
+    with pm.Model() as model:
+        alpha = pm.Beta("alpha", 1.0, 1.0)
+
+        # ---- p_conv: per-arm parameterisation (signoff §2) ----
+        if pconv_mode in ("tiers3", "library"):
+            n_tiers = int(tier_basis.shape[0])
+            tier_weights = pm.Dirichlet("tier_weights", a=np.ones(n_tiers, dtype=float))
+            p_conv = pm.Deterministic("p_conv", pt.dot(tier_weights, tier_basis))
+        else:
+            # Free non-centred GRW, mirroring the p_gen block with its own scale.
+            sigma_conv = pm.HalfNormal("sigma_conv", sigma=1.0)
+            z_pconv = pm.Normal("z_pconv", mu=0.0, sigma=1.0, shape=n_bins - 1)
+            log_pconv_increments = pm.Deterministic(
+                "log_pconv_increments", sigma_conv * z_pconv
+            )
+            log_pconv_raw = pt.concatenate([pt.zeros((1,)), pt.cumsum(log_pconv_increments)])
+            log_pconv_centered = log_pconv_raw - pt.max(log_pconv_raw)
+            unnorm_conv = pt.exp(log_pconv_centered)
+            p_conv = pm.Deterministic("p_conv", unnorm_conv / pt.sum(unnorm_conv))
+
+        # ---- p_gen block: VERBATIM from build_model_joint ----
+        sigma_smooth = pm.HalfNormal("sigma_smooth", sigma=1.0)
+        z_pgen = pm.Normal("z_pgen", mu=0.0, sigma=1.0, shape=n_bins - 1)
+        log_pgen_increments = pm.Deterministic("log_pgen_increments", sigma_smooth * z_pgen)
+        log_pgen_raw = pt.concatenate([pt.zeros((1,)), pt.cumsum(log_pgen_increments)])
+        log_pgen_centered = log_pgen_raw - pt.max(log_pgen_raw)
+        unnorm = pt.exp(log_pgen_centered)
+        p_gen = pm.Deterministic("p_gen", unnorm / pt.sum(unnorm))
+
+        # ---- θ priors: verbatim from build_model_joint ----
+        theta_conv = pm.Beta("theta_conv", a_conv, b_conv)
+        theta_gen = pm.Beta("theta_gen", a_gen, b_gen)
+
+        # ---- alignment-conditional mixtures (each a proper simplex: the     ----
+        # ---- numerators sum exactly to w_a and 1−w_a respectively).          ----
+        w_a = pm.Deterministic("pi_align", alpha * theta_conv + (1.0 - alpha) * theta_gen)
+        num_al = alpha * theta_conv * p_conv + (1.0 - alpha) * theta_gen * p_gen
+        num_non = (alpha * (1.0 - theta_conv) * p_conv
+                   + (1.0 - alpha) * (1.0 - theta_gen) * p_gen)
+        p_aligned = pm.Deterministic("p_aligned", num_al / w_a)
+        p_nonalign = pm.Deterministic("p_nonalign", num_non / (1.0 - w_a))
+
+        # ---- observed data: all three mutable for build-once + set_data ----
+        k_data = pm.Data("k_data", np.asarray(int(k_cc), dtype="int64"))
+        y_al_data = pm.Data("y_al_data", y_aligned)
+        y_non_data = pm.Data("y_non_data", y_nonaligned)
+        pm.Binomial("k_obs", n=int(n_rows), p=w_a, observed=k_data)
+        pm.Multinomial("y_al_obs", n=k_data, p=p_aligned, observed=y_al_data)
+        pm.Multinomial("y_non_obs", n=int(n_rows) - k_data, p=p_nonalign,
+                       observed=y_non_data)
+
+    return model

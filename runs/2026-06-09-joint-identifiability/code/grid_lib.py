@@ -139,3 +139,83 @@ def generate(cell: dict, p_conv: np.ndarray, p_gen: np.ndarray, rep: int) -> tup
     pi = cell["alpha_true"] * THETA_CONV_TRUE + (1.0 - cell["alpha_true"]) * THETA_GEN_TRUE
     k = int(rng.binomial(n, pi))
     return y, k
+
+
+# --------------------------------------------------------------------------- #
+# D-B cross-classified arm (cross-classified-signoff.md §§2–3).                 #
+# --------------------------------------------------------------------------- #
+# Seed offsets for the cc arm, chosen so no (cell, rep, purpose) seed collides
+# with the lead's data (+0), joint-fit (+500_000), or baseline-fit (+700_000)
+# seeds anywhere in the 300-cell × 100-rep range (signoff §3).
+CC_SPLIT_SEED_OFFSET = 1_000_000
+CC_FIT_SEED_OFFSET = 1_300_000
+
+# Slab library for the `library` p_conv arm: individual round-endpoint slabs,
+# lo × hi with lo < hi → 19 deterministic aoristic-box rows, FIXED across cells.
+# (50, ·) recipe slabs are represented by (51, ·) rows — a sub-bin difference,
+# deliberately retained so the library only approximately spans the truth, and
+# so no near-collinear Dirichlet row pairs degrade tier_weights R̂ (signoff §2).
+SLAB_LIBRARY_LOS = (1, 51, 76, 101, 151)
+SLAB_LIBRARY_HIS = (150, 200, 250, 300)
+
+
+def slab_library_basis() -> np.ndarray:
+    """The (19, N_BINS) slab-library basis: one aoristic box per candidate slab.
+
+    Every row's shape is deterministic arithmetic from its endpoints — no data
+    enters, so there is no contamination channel through the basis mass (the
+    lead's failure mode). Rows each sum to 1.
+    """
+    rows = [J.slab_mixture_spa([(lo, hi)])
+            for lo in SLAB_LIBRARY_LOS for hi in SLAB_LIBRARY_HIS if lo < hi]
+    return np.vstack(rows)
+
+
+def generate_cc(cell: dict, p_conv: np.ndarray, p_gen: np.ndarray,
+                rep: int) -> tuple[np.ndarray, np.ndarray, np.ndarray, int]:
+    """Cross-classified draw: lead-identical ``y`` + conditional alignment split.
+
+    The spec §3 per-inscription draw cannot reproduce the lead's ``y`` bit-for-bit
+    (the lead drew ``y`` and ``k`` independently from one stream). The exactly
+    equivalent conditional-split construction can (signoff §3): draw ``y`` with the
+    identical first RNG call, then split each bin's count with an independent RNG,
+
+        m_j | y_j ~ Binomial(y_j, q_j),
+        q_j = [α·θ_conv·p_conv_j + (1−α)·θ_gen·p_gen_j] / p_mix_j ,
+
+    where ``q_j`` = P(aligned | bin j) under the generative process — so
+    ``(y, m)`` has exactly the per-inscription joint law, and marginally
+    ``k_cc ~ Binomial(N, π)`` (the same law as the lead's ``k``; a different
+    realisation, immaterial at cell level over the replicate aggregate).
+
+    Returns
+    -------
+    (y, y_aligned, y_nonaligned, k_cc) — with ``y`` bit-identical to the lead's
+    draw for the same (cell, rep); invariants asserted.
+    """
+    y, _k_lead = generate(cell, p_conv, p_gen, rep)  # y bit-identical to the lead's
+    a = cell["alpha_true"]
+    p_mix = a * p_conv + (1.0 - a) * p_gen
+    p_mix = p_mix / p_mix.sum()
+    num = a * THETA_CONV_TRUE * p_conv + (1.0 - a) * THETA_GEN_TRUE * p_gen
+    with np.errstate(divide="ignore", invalid="ignore"):
+        q = np.where(p_mix > 0, num / p_mix, 0.0)
+    q = np.clip(q, 0.0, 1.0)
+    seed_split = (BASE_SEED + cell["cell_index"]) * 1000 + rep + CC_SPLIT_SEED_OFFSET
+    rng = np.random.default_rng(seed_split)
+    y_aligned = rng.binomial(y, q).astype(np.int64)
+    y_nonaligned = (y - y_aligned).astype(np.int64)
+    assert (y_aligned + y_nonaligned == y).all(), "cc split does not reconstruct y"
+    assert (y_aligned >= 0).all() and (y_nonaligned >= 0).all(), "negative cc split count"
+    k_cc = int(y_aligned.sum())
+    return np.asarray(y, dtype=np.int64), y_aligned, y_nonaligned, k_cc
+
+
+# Pilot subset for the 3-arm p_conv decision gate (signoff §5 step 4):
+# 20 cells — 8 confounded, 12 identifiable — all at N=2800.
+PILOT_CELL_IDS = tuple(
+    f"{recipe}_a{alpha:.1f}_{gen}_N2800"
+    for recipe in ("broad", "conc", "stress")
+    for alpha in (0.0, 0.4, 0.8)
+    for gen in ("gauss_early", "gauss_inwin")
+) + ("conc_a0.4_regnal_N2800", "stress_a0.8_regnal_N2800")
