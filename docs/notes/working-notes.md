@@ -2577,3 +2577,140 @@ The convergence result (C4: 84 %, mean 0.950) is marginal. Individual low-conver
 ### Findable later
 
 `joint-recovery-grid`, `verdict`, `300-cells`, `full-grid`, `C1-fails`, `C2-pass`, `do-no-harm-failure`, `coverage-failure`, `identifiable-cells`, `confounded-cells`, `estimated-basis-contamination`, `plus-0-07-over-attribution`, `near-uniform-bias`, `bias-surface`, `win-pct-vs-alpha`, `37-of-210`, `64-of-90`, `18-percent-pass`, `71-percent-pass`, `mean-coverage-0-374`, `mean-bias-0-075`, `mean-bias-0-066`, `baseline-0-362`, `5x-better-than-baseline`, `production-refit-paused`, `cross-classified-arm`, `D-B`, `time-x-alignment`, `contamination-not-tuned-away`, `pre-committed-reporting`, `convergence-marginal`, `84-percent-convergence`, `build-once-set-data`, `bit-reproducible`, `fad6fd5`, `18dac46`, `37a94c5`, `n-jobs-12`, `25-1-hours`, `zero-worker-errors`, `zero-failed-cells`, `obs-86`, `obs-83`, `obs-85`, `obs-84`, `grid-VERDICT`, `grid-summary`
+
+## Obs 88 — 2026-06-11 [RESULT / METHODOLOGY]: cross-classified (D-B) 3-arm pilot — library arm eliminates estimated-basis contamination bias; Option A (tiers3) re-fails exactly as predicted
+
+### The finding
+
+The D-B sign-off (commit `0f9a025`) replaced the spec's binary A-vs-B `p_conv` choice with a
+three-arm pilot before committing the full 300 × 100 grid. The three arms were:
+
+- **`tiers3`** (Option A as written): `p_conv` = `tier_weights · LATIN_BASIS` (the shared
+  Amendment-03 3-tier empirical basis, `design.json::tier_basis_empirical_latin`).
+- **`library`** (recommended candidate): `p_conv` = `tier_weights · SLAB_LIBRARY`, where
+  the library rows are the deterministic aoristic boxes of 19 round-endpoint slabs
+  (lo ∈ {1, 51, 76, 101, 151} × hi ∈ {150, 200, 250, 300}, lo < hi). No data enters the
+  basis — no contamination channel.
+- **`free`** (Option B): `p_conv` gets its own non-centred GRW, mirroring `p_gen`.
+
+Pilot: 20 cells × 20 reps × 3 arms on sapphire; 0 per-arm failures.
+
+**Regime summary (mean over cells, converged reps only):**
+
+| arm | regime | n | mean med-bias | mean \|bias\| | coverage | conv |
+|---|---|---|---|---|---|---|
+| **lead (ref)** | identifiable | 12 | +0.064 | 0.064 | 0.319 | 0.917 |
+| tiers3 | identifiable | 12 | −0.002 | 0.031 | 0.321 | 1.000 |
+| **library** | identifiable | 12 | **+0.006** | **0.011** | **0.562** | **0.996** |
+| free | identifiable | 12 | −0.013 | 0.017 | 0.620 | 0.979 |
+| **lead (ref)** | confounded | 8 | +0.081 | 0.081 | 0.320 | 0.938 |
+| tiers3 | confounded | 8 | **−0.400** | 0.401 | 0.000 | 1.000 |
+| **library** | confounded | 8 | **+0.010** | **0.012** | **0.725** | **1.000** |
+| free | confounded | 8 | −0.031 | 0.045 | 0.661 | 0.981 |
+
+**`tiers3` re-fails confounded cells.** Mean confounded median-bias −0.400, reaching −0.798
+and −0.799 at α_true = 0.8 (cells `conc_a0.8_gauss_inwin`, `stress_a0.8_regnal`). This
+is the POC Experiment 1 α-collapse mechanism reproducing under the cross-classified
+likelihood: escaping to α → 0 costs ~10 prior-nats (signoff §2 quantitative prediction)
+while holding α at truth with a broad-forced `p_conv` costs hundreds of multinomial nats
+(≈ k × KL, k ≈ 1,300 at N = 2,800). Under the cross-classified likelihood, two
+multinomials are confidently wrong simultaneously (confounded mean-bias more negative than
+the POC single-multinomial result), confirming the signoff §2 prediction in both direction
+and severity.
+
+**`library` eliminates the lead's contamination bias and passes both regimes.**
+Confounded mean median-bias +0.010 vs lead +0.081 (87 % reduction); identifiable mean
+median-bias +0.006 vs lead +0.064 (91 % reduction). The lead's near-uniform +0.06–+0.08
+over-attribution surface disappears. Coverage on coverable cells (α_true > 0) rises from
+0.456 (lead) to 0.896 (library). Convergence improves from 0.917–0.938 (lead) to
+0.996–1.000 (library), confirming signoff §6.3's prediction that the more informative
+two-subset likelihood improves sampling geometry.
+
+**Boundary-coverage artefact (all arms, including the lead):** α_true = 0 cells report
+coverage 0.000 in every arm. This is an equal-tailed-CI boundary artefact — the 2.5th
+percentile of a positive posterior is always > 0, so the true value α = 0 is never
+bracketed. The aggregator now breaks this out separately (commit `a28c406`). This artefact
+also depressed the lead grid's headline C1 coverage (0.374); a portion of that figure was
+never achievable by any model.
+
+**`free` is a viable fallback** (identifiable coverage 0.620, confounded 0.661,
+convergence 0.979–0.981) but under-attributes at mid-α confounded corners: −0.170
+(`conc_a0.4_gauss_inwin`) and −0.125 (`stress_a0.4_gauss_inwin`). `library` is more
+constrained and more interpretable; it is the pilot winner under all four decision
+criteria in order (signoff §5).
+
+**Full 300 × 100 `library` run: NOT launched.** Pilot-measured per-fit time for `library`
+is 60.4 s/fit (mean; max 94.9 s), projecting to ~41.9 h wall-clock at n_jobs = 12 —
+past the signoff §4 30 h hard-stop. Per the standing no-silent-negotiation rule, halted
+and reported to Shawn for a resource decision. (`tiers3` projects ~18.7 h; `free` ~25.5 h;
+neither is the pilot winner.)
+
+### Why this matters
+
+The pilot answers the central question left open by the Obs 87 verdict: does a
+better-specified `p_conv` basis remove the +0.07 contamination surface that caused the
+lead to fail C1? The answer is yes — `library`'s identifiable mean bias is +0.006 and
+its coverage on coverable cells is 0.896. Equally important, the pilot confirms the
+second-opinion prediction (signoff §6.3) that the additional identifying information in
+the two-subset likelihood improves, not degrades, sampling geometry (convergence
+0.996–1.000 vs lead 0.917–0.938).
+
+The `tiers3` failure is also paper-load-bearing: it is a controlled measurement of the
+α-collapse mechanism under the cross-classified likelihood, replicating and extending the
+POC Experiment 1 result. This rules out the Option-A-as-written parameterisation for
+the full grid and justifies the slab-library design choice in the OSF amendment.
+
+The halted launch is not a failure — it is the hard-stop rule functioning correctly. The
+decision now is whether to accept the ~42 h `library` run on sapphire, or to reduce scope
+(e.g., N strata, rep count) to fit the hard-stop.
+
+### Caveats / methodological notes
+
+The pilot used 20 cells × 20 reps. Cell selection is stratified by recipe × α × genuine
+distribution × N = 2,800 only (8 confounded, 12 identifiable); the full 300-cell grid
+covers N ∈ {1,500, 2,800, 15,000} and a wider %win × α surface. The pilot results are
+directionally reliable but the headline figures (coverage, convergence) will shift
+somewhat in a full run, particularly at N = 15,000.
+
+The coverage figures (0.896 for `library` on α > 0 cells) are from 20 reps — the variance
+on a per-cell coverage estimate at 20 reps is high. The full 100-rep run is needed before
+the figure is paper-citable. Use the pilot result as a strong directional signal, not a
+final number.
+
+The `library`'s 19-row slab basis deliberately excludes near-duplicate (50, ·)/(51, ·)
+rows to avoid near-collinear Dirichlet components. The grid recipes' (50, ·) slabs are
+represented by (51, ·) rows — a sub-bin difference, negligible against the 0.12 bias gate.
+The `library` does not exactly contain the truth, which is the production-realistic case.
+
+### Related observations and artefacts
+
+**Obs 87** (the lead grid VERDICT — C1 fails at 18 %, contamination +0.07 near-uniform;
+this Obs is the pilot that measures whether the D-B arm resolves it): the result this
+pilot was designed to address. **Obs 86** (the estimated-basis contamination mechanism
+characterised; cross-classified D-B as the principled fix): the diagnosis confirmed here
+at pilot scale. **Obs 84** (the confidently-wrong likelihood mechanism): the theoretical
+underpinning for the `tiers3` failure predicted by signoff §2 and confirmed by the pilot.
+**Obs 83** (the per-unit + classification design and POC, including Experiment 1 α-collapse
+that `tiers3` now replicates): the original observation whose failure mode the pilot
+reproduces.
+
+**Artefacts**: `runs/2026-06-09-joint-identifiability/outputs/cc-PILOT-REPORT.md`
+(commit `3137241`); `runs/2026-06-09-joint-identifiability/cross-classified-signoff.md`
+(commit `0f9a025`, §2 quantitative prediction and §4 hard-stop rule, §6 second opinions);
+`runs/2026-06-09-joint-identifiability/cross-classified-spec.md` (commit `37a94c5`);
+`runs/2026-06-09-joint-identifiability/outputs/cc-setdata-validation.json`
+(commit `a28c406`, boundary-coverage breakdown).
+
+### Findable later
+
+`cross-classified-pilot`, `3-arm-pilot`, `tiers3-re-fails`, `library-wins`, `free-fallback`,
+`option-A-as-written`, `slab-library`, `19-rows`, `deterministic-aoristic-slabs`,
+`no-contamination-channel`, `alpha-collapse`, `confidently-wrong-two-multinomials`,
+`minus-0-400-confounded`, `minus-0-798`, `minus-0-799`, `poc-experiment-1-reproduces`,
+`signoff-prediction-confirmed`, `10-prior-nats`, `bias-eliminated`, `plus-0-010`,
+`plus-0-006`, `coverage-0-896`, `coverage-0-000-boundary-artefact`, `equal-tailed-CI-boundary`,
+`alpha-true-zero-uncoverable`, `boundary-coverage-breakdown`, `geometry-improves`,
+`convergence-0-996`, `convergence-1-000`, `60-4-s-per-fit`, `41-9-hours`, `hard-stop-triggered`,
+`no-silent-negotiation`, `launch-halted`, `resource-decision`, `full-run-not-launched`,
+`D-B`, `p-conv-parameterisation`, `obs-87`, `obs-86`, `obs-84`, `obs-83`,
+`cc-PILOT-REPORT`, `3137241`, `0f9a025`, `a28c406`, `37a94c5`
