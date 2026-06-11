@@ -5,6 +5,12 @@
 outputs/grid/
 outputs/full-grid.log
 outputs/grid-STATUS.txt
+# Cross-classified (D-B) arm: same retention rule — per-cell JSONs + status +
+# logs are regenerable; only cc-VERDICT-*.md / cc-summary-*.json /
+# cc-PILOT-REPORT.md are committed.
+outputs/grid-cc-*/
+outputs/grid-cc-STATUS-*.txt
+outputs/cc-*.log
 # Transient operational traces from the 2026-06-10 memory-incident recovery
 # (regenerable; the findings are summarised in MEMORY-FIX-AND-RUN-STATUS.md).
 outputs/full-grid-memwatch.log

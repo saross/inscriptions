@@ -146,7 +146,14 @@ def generate(cell: dict, p_conv: np.ndarray, p_gen: np.ndarray, rep: int) -> tup
 # --------------------------------------------------------------------------- #
 # Seed offsets for the cc arm, chosen so no (cell, rep, purpose) seed collides
 # with the lead's data (+0), joint-fit (+500_000), or baseline-fit (+700_000)
-# seeds anywhere in the 300-cell × 100-rep range (signoff §3).
+# seeds anywhere in the 300-cell × 100-rep range (signoff §3). Audit note
+# (2026-06-11): the PRE-EXISTING lead offsets do collide with each other —
+# lead-fit(cell c, rep r) == baseline-fit(cell c−200, rep r) for c ≥ 200 —
+# but only as sampler seeds for different models on different data (harmless;
+# data-generation seeds are unaffected). The cc offsets below collide with
+# nothing (verified exhaustively over all 150,000 seeds); their margins are
+# exactly tight at 300 cells, so a grid extension past 300 cells must re-do
+# the collision analysis.
 CC_SPLIT_SEED_OFFSET = 1_000_000
 CC_FIT_SEED_OFFSET = 1_300_000
 
@@ -188,11 +195,21 @@ def generate_cc(cell: dict, p_conv: np.ndarray, p_gen: np.ndarray,
     ``k_cc ~ Binomial(N, π)`` (the same law as the lead's ``k``; a different
     realisation, immaterial at cell level over the replicate aggregate).
 
+    Parameters
+    ----------
+    cell : dict
+        A `enumerate_cells` record (uses ``cell_index``, ``alpha_true``, ``N``).
+    p_conv, p_gen : (N_BINS,) float arrays
+        The cell's true component shapes (each sums to 1; `cell_shapes`).
+    rep : int
+        Replicate index, 0 ≤ rep < 1000 (the seed arithmetic requires it).
+
     Returns
     -------
     (y, y_aligned, y_nonaligned, k_cc) — with ``y`` bit-identical to the lead's
     draw for the same (cell, rep); invariants asserted.
     """
+    assert 0 <= rep < 1000, f"rep {rep} outside the seed-arithmetic range [0, 1000)"
     y, _k_lead = generate(cell, p_conv, p_gen, rep)  # y bit-identical to the lead's
     a = cell["alpha_true"]
     p_mix = a * p_conv + (1.0 - a) * p_gen
@@ -204,9 +221,8 @@ def generate_cc(cell: dict, p_conv: np.ndarray, p_gen: np.ndarray,
     seed_split = (BASE_SEED + cell["cell_index"]) * 1000 + rep + CC_SPLIT_SEED_OFFSET
     rng = np.random.default_rng(seed_split)
     y_aligned = rng.binomial(y, q).astype(np.int64)
+    assert (y_aligned <= y).all() and (y_aligned >= 0).all(), "cc split exceeds bin counts"
     y_nonaligned = (y - y_aligned).astype(np.int64)
-    assert (y_aligned + y_nonaligned == y).all(), "cc split does not reconstruct y"
-    assert (y_aligned >= 0).all() and (y_nonaligned >= 0).all(), "negative cc split count"
     k_cc = int(y_aligned.sum())
     return np.asarray(y, dtype=np.int64), y_aligned, y_nonaligned, k_cc
 

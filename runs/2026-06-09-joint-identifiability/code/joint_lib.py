@@ -411,6 +411,9 @@ def build_model_cross_classified(y_aligned: np.ndarray, y_nonaligned: np.ndarray
         raise ValueError("theta Beta parameters must all be > 0")
     y_aligned = np.asarray(y_aligned, dtype="int64")
     y_nonaligned = np.asarray(y_nonaligned, dtype="int64")
+    if y_aligned.shape != y_nonaligned.shape:
+        raise ValueError(f"y_aligned shape {y_aligned.shape} != "
+                         f"y_nonaligned shape {y_nonaligned.shape}")
     if int(y_aligned.sum()) != int(k_cc):
         raise ValueError(f"y_aligned sums to {int(y_aligned.sum())}, not k_cc={k_cc}")
     if int(y_aligned.sum() + y_nonaligned.sum()) != int(n_rows):
@@ -435,8 +438,8 @@ def build_model_cross_classified(y_aligned: np.ndarray, y_nonaligned: np.ndarray
                 "log_pconv_increments", sigma_conv * z_pconv
             )
             log_pconv_raw = pt.concatenate([pt.zeros((1,)), pt.cumsum(log_pconv_increments)])
-            log_pconv_centered = log_pconv_raw - pt.max(log_pconv_raw)
-            unnorm_conv = pt.exp(log_pconv_centered)
+            log_pconv_centred = log_pconv_raw - pt.max(log_pconv_raw)
+            unnorm_conv = pt.exp(log_pconv_centred)
             p_conv = pm.Deterministic("p_conv", unnorm_conv / pt.sum(unnorm_conv))
 
         # ---- p_gen block: VERBATIM from build_model_joint ----
@@ -452,16 +455,21 @@ def build_model_cross_classified(y_aligned: np.ndarray, y_nonaligned: np.ndarray
         theta_conv = pm.Beta("theta_conv", a_conv, b_conv)
         theta_gen = pm.Beta("theta_gen", a_gen, b_gen)
 
-        # ---- alignment-conditional mixtures (each a proper simplex: the     ----
-        # ---- numerators sum exactly to w_a and 1−w_a respectively).          ----
+        # ---- alignment-conditional mixtures. The numerators sum exactly to  ----
+        # ---- w_a and 1−w_a respectively, so normalising each by its OWN sum  ----
+        # ---- is algebraically identical to dividing by w_a / (1−w_a) but     ----
+        # ---- cancellation-free: it removes the 0/0 corner at w_a → 1 (alpha  ----
+        # ---- and theta_conv both → 1) where 1−w_a underflows (audit note).   ----
         w_a = pm.Deterministic("pi_align", alpha * theta_conv + (1.0 - alpha) * theta_gen)
         num_al = alpha * theta_conv * p_conv + (1.0 - alpha) * theta_gen * p_gen
         num_non = (alpha * (1.0 - theta_conv) * p_conv
                    + (1.0 - alpha) * (1.0 - theta_gen) * p_gen)
-        p_aligned = pm.Deterministic("p_aligned", num_al / w_a)
-        p_nonalign = pm.Deterministic("p_nonalign", num_non / (1.0 - w_a))
+        p_aligned = pm.Deterministic("p_aligned", num_al / pt.sum(num_al))
+        p_nonalign = pm.Deterministic("p_nonalign", num_non / pt.sum(num_non))
 
         # ---- observed data: all three mutable for build-once + set_data ----
+        # NB pm.Data downcasts int64 → int32 internally (pytensor intX); fine at
+        # N ≤ 15,000, but re-check before reusing this model at N ≳ 2×10⁹.
         k_data = pm.Data("k_data", np.asarray(int(k_cc), dtype="int64"))
         y_al_data = pm.Data("y_al_data", y_aligned)
         y_non_data = pm.Data("y_non_data", y_nonaligned)

@@ -216,6 +216,21 @@ through the θ-instrumented binomial; under D-B it is identified through that *a
 subset-shape contrast — strictly more identifying information, which is also why 6.3 expects
 better geometry.
 
+## 6a. Post-audit addendum (2026-06-11, same session)
+
+The implementation was `/audit`-ed by four parallel subagents before launch: **no critical
+findings**; all Medium findings fixed (n_reps-aware resume gate; `--pilot` defaults to 20
+reps; `.gitignore` for cc outputs; pilot aggregation NaN-poisoning filter; missing-lead-dir
+guard; set_data invariant re-check; cancellation-free simplex normalisation in the cc
+model). One pre-existing caveat surfaced and is recorded here rather than fixed: **the
+lead grid's own fit-seed offsets collide across purposes** (lead-fit(cell c, rep r) ==
+baseline-fit(cell c−200, rep r) for c ≥ 200) — harmless (sampler seeds for different
+models on different data; data-generation seeds unaffected; the completed grid is not
+invalidated), but §3's "no collision" framing holds only for the *new* cc offsets, which
+were verified exhaustively. A new gate, `validate_cc_setdata.py`, covers the one set_data
+pattern the lead's revalidation never exercised (mutable `k_data` as the symbolic
+multinomial `n`); it runs in the smoke step.
+
 ## 7. Risks accepted
 
 - The pilot adds ~ 1–1.5 h sapphire compute and one decision gate before the full run —

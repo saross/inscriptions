@@ -27,9 +27,12 @@ Usage
         --pconv-mode library [--pilot] [--n-jobs 12] [--max-tasks-per-child 1] \
         [--n-reps 100] [--cells-limit N] [--cell-stride S]
 
-`--pilot` restricts to the 20-cell decision-gate subset (`grid_lib.PILOT_CELL_IDS`)
-and writes to a separate `-pilot` output dir so pilot cells never block the full
-run's resume. `--cells-limit` / `--cell-stride` / `--n-reps` are for smoke-testing.
+`--pilot` restricts to the 20-cell decision-gate subset (`grid_lib.PILOT_CELL_IDS`),
+defaults `--n-reps` to 20 (the signed-off pilot budget), and writes to a separate
+`-pilot` output dir so pilot cells never block the full run's resume.
+`--cells-limit` / `--cell-stride` / `--n-reps` are for smoke-testing. The resume
+gate requires a cached cell to carry >= the requested replicate count, so a
+low-rep smoke into either dir cannot silently poison a later pilot or full run.
 
 Author / Date — Claude Code (Fable 5) on Shawn's brief, 2026-06-11. UK/Aus English.
 """
@@ -65,6 +68,7 @@ import grid_lib as G  # noqa: E402
 from cell_lib import convergence_pass  # noqa: E402  (the validated gate, unchanged)
 
 PCONV_MODES = ("tiers3", "library", "free")
+PILOT_N_REPS = 20   # signed-off pilot budget (signoff §5 step 4)
 
 # θ priors (calibration rule C, κ=40) and the shared 3-tier basis — loaded once
 # (module level, so spawn workers re-load them cleanly on import).
@@ -127,6 +131,11 @@ def fit_cc_on_model(model, y_al: np.ndarray, y_non: np.ndarray, k: int,
     (cores=1). Build-once + set_data keeps the PyTensor graph constant so the
     compiled logp is reused (the lead's ~32 MB/fit recompile-leak lesson)."""
     import pymc as pm
+    # Self-describing failure if a caller ever passes an inconsistent split (the
+    # model would otherwise surface it as an opaque -inf-logp SamplingError).
+    if int(np.asarray(y_al).sum()) != int(k):
+        raise ValueError(f"set_data invariant: y_al sums to {int(np.asarray(y_al).sum())}, "
+                         f"not k={k}")
     with model:
         pm.set_data({"y_al_data": np.asarray(y_al, dtype="int64"),
                      "y_non_data": np.asarray(y_non, dtype="int64"),
@@ -147,13 +156,13 @@ def run_cell_cc(cell: dict, n_reps: int, mode: str) -> dict:
     var_names = monitored_vars(mode)
     # Build the cc model ONCE for this cell; each replicate's data is swapped via
     # pm.set_data inside fit_cc_on_model. Rep-0 data is only the initial placeholder.
-    y0, y_al0, y_non0, k0 = G.generate_cc(cell, p_conv, p_gen, 0)
+    _y0, y_al0, y_non0, k0 = G.generate_cc(cell, p_conv, p_gen, 0)
     model = J.build_model_cross_classified(y_al0, y_non0, k0, cell["N"], basis,
                                            THETA_CONV_AB, THETA_GEN_AB, pconv_mode=mode)
     reps = []
     t_fit0 = time.time()
     for r in range(n_reps):
-        y, y_al, y_non, k = G.generate_cc(cell, p_conv, p_gen, r)
+        _y, y_al, y_non, k = G.generate_cc(cell, p_conv, p_gen, r)
         data_seed = (G.BASE_SEED + cell["cell_index"]) * 1000 + r
         rec: dict = {"rep": r, "k_frac": round(k / cell["N"], 4)}
         try:
@@ -207,8 +216,10 @@ def _worker(args: tuple) -> tuple[int, str, int, int]:
     return cell["cell_index"], cell["cell_id"], out["n_ok"], out["n_failed"]
 
 
-def cell_is_done(cell: dict, gdir: Path) -> bool:
-    """Resume gate: done only if the JSON parses AND has >= 1 usable replicate."""
+def cell_is_done(cell: dict, gdir: Path, n_reps: int) -> bool:
+    """Resume gate: done only if the JSON parses, has >= 1 usable replicate, AND
+    was run at >= the requested replicate count (so a low-rep smoke result can
+    never silently satisfy a pilot or full run — audit finding M1)."""
     p = gdir / f"{cell['cell_id']}.json"
     if not p.exists():
         return False
@@ -216,7 +227,7 @@ def cell_is_done(cell: dict, gdir: Path) -> bool:
         d = json.loads(p.read_text())
     except (json.JSONDecodeError, OSError):
         return False
-    return bool(d.get("n_ok", 0) > 0)
+    return bool(d.get("n_ok", 0) > 0) and int(d.get("n_reps", 0)) >= n_reps
 
 
 def write_status(spath: Path, done: int, total: int, t0: float,
@@ -239,10 +250,14 @@ def main() -> None:
     ap.add_argument("--n-jobs", type=int, default=12)
     ap.add_argument("--max-tasks-per-child", type=int, default=1,
                     help="recycle each worker after this many cells (spawn context)")
-    ap.add_argument("--n-reps", type=int, default=G.N_REPS_DEFAULT)
+    ap.add_argument("--n-reps", type=int, default=None,
+                    help="replicates per cell (default: 20 with --pilot, else "
+                         f"{G.N_REPS_DEFAULT}) — audit finding M2")
     ap.add_argument("--cells-limit", type=int, default=None, help="smoke-test: first N cells")
     ap.add_argument("--cell-stride", type=int, default=1, help="smoke-test: every Sth cell")
     args = ap.parse_args()
+    if args.n_reps is None:
+        args.n_reps = PILOT_N_REPS if args.pilot else G.N_REPS_DEFAULT
 
     gdir = grid_dir(args.pconv_mode, args.pilot)
     spath = status_path(args.pconv_mode, args.pilot)
@@ -257,12 +272,13 @@ def main() -> None:
         cells = cells[:: args.cell_stride]
     if args.cells_limit is not None:
         cells = cells[: args.cells_limit]
+    sanctioned_reps = PILOT_N_REPS if args.pilot else G.N_REPS_DEFAULT
     is_slice = (args.cell_stride > 1) or (args.cells_limit is not None) \
-        or (not args.pilot and args.n_reps != G.N_REPS_DEFAULT)
+        or (args.n_reps != sanctioned_reps)
     note = (f"  [arm={args.pconv_mode}{' PILOT' if args.pilot else ''}"
             f"{' SMOKE slice' if is_slice else ''} reps={args.n_reps}]")
 
-    todo = [c for c in cells if not cell_is_done(c, gdir)]
+    todo = [c for c in cells if not cell_is_done(c, gdir, args.n_reps)]
     total = len(cells)
     done = total - len(todo)
     print(f"cc grid [{args.pconv_mode}]: {total} cells ({len(todo)} to do, {done} cached); "

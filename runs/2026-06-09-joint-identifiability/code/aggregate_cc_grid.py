@@ -37,7 +37,9 @@ BETTER_MARGIN = 0.05   # C2 "materially better than baseline" margin (as the lea
 
 
 def load_dir(d: Path) -> dict[str, dict]:
-    """cell_id → cell record, for every parseable JSON in a results dir."""
+    """cell_id → cell record, for every parseable JSON in a results dir (missing
+    dirs yield an empty dict). Includes fully-failed cells — callers must filter
+    with `scorable` before averaging (NaN-poisoning audit finding)."""
     out: dict[str, dict] = {}
     for p in sorted(d.glob("*.json")):
         try:
@@ -48,8 +50,14 @@ def load_dir(d: Path) -> dict[str, dict]:
     return out
 
 
+def scorable(cells: dict[str, dict]) -> dict[str, dict]:
+    """The subset of a `load_dir` result that is safe to average over."""
+    return {cid: c for cid, c in cells.items()
+            if c.get("n_ok", 0) > 0 and c.get("bias_median") is not None}
+
+
 def regime_stats(cells: list[dict]) -> dict:
-    """Mean bias / |bias| / coverage / convergence over a cell list."""
+    """Mean bias / |bias| / coverage / convergence over a (scorable) cell list."""
     if not cells:
         return {"n": 0}
     bm = np.array([c["bias_median"] for c in cells], dtype=float)
@@ -57,11 +65,11 @@ def regime_stats(cells: list[dict]) -> dict:
     cr = np.array([c["convergence_rate"] for c in cells], dtype=float)
     return {"n": len(cells), "bias_median_mean": float(bm.mean()),
             "abs_bias_mean": float(np.abs(bm).mean()),
-            "coverage_mean": float(cov.mean()), "convergence_mean": float(cr.mean()),
-            "worst_pos_bias": float(max(bm.max(), 0.0))}
+            "coverage_mean": float(cov.mean()), "convergence_mean": float(cr.mean())}
 
 
 def fmt(s: dict) -> str:
+    """One regime-summary table fragment: '| n | bias | |bias| | cov | conv '."""
     if s["n"] == 0:
         return "| · | · | · | · | · "
     return (f"| {s['n']} | {s['bias_median_mean']:+.3f} | {s['abs_bias_mean']:.3f} "
@@ -69,17 +77,25 @@ def fmt(s: dict) -> str:
 
 
 def pilot_report() -> None:
-    lead = load_dir(LEAD_DIR)
-    arms = {a: load_dir(RUN / "outputs" / f"grid-cc-{a}-pilot") for a in ARMS}
+    """The 3-arm p_conv comparison over the pilot cells (signoff §5 step 4 gate)."""
+    lead = scorable(load_dir(LEAD_DIR))
+    raw_arms = {a: load_dir(RUN / "outputs" / f"grid-cc-{a}-pilot") for a in ARMS}
+    arms = {a: scorable(v) for a, v in raw_arms.items()}
+    n_failed = {a: len(raw_arms[a]) - len(arms[a]) for a in ARMS}
     pilot_ids = sorted(set().union(*[set(v) for v in arms.values()]))
     if not pilot_ids:
         print("no pilot results yet.")
         return
+    if not lead:
+        print("WARNING: no lead results found at outputs/grid/ — reference rows will be "
+              "empty. Run this on the host that holds the lead grid (sapphire).")
 
     lines = ["# Cross-classified arm — PILOT report (3-arm p_conv decision gate)", "",
              f"Pilot cells with any arm results: {len(pilot_ids)}. "
-             f"Per-arm completeness: " +
-             ", ".join(f"{a} {len(arms[a])}" for a in ARMS) + ".", "",
+             f"Per-arm scorable: " +
+             ", ".join(f"{a} {len(arms[a])}" for a in ARMS) +
+             ". Fully-failed (excluded): " +
+             ", ".join(f"{a} {n_failed[a]}" for a in ARMS) + ".", "",
              "## Regime summary (mean over cells; aggregates over converged reps)", "",
              "| arm | regime | n | mean med-bias | mean \\|bias\\| | coverage | conv |",
              "|---|---|---|---|---|---|---|"]
@@ -121,11 +137,17 @@ def pilot_report() -> None:
 
 
 def full_verdict(mode: str) -> None:
+    """Score one arm's full grid against §3 criteria + §5 adoption, vs the lead."""
     lead = load_dir(LEAD_DIR)
     cc = load_dir(RUN / "outputs" / f"grid-cc-{mode}")
     if not cc:
         print(f"no full-grid results for arm {mode!r} yet.")
         return
+    if not lead:
+        raise SystemExit(
+            f"FATAL: no lead per-cell results at {LEAD_DIR} — the C2 baseline and the "
+            "head-to-head need them. Run this on the host that holds the lead grid "
+            "(sapphire); a verdict without them would silently report C2 = 0.")
     scored = [c for c in cc.values() if c.get("n_ok", 0) > 0 and c.get("bias_median") is not None]
     failed = [c for c in cc.values() if c.get("n_ok", 0) == 0]
     ident = [c for c in scored if c["regime"] == "identifiable"]
@@ -153,11 +175,12 @@ def full_verdict(mode: str) -> None:
     if conf:
         bm = np.array([c["bias_median"] for c in conf])
         cov = np.array([c["coverage_rate"] for c in conf])
-        base = np.array([(lead.get(c["cell_id"]) or {}).get("baseline_abs_bias_median")
-                         or np.nan for c in conf], dtype=float)
-        lead_abs = np.abs(bm)
-        better = (lead_abs + BETTER_MARGIN) < base
-        passing = (lead_abs < 0.18) & (bm <= 0.12) & better
+        base_raw = [(lead.get(c["cell_id"]) or {}).get("baseline_abs_bias_median")
+                    for c in conf]
+        base = np.array([b if b is not None else np.nan for b in base_raw], dtype=float)
+        cc_abs = np.abs(bm)
+        better = (cc_abs + BETTER_MARGIN) < base          # NaN → False (baseline missing)
+        passing = (cc_abs < 0.18) & (bm <= 0.12) & better
         c2 = int(np.sum(passing))
         lines += ["## C2 — pulled-to-truth (confounded; baseline from the lead grid)",
                   f"- passing (|median bias|<0.18 AND bias<=+0.12 AND >baseline by "
@@ -167,7 +190,7 @@ def full_verdict(mode: str) -> None:
                   f"mean coverage {cov.mean():.3f} [lead 0.462]",
                   f"- worst positive median bias {max(float(bm.max()), 0.0):+.3f}",
                   f"- cells with baseline available: {int((~np.isnan(base)).sum())}/{len(conf)}; "
-                  f"mean cc |bias| {lead_abs.mean():.3f} vs baseline |bias| "
+                  f"mean cc |bias| {cc_abs.mean():.3f} vs baseline |bias| "
                   f"{np.nanmean(base):.3f}", ""]
 
     # C4 — convergence.
@@ -228,17 +251,17 @@ def full_verdict(mode: str) -> None:
 
 
 def main() -> None:
+    """CLI: exactly one of --pilot (arm comparison) or --pconv-mode (full verdict)."""
     ap = argparse.ArgumentParser()
-    ap.add_argument("--pilot", action="store_true", help="3-arm pilot comparison report")
-    ap.add_argument("--pconv-mode", choices=ARMS, default=None,
-                    help="full-grid verdict for one arm")
+    group = ap.add_mutually_exclusive_group(required=True)
+    group.add_argument("--pilot", action="store_true", help="3-arm pilot comparison report")
+    group.add_argument("--pconv-mode", choices=ARMS, default=None,
+                       help="full-grid verdict for one arm")
     args = ap.parse_args()
     if args.pilot:
         pilot_report()
-    elif args.pconv_mode:
-        full_verdict(args.pconv_mode)
     else:
-        raise SystemExit("pass --pilot or --pconv-mode <arm>")
+        full_verdict(args.pconv_mode)
 
 
 if __name__ == "__main__":
