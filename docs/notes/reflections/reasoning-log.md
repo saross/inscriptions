@@ -390,3 +390,21 @@ The structured session-reflection (Entry 9) carries the considered account. This
 *Dedup at source when the tool is broken.* The shared `lit-search.py` / importer failed under system python (`ModuleNotFoundError: httpx`) — the same dep gap that blocked the scouts. I confirmed Zotero dedup directly against `~/Zotero/zotero.sqlite` (read-only) rather than trusting "all NEW", and ran the shared tool via `uv run --with httpx` for metadata. Don't reimplement; supply the dep — and verify the dedup at the registry, not via the broken pointer.
 
 *Memo to future me:* the reflexes that paid off — **let the cheap recovery test overrule the confident handoff; re-open "already ruled out" when the model around it changed; measure an agreed parameter before building on it; audit the runner separately from the model; correct the compute aggregate before the sign-off, not after.**
+
+## 2026-06-10 → 2026-06-11 — Entry 15: in-stream notes from the incident-triage → memory-fix → set_data → restart → verdict arc
+
+*`df -h` clean, `df -i` at 100 % is a real failure mode.* The intermittent SSH `255`/"no banner" wasn't the OOM — it was `/tmp` (tmpfs) out of *inodes* (~1.05 M leaked `tempfile` files) while blocks were 14 % used, so `mkdtemp()` failed `ENOSPC` and broke sshd session setup. When connect-but-no-banner pairs with free disk, check inodes before concluding "thrash". Two exhaustions (RAM + inodes) wearing one mask.
+
+*Two daemons mute = userspace-wide, not service-specific.* The decisive diagnostic for "wedged vs slow" was that *both* sshd (22) and open-webui (11434) accepted TCP but couldn't answer at the application layer. One hung service is that service; two is the box. Probe a second port before deciding it's a global wedge.
+
+*A tight SSH retry loop can trip MaxStartups and look like the wedge.* 50 s-timeout attempts every 3 s piled ~16 half-open connections → sshd random-drop → more `255`. Backing off to single non-overlapping connections (short ConnectTimeout, no overlap) fixed it. The recovery tooling manufactured the symptom; suspect your own loop.
+
+*Cap the cgroup, not your nerve.* `systemd-run --user --scope -p MemoryMax=50G -p MemorySwapMax=0` makes a mis-sized run abort *itself* (cgroup-OOM reaps a worker → BrokenProcessPool, resumable) instead of the kernel OOM-killer wedging the whole box (and sshd). For unattended overnight compute on a shared box, the cap is the difference between "abort and resume" and "physical intervention" — and `--user` works detached if you export `XDG_RUNTIME_DIR`/`DBUS_SESSION_BUS_ADDRESS`.
+
+*Measure the per-cell peak at full reps before sizing n_jobs.* The pilot's 8-rep RSS *looked* like it decelerated to a ceiling; the 100-rep measurement showed it climbs linearly to 6.7 GB. 8 reps is too few to distinguish plateau from line — for a leak you extrapolate, you measure to the real depth (or run the worst cell at full reps as a kept result, which I did).
+
+*"Bit-identical" failing is a two-run question, not a judgement.* Old-vs-new differed ~2×10⁻³; the trap is calling it "fine". The determinism test (new-vs-new = 0.000) proved the new code is reproducible and the gap is *method-specific* (shared-var graph ≠ constant graph → different seeded NUTS path through the same posterior). Diagnose "method vs noise floor" empirically before deciding keep-vs-restart.
+
+*Stop the scope, not the orchestrator.* `pkill` of the grid orchestrator left the spawn workers alive inside the systemd scope (their cmdline doesn't match the orchestrator's). `systemctl --user stop <scope>` kills the whole cgroup cleanly. To stop a scoped job, stop the scope.
+
+*Restart can be the clean choice even when keep is cheaper.* The ~2×10⁻³ method delta changes no verdict (≪ the 0.12/0.18 thresholds), so mixing 116 old + 184 new cells was scientifically defensible — but for a preregistered grid feeding an amendment, one consistent bit-reproducible method beat ~5 h saved. Surfaced it as Shawn's call with the numbers, not mine.

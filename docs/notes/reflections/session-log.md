@@ -816,3 +816,24 @@ Remote-control session. New run dir `runs/2026-06-09-joint-identifiability/`. Co
 - Live grid outputs are deliberately gitignored (regenerable; grid-state retention rule); the next session commits only the verdict + summary snapshots after the run.
 - 762 stale untracked files from the superseded 2026-05-26 two-unit grid remain on sapphire (regenerable; not deleted — flagged for optional cleanup, harmless to the resumable reconcile pattern).
 - Full-text reading of the 3 NEW statistical papers + canonical Zotero staging (a minimal lit-scout-iterate workspace → the shared importer, NOT a bespoke script) are tracked follow-ups; the dedup itself is done.
+
+## Session 2026-06-10 → 2026-06-11 — sapphire incident recovery → proper memory fix → clean grid restart → verdict
+
+**Incident.** The launched grid (PID 1899820) OOM'd and self-aborted at **10/300 cells** (`BrokenProcessPool`); throughput had collapsed to 2 cells/h under swap thrash. Diagnosed **two** independent root causes: (1) RAM OOM from long-lived fork pool workers never releasing PyTensor memory + `allow_gc=False`; (2) `/tmp` tmpfs at **100 % inodes** (~1.05 M leaked `tempfile` files, June 4–7) → `mkdtemp() ENOSPC` → intermittent SSH `255`. Cleared `/tmp` (100 %→1 %; detached `find -delete`), cleared ~18 confirmed-orphan `map-reader-llm` workers (Shawn confirmed; that project runs on zbook now).
+
+**Memory fix #1 (bounding), committed `e4298e5`, `/audit`-clean.** `run_joint_grid.py`: spawn start method + `max_tasks_per_child=1` (recycle worker per cell → memory returned to OS), per-rep `gc.collect()`, dropped `allow_gc=False`, `TMPDIR` to root fs. Measured pilot + a definitive worst-cell measurement (conc_a0.2_gauss_inwin_N15000, 100 reps) → **per-worker peak 6.7 GB**, climbing linearly (~32 MB/fit). Sized **n_jobs=6**; launched under a `systemd --user --scope -p MemoryMax=50G -p MemorySwapMax=0` cgroup cap; ran ~109/300 overnight, healthy.
+
+**Memory fix #2 (proper, with Shawn), committed `fad6fd5`, `/audit`-clean.** Refactored `build_model_joint` to wrap y/k in mutable `pm.Data`; `run_cell` builds the joint model once per cell and swaps replicate data via `fit_joint_on_model` + `pm.set_data`. Eliminates the per-fit PyTensor recompile/leak at source. Scope: joint model only (`build_model_f1_f3` left untouched — imported by H2.1 + 5 runs). Gate 1 (`validate_setdata.py`/`determinism_test.py`, committed `6fe80d9`): new code **bit-reproducible** (new-vs-new = 0.000) but **not bit-identical** to old (~2×10⁻³ method-specific NUTS-path delta; conv flags match). Gate 2: worst-cell RSS now ~2 GB at 100 reps (joint flat; residual is the still-rebuilt baseline) → **n_jobs=12 safe**.
+
+**Decision (Shawn): RESTART** rather than mix methods. Deleted the 116 old-method cells; relaunched all 300 fresh with the new code at **n_jobs=12**, cgroup-capped, monitored.
+
+**Result — full 300-cell grid (committed `18dac46`).** 25.1 h, 0 worker-errors, 0 failed cells, bit-reproducible. Scored vs `full-grid-spec.md §3`: **C2 PASS** 64/90 (lead |bias| 0.066 vs baseline 0.362, ~5×); **C1 FAILS** 37/210 — coverage 0.374 (bias fine at 0.075), from a near-uniform **+0.06…+0.08** contamination bias across the whole surface; **C4 marginal** (84 %, mean 0.950). Not a clean pass: the documented estimated-basis contamination is real and degrades coverage.
+
+**Next-session set-up.** Shawn chose to **evaluate the cross-classified time × alignment arm (D-B)** before any production refit; spec drafted + committed (`cross-classified-spec.md`, `37a94c5`). Incident writeup committed (`MEMORY-FIX-AND-RUN-STATUS.md`, `29945f9`/`284c4b6`).
+
+### Contextual assumptions
+- The verdict is **not** the clean pass the original plan assumed; the "production-refit 28 units → OSF amendment" path is **paused** pending the D-B arm's outcome. The amendment still REVERSES Amendment 03's shared basis and the prereg-note "Planned remediation" § is still stale-flagged.
+- Sapphire memory/`/tmp` infrastructure is now solved and reusable: spawn+`max_tasks_per_child`, root-fs `TMPDIR`, `systemd-run --user` cgroup cap (export `XDG_RUNTIME_DIR`/`DBUS_SESSION_BUS_ADDRESS` when detached). The next grid arm inherits all of it.
+- The standing `/tmp` `tempfile` leak in the PyMC/R workflow is unfixed at source (only cleared) — a follow-up; the named `/tmp` files (`h3a_*.py`, `gs_perm.sh`, `k3_scoring.sh`, `run_sweep.sh`) point at the offending sweep/scoring/shadow scripts.
+- Sapphire git carries untracked copies of `validate_setdata.py`/`determinism_test.py`/`grid-VERDICT.md`/`grid-summary.json` (now committed from local) — the next sapphire reconcile must clear those untracked files before `git pull` (sha-verify-then-remove, per the established pattern).
+- Next session is run by a different model (Fable 5); the carry-forward includes an orientation + explicit second-opinion items.
