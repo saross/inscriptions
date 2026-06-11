@@ -231,6 +231,32 @@ were verified exhaustively. A new gate, `validate_cc_setdata.py`, covers the one
 pattern the lead's revalidation never exercised (mutable `k_data` as the symbolic
 multinomial `n`); it runs in the smoke step.
 
+## 6b. Phase-gate verdict (2026-06-11, pilot → production boundary)
+
+| # | Assumption | Evidence | Status | If wrong |
+|---|---|---|---|---|
+| 1 | `library` is the right arm | Pilot 20 × 20 × 3: confounded bias +0.010 vs tiers3 −0.400 vs free −0.031; discriminating cells differ by 0.13–0.80 ≈ 15–80× MC error | **Validated** | — |
+| 2 | cc model + set_data path correct | 4-agent audit (0 critical); M3 gate bit-identical, all arms | **Validated** | — |
+| 3 | Generator = exact per-inscription law; y bit-identical to lead | Derivation + exhaustive seed enumeration + bit-identity + marginal-law checks | **Validated** | — |
+| 4 | Slab library adequately spans truth at all N | Pilot bias ≈ +0.01 (N=2800); N=15000 probe +0.044 on 8 reps | Validated at N=2800; **under-powered at N=15000** | Full run *measures* it — a result, not rework |
+| 5 | Sampler config adequate (geometry) | Pilot convergence 0.996–1.0; probes 1.0 | **Validated** | Reparameterisation ladder (signoff §6.3) |
+| 6 | Memory envelope, n_jobs=12 | set_data leak fix + recycle + 50 G cgroup cap; no OOM in pilot/probes | **Validated-enough** (cap is the backstop) | Clean resumable abort |
+| 7 | Wall-clock | 60.4 s/fit (N=2800 pilot mean) × same-cell scaling f(1500)=0.57, f(15000)=1.98 → ≈ 71.5 s/fit → **≈ 50 h** | **EXCEEDS the §4 30 h gate** | Resource decision, not statistics |
+| 8 | C2 baseline reuse from lead grid | y draws bit-identical (row 3) | **Validated** | — |
+| 9 | 100 reps/cell | Decision 27 (lodged convention) | Fixed by preregistration | — |
+
+**Verdict: statistically READY TO LAUNCH; BLOCKED solely on row 7** — the ~50 h commitment
+exceeds the sanctioned envelope, so per §4's pre-commitment and the standing
+no-silent-negotiation rule the launch waits for Shawn. Options:
+
+- **(a) Run the full 300 × 100 `library` arm, ≈ 50 h (~2 days), recommended** — the clean
+  like-for-like the OSF amendment wants; sapphire is otherwise idle; resumable at cell
+  granularity; one command: `setsid bash code/run-cc-arm.sh library full 12 50G`.
+- **(b) Decision-27-compliant subset** — all 90 confounded (the C2 floor, ≈ 21 h alone) +
+  a stratified identifiable subset (60 cells ≈ +9 h → ≈ 30 h; 30 cells ≈ +4.5 h → ≈ 26 h).
+  Saves ~20–24 h at the cost of a permanently incomplete C1 surface.
+- **(c) Anything else** (e.g. split across two nights via resume — the runner supports it).
+
 ## 7. Risks accepted
 
 - The pilot adds ~ 1–1.5 h sapphire compute and one decision gate before the full run —
