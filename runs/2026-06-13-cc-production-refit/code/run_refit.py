@@ -41,9 +41,13 @@ import numpy as np
 REFIT = Path("/home/shawn/Code/inscriptions/runs/2026-06-13-cc-production-refit")
 H2 = Path("/home/shawn/Code/inscriptions/runs/2026-06-07-h2.1-launch-prep/code")
 JOINT = Path("/home/shawn/Code/inscriptions/runs/2026-06-09-joint-identifiability/code")
+CELL_LIB_DIR = (  # the recovery-validated gate lives here; insert explicitly
+    "/home/shawn/Code/inscriptions/runs/2026-06-06-convention-basis-redesign"
+    "/revalidation/code")
 sys.path.insert(0, str(REFIT / "code"))
 sys.path.insert(0, str(H2))
 sys.path.insert(0, str(JOINT))
+sys.path.insert(0, CELL_LIB_DIR)
 import h2_lib as H  # noqa: E402
 import joint_lib as J  # noqa: E402
 import refit_lib as R  # noqa: E402
@@ -126,8 +130,7 @@ def fit_one(unit: dict, data: dict) -> dict:
 
 
 def _worker(unit: dict) -> tuple[str, bool, float]:
-    df = H.load_filtered_lire()
-    df["family"] = H.classify_family(df)
+    df = H.load_filtered_lire()  # aligned_indicator recomputes family internally; no column needed
     latin = H.latin_provinces()
     sub = R.subset_for(df, unit, latin)
     data = R.build_unit_cc_data(sub)
