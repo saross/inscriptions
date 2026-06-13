@@ -1,0 +1,7 @@
+# Per-unit cc-library refit fits — regenerable (deterministic per-unit seeds);
+# only outputs/refit-summary.json + REFIT-VERDICT.md are committed (grid-state
+# retention rule). The locked design inputs (unit-measurements.json,
+# production-slab-library.json) ARE tracked.
+outputs/units/
+outputs/refit-STATUS.txt
+outputs/*.log

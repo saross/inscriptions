@@ -1,0 +1,2550 @@
+[
+ {
+  "name": "empire-aggregate",
+  "kind": "aggregate",
+  "tier": "secondary",
+  "frame": "empire",
+  "n_rows": 180609,
+  "n_aligned_rows": 120632,
+  "row_aligned_frac": 0.6679,
+  "mass_total": 151360.8,
+  "mass_aligned": 100336.2,
+  "mass_nonaligned": 51024.6,
+  "mass_aligned_frac": 0.6629,
+  "row_minus_mass_frac": 0.005,
+  "n_distinct_types": 362,
+  "top_types": [
+   {
+    "nb": 301,
+    "na": 500,
+    "n": 15926
+   },
+   {
+    "nb": 101,
+    "na": 200,
+    "n": 13303
+   },
+   {
+    "nb": 301,
+    "na": 400,
+    "n": 10847
+   },
+   {
+    "nb": 1,
+    "na": 100,
+    "n": 10807
+   },
+   {
+    "nb": 1,
+    "na": 50,
+    "n": 6572
+   },
+   {
+    "nb": 201,
+    "na": 300,
+    "n": 6559
+   },
+   {
+    "nb": 101,
+    "na": 300,
+    "n": 5919
+   },
+   {
+    "nb": 1,
+    "na": 300,
+    "n": 4856
+   },
+   {
+    "nb": 1,
+    "na": 200,
+    "n": 4611
+   },
+   {
+    "nb": 151,
+    "na": 300,
+    "n": 3534
+   },
+   {
+    "nb": 151,
+    "na": 250,
+    "n": 2782
+   },
+   {
+    "nb": 51,
+    "na": 100,
+    "n": 2200
+   }
+  ],
+  "cum_rowcov": {
+   "top5_rowcov": 0.476,
+   "top10_rowcov": 0.687,
+   "top15_rowcov": 0.778,
+   "top20_rowcov": 0.844,
+   "top30_rowcov": 0.923
+  },
+  "width_pctiles": {
+   "10": 49,
+   "50": 99,
+   "90": 199,
+   "99": 299
+  },
+  "frac_width_ge_49": 0.929
+ },
+ {
+  "name": "latin-aggregate",
+  "kind": "aggregate",
+  "tier": "primary",
+  "frame": "latin",
+  "n_rows": 109646,
+  "n_aligned_rows": 64915,
+  "row_aligned_frac": 0.592,
+  "mass_total": 101065.9,
+  "mass_aligned": 61907.8,
+  "mass_nonaligned": 39158.1,
+  "mass_aligned_frac": 0.6125,
+  "row_minus_mass_frac": -0.0205,
+  "n_distinct_types": 328,
+  "top_types": [
+   {
+    "nb": 101,
+    "na": 200,
+    "n": 9517
+   },
+   {
+    "nb": 1,
+    "na": 100,
+    "n": 7326
+   },
+   {
+    "nb": 101,
+    "na": 300,
+    "n": 4666
+   },
+   {
+    "nb": 1,
+    "na": 300,
+    "n": 4259
+   },
+   {
+    "nb": 151,
+    "na": 300,
+    "n": 3335
+   },
+   {
+    "nb": 201,
+    "na": 300,
+    "n": 3253
+   },
+   {
+    "nb": 1,
+    "na": 200,
+    "n": 3118
+   },
+   {
+    "nb": 1,
+    "na": 50,
+    "n": 2948
+   },
+   {
+    "nb": 151,
+    "na": 250,
+    "n": 2469
+   },
+   {
+    "nb": 101,
+    "na": 150,
+    "n": 1527
+   },
+   {
+    "nb": 151,
+    "na": 200,
+    "n": 1492
+   },
+   {
+    "nb": 51,
+    "na": 100,
+    "n": 1352
+   }
+  ],
+  "cum_rowcov": {
+   "top5_rowcov": 0.448,
+   "top10_rowcov": 0.653,
+   "top15_rowcov": 0.752,
+   "top20_rowcov": 0.83,
+   "top30_rowcov": 0.909
+  },
+  "width_pctiles": {
+   "10": 49,
+   "50": 99,
+   "90": 199,
+   "99": 299
+  },
+  "frac_width_ge_49": 0.906
+ },
+ {
+  "name": "Latium et Campania / Regio I",
+  "kind": "province",
+  "tier": "reportable",
+  "frame": "latin",
+  "n_rows": 18512,
+  "n_aligned_rows": 8345,
+  "row_aligned_frac": 0.4508,
+  "mass_total": 17037.0,
+  "mass_aligned": 7975.8,
+  "mass_nonaligned": 9061.2,
+  "mass_aligned_frac": 0.4681,
+  "row_minus_mass_frac": -0.0174,
+  "n_distinct_types": 181,
+  "top_types": [
+   {
+    "nb": 101,
+    "na": 200,
+    "n": 1698
+   },
+   {
+    "nb": 1,
+    "na": 100,
+    "n": 1023
+   },
+   {
+    "nb": 1,
+    "na": 50,
+    "n": 540
+   },
+   {
+    "nb": 201,
+    "na": 300,
+    "n": 440
+   },
+   {
+    "nb": 151,
+    "na": 250,
+    "n": 404
+   },
+   {
+    "nb": 1,
+    "na": 200,
+    "n": 380
+   },
+   {
+    "nb": 101,
+    "na": 300,
+    "n": 287
+   },
+   {
+    "nb": -50,
+    "na": -1,
+    "n": 243
+   },
+   {
+    "nb": 101,
+    "na": 250,
+    "n": 234
+   },
+   {
+    "nb": 201,
+    "na": 250,
+    "n": 206
+   },
+   {
+    "nb": 51,
+    "na": 200,
+    "n": 202
+   },
+   {
+    "nb": 151,
+    "na": 200,
+    "n": 168
+   }
+  ],
+  "cum_rowcov": {
+   "top5_rowcov": 0.492,
+   "top10_rowcov": 0.654,
+   "top15_rowcov": 0.753,
+   "top20_rowcov": 0.826,
+   "top30_rowcov": 0.898
+  },
+  "width_pctiles": {
+   "10": 39,
+   "50": 99,
+   "90": 199,
+   "99": 299
+  },
+  "frac_width_ge_49": 0.888
+ },
+ {
+  "name": "Dalmatia",
+  "kind": "province",
+  "tier": "reportable",
+  "frame": "latin",
+  "n_rows": 7088,
+  "n_aligned_rows": 5937,
+  "row_aligned_frac": 0.8376,
+  "mass_total": 6325.4,
+  "mass_aligned": 5287.1,
+  "mass_nonaligned": 1038.3,
+  "mass_aligned_frac": 0.8359,
+  "row_minus_mass_frac": 0.0018,
+  "n_distinct_types": 81,
+  "top_types": [
+   {
+    "nb": 151,
+    "na": 300,
+    "n": 1730
+   },
+   {
+    "nb": 1,
+    "na": 300,
+    "n": 868
+   },
+   {
+    "nb": 1,
+    "na": 150,
+    "n": 659
+   },
+   {
+    "nb": 301,
+    "na": 600,
+    "n": 461
+   },
+   {
+    "nb": 101,
+    "na": 300,
+    "n": 404
+   },
+   {
+    "nb": 201,
+    "na": 300,
+    "n": 265
+   },
+   {
+    "nb": 101,
+    "na": 200,
+    "n": 192
+   },
+   {
+    "nb": 1,
+    "na": 100,
+    "n": 176
+   },
+   {
+    "nb": 1,
+    "na": 600,
+    "n": 165
+   },
+   {
+    "nb": 301,
+    "na": 400,
+    "n": 164
+   },
+   {
+    "nb": 151,
+    "na": 250,
+    "n": 80
+   },
+   {
+    "nb": 1,
+    "na": 200,
+    "n": 75
+   }
+  ],
+  "cum_rowcov": {
+   "top5_rowcov": 0.694,
+   "top10_rowcov": 0.856,
+   "top15_rowcov": 0.912,
+   "top20_rowcov": 0.946,
+   "top30_rowcov": 0.975
+  },
+  "width_pctiles": {
+   "10": 99,
+   "50": 149,
+   "90": 299,
+   "99": 599
+  },
+  "frac_width_ge_49": 0.984
+ },
+ {
+  "name": "Hispania citerior",
+  "kind": "province",
+  "tier": "reportable",
+  "frame": "latin",
+  "n_rows": 6312,
+  "n_aligned_rows": 4314,
+  "row_aligned_frac": 0.6835,
+  "mass_total": 6011.0,
+  "mass_aligned": 4193.8,
+  "mass_nonaligned": 1817.2,
+  "mass_aligned_frac": 0.6977,
+  "row_minus_mass_frac": -0.0142,
+  "n_distinct_types": 91,
+  "top_types": [
+   {
+    "nb": 1,
+    "na": 100,
+    "n": 909
+   },
+   {
+    "nb": 101,
+    "na": 200,
+    "n": 810
+   },
+   {
+    "nb": 1,
+    "na": 300,
+    "n": 379
+   },
+   {
+    "nb": 101,
+    "na": 300,
+    "n": 343
+   },
+   {
+    "nb": 1,
+    "na": 200,
+    "n": 328
+   },
+   {
+    "nb": 51,
+    "na": 100,
+    "n": 157
+   },
+   {
+    "nb": 1,
+    "na": 50,
+    "n": 148
+   },
+   {
+    "nb": 201,
+    "na": 300,
+    "n": 141
+   },
+   {
+    "nb": 51,
+    "na": 150,
+    "n": 122
+   },
+   {
+    "nb": 151,
+    "na": 200,
+    "n": 90
+   },
+   {
+    "nb": 101,
+    "na": 150,
+    "n": 77
+   },
+   {
+    "nb": 71,
+    "na": 100,
+    "n": 72
+   }
+  ],
+  "cum_rowcov": {
+   "top5_rowcov": 0.642,
+   "top10_rowcov": 0.794,
+   "top15_rowcov": 0.872,
+   "top20_rowcov": 0.924,
+   "top30_rowcov": 0.97
+  },
+  "width_pctiles": {
+   "10": 49,
+   "50": 99,
+   "90": 199,
+   "99": 299
+  },
+  "frac_width_ge_49": 0.929
+ },
+ {
+  "name": "Germania superior",
+  "kind": "province",
+  "tier": "reportable",
+  "frame": "latin",
+  "n_rows": 5874,
+  "n_aligned_rows": 2325,
+  "row_aligned_frac": 0.3958,
+  "mass_total": 5570.1,
+  "mass_aligned": 2297.3,
+  "mass_nonaligned": 3272.8,
+  "mass_aligned_frac": 0.4124,
+  "row_minus_mass_frac": -0.0166,
+  "n_distinct_types": 85,
+  "top_types": [
+   {
+    "nb": 1,
+    "na": 300,
+    "n": 359
+   },
+   {
+    "nb": 151,
+    "na": 250,
+    "n": 285
+   },
+   {
+    "nb": 101,
+    "na": 250,
+    "n": 219
+   },
+   {
+    "nb": 101,
+    "na": 200,
+    "n": 175
+   },
+   {
+    "nb": 101,
+    "na": 300,
+    "n": 143
+   },
+   {
+    "nb": 201,
+    "na": 250,
+    "n": 119
+   },
+   {
+    "nb": 1,
+    "na": 100,
+    "n": 75
+   },
+   {
+    "nb": 201,
+    "na": 300,
+    "n": 70
+   },
+   {
+    "nb": 41,
+    "na": 80,
+    "n": 68
+   },
+   {
+    "nb": 151,
+    "na": 200,
+    "n": 63
+   },
+   {
+    "nb": 71,
+    "na": 100,
+    "n": 61
+   },
+   {
+    "nb": 151,
+    "na": 300,
+    "n": 56
+   }
+  ],
+  "cum_rowcov": {
+   "top5_rowcov": 0.508,
+   "top10_rowcov": 0.678,
+   "top15_rowcov": 0.795,
+   "top20_rowcov": 0.862,
+   "top30_rowcov": 0.939
+  },
+  "width_pctiles": {
+   "10": 39,
+   "50": 99,
+   "90": 299,
+   "99": 299
+  },
+  "frac_width_ge_49": 0.852
+ },
+ {
+  "name": "Venetia et Histria / Regio X",
+  "kind": "province",
+  "tier": "reportable",
+  "frame": "latin",
+  "n_rows": 5872,
+  "n_aligned_rows": 4866,
+  "row_aligned_frac": 0.8287,
+  "mass_total": 5559.7,
+  "mass_aligned": 4703.0,
+  "mass_nonaligned": 856.7,
+  "mass_aligned_frac": 0.8459,
+  "row_minus_mass_frac": -0.0172,
+  "n_distinct_types": 123,
+  "top_types": [
+   {
+    "nb": 1,
+    "na": 100,
+    "n": 1131
+   },
+   {
+    "nb": 1,
+    "na": 50,
+    "n": 620
+   },
+   {
+    "nb": 101,
+    "na": 200,
+    "n": 612
+   },
+   {
+    "nb": 1,
+    "na": 200,
+    "n": 395
+   },
+   {
+    "nb": 201,
+    "na": 300,
+    "n": 214
+   },
+   {
+    "nb": 51,
+    "na": 100,
+    "n": 188
+   },
+   {
+    "nb": 301,
+    "na": 400,
+    "n": 168
+   },
+   {
+    "nb": -50,
+    "na": -1,
+    "n": 123
+   },
+   {
+    "nb": 101,
+    "na": 300,
+    "n": 103
+   },
+   {
+    "nb": 1,
+    "na": 30,
+    "n": 92
+   },
+   {
+    "nb": 51,
+    "na": 150,
+    "n": 90
+   },
+   {
+    "nb": 151,
+    "na": 250,
+    "n": 73
+   }
+  ],
+  "cum_rowcov": {
+   "top5_rowcov": 0.611,
+   "top10_rowcov": 0.749,
+   "top15_rowcov": 0.823,
+   "top20_rowcov": 0.87,
+   "top30_rowcov": 0.924
+  },
+  "width_pctiles": {
+   "10": 49,
+   "50": 99,
+   "90": 199,
+   "99": 199
+  },
+  "frac_width_ge_49": 0.901
+ },
+ {
+  "name": "Dacia",
+  "kind": "province",
+  "tier": "reportable",
+  "frame": "latin",
+  "n_rows": 4870,
+  "n_aligned_rows": 807,
+  "row_aligned_frac": 0.1657,
+  "mass_total": 4717.4,
+  "mass_aligned": 790.5,
+  "mass_nonaligned": 3926.8,
+  "mass_aligned_frac": 0.1676,
+  "row_minus_mass_frac": -0.0019,
+  "n_distinct_types": 41,
+  "top_types": [
+   {
+    "nb": 151,
+    "na": 250,
+    "n": 146
+   },
+   {
+    "nb": 151,
+    "na": 200,
+    "n": 82
+   },
+   {
+    "nb": 101,
+    "na": 300,
+    "n": 77
+   },
+   {
+    "nb": 101,
+    "na": 200,
+    "n": 63
+   },
+   {
+    "nb": 101,
+    "na": 250,
+    "n": 53
+   },
+   {
+    "nb": 161,
+    "na": 200,
+    "n": 42
+   },
+   {
+    "nb": 171,
+    "na": 200,
+    "n": 40
+   },
+   {
+    "nb": 151,
+    "na": 275,
+    "n": 40
+   },
+   {
+    "nb": 201,
+    "na": 275,
+    "n": 33
+   },
+   {
+    "nb": 201,
+    "na": 250,
+    "n": 31
+   },
+   {
+    "nb": 131,
+    "na": 170,
+    "n": 28
+   },
+   {
+    "nb": 201,
+    "na": 300,
+    "n": 26
+   }
+  ],
+  "cum_rowcov": {
+   "top5_rowcov": 0.522,
+   "top10_rowcov": 0.752,
+   "top15_rowcov": 0.892,
+   "top20_rowcov": 0.952,
+   "top30_rowcov": 0.986
+  },
+  "width_pctiles": {
+   "10": 29,
+   "50": 99,
+   "90": 199,
+   "99": 199
+  },
+  "frac_width_ge_49": 0.789
+ },
+ {
+  "name": "Britannia",
+  "kind": "province",
+  "tier": "reportable",
+  "frame": "latin",
+  "n_rows": 4647,
+  "n_aligned_rows": 1743,
+  "row_aligned_frac": 0.3751,
+  "mass_total": 4406.6,
+  "mass_aligned": 1683.8,
+  "mass_nonaligned": 2722.9,
+  "mass_aligned_frac": 0.3821,
+  "row_minus_mass_frac": -0.007,
+  "n_distinct_types": 80,
+  "top_types": [
+   {
+    "nb": 101,
+    "na": 300,
+    "n": 450
+   },
+   {
+    "nb": 51,
+    "na": 300,
+    "n": 269
+   },
+   {
+    "nb": 201,
+    "na": 300,
+    "n": 202
+   },
+   {
+    "nb": 51,
+    "na": 90,
+    "n": 176
+   },
+   {
+    "nb": 101,
+    "na": 200,
+    "n": 78
+   },
+   {
+    "nb": 301,
+    "na": 400,
+    "n": 75
+   },
+   {
+    "nb": 201,
+    "na": 400,
+    "n": 35
+   },
+   {
+    "nb": 51,
+    "na": 200,
+    "n": 35
+   },
+   {
+    "nb": 71,
+    "na": 100,
+    "n": 34
+   },
+   {
+    "nb": 51,
+    "na": 100,
+    "n": 34
+   },
+   {
+    "nb": 101,
+    "na": 400,
+    "n": 30
+   },
+   {
+    "nb": 151,
+    "na": 200,
+    "n": 28
+   }
+  ],
+  "cum_rowcov": {
+   "top5_rowcov": 0.674,
+   "top10_rowcov": 0.796,
+   "top15_rowcov": 0.872,
+   "top20_rowcov": 0.921,
+   "top30_rowcov": 0.955
+  },
+  "width_pctiles": {
+   "10": 39,
+   "50": 149,
+   "90": 249,
+   "99": 299
+  },
+  "frac_width_ge_49": 0.807
+ },
+ {
+  "name": "Pannonia superior",
+  "kind": "province",
+  "tier": "reportable",
+  "frame": "latin",
+  "n_rows": 4460,
+  "n_aligned_rows": 2960,
+  "row_aligned_frac": 0.6637,
+  "mass_total": 4174.1,
+  "mass_aligned": 2910.9,
+  "mass_nonaligned": 1263.2,
+  "mass_aligned_frac": 0.6974,
+  "row_minus_mass_frac": -0.0337,
+  "n_distinct_types": 70,
+  "top_types": [
+   {
+    "nb": 1,
+    "na": 300,
+    "n": 674
+   },
+   {
+    "nb": 101,
+    "na": 300,
+    "n": 357
+   },
+   {
+    "nb": 201,
+    "na": 300,
+    "n": 253
+   },
+   {
+    "nb": 101,
+    "na": 200,
+    "n": 252
+   },
+   {
+    "nb": 151,
+    "na": 300,
+    "n": 225
+   },
+   {
+    "nb": 101,
+    "na": 150,
+    "n": 110
+   },
+   {
+    "nb": 1,
+    "na": 200,
+    "n": 107
+   },
+   {
+    "nb": 1,
+    "na": 100,
+    "n": 101
+   },
+   {
+    "nb": 151,
+    "na": 250,
+    "n": 82
+   },
+   {
+    "nb": 151,
+    "na": 200,
+    "n": 76
+   },
+   {
+    "nb": 131,
+    "na": 170,
+    "n": 66
+   },
+   {
+    "nb": 201,
+    "na": 250,
+    "n": 60
+   }
+  ],
+  "cum_rowcov": {
+   "top5_rowcov": 0.595,
+   "top10_rowcov": 0.756,
+   "top15_rowcov": 0.85,
+   "top20_rowcov": 0.916,
+   "top30_rowcov": 0.973
+  },
+  "width_pctiles": {
+   "10": 49,
+   "50": 149,
+   "90": 299,
+   "99": 339
+  },
+  "frac_width_ge_49": 0.926
+ },
+ {
+  "name": "Samnium / Regio IV",
+  "kind": "province",
+  "tier": "reportable",
+  "frame": "latin",
+  "n_rows": 4187,
+  "n_aligned_rows": 3408,
+  "row_aligned_frac": 0.8139,
+  "mass_total": 3952.2,
+  "mass_aligned": 3249.5,
+  "mass_nonaligned": 702.8,
+  "mass_aligned_frac": 0.8222,
+  "row_minus_mass_frac": -0.0082,
+  "n_distinct_types": 73,
+  "top_types": [
+   {
+    "nb": 1,
+    "na": 100,
+    "n": 850
+   },
+   {
+    "nb": 101,
+    "na": 200,
+    "n": 718
+   },
+   {
+    "nb": 1,
+    "na": 200,
+    "n": 273
+   },
+   {
+    "nb": 1,
+    "na": 50,
+    "n": 214
+   },
+   {
+    "nb": -50,
+    "na": -1,
+    "n": 166
+   },
+   {
+    "nb": -70,
+    "na": -31,
+    "n": 135
+   },
+   {
+    "nb": -100,
+    "na": -1,
+    "n": 115
+   },
+   {
+    "nb": 31,
+    "na": 70,
+    "n": 92
+   },
+   {
+    "nb": 51,
+    "na": 100,
+    "n": 87
+   },
+   {
+    "nb": 201,
+    "na": 300,
+    "n": 85
+   },
+   {
+    "nb": 101,
+    "na": 300,
+    "n": 72
+   },
+   {
+    "nb": 51,
+    "na": 200,
+    "n": 47
+   }
+  ],
+  "cum_rowcov": {
+   "top5_rowcov": 0.652,
+   "top10_rowcov": 0.803,
+   "top15_rowcov": 0.878,
+   "top20_rowcov": 0.93,
+   "top30_rowcov": 0.978
+  },
+  "width_pctiles": {
+   "10": 39,
+   "50": 99,
+   "90": 199,
+   "99": 299
+  },
+  "frac_width_ge_49": 0.888
+ },
+ {
+  "name": "Africa proconsularis",
+  "kind": "province",
+  "tier": "reportable",
+  "frame": "latin",
+  "n_rows": 3518,
+  "n_aligned_rows": 1945,
+  "row_aligned_frac": 0.5529,
+  "mass_total": 2967.0,
+  "mass_aligned": 1780.5,
+  "mass_nonaligned": 1186.6,
+  "mass_aligned_frac": 0.6001,
+  "row_minus_mass_frac": -0.0472,
+  "n_distinct_types": 72,
+  "top_types": [
+   {
+    "nb": 101,
+    "na": 300,
+    "n": 401
+   },
+   {
+    "nb": 101,
+    "na": 200,
+    "n": 304
+   },
+   {
+    "nb": 201,
+    "na": 300,
+    "n": 239
+   },
+   {
+    "nb": 101,
+    "na": 150,
+    "n": 116
+   },
+   {
+    "nb": 1,
+    "na": 100,
+    "n": 110
+   },
+   {
+    "nb": 301,
+    "na": 400,
+    "n": 107
+   },
+   {
+    "nb": 301,
+    "na": 500,
+    "n": 86
+   },
+   {
+    "nb": 171,
+    "na": 200,
+    "n": 56
+   },
+   {
+    "nb": 151,
+    "na": 300,
+    "n": 47
+   },
+   {
+    "nb": 101,
+    "na": 130,
+    "n": 40
+   },
+   {
+    "nb": 301,
+    "na": 600,
+    "n": 35
+   },
+   {
+    "nb": 51,
+    "na": 150,
+    "n": 29
+   }
+  ],
+  "cum_rowcov": {
+   "top5_rowcov": 0.602,
+   "top10_rowcov": 0.774,
+   "top15_rowcov": 0.846,
+   "top20_rowcov": 0.898,
+   "top30_rowcov": 0.957
+  },
+  "width_pctiles": {
+   "10": 49,
+   "50": 99,
+   "90": 199,
+   "99": 299
+  },
+  "frac_width_ge_49": 0.904
+ },
+ {
+  "name": "Germania inferior",
+  "kind": "province",
+  "tier": "reportable",
+  "frame": "latin",
+  "n_rows": 3390,
+  "n_aligned_rows": 2356,
+  "row_aligned_frac": 0.695,
+  "mass_total": 3260.9,
+  "mass_aligned": 2323.2,
+  "mass_nonaligned": 937.7,
+  "mass_aligned_frac": 0.7124,
+  "row_minus_mass_frac": -0.0175,
+  "n_distinct_types": 68,
+  "top_types": [
+   {
+    "nb": 151,
+    "na": 250,
+    "n": 555
+   },
+   {
+    "nb": 101,
+    "na": 300,
+    "n": 357
+   },
+   {
+    "nb": 1,
+    "na": 300,
+    "n": 308
+   },
+   {
+    "nb": 151,
+    "na": 300,
+    "n": 237
+   },
+   {
+    "nb": 101,
+    "na": 200,
+    "n": 144
+   },
+   {
+    "nb": 201,
+    "na": 300,
+    "n": 99
+   },
+   {
+    "nb": 1,
+    "na": 100,
+    "n": 67
+   },
+   {
+    "nb": 101,
+    "na": 250,
+    "n": 64
+   },
+   {
+    "nb": 1,
+    "na": 200,
+    "n": 63
+   },
+   {
+    "nb": 71,
+    "na": 100,
+    "n": 53
+   },
+   {
+    "nb": 51,
+    "na": 100,
+    "n": 36
+   },
+   {
+    "nb": 31,
+    "na": 70,
+    "n": 35
+   }
+  ],
+  "cum_rowcov": {
+   "top5_rowcov": 0.68,
+   "top10_rowcov": 0.826,
+   "top15_rowcov": 0.893,
+   "top20_rowcov": 0.929,
+   "top30_rowcov": 0.966
+  },
+  "width_pctiles": {
+   "10": 49,
+   "50": 99,
+   "90": 299,
+   "99": 299
+  },
+  "frac_width_ge_49": 0.923
+ },
+ {
+  "name": "Apulia et Calabria / Regio II",
+  "kind": "province",
+  "tier": "reportable",
+  "frame": "latin",
+  "n_rows": 3132,
+  "n_aligned_rows": 2065,
+  "row_aligned_frac": 0.6593,
+  "mass_total": 3012.8,
+  "mass_aligned": 2026.4,
+  "mass_nonaligned": 986.4,
+  "mass_aligned_frac": 0.6726,
+  "row_minus_mass_frac": -0.0133,
+  "n_distinct_types": 108,
+  "top_types": [
+   {
+    "nb": 1,
+    "na": 100,
+    "n": 414
+   },
+   {
+    "nb": 101,
+    "na": 200,
+    "n": 337
+   },
+   {
+    "nb": 1,
+    "na": 50,
+    "n": 190
+   },
+   {
+    "nb": 201,
+    "na": 300,
+    "n": 93
+   },
+   {
+    "nb": 51,
+    "na": 100,
+    "n": 89
+   },
+   {
+    "nb": 51,
+    "na": 150,
+    "n": 75
+   },
+   {
+    "nb": 151,
+    "na": 300,
+    "n": 70
+   },
+   {
+    "nb": 151,
+    "na": 250,
+    "n": 66
+   },
+   {
+    "nb": 1,
+    "na": 200,
+    "n": 62
+   },
+   {
+    "nb": 101,
+    "na": 150,
+    "n": 60
+   },
+   {
+    "nb": 101,
+    "na": 300,
+    "n": 51
+   },
+   {
+    "nb": 151,
+    "na": 200,
+    "n": 45
+   }
+  ],
+  "cum_rowcov": {
+   "top5_rowcov": 0.544,
+   "top10_rowcov": 0.705,
+   "top15_rowcov": 0.798,
+   "top20_rowcov": 0.847,
+   "top30_rowcov": 0.908
+  },
+  "width_pctiles": {
+   "10": 39,
+   "50": 99,
+   "90": 149,
+   "99": 217
+  },
+  "frac_width_ge_49": 0.892
+ },
+ {
+  "name": "Pannonia inferior",
+  "kind": "province",
+  "tier": "reportable",
+  "frame": "latin",
+  "n_rows": 3132,
+  "n_aligned_rows": 1887,
+  "row_aligned_frac": 0.6025,
+  "mass_total": 2811.8,
+  "mass_aligned": 1812.9,
+  "mass_nonaligned": 998.9,
+  "mass_aligned_frac": 0.6448,
+  "row_minus_mass_frac": -0.0423,
+  "n_distinct_types": 60,
+  "top_types": [
+   {
+    "nb": 101,
+    "na": 200,
+    "n": 255
+   },
+   {
+    "nb": 101,
+    "na": 300,
+    "n": 251
+   },
+   {
+    "nb": 201,
+    "na": 250,
+    "n": 195
+   },
+   {
+    "nb": 201,
+    "na": 300,
+    "n": 185
+   },
+   {
+    "nb": 1,
+    "na": 300,
+    "n": 160
+   },
+   {
+    "nb": 151,
+    "na": 300,
+    "n": 131
+   },
+   {
+    "nb": 101,
+    "na": 150,
+    "n": 107
+   },
+   {
+    "nb": 151,
+    "na": 200,
+    "n": 93
+   },
+   {
+    "nb": 301,
+    "na": 500,
+    "n": 58
+   },
+   {
+    "nb": 151,
+    "na": 250,
+    "n": 54
+   },
+   {
+    "nb": 131,
+    "na": 170,
+    "n": 48
+   },
+   {
+    "nb": 301,
+    "na": 400,
+    "n": 44
+   }
+  ],
+  "cum_rowcov": {
+   "top5_rowcov": 0.554,
+   "top10_rowcov": 0.789,
+   "top15_rowcov": 0.881,
+   "top20_rowcov": 0.929,
+   "top30_rowcov": 0.973
+  },
+  "width_pctiles": {
+   "10": 49,
+   "50": 99,
+   "90": 199,
+   "99": 299
+  },
+  "frac_width_ge_49": 0.901
+ },
+ {
+  "name": "Numidia",
+  "kind": "province",
+  "tier": "reportable",
+  "frame": "latin",
+  "n_rows": 3014,
+  "n_aligned_rows": 1479,
+  "row_aligned_frac": 0.4907,
+  "mass_total": 2726.3,
+  "mass_aligned": 1470.6,
+  "mass_nonaligned": 1255.7,
+  "mass_aligned_frac": 0.5394,
+  "row_minus_mass_frac": -0.0487,
+  "n_distinct_types": 33,
+  "top_types": [
+   {
+    "nb": 101,
+    "na": 200,
+    "n": 1104
+   },
+   {
+    "nb": 101,
+    "na": 150,
+    "n": 119
+   },
+   {
+    "nb": 151,
+    "na": 200,
+    "n": 53
+   },
+   {
+    "nb": 231,
+    "na": 270,
+    "n": 46
+   },
+   {
+    "nb": 101,
+    "na": 300,
+    "n": 38
+   },
+   {
+    "nb": 201,
+    "na": 300,
+    "n": 21
+   },
+   {
+    "nb": 1,
+    "na": 100,
+    "n": 21
+   },
+   {
+    "nb": 101,
+    "na": 130,
+    "n": 12
+   },
+   {
+    "nb": 1,
+    "na": 150,
+    "n": 11
+   },
+   {
+    "nb": 301,
+    "na": 500,
+    "n": 8
+   },
+   {
+    "nb": 151,
+    "na": 300,
+    "n": 5
+   },
+   {
+    "nb": 131,
+    "na": 170,
+    "n": 5
+   }
+  ],
+  "cum_rowcov": {
+   "top5_rowcov": 0.92,
+   "top10_rowcov": 0.969,
+   "top15_rowcov": 0.984,
+   "top20_rowcov": 0.991,
+   "top30_rowcov": 0.998
+  },
+  "width_pctiles": {
+   "10": 49,
+   "50": 99,
+   "90": 99,
+   "99": 199
+  },
+  "frac_width_ge_49": 0.946
+ },
+ {
+  "name": "Etruria / Regio VII",
+  "kind": "province",
+  "tier": "reportable",
+  "frame": "latin",
+  "n_rows": 2801,
+  "n_aligned_rows": 1719,
+  "row_aligned_frac": 0.6137,
+  "mass_total": 2426.3,
+  "mass_aligned": 1555.0,
+  "mass_nonaligned": 871.2,
+  "mass_aligned_frac": 0.6409,
+  "row_minus_mass_frac": -0.0272,
+  "n_distinct_types": 99,
+  "top_types": [
+   {
+    "nb": 1,
+    "na": 100,
+    "n": 213
+   },
+   {
+    "nb": 1,
+    "na": 200,
+    "n": 180
+   },
+   {
+    "nb": 101,
+    "na": 200,
+    "n": 163
+   },
+   {
+    "nb": 1,
+    "na": 50,
+    "n": 88
+   },
+   {
+    "nb": -100,
+    "na": -1,
+    "n": 63
+   },
+   {
+    "nb": -50,
+    "na": -1,
+    "n": 62
+   },
+   {
+    "nb": 201,
+    "na": 300,
+    "n": 58
+   },
+   {
+    "nb": 101,
+    "na": 300,
+    "n": 58
+   },
+   {
+    "nb": 301,
+    "na": 400,
+    "n": 55
+   },
+   {
+    "nb": 51,
+    "na": 100,
+    "n": 55
+   },
+   {
+    "nb": 51,
+    "na": 150,
+    "n": 47
+   },
+   {
+    "nb": 301,
+    "na": 500,
+    "n": 44
+   }
+  ],
+  "cum_rowcov": {
+   "top5_rowcov": 0.411,
+   "top10_rowcov": 0.579,
+   "top15_rowcov": 0.696,
+   "top20_rowcov": 0.781,
+   "top30_rowcov": 0.881
+  },
+  "width_pctiles": {
+   "10": 39,
+   "50": 99,
+   "90": 199,
+   "99": 299
+  },
+  "frac_width_ge_49": 0.892
+ },
+ {
+  "name": "Umbria / Regio VI",
+  "kind": "province",
+  "tier": "reportable",
+  "frame": "latin",
+  "n_rows": 2763,
+  "n_aligned_rows": 2005,
+  "row_aligned_frac": 0.7257,
+  "mass_total": 2572.4,
+  "mass_aligned": 1914.8,
+  "mass_nonaligned": 657.6,
+  "mass_aligned_frac": 0.7444,
+  "row_minus_mass_frac": -0.0187,
+  "n_distinct_types": 74,
+  "top_types": [
+   {
+    "nb": 1,
+    "na": 100,
+    "n": 337
+   },
+   {
+    "nb": 101,
+    "na": 200,
+    "n": 325
+   },
+   {
+    "nb": 1,
+    "na": 200,
+    "n": 197
+   },
+   {
+    "nb": 1,
+    "na": 50,
+    "n": 152
+   },
+   {
+    "nb": -50,
+    "na": -1,
+    "n": 146
+   },
+   {
+    "nb": -100,
+    "na": -1,
+    "n": 86
+   },
+   {
+    "nb": 51,
+    "na": 200,
+    "n": 74
+   },
+   {
+    "nb": 101,
+    "na": 300,
+    "n": 72
+   },
+   {
+    "nb": -30,
+    "na": -1,
+    "n": 70
+   },
+   {
+    "nb": 51,
+    "na": 100,
+    "n": 67
+   },
+   {
+    "nb": 1,
+    "na": 30,
+    "n": 63
+   },
+   {
+    "nb": 201,
+    "na": 300,
+    "n": 61
+   }
+  ],
+  "cum_rowcov": {
+   "top5_rowcov": 0.577,
+   "top10_rowcov": 0.761,
+   "top15_rowcov": 0.873,
+   "top20_rowcov": 0.921,
+   "top30_rowcov": 0.966
+  },
+  "width_pctiles": {
+   "10": 39,
+   "50": 99,
+   "90": 199,
+   "99": 199
+  },
+  "frac_width_ge_49": 0.886
+ },
+ {
+  "name": "Noricum",
+  "kind": "province",
+  "tier": "reportable",
+  "frame": "latin",
+  "n_rows": 2761,
+  "n_aligned_rows": 2034,
+  "row_aligned_frac": 0.7367,
+  "mass_total": 2599.7,
+  "mass_aligned": 2008.0,
+  "mass_nonaligned": 591.7,
+  "mass_aligned_frac": 0.7724,
+  "row_minus_mass_frac": -0.0357,
+  "n_distinct_types": 68,
+  "top_types": [
+   {
+    "nb": 1,
+    "na": 300,
+    "n": 410
+   },
+   {
+    "nb": 101,
+    "na": 200,
+    "n": 211
+   },
+   {
+    "nb": 1,
+    "na": 200,
+    "n": 177
+   },
+   {
+    "nb": 101,
+    "na": 300,
+    "n": 124
+   },
+   {
+    "nb": 1,
+    "na": 100,
+    "n": 120
+   },
+   {
+    "nb": 1,
+    "na": 150,
+    "n": 119
+   },
+   {
+    "nb": 51,
+    "na": 150,
+    "n": 95
+   },
+   {
+    "nb": 101,
+    "na": 150,
+    "n": 92
+   },
+   {
+    "nb": 201,
+    "na": 300,
+    "n": 90
+   },
+   {
+    "nb": 1,
+    "na": 50,
+    "n": 87
+   },
+   {
+    "nb": 151,
+    "na": 300,
+    "n": 81
+   },
+   {
+    "nb": 151,
+    "na": 200,
+    "n": 55
+   }
+  ],
+  "cum_rowcov": {
+   "top5_rowcov": 0.512,
+   "top10_rowcov": 0.75,
+   "top15_rowcov": 0.87,
+   "top20_rowcov": 0.931,
+   "top30_rowcov": 0.969
+  },
+  "width_pctiles": {
+   "10": 49,
+   "50": 149,
+   "90": 299,
+   "99": 599
+  },
+  "frac_width_ge_49": 0.925
+ },
+ {
+  "name": "Baetica",
+  "kind": "province",
+  "tier": "reportable",
+  "frame": "latin",
+  "n_rows": 2593,
+  "n_aligned_rows": 1583,
+  "row_aligned_frac": 0.6105,
+  "mass_total": 2448.5,
+  "mass_aligned": 1553.0,
+  "mass_nonaligned": 895.5,
+  "mass_aligned_frac": 0.6343,
+  "row_minus_mass_frac": -0.0238,
+  "n_distinct_types": 55,
+  "top_types": [
+   {
+    "nb": 101,
+    "na": 200,
+    "n": 351
+   },
+   {
+    "nb": 1,
+    "na": 100,
+    "n": 198
+   },
+   {
+    "nb": 151,
+    "na": 200,
+    "n": 118
+   },
+   {
+    "nb": 1,
+    "na": 50,
+    "n": 92
+   },
+   {
+    "nb": 171,
+    "na": 200,
+    "n": 77
+   },
+   {
+    "nb": 31,
+    "na": 70,
+    "n": 77
+   },
+   {
+    "nb": 201,
+    "na": 300,
+    "n": 73
+   },
+   {
+    "nb": 51,
+    "na": 100,
+    "n": 60
+   },
+   {
+    "nb": 131,
+    "na": 170,
+    "n": 53
+   },
+   {
+    "nb": 101,
+    "na": 150,
+    "n": 51
+   },
+   {
+    "nb": 1,
+    "na": 200,
+    "n": 43
+   },
+   {
+    "nb": 151,
+    "na": 250,
+    "n": 43
+   }
+  ],
+  "cum_rowcov": {
+   "top5_rowcov": 0.528,
+   "top10_rowcov": 0.726,
+   "top15_rowcov": 0.853,
+   "top20_rowcov": 0.927,
+   "top30_rowcov": 0.977
+  },
+  "width_pctiles": {
+   "10": 29,
+   "50": 99,
+   "90": 99,
+   "99": 199
+  },
+  "frac_width_ge_49": 0.772
+ },
+ {
+  "name": "Transpadana / Regio XI",
+  "kind": "province",
+  "tier": "reportable",
+  "frame": "latin",
+  "n_rows": 2434,
+  "n_aligned_rows": 2018,
+  "row_aligned_frac": 0.8291,
+  "mass_total": 2200.3,
+  "mass_aligned": 1820.7,
+  "mass_nonaligned": 379.6,
+  "mass_aligned_frac": 0.8275,
+  "row_minus_mass_frac": 0.0016,
+  "n_distinct_types": 72,
+  "top_types": [
+   {
+    "nb": 1,
+    "na": 100,
+    "n": 335
+   },
+   {
+    "nb": 101,
+    "na": 200,
+    "n": 314
+   },
+   {
+    "nb": 301,
+    "na": 500,
+    "n": 212
+   },
+   {
+    "nb": 1,
+    "na": 200,
+    "n": 208
+   },
+   {
+    "nb": 51,
+    "na": 200,
+    "n": 176
+   },
+   {
+    "nb": 101,
+    "na": 300,
+    "n": 125
+   },
+   {
+    "nb": 1,
+    "na": 50,
+    "n": 112
+   },
+   {
+    "nb": 201,
+    "na": 300,
+    "n": 89
+   },
+   {
+    "nb": 201,
+    "na": 400,
+    "n": 50
+   },
+   {
+    "nb": 51,
+    "na": 150,
+    "n": 41
+   },
+   {
+    "nb": 101,
+    "na": 150,
+    "n": 30
+   },
+   {
+    "nb": 151,
+    "na": 300,
+    "n": 29
+   }
+  ],
+  "cum_rowcov": {
+   "top5_rowcov": 0.617,
+   "top10_rowcov": 0.824,
+   "top15_rowcov": 0.889,
+   "top20_rowcov": 0.933,
+   "top30_rowcov": 0.967
+  },
+  "width_pctiles": {
+   "10": 49,
+   "50": 99,
+   "90": 199,
+   "99": 299
+  },
+  "frac_width_ge_49": 0.951
+ },
+ {
+  "name": "Pompeii",
+  "kind": "city",
+  "tier": "reportable",
+  "frame": "latin",
+  "n_rows": 4508,
+  "n_aligned_rows": 227,
+  "row_aligned_frac": 0.0504,
+  "mass_total": 4246.5,
+  "mass_aligned": 217.0,
+  "mass_nonaligned": 4029.5,
+  "mass_aligned_frac": 0.0511,
+  "row_minus_mass_frac": -0.0007,
+  "n_distinct_types": 35,
+  "top_types": [
+   {
+    "nb": 31,
+    "na": 60,
+    "n": 37
+   },
+   {
+    "nb": 1,
+    "na": 50,
+    "n": 28
+   },
+   {
+    "nb": 31,
+    "na": 70,
+    "n": 26
+   },
+   {
+    "nb": 50,
+    "na": 79,
+    "n": 22
+   },
+   {
+    "nb": 61,
+    "na": 80,
+    "n": 13
+   },
+   {
+    "nb": 51,
+    "na": 70,
+    "n": 12
+   },
+   {
+    "nb": 41,
+    "na": 60,
+    "n": 9
+   },
+   {
+    "nb": -40,
+    "na": -1,
+    "n": 7
+   },
+   {
+    "nb": -60,
+    "na": -41,
+    "n": 6
+   },
+   {
+    "nb": -50,
+    "na": -1,
+    "n": 6
+   },
+   {
+    "nb": -80,
+    "na": -41,
+    "n": 6
+   },
+   {
+    "nb": 31,
+    "na": 50,
+    "n": 6
+   }
+  ],
+  "cum_rowcov": {
+   "top5_rowcov": 0.555,
+   "top10_rowcov": 0.731,
+   "top15_rowcov": 0.841,
+   "top20_rowcov": 0.921,
+   "top30_rowcov": 0.978
+  },
+  "width_pctiles": {
+   "10": 19,
+   "50": 29,
+   "90": 49,
+   "99": 99
+  },
+  "frac_width_ge_49": 0.189
+ },
+ {
+  "name": "Salona",
+  "kind": "city",
+  "tier": "reportable",
+  "frame": "latin",
+  "n_rows": 3465,
+  "n_aligned_rows": 3124,
+  "row_aligned_frac": 0.9016,
+  "mass_total": 2890.0,
+  "mass_aligned": 2576.1,
+  "mass_nonaligned": 313.9,
+  "mass_aligned_frac": 0.8914,
+  "row_minus_mass_frac": 0.0102,
+  "n_distinct_types": 62,
+  "top_types": [
+   {
+    "nb": 151,
+    "na": 300,
+    "n": 1234
+   },
+   {
+    "nb": 301,
+    "na": 600,
+    "n": 431
+   },
+   {
+    "nb": 1,
+    "na": 300,
+    "n": 334
+   },
+   {
+    "nb": 1,
+    "na": 150,
+    "n": 209
+   },
+   {
+    "nb": 301,
+    "na": 400,
+    "n": 143
+   },
+   {
+    "nb": 101,
+    "na": 300,
+    "n": 137
+   },
+   {
+    "nb": 201,
+    "na": 300,
+    "n": 108
+   },
+   {
+    "nb": 1,
+    "na": 600,
+    "n": 73
+   },
+   {
+    "nb": 101,
+    "na": 200,
+    "n": 49
+   },
+   {
+    "nb": 301,
+    "na": 500,
+    "n": 47
+   },
+   {
+    "nb": 1,
+    "na": 100,
+    "n": 44
+   },
+   {
+    "nb": 201,
+    "na": 400,
+    "n": 28
+   }
+  ],
+  "cum_rowcov": {
+   "top5_rowcov": 0.753,
+   "top10_rowcov": 0.885,
+   "top15_rowcov": 0.931,
+   "top20_rowcov": 0.954,
+   "top30_rowcov": 0.977
+  },
+  "width_pctiles": {
+   "10": 99,
+   "50": 149,
+   "90": 299,
+   "99": 599
+  },
+  "frac_width_ge_49": 0.989
+ },
+ {
+  "name": "Ostia",
+  "kind": "city",
+  "tier": "reportable",
+  "frame": "latin",
+  "n_rows": 2644,
+  "n_aligned_rows": 1546,
+  "row_aligned_frac": 0.5847,
+  "mass_total": 2316.1,
+  "mass_aligned": 1487.7,
+  "mass_nonaligned": 828.4,
+  "mass_aligned_frac": 0.6423,
+  "row_minus_mass_frac": -0.0576,
+  "n_distinct_types": 76,
+  "top_types": [
+   {
+    "nb": 101,
+    "na": 200,
+    "n": 400
+   },
+   {
+    "nb": 201,
+    "na": 300,
+    "n": 211
+   },
+   {
+    "nb": 151,
+    "na": 250,
+    "n": 121
+   },
+   {
+    "nb": 101,
+    "na": 300,
+    "n": 83
+   },
+   {
+    "nb": 1,
+    "na": 100,
+    "n": 82
+   },
+   {
+    "nb": 301,
+    "na": 400,
+    "n": 71
+   },
+   {
+    "nb": 101,
+    "na": 250,
+    "n": 47
+   },
+   {
+    "nb": 151,
+    "na": 200,
+    "n": 47
+   },
+   {
+    "nb": 1,
+    "na": 50,
+    "n": 46
+   },
+   {
+    "nb": -50,
+    "na": -1,
+    "n": 39
+   },
+   {
+    "nb": 151,
+    "na": 300,
+    "n": 38
+   },
+   {
+    "nb": 101,
+    "na": 150,
+    "n": 32
+   }
+  ],
+  "cum_rowcov": {
+   "top5_rowcov": 0.58,
+   "top10_rowcov": 0.742,
+   "top15_rowcov": 0.838,
+   "top20_rowcov": 0.901,
+   "top30_rowcov": 0.956
+  },
+  "width_pctiles": {
+   "10": 49,
+   "50": 99,
+   "90": 149,
+   "99": 199
+  },
+  "frac_width_ge_49": 0.926
+ },
+ {
+  "name": "Mogontiacum",
+  "kind": "city",
+  "tier": "reportable",
+  "frame": "latin",
+  "n_rows": 2398,
+  "n_aligned_rows": 340,
+  "row_aligned_frac": 0.1418,
+  "mass_total": 2325.0,
+  "mass_aligned": 337.0,
+  "mass_nonaligned": 1988.0,
+  "mass_aligned_frac": 0.1449,
+  "row_minus_mass_frac": -0.0032,
+  "n_distinct_types": 45,
+  "top_types": [
+   {
+    "nb": 1,
+    "na": 50,
+    "n": 35
+   },
+   {
+    "nb": 1,
+    "na": 300,
+    "n": 30
+   },
+   {
+    "nb": 201,
+    "na": 250,
+    "n": 29
+   },
+   {
+    "nb": 151,
+    "na": 250,
+    "n": 21
+   },
+   {
+    "nb": 201,
+    "na": 300,
+    "n": 20
+   },
+   {
+    "nb": 1,
+    "na": 100,
+    "n": 19
+   },
+   {
+    "nb": 71,
+    "na": 100,
+    "n": 18
+   },
+   {
+    "nb": 31,
+    "na": 70,
+    "n": 17
+   },
+   {
+    "nb": 151,
+    "na": 200,
+    "n": 15
+   },
+   {
+    "nb": 101,
+    "na": 200,
+    "n": 14
+   },
+   {
+    "nb": 101,
+    "na": 250,
+    "n": 14
+   },
+   {
+    "nb": 101,
+    "na": 300,
+    "n": 14
+   }
+  ],
+  "cum_rowcov": {
+   "top5_rowcov": 0.397,
+   "top10_rowcov": 0.641,
+   "top15_rowcov": 0.803,
+   "top20_rowcov": 0.868,
+   "top30_rowcov": 0.947
+  },
+  "width_pctiles": {
+   "10": 29,
+   "50": 49,
+   "90": 299,
+   "99": 299
+  },
+  "frac_width_ge_49": 0.774
+ },
+ {
+  "name": "Aquileia",
+  "kind": "city",
+  "tier": "reportable",
+  "frame": "latin",
+  "n_rows": 2034,
+  "n_aligned_rows": 1764,
+  "row_aligned_frac": 0.8673,
+  "mass_total": 1884.6,
+  "mass_aligned": 1667.7,
+  "mass_nonaligned": 217.0,
+  "mass_aligned_frac": 0.8849,
+  "row_minus_mass_frac": -0.0176,
+  "n_distinct_types": 89,
+  "top_types": [
+   {
+    "nb": 101,
+    "na": 200,
+    "n": 306
+   },
+   {
+    "nb": 1,
+    "na": 100,
+    "n": 289
+   },
+   {
+    "nb": 1,
+    "na": 50,
+    "n": 130
+   },
+   {
+    "nb": 301,
+    "na": 400,
+    "n": 120
+   },
+   {
+    "nb": 1,
+    "na": 200,
+    "n": 119
+   },
+   {
+    "nb": 201,
+    "na": 300,
+    "n": 116
+   },
+   {
+    "nb": 51,
+    "na": 100,
+    "n": 59
+   },
+   {
+    "nb": 151,
+    "na": 250,
+    "n": 51
+   },
+   {
+    "nb": 51,
+    "na": 150,
+    "n": 49
+   },
+   {
+    "nb": -50,
+    "na": -1,
+    "n": 44
+   },
+   {
+    "nb": 101,
+    "na": 300,
+    "n": 34
+   },
+   {
+    "nb": 51,
+    "na": 200,
+    "n": 34
+   }
+  ],
+  "cum_rowcov": {
+   "top5_rowcov": 0.546,
+   "top10_rowcov": 0.727,
+   "top15_rowcov": 0.812,
+   "top20_rowcov": 0.867,
+   "top30_rowcov": 0.925
+  },
+  "width_pctiles": {
+   "10": 49,
+   "50": 99,
+   "90": 199,
+   "99": 199
+  },
+  "frac_width_ge_49": 0.923
+ },
+ {
+  "name": "Moesia inferior",
+  "kind": "province",
+  "tier": "caveated",
+  "frame": "latin",
+  "n_rows": 1952,
+  "n_aligned_rows": 1105,
+  "row_aligned_frac": 0.5661,
+  "mass_total": 1728.5,
+  "mass_aligned": 1062.2,
+  "mass_nonaligned": 666.3,
+  "mass_aligned_frac": 0.6145,
+  "row_minus_mass_frac": -0.0484,
+  "n_distinct_types": 67,
+  "top_types": [
+   {
+    "nb": 101,
+    "na": 300,
+    "n": 152
+   },
+   {
+    "nb": 151,
+    "na": 300,
+    "n": 121
+   },
+   {
+    "nb": 101,
+    "na": 200,
+    "n": 108
+   },
+   {
+    "nb": 201,
+    "na": 300,
+    "n": 104
+   },
+   {
+    "nb": 151,
+    "na": 200,
+    "n": 76
+   },
+   {
+    "nb": 151,
+    "na": 250,
+    "n": 74
+   },
+   {
+    "nb": 201,
+    "na": 250,
+    "n": 54
+   },
+   {
+    "nb": 101,
+    "na": 250,
+    "n": 49
+   },
+   {
+    "nb": 131,
+    "na": 170,
+    "n": 49
+   },
+   {
+    "nb": 101,
+    "na": 150,
+    "n": 40
+   },
+   {
+    "nb": 1,
+    "na": 300,
+    "n": 39
+   },
+   {
+    "nb": 301,
+    "na": 400,
+    "n": 33
+   }
+  ],
+  "cum_rowcov": {
+   "top5_rowcov": 0.508,
+   "top10_rowcov": 0.748,
+   "top15_rowcov": 0.851,
+   "top20_rowcov": 0.893,
+   "top30_rowcov": 0.947
+  },
+  "width_pctiles": {
+   "10": 39,
+   "50": 99,
+   "90": 199,
+   "99": 349
+  },
+  "frac_width_ge_49": 0.879
+ },
+ {
+  "name": "Lusitania",
+  "kind": "province",
+  "tier": "caveated",
+  "frame": "latin",
+  "n_rows": 1685,
+  "n_aligned_rows": 1186,
+  "row_aligned_frac": 0.7039,
+  "mass_total": 1577.7,
+  "mass_aligned": 1148.5,
+  "mass_nonaligned": 429.3,
+  "mass_aligned_frac": 0.7279,
+  "row_minus_mass_frac": -0.0241,
+  "n_distinct_types": 51,
+  "top_types": [
+   {
+    "nb": 1,
+    "na": 100,
+    "n": 287
+   },
+   {
+    "nb": 101,
+    "na": 200,
+    "n": 215
+   },
+   {
+    "nb": 1,
+    "na": 50,
+    "n": 73
+   },
+   {
+    "nb": 51,
+    "na": 100,
+    "n": 70
+   },
+   {
+    "nb": 151,
+    "na": 200,
+    "n": 65
+   },
+   {
+    "nb": 1,
+    "na": 200,
+    "n": 55
+   },
+   {
+    "nb": 101,
+    "na": 300,
+    "n": 51
+   },
+   {
+    "nb": 101,
+    "na": 150,
+    "n": 36
+   },
+   {
+    "nb": 151,
+    "na": 250,
+    "n": 35
+   },
+   {
+    "nb": 31,
+    "na": 70,
+    "n": 33
+   },
+   {
+    "nb": 301,
+    "na": 500,
+    "n": 33
+   },
+   {
+    "nb": 51,
+    "na": 150,
+    "n": 27
+   }
+  ],
+  "cum_rowcov": {
+   "top5_rowcov": 0.599,
+   "top10_rowcov": 0.776,
+   "top15_rowcov": 0.884,
+   "top20_rowcov": 0.939,
+   "top30_rowcov": 0.98
+  },
+  "width_pctiles": {
+   "10": 39,
+   "50": 99,
+   "90": 199,
+   "99": 299
+  },
+  "frac_width_ge_49": 0.893
+ }
+]
