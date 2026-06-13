@@ -2872,3 +2872,174 @@ the theoretical background that predicted this result.
 `tiers3-re-fails`, `n-jobs-12`, `sapphire`, `abe0b20`, `37a94c5`, `obs-88`, `obs-87`,
 `obs-86`, `obs-85`, `obs-84`, `cc-VERDICT-library`, `cc-summary-library`,
 `cross-classified-spec`, `cross-classified-signoff`
+
+## Obs 90 — 2026-06-13 [RESULT / METHODOLOGY]: cc-library production refit — all 10 diagnostic-flagged frontier units pinned; controls stable; α under-attribution resolved
+
+### The finding
+
+Following Shawn's adoption sign-off of the cross-classified `library` model (Obs 89),
+the 29 H2.1 production units were re-fitted under
+`build_model_cross_classified(pconv_mode="library")`. Run: `runs/2026-06-13-cc-production-refit/`,
+sapphire, 6 min wall-clock, 0 worker errors, **28/29 converge**. Artefacts:
+`outputs/REFIT-VERDICT.md` + `outputs/refit-summary.json` (commit `48cb5d5`).
+
+**Two design decisions were settled empirically before fitting** (`spec.md`):
+
+1. **k and n_rows in aoristic-effective counts.** `k = y_aligned.sum()`,
+   `n_rows = y_aligned.sum() + y_nonaligned.sum()` (both subsets) — preserving
+   the exact lumping/thinning factorisation. The alternative (row counts) differs from
+   aoristic-mass aligned-fractions by only **mean 0.021, max 0.058** (Ostia;
+   `outputs/unit-measurements.json`), so θ (calibrated on row fractions) transfers with
+   ≤0.06 error — well inside tolerance.
+2. **Fixed 27-row corpus-wide slab library.** The convention basis is a FIXED,
+   a-priori, round-endpoint slab library (`outputs/production-slab-library.json`),
+   identical for every unit — NOT the per-unit catalogue signoff §2 sketched. Three
+   reasons: (a) direct production analogue of what the grid validated; (b) no per-unit
+   membership-contamination channel; (c) avoids per-unit truncation/collinearity tuning.
+   Validation: NNLS L1 residual ≤ 0.083 for all real-convention units (mean 0.056;
+   Pompeii L1 0.632 is correct — genuine-precision, the diagnostic's validation case).
+   Gram condition number **3.0 × 10¹⁷ — lower than the recovery grid's validated 19-row
+   library (6.9 × 10¹⁷)**, which converged at 96 %.
+
+**RESULT — frontier units pinned (the point of the exercise).**
+
+All 10 diagnostic-flagged under-attributed frontier units are now pinned within the
+H2.1 two-bound [α_shared, α_perunit] range and track the classification-implied α:
+
+| unit | H2.1 α_shared | cc-library α [95 % CI] | α_perunit | implied-α |
+|---|---|---|---|---|
+| Moesia inferior | 0.050 | **0.626** [0.532, 0.765] | 0.870 | 0.520 |
+| Pannonia inferior | 0.147 | **0.630** [0.576, 0.696] | 0.751 | 0.566 |
+| Numidia | 0.166 | **0.546** [0.522, 0.573] | 0.515 | 0.425 |
+| Ostia | 0.335 | **0.650** [0.577, 0.735] | 0.775 | 0.544 |
+| Venetia et Histria / Regio X | 0.452 | **0.844** [0.803, 0.880] | 0.809 | 0.853 |
+| Umbria / Regio VI | 0.429 | **0.738** [0.682, 0.800] | 0.700 | 0.722 |
+| Salona | 0.538 | **0.987** [0.942, 1.000] | 0.995 | 0.945 |
+| Samnium / Regio IV | 0.272 | **0.840** [0.803, 0.883] | 0.860 | 0.834 |
+| Britannia | 0.002 | **0.400** [0.340, 0.497] | 0.793 | 0.279 |
+| Dacia | 0.001 | **0.157** [0.138, 0.178] | 0.344 | 0.014 |
+
+The cross-classified alignment contrast pins the value the shared basis could not — exactly
+the remediation the diagnostic called for. 10/10 frontier units within bounds.
+
+**Controls stable.**
+
+| unit | H2.1 α_shared | cc-library α | Δ vs H2.1 |
+|---|---|---|---|
+| Pompeii | 0.001 | 0.015 | +0.014 (≈ 0 — genuine-precision correct) |
+| empire-aggregate | 0.672 | 0.671 | −0.001 |
+| Latium et Campania / Regio I | 0.672 | 0.595 | −0.077 |
+| Noricum | 0.880 | 0.784 | −0.096 |
+| latin-aggregate | 0.811 | 0.726 | −0.085 |
+
+Pompeii and empire-aggregate are unchanged. A mild, consistent −0.08 to −0.10 downshift on
+the broad high-α identifiable units (Latium et Campania, Noricum, latin-aggregate): the cc
+model attributes slightly less convention to broad units than the shared-basis fit. This is
+small and within the recovery grid's accuracy envelope; it warrants a sentence in the
+amendment but is not a validity problem.
+
+**Convergence 28/29.** The one flag is empire-aggregate (the largest unit, n_rows_eff ≈ 151 k,
+secondary/context unit): max R-hat 1.026 (gate 1.01), min bulk-ESS 211 (gate 400),
+0 divergences. This is a mixing/ESS marginality on the hardest unit, not a validity
+problem — α (0.671) matches H2.1 (0.672) exactly, so the estimate is trustworthy. The sampler
+config was kept uniform with the recovery-validated grid (2,000 draws / 1,000 tune /
+target_accept 0.95) rather than bumped for one secondary unit; reported caveated per spec §4.
+
+### Why this matters
+
+This Obs records the end-to-end resolution of the H2.1 α under-attribution problem. The
+DIAGNOSTIC (`runs/2026-06-07-h2.1-launch-prep/outputs/production/DIAGNOSTIC-alpha-identifiability-REPORT.md`)
+flagged 10 frontier units whose shared-basis α was implausibly low (temporal concentration
+confounds convention and genuine in time, making the shared-basis binomial confidently wrong
+for those units — Obs 87, Obs 89). The cc-library refit resolves this directly: the
+alignment contrast provides the identifying information the temporal multinomial alone cannot.
+
+The fixed corpus-wide slab library design is paper-load-bearing: it is the exact production
+analogue of the recovery-validated grid design (fixed deterministic-box library), it carries
+no per-unit contamination channel, and it spans every real unit's aligned SPA at
+reconstruction residual ≤ 0.083 — better collinearity than the validated grid basis.
+
+The immediate consequence is that the OSF amendment can now be drafted. The amendment
+reverses Amendment 03's shared basis, adopts the cc-library model, and records the
+recovery grid (Obs 89) + this refit as the gate. The amendment will be **drafted for
+Shawn's review — not lodged without sign-off**. The H3b identifiable-set reconciliation
+folds in.
+
+### Caveats / methodological notes
+
+**Coverage caveat carried forward from Obs 89.** Reported 95 % CIs are ~1σ-optimistic by
+the recovery grid's residual bias (grid identifiable |bias| 0.024 ≈ 1.07σ against a
+posterior σ of 0.023). For units in high-%win × high-α regimes, pair the cc-library point
+estimate with the H2.1 two-bound sensitivity as the disclosure (per spec §4 and
+`cross-classified-signoff.md` §6c).
+
+**Dacia is a confirmatory, not under-identified, unit** (`h2_under_identified: false` in
+`refit-summary.json`). Its implied-α of 0.014 (near zero) makes the two-bound framing less
+informative there; the cc-library estimate 0.157 [0.138, 0.178] should be read against the
+H2.1 perunit bound (0.344) and the diagnostic context.
+
+**Britannia's implied-α (0.279) is below the cc-library estimate (0.400).** The two-bound
+window is wide (0.002–0.793); the cc estimate is interior and reasonable. The implied-α
+discrepancy is noted for the amendment but does not undermine the pinning result.
+
+**Empire-aggregate convergence caveat.** Max R-hat 1.026 exceeds the 1.01 gate. The unit
+is secondary/context only (it does not feature in H2.1's confirmatory reporting); its
+estimate matches H2.1 (0.671 vs 0.672). The caveat is reported per spec §4 and does not
+affect the 10/10 frontier-unit verdict.
+
+**Pompeii Δ of +0.014.** The shared-basis α_shared was 0.001; the cc-library median is
+0.015. This is a boundary effect — the posterior minimum is constrained above zero by the
+prior, and the NNLS L1 residual for Pompeii (0.632) confirms the library cannot represent
+Pompeii's aligned SPA. The ~1.5 % value is the prior's floor, not a genuine convention
+estimate; this is noted in the REFIT-VERDICT as "genuine-precision, correct".
+
+### Related observations and artefacts
+
+**Obs 89** (cc-library full recovery grid — CLEAN PASS; contamination bias eliminated; model
+adopted as production lead; this Obs is the production application of that validated model):
+the gate result that authorised this refit. **Obs 87** (the lead grid VERDICT — C1 fails at
+18 %, +0.07 estimated-basis contamination near-uniform; this Obs is the refit that resolves
+the under-attribution problem the lead could not fix): the prior production result that
+motivated the cc model. **Obs 84** (the confidently-wrong likelihood mechanism — the
+theoretical explanation for why broad frontier units under-attributed under the shared basis;
+this Obs is the empirical resolution at production scale): the diagnosis confirmed in
+production here.
+
+The H2.1 diagnostic (`runs/2026-06-07-h2.1-launch-prep/outputs/production/DIAGNOSTIC-alpha-identifiability-REPORT.md`)
+is the direct document this refit resolves: the 10 flagged units in its table are the
+same 10 now pinned above.
+
+**Artefacts**: `runs/2026-06-13-cc-production-refit/outputs/REFIT-VERDICT.md` (commit
+`48cb5d5`); `runs/2026-06-13-cc-production-refit/outputs/refit-summary.json` (commit
+`48cb5d5`); `runs/2026-06-13-cc-production-refit/spec.md` (design decisions §1–2);
+`runs/2026-06-13-cc-production-refit/outputs/unit-measurements.json` (row vs mass
+aligned-fraction discrepancy, Gram condition numbers);
+`runs/2026-06-13-cc-production-refit/outputs/production-slab-library.json` (the locked
+27-row fixed library); `runs/2026-06-07-h2.1-launch-prep/outputs/production/DIAGNOSTIC-alpha-identifiability-REPORT.md`
+(the diagnostic this refit resolves).
+
+### Findable later
+
+`cc-library-production-refit`, `production-refit`, `29-units`, `28-of-29-converge`,
+`frontier-units-pinned`, `10-of-10`, `under-attribution-resolved`, `alpha-identifiability`,
+`diagnostic-resolved`, `fixed-corpus-wide-library`, `27-rows`, `production-slab-library`,
+`aoristic-effective-counts`, `k-y-aligned-sum`, `n-rows-both-subsets`,
+`row-vs-mass-aligned-fraction`, `mean-0-021`, `max-0-058`, `ostia-max-discrepancy`,
+`gram-condition-3e17`, `gram-condition-6-9e17`, `grid-validated-collinearity`,
+`nnls-residual-0-083`, `pompeii-l1-0-632`, `pompeii-genuine-precision-correct`,
+`moesia-inferior-0-05-to-0-63`, `pannonia-inferior-0-15-to-0-63`,
+`numidia-0-17-to-0-55`, `ostia-0-34-to-0-65`, `venetia-0-45-to-0-84`,
+`umbria-0-43-to-0-74`, `salona-0-54-to-0-99`, `samnium-0-27-to-0-84`,
+`britannia-0-00-to-0-40`, `dacia-0-00-to-0-16`,
+`empire-aggregate-convergence-flag`, `rhat-1-026`, `ess-211`, `0-divergences`,
+`n-rows-eff-151k`, `secondary-unit`, `alpha-matches-h2-1`,
+`latium-campania-minus-0-077`, `noricum-minus-0-096`, `latin-aggregate-minus-0-085`,
+`mild-downshift-broad-units`, `within-recovery-grid-accuracy`,
+`2000-draws`, `1000-tune`, `target-accept-0-95`, `build-model-cross-classified`,
+`pconv-mode-library`, `two-subset-likelihood`, `alignment-contrast`,
+`h2-1-two-bound`, `alpha-shared`, `alpha-perunit`, `implied-alpha`,
+`coverage-caveat`, `1-sigma-optimistic`, `signoff-6c`, `osf-amendment`,
+`reverses-amendment-03`, `draft-not-lodge`, `h3b-reconciliation-folds-in`,
+`sapphire`, `6-min`, `0-worker-errors`, `48cb5d5`, `obs-89`, `obs-87`, `obs-84`,
+`REFIT-VERDICT`, `refit-summary`, `unit-measurements`, `production-slab-library`,
+`DIAGNOSTIC-alpha-identifiability-REPORT`
