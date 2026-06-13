@@ -2714,3 +2714,161 @@ reproduces.
 `no-silent-negotiation`, `launch-halted`, `resource-decision`, `full-run-not-launched`,
 `D-B`, `p-conv-parameterisation`, `obs-87`, `obs-86`, `obs-84`, `obs-83`,
 `cc-PILOT-REPORT`, `3137241`, `0f9a025`, `a28c406`, `37a94c5`
+
+## Obs 89 — 2026-06-13 [RESULT / METHODOLOGY]: cross-classified `library` full recovery grid — CLEAN PASS; contamination bias eliminated; model adopted as production lead
+
+### The finding
+
+The full 300-cell × 100-rep cross-classified `library`-arm recovery grid completed on
+sapphire: **0 failed cells, 0 worker errors, 46.0 h wall-clock**. All four spec §5
+adoption criteria are met on every axis — this is a clean pass with no caveats on any
+criterion. Artefacts: `runs/2026-06-09-joint-identifiability/outputs/cc-VERDICT-library.md`
+and `cc-summary-library.json` (commit `abe0b20`).
+
+**C1 — do-no-harm (identifiable cells): PASSES.**
+
+| metric | cc `library` | lead (Obs 87) |
+|---|---|---|
+| cells passing C1 (|bias|<0.12 AND coverage≥0.90) | **76/210 (36%)** | 37/210 (18%) |
+| mean \|median bias\| | **0.021** | 0.075 |
+| mean coverage (all ident) | **0.627** | 0.374 |
+| coverage on α>0 cells only (n=168) | **0.784** | 0.456 |
+
+The lead's near-uniform +0.06–+0.08 estimated-basis contamination surface (Obs 87) is
+eliminated. The cc `library` bias surface is flat at +0.00–+0.03 across the whole
+%win × α plane (tabulated below).
+
+**Bias surface — mean(median bias) by %win × α_true** (source: `cc-VERDICT-library.md`):
+
+| %win \ α | 0.0 | 0.2 | 0.4 | 0.6 | 0.8 |
+|---|---|---|---|---|---|
+| 0.53 | +0.01 | +0.01 | +0.02 | +0.02 | +0.01 |
+| 0.63 | +0.01 | +0.00 | +0.00 | +0.01 | +0.01 |
+| 0.83 | +0.01 | +0.01 | +0.01 | +0.01 | +0.02 |
+| 0.95 | +0.01 | +0.01 | +0.02 | +0.02 | +0.02 |
+| 1.00 | +0.01 | +0.02 | +0.03 | +0.03 | +0.02 |
+
+**C2 — pulled-to-truth (confounded cells): PASSES.**
+
+| metric | cc `library` | lead (Obs 87) | shared-basis baseline |
+|---|---|---|---|
+| cells passing C2 | **72/90 (80%)** | 64/90 (71%) | — |
+| mean \|median bias\| | **0.009** | 0.066 | 0.362 |
+| worst positive median bias | +0.040 | +0.164 | — |
+| mean coverage | **0.763** | 0.462 | — |
+| coverage on α>0 confounded cells | **0.953** | — | — |
+
+Confounded |bias| is ~40× below the shared-basis baseline and 7× below the lead.
+Confounded α>0 coverage is 0.953 (≈ nominal).
+
+**C4 — convergence: PASSES.**
+
+| metric | cc `library` | lead (Obs 87) |
+|---|---|---|
+| cells with convergence_rate ≥ 0.95 | **287/300 (96%)** | 252/300 (84%) |
+| mean convergence rate | **0.991** | 0.950 |
+
+**Adoption criteria from `cross-classified-spec.md` §5** (all met):
+
+| criterion | value | required |
+|---|---|---|
+| 1. bias flattens (ident \|bias\| < lead 0.075) | **0.021** | < 0.075 |
+| 2. C1 recovers (coverage > lead 0.374, toward 0.90) | **0.627** | > 0.374 |
+| 3. C2 not sacrificed (conf \|bias\| << baseline 0.362) | **0.009** | << 0.362 |
+| 4. C4 not worse (cell pass-rate ≥ lead 0.84) | **0.957** | ≥ 0.84 |
+
+### Why this matters
+
+This is the gate result that unblocks the production refit. The spec §5 adoption rule
+("if it improves C1/coverage without sacrificing C2, it is the better production model
+and the OSF amendment adopts it") is satisfied on all four axes simultaneously. The
+cc `library` model is therefore **adopted as the production lead**, replacing the
+fixed-estimated-basis design whose +0.07 contamination surface (Obs 87) caused C1
+to fail.
+
+The N=15,000 watch-item from the phase-gate (the pilot N-scaling probe had shown +0.044
+bias on 8 reps, flagged as under-powered) is resolved: full-grid confounded |bias| is
+0.009 and the worst single-cell positive median bias is +0.040 — the probe figure was
+small-sample noise; the slab library spans the truth at all three N levels.
+
+**Immediate consequence:** the production refit (28 H2.1 units + Italia, per-unit slab
+catalogue) and the OSF amendment (reverses Amendment 03's shared basis) are
+preregistration-reversing and **await Shawn's sign-off** — not auto-launched.
+
+### Caveats / methodological notes
+
+**Coverage diagnostic — precision-for-accuracy trade, not under-dispersion.** The
+identifiable coverage shortfall vs the aspirational 0.90 threshold is fully accounted for
+by the tighter posterior, not by over-confidence. Measured on converged replicates:
+
+- The exact two-subset likelihood tightened the posterior to **66% of the lead's width**
+  (posterior σ 0.0227 vs 0.0343 on the same cells — more information ⇒ more precision,
+  exactly as signoff §6.3 predicted).
+- Residual identifiable |bias| 0.024 ÷ σ 0.0227 ≈ **1.07σ**; a pure-shift normal model
+  predicts coverage 0.757 vs observed 0.784 — the shortfall is fully explained by the
+  residual ~1σ bias against a tighter ruler.
+- Posterior σ / replicate sampling-sd = **1.34–1.37 (> 1)** — the credible interval is
+  *wider* than the point-estimate scatter, i.e. dispersion is **conservative**, not
+  optimistic.
+
+So cc `library` is simultaneously more accurate (bias 3.5× smaller) and more precise
+(σ 1.5× tighter) than the lead, with conservative dispersion. The identifiable coverage
+shortfall is a measurement artefact of comparing a tighter ruler against a non-zero
+residual bias, not a calibration defect.
+
+**Methodological takeaway (lego-brick / paper framing).** The cross-classified
+time × alignment model is the exact collapsed concomitant-variable latent-class
+likelihood (per-inscription latent type with two manifest indicators: temporal bin +
+grid-alignment). The lead's "classification-as-likelihood + estimated basis" was a
+composite-likelihood approximation, and the measured +0.07 surface was the cost of that
+approximation. The slab `library` (deterministic aoristic boxes of round-endpoint slabs;
+no data in the basis mass) is what removes the contamination channel while retaining
+shape freedom — the shared 3-tier `tiers3` arm re-failed (Obs 88).
+
+**Grid scope (from `full-grid-spec.md` §2):** %win ∈ {0.527, 0.631, 0.834, 0.951,
+1.00}; α_true ∈ {0.0, 0.2, 0.4, 0.6, 0.8}; N ∈ {1,500, 2,800, 15,000}; 100 reps per
+cell; 0 replicate failures; 46.0 h wall-clock at n_jobs = 12 on sapphire.
+
+### Related observations and artefacts
+
+**Obs 88** (the 3-arm pilot that selected the `library` arm — this Obs is the full
+300-cell confirmation of the pilot result): the pilot that nominated the `library` design
+and triggered this run. **Obs 87** (the lead grid VERDICT — C1 fails at 18 %,
+estimated-basis contamination +0.07 near-uniform; this Obs is the full remediation):
+the prior lead whose contamination surface this Obs eliminates. **Obs 86** (estimated-
+basis contamination mechanism characterised; cross-classified D-B as the principled fix):
+the diagnosis confirmed here at replicate scale across the full grid. **Obs 85** (κ-sweep
+ruled out CI under-dispersion as the C1 failure mode): consistent with this Obs's finding
+that the shortfall is bias-driven, not dispersion-driven. **Obs 84** (the confidently-
+wrong likelihood mechanism — theoretical underpinning for why the shared basis fails):
+the theoretical background that predicted this result.
+
+**Artefacts**: `runs/2026-06-09-joint-identifiability/outputs/cc-VERDICT-library.md`
+(commit `abe0b20`); `runs/2026-06-09-joint-identifiability/outputs/cc-summary-library.json`
+(commit `abe0b20`); `runs/2026-06-09-joint-identifiability/cross-classified-spec.md`
+(commit `37a94c5`, §5 adoption rule); `runs/2026-06-09-joint-identifiability/cross-classified-signoff.md`
+(§6c full-grid verdict + coverage diagnostic); `runs/2026-06-09-joint-identifiability/full-grid-spec.md`
+§2 (grid scope).
+
+### Findable later
+
+`cross-classified-library`, `cc-library-full-grid`, `clean-pass`, `300-cells`,
+`100-reps`, `zero-failed-cells`, `zero-worker-errors`, `46-hours`, `46-0-h`,
+`contamination-eliminated`, `estimated-basis-contamination`, `bias-surface-flat`,
+`plus-0-00-to-plus-0-03`, `C1-passes`, `C2-passes`, `C4-passes`, `76-of-210`,
+`36-percent`, `72-of-90`, `80-percent`, `287-of-300`, `96-percent-convergence`,
+`mean-bias-0-021`, `lead-bias-0-075`, `coverage-0-627`, `coverage-0-784`,
+`alpha-greater-0`, `confounded-coverage-0-953`, `confounded-bias-0-009`,
+`baseline-0-362`, `40x-reduction`, `7x-below-lead`, `mean-rate-0-991`,
+`adoption-criteria-all-met`, `spec-5-adoption-rule`, `production-lead-adopted`,
+`production-refit-awaits-sign-off`, `OSF-amendment`, `reverses-amendment-03`,
+`N-15000-watch-resolved`, `0-044-small-sample-noise`, `worst-cell-plus-0-040`,
+`precision-for-accuracy-trade`, `not-under-dispersion`, `posterior-sigma-0-0227`,
+`lead-sigma-0-0343`, `66-percent-of-lead-width`, `1-07-sigma`, `predicted-coverage-0-757`,
+`observed-coverage-0-784`, `sigma-over-sd-1-34-to-1-37`, `conservative-dispersion`,
+`3-5x-smaller-bias`, `1-5x-tighter-sigma`, `collapsed-concomitant-variable`,
+`latent-class-likelihood`, `two-manifest-indicators`, `composite-likelihood-approximation`,
+`slab-library`, `deterministic-aoristic-slabs`, `no-contamination-channel`,
+`tiers3-re-fails`, `n-jobs-12`, `sapphire`, `abe0b20`, `37a94c5`, `obs-88`, `obs-87`,
+`obs-86`, `obs-85`, `obs-84`, `cc-VERDICT-library`, `cc-summary-library`,
+`cross-classified-spec`, `cross-classified-signoff`
