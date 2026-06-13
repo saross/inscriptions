@@ -257,6 +257,69 @@ no-silent-negotiation rule the launch waits for Shawn. Options:
   Saves ~20–24 h at the cost of a permanently incomplete C1 surface.
 - **(c) Anything else** (e.g. split across two nights via resume — the runner supports it).
 
+## 6c. FULL-GRID VERDICT + adoption recommendation (2026-06-13)
+
+Full 300-cell × 100-rep `library` run on sapphire: **0 failed cells, 0 worker errors,
+46.0 h** (`outputs/cc-VERDICT-library.md`, `cc-summary-library.json`). Head-to-head vs the
+fixed-estimated-basis lead, scored on `full-grid-spec.md` §3 + this spec's §5 adoption rule:
+
+| criterion | lead | **cc `library`** | verdict |
+|---|---|---|---|
+| C1 do-no-harm (ident): |median bias| | 0.075 | **0.021** | ✓ ≪ 0.12 gate |
+| C1 coverage (ident, all cells) | 0.374 | **0.627** | improved 1.7× |
+| C1 coverage (ident, α>0 only) | 0.456 | **0.784** | improved (boundary cells excluded) |
+| C2 pulled-to-truth (conf): pass-rate | 64/90 | **72/90 (80%)** | ✓ improved |
+| C2 confounded |median bias| | 0.066 | **0.009** | ✓ vs baseline 0.362 (~40×) |
+| C2 coverage (conf, α>0) | — | **0.953** | ✓ ≈ nominal |
+| C4 convergence: cell pass-rate | 84% | **96%** | ✓ improved |
+| Bias surface (max cell) | +0.08 | **+0.03** | ✓ the +0.07 surface is GONE |
+
+**The +0.07 estimated-basis contamination bias is eliminated** — the bias surface is flat at
++0.00…+0.03 across the whole %win × α plane (vs the lead's near-uniform +0.06…+0.08).
+**Decision rule met:** spec §5 says "if it improves C1/coverage without sacrificing C2, it is
+the better production model and the OSF amendment adopts it" — cc `library` improves *every*
+axis (bias, coverage, C2 pass-rate, convergence) and sacrifices nothing.
+
+**Coverage diagnostic (the one nuance — answers the brief's second-opinion item 2 for the cc
+model).** Identifiable coverage is 0.784 (α>0), short of the aspirational 0.90. This is **not
+under-dispersion** — the opposite. Per-cell measurement on the converged replicates:
+
+- cc posterior σ **0.0227** vs the lead's 0.0343 on the *same* cells → the exact two-subset
+  likelihood **tightened the posterior to 66 %** of the lead's width (more information ⇒ more
+  precision — exactly as §6.3/§6.4 predicted).
+- residual identifiable |bias| 0.024 ÷ σ 0.0227 ≈ **1.07σ**; a pure-shift normal model then
+  predicts coverage 0.757 vs observed 0.784 — **the gap is the residual ~1σ bias against a
+  now-tighter ruler, fully accounted for.**
+- posterior σ / replicate sampling-sd = **1.34–1.37 (>1)** → the CI is *wider* than the
+  point-estimate scatter: dispersion is **conservative**, not optimistic.
+- confounded cells, where residual bias is only 0.010 (0.42σ), reach **0.953** coverage.
+
+So the identifiable-coverage shortfall is a **precision-for-accuracy trade, not a calibration
+failure**: cc `library` is simultaneously more accurate (bias 3.5× smaller) *and* more precise
+(σ 1.5× tighter) than the lead, with conservative dispersion. At σ ≈ 0.023 a negligible +0.02
+bias is ~1σ, so it nips the 95 % nominal — but for the substantive question (is a frontier
+unit's α ≈ 0.05 or ≈ 0.5–0.6?) an accuracy of ±0.02–0.03 is far inside what matters.
+
+The N=15000 watch-item (phase-gate row 4: probe showed +0.044 on 8 reps) **resolved**:
+full-grid confounded |bias| is 0.009 and the worst single-cell positive median bias is +0.040
+— the probe figure was small-sample noise; the slab library spans the truth at all three N.
+
+**Recommendation: ADOPT cc `library` as the production lead.** Pair production reporting with
+a small CI-honesty note (or the already-planned two-bound α sensitivity) for any unit in a
+high-residual corner, since reported CIs are ~1σ-optimistic by the residual bias.
+
+**This is a preregistration-reversing change** (it reverses Amendment 03's shared basis), so
+the production refit + OSF amendment **await Shawn's sign-off** — not auto-launched. On sign-off:
+
+1. Re-fit the 28 H2.1 units + Italia under cc `library` (per-unit slab **catalogue** = the
+   production analogue of the library, §2): rows are the deterministic aoristic boxes of the
+   distinct grid-aligned interval types observed in each unit (± corpus-common slabs).
+2. OSF amendment: disclose the lead's α-identifiability limit + the measured +0.07
+   contamination; adopt cc `library` (cite Feller 2016 / Gustafson 2010 for the problem,
+   Huang & Bandeen-Roche 2004 / Bronk Ramsey 2009 for the fix); record this grid as the gate;
+   note it reverses Amendment 03. The `prereg-note-2026-06-09` "Planned remediation" § is stale.
+3. Then the hybrid robustness pilot (`hybrid-robustness-spec.md`), one fit first.
+
 ## 7. Risks accepted
 
 - The pilot adds ~ 1–1.5 h sapphire compute and one decision gate before the full run —
