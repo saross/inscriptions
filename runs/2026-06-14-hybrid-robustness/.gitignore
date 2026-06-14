@@ -2,3 +2,6 @@
 # only HYBRID-PILOT-REPORT.md + hybrid-pilot.json are committed.
 outputs/*.nc
 outputs/*.log
+# θ-sweep per-unit fits — regenerable; only THETA-SWEEP-VERDICT.md +
+# theta-sweep-summary.json are committed.
+outputs/sweep-*/

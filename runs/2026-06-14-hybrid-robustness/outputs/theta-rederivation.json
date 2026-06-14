@@ -1,0 +1,58 @@
+{
+ "generated": "2026-06-14",
+ "calibrated_reference": {
+  "theta_gen": 0.155,
+  "theta_conv": 0.945,
+  "note": "calibrate_theta.py rule C, row-frac vs \u03b1_shared, identifiable"
+ },
+ "fits": {
+  "\u03b1_shared\u00d7row\u00d7identifiable": {
+   "theta_gen": 0.16,
+   "theta_conv": 0.95,
+   "rmse": 0.1175,
+   "n": 20
+  },
+  "\u03b1_shared\u00d7row\u00d7all": {
+   "theta_gen": 0.3,
+   "theta_conv": 0.94,
+   "rmse": 0.1615,
+   "n": 29
+  },
+  "\u03b1_shared\u00d7mass\u00d7identifiable": {
+   "theta_gen": 0.165,
+   "theta_conv": 0.975,
+   "rmse": 0.1168,
+   "n": 20
+  },
+  "\u03b1_shared\u00d7mass\u00d7all": {
+   "theta_gen": 0.3,
+   "theta_conv": 0.97,
+   "rmse": 0.1661,
+   "n": 29
+  },
+  "\u03b1_cc\u00d7row\u00d7identifiable": {
+   "theta_gen": 0.015,
+   "theta_conv": 0.89,
+   "rmse": 0.0482,
+   "n": 20
+  },
+  "\u03b1_cc\u00d7row\u00d7all": {
+   "theta_gen": 0.015,
+   "theta_conv": 0.905,
+   "rmse": 0.0451,
+   "n": 29
+  },
+  "\u03b1_cc\u00d7mass\u00d7identifiable": {
+   "theta_gen": 0.025,
+   "theta_conv": 0.91,
+   "rmse": 0.0461,
+   "n": 20
+  },
+  "\u03b1_cc\u00d7mass\u00d7all": {
+   "theta_gen": 0.025,
+   "theta_conv": 0.93,
+   "rmse": 0.0448,
+   "n": 29
+  }
+ }
+}
