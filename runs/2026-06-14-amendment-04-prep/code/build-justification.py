@@ -33,7 +33,7 @@ PANDOC = Path("/opt/quarto/bin/tools/x86_64/pandoc")
 CONCISE = """\
 OSF JUSTIFICATION — Amendment 04: Cross-classified time x alignment remediation for the convention-fraction identifiability limit (reverses the shared convention basis)
 
-[Paste everything below the divider into the OSF "justification" field. Plain text — the field does not render Markdown. Anticipated lodgement date: 2026-06-14 — CONFIRM at lodgement and update the date + git tag here and in the summary-addendum if it differs. OSF does not permit new file uploads to a registration update, so the full amendment is LINKED (version-pinned at git tag osf-amendment-04-2026-06-14) and ALSO reproduced in plain text below, so the OSF record is self-contained. If the field rejects the length, delete the reproduced plain text and keep the concise statement + links — linking is OSF's own recommended method.]
+[Paste everything below the divider into the OSF "justification" field. Plain text — the field does not render Markdown. Lodgement date: 2026-06-14. OSF does not permit new file uploads to a registration update, so the full amendment is LINKED (version-pinned at git tag osf-amendment-04-2026-06-14) and ALSO reproduced in plain text below, so the OSF record is self-contained. If the field rejects the length, delete the reproduced plain text and keep the concise statement + links — linking is OSF's own recommended method.]
 
 ==============================================================================
 

@@ -1,6 +1,6 @@
 OSF JUSTIFICATION — Amendment 04: Cross-classified time x alignment remediation for the convention-fraction identifiability limit (reverses the shared convention basis)
 
-[Paste everything below the divider into the OSF "justification" field. Plain text — the field does not render Markdown. Anticipated lodgement date: 2026-06-14 — CONFIRM at lodgement and update the date + git tag here and in the summary-addendum if it differs. OSF does not permit new file uploads to a registration update, so the full amendment is LINKED (version-pinned at git tag osf-amendment-04-2026-06-14) and ALSO reproduced in plain text below, so the OSF record is self-contained. If the field rejects the length, delete the reproduced plain text and keep the concise statement + links — linking is OSF's own recommended method.]
+[Paste everything below the divider into the OSF "justification" field. Plain text — the field does not render Markdown. Lodgement date: 2026-06-14. OSF does not permit new file uploads to a registration update, so the full amendment is LINKED (version-pinned at git tag osf-amendment-04-2026-06-14) and ALSO reproduced in plain text below, so the OSF record is self-contained. If the field rejects the length, delete the reproduced plain text and keep the concise statement + links — linking is OSF's own recommended method.]
 
 ==============================================================================
 
@@ -186,4 +186,4 @@ A8. Provenance
 -   Production refit: runs/2026-06-13-cc-production-refit/ (spec.md, production-slab-library.json, refit_lib.py/run_refit.py/aggregate_refit.py); VERDICT outputs/REFIT-VERDICT.md (+ refit-summary.json) — under the adopted θ; the first-pass (calibration θ_gen 0.155) is at commit 48cb5d5.
 -   θ robustness (§A5.7): runs/2026-06-14-hybrid-robustness/ (HYBRID-PILOT-FINDINGS.md; rederive_theta.py → theta-rederivation.json; theta_sweep.py/aggregate_sweep.py → THETA-SWEEP-VERDICT.md; the global-θ hybrid hybrid_lib.py/run_pilot.py → HYBRID-PILOT-REPORT.md).
 -   Reverses: Amendment 03 (osf-amendment-2026-06-07-convention-basis.md) §A5.1 / Decision 38 shared, unit-independent basis (lodged 2026-06-08, git tag osf-amendment-03-2026-06-08). Lodged authority for all unchanged specifications remains the original supplementary (git tag osf-lodgement-2026-05-20).
--   Repository-state provenance: the git lodgement tag for this amendment (osf-amendment-04-…, to be created at lodgement) is the reproducibility anchor.
+-   Repository-state provenance: the git lodgement tag for this amendment (osf-amendment-04-2026-06-14) is the reproducibility anchor.

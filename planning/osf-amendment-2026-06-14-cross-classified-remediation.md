@@ -403,4 +403,4 @@ the full global-θ hybrid is **not** pursued (the pilot showed it weakly identif
   `osf-amendment-03-2026-06-08`). **Lodged authority** for all unchanged specifications
   remains the original supplementary (git tag `osf-lodgement-2026-05-20`).
 - **Repository-state provenance:** the git lodgement tag for this amendment
-  (`osf-amendment-04-…`, to be created at lodgement) is the reproducibility anchor.
+  (`osf-amendment-04-2026-06-14`) is the reproducibility anchor.
