@@ -43,6 +43,12 @@ THETA_KAPPA = 40.0
 REFIT_BASE_SEED = 20260613   # production-refit seed; per-unit seed = base + unit_index
 LIBRARY_JSON = REFIT / "outputs" / "production-slab-library.json"
 THETA_CALIB_JSON = JOINT.parent / "outputs" / "theta-calibration.json"
+# The ADOPTED production θ (2026-06-14, Shawn): re-derived from the corrected cc-library
+# α's (see adopted_theta_priors). The first-pass refit (commit 48cb5d5) used the
+# original calibration (theta_priors, θ_gen 0.155).
+REDERIVED_THETA_JSON = Path(
+    "/home/shawn/Code/inscriptions/runs/2026-06-14-hybrid-robustness"
+    "/outputs/theta-rederivation.json")
 
 
 def enumerate_refit_units() -> list[dict[str, Any]]:
@@ -87,11 +93,28 @@ def load_library_basis() -> tuple[np.ndarray, list[list[int]]]:
 
 
 def theta_priors() -> tuple[tuple[float, float], tuple[float, float], dict]:
-    """(theta_conv_ab, theta_gen_ab, calib_rule_C) — rule C, κ=40 (spec §3)."""
+    """ORIGINAL calibration θ (rule C, κ=40): θ_conv 0.945, θ_gen 0.155. Used by the
+    first-pass refit (commit 48cb5d5); kept for the record. Superseded as the production
+    prior by `adopted_theta_priors` (see below)."""
     cal = json.loads(THETA_CALIB_JSON.read_text(encoding="utf-8"))["calibration"][ALIGN_RULE]
     tc = J.beta_from_mean_concentration(cal["theta_conv"], THETA_KAPPA)
     tg = J.beta_from_mean_concentration(cal["theta_gen"], THETA_KAPPA)
     return tc, tg, cal
+
+
+def adopted_theta_priors() -> tuple[tuple[float, float], tuple[float, float], dict]:
+    """ADOPTED production θ prior (2026-06-14, Shawn's decision (i)): the θ **re-derived
+    from the corrected cc-library α's** (`rederive_theta.py` → `theta-rederivation.json`,
+    the ``α_cc×mass×all`` fit → θ_conv ≈ 0.930, θ_gen ≈ 0.025), replacing the calibration's
+    θ_gen 0.155 — which was inflated by the circular use of the under-attributing
+    shared-basis α_shared. Three independent methods agree θ_gen ≈ 0.02–0.025 (the hybrid
+    joint fit, this re-derivation, and the wide-κ θ-sweep; `HYBRID-PILOT-FINDINGS.md`), and
+    it fits the aligned-fraction data 2.5× better. κ=40 (θ_gen is well-determined: hybrid
+    posterior CI [0.016, 0.030]). Read from the artefact, not hardcoded."""
+    fit = json.loads(REDERIVED_THETA_JSON.read_text(encoding="utf-8"))["fits"]["α_cc×mass×all"]
+    tc = J.beta_from_mean_concentration(fit["theta_conv"], THETA_KAPPA)
+    tg = J.beta_from_mean_concentration(fit["theta_gen"], THETA_KAPPA)
+    return tc, tg, fit
 
 
 def build_unit_cc_data(df_unit: pd.DataFrame) -> dict[str, Any]:

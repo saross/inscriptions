@@ -98,8 +98,14 @@ model = build_model_cross_classified(y_aligned, y_nonaligned, k, n_rows,
             tier_basis=FIXED_LIBRARY, theta_conv_ab, theta_gen_ab, pconv_mode="library")
 ```
 
-- θ priors: rule C, κ=40 → `beta_from_mean_concentration(0.945, 40)` / `(0.155, 40)` (identical
-  to the grid; `theta-calibration.json`).
+- θ priors: **κ=40, ADOPTED re-derived centre θ_conv 0.930 / θ_gen 0.025** (`refit_lib.
+  adopted_theta_priors`; Shawn 2026-06-14). **Update:** the first-pass refit (commit 48cb5d5)
+  used the original calibration (θ_conv 0.945, θ_gen 0.155); the robustness work
+  (`runs/2026-06-14-hybrid-robustness/`) showed that θ_gen 0.155 was inflated by the circular
+  use of the under-attributing shared-basis α's — three methods (hybrid joint fit, re-derivation
+  from corrected α's, wide-κ sweep) agree θ_gen ≈ 0.025, fitting 2.5× better — so the production
+  prior was re-centred and the refit re-run. The α's move little (mean +0.025; Moesia inferior
+  and Britannia, the most confounded units, rise ~0.05–0.07, within the two-bound range).
 - Sampler: DRAWS 2000, TUNE 1000, CHAINS 4, target_accept 0.95, cores=1 (the validated config,
   `grid_lib`/`h2_lib` agree). Per-unit seed = `BASE_SEED + unit_index`.
 - Convergence gate: `convergence_pass(max_rhat, min_ess_bulk)` over {alpha, tier_weights,

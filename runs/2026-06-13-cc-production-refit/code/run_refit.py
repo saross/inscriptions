@@ -57,8 +57,10 @@ UNITS_DIR = REFIT / "outputs" / "units"
 STATUS_PATH = REFIT / "outputs" / "refit-STATUS.txt"
 
 # Loaded once at module level (re-imported cleanly by spawn workers).
+# θ prior: the ADOPTED re-derived θ_gen ≈ 0.025 (Shawn 2026-06-14, decision (i)),
+# NOT the original calibration's 0.155 (refit_lib.adopted_theta_priors vs theta_priors).
 LIBRARY_BASIS, LIBRARY_SLABS = R.load_library_basis()
-THETA_CONV_AB, THETA_GEN_AB, THETA_CAL = R.theta_priors()
+THETA_CONV_AB, THETA_GEN_AB, THETA_CAL = R.adopted_theta_priors()
 MONITORED = ["alpha", "tier_weights", "sigma_smooth", "z_pgen", "theta_conv", "theta_gen"]
 
 
