@@ -79,3 +79,39 @@ coverage, so the validation would inherit the pathology. Instead, my recommendat
 
 The amendment (§A5.7) currently flags the hybrid concordance as "pending"; whichever path
 is chosen, its result folds in there before lodgement.
+
+## Addendum (2026-06-14) — (B) + (C) done (Shawn-approved)
+
+**(B) θ re-derivation** (`rederive_theta.py`, `outputs/theta-rederivation.json`).
+Re-running `calibrate_theta`'s constrained least-squares with the **corrected cc-library
+α's** (in place of the under-attributing α_shared) gives **θ_gen ≈ 0.025** (vs the
+calibrated 0.155) and fits the aligned-fraction data **2.5× better** (RMSE 0.045 vs
+0.117). The reproduction control (α_shared → θ_gen 0.160) confirms the method. So three
+independent routes — the hybrid joint fit (0.024), the re-derivation (0.025), and the
+wide-κ sweep below — agree θ_gen ≈ 0.02–0.025; the production calibration's 0.155 was
+inflated by the circular use of the biased shared-basis α's. (The production refit's
+per-unit θ_gen posterior ran at median 0.101 — the data pulled it down, but the tight
+κ=40 prior held it above the data-preferred value.)
+
+**(C) θ-prior-sensitivity sweep** (`theta_sweep.py` / `aggregate_sweep.py`,
+`outputs/THETA-SWEEP-VERDICT.md`; 4 θ-priors × 29 units = 116 well-identified cc-library
+fits, sapphire 18.8 min, 28/29 converge; baseline reproduces the production refit bit-
+identically, max |Δα| 0.003). **This is the robustness annex, replacing the poorly-mixing
+global-θ hybrid.** Result:
+
+- **27/29 units stable** (α-range < 0.10 across baseline / re-derived / wide-κ /
+  re-derived-wide); mean range 0.038; broad units + aggregates rock-stable (range ≤ 0.03).
+- **Frontier units 8/10 stable.** The two sensitive ones are the **most
+  temporally-confounded** units — Moesia inferior (range 0.159) and Britannia (0.140) —
+  where the θ assumption matters most; their α moves **upward** under the corrected lower
+  θ_gen and stays **within the H2.1 two-bound range**, so the remediation conclusion is
+  unchanged.
+- The operative θ_gen 0.155 → 0.025 shift is uniformly small and positive (mean +0.025,
+  max +0.072). The alignment **contrast** — not the θ centre — pins the well-identified α's.
+
+**Open decision (Shawn).** Three methods agree θ_gen ≈ 0.025 and it fits markedly better,
+so there is a principled case to **adopt the re-derived θ_gen as the production prior and
+re-run the 29-unit refit** (~6 min; the α's move little, but it removes a demonstrated
+calibration bias rather than disclosing it). Alternatively, keep θ_gen 0.155 as production
+and report this sweep as the robustness result. Either way the result folds into amendment
+§A5.7 (and, if re-run, §A5.4's per-unit α's update — Moesia/Britannia rise ~0.05–0.07).
