@@ -1,0 +1,4 @@
+# The single joint posterior + run logs are regenerable (deterministic seed);
+# only HYBRID-PILOT-REPORT.md + hybrid-pilot.json are committed.
+outputs/*.nc
+outputs/*.log
