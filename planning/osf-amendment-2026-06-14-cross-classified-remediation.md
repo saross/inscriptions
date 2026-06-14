@@ -244,10 +244,11 @@ mid-range values tracking the independent classification-implied α:** Moesia in
 0.05 → 0.70, Britannia 0.00 → 0.45, Pannonia inferior 0.15 → 0.68, Numidia 0.17 → 0.55,
 Salona 0.54 → 0.99, Samnium 0.27 → 0.86, Venetia et Histria 0.45 → 0.87, Umbria
 0.43 → 0.78, Ostia 0.34 → 0.70, Dacia 0.00 → 0.17. Eight sit inside the H2.1 two-bound
-[shared, per-unit] range; Umbria (0.78) and Venetia (0.87) edge ~0.01–0.03 above the old
-*per-unit-basis* upper bound, but both track their classification-implied α (0.72, 0.85)
-closely — that bound was itself a wrong-high estimate, and the cross-classified model is
-a better third estimator, not constrained to the diagnostic bracket. **Controls stable**
+[shared, per-unit] range; Umbria (0.781) and Venetia (0.870) sit ~0.06–0.08 above the old
+*per-unit-basis* upper bound (0.700, 0.809), but both track their classification-implied α
+(0.722, 0.853) closely — that bound was itself a wrong-high estimate from the
+over-attributing per-unit basis, and the cross-classified model is a better third
+estimator, not constrained to the diagnostic bracket. **Controls stable**
 (Pompeii 0.001 → 0.016 ≈ 0, correct; empire-aggregate 0.672 → 0.680; Latium, Noricum,
 latin-aggregate within ~0.07 of α_shared). The one non-converged unit is empire-aggregate
 (secondary/context; R̂ 1.026, ESS 211, 0 divergences — a mixing marginality on the largest
