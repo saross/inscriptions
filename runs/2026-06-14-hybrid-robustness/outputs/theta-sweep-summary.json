@@ -1,0 +1,423 @@
+{
+ "conditions": [
+  "baseline",
+  "rederived",
+  "wide",
+  "rederived_wide"
+ ],
+ "n_units": 29,
+ "n_stable": 27,
+ "mean_range": 0.03751724137931034,
+ "frontier_mean_range": 0.055000000000000014,
+ "frontier_stable": false,
+ "baseline_to_rederived_mean": 0.02451724137931035,
+ "baseline_consistency_max": 0.003398227700704415,
+ "units": [
+  {
+   "name": "Africa proconsularis",
+   "frontier": false,
+   "alphas": {
+    "baseline": 0.629,
+    "rederived": 0.661,
+    "wide": 0.657,
+    "rederived_wide": 0.673
+   },
+   "range": 0.044,
+   "baseline_to_rederived": 0.032,
+   "refit_alpha": 0.6296079837099707,
+   "all_converged": true
+  },
+  {
+   "name": "Apulia et Calabria / Regio II",
+   "frontier": false,
+   "alphas": {
+    "baseline": 0.744,
+    "rederived": 0.774,
+    "wide": 0.781,
+    "rederived_wide": 0.794
+   },
+   "range": 0.05,
+   "baseline_to_rederived": 0.03,
+   "refit_alpha": 0.7408518001455631,
+   "all_converged": true
+  },
+  {
+   "name": "Aquileia",
+   "frontier": false,
+   "alphas": {
+    "baseline": 0.915,
+    "rederived": 0.933,
+    "wide": 0.902,
+    "rederived_wide": 0.922
+   },
+   "range": 0.031,
+   "baseline_to_rederived": 0.018,
+   "refit_alpha": 0.914516797919924,
+   "all_converged": true
+  },
+  {
+   "name": "Baetica",
+   "frontier": false,
+   "alphas": {
+    "baseline": 0.624,
+    "rederived": 0.661,
+    "wide": 0.625,
+    "rederived_wide": 0.65
+   },
+   "range": 0.037,
+   "baseline_to_rederived": 0.037,
+   "refit_alpha": 0.6236016188680011,
+   "all_converged": true
+  },
+  {
+   "name": "Britannia",
+   "frontier": true,
+   "alphas": {
+    "baseline": 0.4,
+    "rederived": 0.449,
+    "wide": 0.519,
+    "rederived_wide": 0.54
+   },
+   "range": 0.14,
+   "baseline_to_rederived": 0.049,
+   "refit_alpha": 0.4004330442336693,
+   "all_converged": true
+  },
+  {
+   "name": "Dacia",
+   "frontier": true,
+   "alphas": {
+    "baseline": 0.156,
+    "rederived": 0.171,
+    "wide": 0.164,
+    "rederived_wide": 0.173
+   },
+   "range": 0.017,
+   "baseline_to_rederived": 0.014,
+   "refit_alpha": 0.15655513387624348,
+   "all_converged": true
+  },
+  {
+   "name": "Dalmatia",
+   "frontier": false,
+   "alphas": {
+    "baseline": 0.913,
+    "rederived": 0.923,
+    "wide": 0.92,
+    "rederived_wide": 0.927
+   },
+   "range": 0.014,
+   "baseline_to_rederived": 0.011,
+   "refit_alpha": 0.9127932513844391,
+   "all_converged": true
+  },
+  {
+   "name": "Etruria / Regio VII",
+   "frontier": false,
+   "alphas": {
+    "baseline": 0.812,
+    "rederived": 0.836,
+    "wide": 0.842,
+    "rederived_wide": 0.852
+   },
+   "range": 0.04,
+   "baseline_to_rederived": 0.024,
+   "refit_alpha": 0.8115783090127391,
+   "all_converged": true
+  },
+  {
+   "name": "Germania inferior",
+   "frontier": false,
+   "alphas": {
+    "baseline": 0.73,
+    "rederived": 0.754,
+    "wide": 0.737,
+    "rederived_wide": 0.751
+   },
+   "range": 0.024,
+   "baseline_to_rederived": 0.024,
+   "refit_alpha": 0.7299299574121296,
+   "all_converged": true
+  },
+  {
+   "name": "Germania superior",
+   "frontier": false,
+   "alphas": {
+    "baseline": 0.482,
+    "rederived": 0.509,
+    "wide": 0.524,
+    "rederived_wide": 0.537
+   },
+   "range": 0.055,
+   "baseline_to_rederived": 0.027,
+   "refit_alpha": 0.4814124646396024,
+   "all_converged": true
+  },
+  {
+   "name": "Hispania citerior",
+   "frontier": false,
+   "alphas": {
+    "baseline": 0.742,
+    "rederived": 0.766,
+    "wide": 0.758,
+    "rederived_wide": 0.769
+   },
+   "range": 0.027,
+   "baseline_to_rederived": 0.024,
+   "refit_alpha": 0.7429433190103141,
+   "all_converged": true
+  },
+  {
+   "name": "Italia (excl. Rome)",
+   "frontier": false,
+   "alphas": {
+    "baseline": 0.779,
+    "rederived": 0.787,
+    "wide": 0.787,
+    "rederived_wide": 0.791
+   },
+   "range": 0.012,
+   "baseline_to_rederived": 0.008,
+   "refit_alpha": 0.7793569502388181,
+   "all_converged": true
+  },
+  {
+   "name": "Latium et Campania / Regio I",
+   "frontier": false,
+   "alphas": {
+    "baseline": 0.595,
+    "rederived": 0.605,
+    "wide": 0.608,
+    "rederived_wide": 0.614
+   },
+   "range": 0.019,
+   "baseline_to_rederived": 0.01,
+   "refit_alpha": 0.5952881783030282,
+   "all_converged": true
+  },
+  {
+   "name": "Lusitania",
+   "frontier": false,
+   "alphas": {
+    "baseline": 0.758,
+    "rederived": 0.787,
+    "wide": 0.77,
+    "rederived_wide": 0.789
+   },
+   "range": 0.031,
+   "baseline_to_rederived": 0.029,
+   "refit_alpha": 0.7568123645755531,
+   "all_converged": true
+  },
+  {
+   "name": "Moesia inferior",
+   "frontier": true,
+   "alphas": {
+    "baseline": 0.627,
+    "rederived": 0.699,
+    "wide": 0.736,
+    "rederived_wide": 0.785
+   },
+   "range": 0.159,
+   "baseline_to_rederived": 0.072,
+   "refit_alpha": 0.6262592601761922,
+   "all_converged": true
+  },
+  {
+   "name": "Mogontiacum",
+   "frontier": false,
+   "alphas": {
+    "baseline": 0.139,
+    "rederived": 0.153,
+    "wide": 0.154,
+    "rederived_wide": 0.166
+   },
+   "range": 0.027,
+   "baseline_to_rederived": 0.014,
+   "refit_alpha": 0.13877934964781088,
+   "all_converged": true
+  },
+  {
+   "name": "Noricum",
+   "frontier": false,
+   "alphas": {
+    "baseline": 0.784,
+    "rederived": 0.808,
+    "wide": 0.784,
+    "rederived_wide": 0.8
+   },
+   "range": 0.024,
+   "baseline_to_rederived": 0.024,
+   "refit_alpha": 0.7835780213311827,
+   "all_converged": true
+  },
+  {
+   "name": "Numidia",
+   "frontier": true,
+   "alphas": {
+    "baseline": 0.546,
+    "rederived": 0.555,
+    "wide": 0.543,
+    "rederived_wide": 0.547
+   },
+   "range": 0.011,
+   "baseline_to_rederived": 0.009,
+   "refit_alpha": 0.5462547207502,
+   "all_converged": true
+  },
+  {
+   "name": "Ostia",
+   "frontier": true,
+   "alphas": {
+    "baseline": 0.65,
+    "rederived": 0.702,
+    "wide": 0.674,
+    "rederived_wide": 0.71
+   },
+   "range": 0.06,
+   "baseline_to_rederived": 0.052,
+   "refit_alpha": 0.6496867430548856,
+   "all_converged": true
+  },
+  {
+   "name": "Pannonia inferior",
+   "frontier": true,
+   "alphas": {
+    "baseline": 0.63,
+    "rederived": 0.676,
+    "wide": 0.633,
+    "rederived_wide": 0.663
+   },
+   "range": 0.046,
+   "baseline_to_rederived": 0.046,
+   "refit_alpha": 0.6297580139414105,
+   "all_converged": true
+  },
+  {
+   "name": "Pannonia superior",
+   "frontier": false,
+   "alphas": {
+    "baseline": 0.734,
+    "rederived": 0.765,
+    "wide": 0.755,
+    "rederived_wide": 0.772
+   },
+   "range": 0.038,
+   "baseline_to_rederived": 0.031,
+   "refit_alpha": 0.7339148232660736,
+   "all_converged": true
+  },
+  {
+   "name": "Pompeii",
+   "frontier": false,
+   "alphas": {
+    "baseline": 0.015,
+    "rederived": 0.016,
+    "wide": 0.015,
+    "rederived_wide": 0.015
+   },
+   "range": 0.001,
+   "baseline_to_rederived": 0.001,
+   "refit_alpha": 0.014768968946423329,
+   "all_converged": true
+  },
+  {
+   "name": "Salona",
+   "frontier": true,
+   "alphas": {
+    "baseline": 0.987,
+    "rederived": 0.989,
+    "wide": 0.989,
+    "rederived_wide": 0.99
+   },
+   "range": 0.003,
+   "baseline_to_rederived": 0.002,
+   "refit_alpha": 0.9867670260782879,
+   "all_converged": true
+  },
+  {
+   "name": "Samnium / Regio IV",
+   "frontier": true,
+   "alphas": {
+    "baseline": 0.841,
+    "rederived": 0.86,
+    "wide": 0.837,
+    "rederived_wide": 0.848
+   },
+   "range": 0.023,
+   "baseline_to_rederived": 0.019,
+   "refit_alpha": 0.8399136014159279,
+   "all_converged": true
+  },
+  {
+   "name": "Transpadana / Regio XI",
+   "frontier": false,
+   "alphas": {
+    "baseline": 0.891,
+    "rederived": 0.908,
+    "wide": 0.904,
+    "rederived_wide": 0.913
+   },
+   "range": 0.022,
+   "baseline_to_rederived": 0.016,
+   "refit_alpha": 0.8918020342526114,
+   "all_converged": true
+  },
+  {
+   "name": "Umbria / Regio VI",
+   "frontier": true,
+   "alphas": {
+    "baseline": 0.737,
+    "rederived": 0.779,
+    "wide": 0.728,
+    "rederived_wide": 0.761
+   },
+   "range": 0.051,
+   "baseline_to_rederived": 0.042,
+   "refit_alpha": 0.7383493551179596,
+   "all_converged": true
+  },
+  {
+   "name": "Venetia et Histria / Regio X",
+   "frontier": true,
+   "alphas": {
+    "baseline": 0.843,
+    "rederived": 0.87,
+    "wide": 0.829,
+    "rederived_wide": 0.858
+   },
+   "range": 0.04,
+   "baseline_to_rederived": 0.027,
+   "refit_alpha": 0.843644308075606,
+   "all_converged": true
+  },
+  {
+   "name": "empire-aggregate",
+   "frontier": false,
+   "alphas": {
+    "baseline": 0.671,
+    "rederived": 0.68,
+    "wide": 0.667,
+    "rederived_wide": 0.674
+   },
+   "range": 0.013,
+   "baseline_to_rederived": 0.009,
+   "refit_alpha": 0.6708603489102657,
+   "all_converged": false
+  },
+  {
+   "name": "latin-aggregate",
+   "frontier": false,
+   "alphas": {
+    "baseline": 0.729,
+    "rederived": 0.739,
+    "wide": 0.754,
+    "rederived_wide": 0.758
+   },
+   "range": 0.029,
+   "baseline_to_rederived": 0.01,
+   "refit_alpha": 0.7256017722992956,
+   "all_converged": true
+  }
+ ]
+}
