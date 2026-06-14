@@ -1,7 +1,7 @@
 ---
 title: "OSF Amendment 04 (DRAFT) — Cross-classified time × alignment remediation for the α-identifiability limit; reverses the shared convention basis"
 amendment-number: "04"
-status: "DRAFT for Shawn's review — NOT lodged. Amendment 03 lodgement CONFIRMED (Shawn, 2026-06-14: lodged 2026-06-08), so this is Amendment 04 reversing a lodged amendment. One item to fold in before lodgement: the hybrid-robustness concordance result (§A5.7), once the pilot + validation complete. Housekeeping flagged separately: the git tag osf-amendment-03-2026-06-08 the lodged Amendment 03 cites is MISSING from the repo and should be created at its lodged commit."
+status: "DRAFT for Shawn's review — NOT lodged. Amendment 03 lodgement confirmed (Shawn, 2026-06-14: lodged 2026-06-08), so this is Amendment 04 reversing a lodged amendment; its missing git tag has been created (osf-amendment-03-2026-06-08 → 90897d6). The θ robustness work is complete and folded into §A5.7 (the production θ prior was re-centred to the re-derived θ_gen 0.025 and the refit re-run, §A5.1/§A5.4(b)). Believed complete pending Shawn's review; no open work items."
 date-drafted: 2026-06-14
 scope: "Replace the H2.1 temporal-mixture's shared, fixed convention basis (Amendment 03 §A5.1 / Decision 38) — which under-identifies the convention fraction α for temporally-concentrated frontier units — with the recovery-validated cross-classified time × alignment model (per-unit alignment split + a fixed corpus-wide slab library + a classification likelihood sharing α). Adopt it as the production deconvolution; record the recovery grid + 29-unit production refit as the validation gate; supersede the refuted informed-α planned remediation; demote the two-bound α range to a fallback disclosure."
 preregistration: "https://osf.io/uycs6/ (lodged 2026-05-20; embargoed)"
@@ -163,7 +163,7 @@ non-aligned-subset summed-probability analyses (SPAs):
 tier_weights ~ Dirichlet(ones(n_lib))          # n_lib = fixed library rows (§A5.2)
 p_conv        = tier_weights · SLAB_LIBRARY     # convention shape
 p_gen         = softmax(cumsum(σ·z))            # non-centred GRW (UNCHANGED from H2.1)
-θ_conv ~ Beta(μ,κ); θ_gen ~ Beta(μ,κ)           # alignment rates; rule C, κ=40 (calibrated)
+θ_conv ~ Beta(μ,κ); θ_gen ~ Beta(μ,κ)           # alignment rates; κ=40, μ re-derived (§A5.7)
 
 w_a          = α·θ_conv + (1−α)·θ_gen                                   # P(aligned)
 p_aligned    = (α·θ_conv·p_conv     + (1−α)·θ_gen·p_gen)     / w_a
@@ -178,12 +178,16 @@ This is the exact lumping/thinning factorisation of the per-inscription process
 (type ~ Bernoulli(α); bin ~ p_type; aligned ~ Bernoulli(θ_type)). Implementation:
 `runs/2026-06-09-joint-identifiability/code/joint_lib.py::build_model_cross_classified`
 (`pconv_mode="library"`); grid-alignment indicator (rule C: family ∈ {F1_round,
-F3_periodic} or a round-endpoint wide slab) `joint_lib.py::aligned_indicator`. θ
-calibrated from the 19 identifiable units (`calibrate_theta.py`; θ_conv 0.945,
-θ_gen 0.155, κ=40). Counts are **aoristic-effective** (k = y_aligned.sum(); N =
-y_aligned.sum() + y_nonaligned.sum()) so the factorisation holds exactly; the
-aoristic-mass aligned fraction differs from the row aligned fraction θ was calibrated
-on by ≤ 0.06 across units (`runs/2026-06-13-cc-production-refit/spec.md` §1).
+F3_periodic} or a round-endpoint wide slab) `joint_lib.py::aligned_indicator`. **θ
+prior (κ=40): θ_conv 0.930, θ_gen 0.025 — the value re-derived from the corrected
+cc-library α's (§A5.7).** The original empirical-Bayes calibration
+(`calibrate_theta.py`; θ_conv 0.945, θ_gen 0.155) was found to over-state θ_gen because
+it was fit using the under-attributing shared-basis α's (the robustness work, §A5.7);
+three independent methods agree θ_gen ≈ 0.025, so it is adopted as the production prior.
+Counts are **aoristic-effective** (k = y_aligned.sum(); N = y_aligned.sum() +
+y_nonaligned.sum()) so the factorisation holds exactly; the aoristic-mass aligned
+fraction differs from the row aligned fraction by ≤ 0.06 across units
+(`runs/2026-06-13-cc-production-refit/spec.md` §1).
 
 ### A5.2 The convention basis — a FIXED corpus-wide round-endpoint slab library
 
@@ -234,17 +238,23 @@ the lead's width while removing the shift, and dispersion is conservative (poste
 1.34–1.37× the replicate sampling sd).
 
 **(b) Production refit — PASS** (`runs/2026-06-13-cc-production-refit/outputs/REFIT-VERDICT.md`;
-29 units, sapphire 2026-06-13, 28/29 converge). **All 10 diagnostic-flagged frontier
-units are pinned** within the H2.1 two-bound [shared, per-unit] range and track the
-independent classification-implied α: Moesia inferior 0.05 → 0.63, Britannia
-0.00 → 0.40, Pannonia inferior 0.15 → 0.63, Numidia 0.17 → 0.55, Salona 0.54 → 0.99,
-Samnium 0.27 → 0.84, Venetia et Histria 0.45 → 0.84, Umbria 0.43 → 0.74, Ostia
-0.34 → 0.65, Dacia 0.00 → 0.16. **Controls stable** (Pompeii 0.001 → 0.015 ≈ 0,
-correct; empire-aggregate 0.672 → 0.671), with a mild consistent −0.08/−0.10 downshift
-on the broad high-α units (the cc model is slightly more conservative on convention for
-broad units). The one non-converged unit is empire-aggregate (secondary/context; R̂
-1.026, ESS 211, 0 divergences — a mixing marginality on the largest unit; its α matches
-H2.1; sampler config kept uniform with the validated grid and reported caveated).
+29 units, sapphire 2026-06-14 under the adopted θ prior, §A5.7; 28/29 converge). **All 10
+diagnostic-flagged frontier units rise from the under-attributed α_shared to sensible
+mid-range values tracking the independent classification-implied α:** Moesia inferior
+0.05 → 0.70, Britannia 0.00 → 0.45, Pannonia inferior 0.15 → 0.68, Numidia 0.17 → 0.55,
+Salona 0.54 → 0.99, Samnium 0.27 → 0.86, Venetia et Histria 0.45 → 0.87, Umbria
+0.43 → 0.78, Ostia 0.34 → 0.70, Dacia 0.00 → 0.17. Eight sit inside the H2.1 two-bound
+[shared, per-unit] range; Umbria (0.78) and Venetia (0.87) edge ~0.01–0.03 above the old
+*per-unit-basis* upper bound, but both track their classification-implied α (0.72, 0.85)
+closely — that bound was itself a wrong-high estimate, and the cross-classified model is
+a better third estimator, not constrained to the diagnostic bracket. **Controls stable**
+(Pompeii 0.001 → 0.016 ≈ 0, correct; empire-aggregate 0.672 → 0.680; Latium, Noricum,
+latin-aggregate within ~0.07 of α_shared). The one non-converged unit is empire-aggregate
+(secondary/context; R̂ 1.026, ESS 211, 0 divergences — a mixing marginality on the largest
+unit; its α matches H2.1; sampler config kept uniform with the validated grid and reported
+caveated). *(The first-pass refit under the original calibration θ_gen 0.155 is preserved
+at commit 48cb5d5; the α's there are ~0.02–0.07 lower for the confounded frontier units —
+see §A5.7 for why the prior was re-centred.)*
 
 ### A5.5 α reporting under the new model
 
@@ -264,18 +274,43 @@ previously under-identified frontier units, the H3b set is **re-derived from the
 cross-classified α** (folding in the gap < 0.20 → 17 vs gap ≤ 0.25 → 16 reconciliation);
 the updated set is recorded with the refit (`refit-summary.json`).
 
-### A5.7 Hybrid robustness check (preregistered; result pending)
+### A5.7 θ robustness: the global-θ hybrid, the re-derivation, and the θ-prior sweep
 
-The lead plugs in calibrated θ (fixed). A **hybrid** model estimates θ as a single
-global pair across all units (wider prior), propagating its uncertainty, and a
-concordance test asks whether the per-unit cross-classified α estimates sit inside the
-hybrid's α intervals (`hybrid-robustness-spec.md`). It is a **preregistered robustness
-annex**, not the primary; α is **not** pooled (the units are not exchangeable —
-pooling would mask the per-unit deviations H3b detects). **Status:** the hybrid spec
-predates the cross-classified adoption and is being refreshed to the two-subset
-structure, then piloted and validated on a hierarchical recovery population; the
-concordance result folds into this amendment before lodgement. (Concordant ⇒ cc-library
-primary, hybrid corroboration; material divergence ⇒ reported and adjudicated.)
+The production deconvolution plugs in a fixed θ prior, so its robustness to the θ
+assumption was checked three ways (`runs/2026-06-14-hybrid-robustness/`,
+`HYBRID-PILOT-FINDINGS.md`):
+
+1. **Global-θ hybrid (diagnostic).** A single joint fit over all 29 units estimating θ
+   as one global pair (wide prior), α not pooled — the concomitant-variable mixture with
+   shared measurement parameters (`hybrid-robustness-spec.md`). On the real data it is
+   **weakly identified** (an α↔θ_gen ridge: convergence does not improve with more compute,
+   invariant to prior width, 0 divergences), so it is **not** a sound vehicle for a lodged
+   robustness number — but it is informative: it robustly prefers **θ_gen ≈ 0.024**, far
+   below the calibration's 0.155, and the cross-classified per-unit α's it implies are
+   **concordant with the production fit on the frontier units** (the remediation targets)
+   with no systematic shift.
+
+2. **θ re-derivation (the cause).** Re-fitting the calibration regression with the
+   **corrected** cc-library α's (in place of the under-attributing α_shared) gives θ_gen
+   ≈ **0.025** and fits the aligned-fraction data **2.5× better** (RMSE 0.045 vs 0.117) —
+   so the calibration's 0.155 was inflated by the circular use of biased α's. **The
+   production θ prior was re-centred to θ_conv 0.930 / θ_gen 0.025 accordingly** (§A5.1),
+   and the refit re-run (§A5.4(b)).
+
+3. **θ-prior sensitivity sweep (the robustness result).** The validated cc-library model
+   re-fit over four θ priors (original centre × re-derived centre × κ ∈ {40, 12}; 116
+   well-identified fits, `THETA-SWEEP-VERDICT.md`) shows the per-unit α's are **stable to
+   the θ assumption for 27/29 units** (α-range < 0.10; mean 0.038; broad units and
+   aggregates rock-stable ≤ 0.03). The only θ-sensitive units are the two **most
+   temporally-confounded** ones (Moesia inferior, Britannia), where the alignment signal is
+   weakest; their α moves within the H2.1 two-bound range. **Conclusion:** the alignment
+   *contrast* — not the θ centre — identifies the convention fraction for the large
+   majority of units; the production result is robust to the θ assumption.
+
+α is **not** pooled across units in any variant (the units are not exchangeable; pooling
+would mask the per-unit deviations H3b detects). The hierarchical-recovery validation of
+the full global-θ hybrid is **not** pursued (the pilot showed it weakly identified); the
+θ-prior sweep (3) is the lodged robustness annex.
 
 ## A6. What does NOT change
 
@@ -319,9 +354,15 @@ primary, hybrid corroboration; material divergence ⇒ reported and adjudicated.
   `outputs/cc-VERDICT-library.md` (+ `cc-summary-library.json`).
 - **Production refit:** `runs/2026-06-13-cc-production-refit/` (`spec.md`,
   `production-slab-library.json`, `refit_lib.py`/`run_refit.py`/`aggregate_refit.py`);
-  VERDICT `outputs/REFIT-VERDICT.md` (+ `refit-summary.json`).
+  VERDICT `outputs/REFIT-VERDICT.md` (+ `refit-summary.json`) — under the adopted θ;
+  the first-pass (calibration θ_gen 0.155) is at commit `48cb5d5`.
+- **θ robustness (§A5.7):** `runs/2026-06-14-hybrid-robustness/`
+  (`HYBRID-PILOT-FINDINGS.md`; `rederive_theta.py` → `theta-rederivation.json`;
+  `theta_sweep.py`/`aggregate_sweep.py` → `THETA-SWEEP-VERDICT.md`; the global-θ hybrid
+  `hybrid_lib.py`/`run_pilot.py` → `HYBRID-PILOT-REPORT.md`).
 - **Reverses:** Amendment 03 (`osf-amendment-2026-06-07-convention-basis.md`) §A5.1 /
-  Decision 38 shared, unit-independent basis. **Lodged authority** for all unchanged
-  specifications remains the original supplementary (git tag `osf-lodgement-2026-05-20`).
-- **Repository-state provenance:** the git lodgement tag for this amendment (to be
-  created at lodgement, once the numbering is confirmed) is the reproducibility anchor.
+  Decision 38 shared, unit-independent basis (lodged 2026-06-08, git tag
+  `osf-amendment-03-2026-06-08`). **Lodged authority** for all unchanged specifications
+  remains the original supplementary (git tag `osf-lodgement-2026-05-20`).
+- **Repository-state provenance:** the git lodgement tag for this amendment
+  (`osf-amendment-04-…`, to be created at lodgement) is the reproducibility anchor.
