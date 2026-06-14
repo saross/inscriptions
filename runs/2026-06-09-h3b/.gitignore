@@ -1,0 +1,6 @@
+# Draw-wise H3b outputs — regenerable from the committed code + the cc-refit
+# posterior draws (themselves gitignored): uv run python code/run_h3b_drawwise.py.
+# Pending Decisions 1–3 (DECISION-NEEDED-null-construction-2026-06-14.md); will be
+# finalised + the draft REPORT/plots committed once the null construction is confirmed.
+outputs/drawwise/
+code/__pycache__/
