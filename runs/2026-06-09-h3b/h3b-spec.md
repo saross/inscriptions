@@ -1,5 +1,11 @@
 # H3b deviation-detection — build-ready design spec (DRAFT)
 
+> **⚠ SUPERSEDED (2026-06-14) by `h3b-implementation-spec-2026-06-14.md`** in this
+> same dir — which folds in OSF Amendment 04 §A5.6 (uncertainty propagation
+> replaces the identifiability restriction) and Shawn's 2026-06-14 design
+> decisions, and corrects the production source to the cc-library refit. Retained
+> as the dated record of the 2026-06-09 design and its open-question framing.
+
 **Status:** DRAFT — FOR REVIEW. Nothing here is confirmatory until a human signs
 off the open questions in §10.
 **Date:** 2026-06-09.
