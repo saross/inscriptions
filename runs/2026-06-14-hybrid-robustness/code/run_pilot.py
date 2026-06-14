@@ -49,12 +49,17 @@ def main() -> None:
     ap.add_argument("--target-accept", type=float, default=0.95)
     ap.add_argument("--chains", type=int, default=4)
     ap.add_argument("--cores", type=int, default=4)
+    ap.add_argument("--theta-kappa", type=float, default=4.0,
+                    help="global θ prior concentration (spec sensitivity: {2,4,8}; "
+                         "wider = learns θ more freely)")
     args = ap.parse_args()
 
     (HYB / "outputs").mkdir(parents=True, exist_ok=True)
     data = Hy.assemble_unit_data()
     basis, _ = R.load_library_basis()
-    model = Hy.build_model_hybrid(data, basis)
+    model = Hy.build_model_hybrid(data, basis,
+                                  theta_conv_mu_kappa=(0.85, args.theta_kappa),
+                                  theta_gen_mu_kappa=(0.15, args.theta_kappa))
     U = len(data["names"])
     print(f"hybrid pilot: {U} units, library {basis.shape[0]} rows; "
           f"draws {args.draws} tune {args.tune} chains {args.chains} cores {args.cores}",
