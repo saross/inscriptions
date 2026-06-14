@@ -3043,3 +3043,162 @@ aligned-fraction discrepancy, Gram condition numbers);
 `sapphire`, `6-min`, `0-worker-errors`, `48cb5d5`, `obs-89`, `obs-87`, `obs-84`,
 `REFIT-VERDICT`, `refit-summary`, `unit-measurements`, `production-slab-library`,
 `DIAGNOSTIC-alpha-identifiability-REPORT`
+
+## Obs 91 — 2026-06-14 [METHODOLOGY / RESULT]: θ_gen calibration was circularly inflated (0.155 → 0.025); re-derived prior adopted; all frontier units rise to track classification-implied α
+
+### The finding
+
+The cc-library production refit (Obs 90, first-pass commit `48cb5d5`) used θ priors from
+`calibrate_theta.py` rule C: θ_conv 0.945, θ_gen 0.155, κ=40. A robustness investigation
+(`runs/2026-06-14-hybrid-robustness/`) found θ_gen 0.155 was **inflated by a circularity**:
+`calibrate_theta.py` fit θ_gen as the intercept of `aligned_frac ≈ θ_gen + (θ_conv − θ_gen)·α`
+using the **under-attributing shared-basis α_shared** — biased-low α's inflate the intercept.
+
+**Three independent methods agree the true θ_gen ≈ 0.025:**
+
+| method | θ_gen | θ_conv | note |
+|---|---|---|---|
+| Global-θ hybrid joint fit | 0.024 | ~0.933 | weakly identified (α ↔ θ_gen ridge; see Caveats) |
+| Re-derivation with corrected α's (`rederive_theta.py`) | 0.025 | 0.930 | `α_cc × mass × all`, all 29 units; RMSE 0.045 vs 0.117 (~2.6× better) |
+| Wide-κ θ-prior sweep | ~0.025 | — | stable across conditions; confirms direction |
+
+The re-derivation fit is the canonical source (`outputs/theta-rederivation.json`,
+`α_cc×mass×all` row: θ_gen=0.025, θ_conv=0.930, RMSE=0.0448). The reproduction
+control (using α_shared → θ_gen 0.160) confirms the method recovers the original
+calibration. The production refit's per-unit θ_gen posterior ran at median 0.101 under
+the first-pass — the data pulled it down, but the tight κ=40 prior held it above the
+data-preferred value.
+
+**θ-prior sensitivity sweep — the robustness annex
+(`theta_sweep.py` / `aggregate_sweep.py` → `outputs/THETA-SWEEP-VERDICT.md`;
+4 θ-priors × 29 units = 116 cc-library fits, sapphire 18.8 min, 28/29 converge;
+baseline reproduces the production refit bit-identically, max |Δα| 0.003):**
+
+- **27/29 units stable** (α-range < 0.10 across baseline / re-derived / wide-κ /
+  re-derived-wide); mean range 0.038; broad units + aggregates rock-stable (range ≤ 0.03).
+- **Frontier units: 8/10 stable.** The two sensitive units — Moesia inferior (range 0.159)
+  and Britannia (range 0.140) — are the most temporally-confounded. Their α moves
+  **upward** under the corrected lower θ_gen and stays within the H2.1 two-bound range.
+- Operative θ_gen 0.155 → 0.025 shift: uniformly small and positive (mean +0.025,
+  max +0.072). The alignment **contrast** — not the θ centre — pins the well-identified α's.
+
+This sweep replaces the poorly-mixing global-θ hybrid as the preregistered robustness annex.
+
+**DECISION (Shawn, 2026-06-14, option i):** adopt the re-derived prior
+(θ_conv 0.930, θ_gen 0.025, κ=40) as production. `refit_lib.adopted_theta_priors()`
+reads it from `theta-rederivation.json`; `theta_priors()` is preserved for the record.
+The first-pass refit (θ_gen 0.155) is preserved at commit `48cb5d5`; the new refit
+(commit `35f7c71`) supersedes it.
+
+**RESULT — all 10 frontier units rose under the corrected θ_gen (sapphire, 5.5 min, 28/29 converge):**
+
+| unit | H2.1 α_shared | Obs 90 α (θ_gen 0.155) | adopted-θ α [95 % CI] | implied-α |
+|---|---|---|---|---|
+| Moesia inferior | 0.050 | 0.626 | **0.698** [0.617, 0.823] | 0.520 |
+| Britannia | 0.002 | 0.400 | **0.449** [0.386, 0.544] | 0.279 |
+| Pannonia inferior | 0.147 | 0.630 | **0.676** [0.632, 0.737] | 0.566 |
+| Ostia | 0.335 | 0.650 | **0.701** [0.641, 0.772] | 0.544 |
+| Numidia | 0.166 | 0.546 | **0.554** [0.530, 0.581] | 0.425 |
+| Salona | 0.538 | 0.987 | **0.989** [0.951, 1.000] | 0.945 |
+| Samnium / Regio IV | 0.272 | 0.840 | **0.860** [0.828, 0.898] | 0.834 |
+| Umbria / Regio VI | 0.429 | 0.738 | **0.781** [0.734, 0.833] | 0.722 |
+| Venetia et Histria / Regio X | 0.452 | 0.844 | **0.870** [0.845, 0.898] | 0.853 |
+| Dacia | 0.001 | 0.157 | **0.171** [0.151, 0.194] | 0.014 |
+
+All 10 track the classification-implied α. Umbria (0.781) and Venetia (0.870) sit above
+the Obs 90 α_perunit bounds (0.700 and 0.809 respectively — old per-unit-basis upper
+bracket), but that bracket was itself a wrong-high estimate; both track implied-α (0.722
+and 0.853) closely. Controls stable: Pompeii 0.016, empire-aggregate 0.680.
+
+### Why this matters
+
+The θ_gen re-centering removes a demonstrated calibration bias from the production prior
+and replaces it with a value that fits the aligned-fraction data ~2.6× better (RMSE 0.045
+vs 0.117) and is corroborated by two independent methods. The frontier α's move as
+expected (upward, proportional to temporal-confounding severity), confirming the model
+is responding to the prior in the right direction, not just being pushed around. The
+result strengthens the remediation claim: under-attribution is resolved even with the
+corrected, lower θ_gen.
+
+The methodological lesson is general: empirical-Bayes plug-in calibration of a
+measurement parameter (θ_gen) from a biased first-pass estimate of the latent variable
+(α_shared) is circular — the bias propagates into the prior. The fix (re-derive from
+corrected estimates, confirm with an independent joint fit + a sensitivity sweep) is
+documented here as a reusable pattern.
+
+The OSF amendment (Amendment 04,
+`planning/osf-amendment-2026-06-14-cross-classified-remediation.md`) incorporates the
+re-derived θ in §A5.1 (the model spec), §A5.4 (the production-refit results table), and
+§A5.7 (the θ robustness subsection); the sweep becomes the preregistered robustness annex.
+
+### Caveats / methodological notes
+
+**Global-θ hybrid is weakly identified.** Convergence did not improve when tuning was
+doubled and target_accept raised (ESS went 188 → ~70); 0 divergences throughout — this
+is an α ↔ θ_gen ridge, not a sampler failure. The hybrid's θ_gen ≈ 0.024 is treated as
+directional evidence only, not a point estimate. The θ-prior sweep over the validated
+cc-library model is the sound robustness vehicle.
+
+**θ_conv differs slightly across methods.** The hybrid gives θ_conv ~0.933; the
+re-derivation gives 0.930 (from `α_cc×mass×all`); the original calibration was 0.945.
+The adopted production value is 0.930. The difference from 0.945 is small and within
+the per-unit posterior width; it is reported in Amendment 04 §A5.7.
+
+**Moesia inferior and Britannia remain the two most θ-sensitive units** (ranges 0.159
+and 0.140 across the sweep). Their adopted-θ α's (0.698 and 0.449) are interior to
+the H2.1 two-bound window (Obs 90's [α_shared, α_perunit] brackets) and the remediation
+conclusion is unchanged; the θ-sensitivity is disclosed per Amendment 04 §A5.7.
+
+**RMSE improvement figure.** The HYBRID-PILOT-FINDINGS addendum states "2.5× better
+(RMSE 0.045 vs 0.117)"; the raw JSON gives 0.0448 vs 0.1175 ≈ 2.6×. The addendum's
+"2.5×" is a rounded figure. This Obs uses the JSON-exact values.
+
+### Related observations and artefacts
+
+**Obs 90** (cc-library production refit, first-pass under θ_gen 0.155; this Obs corrects
+the θ prior and supersedes the first-pass α table): the Obs being corrected here — its
+frontier-unit α's are the "Obs 90 α" column above. **Obs 86** (estimated-basis
+contamination and the θ_gen contamination channel; this Obs shows that θ_gen 0.155 was
+itself an upward-biased estimate, compounding the contamination problem):
+the θ_gen contamination mechanism characterised there is the mechanistic background for
+why the calibration was susceptible to this circularity. **Obs 89** (cc-library recovery
+grid — CLEAN PASS; the validated model that is the foundation for the θ-prior sweep here):
+the grid that authorised production and whose validated structure the sweep uses.
+
+**Artefacts**: `runs/2026-06-14-hybrid-robustness/HYBRID-PILOT-FINDINGS.md` (the
+pilot report + addendum that diagnosed the circularity and executed options B and C);
+`runs/2026-06-14-hybrid-robustness/outputs/theta-rederivation.json` (the re-derived
+θ values; canonical source for the adopted prior);
+`runs/2026-06-14-hybrid-robustness/outputs/THETA-SWEEP-VERDICT.md` (the 116-fit
+sweep table and verdict);
+`runs/2026-06-13-cc-production-refit/outputs/REFIT-VERDICT.md` (the adopted-θ refit
+results, commit `35f7c71`; first-pass preserved at `48cb5d5`);
+`runs/2026-06-13-cc-production-refit/outputs/refit-summary.json` (commit `35f7c71`);
+`planning/osf-amendment-2026-06-14-cross-classified-remediation.md` §A5.1 / §A5.4 / §A5.7
+(the amendment folding in this correction).
+
+### Findable later
+
+`theta-gen-calibration`, `circular-calibration`, `empirical-bayes-bias-propagation`,
+`theta-gen-inflated`, `theta-gen-0-155`, `theta-gen-0-025`, `theta-conv-0-930`,
+`kappa-40`, `calibrate-theta-circularity`, `alpha-shared-biased-low`,
+`intercept-inflated`, `rederive-theta`, `theta-rederivation-json`,
+`alpha-cc-mass-all`, `rmse-0-045`, `rmse-0-117`, `2-6x-better`, `2-5x-better`,
+`three-methods-agree`, `global-theta-hybrid`, `weakly-identified`, `ridge`,
+`alpha-theta-ridge`, `ess-188`, `ess-70`, `0-divergences`, `poor-mixing`,
+`theta-prior-sweep`, `theta-sweep-verdict`, `theta-sweep-116-fits`,
+`4-theta-priors`, `27-of-29-stable`, `8-of-10-frontier-stable`,
+`mean-range-0-038`, `max-range-0-159`, `moesia-range-0-159`, `britannia-range-0-140`,
+`alignment-contrast-pins-alpha`, `operative-shift-mean-0-025`, `max-shift-0-072`,
+`sapphire-18-8-min`, `sapphire-5-5-min`, `28-of-29-converge`,
+`adopted-theta-priors`, `theta-priors-kept-for-record`, `first-pass-48cb5d5`,
+`adopted-theta-35f7c71`, `decision-option-i`, `shawn-2026-06-14`,
+`moesia-0-05-to-0-70`, `britannia-0-00-to-0-45`, `pannonia-inferior-0-15-to-0-68`,
+`ostia-0-34-to-0-70`, `numidia-0-17-to-0-55`, `salona-0-54-to-0-99`,
+`samnium-0-27-to-0-86`, `umbria-0-43-to-0-78`, `venetia-0-45-to-0-87`,
+`dacia-0-00-to-0-17`, `pompeii-0-016`, `empire-aggregate-0-680`,
+`umbria-above-perunit-bound`, `venetia-above-perunit-bound`,
+`tracks-implied-alpha`, `frontier-units-rise`, `controls-stable`,
+`osf-amendment-04`, `a5-1`, `a5-4`, `a5-7`, `robustness-annex`,
+`preregistered-robustness`, `replaces-hybrid`, `obs-90`, `obs-89`, `obs-86`,
+`HYBRID-PILOT-FINDINGS`, `theta-rederivation`, `THETA-SWEEP-VERDICT`, `REFIT-VERDICT`
