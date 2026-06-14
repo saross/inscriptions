@@ -1,0 +1,360 @@
+{
+ "secs": 473.0,
+ "max_rhat": 1.0469951557549115,
+ "min_ess_bulk": 73.31859507418478,
+ "alpha_theta_max_rhat": 1.0469951557549115,
+ "alpha_theta_min_ess": 73.31859507418478,
+ "n_divergences": 0,
+ "sampler_healthy": false,
+ "alpha_theta_healthy": false,
+ "draws": 2000,
+ "tune": 3000,
+ "target_accept": 0.97,
+ "theta": {
+  "theta_conv": {
+   "median": 0.932820714896054,
+   "ci": [
+    0.9233514442970371,
+    0.9427727008346098
+   ],
+   "calibrated": 0.945
+  },
+  "theta_gen": {
+   "median": 0.02358153154805055,
+   "ci": [
+    0.016821608147802133,
+    0.029602531033765127
+   ],
+   "calibrated": 0.155
+  }
+ },
+ "theta_sane": false,
+ "concordance": {
+  "n_units": 29,
+  "cc_median_inside_hybrid_ci": 9,
+  "frac_inside": 0.31,
+  "mean_discrepancy": -0.0019494090783936174,
+  "max_abs_discrepancy": 0.13064411546062904
+ },
+ "units": [
+  {
+   "name": "empire-aggregate",
+   "hybrid_alpha_med": 0.7029444271172793,
+   "hybrid_ci": [
+    0.6946013022347028,
+    0.7110183314175788
+   ],
+   "cc_alpha_med": 0.6708603489102657,
+   "cc_in_hybrid_ci": false,
+   "discrepancy": 0.032084078207013644
+  },
+  {
+   "name": "latin-aggregate",
+   "hybrid_alpha_med": 0.6478075625934758,
+   "hybrid_ci": [
+    0.6395743626573599,
+    0.6557834152361777
+   ],
+   "cc_alpha_med": 0.7256017722992956,
+   "cc_in_hybrid_ci": false,
+   "discrepancy": -0.07779420970581974
+  },
+  {
+   "name": "Latium et Campania / Regio I",
+   "hybrid_alpha_med": 0.48945064270330313,
+   "hybrid_ci": [
+    0.47895995659852814,
+    0.5000995907525675
+   ],
+   "cc_alpha_med": 0.5952881783030282,
+   "cc_in_hybrid_ci": false,
+   "discrepancy": -0.10583753559972503
+  },
+  {
+   "name": "Dalmatia",
+   "hybrid_alpha_med": 0.8940230057026934,
+   "hybrid_ci": [
+    0.8801143588919687,
+    0.907610549484257
+   ],
+   "cc_alpha_med": 0.9127932513844391,
+   "cc_in_hybrid_ci": false,
+   "discrepancy": -0.01877024568174568
+  },
+  {
+   "name": "Hispania citerior",
+   "hybrid_alpha_med": 0.7411854185057754,
+   "hybrid_ci": [
+    0.7261489293555058,
+    0.7560287960321427
+   ],
+   "cc_alpha_med": 0.7429433190103141,
+   "cc_in_hybrid_ci": true,
+   "discrepancy": -0.001757900504538723
+  },
+  {
+   "name": "Germania superior",
+   "hybrid_alpha_med": 0.4279584151035781,
+   "hybrid_ci": [
+    0.41203383317653014,
+    0.4440305460193203
+   ],
+   "cc_alpha_med": 0.4814124646396024,
+   "cc_in_hybrid_ci": false,
+   "discrepancy": -0.053454049536024284
+  },
+  {
+   "name": "Venetia et Histria / Regio X",
+   "hybrid_alpha_med": 0.9018632238011345,
+   "hybrid_ci": [
+    0.888578093008497,
+    0.9150980063450834
+   ],
+   "cc_alpha_med": 0.843644308075606,
+   "cc_in_hybrid_ci": false,
+   "discrepancy": 0.05821891572552851
+  },
+  {
+   "name": "Dacia",
+   "hybrid_alpha_med": 0.15961339802689772,
+   "hybrid_ci": [
+    0.14665451120299203,
+    0.1728405276760482
+   ],
+   "cc_alpha_med": 0.15655513387624348,
+   "cc_in_hybrid_ci": true,
+   "discrepancy": 0.003058264150654244
+  },
+  {
+   "name": "Britannia",
+   "hybrid_alpha_med": 0.39512980888919713,
+   "hybrid_ci": [
+    0.37774482377585894,
+    0.41205021908364226
+   ],
+   "cc_alpha_med": 0.4004330442336693,
+   "cc_in_hybrid_ci": true,
+   "discrepancy": -0.00530323534447219
+  },
+  {
+   "name": "Pannonia superior",
+   "hybrid_alpha_med": 0.7416349590747933,
+   "hybrid_ci": [
+    0.723935099316933,
+    0.7590914199927603
+   ],
+   "cc_alpha_med": 0.7339148232660736,
+   "cc_in_hybrid_ci": true,
+   "discrepancy": 0.007720135808719664
+  },
+  {
+   "name": "Samnium / Regio IV",
+   "hybrid_alpha_med": 0.8782044555786235,
+   "hybrid_ci": [
+    0.8612715676979295,
+    0.8937528487591235
+   ],
+   "cc_alpha_med": 0.8399136014159279,
+   "cc_in_hybrid_ci": false,
+   "discrepancy": 0.03829085416269562
+  },
+  {
+   "name": "Africa proconsularis",
+   "hybrid_alpha_med": 0.6344591720760178,
+   "hybrid_ci": [
+    0.6137386333824043,
+    0.6547956942665673
+   ],
+   "cc_alpha_med": 0.6296079837099707,
+   "cc_in_hybrid_ci": true,
+   "discrepancy": 0.004851188366047032
+  },
+  {
+   "name": "Germania inferior",
+   "hybrid_alpha_med": 0.757200623062882,
+   "hybrid_ci": [
+    0.7386706882984058,
+    0.775316775173937
+   ],
+   "cc_alpha_med": 0.7299299574121296,
+   "cc_in_hybrid_ci": false,
+   "discrepancy": 0.027270665650752424
+  },
+  {
+   "name": "Apulia et Calabria / Regio II",
+   "hybrid_alpha_med": 0.7148921630010026,
+   "hybrid_ci": [
+    0.6953734850428203,
+    0.7343251658455442
+   ],
+   "cc_alpha_med": 0.7408518001455631,
+   "cc_in_hybrid_ci": false,
+   "discrepancy": -0.02595963714456051
+  },
+  {
+   "name": "Pannonia inferior",
+   "hybrid_alpha_med": 0.6828916092263513,
+   "hybrid_ci": [
+    0.6622028574087768,
+    0.7033916908058346
+   ],
+   "cc_alpha_med": 0.6297580139414105,
+   "cc_in_hybrid_ci": false,
+   "discrepancy": 0.05313359528494077
+  },
+  {
+   "name": "Numidia",
+   "hybrid_alpha_med": 0.5675017483970027,
+   "hybrid_ci": [
+    0.5464331809774098,
+    0.5886233895174159
+   ],
+   "cc_alpha_med": 0.5462547207502,
+   "cc_in_hybrid_ci": false,
+   "discrepancy": 0.021247027646802752
+  },
+  {
+   "name": "Etruria / Regio VII",
+   "hybrid_alpha_med": 0.68093419355211,
+   "hybrid_ci": [
+    0.6579712673513729,
+    0.7031053845229889
+   ],
+   "cc_alpha_med": 0.8115783090127391,
+   "cc_in_hybrid_ci": false,
+   "discrepancy": -0.13064411546062904
+  },
+  {
+   "name": "Umbria / Regio VI",
+   "hybrid_alpha_med": 0.7922934139122271,
+   "hybrid_ci": [
+    0.7720902040428667,
+    0.8130668754582754
+   ],
+   "cc_alpha_med": 0.7383493551179596,
+   "cc_in_hybrid_ci": false,
+   "discrepancy": 0.05394405879426745
+  },
+  {
+   "name": "Noricum",
+   "hybrid_alpha_med": 0.8220738394184423,
+   "hybrid_ci": [
+    0.801747898501812,
+    0.841390899753773
+   ],
+   "cc_alpha_med": 0.7835780213311827,
+   "cc_in_hybrid_ci": false,
+   "discrepancy": 0.03849581808725955
+  },
+  {
+   "name": "Baetica",
+   "hybrid_alpha_med": 0.6710181696463506,
+   "hybrid_ci": [
+    0.6480461683949549,
+    0.6940795891682694
+   ],
+   "cc_alpha_med": 0.6236016188680011,
+   "cc_in_hybrid_ci": false,
+   "discrepancy": 0.0474165507783495
+  },
+  {
+   "name": "Transpadana / Regio XI",
+   "hybrid_alpha_med": 0.8850924654109191,
+   "hybrid_ci": [
+    0.864936662265485,
+    0.9056164756473211
+   ],
+   "cc_alpha_med": 0.8918020342526114,
+   "cc_in_hybrid_ci": true,
+   "discrepancy": -0.0067095688416922705
+  },
+  {
+   "name": "Pompeii",
+   "hybrid_alpha_med": 0.024311193010190517,
+   "hybrid_ci": [
+    0.016057470211102175,
+    0.03497716959627586
+   ],
+   "cc_alpha_med": 0.014768968946423329,
+   "cc_in_hybrid_ci": false,
+   "discrepancy": 0.009542224063767188
+  },
+  {
+   "name": "Salona",
+   "hybrid_alpha_med": 0.9568343644764277,
+   "hybrid_ci": [
+    0.9404791789145216,
+    0.9736101886765535
+   ],
+   "cc_alpha_med": 0.9867670260782879,
+   "cc_in_hybrid_ci": false,
+   "discrepancy": -0.029932661601860255
+  },
+  {
+   "name": "Ostia",
+   "hybrid_alpha_med": 0.6811251825728797,
+   "hybrid_ci": [
+    0.6587060758820966,
+    0.703388708642899
+   ],
+   "cc_alpha_med": 0.6496867430548856,
+   "cc_in_hybrid_ci": false,
+   "discrepancy": 0.03143843951799408
+  },
+  {
+   "name": "Mogontiacum",
+   "hybrid_alpha_med": 0.13684890948756198,
+   "hybrid_ci": [
+    0.12101277873446438,
+    0.15336479087876284
+   ],
+   "cc_alpha_med": 0.13877934964781088,
+   "cc_in_hybrid_ci": true,
+   "discrepancy": -0.001930440160248903
+  },
+  {
+   "name": "Aquileia",
+   "hybrid_alpha_med": 0.9463350508095296,
+   "hybrid_ci": [
+    0.9283102108166178,
+    0.9628800478713498
+   ],
+   "cc_alpha_med": 0.914516797919924,
+   "cc_in_hybrid_ci": false,
+   "discrepancy": 0.0318182528896056
+  },
+  {
+   "name": "Moesia inferior",
+   "hybrid_alpha_med": 0.6509686090786401,
+   "hybrid_ci": [
+    0.6243850630025842,
+    0.6771783065404369
+   ],
+   "cc_alpha_med": 0.6262592601761922,
+   "cc_in_hybrid_ci": true,
+   "discrepancy": 0.024709348902447914
+  },
+  {
+   "name": "Lusitania",
+   "hybrid_alpha_med": 0.7760705220219575,
+   "hybrid_ci": [
+    0.7494416447151674,
+    0.8014807732486918
+   ],
+   "cc_alpha_med": 0.7568123645755531,
+   "cc_in_hybrid_ci": true,
+   "discrepancy": 0.019258157446404356
+  },
+  {
+   "name": "Italia (excl. Rome)",
+   "hybrid_alpha_med": 0.6784201110634696,
+   "hybrid_ci": [
+    0.6693473679113239,
+    0.6878356841498694
+   ],
+   "cc_alpha_med": 0.7793569502388181,
+   "cc_in_hybrid_ci": false,
+   "discrepancy": -0.10093683917534857
+  }
+ ]
+}
