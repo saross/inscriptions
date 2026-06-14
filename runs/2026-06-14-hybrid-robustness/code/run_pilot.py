@@ -51,6 +51,7 @@ def main() -> None:
     ap.add_argument("--cores", type=int, default=4)
     args = ap.parse_args()
 
+    (HYB / "outputs").mkdir(parents=True, exist_ok=True)
     data = Hy.assemble_unit_data()
     basis, _ = R.load_library_basis()
     model = Hy.build_model_hybrid(data, basis)
