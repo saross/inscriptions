@@ -24,15 +24,17 @@ runs/**/grid-state.json
 # grid-state-final.json (run-close snapshot), REPORT.md, and tables/grid-summary.parquet ARE committed (live grid-state.json is ignored — see the rule near the top).
 # Per-cell summary JSONs are NOT committed (Shawn 2026-06-03): their content is
 # preserved compactly in tables/grid-summary.parquet, so the 450 redundant JSONs
-# per grid are gitignored below. The smoke-test cell
-# (shape=rise_and_fall_alpha=0.50_tier=uniform_N=2000) stays committed as a
-# research record of the pre-launch gates, via the explicit re-includes below.
+# per grid are gitignored below. A 5-replicate fixture of the smoke-test cell
+# (shape=rise_and_fall_alpha=0.50_tier=uniform_N=2000 — replicates 000-004 of the
+# synthetic data + cell-fits, plus the cell-summary) is ALREADY committed as the
+# research record of the pre-launch gates; those tracked files stay tracked. The
+# full-run overflow (replicates 005+) and every other cell are regenerable from
+# the deterministic synth.py and are ignored (2026-06-14: dropped the
+# whole-cell re-includes so the overflow no longer shows as untracked).
 runs/2026-05-26-recovery-grid-two-unit/*/data/synthetic-cells/*/
 runs/2026-05-26-recovery-grid-two-unit/*/outputs/cell-fits/*/
 runs/2026-05-26-recovery-grid-two-unit/*/outputs/cell-logs/
 runs/2026-05-26-recovery-grid-two-unit/*/outputs/cell-summaries/*
-!runs/2026-05-26-recovery-grid-two-unit/*/data/synthetic-cells/shape=rise_and_fall_alpha=0.50_tier=uniform_N=2000/
-!runs/2026-05-26-recovery-grid-two-unit/*/outputs/cell-fits/shape=rise_and_fall_alpha=0.50_tier=uniform_N=2000/
 !runs/2026-05-26-recovery-grid-two-unit/*/outputs/cell-summaries/shape=rise_and_fall_alpha=0.50_tier=uniform_N=2000-summary.json
 
 # Diagnostic-run NUTS logs + regenerable scratch synth (results CSV/parquet/PNG
@@ -103,3 +105,10 @@ runs/2026-06-06-convention-basis-redesign/revalidation/*/outputs/cell-logs/
 runs/2026-06-06-convention-basis-redesign/revalidation/*/outputs/cell-summaries/*
 runs/2026-06-06-convention-basis-redesign/revalidation/full-grid.log
 runs/2026-06-06-convention-basis-redesign/revalidation/STATUS-*.txt
+
+# Repo-root operational logs (regenerable run scaffolding; e.g.
+# logs/block-06-mundlak-letter.log from the 2026-05-26 letter-count probe).
+/logs/
+# Transient two-unit-grid run scaffolding (regenerable; results are committed).
+runs/2026-05-26-recovery-grid-two-unit/*/STATUS.txt
+runs/2026-05-26-recovery-grid-two-unit/**/*.out
