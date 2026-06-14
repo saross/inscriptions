@@ -5,7 +5,7 @@ host (or refresh an existing one), using [uv](https://docs.astral.sh/uv/) and th
 committed `uv.lock`. The lock pins the exact stack that produced the §5 Layer-A
 results; `uv sync --frozen` reproduces it bit-for-bit.
 
-Last updated: 2026-06-02 (task #9 dependency hygiene — `chore/dep-hygiene-pymc6`).
+Last updated: 2026-06-14 (sapphire temp/scratch hygiene — 216 GB reclaim + 3-layer fix).
 
 ## The pinned stack
 
@@ -94,6 +94,63 @@ the dry-run plan on a host without the full stack).
   in the meantime.
 - **amd-tower** — synced to the pinned stack; reads posteriors fine but cannot
   fit until Python 3.13 dev headers are installed (see Prerequisites).
+
+## Temp/scratch hygiene on the compute host (sapphire)
+
+pytensor compiles C++/numba kernels at runtime, one set per distinct model
+graph. A grid sweep fits thousands of cells, so two things accumulate:
+
+1. **Per-run pytensor temp** — compile working directories. If `TMPDIR` is unset
+   these land in `/tmp`, which on sapphire is a **tmpfs with a 1,048,576-inode
+   ceiling**. A large sweep can exhaust the inode table mid-run and ENOSPC the
+   whole box (this caused the 2026-06-11 grid OOM).
+2. **The numba kernel cache** (`~/.pytensor/numba/`) — persistent across runs and
+   never evicted. By 2026-06-14 it had reached **201 GB / 443 k files**; per-run
+   pytensor temp under `~/cc-scratch` had reached **13 GB / 2.97 M files**.
+
+A one-time reclaim on 2026-06-14 freed **216 GB** (root-fs 71 % → 42 %) by
+deleting the numba cache and the stale per-run pytensor temp — both regenerate
+on demand, and the grid *conclusions* are committed (per-run `REPORT.md`s), so
+only regenerable intermediates were removed. Three layers keep it from
+recurring:
+
+**Layer 1 — machine-default `TMPDIR` (disk-backed).** Prepended to sapphire's
+`~/.bashrc` *above* the non-interactive guard (so it also applies to
+`ssh sapphire 'cmd'` shells, which Debian/Ubuntu source `.bashrc` for):
+
+```sh
+# === sapphire temp hygiene ===
+export TMPDIR="${TMPDIR:-$HOME/cc-scratch/tmp}"
+[ -d "$TMPDIR" ] || mkdir -p "$TMPDIR" 2>/dev/null
+# === end temp hygiene ===
+```
+
+This sends *all* temp — even from a script that forgets to set it — onto
+root-fs (a real inode table, 400 GB+ free) instead of the tmpfs. Verify with
+`ssh sapphire 'python3 -c "import tempfile; print(tempfile.gettempdir())"'`.
+
+**Layer 2 — run wrappers.** The disciplined launch wrappers
+(`run-production.sh`, `run-both-grids.sh`, the `run_*.py` orchestrators) already
+`export TMPDIR=…` and `PYTENSOR_FLAGS=mode=FAST_RUN,allow_gc=False`. With Layer 1
+in place a forgetful script is caught automatically, so historical run scripts
+were deliberately **not** retrofitted (editing completed-run code muddies the
+research record for no gain). New wrappers should keep following the pattern.
+
+**Layer 3 — age-based janitor.** `scripts/sapphire-cc-scratch-hygiene.conf` is a
+systemd-tmpfiles drop-in that evicts the regenerable compile caches + per-run
+pytensor temp after 14 days, reusing the always-active
+`systemd-tmpfiles-clean.timer` (daily). It targets *only* regenerable caches —
+model files and other projects' data under `~/cc-scratch` are untouched.
+Install on sapphire (one-time, needs root):
+
+```bash
+sudo install -m 0644 scripts/sapphire-cc-scratch-hygiene.conf \
+    /etc/tmpfiles.d/cc-scratch-hygiene.conf
+sudo systemd-tmpfiles --clean /etc/tmpfiles.d/cc-scratch-hygiene.conf   # apply now
+```
+
+`/tmp` itself needs no custom rule — the OS ships a `q /tmp … 10d` policy that
+the same timer already enforces, so loose files in `/tmp` age out at 10 days.
 
 ## Resuming diagnostics without re-fitting
 
