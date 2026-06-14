@@ -111,15 +111,19 @@ def fit_one(unit: dict, data: dict, emit_draws_dir: str | None = None) -> dict:
         ed.mkdir(parents=True, exist_ok=True)
         tmp_npz = ed / f"{_safe(unit['name'])}-pgen.npz.tmp"
         final_npz = ed / f"{_safe(unit['name'])}-pgen.npz"
-        np.savez_compressed(
-            tmp_npz,
-            p_gen=p_gen.astype(np.float32),          # (n_draws_total, n_bins) raw genuine SPA
-            p_gen_median_raw=p_gen_med.astype(np.float64),  # for the provenance gate
-            unit_index=np.int64(unit["unit_index"]),
-            seed=np.int64(seed),
-            n_bins=np.int64(n_bins),
-            name=np.array(unit["name"]),
-        )
+        # Write through a file handle: np.savez_compressed auto-appends ".npz" to a
+        # *path* that doesn't end in .npz (which would desync the os.replace), but
+        # leaves a file *object* untouched.
+        with open(tmp_npz, "wb") as fh:
+            np.savez_compressed(
+                fh,
+                p_gen=p_gen.astype(np.float32),          # (n_draws_total, n_bins) raw genuine SPA
+                p_gen_median_raw=p_gen_med.astype(np.float64),  # for the provenance gate
+                unit_index=np.int64(unit["unit_index"]),
+                seed=np.int64(seed),
+                n_bins=np.int64(n_bins),
+                name=np.array(unit["name"]),
+            )
         os.replace(tmp_npz, final_npz)
     p_conv_med = np.median(idata.posterior["p_conv"].values.reshape(-1, n_bins), axis=0)
     tw_med = np.median(
