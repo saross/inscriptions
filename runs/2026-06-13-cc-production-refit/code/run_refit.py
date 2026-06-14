@@ -64,8 +64,15 @@ THETA_CONV_AB, THETA_GEN_AB, THETA_CAL = R.adopted_theta_priors()
 MONITORED = ["alpha", "tier_weights", "sigma_smooth", "z_pgen", "theta_conv", "theta_gen"]
 
 
-def fit_one(unit: dict, data: dict) -> dict:
-    """Fit one unit's cc-library model and extract the deliverables (spec §3)."""
+def fit_one(unit: dict, data: dict, emit_draws_dir: str | None = None) -> dict:
+    """Fit one unit's cc-library model and extract the deliverables (spec §3).
+
+    If ``emit_draws_dir`` is set, additionally persist the full per-draw genuine-SPA
+    posterior (``p_gen``, shape (n_draws_total, n_bins)) to
+    ``<dir>/<safe-name>-pgen.npz`` — the H3b uncertainty-propagation hand-off
+    (``runs/2026-06-09-h3b/h3b-implementation-spec-2026-06-14.md`` Stage A). The
+    medians written to the per-unit JSON are unchanged, so this is purely additive.
+    """
     import arviz as az
     import pymc as pm
 
@@ -95,6 +102,25 @@ def fit_one(unit: dict, data: dict) -> dict:
     p_gen = idata.posterior["p_gen"].values.reshape(-1, n_bins)
     p_gen_med = np.median(p_gen, axis=0)
     p_gen_med_norm = p_gen_med / p_gen_med.sum() if p_gen_med.sum() > 0 else p_gen_med
+
+    # H3b Stage-A hand-off: persist the full genuine-SPA posterior (raw, unnormalised;
+    # H3b normalises per draw). float32 halves the footprint with no material loss for
+    # an 80-bin probability vector. Atomic write (tmp + replace) for resume safety.
+    if emit_draws_dir is not None:
+        ed = Path(emit_draws_dir)
+        ed.mkdir(parents=True, exist_ok=True)
+        tmp_npz = ed / f"{_safe(unit['name'])}-pgen.npz.tmp"
+        final_npz = ed / f"{_safe(unit['name'])}-pgen.npz"
+        np.savez_compressed(
+            tmp_npz,
+            p_gen=p_gen.astype(np.float32),          # (n_draws_total, n_bins) raw genuine SPA
+            p_gen_median_raw=p_gen_med.astype(np.float64),  # for the provenance gate
+            unit_index=np.int64(unit["unit_index"]),
+            seed=np.int64(seed),
+            n_bins=np.int64(n_bins),
+            name=np.array(unit["name"]),
+        )
+        os.replace(tmp_npz, final_npz)
     p_conv_med = np.median(idata.posterior["p_conv"].values.reshape(-1, n_bins), axis=0)
     tw_med = np.median(
         idata.posterior["tier_weights"].values.reshape(-1, LIBRARY_BASIS.shape[0]), axis=0)
@@ -131,13 +157,13 @@ def fit_one(unit: dict, data: dict) -> dict:
     }
 
 
-def _worker(unit: dict) -> tuple[str, bool, float]:
+def _worker(unit: dict, emit_draws_dir: str | None = None) -> tuple[str, bool, float]:
     df = H.load_filtered_lire()  # aligned_indicator recomputes family internally; no column needed
     latin = H.latin_provinces()
     sub = R.subset_for(df, unit, latin)
     data = R.build_unit_cc_data(sub)
     t0 = time.time()
-    out = fit_one(unit, data)
+    out = fit_one(unit, data, emit_draws_dir=emit_draws_dir)
     out["secs"] = round(time.time() - t0, 1)
     tmp = UNITS_DIR / f"{_safe(unit['name'])}.json.tmp"
     final = UNITS_DIR / f"{_safe(unit['name'])}.json"
@@ -151,7 +177,7 @@ def _safe(name: str) -> str:
     return name.replace(" ", "_").replace("/", "-").replace("(", "").replace(")", "")
 
 
-def unit_is_done(unit: dict) -> bool:
+def unit_is_done(unit: dict, emit_draws_dir: str | None = None) -> bool:
     p = UNITS_DIR / f"{_safe(unit['name'])}.json"
     if not p.exists():
         return False
@@ -159,7 +185,14 @@ def unit_is_done(unit: dict) -> bool:
         d = json.loads(p.read_text())
     except (json.JSONDecodeError, OSError):
         return False
-    return "convergence_pass" in d
+    if "convergence_pass" not in d:
+        return False
+    # In emit-draws mode a unit is only "done" once its posterior npz also exists,
+    # so a fully-cached refit still re-samples to produce the H3b hand-off.
+    if emit_draws_dir is not None:
+        if not (Path(emit_draws_dir) / f"{_safe(unit['name'])}-pgen.npz").exists():
+            return False
+    return True
 
 
 def main() -> None:
@@ -167,6 +200,9 @@ def main() -> None:
     ap.add_argument("--n-jobs", type=int, default=8)
     ap.add_argument("--max-tasks-per-child", type=int, default=1)
     ap.add_argument("--only", type=str, default=None, help="fit a single unit by exact name")
+    ap.add_argument("--emit-draws", type=str, default=None, metavar="DIR",
+                    help="persist the full per-draw genuine-SPA posterior to DIR "
+                         "(H3b Stage-A hand-off); forces a re-sample of cached units")
     args = ap.parse_args()
     UNITS_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -175,9 +211,10 @@ def main() -> None:
         units = [u for u in units if u["name"] == args.only]
         if not units:
             raise SystemExit(f"no unit named {args.only!r}")
-    todo = [u for u in units if not unit_is_done(u)]
+    todo = [u for u in units if not unit_is_done(u, args.emit_draws)]
+    emit_note = f"; EMIT-DRAWS → {args.emit_draws}" if args.emit_draws else ""
     print(f"refit: {len(units)} units ({len(todo)} to do, {len(units)-len(todo)} cached); "
-          f"n_jobs {args.n_jobs}; library {LIBRARY_BASIS.shape[0]} rows", flush=True)
+          f"n_jobs {args.n_jobs}; library {LIBRARY_BASIS.shape[0]} rows{emit_note}", flush=True)
     STATUS_PATH.write_text(f"refit — 0/{len(units)} done (starting)\n")
     if not todo:
         print("nothing to do (all cached).")
@@ -189,7 +226,7 @@ def main() -> None:
     with ProcessPoolExecutor(max_workers=args.n_jobs,
                              max_tasks_per_child=args.max_tasks_per_child,
                              mp_context=mp.get_context("spawn")) as ex:
-        futs = {ex.submit(_worker, u): u for u in todo}
+        futs = {ex.submit(_worker, u, args.emit_draws): u for u in todo}
         for fut in as_completed(futs):
             u = futs[fut]
             try:

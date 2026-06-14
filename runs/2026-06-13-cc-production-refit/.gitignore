@@ -3,5 +3,9 @@
 # retention rule). The locked design inputs (unit-measurements.json,
 # production-slab-library.json) ARE tracked.
 outputs/units/
+outputs/units-prev-provenance/
 outputs/refit-STATUS.txt
 outputs/*.log
+# H3b Stage-A posterior draws — large (~150 MB) regenerable hand-off; the
+# H3b run consumes them, the PROVENANCE-MANIFEST records the gate result.
+outputs/posterior-draws/
