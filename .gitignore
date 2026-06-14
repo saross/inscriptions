@@ -113,3 +113,17 @@ runs/2026-06-06-convention-basis-redesign/revalidation/STATUS-*.txt
 runs/2026-05-26-recovery-grid-two-unit/**/STATUS.txt
 runs/2026-05-26-recovery-grid-two-unit/STATUS.txt
 runs/2026-05-26-recovery-grid-two-unit/**/*.out
+
+# --- 2026-06-14 hygiene: regenerable transients/results from prior runs (their
+# committed records are noted per line) ---
+# Per-replicate raw (result = committed reachability-by-cell.csv).
+runs/2026-06-04-envelope-finer-alpha/outputs/reachability-replicates.parquet
+# brms-shadow raw posterior draws (summaries bayes_r2/fwithin/summary.csv committed).
+runs/2026-06-04-h3a-confirmatory/outputs/brms-shadow/posterior_draws.parquet
+# Revalidation derived pilot-proxy input (regenerable via derive-pilot-proxy.py) + rerun logs.
+runs/2026-06-06-convention-basis-redesign/revalidation/**/data/pilot-proxy.json
+runs/2026-06-06-convention-basis-redesign/revalidation/full-grid*.log
+# joint-identifiability probe logs + gate2 measurement outputs (regenerable diagnostics).
+runs/2026-06-09-joint-identifiability/outputs/det-probe.log
+runs/2026-06-09-joint-identifiability/outputs/gate1-probe.log
+runs/2026-06-09-joint-identifiability/outputs/gate2/
