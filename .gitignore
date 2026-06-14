@@ -127,3 +127,6 @@ runs/2026-06-06-convention-basis-redesign/revalidation/full-grid*.log
 runs/2026-06-09-joint-identifiability/outputs/det-probe.log
 runs/2026-06-09-joint-identifiability/outputs/gate1-probe.log
 runs/2026-06-09-joint-identifiability/outputs/gate2/
+# One-off pre-rerun grid-state snapshots (live orchestration state; the run record
+# is grid-state-final.json — retention rule near top). Regenerable/superseded.
+runs/**/grid-state.before-rerun-*.json
