@@ -1,7 +1,7 @@
 ---
 title: "OSF Amendment 04 (DRAFT) — Cross-classified time × alignment remediation for the α-identifiability limit; reverses the shared convention basis"
-amendment-number: "04 (PROVISIONAL — contingent on confirming Amendment 03's lodgement state; see status note)"
-status: "DRAFT for Shawn's review — NOT lodged. Two items need Shawn before lodgement: (1) confirm the OSF lodgement state of Amendments 02 and 03 (no osf-amendment-03 git tag exists; this fixes the numbering and the 'reverses a lodged amendment' framing); (2) fold in the hybrid-robustness concordance result (§A5.7) once the pilot + validation complete."
+amendment-number: "04"
+status: "DRAFT for Shawn's review — NOT lodged. Amendment 03 lodgement CONFIRMED (Shawn, 2026-06-14: lodged 2026-06-08), so this is Amendment 04 reversing a lodged amendment. One item to fold in before lodgement: the hybrid-robustness concordance result (§A5.7), once the pilot + validation complete. Housekeeping flagged separately: the git tag osf-amendment-03-2026-06-08 the lodged Amendment 03 cites is MISSING from the repo and should be created at its lodged commit."
 date-drafted: 2026-06-14
 scope: "Replace the H2.1 temporal-mixture's shared, fixed convention basis (Amendment 03 §A5.1 / Decision 38) — which under-identifies the convention fraction α for temporally-concentrated frontier units — with the recovery-validated cross-classified time × alignment model (per-unit alignment split + a fixed corpus-wide slab library + a classification likelihood sharing α). Adopt it as the production deconvolution; record the recovery grid + 29-unit production refit as the validation gate; supersede the refuted informed-α planned remediation; demote the two-bound α range to a fallback disclosure."
 preregistration: "https://osf.io/uycs6/ (lodged 2026-05-20; embargoed)"
@@ -14,15 +14,14 @@ relationship: "Independent of Amendments 01 (two-measure framework) and 02 (Lati
 
 # OSF Amendment 04 (DRAFT) — Cross-classified remediation for the α-identifiability limit
 
-> **⚠ Records note for Shawn (resolve before lodgement).** This is numbered **04**
-> provisionally. Git tags exist for `osf-amendment-01-2026-06-04` and
-> `osf-amendment-02-2026-06-06`, but **no `osf-amendment-03` tag exists**, and the
-> Amendment 03 document's own status line reads "not yet lodged" while its
-> summary-addendum and the project continuity read "lodged 2026-06-08". The
-> changelog errata trail formally logs only Amendment 01. **Please confirm the OSF
-> lodgement state of Amendments 02 and 03** — it fixes this amendment's number and
-> whether it "reverses a lodged amendment" (03 lodged) or "supersedes a prepared
-> draft" (03 not lodged). The methodology below is unaffected either way.
+> **Records note.** Amendment 03 lodgement **confirmed** (Shawn, 2026-06-14: lodged
+> 2026-06-08), so this is **Amendment 04 reversing a lodged amendment** (Amendment
+> 03's shared convention basis). **Housekeeping for Shawn:** the lodged Amendment 03
+> summary cites `git tag osf-amendment-03-2026-06-08` as its version-pinned
+> reproducibility anchor, but **that tag is absent from the repository** (local and
+> remote; tags exist for amendments 01 and 02). It should be created at Amendment
+> 03's lodged commit so the public OSF record resolves — see the separate flag at
+> session close. The methodology below is unaffected.
 
 ## Plain-language summary
 
@@ -55,9 +54,9 @@ The technical statement follows.
 
 ## A1. Identification and trigger
 
-This is the fourth amendment (provisional; see records note) to the project's
-preregistration (OSF, osf.io/uycs6/, lodged 2026-05-20, embargoed), filed under the
-preregistration's contingency rule (`preregistration-draft.md` line 423).
+This is the fourth amendment to the project's preregistration (OSF, osf.io/uycs6/,
+lodged 2026-05-20, embargoed; Amendments 01–03 lodged 2026-06-04 / -06-06 / -06-08),
+filed under the preregistration's contingency rule (`preregistration-draft.md` line 423).
 
 **Trigger.** The H2.1 temporal-mixture production run (2026-06-08; 28 units +
 Italia, all converged) returned convention fractions α spanning 0.001–0.88. A
