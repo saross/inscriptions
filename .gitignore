@@ -110,5 +110,6 @@ runs/2026-06-06-convention-basis-redesign/revalidation/STATUS-*.txt
 # logs/block-06-mundlak-letter.log from the 2026-05-26 letter-count probe).
 /logs/
 # Transient two-unit-grid run scaffolding (regenerable; results are committed).
-runs/2026-05-26-recovery-grid-two-unit/*/STATUS.txt
+runs/2026-05-26-recovery-grid-two-unit/**/STATUS.txt
+runs/2026-05-26-recovery-grid-two-unit/STATUS.txt
 runs/2026-05-26-recovery-grid-two-unit/**/*.out
