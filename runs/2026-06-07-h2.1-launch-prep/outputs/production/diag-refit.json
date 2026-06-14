@@ -1,0 +1,171 @@
+[
+  {
+    "unit": "Moesia inferior",
+    "n": 1952,
+    "alpha_shared": 0.049579556540708794,
+    "alpha_perunit": 0.8702445042042339,
+    "swing": 0.8206649476635252,
+    "perunit_tier_counts": [
+      191,
+      353,
+      412
+    ],
+    "perunit_conv_pass": true
+  },
+  {
+    "unit": "Samnium / Regio IV",
+    "n": 4187,
+    "alpha_shared": 0.27249497388178495,
+    "alpha_perunit": 0.8602646366259983,
+    "swing": 0.5877696627442133,
+    "perunit_tier_counts": [
+      570,
+      1845,
+      505
+    ],
+    "perunit_conv_pass": true
+  },
+  {
+    "unit": "Pannonia inferior",
+    "n": 3132,
+    "alpha_shared": 0.14668715000997518,
+    "alpha_perunit": 0.7513354612707046,
+    "swing": 0.6046483112607295,
+    "perunit_tier_counts": [
+      451,
+      591,
+      654
+    ],
+    "perunit_conv_pass": true
+  },
+  {
+    "unit": "Numidia",
+    "n": 3014,
+    "alpha_shared": 0.1664868626463042,
+    "alpha_perunit": 0.5147442034077507,
+    "swing": 0.34825734076144654,
+    "perunit_tier_counts": [
+      177,
+      1151,
+      66
+    ],
+    "perunit_conv_pass": true
+  },
+  {
+    "unit": "Venetia et Histria / Regio X",
+    "n": 5872,
+    "alpha_shared": 0.4519674076028585,
+    "alpha_perunit": 0.809485946235128,
+    "swing": 0.35751853863226957,
+    "perunit_tier_counts": [
+      1132,
+      2348,
+      727
+    ],
+    "perunit_conv_pass": true
+  },
+  {
+    "unit": "Salona",
+    "n": 3465,
+    "alpha_shared": 0.5381595468025828,
+    "alpha_perunit": 0.9946787549756229,
+    "swing": 0.45651920817304004,
+    "perunit_tier_counts": [
+      65,
+      388,
+      2494
+    ],
+    "perunit_conv_pass": true
+  },
+  {
+    "unit": "Britannia",
+    "n": 4647,
+    "alpha_shared": 0.0016020786629196452,
+    "alpha_perunit": 0.7930664210289315,
+    "swing": 0.7914643423660119,
+    "perunit_tier_counts": [
+      110,
+      371,
+      600
+    ],
+    "perunit_conv_pass": true
+  },
+  {
+    "unit": "Umbria / Regio VI",
+    "n": 2763,
+    "alpha_shared": 0.4288320311422776,
+    "alpha_perunit": 0.7000770930334981,
+    "swing": 0.2712450618912205,
+    "perunit_tier_counts": [
+      443,
+      885,
+      420
+    ],
+    "perunit_conv_pass": true
+  },
+  {
+    "unit": "Ostia",
+    "n": 2644,
+    "alpha_shared": 0.33492520659310976,
+    "alpha_perunit": 0.7752053518134503,
+    "swing": 0.44028014522034054,
+    "perunit_tier_counts": [
+      221,
+      921,
+      277
+    ],
+    "perunit_conv_pass": true
+  },
+  {
+    "unit": "Dacia",
+    "n": 4870,
+    "alpha_shared": 0.0009288667439411339,
+    "alpha_perunit": 0.3440899370721278,
+    "swing": 0.34316107032818666,
+    "perunit_tier_counts": [
+      149,
+      453,
+      157
+    ],
+    "perunit_conv_pass": true
+  },
+  {
+    "unit": "Noricum",
+    "n": 2761,
+    "alpha_shared": 0.8800029819591154,
+    "alpha_perunit": 0.8291293241091325,
+    "swing": -0.05087365784998288,
+    "perunit_tier_counts": [
+      290,
+      578,
+      960
+    ],
+    "perunit_conv_pass": true
+  },
+  {
+    "unit": "latin-aggregate",
+    "n": 109646,
+    "alpha_shared": 0.8109379113181797,
+    "alpha_perunit": 0.8146690106622544,
+    "swing": 0.003731099344074673,
+    "perunit_tier_counts": [
+      9830,
+      25844,
+      21626
+    ],
+    "perunit_conv_pass": true
+  },
+  {
+    "unit": "Latium et Campania / Regio I",
+    "n": 18512,
+    "alpha_shared": 0.6720587108924833,
+    "alpha_perunit": 0.6211313923559176,
+    "swing": -0.050927318536565624,
+    "perunit_tier_counts": [
+      1530,
+      4024,
+      1742
+    ],
+    "perunit_conv_pass": true
+  }
+]
