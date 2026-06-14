@@ -104,7 +104,7 @@ spot-verified against CrossRef/DataCite):
 - **The problem is weak component separation.** When a unit's convention and genuine
   signals overlap in time, the mixing weight α is only weakly identified and the
   likelihood can be *confidently wrong* — **Feller, Greif, Ho, Miratrix & Pillai
-  (2016)** (`10.48550/arxiv.1602.06595`; *Ann. Appl. Stat.* 2019) prove the estimator
+  (2016)** (`10.48550/arxiv.1602.06595`, verified against DataCite) prove the estimator
   can behave as a threshold rule that declares components identical when they are not.
 - **A prior cannot fix it.** For a partially-identified parameter the prior over the
   identification region is *never updated by the data* — **Gustafson (2010)**
@@ -271,12 +271,28 @@ as a fallback sensitivity** alongside the cc estimate. The identifiability flag
 
 The H3b deviation-detection confirmatory set was restricted to α-identifiable units
 under the shared basis. The cross-classified model now identifies the previously
-under-identified frontier units, so that restriction relaxes. **The H3b confirmatory set
-will be re-derived from the cross-classified α when H3b is run** — the inputs for the
-reconciliation (the per-unit cc α, the old shared-basis identifiability flag, and the
-classification-implied α) are recorded in `refit-summary.json`; the resulting set, and any
-change to the H3b family size, are reported with the H3b analysis. This is a **downstream
-consequence** of the method change, not a result established by this amendment.
+under-identified frontier units, so that restriction relaxes; the confirmatory family is
+**re-derived here and lodged with this amendment** (the identifiable set must be fixed
+before the confirmatory H3b test runs — deriving it from the *identifiability*, not the
+deviation outcome, is an analysis-scope decision, not result-peeking).
+
+**Cross-classified H3b-eligibility criterion (one new design decision; for sign-off).** A
+unit is H3b-confirmatory-eligible iff it (a) passes the convergence gate AND (b) is
+**θ-robust** — its cc α-range across the §A5.7 θ-prior sweep is < 0.10. This yields:
+
+- **Confirmatory-eligible (26):** every unit except the three below. The previously
+  under-identified frontier units that the shared basis excluded (Numidia, Ostia, Pannonia
+  inferior, Salona, Samnium, Umbria, Venetia et Histria, Dacia) are **now eligible** — the
+  core gain of the remediation.
+- **Caveated-exploratory (2): Moesia inferior and Britannia** — identified by the cc model
+  but the two θ-sensitive units (α-range 0.16 / 0.14; the most temporally-confounded); their
+  H3b deviations are reported exploratory, with the θ-sweep range as the disclosure.
+- **Excluded (1): empire-aggregate** — fails the convergence gate (a secondary/context
+  aggregate, not a primary H3b target).
+
+Inputs and the per-unit ranges are in `refit-summary.json` + `theta-sweep-summary.json`;
+the eligibility list is reproducible from them. If the criterion is approved, this is the
+locked H3b confirmatory family.
 
 ### A5.7 θ robustness: the global-θ hybrid, the re-derivation, and the θ-prior sweep
 
