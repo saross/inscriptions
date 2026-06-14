@@ -24,7 +24,7 @@ What does NOT change: the mixture likelihood's temporal block (the Dirichlet con
 
 Validation. Because the likelihood structure changes, the model was recovery-validated on synthetic data with known answers before the production refit. A 300-cell by 100-replicate recovery grid (zero failed cells) shows, against the shared-basis design: the near-uniform +0.06 to +0.08 over-attribution bias of the shared/estimated basis is eliminated (the do-no-harm identifiable-cell median bias falls to 0.021, and the bias surface is flat across the whole parameter plane); the confounded cells are pulled to truth (median bias 0.009, against a shared-basis baseline of 0.362 — roughly a 40-fold reduction); and convergence improves to 96 percent of cells. A production refit of the 29 analytical units then confirms the diagnostic prediction on the real data: all ten flagged frontier units rise to sensible mid-range convention fractions tracking an independent classification-implied estimate (Moesia inferior 0.05 to 0.70, Britannia 0.00 to 0.45, Pannonia inferior 0.15 to 0.68, and so on), while the well-identified controls are unchanged (Pompeii remains about 0, correctly; the aggregates move negligibly). A theta-prior sensitivity sweep (four priors over the 29 units) shows the per-unit convention fractions are stable to the theta assumption for 27 of 29 units; only the two most temporally-confounded units carry a residual theta-sensitivity, and they move within the disclosed two-bound range.
 
-The H2.1 deviation-detection confirmatory family (which had been restricted to identifiable units) is re-derived from the cross-classified estimates and lodged with this amendment: 26 units are confirmatory-eligible (including the eight frontier provinces the shared basis had excluded), two are caveated-exploratory (the theta-sensitive units), and one secondary aggregate is excluded for non-convergence.
+H3b — the project's pre-specified exploratory deviation-detection analysis — is not a confirmatory family (Decision 15). The post-hoc restriction of H3b to "identifiable units" is replaced by propagating the cross-classified deconvolution's posterior uncertainty into the deviation test, so a unit whose convention/genuine split is weakly identified receives a wider, more conservative result rather than a hard exclusion; the lodged Phase-1 reachability (power) gate is unchanged, the coverage caveat is carried, and the two most theta-sensitive units (Moesia inferior and Britannia) carry a soft reliability annotation. The implementation (the H2.1 hand-off emitting the genuine-SPA posterior rather than only its median, and the draw-wise envelope test) is part of finalising the H3b analysis, not pre-specified by this amendment.
 
 Full detail — the model, the recovery-grid verdict, the production refit, the theta robustness work, the literature warrant, and the provenance trail — is in the full amendment, hosted version-pinned at git tag osf-amendment-04-2026-06-14, and reproduced in plain text below:
   PDF: https://github.com/saross/inscriptions/blob/osf-amendment-04-2026-06-14/planning/osf-amendment-2026-06-14-cross-classified-remediation.pdf
@@ -72,7 +72,7 @@ One structural change to the temporal mixture's convention/genuine deconvolution
 2.  Convention shape p_conv → a FIXED corpus-wide round-endpoint slab library (§A5.2), identical for every unit — replacing Amendment 03's shared 3-tier basis. It is the deterministic, data-independent analogue of the recovery-validated slab library; it carries no per-unit contamination channel.
 3.  Reverse Amendment 03 §A5.1's anti-per-unit-basis rationale (§A5.3): the classification term supplies the over-attribution control that the shared basis was adopted to provide, so a flexible/fixed-library convention shape is now safe.
 4.  Demote the two-bound α range from the primary interim disclosure to a fallback for units in a high-residual corner (§A5.5); the cross-classified point estimate with CI is now primary.
-5.  Reconcile the H3b identifiable set against the cross-classified α (§A5.6).
+5.  Replace the post-hoc H3b identifiability restriction with propagation of the deconvolution uncertainty into the (exploratory) H3b deviation test (§A5.6).
 
 Adoption is gated on a recovery grid and a production refit, both PASS (§A5.4).
 
@@ -93,7 +93,7 @@ The shared-basis production α values were observed before this change (the diag
 
 -   The change is a structural identifiability remediation whose direction is fixed by statistical theory (Feller/Gustafson/Huang & Bandeen-Roche) and whose validity is established on synthetic data with known answers (the recovery grid, §A5.4) — not by tuning to a preferred real-data outcome. The grid was specified and its acceptance criteria fixed (full-grid-spec.md §3; cross-classified-spec.md §5) before the production refit was run.
 -   The production refit's role is confirmation that the validated model behaves on the real units as the diagnostic predicted (frontier units pinned, controls unchanged), not selection among outcomes. No α value was chosen; the model was changed, validated on synthetics, and applied once.
--   The interim reporting responses already disclosed (prereg-note-2026-06-09: identifiability flag, two-bound α, H3b restriction, Italia unit) stand; this amendment supersedes only that note's refuted informed-α "Planned remediation".
+-   The interim reporting responses already disclosed (prereg-note-2026-06-09: identifiability flag, two-bound α, Italia unit) stand; this amendment supersedes that note's refuted informed-α "Planned remediation" and replaces its H3b identifiability restriction with uncertainty propagation (§A5.6).
 
 A5. Pre-specifications
 
@@ -139,17 +139,17 @@ A5.5 α reporting under the new model
 
 The cross-classified posterior α median + 95% CI is the primary reported quantity for every unit (replacing the shared-basis point estimate and the interim two-bound range as primary). Caveat carried forward: reported CIs are ~1σ-optimistic by the grid's small residual positive bias; for any unit in a high-residual corner (high convention-%-in-window × high α) the two-bound [shared, per-unit] range is reported as a fallback sensitivity alongside the cc estimate. The identifiability flag (prereg-note-2026-06-09 response 1) is retained as a transparency annotation.
 
-A5.6 H3b identifiable-set reconciliation
+A5.6 H3b under the cross-classified model — reliability by uncertainty propagation
 
-The H3b deviation-detection confirmatory set was restricted to α-identifiable units under the shared basis. The cross-classified model now identifies the previously under-identified frontier units, so that restriction relaxes; the confirmatory family is re-derived here and lodged with this amendment (the identifiable set must be fixed before the confirmatory H3b test runs — deriving it from the identifiability, not the deviation outcome, is an analysis-scope decision, not result-peeking).
+H3b is the project's pre-specified exploratory temporal deviation-detection analysis (Decision 15; the lodged preregistration places it explicitly outside the confirmatory family — no Holm-corrected family is formed). It scans each unit's convention-corrected genuine summed-probability analysis against a featureless-null permutation envelope at two named probes (Antonine, AD 165–180; Crisis of the Third Century, AD 235–284). Two clarifications and one change:
 
-Cross-classified H3b-eligibility criterion (one new design decision; for sign-off). A unit is H3b-confirmatory-eligible iff it (a) passes the convergence gate AND (b) is θ-robust — its cc α-range across the §A5.7 θ-prior sweep is < 0.10. This yields:
+-   Framing correction. The interim disclosure (prereg-note-2026-06-09 response 3) called this "confirmatory H3b restricted to identifiable units". Because H3b is exploratory, that is a reliability tiering — which units' corrected curves are trustworthy enough to report as findings — not a confirmatory family.
+-   The lodged eligibility gate is unchanged. Which (level × subset) combinations H3b can test is set by the lodged Phase-1 reachability criterion (a sample-size / power threshold, detection ≥ 0.80); this amendment does not touch it.
+-   The post-hoc α-identifiability restriction is superseded by uncertainty propagation (the change). Rather than hard-excluding the diagnostic-flagged units, the cross-classified deconvolution's posterior uncertainty in the corrected genuine SPA is propagated into the H3b deviation test — the test is evaluated over the genuine-SPA posterior, not its point-estimate median — so a unit whose convention/genuine split is weakly identified automatically receives a wider, more conservative deviation result rather than an arbitrary exclusion. This is the principled replacement for the shared-basis "identifiable-set" restriction, whose criterion was itself unsettled (a family-fraction-gap rule and a basis-swing rule disagreed on eight units): with the uncertainty propagated, no hard identifiable set or threshold need be fixed at all.
 
--   Confirmatory-eligible (26): every unit except the three below. The previously under-identified frontier units that the shared basis excluded (Numidia, Ostia, Pannonia inferior, Salona, Samnium, Umbria, Venetia et Histria, Dacia) are now eligible — the core gain of the remediation.
--   Caveated-exploratory (2): Moesia inferior and Britannia — identified by the cc model but the two θ-sensitive units (α-range 0.16 / 0.14; the most temporally-confounded); their H3b deviations are reported exploratory, with the θ-sweep range as the disclosure.
--   Excluded (1): empire-aggregate — fails the convergence gate (a secondary/context aggregate, not a primary H3b target).
+Carried forward: the coverage caveat (§A5.5 — the cross-classified posterior is mildly optimistic, so propagated deviation intervals carry the same caveat or a small inflation), and a soft reliability annotation on the two θ-sensitive units (Moesia inferior and Britannia) — flagged, not excluded.
 
-Inputs and the per-unit ranges are in refit-summary.json + theta-sweep-summary.json; the eligibility list is reproducible from them. If the criterion is approved, this is the locked H3b confirmatory family.
+What this amendment lodges versus what is downstream. Lodged here: H3b is exploratory; the Phase-1 reachability gate stands; the identifiability restriction is replaced by propagation of the deconvolution uncertainty, with a soft annotation on the two hardest units. The implementation — the H2.1 hand-off emitting the genuine-SPA posterior (it currently emits only the posterior-median curve) and the H3b envelope test running draw-wise over it — is part of finalising the H3b analysis (which also resolves that draft's open questions on the per-unit scan scope and the now-moot identifiability criterion); it is not pre-specified by this amendment.
 
 A5.7 θ robustness: the global-θ hybrid, the re-derivation, and the θ-prior sweep
 
@@ -169,13 +169,14 @@ A6. What does NOT change
 -   Amendment 03's grid-quantisation reframe (§A5.3) and reigns-as-genuine reclassification (§A5.2) stand — this amendment changes how convention is identified, not what convention is.
 -   The envelope (50 BC – AD 350, 5-y/80-bin), the observation model (largest-remainder multinomial), and year-precise dates as genuine are unchanged.
 -   The cross-sectional track (H3a/H3c/SR1; Amendments 01/02, date-window counts) is untouched.
--   The interim disclosures of prereg-note-2026-06-09 (identifiability flag, two-bound α as fallback, H3b restriction approach, Italia unit) are retained.
+-   The interim disclosures of prereg-note-2026-06-09 (identifiability flag, two-bound α as fallback, Italia unit) are retained; its H3b identifiability restriction is replaced by uncertainty propagation (§A5.6), and its informed-α remediation is refuted.
 
 A7. Changes by preregistration section
 
 -   §2 (artefact). Unchanged in substance (grid-quantisation reframe stands); add that grid-alignment is used not only to describe the artefact but as an identifying covariate in the deconvolution likelihood.
--   §3 (the mixture / deconvolution). The convention/genuine split is estimated by the cross-classified time × alignment model (§A5.1) with a fixed corpus-wide slab library (§A5.2); supersedes Amendment 03's shared 3-tier basis and §A5.1 rationale. θ calibrated (rule C, κ=40). Validation: the recovery grid + production refit (§A5.4).
--   §3 (H3b). Identifiable set re-derived from the cross-classified α (§A5.6).
+-   §3 (the mixture / deconvolution). The convention/genuine split is estimated by the cross-classified time × alignment model (§A5.1) with a fixed corpus-wide slab library (§A5.2); supersedes Amendment 03's shared 3-tier basis and §A5.1 rationale. θ prior re-derived (θ_conv 0.930, θ_gen 0.025; κ=40; §A5.7). Validation: the recovery grid
+    -   production refit (§A5.4).
+-   §3 (H3b). The post-hoc α-identifiability restriction is replaced by propagating the deconvolution uncertainty into the (exploratory) H3b deviation test (§A5.6).
 -   §5 / robustness. Hybrid global-θ concordance check as a preregistered robustness annex (§A5.7).
 
 A8. Provenance
