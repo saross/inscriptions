@@ -270,10 +270,13 @@ as a fallback sensitivity** alongside the cc estimate. The identifiability flag
 ### A5.6 H3b identifiable-set reconciliation
 
 The H3b deviation-detection confirmatory set was restricted to α-identifiable units
-under the shared basis. Because the cross-classified model now identifies the
-previously under-identified frontier units, the H3b set is **re-derived from the
-cross-classified α** (folding in the gap < 0.20 → 17 vs gap ≤ 0.25 → 16 reconciliation);
-the updated set is recorded with the refit (`refit-summary.json`).
+under the shared basis. The cross-classified model now identifies the previously
+under-identified frontier units, so that restriction relaxes. **The H3b confirmatory set
+will be re-derived from the cross-classified α when H3b is run** — the inputs for the
+reconciliation (the per-unit cc α, the old shared-basis identifiability flag, and the
+classification-implied α) are recorded in `refit-summary.json`; the resulting set, and any
+change to the H3b family size, are reported with the H3b analysis. This is a **downstream
+consequence** of the method change, not a result established by this amendment.
 
 ### A5.7 θ robustness: the global-θ hybrid, the re-derivation, and the θ-prior sweep
 
