@@ -14,14 +14,12 @@ relationship: "Independent of Amendments 01 (two-measure framework) and 02 (Lati
 
 # OSF Amendment 04 (DRAFT) — Cross-classified remediation for the α-identifiability limit
 
-> **Records note.** Amendment 03 lodgement **confirmed** (Shawn, 2026-06-14: lodged
+> **Records note.** Amendment 03 lodgement confirmed (Shawn, 2026-06-14: lodged
 > 2026-06-08), so this is **Amendment 04 reversing a lodged amendment** (Amendment
-> 03's shared convention basis). **Housekeeping for Shawn:** the lodged Amendment 03
-> summary cites `git tag osf-amendment-03-2026-06-08` as its version-pinned
-> reproducibility anchor, but **that tag is absent from the repository** (local and
-> remote; tags exist for amendments 01 and 02). It should be created at Amendment
-> 03's lodged commit so the public OSF record resolves — see the separate flag at
-> session close. The methodology below is unaffected.
+> 03's shared convention basis). Its version-pinned reproducibility tag
+> `osf-amendment-03-2026-06-08` resolves to commit `90897d6` (the as-lodged-text
+> commit; created and pushed 2026-06-14, closing the one gap that the lodgement-time
+> tag step had missed). The methodology below is unaffected.
 
 ## Plain-language summary
 
@@ -253,7 +251,7 @@ over-attributing per-unit basis, and the cross-classified model is a better thir
 estimator, not constrained to the diagnostic bracket. **Controls stable**
 (Pompeii 0.001 → 0.016 ≈ 0, correct; empire-aggregate 0.672 → 0.680; Latium, Noricum,
 latin-aggregate within ~0.07 of α_shared). The one non-converged unit is empire-aggregate
-(secondary/context; R̂ 1.026, ESS 211, 0 divergences — a mixing marginality on the largest
+(secondary/context; R̂ 1.008, ESS 315, 0 divergences — a mixing marginality on the largest
 unit; its α matches H2.1; sampler config kept uniform with the validated grid and reported
 caveated). *(The first-pass refit under the original calibration θ_gen 0.155 is preserved
 at commit 48cb5d5; the α's there are ~0.02–0.07 lower for the confounded frontier units —
@@ -318,7 +316,8 @@ assumption was checked three ways (`runs/2026-06-14-hybrid-robustness/`,
 
 1. **Global-θ hybrid (diagnostic).** A single joint fit over all 29 units estimating θ
    as one global pair (wide prior), α not pooled — the concomitant-variable mixture with
-   shared measurement parameters (`hybrid-robustness-spec.md`). On the real data it is
+   shared measurement parameters (`runs/2026-06-09-joint-identifiability/hybrid-robustness-spec.md`).
+   On the real data it is
    **weakly identified** (an α↔θ_gen ridge: convergence does not improve with more compute,
    invariant to prior width, 0 divergences), so it is **not** a sound vehicle for a lodged
    robustness number — but it is informative: it robustly prefers **θ_gen ≈ 0.024**, far
@@ -374,7 +373,7 @@ the full global-θ hybrid is **not** pursued (the pilot showed it weakly identif
   the cross-classified time × alignment model (§A5.1) with a fixed corpus-wide slab
   library (§A5.2); supersedes Amendment 03's shared 3-tier basis and §A5.1 rationale.
   θ prior re-derived (θ_conv 0.930, θ_gen 0.025; κ=40; §A5.7). Validation: the recovery grid
-  + production refit (§A5.4).
+  and the production refit (§A5.4).
 - **§3 (H3b).** The post-hoc α-identifiability *restriction* is replaced by propagating the
   deconvolution uncertainty into the (exploratory) H3b deviation test (§A5.6).
 - **§5 / robustness.** Hybrid global-θ concordance check as a preregistered robustness
