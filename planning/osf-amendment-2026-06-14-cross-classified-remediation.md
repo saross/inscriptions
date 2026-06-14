@@ -1,0 +1,328 @@
+---
+title: "OSF Amendment 04 (DRAFT) — Cross-classified time × alignment remediation for the α-identifiability limit; reverses the shared convention basis"
+amendment-number: "04 (PROVISIONAL — contingent on confirming Amendment 03's lodgement state; see status note)"
+status: "DRAFT for Shawn's review — NOT lodged. Two items need Shawn before lodgement: (1) confirm the OSF lodgement state of Amendments 02 and 03 (no osf-amendment-03 git tag exists; this fixes the numbering and the 'reverses a lodged amendment' framing); (2) fold in the hybrid-robustness concordance result (§A5.7) once the pilot + validation complete."
+date-drafted: 2026-06-14
+scope: "Replace the H2.1 temporal-mixture's shared, fixed convention basis (Amendment 03 §A5.1 / Decision 38) — which under-identifies the convention fraction α for temporally-concentrated frontier units — with the recovery-validated cross-classified time × alignment model (per-unit alignment split + a fixed corpus-wide slab library + a classification likelihood sharing α). Adopt it as the production deconvolution; record the recovery grid + 29-unit production refit as the validation gate; supersede the refuted informed-α planned remediation; demote the two-bound α range to a fallback disclosure."
+preregistration: "https://osf.io/uycs6/ (lodged 2026-05-20; embargoed)"
+lodged-version: "git tag osf-lodgement-2026-05-20"
+supersedes: "planning/prereg-note-2026-06-09-alpha-identifiability.md ('Planned remediation' § — the informed-α prior, refuted); reverses Amendment 03 (osf-amendment-2026-06-07-convention-basis.md) §A5.1's shared, unit-independent basis."
+filed-under: "preregistration §7 / contingency clause (preregistration-draft.md line 423): substantive post-lodgement methodology changes are filed as an OSF amendment before implementation."
+author: "Shawn Ross (with Claude Code as analyst/RSE)"
+relationship: "Independent of Amendments 01 (two-measure framework) and 02 (Latin-primary frame), both on date-window counts. Concerns only the temporal mixture's convention/genuine deconvolution. Reverses Amendment 03's shared-basis choice while RETAINING Amendment 03's grid-quantisation reframe (§A5.3) and reigns-as-genuine reclassification (§A5.2)."
+---
+
+# OSF Amendment 04 (DRAFT) — Cross-classified remediation for the α-identifiability limit
+
+> **⚠ Records note for Shawn (resolve before lodgement).** This is numbered **04**
+> provisionally. Git tags exist for `osf-amendment-01-2026-06-04` and
+> `osf-amendment-02-2026-06-06`, but **no `osf-amendment-03` tag exists**, and the
+> Amendment 03 document's own status line reads "not yet lodged" while its
+> summary-addendum and the project continuity read "lodged 2026-06-08". The
+> changelog errata trail formally logs only Amendment 01. **Please confirm the OSF
+> lodgement state of Amendments 02 and 03** — it fixes this amendment's number and
+> whether it "reverses a lodged amendment" (03 lodged) or "supersedes a prepared
+> draft" (03 not lodged). The methodology below is unaffected either way.
+
+## Plain-language summary
+
+Roman inscriptions are mostly dated by convention — "2nd century AD", "Hadrianic" —
+rather than to a year. Our method separates that conventional dating from the
+genuine timeline of inscribing, estimating, per region or city, the fraction (α)
+of its dating that is editorial convention. Amendment 03 modelled convention with
+a single broad calendar-slab template shared across all units. After the production
+run, a diagnostic showed that this shared template **systematically under-counts
+convention for frontier provinces** — places like Britannia, Moesia inferior, and
+Pannonia inferior — whose conventional dating is squeezed into the same narrow
+window (their Roman occupation period, roughly AD 100–300) as their genuine
+inscribing activity. When convention and genuine signal sit on top of each other in
+time, the timing alone cannot tell them apart, so the method wrongly assigned almost
+all of these units' dating to "genuine" (Moesia inferior came out at α ≈ 0.05 when
+roughly 60% of its inscriptions are conventionally dated).
+
+This amendment fixes that by using a second, independent clue the timing ignores:
+**whether each inscription's date sits on the round-number calendar grid**
+(a "1st–2nd century" bracket is grid-aligned; a precise "AD 117–138" is not).
+Convention-dated inscriptions are almost always grid-aligned; genuinely-dated ones
+usually are not. The new model splits each unit's inscriptions into a grid-aligned
+group and a non-aligned group and models the two together, so the *contrast* between
+them pins down α even when the timing cannot. Recovery testing on synthetic data
+with known answers and a re-fit of all production units confirm the fix: the frontier
+units now recover sensible convention fractions, the well-behaved units are
+unchanged, and a systematic bias the old model carried is removed. Because this
+changes the model's structure, it is lodged before it becomes the reported result.
+The technical statement follows.
+
+## A1. Identification and trigger
+
+This is the fourth amendment (provisional; see records note) to the project's
+preregistration (OSF, osf.io/uycs6/, lodged 2026-05-20, embargoed), filed under the
+preregistration's contingency rule (`preregistration-draft.md` line 423).
+
+**Trigger.** The H2.1 temporal-mixture production run (2026-06-08; 28 units +
+Italia, all converged) returned convention fractions α spanning 0.001–0.88. A
+post-run diagnostic
+(`runs/2026-06-07-h2.1-launch-prep/outputs/production/DIAGNOSTIC-alpha-identifiability-REPORT.md`)
+established that the **shared, fixed convention basis** adopted in Amendment 03
+(§A5.1 / Decision 38) **structurally under-identifies α for temporally-concentrated
+units**. The diagnosis, the interim reporting responses, and the added Italia unit
+were recorded in `planning/prereg-note-2026-06-09-alpha-identifiability.md`; that
+note's "Planned remediation" (an informed-α prior) was **refuted** and is superseded
+here (§A4). This amendment lodges the validated remediation.
+
+## A2. Summary of the change
+
+One structural change to the **temporal mixture's convention/genuine deconvolution**;
+the cross-sectional track (Amendments 01/02) is untouched (§A6).
+
+1. **Adopt the cross-classified time × alignment model** as the production
+   deconvolution (§A5.1). Each unit's inscriptions are split by grid-alignment into
+   two temporal sub-distributions modelled jointly, sharing the latents
+   (α, p_conv, p_gen, and the alignment rates θ), plus a classification term. α is
+   identified by the **contrast** between the aligned (convention-enriched) and
+   non-aligned (genuine-enriched) subsets, not by the temporal-shape match alone.
+2. **Convention shape p_conv → a FIXED corpus-wide round-endpoint slab library**
+   (§A5.2), identical for every unit — replacing Amendment 03's shared 3-tier basis.
+   It is the deterministic, data-independent analogue of the recovery-validated slab
+   library; it carries no per-unit contamination channel.
+3. **Reverse Amendment 03 §A5.1's anti-per-unit-basis rationale** (§A5.3): the
+   classification term supplies the over-attribution control that the shared basis
+   was adopted to provide, so a flexible/fixed-library convention shape is now safe.
+4. **Demote the two-bound α range** from the primary interim disclosure to a
+   **fallback** for units in a high-residual corner (§A5.5); the cross-classified
+   point estimate with CI is now primary.
+5. **Reconcile the H3b identifiable set** against the cross-classified α (§A5.6).
+
+Adoption is gated on a recovery grid **and** a production refit, both **PASS** (§A5.4).
+
+## A3. Rationale (and why the informed-α prior was the wrong fix)
+
+The diagnosis is textbook, and the remediation is the canonical one — both are
+literature-grounded (scout synthesis
+`planning/scout-2026-06-09-identifiability-remediation-SYNTHESIS.md`, DOIs
+spot-verified against CrossRef/DataCite):
+
+- **The problem is weak component separation.** When a unit's convention and genuine
+  signals overlap in time, the mixing weight α is only weakly identified and the
+  likelihood can be *confidently wrong* — **Feller, Greif, Ho, Miratrix & Pillai
+  (2016)** (`10.48550/arxiv.1602.06595`; *Ann. Appl. Stat.* 2019) prove the estimator
+  can behave as a threshold rule that declares components identical when they are not.
+- **A prior cannot fix it.** For a partially-identified parameter the prior over the
+  identification region is *never updated by the data* — **Gustafson (2010)**
+  (`10.2202/1557-4679.1206`). This is exactly why the **informed-α prior** (the
+  prereg-note's original planned remediation) was refuted on its own prototype
+  (`runs/2026-06-09-informed-alpha/`): centring α's prior on the grid-alignment
+  fraction cannot bite when the likelihood is flat-or-wrong in α.
+- **Auxiliary information as a LIKELIHOOD term is the canonical remedy.** The
+  concomitant-variable / latent-class-with-covariate tradition restores
+  identifiability by bringing an informative covariate into the likelihood —
+  **Dayton & Macready (1988)** (`10.1080/01621459.1988.10478584`); identification
+  theory **Huang & Bandeen-Roche (2004)** (`10.1007/bf02295837`). The grid-alignment
+  indicator is that covariate.
+- **The archaeological archetype is mainstream.** **Bronk Ramsey (2009)**'s OxCal
+  outlier model (`10.1017/S0033822200034093`) is a two-component reliable/unreliable
+  latent mixture inside one Bayesian model; our cross-classified deconvolution is a
+  frequency-distribution-level extension of that accepted structure.
+
+So the argument is two-citation: *a prior cannot fix a confounded likelihood (Feller +
+Gustafson); a second likelihood term can (Huang & Bandeen-Roche)*. The
+cross-classified model is, in fact, the **exact collapsed form** of that
+concomitant-variable likelihood (per-inscription latent type with two manifest
+indicators — temporal bin and grid-alignment — aggregated to sufficient counts); the
+shared-basis fit was a composite-likelihood approximation whose cost was a measured
+systematic over-attribution (§A5.4).
+
+## A4. Relationship to already-observed results (transparency)
+
+The shared-basis production α values **were observed** before this change (the
+diagnostic ran on them) — so, unlike Amendment 03, this is **not** a
+decided-before-any-fit change. Honest framing:
+
+- The change is a **structural identifiability remediation** whose *direction* is
+  fixed by statistical theory (Feller/Gustafson/Huang & Bandeen-Roche) and whose
+  *validity* is established on **synthetic data with known answers** (the recovery
+  grid, §A5.4) — not by tuning to a preferred real-data outcome. The grid was
+  specified and its acceptance criteria fixed (`full-grid-spec.md` §3;
+  `cross-classified-spec.md` §5) before the production refit was run.
+- The production refit's role is **confirmation that the validated model behaves on
+  the real units as the diagnostic predicted** (frontier units pinned, controls
+  unchanged), not selection among outcomes. No α value was chosen; the model was
+  changed, validated on synthetics, and applied once.
+- The interim reporting responses already disclosed (`prereg-note-2026-06-09`:
+  identifiability flag, two-bound α, H3b restriction, Italia unit) **stand**; this
+  amendment supersedes only that note's *refuted* informed-α "Planned remediation".
+
+## A5. Pre-specifications
+
+### A5.1 The cross-classified time × alignment model (the deconvolution)
+
+Per unit with `N` inscriptions, `k` grid-aligned, observed as the aligned- and
+non-aligned-subset summed-probability analyses (SPAs):
+
+```
+α            ~ Beta(1, 1)
+tier_weights ~ Dirichlet(ones(n_lib))          # n_lib = fixed library rows (§A5.2)
+p_conv        = tier_weights · SLAB_LIBRARY     # convention shape
+p_gen         = softmax(cumsum(σ·z))            # non-centred GRW (UNCHANGED from H2.1)
+θ_conv ~ Beta(μ,κ); θ_gen ~ Beta(μ,κ)           # alignment rates; rule C, κ=40 (calibrated)
+
+w_a          = α·θ_conv + (1−α)·θ_gen                                   # P(aligned)
+p_aligned    = (α·θ_conv·p_conv     + (1−α)·θ_gen·p_gen)     / w_a
+p_nonalign   = (α·(1−θ_conv)·p_conv + (1−α)·(1−θ_gen)·p_gen) / (1−w_a)
+
+k            ~ Binomial(N, w_a)                 observed = aligned count
+y_aligned    ~ Multinomial(k,   p_aligned)      observed = aligned-subset SPA
+y_nonalign   ~ Multinomial(N−k, p_nonalign)     observed = non-aligned-subset SPA
+```
+
+This is the exact lumping/thinning factorisation of the per-inscription process
+(type ~ Bernoulli(α); bin ~ p_type; aligned ~ Bernoulli(θ_type)). Implementation:
+`runs/2026-06-09-joint-identifiability/code/joint_lib.py::build_model_cross_classified`
+(`pconv_mode="library"`); grid-alignment indicator (rule C: family ∈ {F1_round,
+F3_periodic} or a round-endpoint wide slab) `joint_lib.py::aligned_indicator`. θ
+calibrated from the 19 identifiable units (`calibrate_theta.py`; θ_conv 0.945,
+θ_gen 0.155, κ=40). Counts are **aoristic-effective** (k = y_aligned.sum(); N =
+y_aligned.sum() + y_nonaligned.sum()) so the factorisation holds exactly; the
+aoristic-mass aligned fraction differs from the row aligned fraction θ was calibrated
+on by ≤ 0.06 across units (`runs/2026-06-13-cc-production-refit/spec.md` §1).
+
+### A5.2 The convention basis — a FIXED corpus-wide round-endpoint slab library
+
+`p_conv = tier_weights · SLAB_LIBRARY`, where `SLAB_LIBRARY` is a **single fixed,
+a-priori, unit-independent** set of 27 round-endpoint calendar-slab boxes (endpoints
+on the 50-year grid spanning the envelope; clipped width ≥ 49; deduped + pruned to
+rows used across units), each row the deterministic aoristic box of one slab. Locked
+artefact: `runs/2026-06-13-cc-production-refit/outputs/production-slab-library.json`
+(`library_design.py`). Three properties justify it over Amendment 03's hand-built
+3-tier basis and over a per-unit catalogue:
+
+1. It is the **direct production analogue of the recovery-validated fixed library**
+   (`grid_lib.slab_library_basis`), re-derived to span the real corpus's convention
+   slabs (the grid's synthetic 19 rows covered only ~62% of real aligned mass).
+2. It carries **no per-unit contamination channel** (it is identical for every unit,
+   independent of the unit being fit — strictly cleaner than a per-unit catalogue,
+   whose membership a genuine-but-aligned inscription could perturb).
+3. It **spans every unit's aligned shape** (non-negative-least-squares reconstruction
+   L1 residual ≤ 0.083 for all convention-bearing units; the lone outlier, Pompeii,
+   is correctly unrepresentable — it is genuine-precision-dated, α ≈ 0). Its
+   collinearity (Gram condition 3.0×10¹⁷) is *below* the recovery-validated library's
+   (6.9×10¹⁷); α is identified by the alignment contrast, not by `tier_weights`
+   uniqueness.
+
+### A5.3 Reversal of Amendment 03 §A5.1's anti-per-unit rationale
+
+Amendment 03 chose a shared basis specifically because "a per-unit basis would absorb
+genuine temporal signal into p_conv". The cross-classified **classification term
+supplies exactly the over-attribution control** that the shared basis was adopted to
+provide: α is pinned by the alignment contrast, so a flexible (or fixed-library)
+convention shape no longer over-attributes (the recovery grid's `free`-GRW arm, the
+most flexible p_conv, still recovered confounded α; the `library` arm was adopted as
+the best-behaved). This is the structural reason the reversal is safe, and it is the
+amendment's core methodological claim.
+
+### A5.4 Validation (the gate) — **PASS** (recovery grid + production refit)
+
+**(a) Recovery grid — PASS** (`runs/2026-06-09-joint-identifiability/outputs/cc-VERDICT-library.md`;
+300 cells × 100 reps, 0 failed, sapphire 2026-06-13). Head-to-head vs the shared-basis
+lead: **C1 do-no-harm** identifiable |median bias| **0.021** (lead 0.075) — the lead's
+near-uniform **+0.06…+0.08 contamination bias surface is eliminated** (cc surface flat
++0.00…+0.03); **C2 pulled-to-truth** 72/90 confounded cells pass (lead 64/90),
+confounded |median bias| **0.009** vs the shared-basis baseline 0.362 (~40×);
+**C4 convergence** 96% of cells (lead 84%). Coverage improved 0.374 → 0.627 (0.784 on
+the coverable α > 0 cells): the residual gap is a **precision-for-accuracy trade, not
+under-dispersion** — the exact two-subset likelihood tightened the posterior to 66% of
+the lead's width while removing the shift, and dispersion is conservative (posterior σ
+1.34–1.37× the replicate sampling sd).
+
+**(b) Production refit — PASS** (`runs/2026-06-13-cc-production-refit/outputs/REFIT-VERDICT.md`;
+29 units, sapphire 2026-06-13, 28/29 converge). **All 10 diagnostic-flagged frontier
+units are pinned** within the H2.1 two-bound [shared, per-unit] range and track the
+independent classification-implied α: Moesia inferior 0.05 → 0.63, Britannia
+0.00 → 0.40, Pannonia inferior 0.15 → 0.63, Numidia 0.17 → 0.55, Salona 0.54 → 0.99,
+Samnium 0.27 → 0.84, Venetia et Histria 0.45 → 0.84, Umbria 0.43 → 0.74, Ostia
+0.34 → 0.65, Dacia 0.00 → 0.16. **Controls stable** (Pompeii 0.001 → 0.015 ≈ 0,
+correct; empire-aggregate 0.672 → 0.671), with a mild consistent −0.08/−0.10 downshift
+on the broad high-α units (the cc model is slightly more conservative on convention for
+broad units). The one non-converged unit is empire-aggregate (secondary/context; R̂
+1.026, ESS 211, 0 divergences — a mixing marginality on the largest unit; its α matches
+H2.1; sampler config kept uniform with the validated grid and reported caveated).
+
+### A5.5 α reporting under the new model
+
+The cross-classified **posterior α median + 95% CI is the primary reported quantity**
+for every unit (replacing the shared-basis point estimate and the interim two-bound
+range as primary). **Caveat carried forward:** reported CIs are ~1σ-optimistic by the
+grid's small residual positive bias; for any unit in a high-residual corner (high
+convention-%-in-window × high α) the **two-bound [shared, per-unit] range is reported
+as a fallback sensitivity** alongside the cc estimate. The identifiability flag
+(`prereg-note-2026-06-09` response 1) is retained as a transparency annotation.
+
+### A5.6 H3b identifiable-set reconciliation
+
+The H3b deviation-detection confirmatory set was restricted to α-identifiable units
+under the shared basis. Because the cross-classified model now identifies the
+previously under-identified frontier units, the H3b set is **re-derived from the
+cross-classified α** (folding in the gap < 0.20 → 17 vs gap ≤ 0.25 → 16 reconciliation);
+the updated set is recorded with the refit (`refit-summary.json`).
+
+### A5.7 Hybrid robustness check (preregistered; result pending)
+
+The lead plugs in calibrated θ (fixed). A **hybrid** model estimates θ as a single
+global pair across all units (wider prior), propagating its uncertainty, and a
+concordance test asks whether the per-unit cross-classified α estimates sit inside the
+hybrid's α intervals (`hybrid-robustness-spec.md`). It is a **preregistered robustness
+annex**, not the primary; α is **not** pooled (the units are not exchangeable —
+pooling would mask the per-unit deviations H3b detects). **Status:** the hybrid spec
+predates the cross-classified adoption and is being refreshed to the two-subset
+structure, then piloted and validated on a hierarchical recovery population; the
+concordance result folds into this amendment before lodgement. (Concordant ⇒ cc-library
+primary, hybrid corroboration; material divergence ⇒ reported and adjudicated.)
+
+## A6. What does NOT change
+
+- **The temporal block** (Dirichlet `tier_weights`, non-centred GRW `p_gen`, the
+  `Beta(1,1)` α prior) is **byte-identical** to the recovery-validated
+  `build_model_f1_f3`; only the *likelihood structure* (alignment split + classification
+  term) and the *convention basis* change.
+- **Amendment 03's grid-quantisation reframe** (§A5.3) and **reigns-as-genuine
+  reclassification** (§A5.2) **stand** — this amendment changes *how* convention is
+  identified, not *what* convention is.
+- The **envelope** (50 BC – AD 350, 5-y/80-bin), the **observation model**
+  (largest-remainder multinomial), and **year-precise dates as genuine** are unchanged.
+- The **cross-sectional track** (H3a/H3c/SR1; Amendments 01/02, date-window counts) is
+  untouched.
+- The **interim disclosures** of `prereg-note-2026-06-09` (identifiability flag,
+  two-bound α as fallback, H3b restriction approach, Italia unit) are retained.
+
+## A7. Changes by preregistration section
+
+- **§2 (artefact).** Unchanged in substance (grid-quantisation reframe stands); add
+  that grid-alignment is used not only to *describe* the artefact but as an
+  *identifying covariate* in the deconvolution likelihood.
+- **§3 (the mixture / deconvolution).** The convention/genuine split is estimated by
+  the cross-classified time × alignment model (§A5.1) with a fixed corpus-wide slab
+  library (§A5.2); supersedes Amendment 03's shared 3-tier basis and §A5.1 rationale.
+  θ calibrated (rule C, κ=40). Validation: the recovery grid + production refit (§A5.4).
+- **§3 (H3b).** Identifiable set re-derived from the cross-classified α (§A5.6).
+- **§5 / robustness.** Hybrid global-θ concordance check as a preregistered robustness
+  annex (§A5.7).
+
+## A8. Provenance
+
+- **Diagnosis:** `runs/2026-06-07-h2.1-launch-prep/outputs/production/DIAGNOSTIC-alpha-identifiability-REPORT.md`;
+  `planning/prereg-note-2026-06-09-alpha-identifiability.md` (diagnosis + interim
+  responses retained; its informed-α "Planned remediation" superseded here).
+- **Literature warrant:** `planning/scout-2026-06-09-identifiability-remediation-SYNTHESIS.md`
+  (Feller 2016; Gustafson 2010; Huang & Bandeen-Roche 2004; Dayton & Macready 1988;
+  Bronk Ramsey 2009 — DOIs spot-verified).
+- **Model + design:** `runs/2026-06-09-joint-identifiability/` (`cross-classified-spec.md`,
+  `cross-classified-signoff.md`, `joint_lib.py`); recovery-grid VERDICT
+  `outputs/cc-VERDICT-library.md` (+ `cc-summary-library.json`).
+- **Production refit:** `runs/2026-06-13-cc-production-refit/` (`spec.md`,
+  `production-slab-library.json`, `refit_lib.py`/`run_refit.py`/`aggregate_refit.py`);
+  VERDICT `outputs/REFIT-VERDICT.md` (+ `refit-summary.json`).
+- **Reverses:** Amendment 03 (`osf-amendment-2026-06-07-convention-basis.md`) §A5.1 /
+  Decision 38 shared, unit-independent basis. **Lodged authority** for all unchanged
+  specifications remains the original supplementary (git tag `osf-lodgement-2026-05-20`).
+- **Repository-state provenance:** the git lodgement tag for this amendment (to be
+  created at lodgement, once the numbering is confirmed) is the reproducibility anchor.
