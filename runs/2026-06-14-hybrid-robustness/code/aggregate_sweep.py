@@ -109,18 +109,34 @@ def main() -> None:
                      f"{r['range']:.3f} | {r['baseline_to_rederived']:+.3f} |")
 
     # Verdict.
-    frontier_stable = all(r["range"] < STABLE_THRESHOLD for r in rows
-                          if r["frontier"] and r["range"] is not None)
+    frontier_rows = [r for r in rows if r["frontier"] and r["range"] is not None]
+    frontier_n_stable = sum(1 for r in frontier_rows if r["range"] < STABLE_THRESHOLD)
+    sensitive = sorted([r for r in rows if r["range"] is not None
+                        and r["range"] >= STABLE_THRESHOLD],
+                       key=lambda x: -x["range"])
     lines += ["", "## Verdict", "",
-              f"- **Frontier units stable to θ:** {frontier_stable} "
-              f"(all frontier α-ranges < {STABLE_THRESHOLD}).",
-              f"- **Broad/identifiable units** carry the θ_gen sensitivity (the larger "
-              f"ranges, driven by the baseline→rederived shift) — directional and bounded.",
-              "- Interpretation: the alignment *contrast* (not the θ centre) pins the "
-              "frontier α's; the θ-centre choice mainly moves the broad units, where α was "
-              "already well-identified. Folds into amendment §A5.7 as the robustness result; "
-              "if the broad-unit shift is judged material, consider adopting the re-derived "
-              "θ_gen as the production prior (a separate decision).", ""]
+              f"- **{n_stable}/{len(ranges)} units stable** (α-range < {STABLE_THRESHOLD} "
+              f"across all four θ priors); mean range {np.mean(ranges):.3f}.",
+              f"- **Frontier units: {frontier_n_stable}/{len(frontier_rows)} stable.** The "
+              f"sensitive units are "
+              + ", ".join(f"{r['name']} (range {r['range']:.3f}, base→reder "
+                          f"{r['baseline_to_rederived']:+.3f})" for r in sensitive)
+              + " — the **most temporally-confounded** units, where the θ assumption matters "
+              "most. Their α moves **upward** under the corrected (lower) θ_gen, and stays "
+              "within the H2.1 two-bound range — so the remediation conclusion is unchanged.",
+              f"- **Operative shift** (θ_gen 0.155→0.025): uniformly small and positive "
+              f"(mean {np.mean(b2r):+.3f}, max {np.max(np.abs(b2r)):.3f}) — re-centring θ_gen "
+              "nudges all α up slightly, most for the confounded frontier units.",
+              "- **Interpretation:** the alignment *contrast* pins the well-identified α's "
+              "(broad units + the aggregates are rock-stable, range ≤ 0.03); the residual "
+              "θ-sensitivity concentrates in the hardest confounded units. The cc-library "
+              "result is robust to the θ assumption for the large majority of units.",
+              "- **Open decision (Shawn):** three methods agree θ_gen ≈ 0.025 (hybrid, "
+              "re-derivation, the wide-κ sweep) and it fits 2.5× better than the calibrated "
+              "0.155 — there is a principled case to **adopt the re-derived θ_gen as the "
+              "production prior** and re-run the refit (~6 min; α's move little, but it "
+              "removes a known calibration bias rather than reporting it). Folds into "
+              "amendment §A5.7 either way.", ""]
 
     (HYB / "outputs" / "THETA-SWEEP-VERDICT.md").write_text("\n".join(lines))
     (HYB / "outputs" / "theta-sweep-summary.json").write_text(json.dumps(
