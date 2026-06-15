@@ -1,6 +1,9 @@
 # H3b flexible-null robustness annex — build-ready spec (2026-06-15)
 
-**Status:** DRAFT FOR PRE-LAUNCH SIGN-OFF. Nothing built or run until Shawn signs §9.
+**Status:** SIGNED OFF (Shawn, 2026-06-15) — build launched. **Execution on
+sapphire** (Shawn's instruction: do not run on amd-tower; offload compute to
+sapphire). The "local-only" in §9 meant *no API / no cluster*; sapphire via SSH is
+the compute box. Build (code authoring) is local; the run executes on sapphire.
 **Date:** 2026-06-15.
 **Author:** Claude Code (Opus 4.8, 1M context) on Shawn Ross's brief.
 **Run dir:** `runs/2026-06-09-h3b/` (annex outputs under `outputs/flexnull/`).
