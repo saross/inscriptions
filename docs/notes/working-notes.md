@@ -3358,3 +3358,224 @@ commit `881aafd`.
 `deviations-table-csv`, `881aafd`, `obs-82`, `obs-89`, `obs-90`, `obs-91`, `obs-23`,
 `2026-05-03-baorista-install`, `phase-1-calibration`, `N-approx-1600`,
 `injected-event`, `matching-baseline`, `null-misspecified`, `baseline-misfit`
+
+## Obs 93 — 2026-06-15 [METHODOLOGY / RESULT]: H3b flexible-null annex part (a) — saturation is structural null-misspecification; baorista NO-GO for the global test; probe-window P(deficit) confirmed robust
+
+### The finding
+
+Part (a) of the H3b flexible-null robustness annex (spec
+`runs/2026-06-09-h3b/h3b-flexible-null-annex-spec-2026-06-15.md`;
+report `runs/2026-06-09-h3b/outputs/flexnull/ANNEX-REPORT.md`;
+engine `runs/2026-06-09-h3b/code/h3b_flexnull.py`; result commit `7fe248a`;
+ran on sapphire) asks whether a more-flexible smooth null, and/or a de-powered
+significance criterion, can de-saturate the global Timpson test without absorbing
+the Antonine/Crisis events it is meant to detect. The base run (Obs 92) accepted
+the saturation as an honest large-N over-power finding; this annex tests that
+characterisation with two orthogonal levers applied to all 29 cc-library units,
+propagating the genuine-SPA posterior draw-wise exactly as the base run.
+
+**The spec §6.3 sweet-spot scan — global marginal-*p* > 0.05 AND named-scope
+Antonine P(deficit) ≥ 0.8 — returns 0 hits across all 290 unit × fit
+combinations.** Three independent legs:
+
+**Leg 1 — flexibility lever.** Three self-referential smooth nulls fit to the
+posterior-median corrected curve, all traced on one effective-degrees-of-freedom
+(edf) axis (edf 5→20):
+
+- CPL knot-sweep k ∈ {2, 3, 5, 7} (edf = {5, 7, 11, 15})
+- Penalised Poisson B-spline (Eilers & Marx; edf ≈ {5, 10, 20})
+- Kernel-ridge GP on log-counts (RBF kernel; edf ≈ {5, 10, 20})
+
+Named-scope results (empire-aggregate n_eff 151,361; latin-aggregate n_eff 101,066):
+
+**empire-aggregate** (global *p* / simultaneous *p* / Antonine P(def) / Crisis P(def)):
+
+| family | edf | global *p* | sim. *p* | Ant P(def) | Cri P(def) |
+|---|---|---|---|---|---|
+| cpl | 5 | 0.000 | 0.001 | 1.00 | 1.00 |
+| cpl | 7 | 0.000 | 0.001 | 1.00 | 1.00 |
+| cpl | 11 | 0.000 | 0.001 | 0.17 | 1.00 |
+| cpl | 15 | 0.000 | 0.001 | 1.00 | 1.00 |
+| spline | 5 | 0.000 | 0.001 | 1.00 | 1.00 |
+| spline | 10 | 0.000 | 0.001 | 1.00 | 1.00 |
+| spline | 20 | 0.000 | 0.001 | 0.83 | 1.00 |
+| gp | 5 | 0.000 | 0.001 | 1.00 | 1.00 |
+| gp | 10 | 0.000 | 0.001 | 1.00 | 1.00 |
+| gp | 20 | 0.000 | 0.001 | 0.96 | 1.00 |
+
+**latin-aggregate:**
+
+| family | edf | global *p* | sim. *p* | Ant P(def) | Cri P(def) |
+|---|---|---|---|---|---|
+| cpl | 5 | 0.000 | 0.001 | 1.00 | 1.00 |
+| cpl | 7 | 0.000 | 0.001 | 1.00 | 1.00 |
+| cpl | 11 | 0.000 | 0.001 | 0.85 | 1.00 |
+| cpl | 15 | 0.000 | 0.001 | 0.85 | 1.00 |
+| spline | 5 | 0.000 | 0.001 | 1.00 | 1.00 |
+| spline | 10 | 0.000 | 0.001 | 0.95 | 1.00 |
+| spline | 20 | 0.000 | 0.001 | 0.67 | 1.00 |
+| gp | 5 | 0.000 | 0.001 | 1.00 | 1.00 |
+| gp | 10 | 0.000 | 0.001 | 0.91 | 1.00 |
+| gp | 20 | 0.000 | 0.001 | 0.75 | 0.98 |
+
+Global marginal-*p* = 0.000 across the entire edf 5→20 ladder for all three
+families at both named scopes. Wigglier nulls only erode the probe signal (empire
+Antonine P(deficit) 1.00 at edf 5 → 0.83 at spline edf 20) without ever clearing
+*p* = 0.05.
+
+**Leg 2 — de-powered (simultaneous-coverage) statistic.** The max-studentised-
+deviation simultaneous-band global *p* at the named scopes never exceeds 0.001.
+Family-wise coverage across the 80 bins does not rescue the high-N scopes. Only
+2/29 small-N units (n_eff ≲ 2,600) ever de-saturate under either the simultaneous
+statistic or the wiggliest GP (edf 20); none of those de-saturated units is a sweet
+spot (no event signal).
+
+**Leg 3 — effective-N thinning (CPL-3 null).** Rescaling to N′ ∈ {1,500, 3,000,
+6,000, 12,000, 25,000}:
+
+| N′ | empire global *p* | empire Ant P(def) | latin global *p* | latin Ant P(def) |
+|---|---|---|---|---|
+| 1,500 | 0.006 | 0.53 | 0.002 | 0.99 |
+| 3,000 | 0.000 | 1.00 | 0.000 | 1.00 |
+| 6,000 | 0.000 | 1.00 | 0.000 | 1.00 |
+| 12,000 | 0.000 | 1.00 | 0.000 | 0.99 |
+| 25,000 | 0.000 | 1.00 | 0.000 | 1.00 |
+
+Empire global *p* = 0.006 and latin global *p* = 0.002 even at N′ ≈ 1,500 — both
+still saturated (< 0.05). This is the decisive diagnostic: Phase 1 calibrated
+detection at N ≈ 1,600 against a *matching* smooth null; here a *smooth* null on a
+*jagged* curve saturates even at N ≈ 1,500. The saturation is therefore **structural
+null-misspecification** (a smooth null cannot represent the jagged real epigraphic
+curve), not large-N over-power.
+
+**Secondary methodological result — CPL knot-placement instability.** The CPL
+knot-sweep is non-monotone in edf: at empire CPL-k5 (edf 11) a knot lands on
+the Antonine window and absorbs the event (Ant P(deficit) = 0.17), recovering to
+1.00 at k7 (edf 15). The penalised spline and GP ladders are monotone in edf across
+both named scopes. This knot-placement instability vindicates carrying the two
+penalised-smooth families rather than CPL alone.
+
+### Why this matters
+
+**Consequence 1 — baorista NO-GO for the global test.** A featureless
+Bayesian-aoristic growth null (baorista) absorbs *less* structure than these
+self-referential nulls, so it cannot de-saturate where they cannot. The §6.3
+decision rule (pre-committed in the spec) triggers NO-GO: baorista is demoted to an
+optional, lower-priority probe-sharpening cross-check for the global test.
+The baorista infra remains installed at `runs/2026-05-03-baorista-install/`
+(R 4.4.3 + baorista 0.2.1 + NIMBLE, smoke-tested on sapphire).
+
+**Consequence 2 — probe-window P(deficit) confirmed AND shown robust.** The base
+deliverable (Obs 92) is unchanged. The three-leg negative result is itself a
+positive robustness certificate: the named-scope Antonine P(deficit) holds ≥ 0.67–
+1.00 across the entire edf/N′ ladder until the null is wiggly enough to absorb the
+event outright. No lever produces a de-saturated global test with the probe signal
+intact.
+
+**Consequence 3 — saturation mechanism clarified.** Obs 92 attributed the saturation
+to "large-N over-power"; this annex refines that characterisation. The thinning leg
+shows the saturation persists at N′ ≈ 1,500 — a regime where large-N alone cannot
+explain it. The correct framing is structural null-misspecification: no smooth null
+(however flexible) can track the round-year spikes and sub-bin jaggedness of the real
+epigraphic curve well enough to avoid saturation, because the curve's jaggedness is
+not smooth-null-representable. This distinction matters for any future SPD-style
+deviation test on epigraphic corpora.
+
+**Methodological lesson — CPL knot instability.** The discrete CPL knot-sweep
+creates instability that a continuously-penalised smoother avoids. Any future
+application of CPL sweeps as a flexibility ladder should carry at least one penalised
+family (spline or GP) as a monotone countercheck.
+
+### Caveats / methodological notes
+
+**Self-referential null caveat.** All smoothers fit the posterior-median corrected
+curve (D1 construction from the base run). High flexibility therefore trivially
+shrinks the residual — the null absorbs the events rather than representing a genuine
+background. This is exactly why the event-preservation axis (probe P(deficit)) is
+reported at every fit level; any de-saturation that loses the probe signal is
+event-absorption, not a fix.
+
+**De-saturation at small-N units.** The 2/29 units that de-saturate under either the
+simultaneous statistic or the wiggliest GP (edf 20) are small-N (n_eff ≲ 2,600) with
+no event signal. Their de-saturation reflects a wider envelope, not a recovered
+event; they are not sweet spots.
+
+**Thinning kills probe power at N′ = 1,500.** Empire Ant P(deficit) falls to 0.53 at
+N′ = 1,500, for a different reason than flexibility: fewer effective counts means a
+noisier posterior, not event absorption. Both levers reduce the probe signal by
+different mechanisms, but neither produces a de-saturated global test with the signal
+intact.
+
+**Exploratory framing.** H3b is exploratory (prereg; Decision 15; OSF Amendment 04
+§A5.6). The 0.05 / 0.8 thresholds in §6.3 are the pre-committed readout convention,
+not a confirmatory gate. Every reading here is descriptive.
+
+**Reproducibility guard.** The CPL k=3 anchor reproduces the base run's marginal-*p*
+and named-scope probe P(deficit) bit-for-bit (regression guard in `run_h3b_flexnull.py`).
+The spline/GP/simultaneous-band code passed a sanity gate before the sweep ran.
+
+### Related observations and artefacts
+
+**Obs 92** (H3b draw-wise base run — global Timpson saturation attributed to
+large-N over-power; probe-window P(deficit) the deliverable; deferred robustness annex
+D2 flagged): the base run whose saturation finding this annex tests and refines.
+The thinning result revises the mechanism from "large-N over-power" to "structural
+null-misspecification", with no change to the deliverable. **Obs 91** (θ_gen
+re-derived 0.155 → 0.025; adopted-θ refit whose draws the annex consumes): the
+upstream cc-library refit; no re-run was needed here — draws already on disk from
+the base run's Stage A. **Obs 23** (real LIRE has structure beyond CPL k=4; H3b
+deviation signal is real; forward-fit CPL saturates at n ≥ 2,500): the earlier
+finding that anticipated exactly this regime; the thinning result here adds the
+further precision that even N ≈ 1,500 saturates under a smooth null on a jagged curve.
+**Obs 82** (H3b preregistered exploratory; 2026-06-09 median-based draft; exponential
+null saturated): the original draft run whose saturation conclusion is now shown robust
+to all three levers.
+
+**Artefacts**:
+`runs/2026-06-09-h3b/outputs/flexnull/ANNEX-REPORT.md` (the DRAFT annex report;
+verdict and tables re-read for this Obs);
+`runs/2026-06-09-h3b/h3b-flexible-null-annex-spec-2026-06-15.md` (the signed-off
+spec; §6.3 decision rule and §10 baorista logic);
+`runs/2026-06-09-h3b/code/h3b_flexnull.py` (the annex engine);
+`runs/2026-06-09-h3b/code/run_h3b_flexnull.py` (the driver; includes the k=3
+regression guard);
+`runs/2026-06-09-h3b/outputs/flexnull/flexnull-sweep.json` (per unit × family × edf);
+`runs/2026-06-09-h3b/outputs/flexnull/flexnull-table.csv` (flat tabulation);
+`runs/2026-06-09-h3b/outputs/flexnull/effn-thinning.json` (thinning ladder per unit × N′);
+`runs/2026-06-09-h3b/outputs/flexnull/depowered-stat.json` (pointwise vs simultaneous-band);
+`runs/2026-05-03-baorista-install/` (baorista infra; demoted to probe-sharpening only);
+commit `7fe248a` (annex results).
+
+### Findable later
+
+`H3b`, `flexible-null`, `flexnull`, `flexible-null-annex`, `part-a`,
+`robustness-annex`, `null-misspecification`, `structural-null-misspecification`,
+`smooth-null`, `self-referential-null`, `CPL-knot-sweep`, `CPL-k2`, `CPL-k3`,
+`CPL-k5`, `CPL-k7`, `penalised-spline`, `P-spline`, `Eilers-Marx`, `GP-null`,
+`Gaussian-process`, `RBF-kernel`, `edf-5-to-20`, `edf-axis`, `flexibility-lever`,
+`effective-N-thinning`, `N-prime-ladder`, `N-prime-1500`, `N-prime-3000`,
+`N-prime-6000`, `N-prime-12000`, `N-prime-25000`, `de-powered-statistic`,
+`simultaneous-coverage`, `max-studentised-deviation`, `simultaneous-band`,
+`Myllymaki-2017`, `JRSS-B`, `global-envelope-test`,
+`sweet-spot-scan`, `0-hits`, `290-unit-fit-combinations`,
+`global-p-zero`, `global-p-0-006`, `global-p-0-002`,
+`probe-preserved`, `probe-window`, `P-deficit`, `Antonine`, `Crisis`,
+`empire-aggregate-151361`, `latin-aggregate-101066`,
+`empire-Antonine-1-00-edf5`, `empire-Antonine-0-83-spline-edf20`,
+`empire-Antonine-0-17-cpl-k5`, `knot-placement-instability`,
+`CPL-non-monotone`, `spline-monotone`, `GP-monotone`,
+`knot-absorbs-event`, `penalised-smoother-monotone`,
+`2-of-29-de-saturate`, `small-N-desaturate`, `n-eff-2600`,
+`baorista`, `baorista-NO-GO`, `baorista-demoted`, `probe-sharpening-only`,
+`baorista-install`, `R-4-4-3`, `baorista-0-2-1`, `NIMBLE`,
+`bit-for-bit`, `regression-guard`, `k3-anchor`, `sanity-gate`,
+`7fe248a`, `run-h3b-flexnull`, `h3b-flexnull`, `make-flexnull-report`,
+`ANNEX-REPORT`, `flexnull-sweep-json`, `effn-thinning-json`, `depowered-stat-json`,
+`flexnull-table-csv`, `decision-D2-closed`, `no-sweet-spot`,
+`large-N-over-power-revised`, `baseline-misfit`, `jagged-epigraphic-curve`,
+`round-year-spikes`, `sub-bin-wiggle`, `Poisson-tight-envelope`,
+`phase-1-calibration`, `N-approx-1600`, `matching-null`, `smooth-null-on-jagged-curve`,
+`probe-robust`, `three-legs`, `two-levers`, `orthogonal-levers`,
+`obs-92`, `obs-91`, `obs-23`, `obs-82`,
+`osf-amendment-04`, `A5-6`, `exploratory`, `decision-15`,
+`runs-2026-05-03-baorista-install`, `runs-2026-06-09-h3b`
