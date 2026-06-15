@@ -34,9 +34,15 @@ import csv
 import json
 import sys
 import time
+import warnings
 from pathlib import Path
 
 import numpy as np
+
+# Degenerate probe windows (empty / all-NaN kept bins on thinned or post-cutoff
+# units) legitimately return NaN departures; silence the benign numpy warnings.
+warnings.filterwarnings("ignore", message="Mean of empty slice")
+warnings.filterwarnings("ignore", message="All-NaN slice encountered")
 
 ROOT = Path("/home/shawn/Code/inscriptions")
 sys.path.insert(0, str(ROOT / "runs/2026-06-09-h3b/code"))

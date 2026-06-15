@@ -159,22 +159,27 @@ def _fit_poisson_pspline(y: np.ndarray, basis: np.ndarray, pen: np.ndarray,
     """
     n_basis = basis.shape[1]
     beta = np.full(n_basis, np.log(max(float(np.mean(y)), 1e-3)))
-    ridge = 1e-8 * np.eye(n_basis)
+    ridge = 1e-6 * np.eye(n_basis)
     for _ in range(n_iter):
         eta = np.clip(basis @ beta, -30.0, 30.0)
         mu = np.exp(eta)
-        z = eta + (y - mu) / np.clip(mu, 1e-6, None)
-        btw = basis.T * mu                       # Bᵀ W  (W = diag(mu))
+        w = np.clip(mu, 1e-6, None)              # floored Poisson IRLS weights
+        z = eta + (y - mu) / w                   # working response (same W)
+        btw = basis.T * w                        # Bᵀ W
         lhs = btw @ basis + lam * pen + ridge
         rhs = btw @ z
-        beta_new = np.linalg.solve(lhs, rhs)
+        # lstsq (not solve): degenerate units (e.g. Pompeii post-AD-79, a near-all-
+        # zero curve) collapse the weighted normal matrix; lstsq stays finite. For
+        # well-conditioned units (all-positive counts) this equals solve.
+        beta_new = np.linalg.lstsq(lhs, rhs, rcond=None)[0]
         if np.max(np.abs(beta_new - beta)) < tol:
             beta = beta_new
             break
         beta = beta_new
     mu = np.exp(np.clip(basis @ beta, -30.0, 30.0))
-    btwb = (basis.T * mu) @ basis
-    hat = np.linalg.solve(btwb + lam * pen + ridge, btwb)
+    w = np.clip(mu, 1e-6, None)
+    btwb = (basis.T * w) @ basis
+    hat = np.linalg.lstsq(btwb + lam * pen + ridge, btwb, rcond=None)[0]
     return mu, float(np.trace(hat))
 
 
