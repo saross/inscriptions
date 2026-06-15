@@ -1,0 +1,572 @@
+[
+ {
+  "name": "empire-aggregate",
+  "unit_index": 0,
+  "n_eff": 151361,
+  "named_scope": true,
+  "n_prime": 1500,
+  "marginal_p": 0.005916,
+  "antonine_p_deficit": 0.52875,
+  "crisis_p_deficit": 0.0685
+ },
+ {
+  "name": "empire-aggregate",
+  "unit_index": 0,
+  "n_eff": 151361,
+  "named_scope": true,
+  "n_prime": 3000,
+  "marginal_p": 0.0,
+  "antonine_p_deficit": 1.0,
+  "crisis_p_deficit": 1.0
+ },
+ {
+  "name": "empire-aggregate",
+  "unit_index": 0,
+  "n_eff": 151361,
+  "named_scope": true,
+  "n_prime": 6000,
+  "marginal_p": 0.0,
+  "antonine_p_deficit": 1.0,
+  "crisis_p_deficit": 1.0
+ },
+ {
+  "name": "empire-aggregate",
+  "unit_index": 0,
+  "n_eff": 151361,
+  "named_scope": true,
+  "n_prime": 12000,
+  "marginal_p": 0.0,
+  "antonine_p_deficit": 1.0,
+  "crisis_p_deficit": 1.0
+ },
+ {
+  "name": "empire-aggregate",
+  "unit_index": 0,
+  "n_eff": 151361,
+  "named_scope": true,
+  "n_prime": 25000,
+  "marginal_p": 0.0,
+  "antonine_p_deficit": 1.0,
+  "crisis_p_deficit": 1.0
+ },
+ {
+  "name": "latin-aggregate",
+  "unit_index": 1,
+  "n_eff": 101066,
+  "named_scope": true,
+  "n_prime": 1500,
+  "marginal_p": 0.001648,
+  "antonine_p_deficit": 0.991125,
+  "crisis_p_deficit": 0.347875
+ },
+ {
+  "name": "latin-aggregate",
+  "unit_index": 1,
+  "n_eff": 101066,
+  "named_scope": true,
+  "n_prime": 3000,
+  "marginal_p": 1e-06,
+  "antonine_p_deficit": 1.0,
+  "crisis_p_deficit": 0.775125
+ },
+ {
+  "name": "latin-aggregate",
+  "unit_index": 1,
+  "n_eff": 101066,
+  "named_scope": true,
+  "n_prime": 6000,
+  "marginal_p": 0.0,
+  "antonine_p_deficit": 1.0,
+  "crisis_p_deficit": 0.953875
+ },
+ {
+  "name": "latin-aggregate",
+  "unit_index": 1,
+  "n_eff": 101066,
+  "named_scope": true,
+  "n_prime": 12000,
+  "marginal_p": 0.0,
+  "antonine_p_deficit": 1.0,
+  "crisis_p_deficit": 0.99425
+ },
+ {
+  "name": "latin-aggregate",
+  "unit_index": 1,
+  "n_eff": 101066,
+  "named_scope": true,
+  "n_prime": 25000,
+  "marginal_p": 0.0,
+  "antonine_p_deficit": 1.0,
+  "crisis_p_deficit": 0.999375
+ },
+ {
+  "name": "Latium et Campania / Regio I",
+  "unit_index": 2,
+  "n_eff": 17037,
+  "named_scope": false,
+  "n_prime": 1500,
+  "marginal_p": 0.0,
+  "antonine_p_deficit": 0.239625,
+  "crisis_p_deficit": 0.0
+ },
+ {
+  "name": "Latium et Campania / Regio I",
+  "unit_index": 2,
+  "n_eff": 17037,
+  "named_scope": false,
+  "n_prime": 3000,
+  "marginal_p": 0.0,
+  "antonine_p_deficit": 0.630375,
+  "crisis_p_deficit": 0.949
+ },
+ {
+  "name": "Latium et Campania / Regio I",
+  "unit_index": 2,
+  "n_eff": 17037,
+  "named_scope": false,
+  "n_prime": 6000,
+  "marginal_p": 0.0,
+  "antonine_p_deficit": 0.79425,
+  "crisis_p_deficit": 0.998375
+ },
+ {
+  "name": "Latium et Campania / Regio I",
+  "unit_index": 2,
+  "n_eff": 17037,
+  "named_scope": false,
+  "n_prime": 12000,
+  "marginal_p": 0.0,
+  "antonine_p_deficit": 0.880875,
+  "crisis_p_deficit": 0.999625
+ },
+ {
+  "name": "Dalmatia",
+  "unit_index": 3,
+  "n_eff": 6325,
+  "named_scope": false,
+  "n_prime": 1500,
+  "marginal_p": 0.000259,
+  "antonine_p_deficit": 0.165375,
+  "crisis_p_deficit": 0.485875
+ },
+ {
+  "name": "Dalmatia",
+  "unit_index": 3,
+  "n_eff": 6325,
+  "named_scope": false,
+  "n_prime": 3000,
+  "marginal_p": 0.0,
+  "antonine_p_deficit": 0.2815,
+  "crisis_p_deficit": 0.7085
+ },
+ {
+  "name": "Dalmatia",
+  "unit_index": 3,
+  "n_eff": 6325,
+  "named_scope": false,
+  "n_prime": 6000,
+  "marginal_p": 0.0,
+  "antonine_p_deficit": 0.38275,
+  "crisis_p_deficit": 0.832625
+ },
+ {
+  "name": "Hispania citerior",
+  "unit_index": 4,
+  "n_eff": 6011,
+  "named_scope": false,
+  "n_prime": 1500,
+  "marginal_p": 0.0,
+  "antonine_p_deficit": 0.89875,
+  "crisis_p_deficit": 0.02375
+ },
+ {
+  "name": "Hispania citerior",
+  "unit_index": 4,
+  "n_eff": 6011,
+  "named_scope": false,
+  "n_prime": 3000,
+  "marginal_p": 0.0,
+  "antonine_p_deficit": 0.975875,
+  "crisis_p_deficit": 0.093375
+ },
+ {
+  "name": "Hispania citerior",
+  "unit_index": 4,
+  "n_eff": 6011,
+  "named_scope": false,
+  "n_prime": 6000,
+  "marginal_p": 0.0,
+  "antonine_p_deficit": 0.98925,
+  "crisis_p_deficit": 0.321
+ },
+ {
+  "name": "Germania superior",
+  "unit_index": 5,
+  "n_eff": 5570,
+  "named_scope": false,
+  "n_prime": 1500,
+  "marginal_p": 0.0,
+  "antonine_p_deficit": 0.1185,
+  "crisis_p_deficit": 0.638375
+ },
+ {
+  "name": "Germania superior",
+  "unit_index": 5,
+  "n_eff": 5570,
+  "named_scope": false,
+  "n_prime": 3000,
+  "marginal_p": 0.0,
+  "antonine_p_deficit": 0.43,
+  "crisis_p_deficit": 0.952125
+ },
+ {
+  "name": "Venetia et Histria / Regio X",
+  "unit_index": 6,
+  "n_eff": 5560,
+  "named_scope": false,
+  "n_prime": 1500,
+  "marginal_p": 0.156846,
+  "antonine_p_deficit": 0.01225,
+  "crisis_p_deficit": 0.240875
+ },
+ {
+  "name": "Venetia et Histria / Regio X",
+  "unit_index": 6,
+  "n_eff": 5560,
+  "named_scope": false,
+  "n_prime": 3000,
+  "marginal_p": 0.00842,
+  "antonine_p_deficit": 0.05325,
+  "crisis_p_deficit": 0.752875
+ },
+ {
+  "name": "Dacia",
+  "unit_index": 7,
+  "n_eff": 4718,
+  "named_scope": false,
+  "n_prime": 1500,
+  "marginal_p": 0.0,
+  "antonine_p_deficit": 0.943375,
+  "crisis_p_deficit": 0.919375
+ },
+ {
+  "name": "Dacia",
+  "unit_index": 7,
+  "n_eff": 4718,
+  "named_scope": false,
+  "n_prime": 3000,
+  "marginal_p": 0.0,
+  "antonine_p_deficit": 0.999625,
+  "crisis_p_deficit": 1.0
+ },
+ {
+  "name": "Britannia",
+  "unit_index": 8,
+  "n_eff": 4407,
+  "named_scope": false,
+  "n_prime": 1500,
+  "marginal_p": 0.0,
+  "antonine_p_deficit": 0.936875,
+  "crisis_p_deficit": 0.00325
+ },
+ {
+  "name": "Britannia",
+  "unit_index": 8,
+  "n_eff": 4407,
+  "named_scope": false,
+  "n_prime": 3000,
+  "marginal_p": 0.0,
+  "antonine_p_deficit": 0.997375,
+  "crisis_p_deficit": 0.010375
+ },
+ {
+  "name": "Pannonia superior",
+  "unit_index": 9,
+  "n_eff": 4174,
+  "named_scope": false,
+  "n_prime": 1500,
+  "marginal_p": 0.003206,
+  "antonine_p_deficit": 0.716375,
+  "crisis_p_deficit": 0.244125
+ },
+ {
+  "name": "Pannonia superior",
+  "unit_index": 9,
+  "n_eff": 4174,
+  "named_scope": false,
+  "n_prime": 3000,
+  "marginal_p": 1e-06,
+  "antonine_p_deficit": 0.941625,
+  "crisis_p_deficit": 0.66225
+ },
+ {
+  "name": "Samnium / Regio IV",
+  "unit_index": 10,
+  "n_eff": 3952,
+  "named_scope": false,
+  "n_prime": 1500,
+  "marginal_p": 0.042835,
+  "antonine_p_deficit": 0.315375,
+  "crisis_p_deficit": 0.08125
+ },
+ {
+  "name": "Samnium / Regio IV",
+  "unit_index": 10,
+  "n_eff": 3952,
+  "named_scope": false,
+  "n_prime": 3000,
+  "marginal_p": 0.001058,
+  "antonine_p_deficit": 0.578125,
+  "crisis_p_deficit": 0.278625
+ },
+ {
+  "name": "Africa proconsularis",
+  "unit_index": 11,
+  "n_eff": 2967,
+  "named_scope": false,
+  "n_prime": 1500,
+  "marginal_p": 2e-06,
+  "antonine_p_deficit": 0.05,
+  "crisis_p_deficit": 0.998375
+ },
+ {
+  "name": "Germania inferior",
+  "unit_index": 12,
+  "n_eff": 3261,
+  "named_scope": false,
+  "n_prime": 1500,
+  "marginal_p": 0.0,
+  "antonine_p_deficit": 0.798875,
+  "crisis_p_deficit": 0.896375
+ },
+ {
+  "name": "Germania inferior",
+  "unit_index": 12,
+  "n_eff": 3261,
+  "named_scope": false,
+  "n_prime": 3000,
+  "marginal_p": 0.0,
+  "antonine_p_deficit": 0.908625,
+  "crisis_p_deficit": 0.9895
+ },
+ {
+  "name": "Apulia et Calabria / Regio II",
+  "unit_index": 13,
+  "n_eff": 3012,
+  "named_scope": false,
+  "n_prime": 1500,
+  "marginal_p": 8e-06,
+  "antonine_p_deficit": 0.3435,
+  "crisis_p_deficit": 0.7545
+ },
+ {
+  "name": "Apulia et Calabria / Regio II",
+  "unit_index": 13,
+  "n_eff": 3012,
+  "named_scope": false,
+  "n_prime": 3000,
+  "marginal_p": 0.0,
+  "antonine_p_deficit": 0.540375,
+  "crisis_p_deficit": 0.96175
+ },
+ {
+  "name": "Pannonia inferior",
+  "unit_index": 14,
+  "n_eff": 2812,
+  "named_scope": false,
+  "n_prime": 1500,
+  "marginal_p": 0.0,
+  "antonine_p_deficit": 0.25425,
+  "crisis_p_deficit": 0.19625
+ },
+ {
+  "name": "Numidia",
+  "unit_index": 15,
+  "n_eff": 2727,
+  "named_scope": false,
+  "n_prime": 1500,
+  "marginal_p": 0.0,
+  "antonine_p_deficit": 0.932875,
+  "crisis_p_deficit": 0.962875
+ },
+ {
+  "name": "Etruria / Regio VII",
+  "unit_index": 16,
+  "n_eff": 2426,
+  "named_scope": false,
+  "n_prime": 1500,
+  "marginal_p": 0.0,
+  "antonine_p_deficit": 0.4355,
+  "crisis_p_deficit": 0.0
+ },
+ {
+  "name": "Umbria / Regio VI",
+  "unit_index": 17,
+  "n_eff": 2573,
+  "named_scope": false,
+  "n_prime": 1500,
+  "marginal_p": 0.001138,
+  "antonine_p_deficit": 0.16875,
+  "crisis_p_deficit": 0.13025
+ },
+ {
+  "name": "Noricum",
+  "unit_index": 18,
+  "n_eff": 2600,
+  "named_scope": false,
+  "n_prime": 1500,
+  "marginal_p": 0.298414,
+  "antonine_p_deficit": 0.080875,
+  "crisis_p_deficit": 0.141125
+ },
+ {
+  "name": "Baetica",
+  "unit_index": 19,
+  "n_eff": 2449,
+  "named_scope": false,
+  "n_prime": 1500,
+  "marginal_p": 0.0,
+  "antonine_p_deficit": 0.92475,
+  "crisis_p_deficit": 0.033625
+ },
+ {
+  "name": "Transpadana / Regio XI",
+  "unit_index": 20,
+  "n_eff": 2201,
+  "named_scope": false,
+  "n_prime": 1500,
+  "marginal_p": 2e-06,
+  "antonine_p_deficit": 0.449125,
+  "crisis_p_deficit": 0.244375
+ },
+ {
+  "name": "Pompeii",
+  "unit_index": 21,
+  "n_eff": 4247,
+  "named_scope": false,
+  "n_prime": 1500,
+  "marginal_p": 0.0,
+  "antonine_p_deficit": 0.0,
+  "crisis_p_deficit": 0.0
+ },
+ {
+  "name": "Pompeii",
+  "unit_index": 21,
+  "n_eff": 4247,
+  "named_scope": false,
+  "n_prime": 3000,
+  "marginal_p": 0.0,
+  "antonine_p_deficit": 0.0,
+  "crisis_p_deficit": 0.0
+ },
+ {
+  "name": "Salona",
+  "unit_index": 22,
+  "n_eff": 2890,
+  "named_scope": false,
+  "n_prime": 1500,
+  "marginal_p": 0.0,
+  "antonine_p_deficit": 0.533125,
+  "crisis_p_deficit": 0.537875
+ },
+ {
+  "name": "Ostia",
+  "unit_index": 23,
+  "n_eff": 2316,
+  "named_scope": false,
+  "n_prime": 1500,
+  "marginal_p": 0.000821,
+  "antonine_p_deficit": 0.78325,
+  "crisis_p_deficit": 0.593625
+ },
+ {
+  "name": "Mogontiacum",
+  "unit_index": 24,
+  "n_eff": 2325,
+  "named_scope": false,
+  "n_prime": 1500,
+  "marginal_p": 0.0,
+  "antonine_p_deficit": 0.0,
+  "crisis_p_deficit": 0.0
+ },
+ {
+  "name": "Aquileia",
+  "unit_index": 25,
+  "n_eff": 1885,
+  "named_scope": false,
+  "n_prime": 1500,
+  "marginal_p": 0.010665,
+  "antonine_p_deficit": 0.18,
+  "crisis_p_deficit": 0.305
+ },
+ {
+  "name": "Moesia inferior",
+  "unit_index": 26,
+  "n_eff": 1728,
+  "named_scope": false,
+  "n_prime": 1500,
+  "marginal_p": 5e-06,
+  "antonine_p_deficit": 0.8675,
+  "crisis_p_deficit": 0.980125
+ },
+ {
+  "name": "Lusitania",
+  "unit_index": 27,
+  "n_eff": 1577,
+  "named_scope": false,
+  "n_prime": 1500,
+  "marginal_p": 0.000193,
+  "antonine_p_deficit": 0.318375,
+  "crisis_p_deficit": 0.867125
+ },
+ {
+  "name": "Italia (excl. Rome)",
+  "unit_index": 28,
+  "n_eff": 40499,
+  "named_scope": false,
+  "n_prime": 1500,
+  "marginal_p": 0.0,
+  "antonine_p_deficit": 0.73875,
+  "crisis_p_deficit": 0.77575
+ },
+ {
+  "name": "Italia (excl. Rome)",
+  "unit_index": 28,
+  "n_eff": 40499,
+  "named_scope": false,
+  "n_prime": 3000,
+  "marginal_p": 0.0,
+  "antonine_p_deficit": 0.9155,
+  "crisis_p_deficit": 0.961
+ },
+ {
+  "name": "Italia (excl. Rome)",
+  "unit_index": 28,
+  "n_eff": 40499,
+  "named_scope": false,
+  "n_prime": 6000,
+  "marginal_p": 0.0,
+  "antonine_p_deficit": 0.961125,
+  "crisis_p_deficit": 0.99875
+ },
+ {
+  "name": "Italia (excl. Rome)",
+  "unit_index": 28,
+  "n_eff": 40499,
+  "named_scope": false,
+  "n_prime": 12000,
+  "marginal_p": 0.0,
+  "antonine_p_deficit": 0.97675,
+  "crisis_p_deficit": 0.999875
+ },
+ {
+  "name": "Italia (excl. Rome)",
+  "unit_index": 28,
+  "n_eff": 40499,
+  "named_scope": false,
+  "n_prime": 25000,
+  "marginal_p": 0.0,
+  "antonine_p_deficit": 0.986875,
+  "crisis_p_deficit": 1.0
+ }
+]

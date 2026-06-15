@@ -69,11 +69,24 @@ Per launch-spec §8, the raw (uncorrected) SPA was tested against the same null.
 - **Reachability** (`‡`): units below the cpl-3 province floor (n_eff < 1,618; Lusitania 1,577) carry a power caveat.
 - **Jaggedness of the corrected curve** drives the saturation and may inflate probe P(deviation); whether it is real structure or deconvolution residual is a question for the annex.
 
-## 7. Deferred robustness annex (D2 — to run after this base)
+## 7. Deferred robustness annex (D2)
 
-- **Large-N correction** — a reduced-significance / mark-permutation variant or effective-N thinning so the global test is not over-powered.
-- **baorista Bayesian-aoristic null** (prereg line 378) — a better-specified flexible null that may also sharpen the probe readings.
-Both are independent post-hoc sensitivities; neither changes the base deliverable. Logged in `planning/backlog` / the decision note.
+**Part (a) RESOLVED 2026-06-15** — `outputs/flexnull/ANNEX-REPORT.md` (spec
+`h3b-flexible-null-annex-spec-2026-06-15.md`). A flexibility lever (CPL k∈{2,3,5,7} +
+penalised P-spline + GP, on one effective-df axis) and an effective-N / reduced-significance
+lever (thinning ladder + a de-powered simultaneous-coverage statistic) tested whether a
+better-specified null de-saturates the global test. **Verdict: it does not** — the
+sweet-spot scan returns **0 hits across all 290 unit×fit combinations**; the saturation is
+robust to null flexibility (edf 5→20), to simultaneous-coverage de-powering, and to
+effective-N thinning down to ≈1,500. It is therefore **structural null-misspecification**
+(the smooth null cannot represent the jagged real epigraphic curve), **not** large-N
+over-power — confirming this report's §1 finding and the probe-window P(deficit) as THE
+deliverable (now shown robust to null choice).
+
+- **Part (b) baorista Bayesian-aoristic null** (prereg line 378) — **NOT warranted for the
+  global test** (a featureless growth null absorbs less structure than the self-referential
+  nulls already tried, so it cannot de-saturate where they cannot). Demoted to an optional,
+  lower-priority probe-sharpening cross-check; infra installed at `runs/2026-05-03-baorista-install/`.
 
 ## 8. Reproduce
 ```bash

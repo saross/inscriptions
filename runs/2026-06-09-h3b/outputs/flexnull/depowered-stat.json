@@ -1,0 +1,2322 @@
+[
+ {
+  "name": "empire-aggregate",
+  "family": "cpl",
+  "level": "k2",
+  "edf": 5.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "empire-aggregate",
+  "family": "cpl",
+  "level": "k3",
+  "edf": 7.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "empire-aggregate",
+  "family": "cpl",
+  "level": "k5",
+  "edf": 11.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "empire-aggregate",
+  "family": "cpl",
+  "level": "k7",
+  "edf": 15.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "empire-aggregate",
+  "family": "spline",
+  "level": "edf5",
+  "edf": 5.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "empire-aggregate",
+  "family": "spline",
+  "level": "edf10",
+  "edf": 10.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "empire-aggregate",
+  "family": "spline",
+  "level": "edf20",
+  "edf": 20.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "empire-aggregate",
+  "family": "gp",
+  "level": "edf5",
+  "edf": 5.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "empire-aggregate",
+  "family": "gp",
+  "level": "edf10",
+  "edf": 10.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "empire-aggregate",
+  "family": "gp",
+  "level": "edf20",
+  "edf": 20.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "latin-aggregate",
+  "family": "cpl",
+  "level": "k2",
+  "edf": 5.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "latin-aggregate",
+  "family": "cpl",
+  "level": "k3",
+  "edf": 7.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "latin-aggregate",
+  "family": "cpl",
+  "level": "k5",
+  "edf": 11.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "latin-aggregate",
+  "family": "cpl",
+  "level": "k7",
+  "edf": 15.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "latin-aggregate",
+  "family": "spline",
+  "level": "edf5",
+  "edf": 5.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "latin-aggregate",
+  "family": "spline",
+  "level": "edf10",
+  "edf": 10.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "latin-aggregate",
+  "family": "spline",
+  "level": "edf20",
+  "edf": 20.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "latin-aggregate",
+  "family": "gp",
+  "level": "edf5",
+  "edf": 5.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "latin-aggregate",
+  "family": "gp",
+  "level": "edf10",
+  "edf": 10.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "latin-aggregate",
+  "family": "gp",
+  "level": "edf20",
+  "edf": 20.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Latium et Campania / Regio I",
+  "family": "cpl",
+  "level": "k2",
+  "edf": 5.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Latium et Campania / Regio I",
+  "family": "cpl",
+  "level": "k3",
+  "edf": 7.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Latium et Campania / Regio I",
+  "family": "cpl",
+  "level": "k5",
+  "edf": 11.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Latium et Campania / Regio I",
+  "family": "cpl",
+  "level": "k7",
+  "edf": 15.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Latium et Campania / Regio I",
+  "family": "spline",
+  "level": "edf5",
+  "edf": 5.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Latium et Campania / Regio I",
+  "family": "spline",
+  "level": "edf10",
+  "edf": 10.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Latium et Campania / Regio I",
+  "family": "spline",
+  "level": "edf20",
+  "edf": 20.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Latium et Campania / Regio I",
+  "family": "gp",
+  "level": "edf5",
+  "edf": 5.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Latium et Campania / Regio I",
+  "family": "gp",
+  "level": "edf10",
+  "edf": 10.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Latium et Campania / Regio I",
+  "family": "gp",
+  "level": "edf20",
+  "edf": 20.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Dalmatia",
+  "family": "cpl",
+  "level": "k2",
+  "edf": 5.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Dalmatia",
+  "family": "cpl",
+  "level": "k3",
+  "edf": 7.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Dalmatia",
+  "family": "cpl",
+  "level": "k5",
+  "edf": 11.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.001018
+ },
+ {
+  "name": "Dalmatia",
+  "family": "cpl",
+  "level": "k7",
+  "edf": 15.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.001021
+ },
+ {
+  "name": "Dalmatia",
+  "family": "spline",
+  "level": "edf5",
+  "edf": 5.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.001
+ },
+ {
+  "name": "Dalmatia",
+  "family": "spline",
+  "level": "edf10",
+  "edf": 10.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.001029
+ },
+ {
+  "name": "Dalmatia",
+  "family": "spline",
+  "level": "edf20",
+  "edf": 20.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.001014
+ },
+ {
+  "name": "Dalmatia",
+  "family": "gp",
+  "level": "edf5",
+  "edf": 5.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Dalmatia",
+  "family": "gp",
+  "level": "edf10",
+  "edf": 10.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.001018
+ },
+ {
+  "name": "Dalmatia",
+  "family": "gp",
+  "level": "edf20",
+  "edf": 20.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.001035
+ },
+ {
+  "name": "Hispania citerior",
+  "family": "cpl",
+  "level": "k2",
+  "edf": 5.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Hispania citerior",
+  "family": "cpl",
+  "level": "k3",
+  "edf": 7.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Hispania citerior",
+  "family": "cpl",
+  "level": "k5",
+  "edf": 11.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Hispania citerior",
+  "family": "cpl",
+  "level": "k7",
+  "edf": 15.0,
+  "marginal_p_pointwise": 1e-06,
+  "marginal_p_simultaneous": 0.001013
+ },
+ {
+  "name": "Hispania citerior",
+  "family": "spline",
+  "level": "edf5",
+  "edf": 5.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Hispania citerior",
+  "family": "spline",
+  "level": "edf10",
+  "edf": 10.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.001011
+ },
+ {
+  "name": "Hispania citerior",
+  "family": "spline",
+  "level": "edf20",
+  "edf": 20.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.001028
+ },
+ {
+  "name": "Hispania citerior",
+  "family": "gp",
+  "level": "edf5",
+  "edf": 5.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Hispania citerior",
+  "family": "gp",
+  "level": "edf10",
+  "edf": 10.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.001
+ },
+ {
+  "name": "Hispania citerior",
+  "family": "gp",
+  "level": "edf20",
+  "edf": 20.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.001003
+ },
+ {
+  "name": "Germania superior",
+  "family": "cpl",
+  "level": "k2",
+  "edf": 5.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Germania superior",
+  "family": "cpl",
+  "level": "k3",
+  "edf": 7.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Germania superior",
+  "family": "cpl",
+  "level": "k5",
+  "edf": 11.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.001002
+ },
+ {
+  "name": "Germania superior",
+  "family": "cpl",
+  "level": "k7",
+  "edf": 15.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.002053
+ },
+ {
+  "name": "Germania superior",
+  "family": "spline",
+  "level": "edf5",
+  "edf": 5.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Germania superior",
+  "family": "spline",
+  "level": "edf10",
+  "edf": 10.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.001126
+ },
+ {
+  "name": "Germania superior",
+  "family": "spline",
+  "level": "edf20",
+  "edf": 20.0,
+  "marginal_p_pointwise": 1.2e-05,
+  "marginal_p_simultaneous": 0.001977
+ },
+ {
+  "name": "Germania superior",
+  "family": "gp",
+  "level": "edf5",
+  "edf": 5.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Germania superior",
+  "family": "gp",
+  "level": "edf10",
+  "edf": 10.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Germania superior",
+  "family": "gp",
+  "level": "edf20",
+  "edf": 20.0,
+  "marginal_p_pointwise": 6.5e-05,
+  "marginal_p_simultaneous": 0.001051
+ },
+ {
+  "name": "Venetia et Histria / Regio X",
+  "family": "cpl",
+  "level": "k2",
+  "edf": 5.0,
+  "marginal_p_pointwise": 5.9e-05,
+  "marginal_p_simultaneous": 0.001647
+ },
+ {
+  "name": "Venetia et Histria / Regio X",
+  "family": "cpl",
+  "level": "k3",
+  "edf": 7.0,
+  "marginal_p_pointwise": 9.7e-05,
+  "marginal_p_simultaneous": 0.001999
+ },
+ {
+  "name": "Venetia et Histria / Regio X",
+  "family": "cpl",
+  "level": "k5",
+  "edf": 11.0,
+  "marginal_p_pointwise": 0.001275,
+  "marginal_p_simultaneous": 0.008766
+ },
+ {
+  "name": "Venetia et Histria / Regio X",
+  "family": "cpl",
+  "level": "k7",
+  "edf": 15.0,
+  "marginal_p_pointwise": 0.0034,
+  "marginal_p_simultaneous": 0.016775
+ },
+ {
+  "name": "Venetia et Histria / Regio X",
+  "family": "spline",
+  "level": "edf5",
+  "edf": 5.0,
+  "marginal_p_pointwise": 0.000209,
+  "marginal_p_simultaneous": 0.002069
+ },
+ {
+  "name": "Venetia et Histria / Regio X",
+  "family": "spline",
+  "level": "edf10",
+  "edf": 10.0,
+  "marginal_p_pointwise": 0.007278,
+  "marginal_p_simultaneous": 0.016268
+ },
+ {
+  "name": "Venetia et Histria / Regio X",
+  "family": "spline",
+  "level": "edf20",
+  "edf": 20.0,
+  "marginal_p_pointwise": 0.007627,
+  "marginal_p_simultaneous": 0.022857
+ },
+ {
+  "name": "Venetia et Histria / Regio X",
+  "family": "gp",
+  "level": "edf5",
+  "edf": 5.0,
+  "marginal_p_pointwise": 7.9e-05,
+  "marginal_p_simultaneous": 0.001354
+ },
+ {
+  "name": "Venetia et Histria / Regio X",
+  "family": "gp",
+  "level": "edf10",
+  "edf": 10.0,
+  "marginal_p_pointwise": 0.006529,
+  "marginal_p_simultaneous": 0.016843
+ },
+ {
+  "name": "Venetia et Histria / Regio X",
+  "family": "gp",
+  "level": "edf20",
+  "edf": 20.0,
+  "marginal_p_pointwise": 0.010536,
+  "marginal_p_simultaneous": 0.030717
+ },
+ {
+  "name": "Dacia",
+  "family": "cpl",
+  "level": "k2",
+  "edf": 5.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Dacia",
+  "family": "cpl",
+  "level": "k3",
+  "edf": 7.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.002121
+ },
+ {
+  "name": "Dacia",
+  "family": "cpl",
+  "level": "k5",
+  "edf": 11.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.02581
+ },
+ {
+  "name": "Dacia",
+  "family": "cpl",
+  "level": "k7",
+  "edf": 15.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.001072
+ },
+ {
+  "name": "Dacia",
+  "family": "spline",
+  "level": "edf5",
+  "edf": 5.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Dacia",
+  "family": "spline",
+  "level": "edf10",
+  "edf": 10.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.003021
+ },
+ {
+  "name": "Dacia",
+  "family": "spline",
+  "level": "edf20",
+  "edf": 20.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Dacia",
+  "family": "gp",
+  "level": "edf5",
+  "edf": 5.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Dacia",
+  "family": "gp",
+  "level": "edf10",
+  "edf": 10.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Dacia",
+  "family": "gp",
+  "level": "edf20",
+  "edf": 20.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Britannia",
+  "family": "cpl",
+  "level": "k2",
+  "edf": 5.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.001005
+ },
+ {
+  "name": "Britannia",
+  "family": "cpl",
+  "level": "k3",
+  "edf": 7.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.013106
+ },
+ {
+  "name": "Britannia",
+  "family": "cpl",
+  "level": "k5",
+  "edf": 11.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.031134
+ },
+ {
+  "name": "Britannia",
+  "family": "cpl",
+  "level": "k7",
+  "edf": 15.0,
+  "marginal_p_pointwise": 0.026769,
+  "marginal_p_simultaneous": 0.234904
+ },
+ {
+  "name": "Britannia",
+  "family": "spline",
+  "level": "edf5",
+  "edf": 5.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Britannia",
+  "family": "spline",
+  "level": "edf10",
+  "edf": 10.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.01026
+ },
+ {
+  "name": "Britannia",
+  "family": "spline",
+  "level": "edf20",
+  "edf": 20.0,
+  "marginal_p_pointwise": 0.00027,
+  "marginal_p_simultaneous": 0.00553
+ },
+ {
+  "name": "Britannia",
+  "family": "gp",
+  "level": "edf5",
+  "edf": 5.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Britannia",
+  "family": "gp",
+  "level": "edf10",
+  "edf": 10.0,
+  "marginal_p_pointwise": 7e-06,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Britannia",
+  "family": "gp",
+  "level": "edf20",
+  "edf": 20.0,
+  "marginal_p_pointwise": 0.005702,
+  "marginal_p_simultaneous": 0.001062
+ },
+ {
+  "name": "Pannonia superior",
+  "family": "cpl",
+  "level": "k2",
+  "edf": 5.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Pannonia superior",
+  "family": "cpl",
+  "level": "k3",
+  "edf": 7.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.002188
+ },
+ {
+  "name": "Pannonia superior",
+  "family": "cpl",
+  "level": "k5",
+  "edf": 11.0,
+  "marginal_p_pointwise": 0.000451,
+  "marginal_p_simultaneous": 0.013936
+ },
+ {
+  "name": "Pannonia superior",
+  "family": "cpl",
+  "level": "k7",
+  "edf": 15.0,
+  "marginal_p_pointwise": 0.001888,
+  "marginal_p_simultaneous": 0.017854
+ },
+ {
+  "name": "Pannonia superior",
+  "family": "spline",
+  "level": "edf5",
+  "edf": 5.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.00117
+ },
+ {
+  "name": "Pannonia superior",
+  "family": "spline",
+  "level": "edf10",
+  "edf": 10.0,
+  "marginal_p_pointwise": 0.000549,
+  "marginal_p_simultaneous": 0.013064
+ },
+ {
+  "name": "Pannonia superior",
+  "family": "spline",
+  "level": "edf20",
+  "edf": 20.0,
+  "marginal_p_pointwise": 0.003685,
+  "marginal_p_simultaneous": 0.028086
+ },
+ {
+  "name": "Pannonia superior",
+  "family": "gp",
+  "level": "edf5",
+  "edf": 5.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.001002
+ },
+ {
+  "name": "Pannonia superior",
+  "family": "gp",
+  "level": "edf10",
+  "edf": 10.0,
+  "marginal_p_pointwise": 0.000565,
+  "marginal_p_simultaneous": 0.005726
+ },
+ {
+  "name": "Pannonia superior",
+  "family": "gp",
+  "level": "edf20",
+  "edf": 20.0,
+  "marginal_p_pointwise": 0.004864,
+  "marginal_p_simultaneous": 0.025239
+ },
+ {
+  "name": "Samnium / Regio IV",
+  "family": "cpl",
+  "level": "k2",
+  "edf": 5.0,
+  "marginal_p_pointwise": 4e-06,
+  "marginal_p_simultaneous": 0.001473
+ },
+ {
+  "name": "Samnium / Regio IV",
+  "family": "cpl",
+  "level": "k3",
+  "edf": 7.0,
+  "marginal_p_pointwise": 0.000137,
+  "marginal_p_simultaneous": 0.001879
+ },
+ {
+  "name": "Samnium / Regio IV",
+  "family": "cpl",
+  "level": "k5",
+  "edf": 11.0,
+  "marginal_p_pointwise": 0.000393,
+  "marginal_p_simultaneous": 0.003518
+ },
+ {
+  "name": "Samnium / Regio IV",
+  "family": "cpl",
+  "level": "k7",
+  "edf": 15.0,
+  "marginal_p_pointwise": 0.001587,
+  "marginal_p_simultaneous": 0.008132
+ },
+ {
+  "name": "Samnium / Regio IV",
+  "family": "spline",
+  "level": "edf5",
+  "edf": 5.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.001074
+ },
+ {
+  "name": "Samnium / Regio IV",
+  "family": "spline",
+  "level": "edf10",
+  "edf": 10.0,
+  "marginal_p_pointwise": 0.002383,
+  "marginal_p_simultaneous": 0.006904
+ },
+ {
+  "name": "Samnium / Regio IV",
+  "family": "spline",
+  "level": "edf20",
+  "edf": 20.0,
+  "marginal_p_pointwise": 0.003054,
+  "marginal_p_simultaneous": 0.011904
+ },
+ {
+  "name": "Samnium / Regio IV",
+  "family": "gp",
+  "level": "edf5",
+  "edf": 5.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.001001
+ },
+ {
+  "name": "Samnium / Regio IV",
+  "family": "gp",
+  "level": "edf10",
+  "edf": 10.0,
+  "marginal_p_pointwise": 0.00235,
+  "marginal_p_simultaneous": 0.009222
+ },
+ {
+  "name": "Samnium / Regio IV",
+  "family": "gp",
+  "level": "edf20",
+  "edf": 20.0,
+  "marginal_p_pointwise": 0.003791,
+  "marginal_p_simultaneous": 0.012218
+ },
+ {
+  "name": "Africa proconsularis",
+  "family": "cpl",
+  "level": "k2",
+  "edf": 5.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Africa proconsularis",
+  "family": "cpl",
+  "level": "k3",
+  "edf": 7.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Africa proconsularis",
+  "family": "cpl",
+  "level": "k5",
+  "edf": 11.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Africa proconsularis",
+  "family": "cpl",
+  "level": "k7",
+  "edf": 15.0,
+  "marginal_p_pointwise": 1e-05,
+  "marginal_p_simultaneous": 0.001747
+ },
+ {
+  "name": "Africa proconsularis",
+  "family": "spline",
+  "level": "edf5",
+  "edf": 5.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Africa proconsularis",
+  "family": "spline",
+  "level": "edf10",
+  "edf": 10.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Africa proconsularis",
+  "family": "spline",
+  "level": "edf20",
+  "edf": 20.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Africa proconsularis",
+  "family": "gp",
+  "level": "edf5",
+  "edf": 5.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Africa proconsularis",
+  "family": "gp",
+  "level": "edf10",
+  "edf": 10.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Africa proconsularis",
+  "family": "gp",
+  "level": "edf20",
+  "edf": 20.0,
+  "marginal_p_pointwise": 5.2e-05,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Germania inferior",
+  "family": "cpl",
+  "level": "k2",
+  "edf": 5.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Germania inferior",
+  "family": "cpl",
+  "level": "k3",
+  "edf": 7.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Germania inferior",
+  "family": "cpl",
+  "level": "k5",
+  "edf": 11.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.001027
+ },
+ {
+  "name": "Germania inferior",
+  "family": "cpl",
+  "level": "k7",
+  "edf": 15.0,
+  "marginal_p_pointwise": 1e-06,
+  "marginal_p_simultaneous": 0.001198
+ },
+ {
+  "name": "Germania inferior",
+  "family": "spline",
+  "level": "edf5",
+  "edf": 5.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Germania inferior",
+  "family": "spline",
+  "level": "edf10",
+  "edf": 10.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.001001
+ },
+ {
+  "name": "Germania inferior",
+  "family": "spline",
+  "level": "edf20",
+  "edf": 20.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.001601
+ },
+ {
+  "name": "Germania inferior",
+  "family": "gp",
+  "level": "edf5",
+  "edf": 5.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Germania inferior",
+  "family": "gp",
+  "level": "edf10",
+  "edf": 10.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Germania inferior",
+  "family": "gp",
+  "level": "edf20",
+  "edf": 20.0,
+  "marginal_p_pointwise": 2e-06,
+  "marginal_p_simultaneous": 0.001012
+ },
+ {
+  "name": "Apulia et Calabria / Regio II",
+  "family": "cpl",
+  "level": "k2",
+  "edf": 5.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Apulia et Calabria / Regio II",
+  "family": "cpl",
+  "level": "k3",
+  "edf": 7.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Apulia et Calabria / Regio II",
+  "family": "cpl",
+  "level": "k5",
+  "edf": 11.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.001033
+ },
+ {
+  "name": "Apulia et Calabria / Regio II",
+  "family": "cpl",
+  "level": "k7",
+  "edf": 15.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.001033
+ },
+ {
+  "name": "Apulia et Calabria / Regio II",
+  "family": "spline",
+  "level": "edf5",
+  "edf": 5.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Apulia et Calabria / Regio II",
+  "family": "spline",
+  "level": "edf10",
+  "edf": 10.0,
+  "marginal_p_pointwise": 9e-06,
+  "marginal_p_simultaneous": 0.001067
+ },
+ {
+  "name": "Apulia et Calabria / Regio II",
+  "family": "spline",
+  "level": "edf20",
+  "edf": 20.0,
+  "marginal_p_pointwise": 7e-06,
+  "marginal_p_simultaneous": 0.001373
+ },
+ {
+  "name": "Apulia et Calabria / Regio II",
+  "family": "gp",
+  "level": "edf5",
+  "edf": 5.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Apulia et Calabria / Regio II",
+  "family": "gp",
+  "level": "edf10",
+  "edf": 10.0,
+  "marginal_p_pointwise": 8e-06,
+  "marginal_p_simultaneous": 0.001035
+ },
+ {
+  "name": "Apulia et Calabria / Regio II",
+  "family": "gp",
+  "level": "edf20",
+  "edf": 20.0,
+  "marginal_p_pointwise": 3.9e-05,
+  "marginal_p_simultaneous": 0.00117
+ },
+ {
+  "name": "Pannonia inferior",
+  "family": "cpl",
+  "level": "k2",
+  "edf": 5.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.002114
+ },
+ {
+  "name": "Pannonia inferior",
+  "family": "cpl",
+  "level": "k3",
+  "edf": 7.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.098254
+ },
+ {
+  "name": "Pannonia inferior",
+  "family": "cpl",
+  "level": "k5",
+  "edf": 11.0,
+  "marginal_p_pointwise": 0.003441,
+  "marginal_p_simultaneous": 0.10084
+ },
+ {
+  "name": "Pannonia inferior",
+  "family": "cpl",
+  "level": "k7",
+  "edf": 15.0,
+  "marginal_p_pointwise": 0.001011,
+  "marginal_p_simultaneous": 0.232038
+ },
+ {
+  "name": "Pannonia inferior",
+  "family": "spline",
+  "level": "edf5",
+  "edf": 5.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.006583
+ },
+ {
+  "name": "Pannonia inferior",
+  "family": "spline",
+  "level": "edf10",
+  "edf": 10.0,
+  "marginal_p_pointwise": 0.004676,
+  "marginal_p_simultaneous": 0.160589
+ },
+ {
+  "name": "Pannonia inferior",
+  "family": "spline",
+  "level": "edf20",
+  "edf": 20.0,
+  "marginal_p_pointwise": 0.01665,
+  "marginal_p_simultaneous": 0.173152
+ },
+ {
+  "name": "Pannonia inferior",
+  "family": "gp",
+  "level": "edf5",
+  "edf": 5.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Pannonia inferior",
+  "family": "gp",
+  "level": "edf10",
+  "edf": 10.0,
+  "marginal_p_pointwise": 0.002211,
+  "marginal_p_simultaneous": 0.01303
+ },
+ {
+  "name": "Pannonia inferior",
+  "family": "gp",
+  "level": "edf20",
+  "edf": 20.0,
+  "marginal_p_pointwise": 0.014217,
+  "marginal_p_simultaneous": 0.048787
+ },
+ {
+  "name": "Numidia",
+  "family": "cpl",
+  "level": "k2",
+  "edf": 5.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Numidia",
+  "family": "cpl",
+  "level": "k3",
+  "edf": 7.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.001013
+ },
+ {
+  "name": "Numidia",
+  "family": "cpl",
+  "level": "k5",
+  "edf": 11.0,
+  "marginal_p_pointwise": 1e-06,
+  "marginal_p_simultaneous": 0.008622
+ },
+ {
+  "name": "Numidia",
+  "family": "cpl",
+  "level": "k7",
+  "edf": 15.0,
+  "marginal_p_pointwise": 0.001566,
+  "marginal_p_simultaneous": 0.035564
+ },
+ {
+  "name": "Numidia",
+  "family": "spline",
+  "level": "edf5",
+  "edf": 5.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.001005
+ },
+ {
+  "name": "Numidia",
+  "family": "spline",
+  "level": "edf10",
+  "edf": 10.0,
+  "marginal_p_pointwise": 1e-06,
+  "marginal_p_simultaneous": 0.001663
+ },
+ {
+  "name": "Numidia",
+  "family": "spline",
+  "level": "edf20",
+  "edf": 20.0,
+  "marginal_p_pointwise": 0.000215,
+  "marginal_p_simultaneous": 0.00666
+ },
+ {
+  "name": "Numidia",
+  "family": "gp",
+  "level": "edf5",
+  "edf": 5.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Numidia",
+  "family": "gp",
+  "level": "edf10",
+  "edf": 10.0,
+  "marginal_p_pointwise": 1.8e-05,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Numidia",
+  "family": "gp",
+  "level": "edf20",
+  "edf": 20.0,
+  "marginal_p_pointwise": 0.000263,
+  "marginal_p_simultaneous": 0.001201
+ },
+ {
+  "name": "Etruria / Regio VII",
+  "family": "cpl",
+  "level": "k2",
+  "edf": 5.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Etruria / Regio VII",
+  "family": "cpl",
+  "level": "k3",
+  "edf": 7.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Etruria / Regio VII",
+  "family": "cpl",
+  "level": "k5",
+  "edf": 11.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Etruria / Regio VII",
+  "family": "cpl",
+  "level": "k7",
+  "edf": 15.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Etruria / Regio VII",
+  "family": "spline",
+  "level": "edf5",
+  "edf": 5.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Etruria / Regio VII",
+  "family": "spline",
+  "level": "edf10",
+  "edf": 10.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Etruria / Regio VII",
+  "family": "spline",
+  "level": "edf20",
+  "edf": 20.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Etruria / Regio VII",
+  "family": "gp",
+  "level": "edf5",
+  "edf": 5.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Etruria / Regio VII",
+  "family": "gp",
+  "level": "edf10",
+  "edf": 10.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Etruria / Regio VII",
+  "family": "gp",
+  "level": "edf20",
+  "edf": 20.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Umbria / Regio VI",
+  "family": "cpl",
+  "level": "k2",
+  "edf": 5.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Umbria / Regio VI",
+  "family": "cpl",
+  "level": "k3",
+  "edf": 7.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.001696
+ },
+ {
+  "name": "Umbria / Regio VI",
+  "family": "cpl",
+  "level": "k5",
+  "edf": 11.0,
+  "marginal_p_pointwise": 0.002415,
+  "marginal_p_simultaneous": 0.011463
+ },
+ {
+  "name": "Umbria / Regio VI",
+  "family": "cpl",
+  "level": "k7",
+  "edf": 15.0,
+  "marginal_p_pointwise": 0.00588,
+  "marginal_p_simultaneous": 0.01879
+ },
+ {
+  "name": "Umbria / Regio VI",
+  "family": "spline",
+  "level": "edf5",
+  "edf": 5.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Umbria / Regio VI",
+  "family": "spline",
+  "level": "edf10",
+  "edf": 10.0,
+  "marginal_p_pointwise": 0.003581,
+  "marginal_p_simultaneous": 0.011478
+ },
+ {
+  "name": "Umbria / Regio VI",
+  "family": "spline",
+  "level": "edf20",
+  "edf": 20.0,
+  "marginal_p_pointwise": 0.011304,
+  "marginal_p_simultaneous": 0.027348
+ },
+ {
+  "name": "Umbria / Regio VI",
+  "family": "gp",
+  "level": "edf5",
+  "edf": 5.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Umbria / Regio VI",
+  "family": "gp",
+  "level": "edf10",
+  "edf": 10.0,
+  "marginal_p_pointwise": 0.004154,
+  "marginal_p_simultaneous": 0.008142
+ },
+ {
+  "name": "Umbria / Regio VI",
+  "family": "gp",
+  "level": "edf20",
+  "edf": 20.0,
+  "marginal_p_pointwise": 0.01949,
+  "marginal_p_simultaneous": 0.034813
+ },
+ {
+  "name": "Noricum",
+  "family": "cpl",
+  "level": "k2",
+  "edf": 5.0,
+  "marginal_p_pointwise": 0.029845,
+  "marginal_p_simultaneous": 0.06778
+ },
+ {
+  "name": "Noricum",
+  "family": "cpl",
+  "level": "k3",
+  "edf": 7.0,
+  "marginal_p_pointwise": 0.03861,
+  "marginal_p_simultaneous": 0.081327
+ },
+ {
+  "name": "Noricum",
+  "family": "cpl",
+  "level": "k5",
+  "edf": 11.0,
+  "marginal_p_pointwise": 0.077286,
+  "marginal_p_simultaneous": 0.107969
+ },
+ {
+  "name": "Noricum",
+  "family": "cpl",
+  "level": "k7",
+  "edf": 15.0,
+  "marginal_p_pointwise": 0.084883,
+  "marginal_p_simultaneous": 0.117466
+ },
+ {
+  "name": "Noricum",
+  "family": "spline",
+  "level": "edf5",
+  "edf": 5.0,
+  "marginal_p_pointwise": 0.003346,
+  "marginal_p_simultaneous": 0.011919
+ },
+ {
+  "name": "Noricum",
+  "family": "spline",
+  "level": "edf10",
+  "edf": 10.0,
+  "marginal_p_pointwise": 0.055918,
+  "marginal_p_simultaneous": 0.081403
+ },
+ {
+  "name": "Noricum",
+  "family": "spline",
+  "level": "edf20",
+  "edf": 20.0,
+  "marginal_p_pointwise": 0.086535,
+  "marginal_p_simultaneous": 0.121668
+ },
+ {
+  "name": "Noricum",
+  "family": "gp",
+  "level": "edf5",
+  "edf": 5.0,
+  "marginal_p_pointwise": 0.001345,
+  "marginal_p_simultaneous": 0.002166
+ },
+ {
+  "name": "Noricum",
+  "family": "gp",
+  "level": "edf10",
+  "edf": 10.0,
+  "marginal_p_pointwise": 0.042001,
+  "marginal_p_simultaneous": 0.068285
+ },
+ {
+  "name": "Noricum",
+  "family": "gp",
+  "level": "edf20",
+  "edf": 20.0,
+  "marginal_p_pointwise": 0.110549,
+  "marginal_p_simultaneous": 0.140763
+ },
+ {
+  "name": "Baetica",
+  "family": "cpl",
+  "level": "k2",
+  "edf": 5.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.001015
+ },
+ {
+  "name": "Baetica",
+  "family": "cpl",
+  "level": "k3",
+  "edf": 7.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.001088
+ },
+ {
+  "name": "Baetica",
+  "family": "cpl",
+  "level": "k5",
+  "edf": 11.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.001834
+ },
+ {
+  "name": "Baetica",
+  "family": "cpl",
+  "level": "k7",
+  "edf": 15.0,
+  "marginal_p_pointwise": 0.000943,
+  "marginal_p_simultaneous": 0.015455
+ },
+ {
+  "name": "Baetica",
+  "family": "spline",
+  "level": "edf5",
+  "edf": 5.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.001085
+ },
+ {
+  "name": "Baetica",
+  "family": "spline",
+  "level": "edf10",
+  "edf": 10.0,
+  "marginal_p_pointwise": 0.000169,
+  "marginal_p_simultaneous": 0.007698
+ },
+ {
+  "name": "Baetica",
+  "family": "spline",
+  "level": "edf20",
+  "edf": 20.0,
+  "marginal_p_pointwise": 0.014954,
+  "marginal_p_simultaneous": 0.0446
+ },
+ {
+  "name": "Baetica",
+  "family": "gp",
+  "level": "edf5",
+  "edf": 5.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Baetica",
+  "family": "gp",
+  "level": "edf10",
+  "edf": 10.0,
+  "marginal_p_pointwise": 0.000208,
+  "marginal_p_simultaneous": 0.003772
+ },
+ {
+  "name": "Baetica",
+  "family": "gp",
+  "level": "edf20",
+  "edf": 20.0,
+  "marginal_p_pointwise": 0.010671,
+  "marginal_p_simultaneous": 0.034503
+ },
+ {
+  "name": "Transpadana / Regio XI",
+  "family": "cpl",
+  "level": "k2",
+  "edf": 5.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.001168
+ },
+ {
+  "name": "Transpadana / Regio XI",
+  "family": "cpl",
+  "level": "k3",
+  "edf": 7.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.001061
+ },
+ {
+  "name": "Transpadana / Regio XI",
+  "family": "cpl",
+  "level": "k5",
+  "edf": 11.0,
+  "marginal_p_pointwise": 5e-06,
+  "marginal_p_simultaneous": 0.001248
+ },
+ {
+  "name": "Transpadana / Regio XI",
+  "family": "cpl",
+  "level": "k7",
+  "edf": 15.0,
+  "marginal_p_pointwise": 9e-06,
+  "marginal_p_simultaneous": 0.001443
+ },
+ {
+  "name": "Transpadana / Regio XI",
+  "family": "spline",
+  "level": "edf5",
+  "edf": 5.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.001184
+ },
+ {
+  "name": "Transpadana / Regio XI",
+  "family": "spline",
+  "level": "edf10",
+  "edf": 10.0,
+  "marginal_p_pointwise": 4.5e-05,
+  "marginal_p_simultaneous": 0.001628
+ },
+ {
+  "name": "Transpadana / Regio XI",
+  "family": "spline",
+  "level": "edf20",
+  "edf": 20.0,
+  "marginal_p_pointwise": 2.6e-05,
+  "marginal_p_simultaneous": 0.001671
+ },
+ {
+  "name": "Transpadana / Regio XI",
+  "family": "gp",
+  "level": "edf5",
+  "edf": 5.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.001012
+ },
+ {
+  "name": "Transpadana / Regio XI",
+  "family": "gp",
+  "level": "edf10",
+  "edf": 10.0,
+  "marginal_p_pointwise": 6.6e-05,
+  "marginal_p_simultaneous": 0.001607
+ },
+ {
+  "name": "Transpadana / Regio XI",
+  "family": "gp",
+  "level": "edf20",
+  "edf": 20.0,
+  "marginal_p_pointwise": 7.3e-05,
+  "marginal_p_simultaneous": 0.001968
+ },
+ {
+  "name": "Pompeii",
+  "family": "cpl",
+  "level": "k2",
+  "edf": 5.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.005487
+ },
+ {
+  "name": "Pompeii",
+  "family": "cpl",
+  "level": "k3",
+  "edf": 7.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Pompeii",
+  "family": "cpl",
+  "level": "k5",
+  "edf": 11.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Pompeii",
+  "family": "cpl",
+  "level": "k7",
+  "edf": 15.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.082416
+ },
+ {
+  "name": "Pompeii",
+  "family": "spline",
+  "level": "edf5",
+  "edf": 5.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Pompeii",
+  "family": "spline",
+  "level": "edf10",
+  "edf": 10.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.00199
+ },
+ {
+  "name": "Pompeii",
+  "family": "spline",
+  "level": "edf20",
+  "edf": 21.993,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Pompeii",
+  "family": "gp",
+  "level": "edf5",
+  "edf": 5.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Pompeii",
+  "family": "gp",
+  "level": "edf10",
+  "edf": 10.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Pompeii",
+  "family": "gp",
+  "level": "edf20",
+  "edf": 20.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Salona",
+  "family": "cpl",
+  "level": "k2",
+  "edf": 5.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Salona",
+  "family": "cpl",
+  "level": "k3",
+  "edf": 7.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Salona",
+  "family": "cpl",
+  "level": "k5",
+  "edf": 11.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Salona",
+  "family": "cpl",
+  "level": "k7",
+  "edf": 15.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Salona",
+  "family": "spline",
+  "level": "edf5",
+  "edf": 5.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Salona",
+  "family": "spline",
+  "level": "edf10",
+  "edf": 10.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Salona",
+  "family": "spline",
+  "level": "edf20",
+  "edf": 20.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Salona",
+  "family": "gp",
+  "level": "edf5",
+  "edf": 5.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Salona",
+  "family": "gp",
+  "level": "edf10",
+  "edf": 10.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Salona",
+  "family": "gp",
+  "level": "edf20",
+  "edf": 20.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Ostia",
+  "family": "cpl",
+  "level": "k2",
+  "edf": 5.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.001012
+ },
+ {
+  "name": "Ostia",
+  "family": "cpl",
+  "level": "k3",
+  "edf": 7.0,
+  "marginal_p_pointwise": 1.9e-05,
+  "marginal_p_simultaneous": 0.00101
+ },
+ {
+  "name": "Ostia",
+  "family": "cpl",
+  "level": "k5",
+  "edf": 11.0,
+  "marginal_p_pointwise": 0.050492,
+  "marginal_p_simultaneous": 0.089363
+ },
+ {
+  "name": "Ostia",
+  "family": "cpl",
+  "level": "k7",
+  "edf": 15.0,
+  "marginal_p_pointwise": 0.064077,
+  "marginal_p_simultaneous": 0.101414
+ },
+ {
+  "name": "Ostia",
+  "family": "spline",
+  "level": "edf5",
+  "edf": 5.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.001154
+ },
+ {
+  "name": "Ostia",
+  "family": "spline",
+  "level": "edf10",
+  "edf": 10.0,
+  "marginal_p_pointwise": 0.013426,
+  "marginal_p_simultaneous": 0.022182
+ },
+ {
+  "name": "Ostia",
+  "family": "spline",
+  "level": "edf20",
+  "edf": 20.0,
+  "marginal_p_pointwise": 0.038611,
+  "marginal_p_simultaneous": 0.074433
+ },
+ {
+  "name": "Ostia",
+  "family": "gp",
+  "level": "edf5",
+  "edf": 5.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.001
+ },
+ {
+  "name": "Ostia",
+  "family": "gp",
+  "level": "edf10",
+  "edf": 10.0,
+  "marginal_p_pointwise": 0.00101,
+  "marginal_p_simultaneous": 0.002687
+ },
+ {
+  "name": "Ostia",
+  "family": "gp",
+  "level": "edf20",
+  "edf": 20.0,
+  "marginal_p_pointwise": 0.06489,
+  "marginal_p_simultaneous": 0.079027
+ },
+ {
+  "name": "Mogontiacum",
+  "family": "cpl",
+  "level": "k2",
+  "edf": 5.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.001009
+ },
+ {
+  "name": "Mogontiacum",
+  "family": "cpl",
+  "level": "k3",
+  "edf": 7.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.001042
+ },
+ {
+  "name": "Mogontiacum",
+  "family": "cpl",
+  "level": "k5",
+  "edf": 11.0,
+  "marginal_p_pointwise": 7e-06,
+  "marginal_p_simultaneous": 0.010527
+ },
+ {
+  "name": "Mogontiacum",
+  "family": "cpl",
+  "level": "k7",
+  "edf": 15.0,
+  "marginal_p_pointwise": 0.000692,
+  "marginal_p_simultaneous": 0.160817
+ },
+ {
+  "name": "Mogontiacum",
+  "family": "spline",
+  "level": "edf5",
+  "edf": 5.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.001505
+ },
+ {
+  "name": "Mogontiacum",
+  "family": "spline",
+  "level": "edf10",
+  "edf": 10.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.051863
+ },
+ {
+  "name": "Mogontiacum",
+  "family": "spline",
+  "level": "edf20",
+  "edf": 20.0,
+  "marginal_p_pointwise": 0.001062,
+  "marginal_p_simultaneous": 0.069484
+ },
+ {
+  "name": "Mogontiacum",
+  "family": "gp",
+  "level": "edf5",
+  "edf": 5.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Mogontiacum",
+  "family": "gp",
+  "level": "edf10",
+  "edf": 10.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.001001
+ },
+ {
+  "name": "Mogontiacum",
+  "family": "gp",
+  "level": "edf20",
+  "edf": 20.0,
+  "marginal_p_pointwise": 0.005233,
+  "marginal_p_simultaneous": 0.001852
+ },
+ {
+  "name": "Aquileia",
+  "family": "cpl",
+  "level": "k2",
+  "edf": 5.0,
+  "marginal_p_pointwise": 0.001116,
+  "marginal_p_simultaneous": 0.005472
+ },
+ {
+  "name": "Aquileia",
+  "family": "cpl",
+  "level": "k3",
+  "edf": 7.0,
+  "marginal_p_pointwise": 0.003753,
+  "marginal_p_simultaneous": 0.008181
+ },
+ {
+  "name": "Aquileia",
+  "family": "cpl",
+  "level": "k5",
+  "edf": 11.0,
+  "marginal_p_pointwise": 0.00468,
+  "marginal_p_simultaneous": 0.00882
+ },
+ {
+  "name": "Aquileia",
+  "family": "cpl",
+  "level": "k7",
+  "edf": 15.0,
+  "marginal_p_pointwise": 0.00468,
+  "marginal_p_simultaneous": 0.011093
+ },
+ {
+  "name": "Aquileia",
+  "family": "spline",
+  "level": "edf5",
+  "edf": 5.0,
+  "marginal_p_pointwise": 0.004961,
+  "marginal_p_simultaneous": 0.006787
+ },
+ {
+  "name": "Aquileia",
+  "family": "spline",
+  "level": "edf10",
+  "edf": 10.0,
+  "marginal_p_pointwise": 0.005177,
+  "marginal_p_simultaneous": 0.009833
+ },
+ {
+  "name": "Aquileia",
+  "family": "spline",
+  "level": "edf20",
+  "edf": 20.0,
+  "marginal_p_pointwise": 0.005148,
+  "marginal_p_simultaneous": 0.011154
+ },
+ {
+  "name": "Aquileia",
+  "family": "gp",
+  "level": "edf5",
+  "edf": 5.0,
+  "marginal_p_pointwise": 0.005347,
+  "marginal_p_simultaneous": 0.011243
+ },
+ {
+  "name": "Aquileia",
+  "family": "gp",
+  "level": "edf10",
+  "edf": 10.0,
+  "marginal_p_pointwise": 0.006912,
+  "marginal_p_simultaneous": 0.013277
+ },
+ {
+  "name": "Aquileia",
+  "family": "gp",
+  "level": "edf20",
+  "edf": 20.0,
+  "marginal_p_pointwise": 0.007493,
+  "marginal_p_simultaneous": 0.015778
+ },
+ {
+  "name": "Moesia inferior",
+  "family": "cpl",
+  "level": "k2",
+  "edf": 5.0,
+  "marginal_p_pointwise": 3e-06,
+  "marginal_p_simultaneous": 0.010582
+ },
+ {
+  "name": "Moesia inferior",
+  "family": "cpl",
+  "level": "k3",
+  "edf": 7.0,
+  "marginal_p_pointwise": 2e-06,
+  "marginal_p_simultaneous": 0.01176
+ },
+ {
+  "name": "Moesia inferior",
+  "family": "cpl",
+  "level": "k5",
+  "edf": 11.0,
+  "marginal_p_pointwise": 6.5e-05,
+  "marginal_p_simultaneous": 0.060914
+ },
+ {
+  "name": "Moesia inferior",
+  "family": "cpl",
+  "level": "k7",
+  "edf": 15.0,
+  "marginal_p_pointwise": 0.00309,
+  "marginal_p_simultaneous": 0.069911
+ },
+ {
+  "name": "Moesia inferior",
+  "family": "spline",
+  "level": "edf5",
+  "edf": 5.0,
+  "marginal_p_pointwise": 9.6e-05,
+  "marginal_p_simultaneous": 0.026371
+ },
+ {
+  "name": "Moesia inferior",
+  "family": "spline",
+  "level": "edf10",
+  "edf": 10.0,
+  "marginal_p_pointwise": 0.002682,
+  "marginal_p_simultaneous": 0.058144
+ },
+ {
+  "name": "Moesia inferior",
+  "family": "spline",
+  "level": "edf20",
+  "edf": 20.0,
+  "marginal_p_pointwise": 0.008783,
+  "marginal_p_simultaneous": 0.110185
+ },
+ {
+  "name": "Moesia inferior",
+  "family": "gp",
+  "level": "edf5",
+  "edf": 5.0,
+  "marginal_p_pointwise": 1.5e-05,
+  "marginal_p_simultaneous": 0.003923
+ },
+ {
+  "name": "Moesia inferior",
+  "family": "gp",
+  "level": "edf10",
+  "edf": 10.0,
+  "marginal_p_pointwise": 0.000868,
+  "marginal_p_simultaneous": 0.01138
+ },
+ {
+  "name": "Moesia inferior",
+  "family": "gp",
+  "level": "edf20",
+  "edf": 20.0,
+  "marginal_p_pointwise": 0.012057,
+  "marginal_p_simultaneous": 0.055911
+ },
+ {
+  "name": "Lusitania",
+  "family": "cpl",
+  "level": "k2",
+  "edf": 5.0,
+  "marginal_p_pointwise": 6.1e-05,
+  "marginal_p_simultaneous": 0.003219
+ },
+ {
+  "name": "Lusitania",
+  "family": "cpl",
+  "level": "k3",
+  "edf": 7.0,
+  "marginal_p_pointwise": 8.7e-05,
+  "marginal_p_simultaneous": 0.0041
+ },
+ {
+  "name": "Lusitania",
+  "family": "cpl",
+  "level": "k5",
+  "edf": 11.0,
+  "marginal_p_pointwise": 0.01214,
+  "marginal_p_simultaneous": 0.033709
+ },
+ {
+  "name": "Lusitania",
+  "family": "cpl",
+  "level": "k7",
+  "edf": 15.0,
+  "marginal_p_pointwise": 0.024735,
+  "marginal_p_simultaneous": 0.05596
+ },
+ {
+  "name": "Lusitania",
+  "family": "spline",
+  "level": "edf5",
+  "edf": 5.0,
+  "marginal_p_pointwise": 3.7e-05,
+  "marginal_p_simultaneous": 0.002699
+ },
+ {
+  "name": "Lusitania",
+  "family": "spline",
+  "level": "edf10",
+  "edf": 10.0,
+  "marginal_p_pointwise": 0.0249,
+  "marginal_p_simultaneous": 0.035346
+ },
+ {
+  "name": "Lusitania",
+  "family": "spline",
+  "level": "edf20",
+  "edf": 20.0,
+  "marginal_p_pointwise": 0.034742,
+  "marginal_p_simultaneous": 0.059096
+ },
+ {
+  "name": "Lusitania",
+  "family": "gp",
+  "level": "edf5",
+  "edf": 5.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.001074
+ },
+ {
+  "name": "Lusitania",
+  "family": "gp",
+  "level": "edf10",
+  "edf": 10.0,
+  "marginal_p_pointwise": 0.027185,
+  "marginal_p_simultaneous": 0.03814
+ },
+ {
+  "name": "Lusitania",
+  "family": "gp",
+  "level": "edf20",
+  "edf": 20.0,
+  "marginal_p_pointwise": 0.04033,
+  "marginal_p_simultaneous": 0.068746
+ },
+ {
+  "name": "Italia (excl. Rome)",
+  "family": "cpl",
+  "level": "k2",
+  "edf": 5.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Italia (excl. Rome)",
+  "family": "cpl",
+  "level": "k3",
+  "edf": 7.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Italia (excl. Rome)",
+  "family": "cpl",
+  "level": "k5",
+  "edf": 11.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Italia (excl. Rome)",
+  "family": "cpl",
+  "level": "k7",
+  "edf": 15.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Italia (excl. Rome)",
+  "family": "spline",
+  "level": "edf5",
+  "edf": 5.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Italia (excl. Rome)",
+  "family": "spline",
+  "level": "edf10",
+  "edf": 10.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Italia (excl. Rome)",
+  "family": "spline",
+  "level": "edf20",
+  "edf": 20.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Italia (excl. Rome)",
+  "family": "gp",
+  "level": "edf5",
+  "edf": 5.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Italia (excl. Rome)",
+  "family": "gp",
+  "level": "edf10",
+  "edf": 10.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ },
+ {
+  "name": "Italia (excl. Rome)",
+  "family": "gp",
+  "level": "edf20",
+  "edf": 20.0,
+  "marginal_p_pointwise": 0.0,
+  "marginal_p_simultaneous": 0.000999
+ }
+]

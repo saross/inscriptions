@@ -1,0 +1,291 @@
+name,n_eff,named_scope,soft_annotated,reach_caveat,family,level,edf,fit_converged,marginal_p,marginal_p_sim,marginal_p_lambda1.2,antonine_p_deficit,crisis_p_deficit,antonine_rel_dep_med,crisis_rel_dep_med
+empire-aggregate,151361,True,False,False,cpl,k2,5.0,True,0.0,0.000999,0.0,1.0,1.0,-0.082576,-0.218329
+empire-aggregate,151361,True,False,False,cpl,k3,7.0,True,0.0,0.000999,0.0,1.0,1.0,-0.233827,-0.268724
+empire-aggregate,151361,True,False,False,cpl,k5,11.0,True,0.0,0.000999,0.0,0.174,1.0,0.071364,-0.031344
+empire-aggregate,151361,True,False,False,cpl,k7,15.0,True,0.0,0.000999,0.0,1.0,0.99975,-0.08665,0.012141
+empire-aggregate,151361,True,False,False,spline,edf5,5.0,True,0.0,0.000999,0.0,1.0,1.0,-0.189829,-0.302332
+empire-aggregate,151361,True,False,False,spline,edf10,10.0,True,0.0,0.000999,0.0,1.0,1.0,-0.086674,-0.175848
+empire-aggregate,151361,True,False,False,spline,edf20,20.0,True,0.0,0.000999,0.0,0.827875,1.0,0.042001,0.010659
+empire-aggregate,151361,True,False,False,gp,edf5,5.0,True,0.0,0.000999,0.0,1.0,1.0,-0.107757,-0.291842
+empire-aggregate,151361,True,False,False,gp,edf10,10.0,True,0.0,0.000999,0.0,0.999375,1.0,-0.075927,-0.048106
+empire-aggregate,151361,True,False,False,gp,edf20,20.0,True,0.0,0.000999,0.0,0.963375,0.999375,0.00207,0.017919
+latin-aggregate,101066,True,False,False,cpl,k2,5.0,True,0.0,0.000999,0.0,1.0,1.0,-0.239485,-0.11633
+latin-aggregate,101066,True,False,False,cpl,k3,7.0,True,0.0,0.000999,0.0,1.0,1.0,-0.428456,-0.133594
+latin-aggregate,101066,True,False,False,cpl,k5,11.0,True,0.0,0.000999,0.0,0.8475,0.99925,0.059616,0.059771
+latin-aggregate,101066,True,False,False,cpl,k7,15.0,True,0.0,0.000999,0.0,0.855,0.999875,0.032557,-0.011518
+latin-aggregate,101066,True,False,False,spline,edf5,5.0,True,0.0,0.000999,0.0,1.0,1.0,-0.353701,-0.266754
+latin-aggregate,101066,True,False,False,spline,edf10,10.0,True,0.0,0.000999,0.0,0.9515,1.0,-0.14952,-0.116517
+latin-aggregate,101066,True,False,False,spline,edf20,20.0,True,0.0,0.000999,0.0,0.67475,0.9985,0.059128,0.02878
+latin-aggregate,101066,True,False,False,gp,edf5,5.0,True,0.0,0.000999,0.0,1.0,1.0,-0.263494,-0.144059
+latin-aggregate,101066,True,False,False,gp,edf10,10.0,True,0.0,0.000999,0.0,0.90575,0.999875,-0.11529,0.018385
+latin-aggregate,101066,True,False,False,gp,edf20,20.0,True,0.0,0.000999,0.0,0.749,0.982,0.000842,0.030281
+Latium et Campania / Regio I,17037,False,False,False,cpl,k2,5.0,True,0.0,0.000999,0.0,0.813625,1.0,-0.382168,-0.8416
+Latium et Campania / Regio I,17037,False,False,False,cpl,k3,7.0,True,0.0,0.000999,0.0,0.914625,0.99975,-0.474874,-0.740474
+Latium et Campania / Regio I,17037,False,False,False,cpl,k5,11.0,True,0.0,0.000999,0.0,0.99125,0.770875,-0.640224,-0.146799
+Latium et Campania / Regio I,17037,False,False,False,cpl,k7,15.0,True,0.0,0.000999,0.0,0.99125,0.569375,-0.637201,0.274241
+Latium et Campania / Regio I,17037,False,False,False,spline,edf5,5.0,True,0.0,0.000999,0.0,0.965875,0.999,-0.563879,-0.686722
+Latium et Campania / Regio I,17037,False,False,False,spline,edf10,10.0,True,0.0,0.000999,0.0,0.923625,0.98725,-0.515189,-0.576495
+Latium et Campania / Regio I,17037,False,False,False,spline,edf20,20.0,True,0.0,0.000999,0.0,0.528,0.665625,-0.069303,0.170071
+Latium et Campania / Regio I,17037,False,False,False,gp,edf5,5.0,True,0.0,0.000999,0.0,0.857625,0.96375,-0.412981,-0.530722
+Latium et Campania / Regio I,17037,False,False,False,gp,edf10,10.0,True,0.0,0.000999,0.0,0.836875,0.761625,-0.400992,-0.113461
+Latium et Campania / Regio I,17037,False,False,False,gp,edf20,20.0,True,0.0,0.000999,0.0,0.460125,0.575,0.017687,0.016271
+Dalmatia,6325,False,False,False,cpl,k2,5.0,True,0.0,0.000999,0.0,0.455125,0.742875,0.048098,0.275365
+Dalmatia,6325,False,False,False,cpl,k3,7.0,True,0.0,0.000999,0.0,0.40775,0.836625,0.063757,0.178311
+Dalmatia,6325,False,False,False,cpl,k5,11.0,True,0.0,0.001018,0.0,0.448,0.733,0.017349,0.082253
+Dalmatia,6325,False,False,False,cpl,k7,15.0,True,0.0,0.001021,0.0,0.39725,0.8205,0.021107,-0.013942
+Dalmatia,6325,False,False,False,spline,edf5,5.0,True,0.0,0.001,0.0,0.663875,0.778875,-0.124849,0.086305
+Dalmatia,6325,False,False,False,spline,edf10,10.0,True,0.0,0.001029,0.0,0.45475,0.79525,0.002815,0.02007
+Dalmatia,6325,False,False,False,spline,edf20,20.0,True,0.0,0.001014,0.0,0.381625,0.758375,0.045252,0.033352
+Dalmatia,6325,False,False,False,gp,edf5,5.0,True,0.0,0.000999,0.0,0.52125,0.85975,-0.020934,0.0578
+Dalmatia,6325,False,False,False,gp,edf10,10.0,True,0.0,0.001018,0.0,0.40225,0.749375,0.032361,0.058541
+Dalmatia,6325,False,False,False,gp,edf20,20.0,True,0.0,0.001035,0.0,0.38175,0.72475,0.039973,0.041155
+Hispania citerior,6011,False,False,False,cpl,k2,5.0,True,0.0,0.000999,0.0,0.5835,0.765125,-0.181684,0.211067
+Hispania citerior,6011,False,False,False,cpl,k3,7.0,True,0.0,0.000999,0.0,0.98875,0.32325,-0.571031,0.548405
+Hispania citerior,6011,False,False,False,cpl,k5,11.0,True,0.0,0.000999,0.0,0.807875,0.6705,-0.365601,0.28004
+Hispania citerior,6011,False,False,False,cpl,k7,15.0,True,1e-06,0.001013,0.0,0.388125,0.897625,-0.026037,0.092277
+Hispania citerior,6011,False,False,False,spline,edf5,5.0,True,0.0,0.000999,0.0,0.977625,0.771,-0.539342,0.197876
+Hispania citerior,6011,False,False,False,spline,edf10,10.0,True,0.0,0.001011,0.0,0.534625,0.9295,-0.152,0.029203
+Hispania citerior,6011,False,False,False,spline,edf20,20.0,True,0.0,0.001028,0.0,0.273625,0.7905,0.172579,0.112179
+Hispania citerior,6011,False,False,False,gp,edf5,5.0,True,0.0,0.000999,0.0,0.871,0.80975,-0.422392,0.156998
+Hispania citerior,6011,False,False,False,gp,edf10,10.0,True,0.0,0.001,0.0,0.380375,0.844875,0.016629,0.118611
+Hispania citerior,6011,False,False,False,gp,edf20,20.0,True,0.0,0.001003,0.0,0.355625,0.763,0.041482,0.144153
+Germania superior,5570,False,False,False,cpl,k2,5.0,True,0.0,0.000999,0.0,0.26425,1.0,0.352524,-0.421488
+Germania superior,5570,False,False,False,cpl,k3,7.0,True,0.0,0.000999,0.0,0.619875,0.993375,0.023196,-0.241912
+Germania superior,5570,False,False,False,cpl,k5,11.0,True,0.0,0.001002,0.0,0.56775,0.4425,-0.090187,-0.029986
+Germania superior,5570,False,False,False,cpl,k7,15.0,True,0.0,0.002053,0.0,0.513125,0.424375,-0.03611,-0.001566
+Germania superior,5570,False,False,False,spline,edf5,5.0,True,0.0,0.000999,0.0,0.834625,0.935875,-0.208279,-0.318383
+Germania superior,5570,False,False,False,spline,edf10,10.0,True,0.0,0.001126,0.0,0.45425,0.52025,-0.066982,-0.110338
+Germania superior,5570,False,False,False,spline,edf20,20.0,True,1.2e-05,0.001977,0.0,0.358375,0.41025,-0.0559,0.071677
+Germania superior,5570,False,False,False,gp,edf5,5.0,True,0.0,0.000999,0.0,0.669875,0.68125,-0.037452,-0.081779
+Germania superior,5570,False,False,False,gp,edf10,10.0,True,0.0,0.000999,0.0,0.45625,0.426375,-0.048317,-0.045112
+Germania superior,5570,False,False,False,gp,edf20,20.0,True,6.5e-05,0.001051,2.3e-05,0.385,0.44325,-0.046616,-0.034388
+Venetia et Histria / Regio X,5560,False,False,False,cpl,k2,5.0,True,5.9e-05,0.001647,9.6e-05,0.09125,0.96825,0.086465,-0.308538
+Venetia et Histria / Regio X,5560,False,False,False,cpl,k3,7.0,True,9.7e-05,0.001999,4.3e-05,0.168875,0.9225,0.033401,-0.255047
+Venetia et Histria / Regio X,5560,False,False,False,cpl,k5,11.0,True,0.001275,0.008766,0.000134,0.10975,0.413625,0.05679,-0.045271
+Venetia et Histria / Regio X,5560,False,False,False,cpl,k7,15.0,True,0.0034,0.016775,0.000276,0.121625,0.424625,0.050509,-0.036893
+Venetia et Histria / Regio X,5560,False,False,False,spline,edf5,5.0,True,0.000209,0.002069,0.000258,0.13075,0.932375,0.061809,-0.274323
+Venetia et Histria / Regio X,5560,False,False,False,spline,edf10,10.0,True,0.007278,0.016268,0.001189,0.123375,0.603375,0.056042,-0.113956
+Venetia et Histria / Regio X,5560,False,False,False,spline,edf20,20.0,True,0.007627,0.022857,0.000379,0.132875,0.27175,0.04783,0.023383
+Venetia et Histria / Regio X,5560,False,False,False,gp,edf5,5.0,True,7.9e-05,0.001354,5.4e-05,0.123125,0.84425,0.061809,-0.220944
+Venetia et Histria / Regio X,5560,False,False,False,gp,edf10,10.0,True,0.006529,0.016843,0.000637,0.0925,0.4225,0.093465,-0.015968
+Venetia et Histria / Regio X,5560,False,False,False,gp,edf20,20.0,True,0.010536,0.030717,0.000588,0.167125,0.280375,0.016583,0.009347
+Dacia,4718,False,False,False,cpl,k2,5.0,True,0.0,0.000999,0.0,0.148625,1.0,0.014487,-0.163373
+Dacia,4718,False,False,False,cpl,k3,7.0,True,0.0,0.002121,0.0,0.999875,1.0,-0.291956,0.27005
+Dacia,4718,False,False,False,cpl,k5,11.0,True,0.0,0.02581,0.0,0.43175,1.0,-0.078374,0.341151
+Dacia,4718,False,False,False,cpl,k7,15.0,True,0.0,0.001072,0.0,0.39675,1.0,-0.086791,0.353012
+Dacia,4718,False,False,False,spline,edf5,5.0,True,0.0,0.000999,0.0,0.996125,1.0,-0.246129,-0.061974
+Dacia,4718,False,False,False,spline,edf10,10.0,True,0.0,0.003021,0.0,0.1485,0.998125,0.105177,-0.045282
+Dacia,4718,False,False,False,spline,edf20,20.0,True,0.0,0.000999,0.0,0.262375,0.926875,0.090225,0.119968
+Dacia,4718,False,False,False,gp,edf5,5.0,True,0.0,0.000999,0.0,1.0,0.829125,-0.463969,1.089413
+Dacia,4718,False,False,False,gp,edf10,10.0,True,0.0,0.000999,0.0,0.238375,0.99625,-0.022745,0.32822
+Dacia,4718,False,False,False,gp,edf20,20.0,True,0.0,0.000999,0.0,0.094625,0.607375,0.051579,0.142331
+Britannia,4407,False,True,False,cpl,k2,5.0,True,0.0,0.001005,0.0,0.9995,0.0235,-0.332194,0.424812
+Britannia,4407,False,True,False,cpl,k3,7.0,True,0.0,0.013106,0.0,0.999375,0.035125,-0.320865,0.410159
+Britannia,4407,False,True,False,cpl,k5,11.0,True,0.0,0.031134,0.0,0.463,0.383625,-0.084839,0.020235
+Britannia,4407,False,True,False,cpl,k7,15.0,True,0.026769,0.234904,0.003226,0.51225,0.3605,-0.105328,0.028375
+Britannia,4407,False,True,False,spline,edf5,5.0,True,0.0,0.000999,0.0,0.99775,0.2205,-0.291032,0.150275
+Britannia,4407,False,True,False,spline,edf10,10.0,True,0.0,0.01026,0.0,0.24925,0.450625,-0.03089,0.010274
+Britannia,4407,False,True,False,spline,edf20,20.0,True,0.00027,0.00553,2.5e-05,0.082125,0.42425,0.041426,0.006717
+Britannia,4407,False,True,False,gp,edf5,5.0,True,0.0,0.000999,0.0,1.0,0.130625,-0.377783,0.309704
+Britannia,4407,False,True,False,gp,edf10,10.0,True,7e-06,0.000999,1e-06,0.7255,0.587,-0.124603,-0.005379
+Britannia,4407,False,True,False,gp,edf20,20.0,True,0.005702,0.001062,0.000809,0.16625,0.37125,-0.000433,0.032348
+Pannonia superior,4174,False,False,False,cpl,k2,5.0,True,0.0,0.000999,0.0,0.734125,0.89425,-0.102707,0.01022
+Pannonia superior,4174,False,False,False,cpl,k3,7.0,True,0.0,0.002188,0.0,0.96025,0.779625,-0.267613,-0.091172
+Pannonia superior,4174,False,False,False,cpl,k5,11.0,True,0.000451,0.013936,1.9e-05,0.269125,0.7825,0.016419,-0.102207
+Pannonia superior,4174,False,False,False,cpl,k7,15.0,True,0.001888,0.017854,6.7e-05,0.269125,0.786875,0.016419,-0.098949
+Pannonia superior,4174,False,False,False,spline,edf5,5.0,True,0.0,0.00117,0.0,0.933,0.94325,-0.232376,-0.170613
+Pannonia superior,4174,False,False,False,spline,edf10,10.0,True,0.000549,0.013064,2.7e-05,0.334375,0.70725,-0.012847,-0.07031
+Pannonia superior,4174,False,False,False,spline,edf20,20.0,True,0.003685,0.028086,0.000139,0.213875,0.527375,0.05388,0.005184
+Pannonia superior,4174,False,False,False,gp,edf5,5.0,True,0.0,0.001002,0.0,0.982375,0.80675,-0.287769,-0.06586
+Pannonia superior,4174,False,False,False,gp,edf10,10.0,True,0.000565,0.005726,0.00011,0.320625,0.683625,-0.003194,-0.055007
+Pannonia superior,4174,False,False,False,gp,edf20,20.0,True,0.004864,0.025239,0.000252,0.216375,0.529625,0.037093,0.011275
+Samnium / Regio IV,3952,False,False,False,cpl,k2,5.0,True,4e-06,0.001473,9e-06,0.6435,0.10725,-0.344656,0.21986
+Samnium / Regio IV,3952,False,False,False,cpl,k3,7.0,True,0.000137,0.001879,1.2e-05,0.65925,0.414375,-0.344656,-0.007513
+Samnium / Regio IV,3952,False,False,False,cpl,k5,11.0,True,0.000393,0.003518,1.7e-05,0.47825,0.2095,-0.230227,0.042049
+Samnium / Regio IV,3952,False,False,False,cpl,k7,15.0,True,0.001587,0.008132,0.000122,0.130375,0.28675,0.155716,-0.026273
+Samnium / Regio IV,3952,False,False,False,spline,edf5,5.0,True,0.0,0.001074,0.0,0.69325,0.415375,-0.368081,-0.034869
+Samnium / Regio IV,3952,False,False,False,spline,edf10,10.0,True,0.002383,0.006904,0.000152,0.41025,0.33825,-0.20958,-0.06745
+Samnium / Regio IV,3952,False,False,False,spline,edf20,20.0,True,0.003054,0.011904,0.00014,0.146625,0.187375,0.08128,0.039694
+Samnium / Regio IV,3952,False,False,False,gp,edf5,5.0,True,0.0,0.001001,0.0,0.655875,0.491875,-0.33703,-0.076092
+Samnium / Regio IV,3952,False,False,False,gp,edf10,10.0,True,0.00235,0.009222,0.00011,0.275375,0.29475,-0.100791,-0.032346
+Samnium / Regio IV,3952,False,False,False,gp,edf20,20.0,True,0.003791,0.012218,0.000194,0.187,0.220375,0.018783,0.007456
+Africa proconsularis,2967,False,False,False,cpl,k2,5.0,True,0.0,0.000999,0.0,0.22425,1.0,0.094606,0.279954
+Africa proconsularis,2967,False,False,False,cpl,k3,7.0,True,0.0,0.000999,0.0,0.1435,1.0,0.18782,0.204879
+Africa proconsularis,2967,False,False,False,cpl,k5,11.0,True,0.0,0.000999,0.0,0.278625,1.0,0.020263,0.047069
+Africa proconsularis,2967,False,False,False,cpl,k7,15.0,True,1e-05,0.001747,0.0,0.322,0.5515,0.002572,0.087061
+Africa proconsularis,2967,False,False,False,spline,edf5,5.0,True,0.0,0.000999,0.0,0.688625,1.0,-0.158299,0.055561
+Africa proconsularis,2967,False,False,False,spline,edf10,10.0,True,0.0,0.000999,0.0,0.253875,1.0,0.045373,-0.034052
+Africa proconsularis,2967,False,False,False,spline,edf20,20.0,True,0.0,0.000999,0.0,0.115625,1.0,0.277462,-0.08287
+Africa proconsularis,2967,False,False,False,gp,edf5,5.0,True,0.0,0.000999,0.0,0.36475,0.999875,0.001348,0.289785
+Africa proconsularis,2967,False,False,False,gp,edf10,10.0,True,0.0,0.000999,0.0,0.267625,0.99775,0.026856,0.351361
+Africa proconsularis,2967,False,False,False,gp,edf20,20.0,True,5.2e-05,0.000999,2e-06,0.212625,0.995875,0.105648,0.106945
+Germania inferior,3261,False,False,False,cpl,k2,5.0,True,0.0,0.000999,0.0,0.9955,0.940125,-0.521289,-0.45884
+Germania inferior,3261,False,False,False,cpl,k3,7.0,True,0.0,0.000999,0.0,0.929,0.9895,-0.377256,-0.539346
+Germania inferior,3261,False,False,False,cpl,k5,11.0,True,0.0,0.001027,0.0,0.157625,0.330875,0.303559,0.462654
+Germania inferior,3261,False,False,False,cpl,k7,15.0,True,1e-06,0.001198,0.0,0.418125,0.248,-0.019662,0.606513
+Germania inferior,3261,False,False,False,spline,edf5,5.0,True,0.0,0.000999,0.0,0.991375,0.9875,-0.505292,-0.559163
+Germania inferior,3261,False,False,False,spline,edf10,10.0,True,0.0,0.001001,0.0,0.31575,0.905625,0.009375,-0.232025
+Germania inferior,3261,False,False,False,spline,edf20,20.0,True,0.0,0.001601,0.0,0.281875,0.262125,0.05402,0.341573
+Germania inferior,3261,False,False,False,gp,edf5,5.0,True,0.0,0.000999,0.0,0.9645,0.66675,-0.405685,-0.262246
+Germania inferior,3261,False,False,False,gp,edf10,10.0,True,0.0,0.000999,0.0,0.2235,0.6865,0.145766,-0.064646
+Germania inferior,3261,False,False,False,gp,edf20,20.0,True,2e-06,0.001012,0.0,0.384,0.4305,-0.06026,0.040619
+Apulia et Calabria / Regio II,3012,False,False,False,cpl,k2,5.0,True,0.0,0.000999,0.0,0.283375,0.9885,0.099227,-0.578134
+Apulia et Calabria / Regio II,3012,False,False,False,cpl,k3,7.0,True,0.0,0.000999,0.0,0.538,0.965625,-0.20164,-0.537937
+Apulia et Calabria / Regio II,3012,False,False,False,cpl,k5,11.0,True,0.0,0.001033,0.0,0.44675,0.930875,-0.109185,-0.502268
+Apulia et Calabria / Regio II,3012,False,False,False,cpl,k7,15.0,True,0.0,0.001033,0.0,0.365125,0.96925,0.000747,-0.56381
+Apulia et Calabria / Regio II,3012,False,False,False,spline,edf5,5.0,True,0.0,0.000999,0.0,0.553375,0.943625,-0.214132,-0.533532
+Apulia et Calabria / Regio II,3012,False,False,False,spline,edf10,10.0,True,9e-06,0.001067,0.0,0.460625,0.644625,-0.114409,-0.349157
+Apulia et Calabria / Regio II,3012,False,False,False,spline,edf20,20.0,True,7e-06,0.001373,5e-06,0.33575,0.266875,0.005448,0.154573
+Apulia et Calabria / Regio II,3012,False,False,False,gp,edf5,5.0,True,0.0,0.000999,0.0,0.45375,0.871125,-0.124799,-0.451368
+Apulia et Calabria / Regio II,3012,False,False,False,gp,edf10,10.0,True,8e-06,0.001035,0.0,0.322375,0.3875,0.000747,-0.072279
+Apulia et Calabria / Regio II,3012,False,False,False,gp,edf20,20.0,True,3.9e-05,0.00117,2e-06,0.336375,0.288375,0.005448,-0.027385
+Pannonia inferior,2812,False,False,False,cpl,k2,5.0,True,0.0,0.002114,0.0,0.029875,1.0,0.360654,-0.48689
+Pannonia inferior,2812,False,False,False,cpl,k3,7.0,True,0.0,0.098254,2e-06,0.485125,0.474375,-0.051269,0.120915
+Pannonia inferior,2812,False,False,False,cpl,k5,11.0,True,0.003441,0.10084,0.000593,0.2235,0.4505,0.030147,0.120671
+Pannonia inferior,2812,False,False,False,cpl,k7,15.0,True,0.001011,0.232038,0.000108,0.337875,0.410875,-0.03726,0.010679
+Pannonia inferior,2812,False,False,False,spline,edf5,5.0,True,0.0,0.006583,0.0,0.70725,0.998125,-0.145997,-0.343198
+Pannonia inferior,2812,False,False,False,spline,edf10,10.0,True,0.004676,0.160589,0.000825,0.317625,0.567625,-0.021587,-0.049642
+Pannonia inferior,2812,False,False,False,spline,edf20,20.0,True,0.01665,0.173152,0.002322,0.443,0.324,-0.072451,0.032559
+Pannonia inferior,2812,False,False,False,gp,edf5,5.0,True,0.0,0.000999,0.0,0.93225,0.965375,-0.19746,-0.206361
+Pannonia inferior,2812,False,False,False,gp,edf10,10.0,True,0.002211,0.01303,0.000542,0.216625,0.579125,0.002422,-0.053508
+Pannonia inferior,2812,False,False,False,gp,edf20,20.0,True,0.014217,0.048787,0.00249,0.3475,0.372875,-0.036497,0.021051
+Numidia,2727,False,False,False,cpl,k2,5.0,True,0.0,0.000999,0.0,0.0385,1.0,0.953049,-0.740597
+Numidia,2727,False,False,False,cpl,k3,7.0,True,0.0,0.001013,0.0,0.9785,0.99,0.33098,0.060113
+Numidia,2727,False,False,False,cpl,k5,11.0,True,1e-06,0.008622,0.0,0.290125,0.980125,0.000294,0.564851
+Numidia,2727,False,False,False,cpl,k7,15.0,True,0.001566,0.035564,0.000164,0.820375,0.418375,-0.101263,-0.028501
+Numidia,2727,False,False,False,spline,edf5,5.0,True,0.0,0.001005,0.0,0.999875,1.0,0.115857,-0.567376
+Numidia,2727,False,False,False,spline,edf10,10.0,True,1e-06,0.001663,0.0,0.9785,0.99625,0.189262,-0.151235
+Numidia,2727,False,False,False,spline,edf20,20.0,True,0.000215,0.00666,3.6e-05,0.971375,0.872875,0.046557,0.050827
+Numidia,2727,False,False,False,gp,edf5,5.0,True,0.0,0.000999,0.0,0.872875,0.999875,0.874616,-0.426212
+Numidia,2727,False,False,False,gp,edf10,10.0,True,1.8e-05,0.000999,2.2e-05,0.766875,0.919625,0.43744,-0.093058
+Numidia,2727,False,False,False,gp,edf20,20.0,True,0.000263,0.001201,2.7e-05,0.843625,0.83675,0.234405,-0.019499
+Etruria / Regio VII,2426,False,False,False,cpl,k2,5.0,True,0.0,0.000999,0.0,0.484125,0.648375,-0.321902,0.10977
+Etruria / Regio VII,2426,False,False,False,cpl,k3,7.0,True,0.0,0.000999,0.0,0.484125,0.501875,-0.2882,0.158433
+Etruria / Regio VII,2426,False,False,False,cpl,k5,11.0,True,0.0,0.000999,0.0,0.343375,0.423125,0.0677,0.8602
+Etruria / Regio VII,2426,False,False,False,cpl,k7,15.0,True,0.0,0.000999,0.0,0.591375,0.447375,-0.389886,0.146695
+Etruria / Regio VII,2426,False,False,False,spline,edf5,5.0,True,0.0,0.000999,0.0,0.591375,0.5515,-0.43965,0.088174
+Etruria / Regio VII,2426,False,False,False,spline,edf10,10.0,True,0.0,0.000999,0.0,0.512,0.493625,-0.271257,0.631246
+Etruria / Regio VII,2426,False,False,False,spline,edf20,20.0,True,0.0,0.000999,0.0,0.0,0.410875,0.4236,0.509849
+Etruria / Regio VII,2426,False,False,False,gp,edf5,5.0,True,0.0,0.000999,0.0,0.536,0.463625,-0.354953,0.223741
+Etruria / Regio VII,2426,False,False,False,gp,edf10,10.0,True,0.0,0.000999,0.0,0.343375,0.5095,-0.090472,0.438123
+Etruria / Regio VII,2426,False,False,False,gp,edf20,20.0,True,0.0,0.000999,0.0,0.343375,0.410875,0.0677,0.295491
+Umbria / Regio VI,2573,False,False,False,cpl,k2,5.0,True,0.0,0.000999,0.0,0.509125,0.1475,-0.242395,0.139142
+Umbria / Regio VI,2573,False,False,False,cpl,k3,7.0,True,0.0,0.001696,0.0,0.286,0.410875,-0.099822,0.089165
+Umbria / Regio VI,2573,False,False,False,cpl,k5,11.0,True,0.002415,0.011463,0.000263,0.590375,0.234875,-0.308493,0.047738
+Umbria / Regio VI,2573,False,False,False,cpl,k7,15.0,True,0.00588,0.01879,0.000476,0.336625,0.3425,-0.131223,-0.008692
+Umbria / Regio VI,2573,False,False,False,spline,edf5,5.0,True,0.0,0.000999,0.0,0.559125,0.248,-0.26517,0.095991
+Umbria / Regio VI,2573,False,False,False,spline,edf10,10.0,True,0.003581,0.011478,0.000388,0.3655,0.251125,-0.158864,0.051925
+Umbria / Regio VI,2573,False,False,False,spline,edf20,20.0,True,0.011304,0.027348,0.000819,0.15525,0.1885,0.003251,0.050765
+Umbria / Regio VI,2573,False,False,False,gp,edf5,5.0,True,0.0,0.000999,0.0,0.594375,0.28525,-0.276019,0.049955
+Umbria / Regio VI,2573,False,False,False,gp,edf10,10.0,True,0.004154,0.008142,0.000562,0.229,0.273375,-0.100759,0.042106
+Umbria / Regio VI,2573,False,False,False,gp,edf20,20.0,True,0.01949,0.034813,0.001558,0.191125,0.230875,-0.01578,0.008809
+Noricum,2600,False,False,False,cpl,k2,5.0,True,0.029845,0.06778,0.005291,0.119875,0.308,0.056393,0.141558
+Noricum,2600,False,False,False,cpl,k3,7.0,True,0.03861,0.081327,0.006709,0.216625,0.3635,0.005352,0.170062
+Noricum,2600,False,False,False,cpl,k5,11.0,True,0.077286,0.107969,0.01352,0.120125,0.26525,0.059952,0.008353
+Noricum,2600,False,False,False,cpl,k7,15.0,True,0.084883,0.117466,0.01463,0.105375,0.208375,0.064639,0.041929
+Noricum,2600,False,False,False,spline,edf5,5.0,True,0.003346,0.011919,0.001161,0.252625,0.965375,-0.011792,-0.306207
+Noricum,2600,False,False,False,spline,edf10,10.0,True,0.055918,0.081403,0.011235,0.235,0.512,0.001441,-0.049014
+Noricum,2600,False,False,False,spline,edf20,20.0,True,0.086535,0.121668,0.015014,0.171125,0.232375,0.009358,0.033052
+Noricum,2600,False,False,False,gp,edf5,5.0,True,0.001345,0.002166,0.000495,0.203375,0.82675,0.023042,-0.230879
+Noricum,2600,False,False,False,gp,edf10,10.0,True,0.042001,0.068285,0.008743,0.3295,0.437625,-0.038615,-0.033985
+Noricum,2600,False,False,False,gp,edf20,20.0,True,0.110549,0.140763,0.019604,0.219375,0.27675,0.000802,-0.006621
+Baetica,2449,False,False,False,cpl,k2,5.0,True,0.0,0.001015,0.0,0.962125,0.153625,-0.169694,0.321378
+Baetica,2449,False,False,False,cpl,k3,7.0,True,0.0,0.001088,0.0,0.96025,0.054875,-0.131497,0.306856
+Baetica,2449,False,False,False,cpl,k5,11.0,True,0.0,0.001834,0.0,0.423375,0.34825,0.123576,0.206112
+Baetica,2449,False,False,False,cpl,k7,15.0,True,0.000943,0.015455,9.3e-05,0.4215,0.34825,0.136133,0.206112
+Baetica,2449,False,False,False,spline,edf5,5.0,True,0.0,0.001085,0.0,0.937625,0.99925,-0.085963,-0.485937
+Baetica,2449,False,False,False,spline,edf10,10.0,True,0.000169,0.007698,2.4e-05,0.531125,0.886375,0.069446,-0.161067
+Baetica,2449,False,False,False,spline,edf20,20.0,True,0.014954,0.0446,0.001308,0.238625,0.167875,0.066483,0.086782
+Baetica,2449,False,False,False,gp,edf5,5.0,True,0.0,0.000999,0.0,0.82875,0.956875,0.038968,-0.370749
+Baetica,2449,False,False,False,gp,edf10,10.0,True,0.000208,0.003772,4e-05,0.266625,0.600875,0.178373,-0.038709
+Baetica,2449,False,False,False,gp,edf20,20.0,True,0.010671,0.034503,0.001096,0.2795,0.241625,0.05472,-0.014158
+Transpadana / Regio XI,2201,False,False,False,cpl,k2,5.0,True,0.0,0.001168,0.0,0.562625,0.26225,-0.292619,0.385226
+Transpadana / Regio XI,2201,False,False,False,cpl,k3,7.0,True,0.0,0.001061,0.0,0.48775,0.308625,-0.248362,0.247219
+Transpadana / Regio XI,2201,False,False,False,cpl,k5,11.0,True,5e-06,0.001248,0.0,0.384125,0.3415,-0.099445,0.137692
+Transpadana / Regio XI,2201,False,False,False,cpl,k7,15.0,True,9e-06,0.001443,0.0,0.345,0.370875,0.026652,0.094398
+Transpadana / Regio XI,2201,False,False,False,spline,edf5,5.0,True,0.0,0.001184,0.0,0.511125,0.333,-0.278356,0.15712
+Transpadana / Regio XI,2201,False,False,False,spline,edf10,10.0,True,4.5e-05,0.001628,2e-06,0.345,0.377875,-0.026142,0.110329
+Transpadana / Regio XI,2201,False,False,False,spline,edf20,20.0,True,2.6e-05,0.001671,0.0,0.313,0.35175,0.055832,0.143663
+Transpadana / Regio XI,2201,False,False,False,gp,edf5,5.0,True,0.0,0.001012,0.0,0.48775,0.37375,-0.233719,0.070835
+Transpadana / Regio XI,2201,False,False,False,gp,edf10,10.0,True,6.6e-05,0.001607,2e-06,0.313,0.370875,0.026652,0.083177
+Transpadana / Regio XI,2201,False,False,False,gp,edf20,20.0,True,7.3e-05,0.001968,0.0,0.345,0.362625,-0.001982,0.051157
+Pompeii,4247,False,False,False,cpl,k2,5.0,True,0.0,0.005487,0.0,0.0,0.0,nan,nan
+Pompeii,4247,False,False,False,cpl,k3,7.0,False,0.0,0.000999,0.0,0.0,0.0,nan,nan
+Pompeii,4247,False,False,False,cpl,k5,11.0,False,0.0,0.000999,0.0,0.0,0.0,nan,nan
+Pompeii,4247,False,False,False,cpl,k7,15.0,True,0.0,0.082416,0.0,0.0,0.0,nan,nan
+Pompeii,4247,False,False,False,spline,edf5,5.0,True,0.0,0.000999,0.0,nan,nan,nan,nan
+Pompeii,4247,False,False,False,spline,edf10,10.0,True,0.0,0.00199,0.0,nan,nan,nan,nan
+Pompeii,4247,False,False,False,spline,edf20,21.993,True,0.0,0.000999,0.0,1.0,0.0,-0.999541,-0.999958
+Pompeii,4247,False,False,False,gp,edf5,5.0,True,0.0,0.000999,0.0,0.0,0.0,nan,nan
+Pompeii,4247,False,False,False,gp,edf10,10.0,True,0.0,0.000999,0.0,0.0,0.0,nan,nan
+Pompeii,4247,False,False,False,gp,edf20,20.0,True,0.0,0.000999,0.0,0.0,0.0,nan,nan
+Salona,2890,False,False,False,cpl,k2,5.0,True,0.0,0.000999,0.0,0.454875,0.712625,0.233462,0.144901
+Salona,2890,False,False,False,cpl,k3,7.0,True,0.0,0.000999,0.0,0.60775,0.607625,-0.147891,0.321079
+Salona,2890,False,False,False,cpl,k5,11.0,True,0.0,0.000999,0.0,0.479375,0.6045,0.105641,0.31528
+Salona,2890,False,False,False,cpl,k7,15.0,True,0.0,0.000999,0.0,0.4705,0.60975,0.116114,0.288835
+Salona,2890,False,False,False,spline,edf5,5.0,True,0.0,0.000999,0.0,0.573875,0.72325,-0.08557,-0.036282
+Salona,2890,False,False,False,spline,edf10,10.0,True,0.0,0.000999,0.0,0.481375,0.6365,0.08257,0.224105
+Salona,2890,False,False,False,spline,edf20,20.0,True,0.0,0.000999,0.0,0.4685,0.606375,0.128975,0.295982
+Salona,2890,False,False,False,gp,edf5,5.0,True,0.0,0.000999,0.0,0.526125,0.688625,0.039462,0.101947
+Salona,2890,False,False,False,gp,edf10,10.0,True,0.0,0.000999,0.0,0.487125,0.6325,0.08257,0.245943
+Salona,2890,False,False,False,gp,edf20,20.0,True,0.0,0.000999,0.0,0.472,0.635875,0.10938,0.268639
+Ostia,2316,False,False,False,cpl,k2,5.0,True,0.0,0.001012,0.0,0.90975,0.82675,-0.28429,-0.380281
+Ostia,2316,False,False,False,cpl,k3,7.0,True,1.9e-05,0.00101,7e-06,0.90475,0.836375,-0.28429,-0.38493
+Ostia,2316,False,False,False,cpl,k5,11.0,True,0.050492,0.089363,0.007216,0.098,0.21125,0.121736,0.165659
+Ostia,2316,False,False,False,cpl,k7,15.0,True,0.064077,0.101414,0.008902,0.098,0.178375,0.12702,0.085004
+Ostia,2316,False,False,False,spline,edf5,5.0,True,0.0,0.001154,0.0,0.995,0.743875,-0.39486,-0.355758
+Ostia,2316,False,False,False,spline,edf10,10.0,True,0.013426,0.022182,0.003048,0.65775,0.25225,-0.195733,-0.06692
+Ostia,2316,False,False,False,spline,edf20,20.0,True,0.038611,0.074433,0.006572,0.188,0.178375,0.034264,0.043822
+Ostia,2316,False,False,False,gp,edf5,5.0,True,0.0,0.001,0.0,0.99675,0.41275,-0.408674,-0.219509
+Ostia,2316,False,False,False,gp,edf10,10.0,True,0.00101,0.002687,0.000262,0.82325,0.291,-0.248438,-0.065641
+Ostia,2316,False,False,False,gp,edf20,20.0,True,0.06489,0.079027,0.011863,0.22025,0.210875,0.018414,-0.034495
+Mogontiacum,2325,False,False,False,cpl,k2,5.0,True,0.0,0.001009,0.0,0.0,0.0,1.017932,-0.52979
+Mogontiacum,2325,False,False,False,cpl,k3,7.0,True,0.0,0.001042,0.0,0.015625,0.0,0.10654,-0.446224
+Mogontiacum,2325,False,False,False,cpl,k5,11.0,True,7e-06,0.010527,6e-06,0.016125,0.0,0.016657,0.170877
+Mogontiacum,2325,False,False,False,cpl,k7,15.0,True,0.000692,0.160817,0.000352,0.016125,0.0,0.10654,0.026485
+Mogontiacum,2325,False,False,False,spline,edf5,5.0,True,0.0,0.001505,0.0,0.016125,0.0,0.10654,-0.350147
+Mogontiacum,2325,False,False,False,spline,edf10,10.0,True,0.0,0.051863,7e-06,0.004625,0.0,0.113394,-0.170597
+Mogontiacum,2325,False,False,False,spline,edf20,20.0,True,0.001062,0.069484,0.000368,0.018625,0.0,0.113394,0.407298
+Mogontiacum,2325,False,False,False,gp,edf5,5.0,True,0.0,0.000999,0.0,0.016125,0.0,0.10654,-0.473349
+Mogontiacum,2325,False,False,False,gp,edf10,10.0,True,0.0,0.001001,0.0,0.016125,0.0,-0.116746,-0.346101
+Mogontiacum,2325,False,False,False,gp,edf20,20.0,True,0.005233,0.001852,0.002191,0.027875,0.0,-0.116746,-0.389555
+Aquileia,1885,False,False,False,cpl,k2,5.0,True,0.001116,0.005472,0.000203,0.425375,0.38075,-0.270776,0.004737
+Aquileia,1885,False,False,False,cpl,k3,7.0,True,0.003753,0.008181,0.000425,0.221625,0.394875,0.026905,-0.001422
+Aquileia,1885,False,False,False,cpl,k5,11.0,True,0.00468,0.00882,0.000511,0.221625,0.386625,0.026905,-0.003704
+Aquileia,1885,False,False,False,cpl,k7,15.0,True,0.00468,0.011093,0.000378,0.221625,0.39,-0.005604,-0.000492
+Aquileia,1885,False,False,False,spline,edf5,5.0,True,0.004961,0.006787,0.000769,0.2835,0.3775,-0.08847,0.017197
+Aquileia,1885,False,False,False,spline,edf10,10.0,True,0.005177,0.009833,0.000604,0.221625,0.370625,0.026905,0.013861
+Aquileia,1885,False,False,False,spline,edf20,20.0,True,0.005148,0.011154,0.000339,0.221375,0.332875,0.059333,0.032818
+Aquileia,1885,False,False,False,gp,edf5,5.0,True,0.005347,0.011243,0.001156,0.2835,0.3825,-0.158588,-0.003834
+Aquileia,1885,False,False,False,gp,edf10,10.0,True,0.006912,0.013277,0.000778,0.221625,0.360875,0.026905,0.006341
+Aquileia,1885,False,False,False,gp,edf20,20.0,True,0.007493,0.015778,0.000715,0.221625,0.341625,-0.005604,0.026748
+Moesia inferior,1728,False,True,False,cpl,k2,5.0,True,3e-06,0.010582,3e-06,0.875375,0.9855,-0.300345,-0.130126
+Moesia inferior,1728,False,True,False,cpl,k3,7.0,True,2e-06,0.01176,1e-06,0.8695,0.98675,-0.305731,-0.128672
+Moesia inferior,1728,False,True,False,cpl,k5,11.0,True,6.5e-05,0.060914,1.4e-05,0.76025,0.403,-0.228512,0.058973
+Moesia inferior,1728,False,True,False,cpl,k7,15.0,True,0.00309,0.069911,0.000432,0.624,0.45725,-0.184925,0.056504
+Moesia inferior,1728,False,True,False,spline,edf5,5.0,True,9.6e-05,0.026371,2.5e-05,0.837125,0.99625,-0.271671,-0.232857
+Moesia inferior,1728,False,True,False,spline,edf10,10.0,True,0.002682,0.058144,0.000455,0.58325,0.809875,-0.164939,-0.091145
+Moesia inferior,1728,False,True,False,spline,edf20,20.0,True,0.008783,0.110185,0.00099,0.388375,0.48575,-0.058133,0.095534
+Moesia inferior,1728,False,True,False,gp,edf5,5.0,True,1.5e-05,0.003923,1e-06,0.913875,0.98775,-0.324396,-0.164149
+Moesia inferior,1728,False,True,False,gp,edf10,10.0,True,0.000868,0.01138,0.000202,0.5305,0.780875,-0.165051,-0.00805
+Moesia inferior,1728,False,True,False,gp,edf20,20.0,True,0.012057,0.055911,0.001801,0.2995,0.439875,-0.024225,0.065689
+Lusitania,1577,False,False,True,cpl,k2,5.0,True,6.1e-05,0.003219,8.4e-05,0.327,0.88675,-0.038411,-0.421854
+Lusitania,1577,False,False,True,cpl,k3,7.0,True,8.7e-05,0.0041,5.4e-05,0.341375,0.872875,-0.038411,-0.405706
+Lusitania,1577,False,False,True,cpl,k5,11.0,True,0.01214,0.033709,0.001504,0.1845,0.15525,0.052667,-0.032394
+Lusitania,1577,False,False,True,cpl,k7,15.0,True,0.024735,0.05596,0.002591,0.171375,0.149875,0.045404,-0.032394
+Lusitania,1577,False,False,True,spline,edf5,5.0,True,3.7e-05,0.002699,2.7e-05,0.41325,0.874375,-0.122735,-0.425288
+Lusitania,1577,False,False,True,spline,edf10,10.0,True,0.0249,0.035346,0.004578,0.18375,0.35625,0.037282,-0.181154
+Lusitania,1577,False,False,True,spline,edf20,20.0,True,0.034742,0.059096,0.003268,0.210125,0.072875,0.023485,0.078119
+Lusitania,1577,False,False,True,gp,edf5,5.0,True,0.0,0.001074,0.0,0.4785,0.631625,-0.129098,-0.311185
+Lusitania,1577,False,False,True,gp,edf10,10.0,True,0.027185,0.03814,0.004154,0.16325,0.239125,0.069796,-0.034942
+Lusitania,1577,False,False,True,gp,edf20,20.0,True,0.04033,0.068746,0.004035,0.228375,0.13475,-0.005774,0.018474
+Italia (excl. Rome),40499,False,False,False,cpl,k2,5.0,True,0.0,0.000999,0.0,0.977875,1.0,-0.677462,-0.577038
+Italia (excl. Rome),40499,False,False,False,cpl,k3,7.0,False,0.0,0.000999,0.0,0.9895,1.0,-0.71995,-0.47116
+Italia (excl. Rome),40499,False,False,False,cpl,k5,11.0,True,0.0,0.000999,0.0,0.9935,1.0,-0.740303,-0.448634
+Italia (excl. Rome),40499,False,False,False,cpl,k7,15.0,True,0.0,0.000999,0.0,0.8825,1.0,-0.481119,-0.553986
+Italia (excl. Rome),40499,False,False,False,spline,edf5,5.0,True,0.0,0.000999,0.0,0.99425,1.0,-0.748215,-0.449957
+Italia (excl. Rome),40499,False,False,False,spline,edf10,10.0,True,0.0,0.000999,0.0,0.95375,0.999625,-0.625667,-0.394979
+Italia (excl. Rome),40499,False,False,False,spline,edf20,20.0,True,0.0,0.000999,0.0,0.569375,0.9205,-0.042728,0.005635
+Italia (excl. Rome),40499,False,False,False,gp,edf5,5.0,True,0.0,0.000999,0.0,0.944625,0.999875,-0.593035,-0.343736
+Italia (excl. Rome),40499,False,False,False,gp,edf10,10.0,True,0.0,0.000999,0.0,0.79475,0.972875,-0.371659,-0.005862
+Italia (excl. Rome),40499,False,False,False,gp,edf20,20.0,True,0.0,0.000999,0.0,0.52775,0.89075,0.039067,0.03748

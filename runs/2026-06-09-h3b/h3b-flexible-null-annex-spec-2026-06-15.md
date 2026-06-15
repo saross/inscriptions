@@ -1,10 +1,15 @@
 # H3b flexible-null robustness annex — build-ready spec (2026-06-15)
 
-**Status:** SIGNED OFF (Shawn, 2026-06-15) — build launched. **Execution on
-sapphire** (Shawn's instruction: do not run on amd-tower; offload compute to
-sapphire). The "local-only" in §9 meant *no API / no cluster*; sapphire via SSH is
-the compute box. Build (code authoring) is local; the run executes on sapphire.
-**Date:** 2026-06-15.
+**Status:** EXECUTED (2026-06-15) on sapphire — part (a) complete; see
+`outputs/flexnull/ANNEX-REPORT.md`. **Verdict: NO-GO on baorista-for-the-global-test**
+— the sweet-spot scan (§6.3) returns 0 hits across all 290 unit×fit combinations.
+The global saturation is robust to null flexibility (CPL/spline/GP, edf 5→20), to the
+de-powered simultaneous-coverage statistic, and to effective-N thinning to ≈1,500, so
+it is structural null-misspecification, not large-N over-power. The probe-window
+P(deficit) is confirmed (and shown robust) as THE H3b deliverable; **part (b) baorista
+is not warranted for the global test** (optional probe-sharpening only).
+Signed off by Shawn 2026-06-15; executed on sapphire per his instruction (not
+amd-tower). The "local-only" in §9 meant *no API / no cluster*. **Date:** 2026-06-15.
 **Author:** Claude Code (Opus 4.8, 1M context) on Shawn Ross's brief.
 **Run dir:** `runs/2026-06-09-h3b/` (annex outputs under `outputs/flexnull/`).
 **UK/Australian English; Oxford comma.**
