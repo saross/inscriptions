@@ -3202,3 +3202,159 @@ results, commit `35f7c71`; first-pass preserved at `48cb5d5`);
 `osf-amendment-04`, `a5-1`, `a5-4`, `a5-7`, `robustness-annex`,
 `preregistered-robustness`, `replaces-hybrid`, `obs-90`, `obs-89`, `obs-86`,
 `HYBRID-PILOT-FINDINGS`, `theta-rederivation`, `THETA-SWEEP-VERDICT`, `REFIT-VERDICT`
+
+## Obs 92 — 2026-06-15 [METHODOLOGY / RESULT]: H3b draw-wise base run — the global Timpson envelope test saturates on real data (large-N over-power); probe-window deficit posteriors are the deliverable
+
+### The finding
+
+The uncertainty-propagating H3b deviation test pushes 8,000 genuine-SPA posterior draws
+per unit (from the cc-library adopted-θ refit, Obs 90–91) through a featureless-null
+permutation envelope built once per unit. The global Timpson marginal-p is **0 (exponential
+null) / ≤ 0.04 (CPL-3 null)** for all **29/29** units under both nulls. This is not a
+bug: a faithfulness self-test confirms the draw-wise engine reproduces the library
+`forward_envelope_test` / `permutation_envelope_test` bit-for-bit (both nulls), and the
+2026-06-09 median-based draft (`REPORT.md`) reached the identical conclusion independently.
+
+**The mechanism is the documented large-N over-power of the basic SPD/Timpson envelope
+test.** At n_eff = 1,577–151,361 the pointwise Monte Carlo envelope is Poisson-tight, and
+the real Roman epigraphic curve is humped and jagged — far richer in structure than a
+monotone exponential or a 3-knot CPL. Essentially the whole curve reads as "deviation":
+the exponential null is degenerate on the empire-aggregate (77/80 bins out-of-envelope).
+Phase-1 calibrated detection at N ≈ 1,600 by injecting a single event onto a matching
+smooth baseline; on real data the null is misspecified relative to the true smooth shape, so
+baseline misfit + large N produces global saturation in a regime the calibration never
+probed.
+
+**The null construction is the CPL-3 fit to the observed corrected curve** (the standard
+SPD self-referential null; Shawn-confirmed D1, 2026-06-15). Fitting CPL-3 to the raw corpus
+instead conflates convention-removal reshaping with genuine events and saturates the probe
+windows too, rendering them uninformative (tested; this is the rejected alternative).
+
+**The informative deliverable is the probe-window deficit posteriors (CPL null, λ=1.0).**
+Two complementary readings per window: net signed windowed departure from the smooth trend
+(negative = net deficit) and P(deficit) = posterior probability that ≥ 1 window bin lies
+below the envelope. Prereg-named scopes are clean and historically coherent:
+
+| scope | Ant net dep. | Ant P(deficit) | Cri net dep. | Cri P(deficit) |
+|---|---|---|---|---|
+| empire-aggregate ◆ | **−23%** | **1.00** | **−27%** | **1.00** |
+| latin-aggregate ◆ | **−43%** | **1.00** | **−13%** | **1.00** |
+
+Both named scopes (empire-aggregate is the Antonine primary; latin-aggregate the Western-
+Empire-provincial Crisis scope, Decision 36) show high-probability deficits at their
+respective windows, consistent with Antonine-plague and Third-Century-Crisis decline
+narratives. By net departure, **20/29** units show a net Antonine deficit and **14/29**
+a net Crisis deficit. By P(deficit) ≥ 0.5: **17/29** (Antonine) and **18/29** (Crisis).
+
+The coverage-inflation sensitivity (λ=1.2, §A5.5) moves only borderline units and
+leaves saturated/near-zero ones flat; it is a sensitivity, not the headline reading.
+
+H3b carries no Holm-corrected confirmatory family (prereg; Decision 15); all readings are
+descriptive/exploratory. All per-unit rows other than the two named scopes are
+exploratory-extra (broader than the prereg's named scope; scope confirmed 2026-06-14).
+
+### The test
+
+**Stage A.** `run_refit.py --emit-draws` re-ran the seeded 29-unit cc-library refit
+(adopted-θ: θ_conv 0.930, θ_gen 0.025) on sapphire (5.8 min, 0 errors) and persisted the
+genuine-SPA posterior (8,000 draws/unit) previously discarded. Provenance gate PASS 29/29:
+α Δ ≤ 1.8 × 10⁻³, SPA Δ ≤ 9.3 × 10⁻⁴.
+
+**Stage B.** `h3b_drawwise.py` built the featureless-null MC envelope once per unit × null,
+evaluated all 8,000 draws against it, and computed: marginal-p + P(deviation) + per-draw
+spread, λ=1.0/1.2 coverage sensitivity, two probe windows (signed + one-sided), Holm
+(descriptive), soft-annotation and reachability flags, and raw-vs-corrected global test.
+`run_h3b_drawwise.py` orchestrates; `make_h3b_report.py` produces the DRAFT report.
+
+### Why this matters
+
+The saturation finding is methodologically important in its own right: it shows that the
+basic SPD/Timpson global test is uninformative at corpus sizes typical of this project.
+The probe-window P(deficit) is the correct H3b deliverable — it tests the locally signed
+departure at each named window relative to the curve's own smooth trend, which is exactly
+what the prereg names.
+
+The draw-wise architecture propagates genuine uncertainty (8,000 posterior draws per unit
+rather than a single posterior-median SPA) through the entire test pipeline, making
+P(deficit) a properly Bayesian summary. This is the improvement over the 2026-06-09
+median-based draft.
+
+The cc-library adopted-θ refit (Obs 90–91) is the upstream source: the corrected α's and
+calibrated θ priors feed directly into the draws used here. Any future sensitivity analysis
+(annex items below) inherits this validated foundation.
+
+### Caveats / methodological notes
+
+**Global saturation.** The global marginal-p is an uninformative gate at these corpus
+sizes — it always signals "there is structure", which is trivially true for a humped
+epigraphic curve. The deliverable is the probe window, not the global p.
+
+**Soft-annotated units.** Moesia inferior and Britannia are θ-sensitive (Obs 91; α
+ranges 0.159 and 0.140 across the θ-prior sweep). Their probe readings are flagged `*`
+and should be read with additional caution; they are not excluded from the results.
+
+**Reachability caveat.** Lusitania (n_eff 1,577) falls below the CPL-3 province
+reachability floor (n_eff < 1,618); its results carry a `‡` flag.
+
+**Coverage caveat.** cc-library posterior 95 % CIs are ~1σ-optimistic (Obs 89–90);
+propagated deviations carry this caveat; λ=1.2 is the preregistered sensitivity.
+
+**CPL-3 null fitting.** Fitting to the raw corpus (instead of the observed corrected
+curve) saturates the probe windows and is demonstrably wrong — the correction itself
+reshapes the whole curve. The adopted observed-corrected construction is the standard
+self-referential SPD null and produces differentiated, informative probe readings.
+
+**Deferred robustness annex (PI decision D2, 2026-06-15 — a new session with its own
+spec).** (a) A more-flexible smooth null (CPL k=5–7 / penalised spline / Gaussian process
+fit to the observed curve) plus an effective-N / reduced-significance variant to test
+whether a better-specified null de-saturates the global test at all. (b) The baorista
+Bayesian-aoristic null if warranted (`runs/2026-05-03-baorista-install/`; full LIRE-width
+revalidation needed). Neither changes the base deliverable; both are independent post-hoc
+sensitivities.
+
+### Related observations and artefacts
+
+**Obs 91** (θ_gen re-derived 0.155 → 0.025; all frontier units rise to track
+classification-implied α; the adopted-θ refit whose draws this test consumes): the direct
+upstream source of the 8,000 draws/unit. **Obs 90** (cc-library production refit — 10/10
+frontier units pinned; first-pass θ_gen 0.155; this Obs uses the corrected second-pass at
+commit `35f7c71`): the production refit superseded by the adopted-θ pass. **Obs 89**
+(cc-library full recovery grid — CLEAN PASS; the validated model authorising production):
+the gate result whose validated structure the draw-wise posterior propagates. **Obs 82**
+(H3b preregistered exploratory; 2026-06-09 median-based draft run; exponential null
+saturated; Antonine deficit in both aggregates): the median-draft precursor that this
+draw-wise run supersedes; the saturation conclusion is replicated here. **Obs 23** (real
+LIRE has structure beyond CPL k=4 — H3b deviation signal is real; forward-fit CPL shows
+saturated FP at n ≥ 2,500): the earlier finding that anticipated exactly this regime of
+global saturation on real humped data.
+
+**Artefacts**: `runs/2026-06-09-h3b/REPORT-drawwise-2026-06-15.md` (the finalised base
+run report; commit `881aafd`); `runs/2026-06-09-h3b/DECISION-NEEDED-null-construction-2026-06-14.md`
+(the diagnosis note recording the D1–D3 decisions and the saturation mechanism);
+`runs/2026-06-09-h3b/code/h3b_drawwise.py` (the Stage B engine);
+`runs/2026-06-09-h3b/code/run_h3b_drawwise.py` (the run script);
+`runs/2026-06-09-h3b/outputs/drawwise/deviations-table.csv` (per-unit × null × λ numbers);
+commit `881aafd`.
+
+### Findable later
+
+`H3b`, `deviation-detection`, `Timpson`, `SPD`, `envelope-test`, `large-N-over-power`,
+`saturation`, `global-test-saturated`, `p-zero-all-29`, `probe-window`, `P-deficit`,
+`Antonine`, `Antonine-plague`, `Crisis-of-the-Third-Century`, `CPL-null`,
+`CPL-fit-to-observed-corrected`, `self-referential-null`, `draw-wise`,
+`uncertainty-propagation`, `8000-draws`, `genuine-SPA-posterior`, `n-eff-1577-151361`,
+`77-of-80-bins`, `exponential-degenerate`, `featureless-null`, `permutation-envelope`,
+`faithfulness-self-test`, `bit-for-bit`, `forward-envelope-test`,
+`permutation-envelope-test`, `empire-aggregate-minus-23`, `empire-aggregate-minus-27`,
+`latin-aggregate-minus-43`, `latin-aggregate-minus-13`, `20-of-29-Antonine`,
+`14-of-29-Crisis`, `named-scopes`, `exploratory-extra`, `coverage-inflation`,
+`lambda-1-2`, `soft-annotated`, `theta-sensitive`, `reachability-floor-1618`,
+`Lusitania-1577`, `Moesia-inferior-soft`, `Britannia-soft`,
+`deferred-robustness-annex`, `flexible-null`, `CPL-k5-7`, `GP-null`, `baorista`,
+`baorista-null`, `effective-N-thinning`, `reduced-significance`, `decision-D1`,
+`decision-D2`, `decision-D3`, `2026-06-15-confirmed`, `stage-A`, `stage-B`,
+`provenance-gate`, `h3b-drawwise`, `run-h3b-drawwise`, `make-h3b-report`,
+`REPORT-drawwise-2026-06-15`, `DECISION-NEEDED-null-construction`,
+`deviations-table-csv`, `881aafd`, `obs-82`, `obs-89`, `obs-90`, `obs-91`, `obs-23`,
+`2026-05-03-baorista-install`, `phase-1-calibration`, `N-approx-1600`,
+`injected-event`, `matching-baseline`, `null-misspecified`, `baseline-misfit`
