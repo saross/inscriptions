@@ -1,5 +1,12 @@
 # H3b draw-wise — interim findings + decisions needed (2026-06-14, overnight)
 
+> **RESOLVED 2026-06-15 (Shawn).** **D1** — confirmed: CPL fits the **observed
+> corrected** curve. **D2** — accept the global saturation now, report the
+> probe-window P(deficit) as the deliverable; the large-N correction + baorista null
+> are a **deferred robustness annex** (run after this base). **D3** — keep the exp
+> null as a labelled saturated cross-check. The finalised base run is
+> `REPORT-drawwise-2026-06-15.md`. This note is retained as the diagnosis record.
+
 **For Shawn, morning review.** The draw-wise H3b pipeline is built, verified, and
 run end-to-end. It works — but the headline result runs into a known limitation of
 the Timpson global test on real data, and resolving it well needs two methodological

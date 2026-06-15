@@ -1,0 +1,350 @@
+[
+ {
+  "name": "empire-aggregate",
+  "null": "exp",
+  "corrected_marginal_p": 0.0,
+  "raw_global_p": 0.0
+ },
+ {
+  "name": "empire-aggregate",
+  "null": "cpl",
+  "corrected_marginal_p": 0.0,
+  "raw_global_p": 0.0
+ },
+ {
+  "name": "latin-aggregate",
+  "null": "exp",
+  "corrected_marginal_p": 0.0,
+  "raw_global_p": 0.0
+ },
+ {
+  "name": "latin-aggregate",
+  "null": "cpl",
+  "corrected_marginal_p": 0.0,
+  "raw_global_p": 0.0
+ },
+ {
+  "name": "Latium et Campania / Regio I",
+  "null": "exp",
+  "corrected_marginal_p": 0.0,
+  "raw_global_p": 0.0
+ },
+ {
+  "name": "Latium et Campania / Regio I",
+  "null": "cpl",
+  "corrected_marginal_p": 0.0,
+  "raw_global_p": 0.0
+ },
+ {
+  "name": "Dalmatia",
+  "null": "exp",
+  "corrected_marginal_p": 0.0,
+  "raw_global_p": 0.0
+ },
+ {
+  "name": "Dalmatia",
+  "null": "cpl",
+  "corrected_marginal_p": 0.0,
+  "raw_global_p": 0.0
+ },
+ {
+  "name": "Hispania citerior",
+  "null": "exp",
+  "corrected_marginal_p": 0.0,
+  "raw_global_p": 0.0
+ },
+ {
+  "name": "Hispania citerior",
+  "null": "cpl",
+  "corrected_marginal_p": 0.0,
+  "raw_global_p": 0.0
+ },
+ {
+  "name": "Germania superior",
+  "null": "exp",
+  "corrected_marginal_p": 0.0,
+  "raw_global_p": 0.0
+ },
+ {
+  "name": "Germania superior",
+  "null": "cpl",
+  "corrected_marginal_p": 0.0,
+  "raw_global_p": 0.0
+ },
+ {
+  "name": "Venetia et Histria / Regio X",
+  "null": "exp",
+  "corrected_marginal_p": 0.0,
+  "raw_global_p": 0.0
+ },
+ {
+  "name": "Venetia et Histria / Regio X",
+  "null": "cpl",
+  "corrected_marginal_p": 0.0001,
+  "raw_global_p": 0.0
+ },
+ {
+  "name": "Dacia",
+  "null": "exp",
+  "corrected_marginal_p": 0.0,
+  "raw_global_p": 0.0
+ },
+ {
+  "name": "Dacia",
+  "null": "cpl",
+  "corrected_marginal_p": 0.0,
+  "raw_global_p": 0.0
+ },
+ {
+  "name": "Britannia",
+  "null": "exp",
+  "corrected_marginal_p": 0.0,
+  "raw_global_p": 0.0
+ },
+ {
+  "name": "Britannia",
+  "null": "cpl",
+  "corrected_marginal_p": 0.0,
+  "raw_global_p": 0.0
+ },
+ {
+  "name": "Pannonia superior",
+  "null": "exp",
+  "corrected_marginal_p": 0.0,
+  "raw_global_p": 0.0
+ },
+ {
+  "name": "Pannonia superior",
+  "null": "cpl",
+  "corrected_marginal_p": 0.0,
+  "raw_global_p": 0.0
+ },
+ {
+  "name": "Samnium / Regio IV",
+  "null": "exp",
+  "corrected_marginal_p": 0.0,
+  "raw_global_p": 0.0
+ },
+ {
+  "name": "Samnium / Regio IV",
+  "null": "cpl",
+  "corrected_marginal_p": 0.0001,
+  "raw_global_p": 0.0
+ },
+ {
+  "name": "Africa proconsularis",
+  "null": "exp",
+  "corrected_marginal_p": 0.0,
+  "raw_global_p": 0.0
+ },
+ {
+  "name": "Africa proconsularis",
+  "null": "cpl",
+  "corrected_marginal_p": 0.0,
+  "raw_global_p": 0.0
+ },
+ {
+  "name": "Germania inferior",
+  "null": "exp",
+  "corrected_marginal_p": 0.0,
+  "raw_global_p": 0.0
+ },
+ {
+  "name": "Germania inferior",
+  "null": "cpl",
+  "corrected_marginal_p": 0.0,
+  "raw_global_p": 0.0
+ },
+ {
+  "name": "Apulia et Calabria / Regio II",
+  "null": "exp",
+  "corrected_marginal_p": 0.0,
+  "raw_global_p": 0.0
+ },
+ {
+  "name": "Apulia et Calabria / Regio II",
+  "null": "cpl",
+  "corrected_marginal_p": 0.0,
+  "raw_global_p": 0.0
+ },
+ {
+  "name": "Pannonia inferior",
+  "null": "exp",
+  "corrected_marginal_p": 0.0,
+  "raw_global_p": 0.0
+ },
+ {
+  "name": "Pannonia inferior",
+  "null": "cpl",
+  "corrected_marginal_p": 0.0,
+  "raw_global_p": 0.0
+ },
+ {
+  "name": "Numidia",
+  "null": "exp",
+  "corrected_marginal_p": 0.0,
+  "raw_global_p": 0.0
+ },
+ {
+  "name": "Numidia",
+  "null": "cpl",
+  "corrected_marginal_p": 0.0,
+  "raw_global_p": 0.0
+ },
+ {
+  "name": "Etruria / Regio VII",
+  "null": "exp",
+  "corrected_marginal_p": 0.0,
+  "raw_global_p": 0.377
+ },
+ {
+  "name": "Etruria / Regio VII",
+  "null": "cpl",
+  "corrected_marginal_p": 0.0,
+  "raw_global_p": 0.0
+ },
+ {
+  "name": "Umbria / Regio VI",
+  "null": "exp",
+  "corrected_marginal_p": 0.0,
+  "raw_global_p": 0.0
+ },
+ {
+  "name": "Umbria / Regio VI",
+  "null": "cpl",
+  "corrected_marginal_p": 0.0,
+  "raw_global_p": 0.0
+ },
+ {
+  "name": "Noricum",
+  "null": "exp",
+  "corrected_marginal_p": 0.0,
+  "raw_global_p": 0.0
+ },
+ {
+  "name": "Noricum",
+  "null": "cpl",
+  "corrected_marginal_p": 0.0405,
+  "raw_global_p": 0.0
+ },
+ {
+  "name": "Baetica",
+  "null": "exp",
+  "corrected_marginal_p": 0.0,
+  "raw_global_p": 0.0
+ },
+ {
+  "name": "Baetica",
+  "null": "cpl",
+  "corrected_marginal_p": 0.0,
+  "raw_global_p": 0.0
+ },
+ {
+  "name": "Transpadana / Regio XI",
+  "null": "exp",
+  "corrected_marginal_p": 0.0,
+  "raw_global_p": 0.0
+ },
+ {
+  "name": "Transpadana / Regio XI",
+  "null": "cpl",
+  "corrected_marginal_p": 0.0,
+  "raw_global_p": 0.0
+ },
+ {
+  "name": "Pompeii",
+  "null": "exp",
+  "corrected_marginal_p": 0.0,
+  "raw_global_p": 0.0
+ },
+ {
+  "name": "Pompeii",
+  "null": "cpl",
+  "corrected_marginal_p": 0.0,
+  "raw_global_p": 0.0
+ },
+ {
+  "name": "Salona",
+  "null": "exp",
+  "corrected_marginal_p": 0.0,
+  "raw_global_p": 0.0
+ },
+ {
+  "name": "Salona",
+  "null": "cpl",
+  "corrected_marginal_p": 0.0,
+  "raw_global_p": 0.0
+ },
+ {
+  "name": "Ostia",
+  "null": "exp",
+  "corrected_marginal_p": 0.0,
+  "raw_global_p": 0.0
+ },
+ {
+  "name": "Ostia",
+  "null": "cpl",
+  "corrected_marginal_p": 0.0,
+  "raw_global_p": 0.0
+ },
+ {
+  "name": "Mogontiacum",
+  "null": "exp",
+  "corrected_marginal_p": 0.0,
+  "raw_global_p": 0.0
+ },
+ {
+  "name": "Mogontiacum",
+  "null": "cpl",
+  "corrected_marginal_p": 0.0,
+  "raw_global_p": 0.0
+ },
+ {
+  "name": "Aquileia",
+  "null": "exp",
+  "corrected_marginal_p": 0.0002,
+  "raw_global_p": 0.0
+ },
+ {
+  "name": "Aquileia",
+  "null": "cpl",
+  "corrected_marginal_p": 0.0038,
+  "raw_global_p": 0.0
+ },
+ {
+  "name": "Moesia inferior",
+  "null": "exp",
+  "corrected_marginal_p": 0.0,
+  "raw_global_p": 0.0
+ },
+ {
+  "name": "Moesia inferior",
+  "null": "cpl",
+  "corrected_marginal_p": 0.0,
+  "raw_global_p": 0.0
+ },
+ {
+  "name": "Lusitania",
+  "null": "exp",
+  "corrected_marginal_p": 0.0,
+  "raw_global_p": 0.0
+ },
+ {
+  "name": "Lusitania",
+  "null": "cpl",
+  "corrected_marginal_p": 0.0001,
+  "raw_global_p": 0.0
+ },
+ {
+  "name": "Italia (excl. Rome)",
+  "null": "exp",
+  "corrected_marginal_p": 0.0,
+  "raw_global_p": 0.0
+ },
+ {
+  "name": "Italia (excl. Rome)",
+  "null": "cpl",
+  "corrected_marginal_p": 0.0,
+  "raw_global_p": 0.0
+ }
+]

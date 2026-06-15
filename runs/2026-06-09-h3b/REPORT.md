@@ -1,5 +1,11 @@
 # H3b deviation-detection — DRAFT results
 
+> **⚠ SUPERSEDED (2026-06-15) by `REPORT-drawwise-2026-06-15.md`.** This 2026-06-09
+> draft used the posterior-MEDIAN corrected SPA from the reversed h2.1-launch-prep
+> run and an identifiable-set restriction. The current result propagates the
+> genuine-SPA **posterior** (draw-wise) from the cc-library refit under OSF
+> Amendment 04 §A5.6. Retained as the dated record of the 2026-06-09 design.
+
 # ⚠ DRAFT — FOR REVIEW ⚠
 
 **Nothing in this report is confirmatory.** It is a draft pass produced to exercise
