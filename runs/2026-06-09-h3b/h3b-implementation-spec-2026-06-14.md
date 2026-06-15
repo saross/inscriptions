@@ -1,8 +1,14 @@
 # H3b deviation-detection — build-ready implementation + run spec (2026-06-14)
 
-**Status:** BUILD-READY — FOR SHAWN'S SIGN-OFF. Supersedes the 2026-06-09 draft
-(`h3b-spec.md`), which it cross-references; nothing here launches until Shawn
-signs the pre-launch gate (§8).
+**Status:** EXECUTED (2026-06-15) — base run complete, see `REPORT-drawwise-2026-06-15.md`.
+Supersedes the 2026-06-09 draft (`h3b-spec.md`). **Post-run resolutions:** the §1
+table's **OQ-5 ("null fit to raw")** was corrected at run time — for the CPL null,
+fit-to-raw saturates the probe windows; the informative null fits the **observed
+corrected** curve (D1, standard SPD), per
+`DECISION-NEEDED-null-construction-2026-06-14.md`. The global test is reported as a
+saturated gate (D2; large-N over-power) with the probe-window P(deficit) as the
+deliverable; exp is a labelled saturated cross-check (D3); the large-N correction +
+baorista null are a deferred robustness annex.
 **Date:** 2026-06-14.
 **Author:** Claude Code (Opus 4.8, 1M context) on Shawn Ross's brief.
 **Run dir:** `runs/2026-06-09-h3b/`.
