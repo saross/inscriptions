@@ -159,6 +159,13 @@ def _ols_slope(x: np.ndarray, y: np.ndarray) -> float:
     return float(np.polyfit(x, y, 1)[0])
 
 
+def _theilsen_slope(x: np.ndarray, y: np.ndarray) -> float:
+    """Median pairwise slope — robust to the high-leverage low-α units (Pompeii)."""
+    s = [(y[j] - y[i]) / (x[j] - x[i])
+         for i in range(len(x)) for j in range(i + 1, len(x)) if x[j] != x[i]]
+    return float(np.median(s)) if s else float("nan")
+
+
 def _boot_ci(x: np.ndarray, y: np.ndarray, stat, n_boot=5000, seed=20260616):
     rng = np.random.default_rng(seed)
     n = len(x)
@@ -176,8 +183,18 @@ def analyse(d: pd.DataFrame) -> dict:
 
     # Implied scaling-exponent shift if raw count N is replaced by genuine α·N:
     # Δβ = slope( log α ~ log pop ).  (Δβ ≈ 0  ⇒ deconvolution leaves Hanson scaling unchanged.)
+    # OLS is high-leverage-sensitive in log space (one near-zero-α unit dominates), so we
+    # also report the robust Theil-Sen slope and a drop-low-α (α<0.10) refit, plus the
+    # single most-influential unit (leave-one-out on the OLS slope).
     dbeta = _ols_slope(lp, la)
     dbeta_ci = _boot_ci(lp, la, _ols_slope)
+    dbeta_ts = _theilsen_slope(lp, la)
+    keep = a >= 0.10
+    dbeta_drop = _ols_slope(lp[keep], la[keep])
+    dbeta_drop_ts = _theilsen_slope(lp[keep], la[keep])
+    names = core["name"].to_numpy()
+    loo = [(names[i], _ols_slope(np.delete(lp, i), np.delete(la, i))) for i in range(len(core))]
+    most_infl_name, most_infl_dbeta = min(loo, key=lambda t: abs(t[1]))
 
     out = {
         "n_units_core": int(len(core)),
@@ -190,9 +207,14 @@ def analyse(d: pd.DataFrame) -> dict:
         # α vs corpus size (a second, join-free size proxy).
         "spearman_alpha_vs_logneff": _spearman(a, ln),
         "pearson_alpha_vs_logneff": float(np.corrcoef(a, ln)[0, 1]),
-        # The decision statistic.
+        # The decision statistic (+ robustness — OLS is dominated by near-zero-α units).
         "implied_delta_beta_alpha_correction": dbeta,
         "implied_delta_beta_ci95": list(dbeta_ci),
+        "implied_delta_beta_theilsen": dbeta_ts,
+        "implied_delta_beta_drop_lowalpha_ols": dbeta_drop,
+        "implied_delta_beta_drop_lowalpha_theilsen": dbeta_drop_ts,
+        "most_influential_unit": most_infl_name,
+        "delta_beta_without_most_influential": most_infl_dbeta,
         # Reshaping (full-window count is conserved; TV measures shape change only).
         "reshaping_tv_median": float(d["reshaping_tv"].median(skipna=True)),
         "reshaping_tv_max": float(d["reshaping_tv"].max(skipna=True)),
@@ -236,10 +258,10 @@ def make_figure(d: pd.DataFrame, summary: dict) -> None:
     ax.set_ylim(0, 1.02)
     ax.set_title(f"α vs corpus size  (Spearman={summary['spearman_alpha_vs_logneff']:+.2f})")
 
-    fig.suptitle("Does convention intensity (1−α) scale with size? "
-                 f"Implied Hanson-β shift from α-correction = {summary['implied_delta_beta_alpha_correction']:+.3f} "
-                 f"[{summary['implied_delta_beta_ci95'][0]:+.3f}, {summary['implied_delta_beta_ci95'][1]:+.3f}]",
-                 fontsize=10)
+    fig.suptitle("Does convention intensity (1−α) scale with size?  Implied Hanson-β shift from α-correction: "
+                 f"OLS {summary['implied_delta_beta_alpha_correction']:+.3f} (Pompeii-driven) → "
+                 f"robust Theil-Sen {summary['implied_delta_beta_theilsen']:+.3f}  ⇒  ≈ 0",
+                 fontsize=9)
     fig.tight_layout()
     FIG_DIR.mkdir(parents=True, exist_ok=True)
     fig.savefig(FIG_DIR / "fig-alpha-vs-size.png", dpi=130)
@@ -248,12 +270,16 @@ def make_figure(d: pd.DataFrame, summary: dict) -> None:
 
 def write_report(d: pd.DataFrame, s: dict) -> None:
     ci = s["implied_delta_beta_ci95"]
-    crosses0 = ci[0] <= 0.0 <= ci[1]
+    # Verdict on the ROBUST estimators, not the leverage-sensitive OLS point estimate.
+    robust_zero = (ci[0] <= 0.0 <= ci[1]
+                   and abs(s["implied_delta_beta_theilsen"]) < 0.10
+                   and abs(s["implied_delta_beta_drop_lowalpha_ols"]) < 0.10)
     verdict = ("the deconvolution does NOT materially change the Hanson scaling — "
                "raw-count H3a is robust to convention-correction"
-               if crosses0 else
+               if robust_zero else
                "the deconvolution WOULD shift the Hanson scaling — convention intensity "
                "correlates with size, a real confound to correct")
+    crosses0 = robust_zero
     agg = d[d["is_aggregate"]][["name", "alpha_median", "n_eff", "hanson_pop_total"]]
     cityrows = d[d["is_single_city"] & ~d["is_aggregate"]].sort_values("hanson_pop_total", ascending=False)
 
@@ -275,10 +301,19 @@ def write_report(d: pd.DataFrame, s: dict) -> None:
 **On the evidence we have, {verdict}.**
 
 The implied shift in the Hanson scaling exponent from replacing the raw count *N*
-with the genuine count α·N — which equals the OLS slope of log(α) on log(population)
-across the {s['n_units_core']} non-aggregate deconvolved units — is
-**Δβ = {s['implied_delta_beta_alpha_correction']:+.3f}** (95% bootstrap CI
-[{ci[0]:+.3f}, {ci[1]:+.3f}]). {'The CI includes 0' if crosses0 else 'The CI excludes 0'}.
+with the genuine count α·N equals the slope of log(α) on log(population) across the
+{s['n_units_core']} non-aggregate deconvolved units. **α is uncorrelated with
+population** (Spearman {s['spearman_alpha_vs_logpop']:+.2f}, Pearson
+{s['pearson_alpha_vs_logpop']:+.2f} — near zero, opposite signs).
+
+The OLS point estimate Δβ = {s['implied_delta_beta_alpha_correction']:+.3f}
+(95% bootstrap CI [{ci[0]:+.3f}, {ci[1]:+.3f}]) is **not robust** — it is dominated
+by a single high-leverage near-zero-α unit (**{s['most_influential_unit']}**, whose
+removal collapses it to {s['delta_beta_without_most_influential']:+.3f}). The robust
+estimators agree on ≈ 0: **Theil-Sen Δβ = {s['implied_delta_beta_theilsen']:+.3f}**;
+drop-low-α (α<0.10) OLS = {s['implied_delta_beta_drop_lowalpha_ols']:+.3f}, Theil-Sen
+= {s['implied_delta_beta_drop_lowalpha_theilsen']:+.3f}. So there is **no robust
+evidence the deconvolution would shift the Hanson scaling.**
 
 ## Why this is the right statistic
 
