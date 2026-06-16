@@ -52,7 +52,22 @@ the global scaling, not a province-specific artefact. So the Hanson correlation
 documented choices; the prereg phrasing ("re-run H3a on residuals") is terse. If you
 intended, e.g., a count-model residual or a different estimand, this is a quick re-run.
 
-## B4 — Phase-1 stratified-sampling sensitivity — SCOPED, decision needed
+## B4 — Phase-1 stratified-sampling sensitivity — PARTLY RESOLVED (see `outputs/REPORT-b4.md`)
+
+**Update (2026-06-16):** reading the v2 harness revealed B4 is **architecturally moot
+as written** — Decision 8 replaced the LIRE bootstrap with synthetic-data-from-null, so
+the only empirical lever is the interval-width pool (province/city counts are vestigial).
+The v2-faithful width-pool diagnostic: **scheme (a) proportional-allocation is
+threshold-neutral by construction**; **scheme (b) reweight-to-balance shifts the width
+pool materially** (city-balanced median width 99y → 79y, −20%; Wasserstein-1 ≈ 18–19y vs
+the 9.9y tolerance) — over-represented big cities carry wider intervals, so a balanced
+corpus is narrower → likely *lower* thresholds. Quantifying that needs a **targeted grid
+re-run** under the balanced width pool (scoped below), now revealed to be a re-run not a
+cheap replay. Recommend recording B4 as **superseded by Decision 8** in the obligations
+audit, with the width-pool check as the v2-faithful substitute. Original scope retained
+below for the re-run.
+
+### Original scope (for the scheme-(b) threshold re-run)
 
 Prereg (§5, Phase-1 supplementary): "Phase 1 thresholds use bootstrap
 (sampling-with-replacement) from filtered LIRE; thresholds are recomputed using

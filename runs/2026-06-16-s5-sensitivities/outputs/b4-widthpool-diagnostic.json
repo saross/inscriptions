@@ -1,0 +1,51 @@
+{
+ "n_inscriptions": 172330,
+ "n_provinces": 65,
+ "n_cities": 1013,
+ "pools": {
+  "global": {
+   "label": "global (v2 committed pool)",
+   "mean_width": 105.67,
+   "quantiles": {
+    "10": 24.0,
+    "25": 49.0,
+    "50": 99.0,
+    "75": 149.0,
+    "90": 199.0
+   }
+  },
+  "province_balanced_b": {
+   "label": "province-balanced (scheme b)",
+   "mean_width": 97.49,
+   "quantiles": {
+    "10": 3.0,
+    "25": 25.0,
+    "50": 99.0,
+    "75": 147.0,
+    "90": 199.0
+   }
+  },
+  "city_balanced_b": {
+   "label": "city-balanced (scheme b)",
+   "mean_width": 87.95,
+   "quantiles": {
+    "10": 3.0,
+    "25": 27.0,
+    "50": 79.0,
+    "75": 99.0,
+    "90": 199.0
+   }
+  }
+ },
+ "wasserstein1_vs_global": {
+  "province_balanced": 17.45,
+  "city_balanced": 18.78
+ },
+ "median_width_shift_pct": {
+  "province_balanced": 0.0,
+  "city_balanced": -20.2
+ },
+ "scheme_a_note": "proportional-allocation preserves the width distribution exactly \u2192 threshold-neutral by construction in the synthetic v2 design",
+ "robust_no_rerun": false,
+ "wasserstein_tolerance_10pct_median": 9.9
+}
