@@ -104,7 +104,7 @@ Amendment 02 is lodged.
 ### B4. Stratified-sampling sensitivity (Phase 1 supplementary)
 - **Quote / loc.** §5 line 357 — "thresholds are recomputed using stratified-sampling (province-proportional or city-proportional draws). Reports deltas to bootstrap primary."
 - **Type.** sensitivity (Phase 1 supplementary).
-- **Status.** **UNACCOUNTED** — listed in §5 and in the backlog ("§5 stratified-sampling sensitivity for H1 … optional; cheap if useful for paper") but no run exists. Low-stakes (Phase-1 robustness, post-hoc replay from persisted parquet), but it is a pre-specified §5 supplementary with no artefact and only an "optional" backlog note.
+- **Status.** **RESOLVED 2026-06-16 — SUPERSEDED-BY-Decision-8, satisfied via a width-pool check** (`runs/2026-06-16-s5-sensitivities/`, commits `6acfddf`/`6b2a14a`). The prereg's stratified-*bootstrap* of LIRE is architecturally moot for the committed v2 thresholds: **Decision 8 replaced the LIRE bootstrap with synthetic data drawn from a parametric null** (`h1_sim_v2.py`), so the only empirical lever on the thresholds is the interval-width pool, and the per-iteration province/city counts are vestigial (zero effect on detection). The v2-faithful B4: scheme (a) proportional-allocation is **threshold-neutral by construction**; scheme (b) reweight-to-balance shifts the width pool (city-balanced median interval width 99 y → 79 y), but a threshold re-run under global / province-balanced / city-balanced width pools found the Phase-1 detection thresholds **robust** (median Δ −1.1 % province / −0.4 % city, within Monte-Carlo noise; 0 reachability classifications changed). *(Original 2026-06-05 status was **UNACCOUNTED** — no run existed at audit time.)*
 
 ---
 
@@ -422,11 +422,11 @@ Amendment 02 is lodged.
 3. **Dirichlet-multinomial supplementary fit** (C5) — committed model-comparison fit, not implemented.
 4. **Rescaled-NegBin supplementary fit** (C6) — committed model-comparison fit, not implemented.
 5. **Aoristic-MC supplementary** (C10) — run on the real-data primary multinomial; N_MC + divergence threshold not pinned; no run.
-6. **Hanson-population measurement-error sensitivity** (D11) — §5 sensitivity, σ_pop ∈ {0.1,0.2,0.3}; not run.
-7. **Scaling-residual sensitivity for H3a** (D12) — §5 sensitivity; not run.
+6. **Hanson-population measurement-error sensitivity** (D11) — ~~§5 sensitivity, σ_pop ∈ {0.1,0.2,0.3}; not run.~~ **RESOLVED 2026-06-16** — f_within robust, no material divergence (`runs/2026-06-16-s5-sensitivities/`, `edc5592`).
+7. **Scaling-residual sensitivity for H3a** (D12) — ~~§5 sensitivity; not run.~~ **RESOLVED 2026-06-16** — within-province scaling is one coherent law with the global scaling; primary β_within stands (`edc5592`).
 8. **§5 temporal habit-removed residual trajectory analysis** (H5) — distinct from small-N trajectory; foundation-date/anchor validation + habit-lag estimate; no run.
 9. **§5 chronological resolution of H3c residuals (per-decadal)** (H7) — §5 exploratory; no run.
-10. **Phase-1 stratified-sampling sensitivity** (B4) — §5 supplementary; only an "optional" backlog note; no run.
+10. **Phase-1 stratified-sampling sensitivity** (B4) — ~~§5 supplementary; only an "optional" backlog note; no run.~~ **RESOLVED 2026-06-16** — superseded by Decision 8; thresholds robust to stratification via the width-pool check (`6acfddf`/`6b2a14a`).
 
 **At-risk / ambiguous:**
 
