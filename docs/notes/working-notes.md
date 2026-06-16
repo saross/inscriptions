@@ -3579,3 +3579,160 @@ commit `7fe248a` (annex results).
 `obs-92`, `obs-91`, `obs-23`, `obs-82`,
 `osf-amendment-04`, `A5-6`, `exploratory`, `decision-15`,
 `runs-2026-05-03-baorista-install`, `runs-2026-06-09-h3b`
+
+## Obs 94 — 2026-06-16 [ROBUSTNESS / RESULT]: deconvolution does NOT change H3a — raw-count population–epigraphy scaling is robust to convention-correction
+
+### The finding
+
+We asked whether the cc-library deconvolution (which separates editorial-convention
+dating artefacts from genuine production) would materially change H3a — the Hanson
+population–inscription-count scaling.
+
+**The publishable robustness statement: the population–epigraphy scaling holds
+whether or not we correct for editorial-convention dating.**
+
+Two independent reasons, one structural and one empirical:
+
+**Reason (a) — structural: temporal reshaping conserves the full-window count.**
+H3a's date window is the full envelope (50 BC – AD 350;
+`h3a_common.DATE_WINDOW`). The deconvolution redistributes probability mass
+*between* time-bins but conserves each unit's full-window total — the raw aoristic
+SPA and the genuine SPA both normalise to the same n_eff. The reshaping is real and
+sizeable (median raw-vs-genuine total-variation distance 0.243, max 0.500), but that
+is H3b's signal (a shape statistic); it is invisible to a full-window count. The
+only remaining channel for H3a is therefore the per-unit genuine fraction α.
+
+**Reason (b) — empirical: α is uncorrelated with population or corpus size.**
+Across the 26 non-aggregate deconvolved units:
+
+| Correlation | α vs population | α vs n_eff |
+|---|---|---|
+| Spearman | −0.11 | −0.22 |
+| Pearson | +0.13 | −0.17 |
+
+The implied shift in the Hanson scaling exponent from replacing raw count N with
+genuine count α·N equals the slope of log(α) on log(population). Flat α means a
+constant multiplier, which leaves β unchanged.
+
+**Slope estimates for implied Δβ:**
+
+| Estimator | Δβ |
+|---|---|
+| OLS (all 26 units) | +0.292 |
+| OLS 95 % bootstrap CI | [−0.112, +0.865] |
+| Theil-Sen (robust) | −0.030 |
+| OLS, drop-low-α (α < 0.10) | +0.015 |
+| Theil-Sen, drop-low-α | −0.045 |
+
+The OLS estimate (+0.292) is **not robust**: it is dominated by a single
+high-leverage unit (see Gotcha below). All robust estimators converge on ≈ 0.
+
+### The methodological gotcha — Pompeii as a high-leverage OLS artefact
+
+The naïve OLS Δβ = +0.292 (95 % bootstrap CI [−0.112, +0.865]) looks non-trivial
+but is a **single-unit artefact**. Pompeii (α = 0.02 — a post-AD-79 special case)
+occupies the extreme low-α end of the log(α) axis and is a high-leverage point in
+the log-space regression. Its removal collapses the OLS slope to +0.015, in line
+with the Theil-Sen estimate of −0.030.
+
+**Lesson for future log-space scaling diagnostics:** a near-zero-α unit can dominate
+OLS when the effective covariate range in log space is very wide. Use a robust
+estimator (Theil-Sen, drop-low-α, or leave-one-out) as the primary and treat OLS as
+a secondary check. The Pompeii leverage artefact was caught on a robustness check;
+the wide CI already signalled instability.
+
+### Why this matters
+
+1. **H3a primary is confirmed paper-ready as-is.** The preregistered primary
+   (Decision 22/35; raw-count Hanson scaling, lodged confirmatory) is already the
+   right specification — not merely by preregistration obligation but because the
+   deconvolution would not move it materially.
+
+2. **Full deconvolution leverage already cashed.** The cc-library mixture model is
+   fully leveraged in H3b (which runs draw-wise on the genuine SPA) and in the
+   descriptive genuine-vs-raw SPA figures (where the TV distance up to 0.500 does its
+   work). H3a/H3c/SR1 count analyses inherit the same null result.
+
+3. **D13 α-as-translator §5 sensitivity is the right H3a payoff route.** The
+   preregistered D13 sensitivity needs **per-city** α. The 29 deconvolved units are
+   province/region-level proxies; this diagnostic is therefore a province-level
+   stand-in for the city-level confound. The province-level α-vs-size result is
+   reassuringly flat, which suggests the expected H3a payoff of a full per-city
+   mixture build is **low** — but the definitive test requires per-city deconvolution.
+
+4. **Peak-window scaling is the motivated extension.** The deconvolution *does*
+   become relevant for a peak-inscription-rate vs Hanson max-population scaling
+   variant (non-preregistered; flagged here as a motivated extension). A peak is a
+   shape statistic — not mass-conserved by the full-window sum — so the TV reshaping
+   (up to 0.500) would matter there. This carries the GRW peak-attenuation caveat
+   and needs per-city deconvolution.
+
+### Caveats / methodological notes
+
+- **Province-level proxy only.** α is available at 29 deconvolved units, mostly at
+  province/region granularity. The slope above is a province-level proxy for the
+  city-level confound. The city-level test requires per-city deconvolution (D13).
+- **Aggregates excluded.** The empire-aggregate, latin-aggregate, and Italia (excl.
+  Rome) aggregates were excluded from the correlation to avoid double-counting
+  (their n_eff subsumes individual units).
+- **Pompeii caveat.** Even the drop-low-α result is dominated by Pompeii's exclusion.
+  The five directly-interpretable single-city units (Ostia, Mogontiacum, Aquileia,
+  Pompeii, Salona) span a wide α range (0.02–0.99), giving the province-level
+  inference both its signal and its instability.
+- **H3a is exploratory-adjacent for α-sensitivity.** D13 is framed as a sensitivity
+  check, not a primary. The flatness of α-vs-population weakens the case for
+  elevating it.
+
+### Related observations and artefacts
+
+**Obs 93** (H3b flexible-null annex part (a) — same cc-library deconvolution
+posterior; saturation is structural null-misspecification): the most recent consumer
+of the same deconvolution posterior. The TV-distance figures (median 0.243, max
+0.500) cited here are the H3b-domain signal that H3a cannot see.
+
+**Obs 92** (H3b draw-wise base run — global Timpson saturation; probe-window
+P(deficit) the deliverable): the base H3b run that confirmed the deconvolution is
+fully leveraged in H3b, motivating this diagnostic to close off the H3a question.
+
+**Artefacts**:
+`runs/2026-06-16-deconv-leverage-diagnostic/outputs/REPORT.md` (the diagnostic
+report; all numbers in this Obs verified against it);
+`runs/2026-06-16-deconv-leverage-diagnostic/outputs/alpha-population-diagnostic.json`
+(underlying data: α medians, population, n_eff, correlations, slope estimates);
+`runs/2026-06-16-deconv-leverage-diagnostic/outputs/figures/fig-alpha-vs-size.png`
+(scatter: α vs population and vs n_eff, all 29 units);
+`runs/2026-06-16-deconv-leverage-diagnostic/code/deconv_leverage_diagnostic.py`
+(the diagnostic script);
+commit `a6ce8db` (result commit).
+
+### Findable later
+
+`deconvolution-leverage`, `deconv-leverage`, `H3a-robustness`,
+`convention-correction`, `raw-count-H3a`, `Hanson-scaling-robustness`,
+`alpha-vs-population`, `alpha-uncorrelated`, `Spearman-minus-0-11`,
+`Pearson-plus-0-13`, `alpha-vs-n-eff`, `Spearman-minus-0-22`,
+`genuine-fraction`, `full-window-count`, `mass-conservation`,
+`temporal-reshaping-conserves`, `total-variation-distance`,
+`TV-distance-0-243`, `TV-distance-0-500`,
+`implied-delta-beta`, `OLS-delta-beta-plus-0-292`,
+`OLS-bootstrap-CI-minus-0-112-plus-0-865`,
+`Theil-Sen-minus-0-030`, `Theil-Sen`, `drop-low-alpha`,
+`drop-low-alpha-OLS-plus-0-015`, `drop-low-alpha-theil-sen-minus-0-045`,
+`Pompeii-OLS-leverage-artefact`, `Pompeii-alpha-0-02`,
+`high-leverage-near-zero-alpha`, `leave-one-out`,
+`single-unit-artefact`, `robust-estimator`,
+`26-non-aggregate-units`, `29-deconvolved-units`,
+`province-level-proxy`, `city-level-deconvolution`,
+`D13-alpha-as-translator`, `alpha-as-translator`,
+`per-city-alpha`, `per-city-mixture`,
+`peak-window-scaling`, `peak-inscription-rate`,
+`GRW-peak-attenuation`, `motivated-extension`, `non-preregistered-extension`,
+`mass-conserved`, `shape-statistic`, `full-envelope`,
+`h3a-common-DATE-WINDOW`, `50-BC-AD-350`,
+`scaling-holds-whether-or-not-we-correct-for-editorial-convention-dating`,
+`population-epigraphy-scaling`, `convention-correction-robustness`,
+`H3b-signal-invisible-to-H3a`, `fully-leveraged`,
+`D13`, `decision-22`, `decision-35`, `SR1`,
+`obs-92`, `obs-93`,
+`a6ce8db`, `deconv-leverage-diagnostic`, `alpha-population-diagnostic-json`,
+`fig-alpha-vs-size`
