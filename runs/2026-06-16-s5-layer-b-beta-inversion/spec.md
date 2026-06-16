@@ -70,21 +70,31 @@ between-province slope (β_between = −0.24, CI crosses 0) is unusable.
 
 | Input | Source (verified) | Value / shape |
 |---|---|---|
-| Layer-A trajectory posterior (primary) | `runs/2026-05-30-s5-small-n-trajectories/code/production/monolithic-inscription-25y.nc` (zbook; gitignored, 3.6 GB total for the 4 fits; rpi-server backup `…/2026-05-30-s5-small-n-trajectories-posteriors/`) | `lam[c, t]`, 4 chains × 1000 = **4,000 draws**, C = 268 target + 7 anchors, T = 16 bins. Gate **PASS** (R̂ 1.0000, ESS 2571, 0 div). |
-| H3a β posterior — **empire** | `runs/2026-06-04-h3a-confirmatory/outputs/h3a-results.json` → `primary.betas.beta_within` (and the underlying `idata-primary.nc` for draw-wise) | median **0.5869** [0.5187, 0.6574]; 1,044 cities / 56 provinces; 4 chains × 3000 = 12,000 draws. |
-| H3a β posterior — **Latin** (sensitivity) | same JSON → `sensitivity_B_latin.betas.beta_within` (underlying `idata-latin.nc`) | median **0.7331** [0.6483, 0.8198]; 817 cities / 39 provinces. |
+| Layer-A trajectory posterior (primary) | `runs/2026-05-30-s5-small-n-trajectories/code/production/monolithic-inscription-25y.nc` (gitignored; zbook + rpi-server backup `…/2026-05-30-s5-small-n-trajectories-posteriors/`; **now also on sapphire, sha256-verified**) | `lam[c, t]`, 4 chains × **2,000 = 8,000 draws** (verified by opening the file, not the argparse default), **C = 268 *target* cities** (the 7 large anchors are NOT in this fit — see below), T = 16 bins. Gate **PASS** (R̂ 1.0000, ESS 2571, 0 div). |
+| H3a β posterior — **empire** | `runs/2026-06-04-h3a-confirmatory/outputs/h3a-results.json` → `primary.betas.beta_within`; underlying `idata-primary.nc` for draw-wise (**on sapphire**) | median **0.5869** [0.5187, 0.6574]; 1,044 cities / 56 provinces; ~12,000 draws (tune 6000 / draws 3000 / 4 chains). |
+| H3a β posterior — **Latin** (sensitivity) | same JSON → `sensitivity_B_latin.betas.beta_within`; underlying `idata-latin.nc` (**on sapphire**) | median **0.7331** [0.6483, 0.8198]; 817 cities / 39 provinces. |
 | Hanson per-city population (anchor) | `data/hanson2016/hanson2016_cities_oxrep.csv`, column **`urban_context_pop_est`** | one static point estimate per city (not time-resolved). All Layer-A target cities are Hanson-matched by construction, so all have a value. |
+| Dataprep cache (for the anchor gate only) | `runs/2026-05-30-s5-small-n-trajectories/code/prepared/` — 275 `aoristic-<city>.npz` + `city-index.parquet` (**now on sapphire, 1.3 MB**) | per-city aoristic matrices incl. `aoristic-ostia.npz`, `aoristic-pompeii.npz`. Needed to re-fit the validation anchors standalone (§7). |
 
-**Stack / read note:** the `.nc` are HDF5 / arviz-1.x; reading needs
-arviz ≥ 1.x + h5netcdf/h5py (the validated pymc-6 env on zbook; see
-`PROVISIONING.md`). The H3a `idata-*.nc` are pymc-6/arviz-1.1 also.
+**The 268-city scope and the anchors.** The monolithic primary fit covers the
+**268 small-N target cities** — that *is* the §5 Layer-B deliverable. The seven
+large validation anchors (incl. **Ostia** and **Pompeii**) are deliberately not
+in it; Layer A validated them via *standalone* single-city fits computed on the
+fly (`orchestrate.py` `anchor_internal_consistency` / `pompeii_ad79_check`),
+which were **not persisted**. So the Layer-B validation gate (§7) must re-fit the
+anchors standalone from the dataprep cache — a small, fast addition, not part of
+the 268-city core transform.
+
+**Stack / read note (verified on sapphire 2026-06-16):** sapphire's project
+`.venv` has **arviz 1.1.0, h5netcdf 1.8.1, xarray 2026.4.0, pymc 6.0.1**, and
+*successfully read* the primary `.nc` (`lam` dims chain 4 × draw 2000 × city 268
+× bin 16). The H3a `idata-*.nc` are pymc-6/arviz-1.1 also.
 
 **Draw-wise pairing:** the two posteriors are independent fits on overlapping but
 non-identical city sets; there is no joint sample. We propagate by Monte Carlo
-under independence — for each of the 4,000 Layer-A draws, draw one β with
-replacement from the 12,000-draw β posterior (seeded). This is valid MC
-integration of two independent uncertainties; the independence simplification is
-flagged in §10.
+under independence — for each of the **8,000** Layer-A draws, draw one β with
+replacement from the β posterior (seeded). This is valid MC integration of two
+independent uncertainties; the independence simplification is flagged in §10.
 
 ---
 
@@ -114,9 +124,15 @@ are tagged `reliable` (N ≥ 300) vs `below-floor` (N < 300, shown but flagged);
 headline figures and any clustering use the reliable set, the rest are an
 explicitly-caveated appendix.
 
-This is a deterministic transform of an existing posterior — **no MCMC, no new
-sampling.** It is fast and fully reproducible from the `.nc` + the β draws + a
-seed.
+For the **268 target cities** this is a deterministic transform of an existing
+posterior — **no MCMC, no new sampling** — fast and fully reproducible from the
+`.nc` + the β draws + a seed.
+
+**Validation anchors (Ostia, Pompeii).** These are not in the monolithic fit
+(§3), so the gate (§7) first re-fits each standalone via the single-city
+`model.py` at full N from the dataprep cache (seeded; ~minutes each — the only
+MCMC in Layer B), saves the anchor `.nc`, then applies the *identical* inversion
+transform. This mirrors Layer A's own anchor-validation step exactly.
 
 ---
 
@@ -177,31 +193,59 @@ throughout, no pre-committed thresholds).
   transform is monotone in `lam`), so Pompeii's population trajectory will
   collapse to ~0 after AD 79 by construction — a consistency check, not new
   evidence.
-- **Ostia c. AD 250 — pending; needs Shawn's historical expectation.** Ostia is
-  a large anchor (N = 2380; standalone Layer-A trajectory exists). AD 250 falls
-  near the bin-11/12 edge of the 25y grid, well inside the envelope. **Open
-  questions for Shawn (ancient historian's call):**
-  1. What is the independent expectation for Ostia's population trajectory across
-     50 BC – AD 350 — peak era and the timing/steepness of decline? (My working
-     understanding: growth through the 1st–2nd c., peak in the Antonine/Severan
-     period, decline setting in across the later 3rd c. Please correct.)
-  2. Should the gate stay **descriptive-only** (prereg default — report the
-     Layer-B Ostia trajectory against the stated expectation, no threshold), or
-     do you want a **soft, pre-stated qualitative criterion** (e.g. "posterior
-     median peaks no later than AD 250 and is declining by AD 300")?
+- **Ostia c. AD 250 — descriptive expectation (light lit search, 2026-06-16).**
+  Ostia is a large anchor (N = 2380; standalone Layer-A trajectory exists). AD
+  250 falls near the bin-11/12 edge of the 25y grid, well inside the envelope.
+  Independent expectation, grounded in:
+  - **Oxford Classical Dictionary, "Ostia"** (oxfordre.com/classics; OCD entry):
+    "Much of what we know of Ostia refers to the 2nd and 3rd cents."; "Most of
+    what is visible at Ostia is a development of the Flavian, Antonine, and
+    Severan periods … suggesting wholesale redevelopment and large-scale
+    investment in urban property"; the city was "abandoned in the 5th cent. ce".
+  - **R. Meiggs, *Roman Ostia* (2nd edn, 1973)** — the foundational synthesis
+    (the post-Severan phases were comparatively under-studied there).
+  - **Revisionist caveat — D. Boin, *Ostia in Late Antiquity* (Cambridge, 2013)**:
+    "theories that Ostia experienced 'decline' … in the third and fourth
+    centuries are generally unfounded." A simple 3rd–4th-c. collapse is
+    contested.
+
+  **Expectation for the gate:** growth across the 1st–2nd c. AD to an apogee in
+  the **2nd c. (broadly Antonine, with strong Flavian–Severan activity)**; our
+  Hanson anchor estimate corresponds to this 2nd-c. apogee. Decline thereafter is
+  the *traditional* reading (Portus competition + the wider 3rd-c. crisis) but is
+  scholarly-contested for the 3rd–4th c.
+
+  **Confound to state prominently (critical-friend flag).** The empire-wide
+  *epigraphic-habit* decline after ~AD 250 (MacMullen 1982) depresses inscription
+  counts independent of population, so any post-peak *population* fall the
+  inversion shows is partly a habit artefact, not demonstrated depopulation. The
+  Ostia gate is therefore read most cleanly on the **growth-to-peak (1st–2nd c.)**
+  segment, where the habit is comparatively stable; the post-peak segment is
+  reported descriptively with the habit caveat (and is exactly what Decision 13's
+  H5 habit-removed residual analysis would later disentangle).
+
+  **Gate verdict mode — descriptive-only** (Shawn, 2026-06-16; prereg default; no
+  pass/fail threshold): report the Layer-B Ostia trajectory against the above and
+  comment on fit to the growth-to-peak expectation; sustained-vs-declining late
+  activity is *not* treated as pass/fail.
 
 ---
 
 ## 8. Compute plan
 
-- **Host:** zbook (the `.nc` live there + the validated pymc-6/arviz-1.1 stack).
-  No sapphire needed — there is no sampling; this is a numpy transform over a
-  loaded posterior. Reading the 3.6 GB `.nc` and transforming is minutes, not
-  hours.
+- **Host: sapphire (default; Shawn 2026-06-16).** All inputs are staged and
+  verified there (2026-06-16): the 4 Layer-A `.nc` (primary sha256-identical to
+  zbook + opens cleanly), the 2 H3a β `.nc`, and the dataprep cache. Sapphire's
+  `.venv` reads the arviz-1.1 posteriors (versions in §3). zbook remains a viable
+  fallback (the data and an identical stack live there too).
+- **Cost shape:** the 268-city core is a numpy transform over a loaded posterior
+  — minutes, no MCMC. The validation gate adds **two small single-city fits**
+  (Ostia, Pompeii) — the only sampling in Layer B, a few minutes each.
 - **Reproducibility:** seed fixed; input `.nc` sha256 recorded in
-  `layerb-summary.json`; β draws resampled deterministically from the seed.
-- **No API calls, no MCMC, no sapphire job.** (Flagged for the review gate: this
-  stage spends no API budget and no cluster time.)
+  `layerb-summary.json`; β draws resampled deterministically from the seed;
+  anchor re-fit seeds recorded.
+- **No model/LLM API calls.** (Flagged for the API review gate: this stage spends
+  no API budget; compute is sapphire CPU only.)
 
 ---
 
@@ -209,11 +253,14 @@ throughout, no pre-committed thresholds).
 
 A single self-contained script `code/layerb_invert.py` in this run dir:
 
-- `load_trajectory_posterior(nc_path)` → `lam` draws + city/bin coords.
+- `load_trajectory_posterior(nc_path)` → `lam` draws + city/bin coords (268).
 - `load_beta_draws(h3a_nc, frame)` → β posterior draws (empire | latin).
 - `invert(lam, beta_draws, pop_max, seed)` → relative-shape + anchored posteriors.
 - `summarise(...)` → per-city medians, bands, peak-bin, decline; write `.nc`/json.
-- `validate_ostia(...)`, `validate_pompeii(...)` → gate outcomes.
+- `fit_anchor_standalone(city, cache, seed)` → re-fit Ostia/Pompeii via the
+  single-city `model.py` at full N (the only MCMC), save the anchor `.nc`, then
+  feed the same `invert(...)`.
+- `validate_ostia(...)`, `validate_pompeii(...)` → gate outcomes vs §7.
 - `plots(...)` → small-multiples + the empire-vs-Latin overlay.
 
 `/audit` (or a focused review) before launch, per the standing pre-launch rule.
@@ -250,9 +297,11 @@ A single self-contained script `code/layerb_invert.py` in this run dir:
 - [x] **(iii)** anchoring: produce both relative-shape and Hanson-anchored —
   confirmed 2026-06-16.
 - [x] **(iv)** Ostia gate: descriptive-only — confirmed 2026-06-16.
-- [ ] **Ostia historical expectation** stated (the trajectory is reported
-  against it; descriptive, no threshold) — **pending Shawn**.
-- [ ] Run script written + reviewed (`/audit` before execution).
-- [ ] Confirm host = zbook and that the Layer-A `.nc` are present there (or
-  restore from the rpi-server backup first).
+- [x] **Ostia historical expectation** — grounded by a light lit search (OCD /
+  Meiggs / Boin) rather than asserted, per Shawn (not an Ostia specialist); §7.
+- [x] **Inputs staged + verified on sapphire** (2026-06-16): 4 Layer-A `.nc`
+  (primary sha256-identical + opens), 2 H3a β `.nc`, dataprep cache (Ostia +
+  Pompeii present); host = sapphire confirmed.
+- [ ] Run script `code/layerb_invert.py` written + reviewed (`/audit` before
+  execution).
 - [ ] Final sign-off to launch.
