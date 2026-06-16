@@ -1,0 +1,19 @@
+§5 Layer B — frames=['empire', 'latin'] seed=20260616
+  primary posterior: /home/shawn/Code/inscriptions/runs/2026-05-30-s5-small-n-trajectories/code/production/monolithic-inscription-25y.nc
+  loaded lam (8000, 268, 16) (sample, city, bin) — 268 cities
+  inverting (frame=empire) ...
+  inverting (frame=latin) ...
+  gate: re-fitting anchor Ostia standalone ...
+Initializing NUTS using jitter+adapt_diag...
+Multiprocess sampling (4 chains in 4 jobs)
+NUTS: [sigma, z_raw, alpha]
+Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 15 seconds.
+    [Ostia] anchor fit: R̂=1.0000 ESS=1166 div=0
+  gate: re-fitting anchor Pompeii standalone ...
+Initializing NUTS using jitter+adapt_diag...
+Multiprocess sampling (4 chains in 4 jobs)
+NUTS: [sigma, z_raw, alpha]
+Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 119 seconds.
+    [Pompeii] anchor fit: R̂=1.0000 ESS=1420 div=0
+  wrote /home/shawn/Code/inscriptions/runs/2026-06-16-s5-layer-b-beta-inversion/outputs/layerb-summary.json
+Done.

@@ -92,6 +92,11 @@ runs/2026-05-30-s5-small-n-trajectories/code/subsample-recover.png
 # H3a confirmatory: large InferenceData (regenerable from committed seed+code)
 runs/2026-06-04-h3a-confirmatory/outputs/*.nc
 
+# §5 Layer B: standalone anchor posteriors (regenerable in seconds; on sapphire).
+# The small per-city summary trajectories (layerb-trajectories-*.nc, ~240 KB) ARE
+# committed as the deliverable; only the full anchor posteriors are excluded.
+runs/2026-06-16-s5-layer-b-beta-inversion/outputs/layerb-anchor-*.nc
+
 # Decision-38 recovery re-validation (2026-06-06): per-replicate synthetic data
 # + posterior fits regenerate deterministically from base_seed + cell_index +
 # replicate; the 450-cell bulk lives on sapphire, like the 2026-05-26 grid.
