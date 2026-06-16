@@ -1,0 +1,34 @@
+{
+ "5y": {
+  "n_units": 26,
+  "log_peak_ratio_median": 0.531654909345405,
+  "log_peak_ratio_iqr": [
+   0.29448032380466094,
+   0.7465093618076364
+  ],
+  "n_peak_rises": 25,
+  "n_peak_falls": 1,
+  "peak_ratio_median_pct": 70.17462153113259,
+  "abs_peak_year_shift_median": 10.0,
+  "spearman_logratio_vs_logpop": 0.06666666666666665,
+  "theilsen_logratio_vs_logpop": 0.025832571271987258,
+  "spearman_logratio_vs_logneff": -0.15555555555555553,
+  "theilsen_logratio_vs_logneff": -0.14798966028160293
+ },
+ "25y": {
+  "n_units": 26,
+  "log_peak_ratio_median": 0.4706575630185745,
+  "log_peak_ratio_iqr": [
+   0.18339583542081184,
+   0.6580741870759101
+  ],
+  "n_peak_rises": 25,
+  "n_peak_falls": 1,
+  "peak_ratio_median_pct": 60.1046636214629,
+  "abs_peak_year_shift_median": 17.5,
+  "spearman_logratio_vs_logpop": -0.002393162393162393,
+  "theilsen_logratio_vs_logpop": -0.0047899006172419005,
+  "spearman_logratio_vs_logneff": -0.17196581196581195,
+  "theilsen_logratio_vs_logneff": -0.1611504974777162
+ }
+}
