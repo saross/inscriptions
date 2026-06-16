@@ -1,0 +1,26 @@
+{
+ "n_units_core": 26,
+ "alpha_range": [
+  0.015578318388242317,
+  0.9892820908181388
+ ],
+ "alpha_mean": 0.6773563864503609,
+ "alpha_sd": 0.2461815602766218,
+ "spearman_alpha_vs_logpop": -0.11452991452991453,
+ "pearson_alpha_vs_logpop": 0.12956736553061296,
+ "spearman_alpha_vs_logneff": -0.21504273504273502,
+ "pearson_alpha_vs_logneff": -0.17129002671981836,
+ "implied_delta_beta_alpha_correction": 0.29217439540675094,
+ "implied_delta_beta_ci95": [
+  -0.11162888174745142,
+  0.8652297702402725
+ ],
+ "implied_delta_beta_theilsen": -0.02999606577533469,
+ "implied_delta_beta_drop_lowalpha_ols": 0.015195735639487742,
+ "implied_delta_beta_drop_lowalpha_theilsen": -0.04496059981638911,
+ "most_influential_unit": "Pompeii",
+ "delta_beta_without_most_influential": 0.015195735639487742,
+ "reshaping_tv_median": 0.2426573214038478,
+ "reshaping_tv_max": 0.5000190422778547,
+ "date_window": "50 BC \u2013 AD 350 (full envelope; reshaping conserves the count)"
+}
