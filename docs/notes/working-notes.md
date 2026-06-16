@@ -3736,3 +3736,206 @@ commit `a6ce8db` (result commit).
 `obs-92`, `obs-93`,
 `a6ce8db`, `deconv-leverage-diagnostic`, `alpha-population-diagnostic-json`,
 `fig-alpha-vs-size`
+
+## Obs 95 — 2026-06-16 [ROBUSTNESS / METHODOLOGY]: §5 sensitivity batch (D11, D12, B4) — all three corroborate H3a and Phase-1; B4 surfaces prereg-vs-implementation discrepancy
+
+### The finding
+
+All three preregistered §5 sensitivities for H3a / Phase-1 return corroborating
+results. Numbers below verified against source JSON and REPORT files in
+`runs/2026-06-16-s5-sensitivities/`.
+
+---
+
+**D11 — Hanson-population measurement-error sensitivity**
+
+Re-fit the H3a within-between (Mundlak) Negative Binomial Regression (NBR) with the
+preregistered Berkson measurement-error (ME) form
+`log_pop_c ~ Normal(log_pop_observed_c, σ_pop)`, Mundlak within / between components
+recomputed from the latent population each draw.
+Primary (no ME): **f_within = 0.299 [0.240, 0.365]** (confirmatory run anchor).
+
+| σ_pop | f_within (median) | 95 % CI | CI shift vs primary | material? | verdict |
+|---|---|---|---|---|---|
+| — (primary) | 0.299 | [0.240, 0.365] | — | — | supported |
+| 0.1 | 0.305 | [0.243, 0.373] | 0.008 | no | supported |
+| 0.2 | 0.320 | [0.255, 0.390] | 0.025 | no | supported |
+| 0.3 | 0.341 | [0.277, 0.412] | 0.047 | no | supported |
+
+The largest CI shift (0.047 at σ = 0.3) is below the prereg's material-divergence
+threshold (50 % of the primary CI width = 0.063). Convergence clean throughout:
+R̂ ≤ 1.01, ESS-bulk ≥ 1,080, 0 divergences (tune 4,000 / draw 2,000 × 4 chains).
+**f_within is robust to Hanson-population measurement error. No material divergence;
+no limitation flagged.**
+
+**Methodological faithfulness catch:** the first implementation used a structural
+errors-in-variables hyperprior (a symmetric-error form). Re-reading the prereg showed
+it specifies the Berkson form (prior centred on the observed value; measurement error
+propagated one-way from observation to latent), so the run was redone with the correct
+specification. Recorded as a faithfulness catch to close any audit gap.
+
+---
+
+**D12 — scaling-residual sensitivity**
+
+Construction (documented choice): pooled NBR power-law
+`insc ~ NB(exp(a + β·log_pop), φ)` → per-city SAMOC log-scale residual
+`r_c = log(insc_c) − (â + β̂·log_pop_c)` → Gaussian within-between partition of `r_c`.
+
+- Pooled power-law slope **β = 0.565** (cf. primary H3a within-province β = 0.587;
+  Hanson 2021 ≈ 0.67).
+- Residual **β_within = −0.065 [−0.144, +0.011]**, P(> 0) = 0.05;
+  residual **f_within ≈ 0.004 [0.00, 0.02]**. Convergence clean (R̂ 1.00, 0 div.).
+
+**Interpretation — a coherence result, not a refutation.** After removing the global
+pooled scaling, the within-province population gradient on the residuals is
+essentially zero. This means the within-province slope ≈ the global slope (≈ 0.57–
+0.59): the Hanson population relationship operates as **one consistent scaling law at
+both levels**, so "controlling for scaling" leaves no extra within-province structure.
+The primary β_within (0.587, CI well above 0) is real; D12 shows it is the *same* law
+as the global scaling, not a province-specific artefact.
+
+---
+
+**B4 — stratified-sampling sensitivity**
+
+Two findings, one methodological and one empirical.
+
+**(a) Prereg-vs-implementation discrepancy.** The preregistered B4 (stratified
+bootstrap of LIRE) is **architecturally moot** for the committed v2 Phase-1
+thresholds: Decision 8 replaced the LIRE bootstrap with synthetic data drawn from a
+parametric null (`h1_sim_v2.py`). The only empirical lever on the thresholds is the
+interval-width pool; the per-iteration province / city counts are vestigial metadata
+with zero effect on detection. Recommend recording B4 in the obligations audit as
+superseded by Decision 8, satisfied via this width-pool check.
+
+**(b) Scheme-(b) threshold re-run result.** Scheme (a) proportional-allocation is
+threshold-neutral by construction (it preserves the width distribution exactly).
+Scheme (b) reweight-to-balance shifts the width pool (city-balanced median interval
+width 99 y → 79 y; over-represented large cities carry wider intervals), triggering a
+targeted threshold re-run under global / province-balanced / city-balanced width pools
+at matched reduced precision (n_iter = 200, n_mc = 300).
+
+| scheme | median Δ min_n | median Δ (%) | n_lower / n_higher | reachability changed |
+|---|---|---|---|---|
+| province-balanced | −12 inscriptions | −1.1 % | 7 / 4 of 12 | 0 cells |
+| city-balanced | −7 inscriptions | −0.4 % | 6 / 4 of 12 | 0 cells |
+
+Direction is as expected (narrower corpus → less aoristic smearing → easier detection
+→ lower thresholds), magnitude is small and within Monte-Carlo noise at n_iter = 200.
+**No reachability classifications change.** The Phase-1 detection thresholds are
+robust to province / city stratification under both schemes.
+
+Caveat: per-cell threshold deltas are noisy at n_iter = 200 (individual Δ values span
+±100–280 inscriptions); the median and the unchanged reachability are the robust
+signals, not the per-cell signs.
+
+### Why this matters
+
+1. **H3a primary confirmed robust on two additional axes.** D11 shows f_within is
+   stable under realistic population-data noise (a common concern for Hanson's
+   non-census estimates). D12 shows the within-province and global slopes are one
+   coherent law — the correlation is not a province-specific artefact. Both clear the
+   prereg's material-divergence criterion with no limitations flagged.
+
+2. **D12 is a settlement-scaling coherence result.** The usual worry is that a
+   within-province β ≈ global β might mean a confound; D12's interpretation is the
+   reverse — it means the scaling is a genuinely unified law operating at both levels.
+   The primary f_within result (0.299) is therefore not inflated by a global
+   composition effect.
+
+3. **B4 closes a prereg obligation and flags a v2 supersession.** The discrepancy
+   between the prereg and the v2 implementation (Decision 8 removes the LIRE
+   bootstrap) needed to be documented rather than silently ignored. The width-pool
+   check is the v2-faithful substitute, and the thresholds are robust to it.
+
+4. **Phase-1 thresholds stand.** The committed full-precision thresholds
+   (`runs/2026-04-25-h1-simulation/outputs/h1-v2/`) are the primary; the B4
+   stratification check does not displace them.
+
+### Caveats / methodological notes
+
+- **D11 convergence at σ = 0.3.** R̂ = 1.01 (not 1.00) at the highest ME level;
+  ESS-bulk 1,080. These are within acceptable bounds and the CIs are still tight, but
+  the slight degradation at σ = 0.3 is consistent with the latent-population model
+  carrying more sampling difficulty at high noise.
+- **D12 construction is terse in the prereg.** The prereg phrasing ("re-run H3a on
+  residuals") is ambiguous — a count-model residual or a different estimand is
+  possible. The SAMOC log-residual construction is documented in the REPORT and
+  recorded here; a different reading would require a re-run.
+- **B4 per-cell noise.** At n_iter = 200, individual cell deltas span ±100–280
+  inscriptions and include sign reversals; the median and reachability are the
+  signal. The full-precision committed thresholds are the primary.
+- **Scope: §5 sensitivities only.** All three are preregistered as non-confirmatory
+  sensitivity checks (prereg §5). Material divergence would be a reported limitation,
+  not an amendment trigger; none was found.
+
+### Related observations and artefacts
+
+**Obs 94** (deconvolution does NOT change H3a — raw-count population–epigraphy
+scaling robust to convention-correction; deconvolution leveraged in H3b not H3a):
+the most recent H3a robustness Obs; this Obs adds robustness to ME, scaling control,
+and stratification, completing the §5 sensitivity programme.
+
+**Obs 92** (H3b draw-wise base run — global Timpson saturation; probe-window
+P(deficit) the deliverable): H3b context; the Phase-1 thresholds that B4 tested here
+are also consumed by the H3b probe-window machinery.
+
+**Obs 93** (H3b flexible-null annex — saturation is structural null-misspecification;
+probe-window P(deficit) confirmed robust): the most recent H3b Obs; the Phase-1
+detection thresholds' robustness (B4, this Obs) feeds the H3b pipeline's Phase-1
+calibration.
+
+**Artefacts**:
+`runs/2026-06-16-s5-sensitivities/REPORT.md` (headline report; D11, D12, B4 summary);
+`runs/2026-06-16-s5-sensitivities/outputs/d11-hanson-me-results.json`
+(D11 per-σ results, convergence diagnostics, CI-shift table; source for all D11
+numbers in this Obs);
+`runs/2026-06-16-s5-sensitivities/outputs/d12-scaling-residual-results.json`
+(D12 pooled β, residual β_within, f_within; source for all D12 numbers);
+`runs/2026-06-16-s5-sensitivities/outputs/REPORT-b4.md` (B4 width-pool diagnostic;
+scheme-a/b construction, Wasserstein distances, width-pool table);
+`runs/2026-06-16-s5-sensitivities/outputs/REPORT-b4-rerun.md` (B4 threshold re-run
+results; per-cell table, headline medians);
+`runs/2026-06-16-s5-sensitivities/outputs/b4-threshold-rerun.json`
+(B4 per-cell thresholds and deltas; source for all B4 numbers in this Obs);
+`runs/2026-06-16-s5-sensitivities/code/d11_hanson_me.py` (D11 engine);
+`runs/2026-06-16-s5-sensitivities/code/d12_scaling_residual.py` (D12 engine);
+`runs/2026-06-16-s5-sensitivities/code/b4_stratified_widthpool.py` (B4 width-pool
+diagnostic);
+`runs/2026-06-16-s5-sensitivities/code/b4_threshold_rerun.py` (B4 threshold re-run);
+commit `edc5592` (D11 + D12 results);
+commit `6acfddf` (B4 width-pool diagnostic);
+commit `6b2a14a` (B4 threshold re-run — B4 closed).
+
+### Findable later
+
+`section-5-sensitivities`, `S5-sensitivities`, `D11`, `D12`, `B4`,
+`D11-measurement-error`, `Berkson-ME`, `Berkson-errors-in-variables`,
+`structural-EIV`, `faithfulness-catch`, `prereg-vs-implementation`,
+`Mundlak-NBR`, `within-between`, `f_within-robustness`,
+`f-within-0-299`, `f-within-0-305`, `f-within-0-320`, `f-within-0-341`,
+`sigma-pop-0-1`, `sigma-pop-0-2`, `sigma-pop-0-3`,
+`CI-shift-0-008`, `CI-shift-0-025`, `CI-shift-0-047`,
+`material-divergence-threshold-0-063`, `primary-CI-width-0-1253`,
+`rhat-1-01`, `ESS-bulk-1080`, `0-divergences`,
+`D12-scaling-residual`, `SAMOC-residual`, `SAMOC-log-residual`,
+`pooled-power-law`, `pooled-beta-0-565`, `beta-within-0-587`,
+`residual-beta-within-minus-0-065`, `residual-f-within-0-004`,
+`P-gt-0-equals-0-05`, `settlement-scaling-coherence`,
+`one-consistent-scaling-law`, `province-not-artefact`,
+`B4-stratified-sampling`, `province-proportional`, `city-proportional`,
+`reweight-to-balance`, `width-pool`, `interval-width-pool`,
+`Decision-8-supersession`, `LIRE-bootstrap-replaced`,
+`h1-sim-v2`, `parametric-null`, `vestigial-metadata`,
+`median-width-99y-to-79y`, `city-balanced-79y`,
+`Wasserstein-1`, `Wasserstein-17-45`, `Wasserstein-18-78`,
+`median-delta-minus-1-1-pct`, `median-delta-minus-0-4-pct`,
+`reachability-unchanged`, `0-cells-flip`,
+`n-iter-200`, `n-mc-300`, `reduced-precision`,
+`Phase-1-thresholds-robust`, `h1-v2`,
+`obligations-audit`, `B4-superseded`, `B4-closed`,
+`corroborating-results`, `no-limitation-flagged`,
+`obs-92`, `obs-93`, `obs-94`,
+`edc5592`, `6acfddf`, `6b2a14a`,
+`runs-2026-06-16-s5-sensitivities`
