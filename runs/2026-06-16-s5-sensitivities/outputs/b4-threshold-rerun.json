@@ -1,0 +1,293 @@
+{
+ "sampling": {
+  "n_iter": 200,
+  "n_mc": 300,
+  "target": 0.8,
+  "seed": 20260616,
+  "note": "balanced-vs-global delta is the deliverable; absolute min_n at reduced precision"
+ },
+ "summary": {
+  "province_balanced": {
+   "n_cells_comparable": 12,
+   "median_delta_min_n": -11.513230749068839,
+   "median_rel_change_pct": -1.0755738578957306,
+   "n_lower": 7,
+   "n_higher": 4,
+   "reachability_changed": 0
+  },
+  "city_balanced": {
+   "n_cells_comparable": 12,
+   "median_delta_min_n": -7.059533386967246,
+   "median_rel_change_pct": -0.3561282467532583,
+   "n_lower": 6,
+   "n_higher": 4,
+   "reachability_changed": 0
+  }
+ },
+ "rows": [
+  {
+   "level": "province",
+   "bracket": "a_50pc_50y",
+   "shape": "gaussian",
+   "null_model": "cpl",
+   "global": 1275.5102040816328,
+   "province_balanced": 1436.3636363636367,
+   "city_balanced": 1409.0909090909095,
+   "delta_province_balanced": 160.85343228200395,
+   "delta_city_balanced": 133.5807050092767
+  },
+  {
+   "level": "province",
+   "bracket": "a_50pc_50y",
+   "shape": "gaussian",
+   "null_model": "exponential",
+   "global": 1910.7142857142858,
+   "province_balanced": 1914.6341463414637,
+   "city_balanced": 1890.1098901098903,
+   "delta_province_balanced": 3.919860627177968,
+   "delta_city_balanced": -20.60439560439545
+  },
+  {
+   "level": "province",
+   "bracket": "a_50pc_50y",
+   "shape": "step",
+   "null_model": "cpl",
+   "global": 992.0,
+   "province_balanced": 972.4409448818899,
+   "city_balanced": 1104.6511627906978,
+   "delta_province_balanced": -19.55905511811011,
+   "delta_city_balanced": 112.65116279069775
+  },
+  {
+   "level": "province",
+   "bracket": "a_50pc_50y",
+   "shape": "step",
+   "null_model": "exponential",
+   "global": 1982.3008849557525,
+   "province_balanced": 1875.0,
+   "city_balanced": 1968.181818181818,
+   "delta_province_balanced": -107.30088495575251,
+   "delta_city_balanced": -14.119066773934492
+  },
+  {
+   "level": "province",
+   "bracket": "b_double_25y",
+   "shape": "gaussian",
+   "null_model": "cpl",
+   "global": 2111.1111111111113,
+   "province_balanced": 1980.769230769231,
+   "city_balanced": 1967.7419354838717,
+   "delta_province_balanced": -130.34188034188037,
+   "delta_city_balanced": -143.36917562723966
+  },
+  {
+   "level": "province",
+   "bracket": "b_double_25y",
+   "shape": "gaussian",
+   "null_model": "exponential",
+   "global": 2430.232558139535,
+   "province_balanced": 2500.0,
+   "city_balanced": 2308.510638297873,
+   "delta_province_balanced": 69.76744186046517,
+   "delta_city_balanced": -121.72191984166193
+  },
+  {
+   "level": "province",
+   "bracket": "b_double_25y",
+   "shape": "step",
+   "null_model": "cpl",
+   "global": null,
+   "province_balanced": null,
+   "city_balanced": null,
+   "delta_province_balanced": null,
+   "delta_city_balanced": null
+  },
+  {
+   "level": "province",
+   "bracket": "b_double_25y",
+   "shape": "step",
+   "null_model": "exponential",
+   "global": null,
+   "province_balanced": null,
+   "city_balanced": null,
+   "delta_province_balanced": null,
+   "delta_city_balanced": null
+  },
+  {
+   "level": "province",
+   "bracket": "c_20pc_25y",
+   "shape": "gaussian",
+   "null_model": "cpl",
+   "global": null,
+   "province_balanced": null,
+   "city_balanced": null,
+   "delta_province_balanced": null,
+   "delta_city_balanced": null
+  },
+  {
+   "level": "province",
+   "bracket": "c_20pc_25y",
+   "shape": "gaussian",
+   "null_model": "exponential",
+   "global": null,
+   "province_balanced": null,
+   "city_balanced": null,
+   "delta_province_balanced": null,
+   "delta_city_balanced": null
+  },
+  {
+   "level": "province",
+   "bracket": "c_20pc_25y",
+   "shape": "step",
+   "null_model": "cpl",
+   "global": null,
+   "province_balanced": null,
+   "city_balanced": null,
+   "delta_province_balanced": null,
+   "delta_city_balanced": null
+  },
+  {
+   "level": "province",
+   "bracket": "c_20pc_25y",
+   "shape": "step",
+   "null_model": "exponential",
+   "global": null,
+   "province_balanced": null,
+   "city_balanced": null,
+   "delta_province_balanced": null,
+   "delta_city_balanced": null
+  },
+  {
+   "level": "urban-area",
+   "bracket": "a_50pc_50y",
+   "shape": "gaussian",
+   "null_model": "cpl",
+   "global": 1604.4776119402986,
+   "province_balanced": 1323.529411764706,
+   "city_balanced": 1463.636363636364,
+   "delta_province_balanced": -280.94820017559255,
+   "delta_city_balanced": -140.84124830393466
+  },
+  {
+   "level": "urban-area",
+   "bracket": "a_50pc_50y",
+   "shape": "gaussian",
+   "null_model": "exponential",
+   "global": 1988.2352941176473,
+   "province_balanced": 2011.6279069767445,
+   "city_balanced": 1957.831325301205,
+   "delta_province_balanced": 23.3926128590972,
+   "delta_city_balanced": -30.40396881644233
+  },
+  {
+   "level": "urban-area",
+   "bracket": "a_50pc_50y",
+   "shape": "step",
+   "null_model": "cpl",
+   "global": 1136.3636363636365,
+   "province_balanced": 987.6033057851241,
+   "city_balanced": 1136.3636363636365,
+   "delta_province_balanced": -148.76033057851237,
+   "delta_city_balanced": 0.0
+  },
+  {
+   "level": "urban-area",
+   "bracket": "a_50pc_50y",
+   "shape": "step",
+   "null_model": "exponential",
+   "global": 1932.0388349514565,
+   "province_balanced": 1928.571428571429,
+   "city_balanced": 1933.9622641509436,
+   "delta_province_balanced": -3.467406380027569,
+   "delta_city_balanced": 1.9234291994871455
+  },
+  {
+   "level": "urban-area",
+   "bracket": "b_double_25y",
+   "shape": "gaussian",
+   "null_model": "cpl",
+   "global": 1928.571428571429,
+   "province_balanced": 1865.3846153846155,
+   "city_balanced": 2071.4285714285716,
+   "delta_province_balanced": -63.186813186813424,
+   "delta_city_balanced": 142.85714285714266
+  },
+  {
+   "level": "urban-area",
+   "bracket": "b_double_25y",
+   "shape": "gaussian",
+   "null_model": "exponential",
+   "global": 25.0,
+   "province_balanced": 25.0,
+   "city_balanced": 25.0,
+   "delta_province_balanced": 0.0,
+   "delta_city_balanced": 0.0
+  },
+  {
+   "level": "urban-area",
+   "bracket": "b_double_25y",
+   "shape": "step",
+   "null_model": "cpl",
+   "global": null,
+   "province_balanced": null,
+   "city_balanced": null,
+   "delta_province_balanced": null,
+   "delta_city_balanced": null
+  },
+  {
+   "level": "urban-area",
+   "bracket": "b_double_25y",
+   "shape": "step",
+   "null_model": "exponential",
+   "global": null,
+   "province_balanced": null,
+   "city_balanced": null,
+   "delta_province_balanced": null,
+   "delta_city_balanced": null
+  },
+  {
+   "level": "urban-area",
+   "bracket": "c_20pc_25y",
+   "shape": "gaussian",
+   "null_model": "cpl",
+   "global": null,
+   "province_balanced": null,
+   "city_balanced": null,
+   "delta_province_balanced": null,
+   "delta_city_balanced": null
+  },
+  {
+   "level": "urban-area",
+   "bracket": "c_20pc_25y",
+   "shape": "gaussian",
+   "null_model": "exponential",
+   "global": null,
+   "province_balanced": null,
+   "city_balanced": null,
+   "delta_province_balanced": null,
+   "delta_city_balanced": null
+  },
+  {
+   "level": "urban-area",
+   "bracket": "c_20pc_25y",
+   "shape": "step",
+   "null_model": "cpl",
+   "global": null,
+   "province_balanced": null,
+   "city_balanced": null,
+   "delta_province_balanced": null,
+   "delta_city_balanced": null
+  },
+  {
+   "level": "urban-area",
+   "bracket": "c_20pc_25y",
+   "shape": "step",
+   "null_model": "exponential",
+   "global": null,
+   "province_balanced": null,
+   "city_balanced": null,
+   "delta_province_balanced": null,
+   "delta_city_balanced": null
+  }
+ ]
+}

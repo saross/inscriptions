@@ -52,22 +52,30 @@ the global scaling, not a province-specific artefact. So the Hanson correlation
 documented choices; the prereg phrasing ("re-run H3a on residuals") is terse. If you
 intended, e.g., a count-model residual or a different estimand, this is a quick re-run.
 
-## B4 — Phase-1 stratified-sampling sensitivity — PARTLY RESOLVED (see `outputs/REPORT-b4.md`)
+## B4 — Phase-1 stratified-sampling sensitivity — RESOLVED (robust)
 
-**Update (2026-06-16):** reading the v2 harness revealed B4 is **architecturally moot
+**Outcome (2026-06-16).** Reading the v2 harness revealed B4 is **architecturally moot
 as written** — Decision 8 replaced the LIRE bootstrap with synthetic-data-from-null, so
 the only empirical lever is the interval-width pool (province/city counts are vestigial).
-The v2-faithful width-pool diagnostic: **scheme (a) proportional-allocation is
-threshold-neutral by construction**; **scheme (b) reweight-to-balance shifts the width
-pool materially** (city-balanced median width 99y → 79y, −20%; Wasserstein-1 ≈ 18–19y vs
-the 9.9y tolerance) — over-represented big cities carry wider intervals, so a balanced
-corpus is narrower → likely *lower* thresholds. Quantifying that needs a **targeted grid
-re-run** under the balanced width pool (scoped below), now revealed to be a re-run not a
-cheap replay. Recommend recording B4 as **superseded by Decision 8** in the obligations
-audit, with the width-pool check as the v2-faithful substitute. Original scope retained
-below for the re-run.
+The v2-faithful B4 was then run in two steps:
 
-### Original scope (for the scheme-(b) threshold re-run)
+1. **Width-pool diagnostic** (`outputs/REPORT-b4.md`): scheme (a) proportional-allocation
+   is **threshold-neutral by construction**; scheme (b) reweight-to-balance shifts the
+   width pool (city-balanced median width 99y → 79y; over-represented big cities carry
+   wider intervals).
+2. **Scheme-(b) threshold re-run** (`outputs/REPORT-b4-rerun.md`): re-ran the threshold
+   cells under global / province-balanced / city-balanced width pools at matched
+   precision. **Thresholds are robust** — median Δ **−1.1%** (province-balanced) / **−0.4%**
+   (city-balanced), in the expected direction (narrower → easier detection) but tiny and
+   within the n_iter=200 Monte-Carlo noise, and **no reachability classifications change**
+   (0 cells flip reachable↔unreachable).
+
+**Conclusion:** the Phase-1 detection thresholds are robust to province/city stratification
+under both schemes. **Recommend recording B4 in the obligations audit as superseded by
+Decision 8 (no LIRE bootstrap in v2), satisfied via this width-pool check.** The committed
+full-precision thresholds (`runs/2026-04-25-h1-simulation/outputs/h1-v2/`) stand.
+
+<details><summary>Original scope (now executed)</summary>
 
 Prereg (§5, Phase-1 supplementary): "Phase 1 thresholds use bootstrap
 (sampling-with-replacement) from filtered LIRE; thresholds are recomputed using
@@ -89,12 +97,15 @@ guess the scheme and dive into the Phase-1 code blind, it is flagged:
 - **Stakes:** low (Phase-1 robustness supplementary); no downstream analysis gates on
   it.
 
+</details>
+
 ## Summary
 
-Both executed §5 sensitivities **corroborate the H3a primary**: f_within is robust to
-population measurement error (D11), and the within-province scaling is one coherent law
-with the global scaling (D12). B4 awaits a one-line decision on the stratification
-scheme.
+All three §5 items **corroborate the existing results**: f_within is robust to population
+measurement error (D11); the within-province scaling is one coherent law with the global
+scaling (D12); and the Phase-1 detection thresholds are robust to province/city
+stratification (B4 — both schemes, median Δ ~−1%, no reachability change), with B4
+recorded as superseded-by-Decision-8 and satisfied via the width-pool check.
 
 ## Reproduce
 ```bash
