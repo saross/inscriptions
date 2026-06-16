@@ -10,17 +10,19 @@ layer on Hanson population, σ_pop ∈ {0.1, 0.2, 0.3}, and report f_within per 
 Material divergence from the no-ME primary is flagged descriptively (NOT an amendment
 trigger — prereg §5; I7 in the obligations audit).
 
-Implementation (errors-in-variables, the standard reading of "lognormal ME on
-log_pop"):
-  - latent true log-population  log_pop_true[i] ~ Normal(μ_lp, τ_lp);
-  - measurement                 log_pop_obs[i]  ~ Normal(log_pop_true[i], σ_pop)
-                                (lognormal ME on pop == normal ME on log pop);
-  - the Mundlak components are recomputed FROM THE LATENT log_pop each draw
-    (province mean via a row-normalised membership matrix), so both the within
-    deviation and the between mean carry the population uncertainty — this is the
-    point of the sensitivity;
-  - otherwise identical to the primary: non-centred province intercepts, NBR
-    likelihood, the same f_within = Var(β_within·within)/Var(log μ).
+Implementation — EXACTLY the preregistered ME (prereg §5):
+  ``log_pop_c ~ Normal(log_pop_observed_c, σ_pop)``  (a Berkson-style prior centred
+  on the observed value; NOT a structural EIV hyperprior — faithful to the prereg
+  notation). The latent log-population is informed by both this prior and the count
+  likelihood. The Mundlak components are recomputed FROM THE LATENT log_pop each draw
+  (province mean via a row-normalised membership matrix), so both the within deviation
+  and the between mean carry the population uncertainty — the point of the sensitivity.
+  Otherwise identical to the primary: non-centred province intercepts, NBR likelihood,
+  the same f_within = Var(β_within·within)/Var(log μ).
+
+Material-divergence rule (prereg §5): the f_within 95% CI shifting by more than 50% of
+the primary-result CI width (primary width 0.125 → threshold 0.0625) under any σ_pop is
+flagged as a limitation; it does NOT trigger an amendment (preregistered exploratory).
 
 Anchor: the no-ME primary f_within (runs/2026-06-04-h3a-confirmatory) is read and
 reported alongside; σ_pop → 0 would reproduce it.
@@ -70,11 +72,8 @@ def build_me_model(cities: pd.DataFrame, sigma_pop: float) -> pm.Model:
     mmat = province_mean_matrix(pidx, n_prov)
 
     with pm.Model() as model:
-        # Latent true log-population + lognormal measurement layer.
-        mu_lp = pm.Normal("mu_lp", mu=float(x_obs.mean()), sigma=5.0)
-        tau_lp = pm.HalfNormal("tau_lp", sigma=5.0)
-        log_pop_true = pm.Normal("log_pop_true", mu=mu_lp, sigma=tau_lp, shape=len(x_obs))
-        pm.Normal("log_pop_obs", mu=log_pop_true, sigma=sigma_pop, observed=x_obs)
+        # Preregistered ME: latent log-pop ~ Normal(observed, σ_pop) (Berkson form).
+        log_pop_true = pm.Normal("log_pop_true", mu=x_obs, sigma=sigma_pop, shape=len(x_obs))
 
         # Mundlak components recomputed from the latent population.
         prov_mean = pm.math.dot(mmat, log_pop_true)          # (n_prov,)
@@ -117,7 +116,7 @@ def summarise(draws: np.ndarray) -> dict:
 
 def convergence(idata: az.InferenceData) -> dict:
     summ = az.summary(idata, var_names=["alpha_0", "beta_within", "beta_between",
-                                        "sigma_prov", "inv_dispersion", "mu_lp", "tau_lp"])
+                                        "sigma_prov", "inv_dispersion"])
     return {"max_rhat": float(summ["r_hat"].max()),
             "min_ess_bulk": float(summ["ess_bulk"].min()),
             "n_divergences": int(idata.sample_stats["diverging"].sum()),
@@ -151,8 +150,22 @@ def main() -> None:
               f"({fw['verdict']}); R̂max {conv['max_rhat']:.4f}, ESS {conv['min_ess_bulk']:.0f}, "
               f"div {conv['n_divergences']}  ({results['sigma_pop'][str(sig)]['secs']}s)", flush=True)
 
+    # Material-divergence flag (prereg §5): CI shift > 50% of primary CI width.
+    prim_lo, prim_hi = primary_f["ci_lo"], primary_f["ci_hi"]
+    prim_w = prim_hi - prim_lo
+    thresh = 0.5 * prim_w
+    flags = {}
+    for sig in SIGMAS:
+        fw = results["sigma_pop"][str(sig)]["f_within"]
+        shift = max(abs(fw["ci_lo"] - prim_lo), abs(fw["ci_hi"] - prim_hi))
+        flags[str(sig)] = {"ci_shift": round(shift, 4), "material": bool(shift > thresh)}
+    results["material_divergence"] = {"primary_ci_width": round(prim_w, 4),
+                                      "threshold_50pct": round(thresh, 4),
+                                      "per_sigma": flags,
+                                      "any_material": any(f["material"] for f in flags.values())}
     (OUT_DIR / "d11-hanson-me-results.json").write_text(json.dumps(results, indent=1))
-    print(f"\nwrote → {OUT_DIR}/d11-hanson-me-results.json")
+    print(f"\nmaterial divergence (any σ): {results['material_divergence']['any_material']}")
+    print(f"wrote → {OUT_DIR}/d11-hanson-me-results.json")
 
 
 if __name__ == "__main__":
