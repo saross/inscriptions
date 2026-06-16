@@ -1,0 +1,44 @@
+{
+ "frame": "primary (1,044-city Hanson)",
+ "construction": "pooled NBR power-law -> SAMOC log-residual -> Gaussian within-between",
+ "primary_h3a_f_within": {
+  "median": 0.2989204388553127,
+  "ci_lo": 0.2397320481157514,
+  "ci_hi": 0.36507666937399985,
+  "p_gt_005": 1.0,
+  "p_gt_010": 1.0,
+  "p_gt_020": 0.9995833333333334,
+  "verdict": "supported"
+ },
+ "primary_h3a_beta_within": {
+  "median": 0.5869170609413196,
+  "ci_lo": 0.5187384617723132,
+  "ci_hi": 0.6573599538135705
+ },
+ "stage1_pooled_scaling": {
+  "beta_median": 0.565369982015409,
+  "a_median": -0.4212685334877744,
+  "max_rhat": 1.0,
+  "min_ess_bulk": 5341.0
+ },
+ "residual_partition": {
+  "beta_within": {
+   "median": -0.06549873118356468,
+   "ci_lo": -0.1436659935026045,
+   "ci_hi": 0.011180627274957512,
+   "p_gt_0": 0.04733333333333333,
+   "survives_scaling_control": false
+  },
+  "residual_f_within": {
+   "median": 0.00411499092768969,
+   "ci_lo": 2.597238822545487e-05,
+   "ci_hi": 0.01963213972701582
+  },
+  "convergence": {
+   "max_rhat": 1.0,
+   "min_ess_bulk": 1107.0,
+   "n_divergences": 0
+  }
+ },
+ "secs": 20.7
+}
