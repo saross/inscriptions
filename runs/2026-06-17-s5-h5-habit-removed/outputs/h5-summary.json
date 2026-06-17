@@ -1,0 +1,78 @@
+{
+  "n_cities": 268,
+  "n_reliable": 34,
+  "n_star": 300,
+  "empire_habit_peak_bin": 9,
+  "empire_habit_peak_year": 187.5,
+  "habit_lag_years": {
+    "definition": "raw inscription peak year - habit-removed residual peak year, per city (median over draws)",
+    "corpus_median": 0.0,
+    "corpus_median_reliable": 0.0,
+    "iqr": [
+      0.0,
+      50.0
+    ],
+    "frac_positive": 0.48134328358208955
+  },
+  "foundation_terminus": {
+    "n_matched": 268,
+    "n_within_envelope_matched": 99,
+    "median_pre_foundation_frac": 0.0007,
+    "worst_offenders": [
+      {
+        "city": "Corstopitum",
+        "start_date": 200.0,
+        "pre_foundation_mass_frac": 0.594
+      },
+      {
+        "city": "Corinium Dobunnorum",
+        "start_date": 100.0,
+        "pre_foundation_mass_frac": 0.3021
+      },
+      {
+        "city": "Luguvalium",
+        "start_date": 100.0,
+        "pre_foundation_mass_frac": 0.2681
+      },
+      {
+        "city": "Centumcellae",
+        "start_date": 106.0,
+        "pre_foundation_mass_frac": 0.2581
+      },
+      {
+        "city": "Lauriacum",
+        "start_date": 191.0,
+        "pre_foundation_mass_frac": 0.1714
+      },
+      {
+        "city": "Argentoratum",
+        "start_date": 80.0,
+        "pre_foundation_mass_frac": 0.1655
+      },
+      {
+        "city": "Vindobona",
+        "start_date": 100.0,
+        "pre_foundation_mass_frac": 0.1455
+      },
+      {
+        "city": "Mursa",
+        "start_date": 133.0,
+        "pre_foundation_mass_frac": 0.0945
+      },
+      {
+        "city": "Lambaesis",
+        "start_date": 129.0,
+        "pre_foundation_mass_frac": 0.0816
+      },
+      {
+        "city": "Eburacum",
+        "start_date": 100.0,
+        "pre_foundation_mass_frac": 0.0786
+      }
+    ]
+  },
+  "provenance": {
+    "primary_nc": "/home/shawn/Code/inscriptions/runs/2026-05-30-s5-small-n-trajectories/code/production/monolithic-inscription-25y.nc"
+  },
+  "note": "Exploratory; no pre-committed thresholds (Decision 13). Residual = u_shape + v_shape."
+}
