@@ -4132,6 +4132,28 @@ All six are well-known Hadrianic or Trajanic frontier garrisons with documented 
 military phases; the over-representation of inscriptions before the civilian foundation
 date is archaeologically expected.
 
+**Finding 4 — Magnitude decomposition: the common temporal component is large; the
+Latin-minus-Roma diagnostic unit ≈ all-provinces.**
+In comparable log-rate SD units (posterior median; `h5-decomposition.json`):
+
+| Component | log-rate SD |
+|---|---|
+| Empire-common temporal swing (`g`) | 1.11 |
+| Province temporal (`u`) | 1.02 |
+| City-specific temporal (`v`) | 0.98 |
+| Between-city LEVEL spread (cross-sectional / population axis) | 0.78 |
+
+The empire-common temporal component accounts for **≈ 54 %** of a typical city's temporal
+variance and is the largest single magnitude among the mid-sized §5 cities — but the
+level/population axis (0.78) is **understated by §5 range restriction** (the set excludes
+the size extremes), so this is *not* "timing beats population" in the full corpus; level
+(cross-sectional, population) and the common component (temporal) live on different axes.
+**Latin-minus-Roma (257/268 cities) is essentially identical to all-provinces** (common
+peak AD 187.5, sd_level 0.785, sd_v 0.975, common share 0.54) — the diagnostic unit gives
+the same decomposition because the §5 set is 96 % Latin-West. The 11 non-Latin Greek-East
+cities peak **earlier (~ AD 112.5)** with a tighter level spread (0.52) — a possible
+East/West timing difference, but n = 11, a flag not a finding.
+
 ### Why this matters
 
 1. **H5 confirms the Layer-A posterior is well-behaved.** The corpus-wide foundation-date
@@ -4164,11 +4186,12 @@ date is archaeologically expected.
   founded within the envelope; cities pre-dating 50 BC have no binding lower terminus.
 - **N* = 300 floor** carries from Layer A: 34/268 reliable; the lag result is dominated
   by small-N cities whose peaks are noisy.
-- **Magnitude decomposition and Latin-minus-Roma subset analysis** (variance of g, u, v
-  components; Greek-East vs Latin comparison) are documented in the spec as planned
-  deliverables but are not present in the REPORT.md or h5-summary.json for this run.
-  These numbers cannot be verified from available source files and are omitted here;
-  they would require a re-read of the trajectory `.nc` or a supplementary run.
+- **Magnitude decomposition + Latin-minus-Roma** (Finding 4) are computed by the companion
+  script `code/h5_decomposition.py` → `outputs/h5-decomposition.json` (commit `3ae63c0`),
+  reproducible from the §5 Layer-A posterior. The `median_common_share_of_temporal_var`
+  (≈ 54 %) is approximate — it ignores inter-tier covariance. The Greek-East subset is
+  n = 11 (descriptive only). A dedicated Latin-only re-fit would barely differ (the global
+  `g` is unchanged); it is optional polish, not a correction.
 
 ### Related observations and artefacts
 
@@ -4202,6 +4225,9 @@ verified against it and the JSON);
 (sample residual trajectories);
 `runs/2026-06-17-s5-h5-habit-removed/spec.md` (the signed-off H5 spec + design decisions);
 `runs/2026-06-17-s5-h5-habit-removed/code/h5_habit_removed.py` (engine);
+`runs/2026-06-17-s5-h5-habit-removed/code/h5_decomposition.py` +
+`outputs/h5-decomposition.json` (Finding 4 magnitude decomposition + Latin-minus-Roma;
+commit `3ae63c0`);
 commit `4f125cd` (H5 results).
 
 ### Findable later
@@ -4223,8 +4249,11 @@ commit `4f125cd` (H5 results).
 `Argentoratum`, `Strasbourg`, `16-pct-pre-foundation`,
 `terminus-check`, `Barrington-foundation`, `within-envelope`,
 `u-shape`, `v-shape`, `alpha-g`, `residual-trajectory`,
-`magnitude-decomposition-missing`, `Latin-minus-Roma-missing`,
-`Greek-East-missing`, `planned-but-unverified`,
+`magnitude-decomposition`, `variance-decomposition`, `sd-common-g-1-11`,
+`sd-province-u-1-02`, `sd-city-v-0-98`, `sd-level-0-78`, `common-share-0-54`,
+`Latin-minus-Roma`, `Latin-minus-Roma-257`, `diagnostic-unit`,
+`Greek-East-11`, `Greek-East-peak-AD-112`, `log-rate-SD`, `range-restriction`,
+`h5-decomposition-json`, `3ae63c0`,
 `h5-summary-json`, `h5-residual-trajectories-nc`,
 `deterministic-read`, `no-MCMC`, `monolithic-inscription-25y`,
 `4f125cd`, `runs-2026-06-17-s5-h5-habit-removed`,
