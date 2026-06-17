@@ -1,0 +1,24 @@
+Building peak counts ...
+  raw50 cities=1044 | raw25 cities=1044 | modelled §5 cities=268
+Initializing NUTS using jitter+adapt_diag...
+Multiprocess sampling (4 chains in 4 jobs)
+NUTS: [alpha_0, sigma_prov, alpha_prov_raw, beta_within, beta_between, inv_dispersion]
+Sampling 4 chains for 3_000 tune and 2_000 draw iterations (12_000 + 8_000 draws total) took 73 seconds.
+  [raw_peak_50y_1044] beta_within=+0.557 [+0.490,+0.624] n=1044 (R̂=1.0000)
+Initializing NUTS using jitter+adapt_diag...
+Multiprocess sampling (4 chains in 4 jobs)
+NUTS: [alpha_0, sigma_prov, alpha_prov_raw, beta_within, beta_between, inv_dispersion]
+Sampling 4 chains for 3_000 tune and 2_000 draw iterations (12_000 + 8_000 draws total) took 73 seconds.
+  [raw_peak_25y_1044] beta_within=+0.545 [+0.479,+0.612] n=1044 (R̂=1.0000)
+Initializing NUTS using jitter+adapt_diag...
+Multiprocess sampling (4 chains in 4 jobs)
+NUTS: [alpha_0, sigma_prov, alpha_prov_raw, beta_within, beta_between, inv_dispersion]
+Sampling 4 chains for 3_000 tune and 2_000 draw iterations (12_000 + 8_000 draws total) took 17 seconds.
+  [raw_peak_25y_268] beta_within=+0.223 [+0.130,+0.319] n=268 (R̂=1.0000)
+Initializing NUTS using jitter+adapt_diag...
+Multiprocess sampling (4 chains in 4 jobs)
+NUTS: [alpha_0, sigma_prov, alpha_prov_raw, beta_within, beta_between, inv_dispersion]
+Sampling 4 chains for 3_000 tune and 2_000 draw iterations (12_000 + 8_000 draws total) took 17 seconds.
+  [modelled_peak_25y_268] beta_within=+0.213 [+0.112,+0.314] n=268 (R̂=1.0000)
+
+Done. Summary at outputs/peak-scaling-summary.json
