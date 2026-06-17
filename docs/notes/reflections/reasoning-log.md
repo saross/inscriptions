@@ -460,3 +460,19 @@ The structured session-reflection (Entry 9) carries the considered account. This
 *A robustness result is a finding; record the lever AND the magnitude it didn't move.* "f_within robust to ME" is only legible with the numbers (0.299 → 0.341 max, CI shift 0.047 < 0.063 threshold); "thresholds robust to stratification" needs "median Δ −1%, 0 reachability changes." Without the magnitude a null reads as "didn't look," not "looked and it held."
 
 *Memo to future me:* **measure whether the lever moves the answer before spending compute; re-read a preregistered model's *form* before coding it; read the harness before swapping a component — the obligation may be superseded; use a robust estimator in log space before trusting a slope; classify your statistic as mass-conserved or shape-sensitive before predicting a reshaping's effect; match baseline precision to treatment so the delta is clean; and quote the magnitude a robustness result didn't move.**
+
+## 2026-06-16 → 2026-06-17 — Entry 19: in-stream notes from the Layer B → H5 → H7 → peak-scaling production arc
+
+*Before building a downstream analysis, ask whether it's a deterministic read of a posterior you already have.* Layer B and H5 needed **no new MCMC** — Layer B is a transform of the §5 Layer-A `lam` draws; H5's habit/residual split is literally the model's own `g_shape`/`u_shape`/`v_shape` Deterministics. H7 and peak-scaling reused the audited H3a NBR verbatim rather than reimplementing. The reflex "what would I have to fit?" often answers "nothing — it's already in the `.nc`".
+
+*A number you reported but never wrote to a file is unanchored — persist the computation before citing it.* I reported the magnitude decomposition from transient sapphire stdout; the obs-writer (correctly) refused to record it because it was in no source file. Wrote `h5_decomposition.py` → `h5-decomposition.json` to anchor it, then completed the Obs. The write-side anti-confab rule applies to *computed results*, not just filenames/hashes.
+
+*Surface the analysis frame as a decision; don't inherit the prior run's frame.* I built all four §5 analyses on the all-provinces frame because the existing §5 fit used it — Shawn flagged the diagnostic unit is Latin-minus-Roma. For §5 it was ~moot (257/268 Latin), but H7/peak-scaling on the 1044 frame need Latin variants. The frame is a choice even when a fit already exists in it.
+
+*A magnitude that drops only when the city set changes is range restriction, not a real effect.* peak-scaling β fell 0.55 (1044 cities) → 0.22 (268 §5 cities) at the *same* window and measure — pure range restriction (the §5 set excludes the size extremes). Stated explicitly so the 0.22 isn't read as "peak scaling is flat".
+
+*`pgrep -f <name>` matches the watcher's own command line.* My "wait until peak_scaling finishes" loop (`while pgrep -f peak_scaling`) never exited because the loop's own command contained "peak_scaling". For a self-watching poll, match a string that isn't in the watcher (or check the log for a "Done" sentinel). Small gotcha, cost a stuck background task.
+
+*For background runs on sapphire, prefer a foreground ssh under the harness's run_in_background (it notifies on completion) over a detached `nohup &` (which gives no completion signal).* The Layer-B run notified me cleanly; the nohup'd H5/H7/peak runs left me polling. Use nohup only when the run must outlive the ssh.
+
+*Memo to future me:* **check if a downstream analysis is just a posterior read before fitting anything; persist a computed number to a file before citing it (write-side anti-confab); surface the analysis frame (here: Latin-minus-Roma) as a choice; label a city-set-dependent magnitude drop as range restriction; don't self-match in a `pgrep` watcher; and prefer harness-tracked foreground ssh over detached nohup for completion signals.**
