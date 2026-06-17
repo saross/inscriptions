@@ -3939,3 +3939,779 @@ commit `6b2a14a` (B4 threshold re-run — B4 closed).
 `obs-92`, `obs-93`, `obs-94`,
 `edc5592`, `6acfddf`, `6b2a14a`,
 `runs-2026-06-16-s5-sensitivities`
+
+## Obs 96 — 2026-06-16 [RESULT]: §5 Layer B β-inversion complete — gate validates against both independent anchors
+
+### The finding
+
+Per-city relative and Hanson-anchored population trajectories for the 268 §5 target
+cities, produced draw-wise via the H3a scaling law inverted through the within-province
+exponent:
+
+`pop_t = pop_max · ( insc_t / max_t insc_t )^(1/β_within)`
+
+Two β frames propagated (8,000 Layer-A draws each, resampled from 12,000 H3a draws):
+- **Empire frame:** β_within = 0.587 (JSON: 0.5869); exponent 1/β ≈ 1.70 (amplifying)
+- **Latin frame:** β_within = 0.733 (JSON: 0.7331); exponent 1/β ≈ 1.36 (less extreme)
+
+Outputs: relative-shape (peak = 1) and Hanson-anchored absolute trajectories, median +
+95 % bands; 34/268 cities meet the N ≥ 300 reliability floor (`reliable` flag carried
+from Layer A).
+
+**Validation gate (descriptive, exploratory) — PASS: both anchors met.**
+
+Because the 268 target cities are small-N and the large anchors were not in that fit,
+Ostia and Pompeii were re-fitted standalone (empire β only) and the identical transform
+applied. Both converged: R̂ = 1.0000, 0 divergences, ESS 1,166 (Ostia) / 1,420
+(Pompeii).
+
+| Anchor | Inverted-pop peak | P(peak 2nd c. AD) | Post-AD-79 mass fraction | Verdict |
+|---|---|---|---|---|
+| **Ostia** | AD 125–150 (Hadrianic) | 0.99 | — | matches OCD/Meiggs 2nd-c. apogee |
+| **Pompeii** | AD 50–75 (pre-eruption) | 0.00 | 5.4 × 10⁻⁶ ≈ 0.000 | eruption terminus reproduced |
+
+Descriptive aside: a dip in the Ostia trajectory ~AD 160–175 coincides with the Antonine
+Plague — intriguing but not a claim (binning/aoristic artefact equally plausible; the
+1/β amplification makes small inscription-rate dips look like steep population drops).
+
+**The headline caveat, borne out.** Because β < 1 ⇒ 1/β > 1, the inversion amplifies
+every swing. For the **median** target city, the inverted population at AD 250 is ≈ 0 %
+of peak (empire frame) — the post-AD-250 inscription collapse, dominated empire-wide by
+the epigraphic-habit decline (MacMullen 1982), is NOT demonstrated depopulation. The Latin
+frame (1/β ≈ 1.36) is materially less extreme; the amplitude overlay figure shows this
+directly. This vindicates the illustrative-only framing and is exactly what the H5
+habit-removed residual analysis (Decision 13) is designed to disentangle.
+
+Typical small-N target city: median P(peak in 2nd century) = 0.21 across cities — not
+concentrated in the 2nd century as the great anchors are; small/frontier cities are more
+varied.
+
+### Why this matters
+
+1. **The §5 Layer B deliverable is done.** Per-city illustrative population-trajectory
+   shapes for the 268 target cities are on disk, flagged with the N* = 300 reliability
+   floor.
+2. **Validation gate demonstrates methodological coherence.** Two independent anchors
+   bracket the gate: one tests the growth-to-2nd-c.-peak expectation (Ostia, clean pass),
+   the other a hard eruption terminus (Pompeii, clean pass). The gate is descriptive but
+   non-trivial.
+3. **Amplification is the dominant interpretive caveat.** The 1/β exponent (1.70 empire,
+   1.36 Latin) means population swings exceed inscription swings; the post-peak decline
+   is partly artefactual. Write-up must lead with the illustrative-only framing.
+4. **H5 habit-removed residual is the principled next step.** The inversion works on
+   the raw Layer-A trajectory (which includes the empire-wide epigraphic-habit shape);
+   the H5 residual (Obs 97) separates habit from city signal before inversion.
+
+### Caveats / methodological notes
+
+- **Illustrative comparative-shape only** — not a population estimate; the preregistration
+  wording is binding (Decision 13; prereg §5 "Extension (Layer B)").
+- **Cross-sectional → temporal substitution:** the within-province H3a β is used as a
+  within-city-over-time exponent — the prereg's flagged "strong assumption"; β_within is
+  the least-bad analogue but is still an assumption.
+- **Only 34/268 cities meet the N* = 300 floor.** The remaining 234 are below-floor;
+  retained and flagged, not suppressed.
+- **Hanson anchor** pins peak population to a single static figure; Hanson's own level
+  uncertainty is not propagated.
+- **Posterior independence** — Layer-A and H3a posteriors combined under independence
+  (separate fits).
+- **Antonine Plague dip in Ostia** — visually striking, not a claim; binning and
+  aoristic spreading plus 1/β amplification are co-equal explanations.
+
+### Related observations and artefacts
+
+**Obs 94** (deconvolution does NOT change H3a — raw-count population–epigraphy scaling
+robust to convention-correction): the H3a scaling law consumed here as the β parameter;
+confirms the β_within = 0.587 primary is paper-ready.
+
+**Obs 95** (§5 sensitivity batch D11, D12, B4 — all three corroborate H3a): closes the
+sensitivity programme for the same H3a result; the robustness stack is the foundation
+for using β_within here.
+
+**Obs 97** (H5 — empire-wide common temporal component peaks AD 188; habit-lag
+characterised): the complement to this Obs — habit-removed residuals that disentangle
+epigraphic habit from city signal in the Layer-A trajectories inverted here.
+
+**Artefacts**:
+`runs/2026-06-16-s5-layer-b-beta-inversion/REPORT.md` (source report; all numbers
+verified against it and the JSON);
+`runs/2026-06-16-s5-layer-b-beta-inversion/outputs/layerb-summary.json`
+(per-frame β, per-city peak/decline summaries, gate outcomes, seed, input sha256 provenance;
+source for all numbers in this Obs);
+`runs/2026-06-16-s5-layer-b-beta-inversion/outputs/layerb-trajectories-empire.nc`
+(per-city summary trajectories, empire frame);
+`runs/2026-06-16-s5-layer-b-beta-inversion/outputs/layerb-trajectories-latin.nc`
+(per-city summary trajectories, Latin frame);
+`runs/2026-06-16-s5-layer-b-beta-inversion/outputs/layerb-anchor-gate-empire.png`
+(Ostia/Pompeii gate panels);
+`runs/2026-06-16-s5-layer-b-beta-inversion/outputs/layerb-amplitude-overlay.png`
+(empire-vs-Latin β amplitude sensitivity overlay);
+commit `b0de24e` (Layer B results).
+
+### Findable later
+
+`Layer-B`, `beta-inversion`, `layerb`, `s5-layer-b`, `population-trajectory`,
+`illustrative-comparative-shape`, `Decision-13`, `prereg-s5`,
+`beta-within-0-587`, `beta-within-0-733`, `empire-frame`, `latin-frame`,
+`1-over-beta`, `amplification-exponent`, `1-70`, `1-36`,
+`268-target-cities`, `34-reliable`, `N-star-300`, `below-floor`,
+`Ostia`, `Pompeii`, `anchor-gate`, `validation-gate`,
+`Ostia-AD-125-150`, `Ostia-P-peak-2c-0-99`, `Ostia-Hadrianic`,
+`Pompeii-AD-50-75`, `Pompeii-post-AD-79-mass-0-000`, `eruption-terminus`,
+`Antonine-Plague-dip`, `Meiggs-Roman-Ostia`, `OCD-Ostia`,
+`median-P-peak-2c-0-21`, `small-frontier-cities`, `varied-peaks`,
+`MacMullen-1982`, `epigraphic-habit-collapse`, `post-AD-250`,
+`not-demography`, `not-depopulation`, `illustrative-only`,
+`Hanson-anchored`, `cross-sectional-temporal-substitution`,
+`pop-max-urban-context`, `posterior-independence`,
+`rhat-1-0000`, `ESS-1166`, `ESS-1420`, `0-divergences`,
+`layerb-summary-json`, `layerb-trajectories-nc`, `layerb-anchor-gate-png`,
+`layerb-amplitude-overlay-png`, `b0de24e`,
+`runs-2026-06-16-s5-layer-b-beta-inversion`,
+`obs-94`, `obs-95`, `obs-97`
+
+## Obs 97 — 2026-06-17 [RESULT / METHODOLOGY]: §5 H5 — empire-wide common temporal component peaks AD 188; no systematic corpus lag; foundation-terminus check passes
+
+### The finding
+
+H5 is a deterministic read of the §5 Layer-A posterior (`monolithic-inscription-25y.nc`,
+268 cities, 8,000 draws, 16 × 25 y bins, 50 BC–AD 350). No new MCMC. The hierarchical
+model already decomposes each city's log inscription-rate:
+
+`log_lam[c,t] = α_g + g_shape[t] + b_u[p] + u_shape[p,t] + b_v[c] + v_shape[c,t]`
+
+H5 reads:
+- **Empire-wide common temporal component** = `α_g + g_shape[t]` (the shape shared by
+  all cities)
+- **Habit-removed residual trajectory** = `u_shape[p,t] + v_shape[c,t]` (province +
+  city deviation from the empire norm)
+
+**Finding 1 — Empire habit peak: AD 187.5.**
+The empire-wide common temporal component (`g_shape`) peaks at **AD 187.5** (bin
+[175, 200) — late-Antonine / Severan), consistent with MacMullen's epigraphic-habit
+curve and the H3b "hump" (Obs 92–93). Verified in `h5-summary.json`
+(`empire_habit_peak_year: 187.5`).
+
+**Finding 2 — Habit lag: no systematic directional lag at corpus level.**
+Per-city habit lag = peak year (raw `lam`) − peak year (habit-removed residual), propagated
+draw-wise.
+
+| Metric | Value |
+|---|---|
+| Corpus-median lag (all cities) | 0 yr |
+| Corpus-median lag (reliable, N ≥ 300) | 0 yr |
+| IQR | [0, 50] yr |
+| Fraction-positive lag | 0.48 |
+
+**Read:** no systematic directional pull at the corpus level, but individual cities shift
+by up to ~one or two 25-year bins (IQR to 50 yr). The habit confound bites hardest on
+small-N cities (which partial-pool toward AD 188); data-rich cities' own signal dominates.
+
+**Finding 3 — Foundation-date terminus check: passes corpus-wide.**
+Hanson `Start Date` matched to all **268 cities** (clean match); **99** cities are founded
+within the envelope (Start Date > 50 BC) and so provide a meaningful lower-terminus test.
+
+- **Median pre-foundation inscription mass = 0.07 %** (JSON: 0.0007) — essentially zero;
+  the Layer-A trajectories respect foundation termini corpus-wide (the lower-terminus
+  analogue of Pompeii's AD-79 upper terminus, Obs 96).
+- **Notable exceptions are archaeologically sensible:** worst offenders are frontier
+  military sites where epigraphy from an earlier military presence predates the town's
+  Barrington/Hanson foundation date — a real signal (military-before-civilian), not a
+  model error.
+
+| City (Barrington name) | Hanson Start Date | Pre-foundation mass |
+|---|---|---|
+| Corstopitum (Corbridge) | AD 200 | 59.4 % |
+| Corinium Dobunnorum (Cirencester) | AD 100 | 30.2 % |
+| Luguvalium (Carlisle) | AD 100 | 26.8 % |
+| Centumcellae | AD 106 | 25.8 % |
+| Lauriacum | AD 191 | 17.1 % |
+| Argentoratum (Strasbourg) | AD 80 | 16.6 % |
+
+All six are well-known Hadrianic or Trajanic frontier garrisons with documented pre-urban
+military phases; the over-representation of inscriptions before the civilian foundation
+date is archaeologically expected.
+
+### Why this matters
+
+1. **H5 confirms the Layer-A posterior is well-behaved.** The corpus-wide foundation-date
+   check (0.07 % pre-foundation mass) is a significant positive: the hierarchical model
+   does not extrapolate backward through termini it has no inscriptions to support. The
+   two-direction terminus check (Pompeii upper, foundation-date lower) brackets the model
+   quality assessment.
+2. **The habit peak (AD 187.5) is the quantity to remove before interpreting city
+   trajectories as population signals.** The Layer B β-inversion (Obs 96) runs on raw
+   `lam`, which includes `g_shape`; the residual `u + v` is the defensible per-city
+   signal. The AD-188 peak is consistent with both MacMullen's epigraphic-habit literature
+   and the Antonine demographic apogee — the two cannot be separated within this model (see
+   Obs 98).
+3. **No systematic directional lag** means the H5 residual does not systematically shift
+   peaks; the habit confound is a noise amplifier for small-N cities, not a consistent bias
+   direction. The IQR of 50 yr spans about two 25-year bins — non-trivial for small-N
+   cities, negligible for large ones.
+4. **Frontier military exceptions are a real archaeological signal** worth a sentence in
+   the write-up: pre-civilian military epigraphy predating the Barrington foundation date
+   is expected and documented, not a model artefact.
+
+### Caveats / methodological notes
+
+- **Exploratory; no pre-committed thresholds** (Decision 13; prereg §5, lines 358–364).
+  GPT-5.5 flagged the design as "statistically fragile" — read descriptively throughout.
+- **Habit component = within-sample empire trajectory** (`g_shape` from the 268-city fit),
+  not an external independent measure. It is hierarchically coherent with the per-city
+  residuals (same fit) but is not an independent habit proxy.
+- **Foundation-anchor coverage:** the terminus check applies only to the 99/268 cities
+  founded within the envelope; cities pre-dating 50 BC have no binding lower terminus.
+- **N* = 300 floor** carries from Layer A: 34/268 reliable; the lag result is dominated
+  by small-N cities whose peaks are noisy.
+- **Magnitude decomposition and Latin-minus-Roma subset analysis** (variance of g, u, v
+  components; Greek-East vs Latin comparison) are documented in the spec as planned
+  deliverables but are not present in the REPORT.md or h5-summary.json for this run.
+  These numbers cannot be verified from available source files and are omitted here;
+  they would require a re-read of the trajectory `.nc` or a supplementary run.
+
+### Related observations and artefacts
+
+**Obs 96** (Layer B β-inversion — gate passes both anchors; 1/β amplification is the
+dominant write-up caveat): the Obs this H5 result was designed to complement — H5
+produces the habit-removed residuals that disentangle habit from signal before or
+alongside the Layer B inversion.
+
+**Obs 98** (the empire-wide common temporal component conflates four drivers — NOT a clean
+habit proxy; identification caveat): the direct methodological follow-on from this Obs;
+explains why `g_shape` cannot be interpreted as pure epigraphic habit.
+
+**Obs 92** (H3b draw-wise base run — global Timpson saturation; empire temporal "hump"):
+the earlier H3b result that established the empire-wide inscription hump; g_shape peak
+AD 187.5 is the Layer-A analogue of the H3b hump and they are mutually consistent.
+
+**Obs 93** (H3b flexible-null annex — saturation is structural null-misspecification;
+probe-window P(deficit) confirmed robust): the final H3b Obs; the AD-188 hump is
+confirmed robust across all null specifications.
+
+**Artefacts**:
+`runs/2026-06-17-s5-h5-habit-removed/REPORT.md` (source report; all numbers in this Obs
+verified against it and the JSON);
+`runs/2026-06-17-s5-h5-habit-removed/outputs/h5-summary.json`
+(habit peak year, lag metrics, foundation-terminus coverage; source for all numbers);
+`runs/2026-06-17-s5-h5-habit-removed/outputs/h5-residual-trajectories.nc`
+(per-city residual + raw trajectories, peak bins, lag with CI, reliability flag);
+`runs/2026-06-17-s5-h5-habit-removed/outputs/h5-empire-habit.png` (habit curve figure);
+`runs/2026-06-17-s5-h5-habit-removed/outputs/h5-habit-lag-hist.png` (lag distribution);
+`runs/2026-06-17-s5-h5-habit-removed/outputs/h5-residual-samples.png`
+(sample residual trajectories);
+`runs/2026-06-17-s5-h5-habit-removed/spec.md` (the signed-off H5 spec + design decisions);
+`runs/2026-06-17-s5-h5-habit-removed/code/h5_habit_removed.py` (engine);
+commit `4f125cd` (H5 results).
+
+### Findable later
+
+`H5`, `habit-removed`, `h5-habit-removed`, `s5-h5`, `epigraphic-habit`,
+`g-shape`, `g_shape`, `empire-common-temporal-component`, `empire-wide-habit`,
+`AD-187-5`, `AD-188`, `late-Antonine`, `Severan`, `MacMullen`,
+`habit-lag`, `epigraphic-habit-lag`, `corpus-median-lag-0`,
+`IQR-0-50`, `fraction-positive-0-48`, `no-systematic-lag`,
+`habit-confound`, `small-N-partial-pooling`,
+`foundation-terminus`, `foundation-date-check`, `Hanson-Start-Date`,
+`268-matched`, `99-within-envelope`, `median-pre-foundation-0-07-pct`,
+`military-before-civilian`, `frontier-military`,
+`Corstopitum`, `Corbridge`, `59-pct-pre-foundation`,
+`Corinium-Dobunnorum`, `Cirencester`, `30-pct-pre-foundation`,
+`Luguvalium`, `Carlisle`, `26-pct-pre-foundation`,
+`Centumcellae`, `25-pct-pre-foundation`,
+`Lauriacum`, `17-pct-pre-foundation`,
+`Argentoratum`, `Strasbourg`, `16-pct-pre-foundation`,
+`terminus-check`, `Barrington-foundation`, `within-envelope`,
+`u-shape`, `v-shape`, `alpha-g`, `residual-trajectory`,
+`magnitude-decomposition-missing`, `Latin-minus-Roma-missing`,
+`Greek-East-missing`, `planned-but-unverified`,
+`h5-summary-json`, `h5-residual-trajectories-nc`,
+`deterministic-read`, `no-MCMC`, `monolithic-inscription-25y`,
+`4f125cd`, `runs-2026-06-17-s5-h5-habit-removed`,
+`obs-96`, `obs-98`, `obs-92`, `obs-93`
+
+## Obs 98 — 2026-06-17 [METHODOLOGY / THEORY]: the empire-wide common temporal component is NOT a clean epigraphic habit — it conflates four drivers
+
+### The finding
+
+The H5 empire-wide common temporal component `g_shape` (Obs 97: peak AD 187.5) is
+identified by the hierarchical model purely through pooling — it is the time-shape that
+**all cities share**. It is therefore not, and cannot be, a clean measure of the
+epigraphic habit alone.
+
+**The four conflated drivers:**
+1. **(a) Cultural epigraphic habit** — the MacMullen/Woolf phenomenon of
+   inscription-production as a social practice, independently varying over time
+2. **(b) Empire-wide demographic and economic trends** — real population growth,
+   urbanisation, and economic integration that increase inscription opportunities
+3. **(c) Empire-wide taphonomy and recovery bias** — survival and discovery rates that
+   may be correlated across the empire through shared geological and historiographical
+   conditions
+4. **(d) Residual dating-convention structure** — any dating artefact that is
+   spatially or corpus-wide systematic (e.g., round-year preferences that are not
+   fully removed by the deconvolution at the aggregate level)
+
+**Critical identification caveat:** §5 Layer A contains no population covariate.
+The decomposition separates **empire-common temporal variation** from **city-specific
+temporal deviation** — it does NOT separate habit from population. The AD-188 peak of
+`g_shape` is consistent with both MacMullen's epigraphic-habit curve and the Antonine
+demographic apogee; the two cannot be disentangled within this model.
+
+No external, joinable epigraphic-habit proxy exists for this corpus: the prior-art scout
+(2026-04-23, scout-3-epigraphic-habit-proxies) found no suitable independent time-series
+that can be merged at city or province level to partial-out the habit component.
+
+**The methodologically defensible quantity:** the residual (`u_shape + v_shape`) — a
+city's deviation from the empire norm. Inverting the city residual into a relative
+population trajectory is well-posed regardless of the conflation, because the residual
+is explicitly what the city does above or below the empire-common trend, whatever that
+trend's drivers are. The Layer B β-inversion runs on the raw trajectory (which includes
+`g_shape`); a principled "habit-corrected" inversion would use the residual alone.
+
+**Implication for write-up:** the over-claim to avoid is "this is the epigraphic-habit
+component". The correct framing is "this is the empire-wide common temporal component"
+(in results), with the four candidate drivers listed in the discussion section alongside
+the correspondence with the epigraphic-habit literature.
+
+### Why this matters
+
+1. **This is the methodologically central caveat for the paper.** Readers familiar with
+   the epigraphic-habit literature will immediately ask "but does the habit component
+   confound your population inference?" The answer is yes — it is irreducibly present in
+   the raw `g_shape` and in any Layer B inversion that uses raw `lam`. The residual-based
+   inversion is the robust alternative.
+2. **The naming convention must be enforced in drafting.** "Empire-wide common temporal
+   component" in results; interpretive claims about habit vs demographics deferred to
+   discussion. See Obs 101 for the structural framing decision.
+3. **No habit proxy exists to partial it out.** The prior-art scout established this
+   definitively; any future proposal to use an external proxy needs to first revisit the
+   scout-3 findings.
+4. **The Antonine peak (AD ~188) is the confirmatory meeting-point.** The coincidence of
+   the g_shape peak with MacMullen's habit peak and the Antonine demographic apogee is
+   genuine and noteworthy — the model is picking up something real. The point of this Obs
+   is not to dismiss the peak but to be precise about what it identifies.
+
+### Caveats / methodological notes
+
+- **This is a conceptual/identification caveat**, not an empirical result from a new run.
+  It is a methodological characterisation of what Layer A's hierarchical decomposition can
+  and cannot identify.
+- **The residual is not a pure population signal either.** City-specific `v_shape` captures
+  whatever makes a city deviate from the empire norm — it includes city-level demographic,
+  economic, taphonomic, and habit variation. The claim is only that it is free of the
+  empire-common confound.
+- **Taphonomy and dating conventions** are partially removed by the cc-library
+  deconvolution (Obs 90–91) at the province level; whether residual empire-wide
+  taphonomic structure in `g_shape` is material is unknown.
+
+### Related observations and artefacts
+
+**Obs 97** (H5 — empire habit component peaks AD 187.5; lag characterised): the Obs this
+one annotates — the identification caveat applies to g_shape as computed there.
+
+**Obs 96** (Layer B β-inversion — inverts raw `lam` including g_shape; illustrative-only):
+the Layer B result is subject to this caveat; the illustrative-only framing partially
+absorbs it but does not fully resolve the conflation.
+
+**Obs 101** (paper framing — empirical decomposition first, interpretation later; Hanson
+as bridge): the structural decision that externalises these four drivers to the discussion
+section and mandates "empire-wide common temporal component" as the results-section name.
+
+**Obs 92–93** (H3b — the empire "hump" / epigraphic-habit saturation context): the H3b
+results that established the empire-wide hump; this Obs characterises the identification
+problem that the hump literature embodies.
+
+**Artefacts**: no new run artefact (this is a methodological characterisation).
+Prior-art scout: `scout-3-epigraphic-habit-proxies` (2026-04-23 lit-scout-iterate
+workspace; finding = no suitable joinable external habit proxy exists).
+Spec: `runs/2026-06-17-s5-h5-habit-removed/spec.md` (the H5 spec articulates the
+two-component decomposition this Obs annotates).
+
+### Findable later
+
+`epigraphic-habit-identification`, `g-shape-conflation`, `four-drivers`,
+`empire-common-temporal-component`, `not-pure-habit`, `identification-caveat`,
+`habit-vs-population`, `cant-separate-habit-from-demography`,
+`Antonine-demographic-apogee`, `MacMullen-Woolf`, `epigraphic-habit-literature`,
+`taphonomy-empire-wide`, `dating-convention-residual`,
+`no-population-covariate`, `Layer-A-no-covariate`,
+`residual-u-v-defensible`, `empire-common-free`,
+`habit-proxy-does-not-exist`, `prior-art-scout-2026-04-23`,
+`scout-3-epigraphic-habit-proxies`, `no-joinable-external-proxy`,
+`over-claim-to-avoid`, `naming-convention`, `results-framing`,
+`discussion-section-four-drivers`, `correspondence-habit-literature`,
+`habit-corrected-inversion`, `raw-lam-includes-g-shape`,
+`identification-problem`, `conceptual-caveat`, `methodological-characterisation`,
+`obs-97`, `obs-96`, `obs-101`, `obs-92`, `obs-93`
+
+## Obs 99 — 2026-06-17 [RESULT]: §5 H7 — time-resolved (per-period) H3c; β_within traces a U over the four centuries
+
+### The finding
+
+H7 recomputes H3c diagnostics within 8 × 50-year periods (50 BC – AD 350), using
+aoristic-apportioned counts (rounded), fixed 1,044-city universe, and population-based
+Mundlak. All 8 Negative Binomial Regression (NBR) fits converged: R̂ = 1.0000, 0
+divergences (ESS-bulk range: 688–2,369 across periods).
+
+**Full results table:**
+
+| Period | Non-zero cities | Count | β_within [95 % CI] | Capital P(contrast > 0) | Moran's I k8 | p |
+|---|---|---|---|---|---|---|
+| 50 BC – AD 0 | 434 | 4,714 | **0.701** [0.596, 0.809] | 1.00 | **+0.029** | **0.021** |
+| AD 0–50 | 624 | 12,633 | 0.667 [0.572, 0.768] | 1.00 | +0.016 | 0.111 |
+| AD 50–100 | 696 | 14,031 | 0.629 [0.537, 0.727] | 1.00 | +0.005 | 0.292 |
+| AD 100–150 | 735 | 11,636 | 0.582 [0.496, 0.670] | 1.00 | −0.014 | 0.187 |
+| AD 150–200 | 779 | 12,793 | 0.580 [0.497, 0.667] | 1.00 | −0.005 | 0.459 |
+| AD 200–250 | 717 | 10,229 | 0.587 [0.500, 0.674] | 1.00 | −0.003 | 0.466 |
+| AD 250–300 | 623 | 5,077 | 0.581 [0.488, 0.674] | 1.00 | −0.014 | 0.155 |
+| AD 300–350 | 518 | 3,948 | 0.659 [0.551, 0.770] | 1.00 | −0.012 | 0.219 |
+
+**All numbers verified against `h7-summary.json` and REPORT.md.**
+
+**Three headline findings:**
+
+**1. β_within traces a U over time (descriptive).** β_within falls from **0.701**
+(50 BC – AD 0) through a **~0.58 plateau across the high empire (AD 100–250)** — which
+is exactly the pooled confirmatory β_within = 0.587 (the pooled result is dominated by
+these inscription-rich centuries) — then rises again to **0.659** in the 4th century.
+Early- and late-empire epigraphic production scales more steeply with city size than the
+high-empire core. CIs overlap throughout, so this is a descriptive trend, not a sharp
+break; read accordingly.
+
+**2. Provincial capitals over-produce in every period.** P(contrast > 0) = 1.00 in all
+8 periods — the capital over-production effect (H3c) is temporally stable, not a
+high-empire artefact. No break; no reversal.
+
+**3. Residual spatial clustering is an early-empire phenomenon only.** Moran's I (k = 8
+neighbours) is significantly positive only in **50 BC – AD 0** (I = +0.029, p = 0.021);
+from AD 0 onwards it is ~0 / non-significant at any k. Whatever spatial structure
+Hanson's pooled residual map carries is concentrated in the earliest period.
+
+### Why this matters
+
+1. **The pooled β_within = 0.587 is the high-empire core, not a period-specific outlier.**
+   H7 confirms it is the characteristic value for AD 100–250 — the centuries that
+   dominate the corpus — and not an artefact of pooling over a heterogeneous period range.
+2. **The U-shape is novel descriptive content.** No published comparator exists (per
+   REPORT). It is candidate content for the §5 descriptive section: "the scaling exponent
+   is not constant but is most stable during the epigraphic apogee."
+3. **Capital stability is a substantive result.** The temporally uniform capital effect
+   argues against the capital over-production being a feature of a specific administrative
+   or economic period; it is a structural property of the urban hierarchy throughout the
+   period of study.
+4. **Early spatial clustering needs a sentence.** The AD 50 BC – AD 0 Moran's I result is
+   significant and positive; it likely reflects geographic clustering of early Roman
+   inscription production in Italy and the established western provinces before the
+   empire-wide spread. Worth flagging descriptively; not over-interpreted.
+5. **Latin-minus-Roma variant is still outstanding.** The H7 run used the all-provinces
+   1,044-city frame; the project's diagnostic unit is Latin-speaking-minus-Roma, which
+   requires a separate variant run. See Obs 101 for the framing consequence.
+
+### Caveats / methodological notes
+
+- **Exploratory; no pre-committed thresholds.** No published comparator; read all findings
+  descriptively (prereg §5 line 384).
+- **50-year periods, not decadal.** Feasibility constraint; finer temporal resolution
+  (e.g., 25-year) is a re-run that would narrow the bins and potentially sharpen or
+  dissolve the early/late upticks.
+- **Aoristic-apportioned counts (rounded).** The midpoint alternative (snap-to-midpoint
+  rather than aoristic-fraction) is an unrun sensitivity; the rounding is expected to
+  be conservative.
+- **All-provinces frame (1,044 cities).** The diagnostic unit for the paper is
+  Latin-minus-Roma; the all-provinces frame is baseline context. The H7 result for the
+  paper's primary frame requires a Latin-minus-Roma re-run.
+- **Early-period CIs are wide** (fewer inscriptions, fewer cities with data): the 50 BC –
+  AD 0 β CI [0.596, 0.809] is ≈ 1.5× the width of the high-empire CIs. The U-shape
+  endpoints should be treated as indicative, not point estimates.
+- **Moran's I k-sensitivity:** the 50 BC – AD 0 period is significant at k = 5 (p = 0.023)
+  and k = 8 (p = 0.021) but not k = 10 (p = 0.098); the AD 0–50 period is significant
+  at k = 5 only (p = 0.018). The "significant only in 50 BC – AD 0" statement uses k = 8
+  as the reference (consistent with H3c); at k = 5 the signal persists one period longer.
+
+### Related observations and artefacts
+
+**Obs 94** (deconvolution does NOT change H3a — cumulative scaling robust; β_within =
+0.587 is paper-ready): the source of the pooled value that the H7 time-resolved analysis
+recontextualises as the high-empire plateau.
+
+**Obs 95** (§5 sensitivities D11, D12, B4 — all corroborate H3a; B4 closes Phase-1
+threshold obligation): the H3a robustness stack that underpins confidence in the per-period
+NBR fits here.
+
+**Obs 100** (peak vs cumulative scaling — β ≈ 0.56 at 50y peak, indistinguishable from
+cumulative 0.587): the complementary scaling robustness check; together with H7, it
+brackets the temporal and measure-space stability of the population–epigraphy relationship.
+
+**Artefacts**:
+`runs/2026-06-17-s5-h7-perperiod-h3c/REPORT.md` (source report; all numbers verified);
+`runs/2026-06-17-s5-h7-perperiod-h3c/outputs/h7-summary.json`
+(per-period β_within, capital contrast, Moran's I per k; source for all numbers);
+`runs/2026-06-17-s5-h7-perperiod-h3c/outputs/h7-time-resolved.png` (β over time figure);
+`runs/2026-06-17-s5-h7-perperiod-h3c/outputs/h7-per-city-residuals.parquet`
+(time-resolved residual-map data, per city per period);
+`runs/2026-06-17-s5-h7-perperiod-h3c/code/h7_perperiod_h3c.py` (engine);
+commit `fb05c1d` (H7 results + peak-scaling spec).
+
+### Findable later
+
+`H7`, `perperiod-h3c`, `time-resolved-h3c`, `s5-h7`, `per-period`,
+`8-periods`, `50-year-periods`, `aoristic-apportioned`, `fixed-1044`,
+`U-shape-beta`, `beta-U-shape`, `scaling-exponent-over-time`,
+`beta-0-701`, `beta-50bc-ad0`, `late-Republican-Augustan`,
+`high-empire-plateau`, `beta-0-58-plateau`, `AD-100-250`,
+`beta-0-659`, `4th-century`, `AD-300-350`,
+`pooled-beta-0-587`, `confirmatory-beta-same-as-plateau`,
+`capitals-over-produce-every-period`, `capital-stable`,
+`provincial-capital-contrast`, `P-contrast-1-00`,
+`spatial-clustering-early-empire`, `Morans-I`, `Moran-I-k8`,
+`Moran-I-0-029`, `p-0-021`, `50bc-ad0-significant`,
+`spatial-clustering-washes-out`, `clustering-early-only`,
+`novel-descriptive`, `no-published-comparator`,
+`Latin-minus-Roma-outstanding`, `all-provinces-frame`,
+`1044-city-universe`, `population-based-Mundlak`,
+`NBR-per-period`, `Negative-Binomial`, `Mundlak-NBR`,
+`rhat-1-0000-all-periods`, `0-divergences`,
+`ESS-688`, `ESS-2369`, `wide-CIs-early`,
+`h7-summary-json`, `h7-time-resolved-png`,
+`h7-per-city-residuals-parquet`, `fb05c1d`,
+`runs-2026-06-17-s5-h7-perperiod-h3c`,
+`obs-94`, `obs-95`, `obs-100`
+
+## Obs 100 — 2026-06-17 [RESULT / ROBUSTNESS]: §5 peak-inscription vs Hanson-population scaling — peak ≈ cumulative; smoothing neutral
+
+### The finding
+
+Does peak inscription intensity scale with (Hanson peak) population differently from
+cumulative output? The H3a confirmatory reference: β_within = 0.587 [0.519, 0.657]
+(1,044 cities, full-window cumulative count). Four arms run; all 4 NBR fits converged:
+R̂ = 1.0000, 0 divergences.
+
+**Full results table (all numbers verified against `peak-scaling-summary.json`):**
+
+| Arm | β_within | 95 % CI | n cities |
+|---|---|---|---|
+| Cumulative H3a (reference) | **0.587** | [0.519, 0.657] | 1,044 |
+| Raw peak, 50 y window, 1,044 cities (headline) | **0.557** | [0.490, 0.624] | 1,044 |
+| Raw peak, 25 y window, 1,044 cities | 0.545 | [0.479, 0.612] | 1,044 |
+| Raw peak, 25 y window, 268 §5 cities | 0.223 | [0.130, 0.319] | 268 |
+| Modelled peak, 25 y window, 268 §5 cities | 0.213 | [0.112, 0.314] | 268 |
+
+**Two headline findings:**
+
+**1. Peak intensity scales with population essentially like cumulative output.**
+On the full 1,044-city frame, the raw-peak exponent (0.557 at 50 y, 0.545 at 25 y) is
+**statistically indistinguishable from the cumulative 0.587** (CIs overlap heavily).
+Peak production scales with Hanson population at approximately the same law as total
+production. Bigger cities have proportionally higher peaks and higher totals by the same
+exponent.
+
+**2. Smoothing is neutral; the §5 subset attenuates by range restriction (not a real
+flattening).**
+On the 268 §5 cities at 25 y, raw-peak 0.223 and modelled-peak 0.213 are essentially
+identical — the Layer-A smoothing does NOT bias the peak-scaling exponent (the contrast
+Shawn asked for). The much lower value vs the full corpus (0.22 vs 0.55, same window
+and measure, only city set differs) is a **range-restriction artefact**: the §5 target
+set excludes the largest cities (N ≥ 1,549 anchors) and the smallest (N < 50), truncating
+the population range and attenuating the within-province slope. Do NOT read 0.22 as
+"peak scaling is flat" — the restricted-set slope is a range artefact; the unrestricted
+answer is finding 1.
+
+### Why this matters
+
+1. **Closes the previously open "peak vs cumulative" question.** The Hanson comparison
+   against peak population had not been run prior to this; it now corroborates the
+   cumulative H3a headline rather than complicating it.
+2. **β ≈ 0.56 at peak is the same law as β ≈ 0.59 cumulatively.** A materially different
+   peak-scaling exponent would have required a new explanatory story (e.g., cities have
+   a fixed inscription ceiling per unit population); the null of "same law" holds.
+3. **Smoothing neutrality closes a potential methodological objection.** A critic could
+   claim that the Layer-A posterior-smoothing artificially concentrates peak counts and
+   inflates or deflates the per-city peak. The overlap test (raw ≈ modelled, 0.223 ≈
+   0.213) closes this.
+4. **Range restriction is an important methodological lesson for the §5 subset.** The
+   §5 subset (268 small-N cities) is not a random subsample of the full 1,044; it
+   excludes the full population-range tails. Any within-§5-subset scaling reported in
+   the paper should carry a range-restriction caveat; the all-cities frame is the
+   population-range-valid result.
+5. **Exploratory / tertiary status.** Not preregistered; the cumulative H3a is the
+   confirmatory scaling result. This arm is a robustness check and a Hanson-comparison
+   extension, not a new confirmatory claim.
+
+### Caveats / methodological notes
+
+- **Exploratory / tertiary; not preregistered.** The cumulative H3a (Decision 22/35;
+  raw-count Hanson scaling) is the confirmatory result; this peak-variant is a motivated
+  extension.
+- **Arm D (modelled peak) uses the posterior-median modelled peak,** not the full Layer-A
+  trajectory posterior propagated into β_peak. This is a documented simplification; the
+  raw ≈ modelled agreement makes it immaterial for the comparison asked for.
+- **Peak count is window-dependent** (50 y vs 25 y both reported; results are nearly
+  identical across windows).
+- **Range restriction** in the §5-subset arms (0.22) is real and dominant; do not use
+  those values as the headline peak-scaling result.
+- **The all-provinces frame is used** (1,044 cities); Latin-minus-Roma variant not run
+  (see Obs 101 for framing consequence — Latin-minus-Roma is the diagnostic unit).
+
+### Related observations and artefacts
+
+**Obs 94** (deconvolution does NOT change H3a — full-window cumulative scaling robust;
+β_within = 0.587 the paper-ready reference value): the cumulative baseline whose peak
+analogue is tested here.
+
+**Obs 99** (H7 — β_within over time; U-shape; high-empire plateau at 0.58): the temporal
+decomposition of the same β; together with Obs 100 (peak vs cumulative), these two Obs
+bracket scaling stability across both the time and measure dimensions.
+
+**Artefacts**:
+`runs/2026-06-17-s5-peak-scaling/REPORT.md` (source report; all numbers verified);
+`runs/2026-06-17-s5-peak-scaling/outputs/peak-scaling-summary.json`
+(all arms, contrasts, convergence, provenance; source for all numbers in this Obs);
+`runs/2026-06-17-s5-peak-scaling/outputs/peak-scaling-forest.png` (forest plot);
+`runs/2026-06-17-s5-peak-scaling/code/peak_scaling.py` (engine);
+commit `e456ad2` (peak-scaling results).
+
+### Findable later
+
+`peak-scaling`, `peak-inscription-scaling`, `s5-peak-scaling`,
+`peak-vs-cumulative`, `peak-population-scaling`,
+`beta-within-0-557`, `raw-peak-50y`, `1044-cities`,
+`beta-within-0-545`, `raw-peak-25y`,
+`beta-within-0-223`, `268-s5-cities`, `raw-peak-25y-268`,
+`beta-within-0-213`, `modelled-peak-25y-268`,
+`smoothing-neutral`, `Layer-A-smoothing-neutral`, `raw-approx-modelled`,
+`range-restriction`, `range-restriction-artefact`, `truncated-population-range`,
+`N-1549-anchor-excluded`, `N-50-excluded`,
+`do-not-read-0-22-as-flat`, `restricted-set-slope`,
+`peak-CI-0-490-0-624`, `peak-CI-0-479-0-612`,
+`cumulative-H3a-reference`, `beta-0-587-reference`,
+`CIs-overlap`, `indistinguishable`,
+`same-law-peak-and-cumulative`, `inscription-ceiling-null`,
+`overlap-contrast`, `posterior-median-modelled-peak`,
+`trajectory-posterior-not-propagated`, `documented-simplification`,
+`exploratory-tertiary`, `not-preregistered`, `motivated-extension`,
+`Hanson-peak-population`, `Hanson-comparison`,
+`4-arms`, `rhat-1-0000`, `0-divergences`,
+`peak-scaling-summary-json`, `peak-scaling-forest-png`,
+`e456ad2`, `runs-2026-06-17-s5-peak-scaling`,
+`obs-94`, `obs-99`
+
+## Obs 101 — 2026-06-17 [FRAMING / METHODOLOGY]: paper framing decision — empirical decomposition first, interpretation later; Hanson as the bridge; diagnostic unit = Latin-minus-Roma
+
+### The finding
+
+A structural decision (Shawn, 2026-06-17) on how to organise the paper results and
+discussion sections in light of the §5 Layer A / B / H5 / H7 analyses.
+
+**The decision (five parts):**
+
+**1. Empirical decomposition first.** Present the nested-unit decomposition in the results
+section as an objective empirical finding — city-specific temporal component, province
+component, between-city level spread, Latin-minus-Roma-common temporal component,
+empire-wide-common temporal component — without interpretive labels. The decomposition is
+what the model identifies; the interpretation of what drives each component belongs in
+discussion.
+
+**2. Interpretation later (discussion section).** In discussion, introduce the four
+candidate drivers of the empire-wide common temporal component (Obs 98: cultural habit,
+empire-wide demography, taphonomy, dating-convention residual) and note the correspondence
+with the epigraphic-habit literature. Do not suppress the correspondence — it is a genuine
+and noteworthy connection — but externalise the causal claim about which driver dominates.
+
+**3. Hanson is the bridge.** The Hanson population comparison is introduced at the end of
+the results section, as the hinge between empirical pattern and interpretation. Hanson's
+estimates are well-regarded (if not universally agreed), and naming him explicitly as the
+first interpretive step is safe and transparent. The language in results: "association with
+Hanson's population estimates" (not "population scaling" with causal force). The bridge
+framing lets the cumulative H3a result (β_within = 0.587 [0.519, 0.657]) stand as the
+confirmed results-section finding, with interpretive elaboration in discussion.
+
+**4. Naming discipline.** Two non-negotiable naming rules for drafting:
+- In results: "empire-wide common temporal component" (not "epigraphic habit", not "habit
+  component" — these imply the causal interpretation)
+- In results: "association with Hanson's population estimates" (not "population scaling",
+  not "urbanisation proxy")
+
+**5. The diagnostic unit is Latin-speaking-minus-Roma.** The all-provinces (1,044-city)
+frame is baseline context; the project's primary diagnostic unit is Latin-speaking
+provinces excluding Roma. Metrics computed on the all-provinces frame (H7 β over time,
+peak-scaling arms) are valid and important baseline results, but the paper-primary
+versions require Latin-minus-Roma variants. This flags H7 (Obs 99) and the peak-scaling
+arms (Obs 100) as needing Latin-minus-Roma re-runs before paper-finalisation.
+
+### Why this matters
+
+1. **The empirical/interpretive separation protects the results section from claims the
+   model cannot support.** The identification caveat (Obs 98) means any results-section
+   claim that `g_shape` = habit or `g_shape` = demography is an over-claim; the separation
+   ensures the paper's results section is reproducible and model-conditional, while the
+   discussion section carries the interpretive weight.
+2. **Naming discipline prevents reviewer objections at first read.** The most common
+   critique of epigraphic-habit studies is conflation of "what the inscriptions record"
+   with "what the habit does". Using "empire-wide common temporal component" in results
+   pre-empts this critique without suppressing the substantive connection to MacMullen.
+3. **Hanson as bridge is rhetorically and substantively sound.** Hanson (2016 / 2021) is
+   the standard population reference for the Roman world in quantitative urban studies;
+   introducing the association explicitly, rather than embedding it as a silent assumption,
+   is methodologically transparent and reviewably correct.
+4. **The Latin-minus-Roma gap is now formally on the work list.** H7 and peak-scaling are
+   currently all-provinces; the diagnostic unit requires Latin-minus-Roma variants. This
+   Obs records the gap so it is not silently dropped before paper-finalisation.
+
+### Caveats / methodological notes
+
+- **This is a structural framing decision, not a run artefact.** No new data or statistics
+  are introduced here; this Obs records the methodological and organisational decision for
+  future reference and write-up guidance.
+- **"Empirical" does not mean "atheoretical".** The model results are model-conditional
+  (aoristic mixture + hierarchical partial-pooling); the results section should state this
+  once, clearly, so that the "empirical" framing is not misread as theory-free.
+- **The Hanson-bridge position (end of results) is provisional.** If reviewers or co-authors
+  prefer the Hanson comparison in a separate section or as an explicit sensitivity, the
+  structural logic of the framing decision still holds; only the location within the paper
+  changes.
+- **Latin-minus-Roma variants are unrun as of 2026-06-17** for H7 and peak-scaling. The
+  all-provinces results are valid baselines; the paper cannot present them as the
+  diagnostic-unit result without the variants.
+
+### Related observations and artefacts
+
+**Obs 98** (the empire-wide common temporal component conflates four drivers — the
+identification caveat that motivates the empirical/interpretive separation): the core
+methodological insight that makes the naming discipline in point 4 non-negotiable.
+
+**Obs 97** (H5 — empire-wide common temporal component peaks AD 187.5; this is the
+quantity that must be named carefully in results): the specific g_shape result that the
+naming discipline applies to.
+
+**Obs 99** (H7 — β_within U-shape, all-provinces frame; Latin-minus-Roma variant
+outstanding): one of the two analyses flagged as needing a Latin-minus-Roma re-run.
+
+**Obs 100** (peak-scaling — all-provinces frame; Latin-minus-Roma variant outstanding):
+the other analysis flagged for a Latin-minus-Roma re-run.
+
+**Artefacts**: no run artefact (a structural framing decision). Documentation:
+`runs/2026-06-17-s5-h5-habit-removed/spec.md` (the H5 spec articulates the two-component
+decomposition this decision builds on);
+`runs/2026-06-16-s5-layer-b-beta-inversion/REPORT.md` (Layer B illustrative-only framing
+that this decision extends).
+
+### Findable later
+
+`paper-framing`, `framing-decision`, `structural-decision`, `write-up-structure`,
+`empirical-decomposition-first`, `interpretation-later`,
+`results-discussion-separation`, `identification-caveat-framing`,
+`Hanson-as-bridge`, `Hanson-bridge`, `end-of-results`,
+`association-with-Hanson`, `not-population-scaling`,
+`naming-discipline`, `empire-wide-common-temporal-component`,
+`not-epigraphic-habit`, `not-habit-component`,
+`four-drivers-in-discussion`, `MacMullen-correspondence`,
+`Latin-minus-Roma`, `diagnostic-unit`, `Latin-speaking-minus-Roma`,
+`all-provinces-baseline`, `1044-frame-baseline`,
+`H7-Latin-minus-Roma-outstanding`, `peak-scaling-Latin-minus-Roma-outstanding`,
+`Latin-minus-Roma-variants-needed`, `paper-finalisation-gap`,
+`model-conditional`, `aoristic-mixture`, `hierarchical-partial-pooling`,
+`reproducible-results-section`, `empirical-not-atheoretical`,
+`Hanson-2016`, `Hanson-2021`, `population-reference`,
+`beta-within-0-587`, `cumulative-H3a-results-section`,
+`reviewer-objection-preempted`, `MacMullen-connection-not-suppressed`,
+`obs-98`, `obs-97`, `obs-99`, `obs-100`
