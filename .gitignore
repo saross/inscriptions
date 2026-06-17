@@ -97,6 +97,10 @@ runs/2026-06-04-h3a-confirmatory/outputs/*.nc
 # committed as the deliverable; only the full anchor posteriors are excluded.
 runs/2026-06-16-s5-layer-b-beta-inversion/outputs/layerb-anchor-*.nc
 
+# §5 H7: per-period NBR posteriors (regenerable; on sapphire). The small
+# per-period residual parquet + summary.json + figure ARE committed.
+runs/2026-06-17-s5-h7-perperiod-h3c/outputs/h7-idata-*.nc
+
 # Decision-38 recovery re-validation (2026-06-06): per-replicate synthetic data
 # + posterior fits regenerate deterministically from base_seed + cell_index +
 # replicate; the 450-cell bulk lives on sapphire, like the 2026-05-26 grid.
