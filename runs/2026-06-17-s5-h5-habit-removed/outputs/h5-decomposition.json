@@ -1,0 +1,38 @@
+{
+  "units": "log-rate standard deviation (posterior median); comparable across rows",
+  "shared_empire_common": {
+    "g_peak_bin": 9,
+    "g_peak_year": 187.5,
+    "sd_common_temporal_g": 1.1103092151002771,
+    "sd_province_temporal_u": 1.0194516741745712
+  },
+  "all_provinces": {
+    "n_cities": 268,
+    "aggregate_common_peak_bin": 9,
+    "aggregate_common_peak_year": 187.5,
+    "sd_level_lograte": 0.7765392180938141,
+    "sd_city_temporal_v": 0.975865885876148,
+    "median_common_share_of_temporal_var": 0.539742595738415
+  },
+  "latin_minus_roma": {
+    "n_cities": 257,
+    "aggregate_common_peak_bin": 9,
+    "aggregate_common_peak_year": 187.5,
+    "sd_level_lograte": 0.7850567714396992,
+    "sd_city_temporal_v": 0.9752980291855415,
+    "median_common_share_of_temporal_var": 0.5402948621421158
+  },
+  "non_latin_greek_east": {
+    "n_cities": 11,
+    "aggregate_common_peak_bin": 6,
+    "aggregate_common_peak_year": 112.5,
+    "sd_level_lograte": 0.5203215269761892,
+    "sd_city_temporal_v": 0.9825644367067065,
+    "median_common_share_of_temporal_var": 0.5239507474508092
+  },
+  "provenance": {
+    "primary_nc": "/home/shawn/Code/inscriptions/runs/2026-05-30-s5-small-n-trajectories/code/production/monolithic-inscription-25y.nc",
+    "lang_map": "/home/shawn/Code/inscriptions/runs/2026-06-04-h3a-confirmatory/data/province-language-map.csv",
+    "note": "Rome already excluded in the \u00a75 set; latin_minus_roma = Latin-language provinces."
+  }
+}
