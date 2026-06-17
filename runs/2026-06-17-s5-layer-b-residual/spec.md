@@ -165,29 +165,29 @@ raw Layer B.
 
 ---
 
-## 6. Design decisions (recommendations — confirm at §11)
+## 6. Design decisions (Shawn sign-off 2026-06-18 — all confirmed as recommended)
 
-**(i) β frame → recommend empire primary + Latin overlay** (identical to the raw
+**(i) β frame → DECIDED: empire primary + Latin overlay** (identical to the raw
 Layer B, for direct comparability; both posteriors propagated draw-wise). The
 diagnostic-unit framing (Obs 101, Latin-minus-Roma) is about the *city set*, not
 the β slope; H5 §4 already showed the Latin-minus-Roma decomposition ≈
 all-provinces, so the residual is materially the same. *Confirm.*
 
-**(ii) Residual composition → recommend `u_shape + v_shape` primary** (remove the
-empire-common component only; keep the province + city deviation as the
-residual). This matches the beacon's explicit brief, Decision 13's two-way
-"empire habit + city residual", and the H5 residual exactly. **Optional secondary
-overlay: `v_shape`-only** (remove empire *and* province; the purely city-specific
-deviation) — cheap, and worth showing because it answers "is a city's deviation
-its own or its province's?". *Confirm primary; opt in/out of the v-only overlay.*
+**(ii) Residual composition → DECIDED: `u_shape + v_shape` primary + `v_shape`-only
+overlay.** Primary removes the empire-common component only (keeps province + city
+deviation), matching the beacon's brief, Decision 13's two-way "empire habit + city
+residual", and the H5 residual exactly. The `v`-only overlay (remove empire *and*
+province; purely city-specific deviation) is produced as a cheap secondary, to show
+whether a city's deviation is its own or its province's.
 
-**(iii) Normalisation → recommend relative-to-empire (geom-mean = 1) as primary**
-(the natural zero-sum scale; it preserves the "no spurious collapse" reading,
-which peak-normalising would hide). Peak = 1 available as a plotting overlay for
-comparability with the raw-Layer-B figures. *Confirm.*
+**(iii) Normalisation → DECIDED: relative-to-empire (geom-mean = 1) primary**
+(the natural zero-sum scale; preserves the "no spurious collapse" reading, which
+peak-normalising would hide). Peak = 1 produced as a plotting overlay for
+comparability with the raw-Layer-B figures.
 
-**(iv) Validation mode → descriptive-only, no thresholds** (Decision 13; prereg
-default). See §7. *Confirm.*
+**(iv) Validation mode → DECIDED: descriptive-only, no thresholds** (Decision 13;
+prereg default). Foundation-terminus (99 cities) + collapse-disappearance contrast;
+anchors *not* re-run (cannot be residual-decomposed). See §7.
 
 ---
 
@@ -307,14 +307,16 @@ step reserved for the discussion.
 
 ## 12. Pre-launch sign-off checklist (Shawn)
 
-- [ ] **(i)** β frame: empire primary + Latin overlay.
-- [ ] **(ii)** Residual composition: `u+v` primary; v-only overlay yes/no.
-- [ ] **(iii)** Normalisation: relative-to-empire (geom-mean 1) primary; peak=1
-  plotting overlay.
-- [ ] **(iv)** Validation: descriptive-only; foundation-terminus (99 cities) +
-  collapse-disappearance contrast; anchors *not* re-run (cannot be
-  residual-decomposed — confirm this is acceptable).
-- [ ] **Seed:** reuse `20260616` (cross-run comparability) vs a fresh seed.
-- [ ] Run script `code/layerb_residual_invert.py` written + reviewed (`/audit`
-  before execution).
+- [x] **(i)** β frame: empire primary + Latin overlay — confirmed 2026-06-18.
+- [x] **(ii)** Residual composition: `u+v` primary + `v`-only overlay — confirmed
+  2026-06-18.
+- [x] **(iii)** Normalisation: relative-to-empire (geom-mean 1) primary; peak=1
+  plotting overlay — confirmed 2026-06-18.
+- [x] **(iv)** Validation: descriptive-only; foundation-terminus (99 cities) +
+  collapse-disappearance contrast; anchors *not* re-run — confirmed 2026-06-18.
+- [x] **Seed:** reuse `20260616` (cross-run comparability) — default adopted
+  2026-06-18.
+- [x] Run script `code/layerb_residual_invert.py` written + `/audit`-reviewed
+  (2026-06-18: no Critical/Medium; two Low fixes applied — StopIteration guard,
+  dropped unused param; built-in exact self-test as a wiring regression guard).
 - [ ] Final sign-off to launch.
