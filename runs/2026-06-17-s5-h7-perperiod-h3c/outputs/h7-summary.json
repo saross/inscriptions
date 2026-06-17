@@ -1,0 +1,400 @@
+{
+  "n_periods": 8,
+  "period_edges": [
+    -50,
+    0,
+    50,
+    100,
+    150,
+    200,
+    250,
+    300,
+    350
+  ],
+  "period_labels": [
+    "-50..0",
+    "0..50",
+    "50..100",
+    "100..150",
+    "150..200",
+    "200..250",
+    "250..300",
+    "300..350"
+  ],
+  "n_cities": 1044,
+  "sampler": {
+    "tune": 3000,
+    "draws": 2000,
+    "chains": 4,
+    "target_accept": 0.95,
+    "seed": 20260617
+  },
+  "design": {
+    "resolution": "50y (8 periods)",
+    "count_construction": "aoristic-apportioned, rounded to int",
+    "city_universe": "fixed 1044; Mundlak population-based"
+  },
+  "per_period": {
+    "-50..0": {
+      "n_nonzero_cities": 434,
+      "total_count": 4714,
+      "convergence": {
+        "max_rhat": 1.0,
+        "min_ess_bulk": 688.0,
+        "n_divergences": 0
+      },
+      "gates_pass": true,
+      "beta_within_median": 0.7007072168921729,
+      "beta_within_ci": [
+        0.5960613699038839,
+        0.8093626242610972
+      ],
+      "capital_contrast": {
+        "n_capitals": 62,
+        "p_contrast_gt_0": 1.0,
+        "contrast_median": 0.4845468217049962,
+        "supported": true
+      },
+      "moran": {
+        "per_k": {
+          "5": {
+            "moran_I": 0.039786977351073886,
+            "p_sim_one_sided": 0.023,
+            "z_sim": 2.2685479139620566,
+            "passes_rule": true
+          },
+          "8": {
+            "moran_I": 0.02889442205183027,
+            "p_sim_one_sided": 0.021,
+            "z_sim": 2.164771032278293,
+            "passes_rule": true
+          },
+          "10": {
+            "moran_I": 0.016964981877596624,
+            "p_sim_one_sided": 0.098,
+            "z_sim": 1.3500222410526774,
+            "passes_rule": false
+          }
+        },
+        "n_k_passing": 2,
+        "clustering_supported": true
+      }
+    },
+    "0..50": {
+      "n_nonzero_cities": 624,
+      "total_count": 12633,
+      "convergence": {
+        "max_rhat": 1.0,
+        "min_ess_bulk": 861.0,
+        "n_divergences": 0
+      },
+      "gates_pass": true,
+      "beta_within_median": 0.6670738580658644,
+      "beta_within_ci": [
+        0.5715082142293084,
+        0.7675646574327808
+      ],
+      "capital_contrast": {
+        "n_capitals": 62,
+        "p_contrast_gt_0": 1.0,
+        "contrast_median": 0.6236917556981705,
+        "supported": true
+      },
+      "moran": {
+        "per_k": {
+          "5": {
+            "moran_I": 0.042186860206945176,
+            "p_sim_one_sided": 0.018,
+            "z_sim": 2.39382544061607,
+            "passes_rule": true
+          },
+          "8": {
+            "moran_I": 0.015999723714284687,
+            "p_sim_one_sided": 0.111,
+            "z_sim": 1.195331773344345,
+            "passes_rule": false
+          },
+          "10": {
+            "moran_I": 0.008997911158239967,
+            "p_sim_one_sided": 0.197,
+            "z_sim": 0.8039542768243738,
+            "passes_rule": false
+          }
+        },
+        "n_k_passing": 1,
+        "clustering_supported": false
+      }
+    },
+    "50..100": {
+      "n_nonzero_cities": 696,
+      "total_count": 14031,
+      "convergence": {
+        "max_rhat": 1.0,
+        "min_ess_bulk": 1307.0,
+        "n_divergences": 0
+      },
+      "gates_pass": true,
+      "beta_within_median": 0.6293817849625993,
+      "beta_within_ci": [
+        0.5371156175785914,
+        0.7274873272586387
+      ],
+      "capital_contrast": {
+        "n_capitals": 62,
+        "p_contrast_gt_0": 1.0,
+        "contrast_median": 0.6743291646128893,
+        "supported": true
+      },
+      "moran": {
+        "per_k": {
+          "5": {
+            "moran_I": 0.02004889326175031,
+            "p_sim_one_sided": 0.15,
+            "z_sim": 1.0456594926428378,
+            "passes_rule": false
+          },
+          "8": {
+            "moran_I": 0.00487755632465192,
+            "p_sim_one_sided": 0.292,
+            "z_sim": 0.41466108290318143,
+            "passes_rule": false
+          },
+          "10": {
+            "moran_I": 7.01331625406742e-05,
+            "p_sim_one_sided": 0.435,
+            "z_sim": 0.04819973178657651,
+            "passes_rule": false
+          }
+        },
+        "n_k_passing": 0,
+        "clustering_supported": false
+      }
+    },
+    "100..150": {
+      "n_nonzero_cities": 735,
+      "total_count": 11636,
+      "convergence": {
+        "max_rhat": 1.0,
+        "min_ess_bulk": 1625.0,
+        "n_divergences": 0
+      },
+      "gates_pass": true,
+      "beta_within_median": 0.5819998838410106,
+      "beta_within_ci": [
+        0.49554038978870574,
+        0.6696333823374241
+      ],
+      "capital_contrast": {
+        "n_capitals": 62,
+        "p_contrast_gt_0": 1.0,
+        "contrast_median": 0.6531797832711465,
+        "supported": true
+      },
+      "moran": {
+        "per_k": {
+          "5": {
+            "moran_I": -0.006950032404123152,
+            "p_sim_one_sided": 0.376,
+            "z_sim": -0.3363314696037287,
+            "passes_rule": false
+          },
+          "8": {
+            "moran_I": -0.013478252631939917,
+            "p_sim_one_sided": 0.187,
+            "z_sim": -0.8815444759163957,
+            "passes_rule": false
+          },
+          "10": {
+            "moran_I": -0.013174792192421252,
+            "p_sim_one_sided": 0.152,
+            "z_sim": -1.005494123946872,
+            "passes_rule": false
+          }
+        },
+        "n_k_passing": 0,
+        "clustering_supported": false
+      }
+    },
+    "150..200": {
+      "n_nonzero_cities": 779,
+      "total_count": 12793,
+      "convergence": {
+        "max_rhat": 1.0,
+        "min_ess_bulk": 1522.0,
+        "n_divergences": 0
+      },
+      "gates_pass": true,
+      "beta_within_median": 0.5798497605456567,
+      "beta_within_ci": [
+        0.4966050369824173,
+        0.6667321559051612
+      ],
+      "capital_contrast": {
+        "n_capitals": 62,
+        "p_contrast_gt_0": 1.0,
+        "contrast_median": 0.8994637001040273,
+        "supported": true
+      },
+      "moran": {
+        "per_k": {
+          "5": {
+            "moran_I": 0.012085481917881514,
+            "p_sim_one_sided": 0.226,
+            "z_sim": 0.7266410394573256,
+            "passes_rule": false
+          },
+          "8": {
+            "moran_I": -0.004549901698680783,
+            "p_sim_one_sided": 0.459,
+            "z_sim": -0.21947989461241868,
+            "passes_rule": false
+          },
+          "10": {
+            "moran_I": -0.004980949058745965,
+            "p_sim_one_sided": 0.422,
+            "z_sim": -0.28597084219589347,
+            "passes_rule": false
+          }
+        },
+        "n_k_passing": 0,
+        "clustering_supported": false
+      }
+    },
+    "200..250": {
+      "n_nonzero_cities": 717,
+      "total_count": 10229,
+      "convergence": {
+        "max_rhat": 1.0,
+        "min_ess_bulk": 1407.0,
+        "n_divergences": 0
+      },
+      "gates_pass": true,
+      "beta_within_median": 0.5870799863290082,
+      "beta_within_ci": [
+        0.5001633072710812,
+        0.6738968496153167
+      ],
+      "capital_contrast": {
+        "n_capitals": 62,
+        "p_contrast_gt_0": 1.0,
+        "contrast_median": 0.947965089359444,
+        "supported": true
+      },
+      "moran": {
+        "per_k": {
+          "5": {
+            "moran_I": 0.009912404601468779,
+            "p_sim_one_sided": 0.263,
+            "z_sim": 0.6026709513849142,
+            "passes_rule": false
+          },
+          "8": {
+            "moran_I": -0.003172722187682579,
+            "p_sim_one_sided": 0.466,
+            "z_sim": -0.17813456783797005,
+            "passes_rule": false
+          },
+          "10": {
+            "moran_I": -0.006225354518756298,
+            "p_sim_one_sided": 0.341,
+            "z_sim": -0.4208869205230946,
+            "passes_rule": false
+          }
+        },
+        "n_k_passing": 0,
+        "clustering_supported": false
+      }
+    },
+    "250..300": {
+      "n_nonzero_cities": 623,
+      "total_count": 5077,
+      "convergence": {
+        "max_rhat": 1.0,
+        "min_ess_bulk": 1997.0,
+        "n_divergences": 0
+      },
+      "gates_pass": true,
+      "beta_within_median": 0.5807279847596203,
+      "beta_within_ci": [
+        0.4880576295308729,
+        0.6736497249579211
+      ],
+      "capital_contrast": {
+        "n_capitals": 62,
+        "p_contrast_gt_0": 1.0,
+        "contrast_median": 0.7532833777173013,
+        "supported": true
+      },
+      "moran": {
+        "per_k": {
+          "5": {
+            "moran_I": -0.0030149059619499494,
+            "p_sim_one_sided": 0.487,
+            "z_sim": -0.062186957245956874,
+            "passes_rule": false
+          },
+          "8": {
+            "moran_I": -0.014108411831279848,
+            "p_sim_one_sided": 0.155,
+            "z_sim": -0.99570711957106,
+            "passes_rule": false
+          },
+          "10": {
+            "moran_I": -0.01396670631991442,
+            "p_sim_one_sided": 0.166,
+            "z_sim": -0.9676687462604048,
+            "passes_rule": false
+          }
+        },
+        "n_k_passing": 0,
+        "clustering_supported": false
+      }
+    },
+    "300..350": {
+      "n_nonzero_cities": 518,
+      "total_count": 3948,
+      "convergence": {
+        "max_rhat": 1.0,
+        "min_ess_bulk": 2369.0,
+        "n_divergences": 0
+      },
+      "gates_pass": true,
+      "beta_within_median": 0.65873939228917,
+      "beta_within_ci": [
+        0.5508664825724137,
+        0.7696401057367755
+      ],
+      "capital_contrast": {
+        "n_capitals": 62,
+        "p_contrast_gt_0": 1.0,
+        "contrast_median": 0.4946602545559222,
+        "supported": true
+      },
+      "moran": {
+        "per_k": {
+          "5": {
+            "moran_I": -0.0036996807282221275,
+            "p_sim_one_sided": 0.474,
+            "z_sim": -0.1802399020820373,
+            "passes_rule": false
+          },
+          "8": {
+            "moran_I": -0.011782847763810174,
+            "p_sim_one_sided": 0.219,
+            "z_sim": -0.7767238383076346,
+            "passes_rule": false
+          },
+          "10": {
+            "moran_I": -0.010144317923574765,
+            "p_sim_one_sided": 0.248,
+            "z_sim": -0.7218725638822756,
+            "passes_rule": false
+          }
+        },
+        "n_k_passing": 0,
+        "clustering_supported": false
+      }
+    }
+  },
+  "note": "Exploratory time-resolved H3c (prereg \u00a75 line 384); no thresholds."
+}

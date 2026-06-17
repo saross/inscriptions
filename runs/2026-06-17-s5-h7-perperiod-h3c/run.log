@@ -1,0 +1,67 @@
+H7: 8 periods, 1044 cities, 56 provinces; pooled count 75140; capitals 62
+
+[-50..0] non-zero cities=434 total=4714 — fitting NBR ...
+Initializing NUTS using jitter+adapt_diag...
+Multiprocess sampling (4 chains in 4 jobs)
+NUTS: [alpha_0, sigma_prov, alpha_prov_raw, beta_within, beta_between, inv_dispersion]
+Sampling 4 chains for 3_000 tune and 2_000 draw iterations (12_000 + 8_000 draws total) took 74 seconds.
+  converged: R̂=1.0000 ESS=688 div=0
+  β_within=+0.701 | capital P(>0)=1.000 | Moran k8 I=+0.0289 p=0.0210
+
+[0..50] non-zero cities=624 total=12633 — fitting NBR ...
+Initializing NUTS using jitter+adapt_diag...
+Multiprocess sampling (4 chains in 4 jobs)
+NUTS: [alpha_0, sigma_prov, alpha_prov_raw, beta_within, beta_between, inv_dispersion]
+Sampling 4 chains for 3_000 tune and 2_000 draw iterations (12_000 + 8_000 draws total) took 74 seconds.
+  converged: R̂=1.0000 ESS=861 div=0
+  β_within=+0.667 | capital P(>0)=1.000 | Moran k8 I=+0.0160 p=0.1110
+
+[50..100] non-zero cities=696 total=14031 — fitting NBR ...
+Initializing NUTS using jitter+adapt_diag...
+Multiprocess sampling (4 chains in 4 jobs)
+NUTS: [alpha_0, sigma_prov, alpha_prov_raw, beta_within, beta_between, inv_dispersion]
+Sampling 4 chains for 3_000 tune and 2_000 draw iterations (12_000 + 8_000 draws total) took 72 seconds.
+  converged: R̂=1.0000 ESS=1307 div=0
+  β_within=+0.629 | capital P(>0)=1.000 | Moran k8 I=+0.0049 p=0.2920
+
+[100..150] non-zero cities=735 total=11636 — fitting NBR ...
+Initializing NUTS using jitter+adapt_diag...
+Multiprocess sampling (4 chains in 4 jobs)
+NUTS: [alpha_0, sigma_prov, alpha_prov_raw, beta_within, beta_between, inv_dispersion]
+Sampling 4 chains for 3_000 tune and 2_000 draw iterations (12_000 + 8_000 draws total) took 72 seconds.
+  converged: R̂=1.0000 ESS=1625 div=0
+  β_within=+0.582 | capital P(>0)=1.000 | Moran k8 I=-0.0135 p=0.1870
+
+[150..200] non-zero cities=779 total=12793 — fitting NBR ...
+Initializing NUTS using jitter+adapt_diag...
+Multiprocess sampling (4 chains in 4 jobs)
+NUTS: [alpha_0, sigma_prov, alpha_prov_raw, beta_within, beta_between, inv_dispersion]
+Sampling 4 chains for 3_000 tune and 2_000 draw iterations (12_000 + 8_000 draws total) took 73 seconds.
+  converged: R̂=1.0000 ESS=1522 div=0
+  β_within=+0.580 | capital P(>0)=1.000 | Moran k8 I=-0.0045 p=0.4590
+
+[200..250] non-zero cities=717 total=10229 — fitting NBR ...
+Initializing NUTS using jitter+adapt_diag...
+Multiprocess sampling (4 chains in 4 jobs)
+NUTS: [alpha_0, sigma_prov, alpha_prov_raw, beta_within, beta_between, inv_dispersion]
+Sampling 4 chains for 3_000 tune and 2_000 draw iterations (12_000 + 8_000 draws total) took 71 seconds.
+  converged: R̂=1.0000 ESS=1407 div=0
+  β_within=+0.587 | capital P(>0)=1.000 | Moran k8 I=-0.0032 p=0.4660
+
+[250..300] non-zero cities=623 total=5077 — fitting NBR ...
+Initializing NUTS using jitter+adapt_diag...
+Multiprocess sampling (4 chains in 4 jobs)
+NUTS: [alpha_0, sigma_prov, alpha_prov_raw, beta_within, beta_between, inv_dispersion]
+Sampling 4 chains for 3_000 tune and 2_000 draw iterations (12_000 + 8_000 draws total) took 70 seconds.
+  converged: R̂=1.0000 ESS=1997 div=0
+  β_within=+0.581 | capital P(>0)=1.000 | Moran k8 I=-0.0141 p=0.1550
+
+[300..350] non-zero cities=518 total=3948 — fitting NBR ...
+Initializing NUTS using jitter+adapt_diag...
+Multiprocess sampling (4 chains in 4 jobs)
+NUTS: [alpha_0, sigma_prov, alpha_prov_raw, beta_within, beta_between, inv_dispersion]
+Sampling 4 chains for 3_000 tune and 2_000 draw iterations (12_000 + 8_000 draws total) took 64 seconds.
+  converged: R̂=1.0000 ESS=2369 div=0
+  β_within=+0.659 | capital P(>0)=1.000 | Moran k8 I=-0.0118 p=0.2190
+
+H7 done. Summary at outputs/h7-summary.json
