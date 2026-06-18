@@ -9,6 +9,13 @@ status-legend: "DONE | PENDING-PLANNED | SUPERSEDED-BY-AMENDMENT (01 lodged / 02
 
 # Preregistration obligations completeness audit (2026-06-05)
 
+> **STATUS SUPERSEDED (2026-06-18):** see `prereg-obligations-audit-2026-06-18.md`
+> for the current status picture. This file remains the durable **per-item**
+> register (prereg line refs, types, A–I structure); its SUMMARY and amendment
+> (I) section are stale — e.g. H3c(i) closed 2026-06-05, D11/D12/B4 resolved
+> 2026-06-16, and **all four amendments 01–04 are now lodged** (this file predates
+> 03/04 and wrongly lists 02 as pending).
+
 **Purpose.** Make sure no preregistered obligation is missed as the project moves
 into the H2.1 mixture run and the H3 substantive analyses. Every committed
 obligation in `planning/preregistration-draft.md` is extracted, typed, and given
