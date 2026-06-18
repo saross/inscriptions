@@ -1,0 +1,3 @@
+# InferenceData netCDF artefacts are regenerable; keep them on sapphire only
+# (per the H7-Latin precedent / SPEC §11). Commit the JSON / Markdown summaries.
+*.nc

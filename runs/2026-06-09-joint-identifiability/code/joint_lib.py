@@ -344,6 +344,123 @@ def build_model_joint(y: np.ndarray, k_aligned: int, n_rows: int,
 
 
 # --------------------------------------------------------------------------- #
+# Shared CROSS-CLASSIFIED structural block (the prior + alignment mixtures).     #
+# --------------------------------------------------------------------------- #
+def cc_structural_block(n_bins: int,
+                        tier_basis: np.ndarray | None,
+                        theta_conv_ab: tuple[float, float],
+                        theta_gen_ab: tuple[float, float],
+                        pconv_mode: str = "library") -> dict:
+    """Build the cross-classified STRUCTURAL block inside an already-open model.
+
+    This is an extract-method refactor of the structural half of
+    ``build_model_cross_classified`` — every PyMC node is created here with the
+    SAME name, the SAME distribution, and in the SAME order as the original inline
+    code, so the prior graph is byte-identical. The adopted primary
+    (``build_model_cross_classified``) and the two supplementary builders
+    (``supp_lib.build_model_cc_dirichlet_multinomial`` /
+    ``build_model_cc_negbin``) all call this single helper, which is the
+    SPEC §3 guarantee that "the structural prior is provably identical" with no
+    copy-paste drift.
+
+    Must be called inside a ``with pm.Model():`` context (it adds nodes to the
+    model on the PyMC model-context stack). It creates ``alpha``, ``p_conv``
+    (per ``pconv_mode``), the non-centred GRW ``p_gen``, the θ priors, and the
+    alignment-conditional mixtures ``w_a`` (named ``"pi_align"``), ``p_aligned``
+    and ``p_nonalign`` — but NO observation terms. The caller adds the likelihood
+    (Multinomial for the primary; DirichletMultinomial / NegativeBinomial for the
+    supplementaries) using the returned tensors.
+
+    Parameters
+    ----------
+    n_bins : int
+        Number of 5-year bins (``N_BINS`` = 80 in production).
+    tier_basis : (n_tiers, n_bins) float array, or None
+        Convention basis for ``pconv_mode`` in {"tiers3", "library"}; must be None
+        for "free".
+    theta_conv_ab, theta_gen_ab : (a, b)
+        Beta shape parameters for the θ priors.
+    pconv_mode : str
+        "tiers3" | "library" (Dirichlet tier weights · basis) or "free" (own GRW).
+
+    Returns
+    -------
+    dict
+        ``{"alpha", "p_conv", "p_gen", "theta_conv", "theta_gen", "w_a",
+        "num_al", "num_non", "p_aligned", "p_nonalign"}`` — the structural tensors
+        the observation terms need. ``w_a`` is the PyMC deterministic registered
+        under the name ``"pi_align"``.
+    """
+    import pymc as pm
+    import pytensor.tensor as pt
+
+    if pconv_mode not in ("tiers3", "library", "free"):
+        raise ValueError(f"unknown pconv_mode {pconv_mode!r}")
+    if pconv_mode == "free":
+        if tier_basis is not None:
+            raise ValueError("tier_basis must be None for pconv_mode='free'")
+    elif tier_basis is None:
+        raise ValueError(f"tier_basis is required for pconv_mode={pconv_mode!r}")
+    a_conv, b_conv = theta_conv_ab
+    a_gen, b_gen = theta_gen_ab
+    if min(a_conv, b_conv, a_gen, b_gen) <= 0:
+        raise ValueError("theta Beta parameters must all be > 0")
+    if tier_basis is not None:
+        assert tier_basis.shape[1] == n_bins, "tier_basis shape mismatch"
+
+    alpha = pm.Beta("alpha", 1.0, 1.0)
+
+    # ---- p_conv: per-arm parameterisation (signoff §2) ----
+    if pconv_mode in ("tiers3", "library"):
+        n_tiers = int(tier_basis.shape[0])
+        tier_weights = pm.Dirichlet("tier_weights", a=np.ones(n_tiers, dtype=float))
+        p_conv = pm.Deterministic("p_conv", pt.dot(tier_weights, tier_basis))
+    else:
+        # Free non-centred GRW, mirroring the p_gen block with its own scale.
+        sigma_conv = pm.HalfNormal("sigma_conv", sigma=1.0)
+        z_pconv = pm.Normal("z_pconv", mu=0.0, sigma=1.0, shape=n_bins - 1)
+        log_pconv_increments = pm.Deterministic(
+            "log_pconv_increments", sigma_conv * z_pconv
+        )
+        log_pconv_raw = pt.concatenate([pt.zeros((1,)), pt.cumsum(log_pconv_increments)])
+        log_pconv_centred = log_pconv_raw - pt.max(log_pconv_raw)
+        unnorm_conv = pt.exp(log_pconv_centred)
+        p_conv = pm.Deterministic("p_conv", unnorm_conv / pt.sum(unnorm_conv))
+
+    # ---- p_gen block: VERBATIM from build_model_joint ----
+    sigma_smooth = pm.HalfNormal("sigma_smooth", sigma=1.0)
+    z_pgen = pm.Normal("z_pgen", mu=0.0, sigma=1.0, shape=n_bins - 1)
+    log_pgen_increments = pm.Deterministic("log_pgen_increments", sigma_smooth * z_pgen)
+    log_pgen_raw = pt.concatenate([pt.zeros((1,)), pt.cumsum(log_pgen_increments)])
+    log_pgen_centered = log_pgen_raw - pt.max(log_pgen_raw)
+    unnorm = pt.exp(log_pgen_centered)
+    p_gen = pm.Deterministic("p_gen", unnorm / pt.sum(unnorm))
+
+    # ---- θ priors: verbatim from build_model_joint ----
+    theta_conv = pm.Beta("theta_conv", a_conv, b_conv)
+    theta_gen = pm.Beta("theta_gen", a_gen, b_gen)
+
+    # ---- alignment-conditional mixtures. The numerators sum exactly to  ----
+    # ---- w_a and 1−w_a respectively, so normalising each by its OWN sum  ----
+    # ---- is algebraically identical to dividing by w_a / (1−w_a) but     ----
+    # ---- cancellation-free: it removes the 0/0 corner at w_a → 1 (alpha  ----
+    # ---- and theta_conv both → 1) where 1−w_a underflows (audit note).   ----
+    w_a = pm.Deterministic("pi_align", alpha * theta_conv + (1.0 - alpha) * theta_gen)
+    num_al = alpha * theta_conv * p_conv + (1.0 - alpha) * theta_gen * p_gen
+    num_non = (alpha * (1.0 - theta_conv) * p_conv
+               + (1.0 - alpha) * (1.0 - theta_gen) * p_gen)
+    p_aligned = pm.Deterministic("p_aligned", num_al / pt.sum(num_al))
+    p_nonalign = pm.Deterministic("p_nonalign", num_non / pt.sum(num_non))
+
+    return {
+        "alpha": alpha, "p_conv": p_conv, "p_gen": p_gen,
+        "theta_conv": theta_conv, "theta_gen": theta_gen, "w_a": w_a,
+        "num_al": num_al, "num_non": num_non,
+        "p_aligned": p_aligned, "p_nonalign": p_nonalign,
+    }
+
+
+# --------------------------------------------------------------------------- #
 # The CROSS-CLASSIFIED time × alignment model (D-B).                            #
 # --------------------------------------------------------------------------- #
 def build_model_cross_classified(y_aligned: np.ndarray, y_nonaligned: np.ndarray,
@@ -396,7 +513,6 @@ def build_model_cross_classified(y_aligned: np.ndarray, y_nonaligned: np.ndarray
         replicate via ``pm.set_data`` (the lead's set_data lesson; spec §4).
     """
     import pymc as pm
-    import pytensor.tensor as pt
 
     if pconv_mode not in ("tiers3", "library", "free"):
         raise ValueError(f"unknown pconv_mode {pconv_mode!r}")
@@ -423,49 +539,12 @@ def build_model_cross_classified(y_aligned: np.ndarray, y_nonaligned: np.ndarray
         assert tier_basis.shape[1] == n_bins, "tier_basis shape mismatch"
 
     with pm.Model() as model:
-        alpha = pm.Beta("alpha", 1.0, 1.0)
-
-        # ---- p_conv: per-arm parameterisation (signoff §2) ----
-        if pconv_mode in ("tiers3", "library"):
-            n_tiers = int(tier_basis.shape[0])
-            tier_weights = pm.Dirichlet("tier_weights", a=np.ones(n_tiers, dtype=float))
-            p_conv = pm.Deterministic("p_conv", pt.dot(tier_weights, tier_basis))
-        else:
-            # Free non-centred GRW, mirroring the p_gen block with its own scale.
-            sigma_conv = pm.HalfNormal("sigma_conv", sigma=1.0)
-            z_pconv = pm.Normal("z_pconv", mu=0.0, sigma=1.0, shape=n_bins - 1)
-            log_pconv_increments = pm.Deterministic(
-                "log_pconv_increments", sigma_conv * z_pconv
-            )
-            log_pconv_raw = pt.concatenate([pt.zeros((1,)), pt.cumsum(log_pconv_increments)])
-            log_pconv_centred = log_pconv_raw - pt.max(log_pconv_raw)
-            unnorm_conv = pt.exp(log_pconv_centred)
-            p_conv = pm.Deterministic("p_conv", unnorm_conv / pt.sum(unnorm_conv))
-
-        # ---- p_gen block: VERBATIM from build_model_joint ----
-        sigma_smooth = pm.HalfNormal("sigma_smooth", sigma=1.0)
-        z_pgen = pm.Normal("z_pgen", mu=0.0, sigma=1.0, shape=n_bins - 1)
-        log_pgen_increments = pm.Deterministic("log_pgen_increments", sigma_smooth * z_pgen)
-        log_pgen_raw = pt.concatenate([pt.zeros((1,)), pt.cumsum(log_pgen_increments)])
-        log_pgen_centered = log_pgen_raw - pt.max(log_pgen_raw)
-        unnorm = pt.exp(log_pgen_centered)
-        p_gen = pm.Deterministic("p_gen", unnorm / pt.sum(unnorm))
-
-        # ---- θ priors: verbatim from build_model_joint ----
-        theta_conv = pm.Beta("theta_conv", a_conv, b_conv)
-        theta_gen = pm.Beta("theta_gen", a_gen, b_gen)
-
-        # ---- alignment-conditional mixtures. The numerators sum exactly to  ----
-        # ---- w_a and 1−w_a respectively, so normalising each by its OWN sum  ----
-        # ---- is algebraically identical to dividing by w_a / (1−w_a) but     ----
-        # ---- cancellation-free: it removes the 0/0 corner at w_a → 1 (alpha  ----
-        # ---- and theta_conv both → 1) where 1−w_a underflows (audit note).   ----
-        w_a = pm.Deterministic("pi_align", alpha * theta_conv + (1.0 - alpha) * theta_gen)
-        num_al = alpha * theta_conv * p_conv + (1.0 - alpha) * theta_gen * p_gen
-        num_non = (alpha * (1.0 - theta_conv) * p_conv
-                   + (1.0 - alpha) * (1.0 - theta_gen) * p_gen)
-        p_aligned = pm.Deterministic("p_aligned", num_al / pt.sum(num_al))
-        p_nonalign = pm.Deterministic("p_nonalign", num_non / pt.sum(num_non))
+        # ---- structural block: SHARED helper (extract-method; byte-identical) ----
+        blk = cc_structural_block(n_bins, tier_basis, theta_conv_ab, theta_gen_ab,
+                                  pconv_mode=pconv_mode)
+        w_a = blk["w_a"]
+        p_aligned = blk["p_aligned"]
+        p_nonalign = blk["p_nonalign"]
 
         # ---- observed data: all three mutable for build-once + set_data ----
         # NB pm.Data downcasts int64 → int32 internally (pytensor intX); fine at
