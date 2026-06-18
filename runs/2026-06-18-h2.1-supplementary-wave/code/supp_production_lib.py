@@ -231,6 +231,77 @@ def uniform_spa_2026_05_17(nb: np.ndarray, na: np.ndarray, H, T) -> np.ndarray:
     return T.uniform_aoristic_spa(nb, na, width, bin_edges=H.BIN_EDGES)
 
 
+def trapezoidal_spa_h2_convention(nb: np.ndarray, na: np.ndarray, H, T) -> np.ndarray:
+    """Trapezoidal-aoristic SPA on the EXACT ``h2_lib.aoristic_spa`` width/clip convention.
+
+    This is the convention-matched trapezoidal leg for the C11 **output-level** refit
+    (audit fix M2). It reuses the lodged 2026-05-17 trapezoidal SHAPE
+    (``T.trapezoidal_aoristic_spa``; the original module is never edited), but lands
+    the integration interval, the width denominator, the envelope clip, and the
+    width-≤-0 drop on the SAME footing as ``h2_lib.aoristic_spa`` — the convention the
+    lodged uniform-input ``p_gen`` (the output-level r's comparison arm) was fit under.
+
+    Why this differs from ``trapezoidal_spa_on_h2_grid`` (which is for the INPUT-level
+    r): the input-level r correlates a trapezoid vs a uniform SPA that are BOTH built
+    with the 2026-05-17 inclusive-Roman ``[nb, na+1)`` / unclipped convention, so the
+    only difference there is the mass SHAPE (correct, and left untouched). The OUTPUT-
+    level r, by contrast, compares a trapezoidal **refit's** ``p_gen`` against the
+    LODGED uniform-input ``p_gen`` — and the lodged primary was fit on
+    ``h2_lib.aoristic_spa`` (interval ``[nb, na]``, denominator ``width = na − nb``,
+    clipped to ``[ENV_START, ENV_END]``, rows with ``width ≤ 0`` dropped). If the
+    trapezoidal refit instead used the 2026-05-17 ``[nb, na+1)`` / unclipped /
+    keep-width-0 convention (as the input-level leg does), a sub-0.95 output-level r
+    could be a WIDTH/CLIP-convention artefact rather than the trapezoidal-shape effect
+    the C11 sensitivity is about. Matching the convention here isolates the shape
+    effect (audit M2).
+
+    Convention reconciliation (how the 2026-05-17 trapezoid is coaxed onto the h2_lib
+    footing without editing the lodged module):
+
+      * ``T.trapezoidal_aoristic_spa`` hardcodes ``interval_hi = not_after + 1`` and
+        derives its trapezoid length ``L = interval_hi − interval_lo``. To integrate
+        the trapezoid over ``[nb, na]`` (h2_lib's interval, length ``na − nb``) we pass
+        ``not_after = na − 1`` (so ``interval_hi = na``) and ``width = na − nb``.
+      * We pre-clip ``nb``/``na`` to ``[ENV_START, ENV_END]`` and drop rows with
+        ``na − nb ≤ 0`` (or a clipped interval of non-positive length) — VERBATIM the
+        ``h2_lib.aoristic_spa`` ``valid = (width > 0) & (na_c > nb_c)`` mask — so the
+        per-row population and the apportioned envelope match the uniform arm exactly.
+
+    Parameters
+    ----------
+    nb, na : int arrays
+        Interval endpoints (h2_lib ``nb`` / ``na`` columns), pre-clip.
+    H : module
+        ``h2_lib`` (for ``ENV_START`` / ``ENV_END`` / ``BIN_EDGES``).
+    T : module
+        The lodged ``empirical_spa_shape`` module (for ``trapezoidal_aoristic_spa``).
+
+    Returns
+    -------
+    spa : (N_BINS,) float array on the h2_lib grid (trapezoidal shape, h2_lib
+          convention). Total mass = number of in-envelope inscriptions, matching
+          ``h2_lib.aoristic_spa`` on the same rows.
+    """
+    nb = np.asarray(nb, dtype=float)
+    na = np.asarray(na, dtype=float)
+    if nb.size == 0:
+        return np.zeros(len(H.BIN_EDGES) - 1, dtype=float)
+    # VERBATIM h2_lib.aoristic_spa clip + width-≤-0 drop (so the population and the
+    # apportioned envelope match the lodged uniform-input arm exactly).
+    nb_c = np.maximum(nb, H.ENV_START)
+    na_c = np.minimum(na, H.ENV_END)
+    width = na - nb                                   # h2_lib width convention (na − nb)
+    valid = (width > 0) & (na_c > nb_c)
+    nb_c, na_c, width = nb_c[valid], na_c[valid], width[valid]
+    if nb_c.size == 0:
+        return np.zeros(len(H.BIN_EDGES) - 1, dtype=float)
+    # Coax the lodged trapezoid (which hardcodes interval_hi = not_after + 1) to
+    # integrate over [nb_c, na_c] with length na_c − nb_c: pass not_after = na_c − 1.
+    width_clipped = na_c - nb_c
+    return T.trapezoidal_aoristic_spa(
+        nb_c, na_c - 1.0, width_clipped, bin_edges=H.BIN_EDGES)
+
+
 # =========================================================================== #
 # H2.2 — corrected-vs-uncorrected template-boundary step magnitudes (SPEC §4).  #
 # =========================================================================== #

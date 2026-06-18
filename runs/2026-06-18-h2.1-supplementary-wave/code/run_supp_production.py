@@ -13,11 +13,16 @@ production:
   * **C5 / C6** — model comparison. Per unit, fit the Dirichlet-multinomial
     (``supp_lib.build_model_cc_dirichlet_multinomial``) and the rescaled
     negative-binomial (``supp_lib.build_model_cc_negbin``) on the adopted
-    cross-classified likelihood, re-using the PRIMARY fit (already in hand from
-    ``runs/2026-06-13-cc-production-refit/``; NOT re-run) for the side-by-side and
-    the PSIS-LOO base. Reports ``az.compare`` (PSIS-LOO) across the three families,
-    the α median + 95 % CI side-by-side, and the multinomial posterior-predictive
-    dispersion check on the primary. → ``outputs/model-comparison.md`` + per-unit JSON.
+    cross-classified likelihood, re-using the lodged PRIMARY α (from
+    ``runs/2026-06-13-cc-production-refit/``; NOT re-run) for the side-by-side.
+    Reports (i) the α median + 95 % CI SIDE-BY-SIDE across primary / DM / NB (does
+    the family move α?); (ii) the multinomial posterior-predictive dispersion check
+    on the primary (is overdispersion warranted? — the prereg's stated DM/NB trigger,
+    l.192); and (iii) each family's OWN within-family WAIC (descriptive, NOT
+    cross-compared). Cross-family PSIS-LOO is NOT computed — it is methodologically
+    inapplicable across the joint-multinomial primary/DM and the per-bin NegBin
+    (audit fix C1; see BUILD-NOTES.md). → ``outputs/model-comparison.md`` + per-unit
+    JSON.
   * **C11** — trapezoidal-aoristic sensitivity. Re-derive the trapezoidal SPA per
     unit + full empire (reusing the lodged 2026-05-17 apportionment), report (a) the
     input-level Pearson r vs the matched-convention uniform SPA, and (b) refit under
@@ -62,10 +67,11 @@ Reuse (imported, never modified)
   posterior-draws/<safe-name>-pgen.npz``) — the corrected SPA for H2.2 / H2.4 and the
   uniform-input baseline for the C11 output-level r — reused, NOT re-fit.
 
-κ for the DM is fixed at ``S_KAPPA = 1e3`` (the pilot-fitted value; the κ posterior was
-data-dominated — see ``PILOT-REPORT.md``). [Note: the pilot prior-predictive nudged the
-candidate to 3e3 for prior coverage, but the BRIEF pins production at S_KAPPA = 1e3, the
-data-dominated value; this is a flagged audit item — see the BUILD-NOTES.]
+The DM κ PRIOR is ``HalfNormal(σ = S_KAPPA = 5000)`` (audit fix C2; was 1e3). The pilot
+DM fit returned κ ≈ 5,800 (data-dominated posterior); σ = 5000 places the weakly-informative
+prior bulk around that without the downward pull the earlier σ = 1000 caused. κ itself is
+sampled (free), not fixed — only its prior σ is pinned here. The value is FLAGGED FOR FINAL
+HUMAN CONFIRM before the run — see BUILD-NOTES.md (C2).
 
 Sampling config + infra
 ------------------------
@@ -120,7 +126,10 @@ LIBRARY_BASIS = THETA_CONV_AB = THETA_GEN_AB = None
 # --------------------------------------------------------------------------- #
 # Production constants (SPEC §3.3 / §4 / §5 / §6 / §7).                          #
 # --------------------------------------------------------------------------- #
-S_KAPPA = 1e3                       # DM concentration prior σ — pilot-fitted (brief pin)
+S_KAPPA = 5000                      # DM concentration prior σ (audit fix C2; was 1e3).
+#                                     Pilot fit κ ≈ 5,800; σ = 5000 places the prior bulk
+#                                     around it without the downward pull σ = 1000 caused.
+#                                     FLAGGED FOR FINAL HUMAN CONFIRM before the run.
 PROD_BASE_SEED = 20260618           # production seed; per-unit seed = base + unit_index
 H2_3_SEED_OFFSET = 200_000          # disjoint seed block for the H2.3 threshold refits
 BOOT_SEED_OFFSET = 400_000          # disjoint seed block for the bootstrap CIs
@@ -166,10 +175,11 @@ def _sample(model, seed: int, with_loglik: bool):
     """Sample one model with the production config (cores = 1); return InferenceData.
 
     ``with_loglik`` requests the pointwise log-likelihood group at sample time
-    (``idata_kwargs={"log_likelihood": True}``) — required for the C5 / C6 PSIS-LOO
-    (``az.compare``); the primary refit did NOT store it, so the primary is re-fit
-    HERE for the LOO base (its α is still taken from the lodged summary for the
-    side-by-side — see ``fit_model_comparison``).
+    (``idata_kwargs={"log_likelihood": True}``) — used for each family's OWN
+    WITHIN-family WAIC/LOO (descriptive context only; C1.iii). It is NOT used for any
+    cross-family comparison: cross-family PSIS-LOO across these models is inapplicable
+    (the primary/DM emit a joint multinomial log-lik, 3 points/unit; the NegBin emits
+    per-bin, 161 points) — see ``fit_model_comparison`` and BUILD-NOTES.md (C1).
     """
     import pymc as pm
     with model:
@@ -217,44 +227,58 @@ def _pgen_median_norm(idata, n_bins: int) -> np.ndarray:
     return SP.normalise(med)
 
 
-def _pooled_loglik_tree(idata):
-    """A DataTree carrying ``posterior`` + a pooled-``obs`` ``log_likelihood`` group.
+def _within_family_waic(idata) -> dict[str, Any]:
+    """Each observed node's OWN WAIC — WITHIN-FAMILY descriptive context only (C1.iii).
 
-    arviz 1.1.0 idiom (the project's pinned stack: arviz≥1.1.0 / pymc≥6.0.1). The
-    cross-classified models carry THREE observed nodes — ``k_obs`` (a scalar
-    per-draw log-lik), ``y_al_obs`` and ``y_non_obs`` (each an N_BINS-vector of
-    per-bin pointwise log-liks). For PSIS-LOO we want the FULL pointwise structure,
-    so we CONCATENATE the three groups' per-draw log-liks along one shared ``obs``
-    dimension (1 + N_BINS + N_BINS points) rather than summing to a single scalar —
-    this gives a proper pointwise LOO across the bin-level observations the dispersion
-    question is about. ``az.compare`` then ranks the families on the SAME observed
-    points (every family scores the same ``k_data`` / ``y_al_data`` / ``y_non_data``).
+    *** This is NOT a cross-family model-comparison number. ***  Cross-family PSIS-LOO
+    across the supplementary families is INAPPLICABLE: the primary and the DM emit a
+    JOINT-multinomial pointwise log-likelihood (the two subset multinomials score one
+    log-lik point each → 3 points/unit incl. the Binomial), while the per-bin NegBin
+    emits 1 + N_BINS + N_BINS ≈ 161 points/unit. ``az.compare`` cannot rank models
+    whose pointwise log-likelihoods live on differently-shaped observation spaces —
+    forcing a shared ``obs`` axis (as an earlier draft did) compares incommensurable
+    quantities and is methodologically invalid. See BUILD-NOTES.md (C1).
 
-    Note (arviz 1.x migration): ``az.InferenceData(log_likelihood=…)`` was removed
-    (arviz now uses xarray ``DataTree``); ``az.compare`` no longer takes ``ic=`` (LOO
-    is the method) and is given the DataTree directly with ``var_name``. This is the
-    1.1.0-correct path; the old 0.x ``ic="loo"`` / ``InferenceData`` API would raise.
+    Instead, for DESCRIPTIVE context we report each family's OWN per-node WAIC,
+    computed independently on that node (no pooling across families, no ranking):
+    ``elpd_waic`` + ``p_waic`` for each of ``k_obs`` / ``y_al_obs`` / ``y_non_obs``.
+    These are only ever interpreted within a single family (e.g. "the DM's y_al_obs
+    elpd"), never across families. The model-comparison VERDICT is carried by the α
+    side-by-side (does the family move α?) and the multinomial PPC dispersion ratio
+    (is overdispersion warranted?), NOT by any cross-family information criterion.
+
+    Returns ``{node: {elpd_waic, p_waic, n_obs} | {error: …}}`` for the three nodes;
+    a node that cannot form a WAIC (e.g. a 1-point joint log-lik) is reported with its
+    error string rather than silently dropped. Best-effort — never raises.
     """
-    import numpy as _np
-    import xarray as xr
-    from xarray import DataTree
-    ll = idata.log_likelihood.to_dataset()        # the log_likelihood group as a Dataset
-    post = idata.posterior.to_dataset()            # the posterior group as a Dataset
-    # Reduce each obs group to a (chain, draw, n_points) numpy array, then concatenate
-    # along the points axis. numpy concat is unambiguous (no xarray coordinate-
-    # alignment subtleties) and treats each bin / the scalar k as a separate LOO point.
-    pieces = []
-    n_chain = ll.sizes["chain"]
-    n_draw = ll.sizes["draw"]
-    for var in ("k_obs", "y_al_obs", "y_non_obs"):
-        arr = ll[var].transpose("chain", "draw", ...).values
-        arr = arr.reshape(n_chain, n_draw, -1)     # (chain, draw, n_points); scalar → 1
-        pieces.append(arr)
-    pooled = _np.concatenate(pieces, axis=2)        # (chain, draw, 1 + N_BINS + N_BINS)
-    ll_pooled = xr.Dataset(
-        {"obs": (("chain", "draw", "obs"), pooled)},
-        coords={"chain": ll["chain"].values, "draw": ll["draw"].values})
-    return DataTree.from_dict({"posterior": post, "log_likelihood": ll_pooled})
+    import arviz as az
+    out: dict[str, Any] = {
+        "note": ("WITHIN-FAMILY descriptive WAIC per observed node; NOT a cross-family "
+                 "comparison (inapplicable across joint-multinomial vs per-bin NegBin "
+                 "observation structures — see BUILD-NOTES.md C1).")}
+    if not hasattr(idata, "log_likelihood"):
+        out["error"] = "no log_likelihood group (model fit without with_loglik)"
+        return out
+    ll_vars = set(idata.log_likelihood.data_vars)
+    for node in ("k_obs", "y_al_obs", "y_non_obs"):
+        if node not in ll_vars:
+            out[node] = {"error": "node absent from log_likelihood group"}
+            continue
+        try:
+            with warnings.catch_warnings():
+                warnings.simplefilter("ignore")    # benign p_waic / scale notices
+                w = az.waic(idata, var_name=node, scale="log")
+            # n_obs = pointwise log-lik element count per draw = total / (chain·draw);
+            # 1 for a joint-multinomial node, N_BINS for a per-bin NegBin node.
+            da = idata.log_likelihood[node]
+            per_draw = int(da.size // (da.sizes["chain"] * da.sizes["draw"]))
+            out[node] = {
+                "elpd_waic": float(getattr(w, "elpd_waic", float("nan"))),
+                "p_waic": float(getattr(w, "p_waic", float("nan"))),
+                "n_obs": per_draw}
+        except Exception as exc:  # noqa: BLE001
+            out[node] = {"error": repr(exc)[:160]}
+    return out
 
 
 # =========================================================================== #
@@ -263,20 +287,37 @@ def _pooled_loglik_tree(idata):
 def fit_model_comparison(unit: dict, data: dict) -> dict[str, Any]:
     """Fit DM + NB for one unit and assemble the C5 / C6 model-comparison record.
 
+    Model-comparison deliverable (audit fix C1 — cross-family PSIS-LOO REMOVED as
+    methodologically invalid). The prereg asks for the supplementaries "reported
+    alongside for model-comparison cross-checks"; this is discharged by:
+
+      (i)   the α median + 95 % CI SIDE-BY-SIDE across primary / DM / NB — the
+            substantive question, "does the overdispersed family move the α verdict?"
+            (primary α is the lodged value; DM / NB α from their fits here);
+      (ii)  the multinomial POSTERIOR-PREDICTIVE DISPERSION check on the primary — the
+            prereg's stated trigger (l.192) for preferring DM/NB: a bin-level dispersion
+            ratio ≈ 1 says the multinomial is adequate (overdispersion NOT warranted),
+            > 1 says it is; the adjudicator of whether DM/NB are even needed;
+      (iii) each family's OWN per-node WAIC, reported WITHIN-FAMILY ONLY (descriptive
+            context, NOT cross-compared) via ``_within_family_waic``.
+
+    Cross-family PSIS-LOO is INAPPLICABLE here: the primary/DM emit a joint-multinomial
+    pointwise log-lik (3 points/unit) and the NegBin emits per-bin (≈161 points/unit);
+    ``az.compare`` cannot rank models on differently-shaped observation spaces. See
+    BUILD-NOTES.md (C1). The model-comparison VERDICT is therefore (i) + (ii), NOT any
+    information criterion.
+
     The PRIMARY α + CI come from the lodged refit summary (NOT re-run; SPEC §4 reuse).
-    The primary is RE-FIT here ONLY to obtain its log-likelihood group for the LOO
-    base and the posterior-predictive dispersion check — both of which the lodged
-    refit did not persist. The re-fit uses the SAME per-unit seed as the refit
-    (``REFIT_BASE_SEED + unit_index``) so the LOO base is the lodged posterior to
-    MCMC noise (its α is taken from the summary, so any tiny re-fit drift does not
-    touch the reported α).
+    The primary is RE-FIT here ONLY for the posterior-predictive dispersion check (ii)
+    and its own within-family WAIC (iii) — neither of which the lodged refit persisted.
+    The re-fit uses the SAME per-unit seed as the refit (``REFIT_BASE_SEED +
+    unit_index``) so it reproduces the lodged posterior to MCMC noise; its α is taken
+    from the summary, so any tiny re-fit drift does not touch the reported α.
 
     Returns the per-unit JSON record: α side-by-side (primary from summary, DM, NB),
-    PSIS-LOO comparison, the κ / φ posteriors, the dispersion ratios, and the
-    per-fit convergence + timing.
+    the κ / φ posteriors, the dispersion ratios, per-family within-family WAIC, the
+    α-movement verdict, and the per-fit convergence + timing.
     """
-    import arviz as az
-
     ya, yn = data["y_aligned"], data["y_nonaligned"]
     k, n_rows = data["k"], data["n_rows"]
     n_bins = int(ya.size)
@@ -297,19 +338,20 @@ def fit_model_comparison(unit: dict, data: dict) -> dict[str, Any]:
         "convergence_pass": prim.get("convergence_pass"),
         "source": "runs/2026-06-13-cc-production-refit/outputs/refit-summary.json"}
 
-    # --- primary RE-FIT (LOO base + PPC dispersion only; α NOT taken from here) ---
+    # --- primary RE-FIT (PPC dispersion + within-family WAIC only; α from lodged) ---
     t0 = time.time()
     primary = J.build_model_cross_classified(
         ya, yn, k, n_rows, LIBRARY_BASIS, THETA_CONV_AB, THETA_GEN_AB,
         pconv_mode="library")
     seed_p = R.REFIT_BASE_SEED + unit["unit_index"]
     idata_p = _sample(primary, seed_p, with_loglik=True)
-    tree_p = _pooled_loglik_tree(idata_p)
     rec["primary_refit"] = {
         **_alpha_summary(idata_p), "secs": round(time.time() - t0, 1),
         "convergence": _convergence(idata_p),
         "dispersion": _dispersion_check(idata_p, ya, yn),
-        "note": "re-fit for LOO base + PPC dispersion; reported α is primary_lodged"}
+        "within_family_waic": _within_family_waic(idata_p),
+        "note": ("re-fit for the PPC dispersion check + within-family WAIC only; "
+                 "reported α is primary_lodged")}
 
     # --- DM fit (free κ at the brief-pinned S_KAPPA) ---
     t0 = time.time()
@@ -318,10 +360,10 @@ def fit_model_comparison(unit: dict, data: dict) -> dict[str, Any]:
         s_kappa=S_KAPPA, pconv_mode="library")
     idata_dm = _sample(dm, PROD_BASE_SEED + unit["unit_index"], with_loglik=True)
     kappa = idata_dm.posterior["kappa"].values.reshape(-1)
-    tree_dm = _pooled_loglik_tree(idata_dm)
     rec["dm"] = {
         **_alpha_summary(idata_dm), "secs": round(time.time() - t0, 1),
         "convergence": _convergence(idata_dm),
+        "within_family_waic": _within_family_waic(idata_dm),
         "kappa_median": float(np.median(kappa)),
         "kappa_ci_lo": float(np.percentile(kappa, 2.5)),
         "kappa_ci_hi": float(np.percentile(kappa, 97.5)),
@@ -334,41 +376,40 @@ def fit_model_comparison(unit: dict, data: dict) -> dict[str, Any]:
         pconv_mode="library")
     idata_nb = _sample(nb, PROD_BASE_SEED + unit["unit_index"], with_loglik=True)
     phi = idata_nb.posterior["phi"].values.reshape(-1)
-    tree_nb = _pooled_loglik_tree(idata_nb)
     rec["nb"] = {
         **_alpha_summary(idata_nb), "secs": round(time.time() - t0, 1),
         "convergence": _convergence(idata_nb),
+        "within_family_waic": _within_family_waic(idata_nb),
         "phi_median": float(np.median(phi)),
         "phi_ci_lo": float(np.percentile(phi, 2.5)),
         "phi_ci_hi": float(np.percentile(phi, 97.5))}
 
-    # --- PSIS-LOO comparison across the three families (az.compare, arviz 1.1.0) ---
-    # az.compare consumes the per-family DataTrees directly (var_name='obs' selects
-    # the pooled pointwise log-lik); LOO is the method (no 0.x ``ic=`` kwarg).
-    try:
-        with warnings.catch_warnings():
-            warnings.simplefilter("ignore")        # silence the benign Pareto-k notice
-            cmp = az.compare(
-                {"primary": tree_p, "dm": tree_dm, "nb": tree_nb}, var_name="obs")
-        rec["loo_compare"] = {
-            "ranking": list(cmp.index),
-            "table": {str(idx): {c: _jsonable(cmp.loc[idx, c]) for c in cmp.columns}
-                      for idx in cmp.index},
-            "note": ("PSIS-LOO over the pooled pointwise log-likelihood (k_obs + the "
-                     "two N_BINS subset vectors concatenated on one obs axis); "
-                     "cross-family LOO comparability flagged for audit — see BUILD-NOTES")}
-    except Exception as exc:  # noqa: BLE001
-        rec["loo_compare"] = {"error": repr(exc)[:200]}
-
-    # --- the substantive question: does the family move the α verdict? ---
+    # --- model-comparison VERDICT (C1): NOT a cross-family information criterion. ---
+    # (i) does the overdispersed family MOVE the lodged primary α?  (ii) is
+    # overdispersion even WARRANTED (primary multinomial PPC dispersion ratio vs 1)?
+    # A small |Δα| + a dispersion ratio ≈ 1 ⇒ the multinomial is adequate and the α
+    # attribution is family-robust (the supplementaries cross-check, don't overturn).
     am_p = rec["primary_lodged"].get("alpha_median")
+    disp = rec["primary_refit"]["dispersion"]
+    disp_finite = [v for v in (disp.get("dispersion_ratio_aligned"),
+                               disp.get("dispersion_ratio_nonaligned"))
+                   if isinstance(v, (int, float)) and np.isfinite(v)]
+    disp_max = max(disp_finite) if disp_finite else None
     rec["alpha_verdict"] = {
         "delta_alpha_dm_vs_primary": (abs(rec["dm"]["alpha_median"] - am_p)
                                       if am_p is not None else None),
         "delta_alpha_nb_vs_primary": (abs(rec["nb"]["alpha_median"] - am_p)
                                       if am_p is not None else None),
-        "interpretation": ("the supplementary families CROSS-CHECK the primary α; a "
-                           "small Δ confirms the α attribution is family-robust")}
+        "primary_dispersion_ratio_max": disp_max,
+        "overdispersion_warranted": (bool(disp_max > 1.0)
+                                     if disp_max is not None else None),
+        "interpretation": ("model-comparison VERDICT (C1; NOT cross-family LOO): the "
+                           "supplementary families CROSS-CHECK the primary α — a small "
+                           "|Δα| says the α attribution is family-robust; the primary "
+                           "multinomial PPC dispersion ratio (≈1 vs >1) adjudicates "
+                           "whether the DM/NB overdispersed families are warranted at "
+                           "all. Each family's WAIC is within-family-only descriptive "
+                           "context, never cross-compared.")}
     return rec
 
 
@@ -422,6 +463,17 @@ def trapezoidal_unit(unit: dict, sub, posterior_draws_dir: Path) -> dict[str, An
     cross-classified contrast is preserved; ``k`` and ``n_rows`` are the trapezoidal
     largest-remainder totals (the model's Binomial / Multinomial ``n`` must match its
     own observation, exactly as the uniform refit does).
+
+    Convention (audit fix M2): the output-level refit uses
+    ``SP.trapezoidal_spa_h2_convention`` — the lodged trapezoidal SHAPE on the EXACT
+    ``h2_lib.aoristic_spa`` width/clip/drop convention the lodged uniform-input
+    ``p_gen`` was fit under (interval ``[nb, na]``, width ``na − nb``, clipped to the
+    envelope, rows with width ≤ 0 dropped). This makes the trapezoidal arm
+    convention-matched to the uniform arm it is correlated against, so the output-level
+    r isolates the trapezoidal-SHAPE effect rather than confounding it with a
+    width/clip-convention change. (The INPUT-level r above is a separate, already-
+    convention-matched trapezoid-vs-uniform comparison under the 2026-05-17 convention
+    — left untouched.)
     """
     import empirical_spa_shape as T   # the lodged 2026-05-17 apportionment (on sys.path)
 
@@ -441,11 +493,15 @@ def trapezoidal_unit(unit: dict, sub, posterior_draws_dir: Path) -> dict[str, An
     }
 
     # (b) trapezoidal-input refit → output-level r vs the lodged uniform p_gen.
+    # M2: the OUTPUT-level trapezoidal arm uses the h2_lib width/clip convention
+    # (trapezoidal_spa_h2_convention) — the SAME convention the lodged uniform-input
+    # p_gen (the comparison arm) was fit under — so the output-level r isolates the
+    # trapezoidal-shape effect, not a width/clip-convention artefact.
     amask = J.aligned_indicator(sub, rule=R.ALIGN_RULE)
     al, non = sub.loc[amask], sub.loc[~amask]
-    ya = H.largest_remainder(SP.trapezoidal_spa_on_h2_grid(
+    ya = H.largest_remainder(SP.trapezoidal_spa_h2_convention(
         al["nb"].to_numpy(), al["na"].to_numpy(), H, T))
-    yn = H.largest_remainder(SP.trapezoidal_spa_on_h2_grid(
+    yn = H.largest_remainder(SP.trapezoidal_spa_h2_convention(
         non["nb"].to_numpy(), non["na"].to_numpy(), H, T))
     k = int(ya.sum())
     n_rows = int(k + int(yn.sum()))
@@ -628,24 +684,50 @@ def stratified_unit(unit: dict, sub, posterior_draws_dir: Path) -> dict[str, Any
     the stratum band, and (ii) the point Pearson r. Internal-consistency framing —
     the genuine-classed stratum should TRACK the deconvolved genuine SPA; the
     convention-classed stratum is the contrast.
+
+    CAVEAT (audit fix M1 — reported, computation UNCHANGED): the stratum SPAs are
+    built with ``h2_lib.aoristic_spa``, which drops rows with ``width = na − nb ≤ 0``
+    — i.e. the YEAR-PRECISE rows (``na == nb``, a zero-width interval). This is
+    CONSISTENT with how the primary ``p_gen`` was fit (the same drop, so the
+    comparison is valid and apples-to-apples), but it means the genuine-classed
+    stratum UNDER-REPRESENTS exactly the date-honest year-precise inscriptions this
+    H2.4 internal-consistency check is most about. We report the count of dropped
+    year-precise rows per stratum (``n_year_precise_dropped``) so the
+    under-representation is visible; we do NOT change the computation (changing it
+    would break the consistency with the lodged primary). See BUILD-NOTES.md (M1).
     """
     rng = np.random.default_rng(
         PROD_BASE_SEED + BOOT_SEED_OFFSET + 1 + unit["unit_index"])
     pgen = _load_lodged_pgen_median(unit["name"], posterior_draws_dir, H.N_BINS)
     rec: dict[str, Any] = {
         "name": unit["name"], "frame": unit["frame"], "unit_index": unit["unit_index"],
-        "n_rows_raw": int(len(sub))}
+        "n_rows_raw": int(len(sub)),
+        "m1_caveat": ("genuine/convention strata SPAs drop year-precise (na==nb, "
+                      "width≤0) rows via h2_lib.aoristic_spa — consistent with the "
+                      "lodged primary p_gen fit, but under-represents the date-honest "
+                      "year-precise inscriptions; see n_year_precise_dropped per "
+                      "stratum and BUILD-NOTES.md M1.")}
     if pgen is None:
         rec["error"] = "lodged p_gen .npz missing; cannot compare strata to p_gen"
         return rec
+    # M1: count the year-precise (na==nb) rows in each stratum that h2_lib.aoristic_spa
+    # silently drops (width≤0), so the under-representation is reported per stratum.
+    # (Read-off only — the stratum SPA / band computation below is UNCHANGED.)
+    fam_all = H.classify_family(sub)
+    nb_all = sub["nb"].to_numpy()
+    na_all = sub["na"].to_numpy()
+    year_precise = (na_all - nb_all) <= 0
     for label, fams in (("genuine_classed", SP.GENUINE_FAMILIES),
                         ("convention_classed", SP.CONVENTION_FAMILIES)):
         band = SP.stratified_bootstrap_band(sub, H, fams, N_BOOT, rng)
         spa = np.asarray(band["spa"], dtype=float)
         frac_in = SP.fraction_in_band(pgen, np.asarray(band["band_lo"], dtype=float),
                                       np.asarray(band["band_hi"], dtype=float))
+        in_stratum = np.isin(fam_all, list(fams))
+        n_dropped = int((in_stratum & year_precise).sum())
         rec[label] = {
             "families": list(fams), "n_rows": band["n_rows"],
+            "n_year_precise_dropped": n_dropped,         # M1 caveat (width≤0 → dropped)
             "pearson_r_vs_pgen": SP.pearson_r(spa, pgen),
             "frac_pgen_in_band": frac_in, "n_boot": band["n_boot"],
             "spa": band["spa"], "band_lo": band["band_lo"], "band_hi": band["band_hi"]}
@@ -766,12 +848,26 @@ def _hdr(title: str, stamp: str, spec_ref: str) -> list[str]:
 
 
 def _write_model_comparison(path: Path, recs: list[dict], stamp: str) -> None:
-    """C5 / C6 deliverable — PSIS-LOO + α side-by-side + dispersion."""
+    """C5 / C6 deliverable — α side-by-side + multinomial PPC dispersion (C1).
+
+    Cross-family PSIS-LOO is NOT reported: it is methodologically inapplicable across
+    the joint-multinomial primary/DM and the per-bin NegBin (differently-shaped
+    observation spaces; see BUILD-NOTES.md C1). The deliverable is the comparison the
+    prereg actually asks for — α side-by-side (does the family move α?) + the primary
+    multinomial PPC dispersion ratio (is overdispersion warranted?).
+    """
     lines = _hdr("C5 / C6 — model comparison (Dirichlet-multinomial + negative-binomial)",
                  stamp, "§4 (C5/C6)")
-    lines += ["## α side-by-side (median, 95 % CI)", "",
-              "| unit | primary (lodged) | DM | NB | |Δα| DM | |Δα| NB | LOO best |",
-              "|------|------------------|----|----|--------|--------|----------|"]
+    lines += ["**Method note (C1):** cross-family PSIS-LOO is NOT reported — it is "
+              "inapplicable across the joint-multinomial (primary, DM; 3 log-lik "
+              "points/unit) and per-bin negative-binomial (≈161 points/unit) "
+              "observation structures. The model-comparison verdict is the α "
+              "side-by-side (does the family move α?) plus the primary multinomial "
+              "posterior-predictive dispersion ratio (is overdispersion warranted?). "
+              "Each family's own WAIC is in the per-unit JSON, within-family-only.", "",
+              "## α side-by-side (median, 95 % CI) — does the family move α?", "",
+              "| unit | primary (lodged) | DM | NB | |Δα| DM | |Δα| NB |",
+              "|------|------------------|----|----|--------|--------|"]
     for r in recs:
         mc = r.get("model_comparison", {})
         if not mc:
@@ -779,32 +875,43 @@ def _write_model_comparison(path: Path, recs: list[dict], stamp: str) -> None:
         p = mc.get("primary_lodged", {})
         dm, nb = mc.get("dm", {}), mc.get("nb", {})
         v = mc.get("alpha_verdict", {})
-        best = (mc.get("loo_compare", {}).get("ranking", ["?"]) or ["?"])[0]
         prim_ci = _fmt_ci(p.get("alpha_median"), p.get("alpha_ci_lo"), p.get("alpha_ci_hi"))
         lines.append(
             f"| {r['name']} | {prim_ci} "
             f"| {_fmt_ci(dm.get('alpha_median'), dm.get('alpha_ci_lo'), dm.get('alpha_ci_hi'))} "
             f"| {_fmt_ci(nb.get('alpha_median'), nb.get('alpha_ci_lo'), nb.get('alpha_ci_hi'))} "
             f"| {_fmt(v.get('delta_alpha_dm_vs_primary'))} "
-            f"| {_fmt(v.get('delta_alpha_nb_vs_primary'))} | {best} |")
-    lines += ["", "## DM κ / NB φ posteriors + multinomial PPC dispersion", "",
-              "| unit | κ median [95% CI] | φ median | disp. aligned | disp. non-al |",
-              "|------|-------------------|----------|---------------|--------------|"]
+            f"| {_fmt(v.get('delta_alpha_nb_vs_primary'))} |")
+    lines += ["", "## DM κ / NB φ posteriors + multinomial PPC dispersion "
+              "(overdispersion warranted?)", "",
+              "| unit | κ median [95% CI] | φ median | disp. aligned | disp. non-al | "
+              "overdisp.? |",
+              "|------|-------------------|----------|---------------|--------------|"
+              "------------|"]
     for r in recs:
         mc = r.get("model_comparison", {})
         if not mc:
             continue
         dm, nb = mc.get("dm", {}), mc.get("nb", {})
         d = mc.get("primary_refit", {}).get("dispersion", {})
+        v = mc.get("alpha_verdict", {})
+        ow = v.get("overdispersion_warranted")
+        ow_str = "YES" if ow else ("no" if ow is not None else "—")
         lines.append(
             f"| {r['name']} | {_fmt(dm.get('kappa_median'))} "
             f"[{_fmt(dm.get('kappa_ci_lo'))}, {_fmt(dm.get('kappa_ci_hi'))}] "
             f"| {_fmt(nb.get('phi_median'))} | {_fmt(d.get('dispersion_ratio_aligned'))} "
-            f"| {_fmt(d.get('dispersion_ratio_nonaligned'))} |")
-    lines += ["", f"- DM κ prior: HalfNormal(σ = S_KAPPA = {S_KAPPA:g}) — pilot-fitted "
-              "(brief pin; κ posterior data-dominated, see PILOT-REPORT.md).",
-              "- LOO comparison granularity (1-point pooled joint log-lik across the 3 "
-              "obs groups) is a flagged audit item — see BUILD-NOTES.", ""]
+            f"| {_fmt(d.get('dispersion_ratio_nonaligned'))} | {ow_str} |")
+    lines += ["", f"- DM κ prior: HalfNormal(σ = S_KAPPA = {S_KAPPA:g}) — pilot κ ≈ 5,800; "
+              "σ = 5000 centres the weakly-informative prior near it (audit fix C2; "
+              "see BUILD-NOTES.md).",
+              "- Dispersion ratio ≈ 1 ⇒ the multinomial primary is adequate "
+              "(overdispersion NOT warranted); > 1 ⇒ DM/NB preferred. This is the "
+              "prereg's stated DM/NB trigger (l.192) and the model-comparison "
+              "adjudicator — NOT a cross-family information criterion (C1).",
+              "- Per-family within-family WAIC (descriptive, NOT cross-compared) is in "
+              "the per-unit JSON (outputs/units/, `*.model_comparison.{primary_refit,"
+              "dm,nb}.within_family_waic`).", ""]
     path.write_text("\n".join(lines) + "\n")
 
 
@@ -831,8 +938,15 @@ def _write_trapezoidal(path: Path, recs: list[dict], stamp: str) -> None:
     lines += ["", f"- Units flagged report-alongside: {n_material} / {len(recs)}.",
               "- Trapezoidal apportionment reused from "
               "runs/2026-05-17-empirical-spa-shape/code/empirical_spa_shape.py "
-              "(imported; original untouched). Uniform leg matched to the same width "
-              "convention (see supp_production_lib.trapezoidal_spa_on_h2_grid).", ""]
+              "(imported; original untouched).",
+              "- **Convention (M2):** the INPUT-level r matches trapezoid vs uniform "
+              "under the 2026-05-17 inclusive-Roman convention "
+              "(`trapezoidal_spa_on_h2_grid` vs `uniform_spa_2026_05_17`), isolating "
+              "the mass SHAPE. The OUTPUT-level r matches the trapezoidal refit to the "
+              "lodged uniform-input `p_gen` under the `h2_lib.aoristic_spa` width/clip "
+              "convention (`trapezoidal_spa_h2_convention`), so it too isolates the "
+              "shape effect rather than a width/clip artefact. See BUILD-NOTES.md (M2).",
+              ""]
     path.write_text("\n".join(lines) + "\n")
 
 
@@ -897,21 +1011,33 @@ def _write_h24(path: Path, recs: list[dict], stamp: str) -> None:
     lines += ["Internal-consistency check (NOT independent validation): the genuine-"
               "classed (Tight) and convention-classed (F1_round + F3_periodic) strata "
               "SPAs vs the model p_gen, within an inscription-bootstrap band.", "",
-              "| unit | genuine r | genuine frac-in-band | conv r | conv frac-in-band |",
-              "|------|-----------|----------------------|--------|-------------------|"]
+              "**CAVEAT (M1):** the stratum SPAs are built with `h2_lib.aoristic_spa`, "
+              "which drops year-precise rows (`na == nb`, width ≤ 0). This is CONSISTENT "
+              "with how the lodged primary `p_gen` was fit (so the comparison is valid), "
+              "but it UNDER-REPRESENTS exactly the date-honest year-precise inscriptions "
+              "this check is about — the `genuine drop` column counts the dropped rows "
+              "per genuine stratum. See BUILD-NOTES.md (M1).", "",
+              "| unit | genuine r | genuine frac-in-band | genuine drop | conv r | "
+              "conv frac-in-band |",
+              "|------|-----------|----------------------|--------------|--------|"
+              "-------------------|"]
     for r in recs:
         s = r.get("stratified", {})
         if not s or "error" in s:
-            lines.append(f"| {r['name']} | — | — | — | {s.get('error', 'n/a')} |")
+            lines.append(f"| {r['name']} | — | — | — | — | {s.get('error', 'n/a')} |")
             continue
         g, c = s.get("genuine_classed", {}), s.get("convention_classed", {})
         lines.append(f"| {r['name']} | {_fmt(g.get('pearson_r_vs_pgen'), 3)} | "
                      f"{_fmt_pct(g.get('frac_pgen_in_band'))} | "
+                     f"{g.get('n_year_precise_dropped', '—')} | "
                      f"{_fmt(c.get('pearson_r_vs_pgen'), 3)} | "
                      f"{_fmt_pct(c.get('frac_pgen_in_band'))} |")
     lines += ["", "- The genuine-classed stratum should TRACK the deconvolved genuine "
               "SPA (high r, high frac-in-band); the convention-classed stratum is the "
-              "contrast. Full per-bin bands are in the per-unit JSON.", ""]
+              "contrast. Full per-bin bands are in the per-unit JSON.",
+              "- `genuine drop` = year-precise (na==nb) rows dropped from the genuine "
+              "stratum by the width≤0 rule (M1); a large count means the stratum SPA "
+              "materially under-samples the date-honest tail.", ""]
     path.write_text("\n".join(lines) + "\n")
 
 
