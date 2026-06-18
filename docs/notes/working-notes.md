@@ -5342,3 +5342,173 @@ self-check; provenance sha256; source for all numbers in this Obs);
 `35-provinces`, `20-reliable`, `1012-city-index`,
 `Decision-13`, `exploratory-no-thresholds`, `multiple-features-no-cherry-pick`,
 `obs-104`, `obs-103`, `obs-100`, `obs-98`
+
+## Obs 106 — 2026-06-18 [RESULT / ROBUSTNESS]: §5 H7-Latin + peak-scaling-Latin — the β_within U-shape, capital over-production, and peak ≈ cumulative replicate on the lodged primary (diagnostic-unit) frame; not a Greek-East artefact
+
+### The finding
+
+Both §5 analyses previously run only on the all-provinces 1,044-city frame were re-run on
+the **lodged primary cross-sectional frame** (Amendment 02, 2026-06-06): the Latin-minus-Roma
+diagnostic unit (Obs 101). Every modelling choice was inherited verbatim from the all-provinces
+runs by importing the audited modules; only the city/province universe changed. Both runs
+executed on sapphire (2026-06-18, background agent). All fits converged: R̂ = 1.0000,
+0 divergences across all periods and arms.
+
+**Frame — verified against the H3a precedent (H3a-confirmatory run):**
+
+| Quantity | This run | H3a-confirmatory precedent |
+|---|---|---|
+| Cities | 817 | 817 |
+| Provinces | 39 | 39 |
+| Roma | excluded | excluded (`rome_mask`) |
+| Capitals in frame | 41 | — |
+
+Cumulative comparator (re-verified from `idata-latin.nc`): Latin NBR
+**β_within = 0.733 [0.648, 0.820]**.
+
+---
+
+**H7-LATIN — time-resolved per-period H3c (8 × 50y periods, 50 BC – AD 350):**
+
+| Period | β_within [95 % CI] | Capital P(contrast > 0) | Clustering (≥2-of-3 k) |
+|---|---|---|---|
+| 50 BC – AD 0 | **0.886** [0.761, 1.015] | 1.00 | **YES** (3/3; k8 I=0.037, p=0.020) |
+| AD 0–50 | 0.801 [0.691, 0.919] | 1.00 | **YES** (2/3; k8 I=0.027, p=0.047) |
+| AD 50–100 | 0.816 [0.709, 0.925] | 1.00 | no (0/3) |
+| AD 100–150 | 0.699 [0.600, 0.799] | 1.00 | no |
+| AD 150–200 | 0.693 [0.603, 0.788] | 1.00 | no |
+| AD 200–250 | 0.708 [0.605, 0.811] | 1.00 | no |
+| AD 250–300 | 0.690 [0.585, 0.793] | 1.00 | no |
+| AD 300–350 | 0.799 [0.672, 0.929] | 1.00 | no |
+
+Three findings on the diagnostic unit:
+
+**1. The U-shape persists, shifted upward.** β_within falls from **0.886** (50 BC – AD 0)
+through a **~0.69–0.71 high-empire plateau (AD 100–300)** — which sits just below the
+Latin cumulative 0.733, exactly as the all-provinces plateau (~0.58) tracked its
+cumulative 0.587 — then rises again to **0.799** in the 4th century. Comparison with
+Obs 99 (all-provinces: 0.701 → ~0.58 plateau → 0.659): the same U, uniformly higher
+on the Latin frame, as expected given the removal of the less-productive Greek East.
+**The U-shape is a feature of the diagnostic unit, not a Greek-East mixing artefact.**
+
+**2. Provincial capitals over-produce in every period.** P(contrast > 0) = 1.00 in all
+8 periods — identical to the all-provinces result (Obs 99). Capital over-production is a
+time-stable, frame-stable replication of Hanson 2021.
+
+**3. Spatial clustering is early-empire-only.** The H3c(ii) ≥2-of-3-k rule (k ∈ {5, 8, 10};
+999-permutation) passes in the **two earliest** periods — 50 BC – AD 0 (3/3) and
+AD 0–50 (2/3) — then washes out from AD 50 onwards (0/3 every later period). Compared
+with all-provinces (clustering significant in the single earliest period at k=8), the
+same early-empire-only pattern, marginally more persistent on the Latin frame.
+
+---
+
+**PEAK-SCALING-LATIN — peak-inscription vs Hanson-population scaling (full-frame Arm A
+only; scope note below):**
+
+| Arm | β_within [95 % CI] | n cities |
+|---|---|---|
+| Cumulative H3a Latin (reference) | 0.733 [0.648, 0.820] | 817 |
+| **Raw peak, 50y (headline)** | **0.700** [0.618, 0.784] | 817 |
+| Raw peak, 25y (window sensitivity) | 0.693 [0.612, 0.775] | 817 |
+
+Raw peak-bin scaling (0.700 at 50y, 0.693 at 25y) is **statistically indistinguishable
+from the Latin cumulative 0.733** (CIs overlap heavily; marginally flatter, not
+significantly so). This reproduces the all-provinces finding (Obs 100: raw peak 0.557 ≈
+cumulative 0.587) on the primary Latin frame: **peak scales like total, so the cumulative
+β headline is not an artefact of aggregating over time.**
+
+*Scope note*: only the full-frame raw-peak arm (Arm A) is a Latin-frame swap. The
+all-provinces 268-city §5 arms in Obs 100 come from the Layer-A trajectory subset (a
+range-restriction probe) and are orthogonal to the Latin-frame definition — intentionally
+out of scope here.
+
+### Why this matters
+
+1. **These are the paper's primary-frame versions of both analyses.** The Latin frame is
+   the lodged primary frame (Amendment 02); the all-provinces runs were baseline context.
+   Both H7 and peak-scaling now have diagnostic-unit results, and both all-provinces
+   headlines survive on that frame.
+2. **The U-shape is confirmed as a diagnostic-unit feature.** The Obs 99 U-shape ran only
+   on the 1,044-city all-provinces frame; this Obs establishes it is not a product of
+   including the under-covered Greek East. The shape, the relative plateau depth, and the
+   plateau-to-cumulative relationship all transfer.
+3. **Frame robustness across both time-resolved and peak-scaling dimensions.** Together
+   with Obs 99 (all-provinces H7) and Obs 100 (all-provinces peak-scaling), these two
+   Latin variants give a 2 × 2 robustness table — both run × both frame — with consistent
+   conclusions throughout.
+4. **Capital over-production is doubly replicated.** Eight periods × two frames = 16
+   independent P(contrast > 0) = 1.00 observations; the effect is structurally robust.
+
+### Caveats / methodological notes
+
+- **Exploratory; no thresholds (Decision 13).** Both analyses inherit the all-provinces
+  exploratory design; no pre-committed thresholds.
+- **Per-period counts thin at the envelope edges.** 4th-century total: 3,744
+  inscriptions (across 429 non-zero cities) → widest CIs there; the 50 BC – AD 0
+  endpoint (4,561; 380 cities) is similarly wide. The U-shape endpoints are indicative,
+  not point estimates; CIs overlap throughout.
+- **Clustering uses the H3c(ii) ≥2-of-3-k rule** (k ∈ {5, 8, 10}, 999-permutation);
+  k=8 values are the primary reference in the table above.
+- **The 8 H7-Latin per-period idata `.nc` files (~456 MB total) are regenerable and
+  gitignored** — retained on sapphire, not in the repository.
+- **All-provinces §5 range-restriction arms from Obs 100 are out of scope here** and
+  remain all-provinces results. The peak-scaling-Latin run covers Arm A only.
+
+### Related observations and artefacts
+
+**Obs 99** (§5 H7 all-provinces — β_within U-shape 0.701 → ~0.58 plateau → 0.659; capital
+over-production every period; clustering early-empire-only): this Obs is the diagnostic-unit
+confirmation; every headline in Obs 99 is replicated and frame-robust.
+
+**Obs 100** (§5 peak-scaling all-provinces — peak 0.557 ≈ cumulative 0.587; smoothing
+neutral; 268-city range-restriction arms): this Obs confirms the peak ≈ cumulative
+finding on the primary Latin frame; the 268-city arms remain all-provinces results and
+are orthogonal.
+
+**Obs 101** (paper framing decision — empirical decomposition first; diagnostic unit =
+Latin-minus-Roma; Amendment 02): defines the diagnostic unit used in both runs here;
+establishes why re-running on the Latin frame was warranted.
+
+**Artefacts**:
+`runs/2026-06-18-h7-latin/outputs/h7-latin-summary.json`
+(per-period β_within, capital contrast, Moran's I per k, convergence, frame provenance;
+source for all H7-Latin numbers in this Obs);
+`runs/2026-06-18-h7-latin/REPORT.md` (source report);
+`runs/2026-06-18-h7-latin/outputs/h7-latin-per-city-residuals.parquet`;
+`runs/2026-06-18-h7-latin/outputs/h7-latin-time-resolved.png`;
+`runs/2026-06-18-peak-scaling-latin/outputs/peak-scaling-latin-summary.json`
+(per-arm β_within, convergence, frame provenance; source for all peak-scaling-Latin
+numbers in this Obs);
+`runs/2026-06-18-peak-scaling-latin/REPORT.md` (source report);
+`runs/2026-06-18-peak-scaling-latin/outputs/peak-scaling-latin-forest.png`;
+commit `2b159f1` (H7-Latin + peak-scaling-Latin results).
+
+### Findable later
+
+`latin-frame-variants`, `diagnostic-unit-confirmation`,
+`H7-latin`, `h7-latin`, `time-resolved-latin`, `per-period-latin`,
+`peak-scaling-latin`, `peak-scaling-diagnostic-unit`,
+`beta-within-U-shape`, `U-shape-not-greek-east-artefact`,
+`greek-east-not-artefact`, `U-shape-frame-robust`,
+`capital-over-production-every-period`, `capital-stable-latin`,
+`capital-contrast-1-00`, `P-contrast-1-00`,
+`peak-scales-like-cumulative`, `peak-approx-cumulative-latin`,
+`frame-robust`, `robustness-2x2`, `all-provinces-vs-latin`,
+`817-cities`, `39-provinces`, `roma-excluded`,
+`41-capitals`, `diagnostic-unit`, `latin-minus-roma`,
+`amendment-02-primary-frame`, `amendment-02`,
+`beta-cumulative-latin-0-733`, `CI-0-648-0-820`,
+`beta-0-886-50bc-ad0`, `high-empire-plateau-0-69`,
+`beta-0-799-4th-century`, `latin-plateau-below-cumulative`,
+`clustering-early-only-latin`, `3-of-3-k-earliest`, `2-of-3-k-ad0-50`,
+`k8-moran-0-037-p-0-020`, `k8-moran-0-027-p-0-047`,
+`raw-peak-50y-latin-0-700`, `CI-0-618-0-784`,
+`raw-peak-25y-latin-0-693`, `CI-0-612-0-775`,
+`CIs-overlap-peak-cumulative`, `marginally-flatter-not-significant`,
+`arm-a-latin-only`, `268-city-arms-out-of-scope`,
+`rhat-1-0000`, `0-divergences`, `all-fits-converged`,
+`4th-century-n-3744`, `wide-CIs-endpoints`,
+`idata-nc-gitignored-sapphire`, `456-MB-regenerable`,
+`2b159f1`, `runs-2026-06-18-h7-latin`, `runs-2026-06-18-peak-scaling-latin`,
+`obs-99`, `obs-100`, `obs-101`
