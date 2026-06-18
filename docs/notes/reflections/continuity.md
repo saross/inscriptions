@@ -19,6 +19,64 @@ last-updated: 2026-06-18 SESSION CLOSE (**§5 TAIL CLEARED — residual Layer B 
 
 ---
 
+## Remaining work — definitive inventory (2026-06-18, the consolidation tail)
+
+**Provenance:** distilled from `planning/prereg-obligations-audit-2026-06-18.md` §4, updated for
+work completed since (H9 done; supplementary wave + C10 validity in flight at the time of
+writing). The full session-close beacon with the RUN RESULTS is written at the next handoff;
+this section is the durable forward plan.
+
+**In flight (2026-06-18 evening):**
+
+- **H2.1 supplementary wave — all 29 units** (`runs/2026-06-18-h2.1-supplementary-wave/`;
+  driver audited + fixed at `5685e39`): C5/C6 model-comparison (α side-by-side + multinomial
+  PPC dispersion; cross-family PSIS-LOO dropped as inapplicable across the joint-multinomial
+  vs per-bin-NegBin observation structures), C11 trapezoidal (input-level r — the prereg
+  Decision-4 measure; output-level r dropped, audit M-1, as convention-confounded), H2.2 /
+  H2.3 / H2.4, C16. **Running on zbook.**
+- **C10 aoristic-MC validity test** (`runs/2026-06-18-c10-validity-test/`, `6ce6e3f`): the full
+  battery (1a slab-concentration diagnostic + 1b ground-truth recovery + 1c
+  mass-preserving-vs-point-collapse) deciding reading **(a)** genuine sensitivity vs **(b)**
+  point-date sampling destroys the cross-classified convention signal. Mass-arm baseline
+  pre-check PASSED (|Δα| = 0.036 at planted α = 0.68). **Running on sapphire.**
+
+**REMAINING after those two land (excluding unforeseen follow-ups):**
+
+*Preregistered obligations (must-do):*
+
+1. **C10 resolution tail — conditional on the validity verdict.** If (b) is confirmed
+   [likely, per the pre-check + mechanism], the point-date aoristic-MC is replaced: release the
+   HELD aoristic literature scout → design + run the corrected mass-preserving/bracket
+   sensitivity (1c prototypes it). If (a), C10 stands and nothing further is needed.
+2. **D13 α-as-translator** for H3a — per-**city** mixture α as an NBR covariate (N ≥ 100
+   cities). NOT delivered by the supplementary wave (which is **unit-level**: 29
+   provinces/aggregates); needs a separate per-city mixture, feasibility gated by how many
+   cities clear the reachability floor (worst-case N ≈ 2,000; Decision 34 / A01 §A5.7).
+
+*Optional robustness / exploratory (not gating):*
+
+3. **H6 — Decision-3 baorista cross-check** (forward-fit vs Bayesian-aoristic; infra installed
+   + smoke-tested on sapphire; ~1 day; needs design + full-LIRE-width revalidation first).
+4. **H4 — province-scale Layer B + diagnostic** (Layer A covers 45 provinces; Layer
+   B/diagnostic partial). **Needs a Shawn decision first:** is it distinct from the q_u
+   nested-triple province tier already computed (Obs 102/103), and what anchors a
+   province-scale validation gate (there is no city-apogee analogue)?
+
+*The main remaining body of work:*
+
+5. **The write-up** — empirical-first / interpretation-later structure (Obs 101); not started.
+
+**Done — NOT remaining:** H9 confirmatory letter-mass H3a (`ec99343`; f_within SUPPORTED on
+all frames); Latin variants H7-Latin + peak-scaling-Latin (Obs 106); province-size regression
+(Obs 105); the full §5 suite; D11 / D12 / B4 sensitivities; H3a / H3b / H3c; **all four OSF
+amendments lodged** (no preregistration lodgement outstanding).
+
+**Shawn's read (2026-06-18):** if nothing goes off the rails, the project is **finishable
+tomorrow** — the methodological core and the confirmatory programme are essentially done; what
+is left is a couple of bounded sensitivities and the write-up.
+
+---
+
 ## Research state — one-paragraph snapshot (2026-05-20, post-lodgement; conference-talk prep in flight)
 
 The **OSF preregistration is lodged** (commit `a2e40fd`; git tag `osf-lodgement-2026-05-20`; OSF DOI pending Shawn's confirmation post-submit). The lodged document and supplementary upload PDF reflect three rounds of adversarial review, a stand-in cross-model statistical review (Decisions 27–32), and four rounds of pre-lodgement quality fixes (pipe-in-table-cell escape; ASCII-flowchart sizing; URL-overflow via `pandoc -f markdown+autolink_bare_uris` + `xurl`). Martin's HMM-pivot proposal (his post-statistician-pack response) is logged as a post-lodgement extension on which Decisions 33+ will be drafted once he replies to our seven follow-up questions (sent 2026-05-19); the prior-art scout (`planning/prior-art-scout-2026-05-19-hmm-aoristic.md`) confirms the combination is genuinely novel and identifies baorista as the natural emission-layer foundation. **Decisions 1–32 are logged**; key decisions for orientation: 12 (Mundlak NBR + variance partition); 14 (Bayesian mixture + recovery sim); 18 (three-way H3a verdict); 19, 21, 23, 25 (the four Martin-flagged primary items); 20 (template-interval slab structure, supersedes 17); 22 (date-window-filtered counts for H3a / H3c); 27–32 (stand-in-review-driven refinements). Two pre-Phase-2 design artefacts (template-dictionary + recovery-grid-design) are deferred post-talk. **Current focus**: preliminary results for Shawn's RAC-TRAC 2026 TRAC7 talk on Friday 2026-05-22 14:20 — overnight planning done; implementation begins next session. Phase 2 / 3 substantive analyses (the full preregistered pipeline) remain designed but not-yet-implemented; that work tranche begins after the conference.
