@@ -12,8 +12,9 @@
   },
   "quantity": "q = exp((1/beta_within)*(u_shape+v_shape)); population relative to the empire-wide common temporal component; geom-mean 1 over t; NOT absolute population (Obs 98).",
   "relative_to_empire_diagnostic": {
-    "metric": "corpus median q (and IQR, share below empire) per key bin, reliable cities; 1.0 = on the empire trend",
-    "residual_uv": {
+    "metric": "corpus median q (and IQR, share below empire) per key bin; 1.0 = on the empire trend. city/province over reliable cities; province over reliable province-tier cities (singletons have q_u\u22611 and are excluded there).",
+    "nested_identity": "q_uv (city-from-empire) = q_u (province-from-empire) \u00b7 q_v (city-from-province), per draw",
+    "city_from_empire_uv": {
       "empire": [
         {
           "label": "AD12_augustan",
@@ -109,7 +110,7 @@
         }
       ]
     },
-    "residual_v_only": {
+    "city_from_province_v": {
       "empire": [
         {
           "label": "AD12_augustan",
@@ -205,7 +206,104 @@
         }
       ]
     },
-    "interpretation": "Removing the empire-common component dissolves the raw inversion's apparent universal post-AD-250 collapse into city-level heterogeneity: the median reliable city sits at ~0.32 of its empire-relative baseline at AD 262 (a moderate relative decline, not annihilation), and ~half the cities are at or above the empire trend even late. The residual is not pure demography (Obs 98)."
+    "province_from_empire_u": {
+      "empire": [
+        {
+          "label": "AD12_augustan",
+          "bin": 2,
+          "centre_year": 12.5,
+          "median_q": 3.930272360465564,
+          "q25": 0.34100666795373913,
+          "q75": 11.51853698702034,
+          "frac_below_empire": 0.4117647058823529
+        },
+        {
+          "label": "AD112_early_antonine",
+          "bin": 6,
+          "centre_year": 112.5,
+          "median_q": 0.6423416195562456,
+          "q25": 0.34141634631169904,
+          "q75": 1.4962007679972698,
+          "frac_below_empire": 0.6470588235294118
+        },
+        {
+          "label": "AD187_empire_common_peak",
+          "bin": 9,
+          "centre_year": 187.5,
+          "median_q": 0.7719720275572197,
+          "q25": 0.517980662209824,
+          "q75": 1.9403220793775744,
+          "frac_below_empire": 0.5294117647058824
+        },
+        {
+          "label": "AD262_third_century",
+          "bin": 12,
+          "centre_year": 262.5,
+          "median_q": 0.5625788848931326,
+          "q25": 0.22740934145938171,
+          "q75": 2.336461007827135,
+          "frac_below_empire": 0.6764705882352942
+        },
+        {
+          "label": "AD337_late",
+          "bin": 15,
+          "centre_year": 337.5,
+          "median_q": 0.835542359230663,
+          "q25": 0.3215029020807685,
+          "q75": 1.514554208616917,
+          "frac_below_empire": 0.6470588235294118
+        }
+      ],
+      "latin": [
+        {
+          "label": "AD12_augustan",
+          "bin": 2,
+          "centre_year": 12.5,
+          "median_q": 2.917048034851304,
+          "q25": 0.42241971660299865,
+          "q75": 7.080110835129466,
+          "frac_below_empire": 0.4117647058823529
+        },
+        {
+          "label": "AD112_early_antonine",
+          "bin": 6,
+          "centre_year": 112.5,
+          "median_q": 0.7039608935917975,
+          "q25": 0.42197375720290553,
+          "q75": 1.37733245951175,
+          "frac_below_empire": 0.6470588235294118
+        },
+        {
+          "label": "AD187_empire_common_peak",
+          "bin": 9,
+          "centre_year": 187.5,
+          "median_q": 0.8123436798219695,
+          "q25": 0.5902362470703211,
+          "q75": 1.697140098113449,
+          "frac_below_empire": 0.5294117647058824
+        },
+        {
+          "label": "AD262_third_century",
+          "bin": 12,
+          "centre_year": 262.5,
+          "median_q": 0.6282435258890532,
+          "q25": 0.30361371169847906,
+          "q75": 1.9680508497323834,
+          "frac_below_empire": 0.6764705882352942
+        },
+        {
+          "label": "AD337_late",
+          "bin": 15,
+          "centre_year": 337.5,
+          "median_q": 0.8650106857179085,
+          "q25": 0.40425461572408256,
+          "q75": 1.392596328212632,
+          "frac_below_empire": 0.6470588235294118
+        }
+      ]
+    },
+    "n_reliable_province_tier": 34,
+    "interpretation": "Removing the empire-common component dissolves the raw inversion's apparent universal post-AD-250 collapse into city-level heterogeneity: the median reliable city sits at ~0.32 of its empire-relative baseline at AD 262 (a moderate relative decline, not annihilation), and ~half the cities are at or above the empire trend even late. Decomposing the nested triple shows the decline is largely PROVINCIAL-tier: province-from-empire (q_u) carries most of it, while city-from-province (q_v) is much flatter. The residual is not pure demography (Obs 98)."
   },
   "frac_of_peak_CONFOUNDED": {
     "warning": "'fraction of own peak' is confounded for the residual: 1/\u03b2 amplification + GRW endpoint variance push many cities' q-peak to the envelope edges, forcing the ratio to ~0 regardless of the actual late level. Use relative_to_empire_diagnostic instead.",

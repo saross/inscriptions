@@ -1,13 +1,14 @@
 §5 Layer B (residual) — frames=('empire', 'latin') seed=20260616
   loaded: S=8000 draws, C=268 cities, T=16 bins; 34/268 reliable (N>=300)
   self-test [Cirta]: max|recon − raw shape_med| = 5.55e-16 -> PASS
-  empire: β median 0.588; u+v median q at AD262 vs empire 0.32 (68% below empire)
-  latin: β median 0.733; u+v median q at AD262 vs empire 0.40 (68% below empire)
-  RELATIVE-TO-EMPIRE (median q vs 1.0, reliable cities):
-    AD112_early_antonine: median q 0.48 [IQR 0.27–1.74], 65% below empire
-    AD187_empire_common_peak: median q 1.01 [IQR 0.38–4.36], 50% below empire
-    AD262_third_century: median q 0.32 [IQR 0.16–1.25], 68% below empire
-    AD337_late: median q 0.67 [IQR 0.10–5.22], 53% below empire
+  empire: β median 0.588; AD262 median q vs empire — city 0.32 (68% below) | province 0.56
+  latin: β median 0.733; AD262 median q vs empire — city 0.40 (68% below) | province 0.63
+  nested-identity check  max|q_uv − q_u·q_v| = 1.30e-08 -> PASS
+  RELATIVE-TO-EMPIRE (median q vs 1.0; city=u+v, prov=u, city/prov=v):
+    AD112_early_antonine: city 0.48 (65% below) | province 0.64 | city/province 0.75
+    AD187_empire_common_peak: city 1.01 (50% below) | province 0.77 | city/province 1.31
+    AD262_third_century: city 0.32 (68% below) | province 0.56 | city/province 0.78
+    AD337_late: city 0.67 (53% below) | province 0.84 | city/province 0.80
   (frac-of-peak confounded: 11/34 reliable cities peak at an envelope edge — not a collapse)
   foundation-terminus on q: median pre-foundation frac 0.0002, 99 cities checked
   done. outputs in /home/shawn/Code/inscriptions/runs/2026-06-17-s5-layer-b-residual/outputs

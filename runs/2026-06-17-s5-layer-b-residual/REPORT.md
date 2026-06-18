@@ -32,7 +32,8 @@ quantity Obs 98 names well-posed *regardless of the habit/demography conflation*
 
 - **β frames:** empire `β_within = 0.588` primary; Latin `0.733` overlay (both
   posteriors propagated, seeded resample).
-- **Residual:** `u+v` primary; `v`-only overlay (province removed too).
+- **Residual:** the nested divergence triple — `u+v` city-from-empire (primary),
+  `v` city-from-province, `u` province-from-empire; `q_uv = q_u · q_v` per draw (§4).
 - **Scope:** the 268 small-N target cities; 34 meet the N\*=300 reliability floor.
 - **Wiring guard (self-test) — PASS at machine precision.** Adding `g` back
   reconstructs `exp((1/β)·((g+u+v)−max))`, which must equal the raw Layer B
@@ -96,24 +97,33 @@ mid-empire bins (AD 112 / 188 / 262).
 
 ---
 
-## 4. The province carries much of the relative decline (v-only overlay)
+## 4. The nested decomposition — the decline is largely provincial-tier
 
-Removing the province component as well (`v`-only residual) gives a **markedly
-flatter** trajectory than `u+v`:
+The residual factors into three **nested divergences**, each inverted from one
+tier of the model (median `q` vs the empire baseline 1.0; all over the 34
+reliable cities, every one of which has a province tier):
 
-| bin (centre) | `u+v` median `q` | `v`-only median `q` |
-|---|---|---|
-| AD 112 | 0.48 | 0.75 |
-| AD 188 | 1.01 | 1.31 |
-| AD 262 | **0.32** | **0.78** |
-| AD 338 | 0.67 | 0.80 |
+| bin (centre) | city ← empire (`q_uv`) | province ← empire (`q_u`) | city ← province (`q_v`) |
+|---|---|---|---|
+| AD 112 | 0.48 | 0.64 | 0.75 |
+| AD 188 | 1.01 | 0.77 | 1.31 |
+| AD 262 | **0.32** | **0.56** | 0.78 |
+| AD 338 | 0.67 | 0.84 | 0.80 |
 
-So a substantial part of a city's apparent decline *relative to the empire* is its
-**province's shared deviation** (`u_shape`), not its own (`v_shape`): the purely
-city-specific 3rd-c. position is a mild ≈ 0.78 of baseline, against 0.32 once the
-province deviation is folded in. The late-imperial under-production of these
-small western cities is largely a **provincial-tier** phenomenon, not idiosyncratic
-to individual cities — a structural result worth carrying forward.
+They nest **per draw**: `q_uv = q_u · q_v` (runtime-guarded; max abs deviation
+1.3 × 10⁻⁸). *Caveat:* the identity is per-draw, so the **median** columns do
+**not** multiply (median of a product ≠ product of medians) — read each column as
+its own marginal summary.
+
+At AD 262 the median city sits at 0.32 of the empire baseline; decomposed, its
+**province** is at 0.56 of empire and the city at 0.78 of its own province — so
+the **larger share of the divergence is provincial-tier**, not city-specific
+(this is now shown *directly* by `q_u`, not merely inferred from `q_v` being
+flatter). The late-imperial under-production of these small western cities is
+mostly *their provinces declining relative to the empire*, not idiosyncratic to
+individual cities — a structural result bearing on interpretation (region-wide vs
+city-specific drivers). Figure `outputs/layerb-residual-nested-tiers.png`; all
+three tiers are in the per-frame `.nc` (`q_uv_*`, `q_u_*`, `q_v_*`).
 
 ---
 
@@ -154,9 +164,10 @@ Removing the empire-wide common temporal component turns the raw inversion's
 *apparent universal post-AD-250 collapse* into a **moderate, heterogeneous
 relative decline**: the median reliable city sits on the empire trend at the
 AD-188 peak and at ~0.32 of its empire-relative baseline by the 3rd century, with
-roughly half the cities at or above the empire trend even late. Much of that
-relative decline is **provincial-tier**, not city-specific (`v`-only ≈ 0.78 at
-AD 262). The result is well-posed regardless of the habit/demography conflation
+roughly half the cities at or above the empire trend even late. The nested
+decomposition (§4) shows the larger share of that decline is **provincial-tier**
+(province-from-empire `q_u` ≈ 0.56 at AD 262) rather than city-specific
+(city-from-province `q_v` ≈ 0.78). The result is well-posed regardless of the habit/demography conflation
 (Obs 98) but is relative and not pure demography — exactly the bounded,
 demography-isolating contribution the residual Layer B was designed to deliver,
 and a cleaner object than the raw inversion for the discussion.
