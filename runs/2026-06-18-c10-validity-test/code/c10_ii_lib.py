@@ -247,36 +247,97 @@ def _nearest_aligned_width(w: np.ndarray) -> np.ndarray:
     return family[idx].astype(int)
 
 
+# Lowest common multiple of the two round-residue grids rule C uses (25 for F1/Big,
+# 10 for F3). The set of lower-endpoint residues mod 50 that align a given width is
+# periodic with period 50, so a per-width residue lookup keyed on ``nb % 50`` is exact.
+_ALIGN_GRID_PERIOD = 50
+
+
+def _aligned_nb_residues(width: int) -> np.ndarray:
+    """The set of lower-endpoint residues ``nb % 50`` that make a width rule-C aligned.
+
+    Probes the REAL ``joint_lib.aligned_indicator(rule="C")`` directly (rather than
+    re-deriving the residue arithmetic by hand) for every residue ``r ∈ [0, 50)`` with
+    ``nb = r``, ``na = r + width``. Because rule-C alignment of ``[nb, nb + width]``
+    depends on ``nb`` only through ``nb % 25`` and ``nb % 10`` — both of which repeat
+    with period ``lcm(25, 10) = 50`` — this 0..49 probe captures the full residue set
+    for ANY integer ``nb`` of that residue. Returns the sorted ascending residues.
+
+    Built from the indicator so it stays correct if the lodged rule-C definition ever
+    changes (it would not silently drift back to the buggy 25-grid assumption).
+    """
+    nb = np.arange(_ALIGN_GRID_PERIOD, dtype=int)
+    na = nb + int(width)
+    dr = np.full(_ALIGN_GRID_PERIOD, int(width), dtype=int)
+    al = J.aligned_indicator(
+        pd.DataFrame({"nb": nb, "na": na, "date_range": dr}), rule=R.ALIGN_RULE)
+    return nb[np.asarray(al, dtype=bool)]
+
+
 def _place_aligned_interval(width: np.ndarray, t_anchor: np.ndarray,
                             rng: np.random.Generator) -> tuple[np.ndarray, np.ndarray]:
     """Place an ALIGNED (convention-ish) recorded interval of a given width.
 
     Given an aligned family ``width`` and an anchor year ``t_anchor`` (the convention
-    true date), choose a 25-y-grid lower endpoint near the anchor so that BOTH
-    endpoints land on the 25-y grid (which makes the interval alignable under rule C
-    for the F1/Big widths; the F3 widths 19/29/39 with a 25-grid lower endpoint also
-    satisfy the 10-y F3 grid). ``nb`` is the largest 25-multiple ≤ the anchor's
-    lower-bound target; ``na = nb + width``. The anchor is kept inside ``[nb, na]``
-    so the recorded interval brackets the convention true date (the slab the editor
-    chose contains the inscription's date), exactly as in R0 where ``t_true ~
-    Uniform(slab)`` ⊂ slab.
+    true date), choose a lower endpoint ``nb`` so that the recorded interval
+    ``[nb, nb + width]`` is rule-C ALIGNED *and* brackets the anchor
+    (``nb ≤ t_anchor ≤ nb + width``) — so the slab the editor chose contains the
+    inscription's true date, exactly as in R0 where ``t_true ~ Uniform(slab)`` ⊂ slab.
+
+    Why NOT just a 25-y grid (the original bug)
+    -------------------------------------------
+    The first implementation placed ``nb`` on a multiple of 25. That is WRONG for two
+    reasons against the real rule-C residue rule
+    (``round_aligned(x, mod)`` ≡ ``x % mod ∈ {0, 1, mod − 1}``):
+
+    * **F3 widths (19, 29, 39)** need BOTH endpoints round on the *10-y* grid
+      (``x % 10 ∈ {0, 1, 9}``). An ODD multiple of 25 (75, 125, 175, …) has
+      ``nb % 10 == 5``, which fails — so every F3-width convention placed on an odd
+      25-multiple LEAKED to non-aligned, dragging realised θ_conv below 1.0.
+    * The audit's suggested "snap to multiples of 50" is itself wrong: a 50-grid is
+      coarser than the F1/F3 widths < 50 (24, 49, 19, 29, 39), so it cannot always
+      bracket the anchor.
+
+    The correct placement (verified against the REAL indicator)
+    -----------------------------------------------------------
+    For each width we read the EXACT set of valid lower-endpoint residues ``nb % 50``
+    from :func:`_aligned_nb_residues` (i.e. from ``joint_lib.aligned_indicator`` — not
+    a hand re-derivation). The valid residues are dense enough that for EVERY
+    aligned width the largest gap between consecutive valid residues is ≤ 24 ≤ width,
+    so the largest valid ``nb ≤ t_anchor`` always satisfies ``nb + width ≥ t_anchor``
+    — the slab brackets the anchor. We pick that ``nb``: the valid lower endpoint
+    closest below the anchor. (Verified at ~40 k rows: realised θ_conv = 1.000,
+    bracket rate = 1.000 — see ``C10-FOLLOWUP-NOTES.md``.)
     """
     width = np.asarray(width, dtype=int)
     t_anchor = np.asarray(t_anchor, dtype=float)
-    # Lower endpoint: largest 25-grid year not exceeding (anchor − uniform offset in
-    # [0, width]) so the anchor falls inside [nb, nb+width]. floor to the 25-grid.
-    offset = rng.uniform(0.0, 1.0, size=len(width)) * width
-    target_lo = t_anchor - offset
-    nb = (np.floor(target_lo / 25.0) * 25.0).astype(int)
+    nb = np.empty(len(width), dtype=int)
+    ti = np.floor(t_anchor).astype(int)   # integer year at or below the anchor
+    # Group by distinct width so the per-width residue lookup is computed once each.
+    for w in np.unique(width):
+        m = width == w
+        res = _aligned_nb_residues(int(w))           # ascending residues in [0, 50)
+        tt = t_anchor[m]
+        ti_w = ti[m]
+        # For each valid residue r, the largest nb ≤ ti_w with nb % 50 == r is
+        # nb_r = ti_w − ((ti_w − r) mod 50). Among residues whose slab brackets the
+        # anchor (nb ≤ t ≤ nb + w), take the one CLOSEST below the anchor (largest nb).
+        cand = ti_w[:, None] - np.mod(ti_w[:, None] - res[None, :], _ALIGN_GRID_PERIOD)
+        brackets = (cand <= tt[:, None]) & (cand + int(w) >= tt[:, None])
+        cand_ok = np.where(brackets, cand, np.iinfo(np.int64).min)
+        nb[m] = cand_ok.max(axis=1)
     na = nb + width
-    # Guarantee the anchor is bracketed (floor()/grid-snap can nudge it out by < 25 y).
-    below = t_anchor < nb
-    nb[below] = (np.floor(t_anchor[below] / 25.0) * 25.0).astype(int)
-    na[below] = nb[below] + width[below]
-    above = t_anchor > na
-    nb[above] = (np.ceil((t_anchor[above] - width[above]) / 25.0) * 25.0).astype(int)
-    na[above] = nb[above] + width[above]
     return nb.astype(int), na.astype(int)
+
+
+# Lower-endpoint shifts (added to a 25-grid base) that make ``nb`` fail BOTH the 25-y
+# and 10-y round-residue tests for EITHER parity of the 25-grid multiple — so rule C
+# fails on the lower endpoint, hence on the whole interval, for ANY width. Derived from
+# the real residue rule and verified empirically (0 % leak to aligned) — see the M2
+# note in ``C10-FOLLOWUP-NOTES.md``. The old set {3, …, 22} included shifts (e.g. 4, 5,
+# 9, 10) whose ``nb`` could still land round on one grid for one base parity, leaking
+# ~0.1 % of non-aligned-intent rows to aligned.
+_NONALIGNED_SHIFTS = np.array([2, 3, 7, 8, 12, 13, 17, 18, 22, 23], dtype=int)
 
 
 def _place_nonaligned_interval(width: np.ndarray, t_anchor: np.ndarray,
@@ -285,28 +346,41 @@ def _place_nonaligned_interval(width: np.ndarray, t_anchor: np.ndarray,
 
     Brackets the genuine true date ``t_anchor`` with a recorded interval of the
     sampled ``width``, OFFSET so the interval is non-round (fails rule C). The anchor
-    sits at a uniform position inside the interval; the lower endpoint is then nudged
-    by ±1..±9 y off the 25-y grid (a non-round shift) so ``round_aligned`` fails on at
-    least one endpoint, classifying the interval non-aligned. Widths that happen to be
-    a family width but with off-grid endpoints are non-aligned by construction (rule C
-    needs BOTH endpoints on the grid).
+    sits at a uniform position inside the interval; the lower endpoint is then snapped
+    to the 25-y grid and shifted off it so ``round_aligned`` fails on the LOWER
+    endpoint, classifying the interval non-aligned for ANY width.
+
+    The non-alignment GUARANTEE (corrected)
+    ---------------------------------------
+    Rule-C alignment of ``[nb, na]`` requires the LOWER endpoint to be round on the
+    relevant grid: the 25-y grid (``nb % 25 ∈ {0, 1, 24}``) for F1/Big widths, or the
+    10-y grid (``nb % 10 ∈ {0, 1, 9}``) for the F3 widths 19/29/39. If ``nb`` fails
+    BOTH grids, the interval is non-aligned regardless of width or upper endpoint.
+
+    The shift is therefore drawn from :data:`_NONALIGNED_SHIFTS` =
+    ``{2, 3, 7, 8, 12, 13, 17, 18, 22, 23}`` — the shifts ``s`` for which
+    ``(25k + s) % 25 ∉ {0, 1, 24}`` AND ``(25k + s) % 10 ∉ {0, 1, 9}`` hold for BOTH
+    parities of ``k`` (note ``25k % 10`` cycles {0, 5}, so the shift must dodge the
+    round residues for both). The previous set ``{3, …, 22}`` did NOT — shifts like 4,
+    5, 9, 10 could leave ``nb`` round on one grid for one base parity, leaking a small
+    fraction of non-aligned-intent rows back to aligned.
 
     Tight widths (≤ TIGHT_MAX) are left as-is — they are ``Tight`` → non-aligned
-    regardless of endpoint, reproducing the genuine tight brackets.
+    regardless of endpoint, reproducing the genuine tight brackets (a tight width < 19
+    can never be an F1/F3/Big aligned family anyway).
     """
     width = np.asarray(width, dtype=int)
     t_anchor = np.asarray(t_anchor, dtype=float)
     offset = rng.uniform(0.0, 1.0, size=len(width)) * width
     nb = np.rint(t_anchor - offset).astype(int)
     na = nb + width
-    # For non-tight widths, force an off-grid lower endpoint (so rule C fails). A
-    # shift drawn from {3, ..., 22} guarantees nb % 25 ∉ {0, 1, 24} (the round_aligned
-    # hits) AND nb % 10 ∉ {0, 1, 9} for the F3 widths — i.e. genuinely non-round.
+    # For non-tight widths, force an off-grid lower endpoint (so rule C fails) using a
+    # shift that dodges BOTH the 25-y and 10-y round residues for either base parity.
     non_tight = width > TIGHT_MAX
     if non_tight.any():
-        # snap nb to the 25-grid then add a guaranteed-off-grid shift.
+        # snap nb to the 25-grid then add a guaranteed-off-both-grids shift.
         base = (np.round(nb[non_tight] / 25.0) * 25.0).astype(int)
-        shift = rng.integers(3, 23, size=int(non_tight.sum()))
+        shift = rng.choice(_NONALIGNED_SHIFTS, size=int(non_tight.sum()))
         nb_off = base + shift
         nb[non_tight] = nb_off
         na[non_tight] = nb_off + width[non_tight]
@@ -395,6 +469,32 @@ def generate_inscriptions_variant(
         df["recorded_as"] = np.where(df["type"] == "convention", "aligned", "nonaligned")
         return df
 
+    # ---- R3: CLEAN confirmatory NULL — recorded interval IDENTICAL to R0; only the
+    #          latent convention TRUE date changes (Uniform(slab) → U-shaped Beta). ----
+    # Building R3 through the general R1/R2 path would RE-PLACE the recorded interval
+    # (its own RNG draw of nb/na), so the recorded columns would NOT match R0 and the
+    # "null" would silently confound a recorded-interval change with the true-date
+    # change. To isolate the true-date shape we delegate the WHOLE recorded interval to
+    # R0 (byte-identical nb / na / date_range / aligned) and override ONLY t_true for
+    # convention rows. Because R0 records a convention's interval AS its slab, the
+    # recorded [nb, na] IS the slab [lo, hi]; redrawing the within-slab true date over
+    # [nb, na] is exactly the R3 idealisation knob with the recorded interval frozen.
+    if variant == "R3":
+        df = C.generate_inscriptions(
+            alpha_true, n, seed, slabs, p_gen,
+            slab_weights=slab_weights, genuine_half_width=genuine_half_width)
+        df["recorded_as"] = np.where(df["type"] == "convention", "aligned", "nonaligned")
+        conv = (df["type"] == "convention").to_numpy()
+        if conv.any():
+            # A SEPARATE generator (seed offset) draws the U-shaped within-slab true
+            # date, so R0's recorded-interval RNG stream is left untouched.
+            rng_r3 = np.random.default_rng(seed + 777)
+            lo = df.loc[conv, "nb"].to_numpy(dtype=float)
+            hi = df.loc[conv, "na"].to_numpy(dtype=float)
+            new_t = _nonuniform_inslab_true_date(lo, hi, rng_r3)
+            df.loc[conv, "t_true"] = new_t
+        return df
+
     if not (0.0 <= alpha_true <= 1.0):
         raise ValueError(f"alpha_true {alpha_true} not in [0, 1]")
     if n <= 0:
@@ -425,6 +525,10 @@ def generate_inscriptions_variant(
         slab_idx = rng.choice(len(slabs), size=n_conv, p=slab_w)
         conv_lo = slab_lo[slab_idx]
         conv_hi = slab_hi[slab_idx]
+        # The NAMED "R3" variant is intercepted above (clean null: recorded interval
+        # frozen to R0). This branch only fires for an AD-HOC VariantConfig that turns
+        # r3_nonuniform_true_date ON together with R1/R2 — where re-placement of the
+        # recorded interval is intended, so the within-slab redraw rides the main RNG.
         if cfg.r3_nonuniform_true_date:
             t_true[is_conv] = _nonuniform_inslab_true_date(conv_lo, conv_hi, rng)
         else:

@@ -104,22 +104,25 @@ aligned-style width, and vice versa.)
    width ({F1} ∪ {F3} = {19, 24, 29, 39, 49, 99, 149, 199, 299}) so it is alignable
    with round endpoints (the real aligned subset is itself dominated by exactly these
    widths, so the snap is small and rarely binds). The lower endpoint is then placed
-   on the 25-year grid, chosen so the convention true date `t_true` falls INSIDE
-   `[nb, nb + width]` (the slab the editor chose contains the inscription's date —
-   the R0 semantics where `t_true ~ Uniform(slab) ⊂ slab`). The anchor offset is
-   drawn Uniform(0, width). **Audit: confirm the snap-to-family-width + 25-grid
-   placement is an acceptable "centred on a slab/round position", or specify an
-   alternative (e.g. round the endpoints to the nearest 50 and accept the resulting
-   width).**
+   so that BOTH endpoints satisfy rule C *for the sampled width* AND the convention
+   true date `t_true` falls INSIDE `[nb, nb + width]` (the slab the editor chose
+   contains the inscription's date — the R0 semantics where `t_true ~ Uniform(slab) ⊂
+   slab`). **CORRECTED (audit C1):** the original code placed `nb` on the 25-y grid;
+   see the **Audit fixes** section below — a 25-grid leaks the F3 widths to
+   non-aligned and dropped realised θ_conv to 0.962. The placement now reads the
+   EXACT valid lower-endpoint residues for the sampled width from the real
+   `joint_lib.aligned_indicator`, giving realised θ_conv = **1.000**.
 
 2. **R1/R2 non-aligned interval placement (`_place_nonaligned_interval`).** A
    genuine (or θ-contaminated convention recorded non-aligned) inscription gets a
    recorded interval of the sampled non-aligned width, bracketing `t_true` at a
-   uniform position, with the lower endpoint nudged OFF the 25-y grid by a shift in
-   {3, …, 22} so rule C fails on at least one endpoint (genuinely non-round). Tight
-   widths (≤ `TIGHT_MAX` = 4) are left as-is (they are `Tight` → non-aligned
-   regardless). **Audit: confirm the off-grid forcing is the intended way to make a
-   non-aligned interval of a real non-aligned width.**
+   uniform position, with the lower endpoint snapped to the 25-y grid then shifted OFF
+   BOTH the 25-y and 10-y round grids so rule C fails on the lower endpoint (hence on
+   the whole interval, for any width). Tight widths (≤ `TIGHT_MAX` = 4) are left as-is
+   (they are `Tight` → non-aligned regardless). **CORRECTED (audit M2):** the original
+   shift set {3, …, 22} did not guarantee non-alignment for all widths (~0.1 % leak);
+   the shift is now drawn from {2, 3, 7, 8, 12, 13, 17, 18, 22, 23} — see the **Audit
+   fixes** section. Verified leak = **0.000 %**.
 
 3. **R2 alignment-consistent recorded intervals (the contamination mechanism).** R2
    assigns each inscription an INTENDED recorded alignment: a convention is recorded
@@ -127,8 +130,9 @@ aligned-style width, and vice versa.)
    (a wide non-round bracket); a genuine is recorded ALIGNED with prob `theta_gen`
    (≈ 0.025) — else non-aligned (tight, idealised case) / its real width (R1+R2). The
    recorded interval is then BUILT with the aligned vs non-aligned placement helper
-   per that intent, so the REAL indicator re-derives the intended label. **Verified:
-   realised θ_conv = 0.927, θ_gen = 0.024 under R2 — on target.** θ_conv / θ_gen
+   per that intent, so the REAL indicator re-derives the intended label. **Verified
+   (40 k rows, α = 0.68, seed 20260619): realised θ_conv = 0.931, θ_gen = 0.023 under
+   R2 — on target.** θ_conv / θ_gen
    MEANS are read from `refit_lib.adopted_theta_priors`'s `theta_fit`, not hardcoded.
    **Audit: confirm "assign alignment as the realistic mix consistent with those θ"
    is correctly operationalised as a per-inscription Bernoulli on the recorded-
@@ -154,6 +158,102 @@ aligned-style width, and vice versa.)
    N = 3000 (each fit ~seconds–minutes), this is a few core-hours — same footing as
    the first wave's 1b, scaled by the variant count. **Audit: confirm 2 seeds and
    N_synth = 3000 are adequate; the first wave used 3 seeds at N_synth = 3000.**
+
+## Audit fixes (2026-06-19) — corrected placement + verification numbers
+
+Three audit findings against `code/c10_ii_lib.py` (was at commit `c050b60`) were
+resolved. All verification below is pure data-generation / `numpy` / the REAL
+`joint_lib.aligned_indicator(rule="C")` — **no MCMC was run** (the recovery sweep
+`run_c10_ii.py` runs later on sapphire). Numbers below are at α = 0.68, seed =
+20260619, N = 40 000, `p_gen = empire-posterior-median`, θ from
+`refit_lib.adopted_theta_priors` (θ_conv = 0.93, θ_gen = 0.025).
+
+### The exact rule-C residue rule (read from the lodged source, not assumed)
+
+`joint_lib.round_aligned(x, mod)` ≡ `x % mod ∈ {0, 1, mod − 1}`. Rule C marks an
+interval `[nb, na]` aligned iff it is **F1** (width ∈ {24, 49, 99, 149, 199, 299}
+with both endpoints round mod 25), **F3** (width ∈ {19, 29, 39} with both endpoints
+round mod 10), or a **Big** slab (width ≥ 49, not F1, both endpoints round mod 25).
+The aligned widths R1 can emit (after the snap to F1 ∪ F3, plus the Big slab widths
+{100, 150, 200}) therefore have **width-specific** valid lower-endpoint residues.
+
+### C1 (CRITICAL) — aligned-interval placement leaked F3 widths
+
+**Bug:** `_place_aligned_interval` put `nb` on a multiple of 25. Odd multiples
+(75, 125, 175, …) have `nb % 10 == 5`, which fails the F3 mod-10 grid — so every
+F3-width (19/29/39) convention placed on an odd 25-multiple was classified
+non-aligned. Realised R1 θ_conv fell to **0.962** (must match the R0 baseline of
+1.000).
+
+**Why the audit's "multiples of 50" suggestion is also wrong:** a 50-grid is
+coarser than the F1/F3 widths < 50 (24, 49, 19, 29, 39), so it cannot always bracket
+`t_true`. **Verified residues:** searching every residue mod 50 against the real
+indicator, only `nb % 50 ∈ {0, 1}` aligns *every* width — too sparse to bracket
+narrow widths.
+
+**Fix (verified, not assumed):** for the sampled width, read the EXACT valid
+lower-endpoint residues mod `lcm(25, 10) = 50` directly from
+`joint_lib.aligned_indicator` (`_aligned_nb_residues`), then place `nb` at the valid
+lower endpoint closest **below** the anchor. The valid-residue gaps are ≤ 24 for
+every aligned width and `width ≥ gap`, so the slab always brackets `t_true`. Proven
+on 200 000 random (width, anchor) pairs across all aligned widths: **aligned frac =
+1.000000, bracket frac = 1.000000**.
+
+**DECISIVE GATE (40 000-row R1 frame):** realised **θ_conv = 1.000000**,
+**θ_gen = 0.000000** (R0 baseline is θ_conv = 1.000, θ_gen = 0.000). R1 keeps the
+realistic width distribution: aligned **median = 99 y**, modes [99, 199, 49, 149,
+299, 29] — the real aligned modes. ✓
+
+### M1 (MEDIUM) — R3 is now a CLEAN null (true-date only)
+
+**Bug:** R3 ran through the general path and re-placed the recorded interval, so its
+`nb`/`na` moved (recorded intervals agreed with R0 only ~1 %), confounding the
+true-date knob with a recorded-interval change.
+
+**Fix:** R3 now delegates the WHOLE recorded interval to `c10_lib.generate_inscriptions`
+(byte-identical to R0) and overrides ONLY the convention `t_true` with the U-shaped
+Beta(0.5, 0.5) within-slab draw, using a separate RNG (seed + 777) so R0's
+recorded-interval stream is untouched. Because R0 records a convention's interval AS
+its slab, the redraw over `[nb, na]` is exactly the R3 idealisation with the recorded
+interval frozen.
+
+**DECISIVE VERIFICATION (R3 vs R0 at the same seed):** `nb`, `na`, `date_range`,
+`aligned`, and `type` are all **byte-identical** to R0; convention `t_true` differs;
+genuine `t_true` is unchanged; R3 convention `t_true` stays within `[nb, na]`;
+edge-mass fraction 0.408 (uniform = 0.200) confirms the U-shape. ✓
+
+### M2 (MEDIUM) — non-aligned placement guarantees non-alignment
+
+**Bug:** the off-grid shift was drawn from {3, …, 22}; shifts like 4, 5, 9, 10 can
+leave `nb` round on one grid for one base parity (note `25k % 10` cycles {0, 5}), so
+~0.1 % of non-aligned-intent rows leaked to aligned.
+
+**Fix:** shift drawn from `_NONALIGNED_SHIFTS = {2, 3, 7, 8, 12, 13, 17, 18, 22, 23}`
+— the shifts `s` for which `(25k + s) % 25 ∉ {0, 1, 24}` AND `(25k + s) % 10 ∉
+{0, 1, 9}` hold for BOTH parities of `k`, so the lower endpoint fails both round
+grids regardless of width.
+
+**DECISIVE VERIFICATION:** a 40 000-row non-aligned-intent frame (R1, α = 0) leaks
+**0.0000 %** to aligned (was ~0.125 % with the old set); the R2
+convention-recorded-non-aligned + genuine path (14 323 non-aligned-intent rows)
+leaks **0.0000 %**. ✓
+
+### Whole-set re-verification (measured)
+
+| variant | realised θ_conv | realised θ_gen | note |
+|---|---|---|---|
+| R0 | 1.0000 | 0.0000 | byte-identical to `c10_lib.generate_inscriptions` (all 6 cols) ✓ |
+| R1 | **1.0000** | 0.0000 | C1 gate — clean width-only isolation; aligned median 99 y ✓ |
+| R2 | 0.9312 | 0.0233 | unchanged — on target (~0.93 / 0.025) ✓ |
+| R3 | 1.0000 | 0.0000 | recorded interval byte-identical to R0; only `t_true` differs ✓ |
+| R1+R2 | 0.9312 | 0.0233 | composition as expected ✓ |
+
+**Count-builder invariants** (`y_aligned.sum() == k`, `aligned + non-aligned ==
+n_rows`) hold for the mass arm and the point-date arm in all five variants. (The
+mass-arm effective `n_rows` for R1/R2/R1+R2 is < raw N because wide real non-aligned
+intervals spill off-envelope — this is the lodged `refit_lib.build_unit_cc_data`'s
+aoristic-effective convention, not introduced by these fixes; the asserted invariants
+still hold.)
 
 ## Decision rule (pre-registered here)
 
