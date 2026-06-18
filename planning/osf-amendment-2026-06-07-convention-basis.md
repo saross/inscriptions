@@ -1,7 +1,7 @@
 ---
 title: "OSF Amendment 03 — Convention component is an empirical calendar-slab basis (grid-quantisation reframe; no reign tier)"
 amendment-number: 03
-status: DRAFT (complete) — §A5.5 filled with the full-grid PASS (2026-06-08); awaiting Shawn's review and lodgement (not yet lodged)
+status: LODGED 2026-06-08 (OSF; Amendment 03; git tag osf-amendment-03-2026-06-08 → 90897d6). [Header corrected 2026-06-18: previously read "DRAFT … not yet lodged", which was stale — lodgement confirmed by the tag, the summary-addendum, and the 2026-06-14 continuity close.]
 date-drafted: 2026-06-07
 scope: "Redefine the H2.1 mixture's editorial-convention component (p_conv) as an empirical calendar-slab basis with NO reign tier; reclassify reigns/dynasties/datable events as genuine-but-aoristic; reframe the artefact as grid-quantisation of genuine-but-coarse evidence onto the BC/AD calendar lattice; ride decadal/quarter-century brackets as a sensitivity band. Gated on a fresh recovery re-validation."
 preregistration: "https://osf.io/uycs6/ (lodged 2026-05-20; embargoed)"
