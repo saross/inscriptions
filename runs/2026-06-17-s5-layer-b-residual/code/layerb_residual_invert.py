@@ -94,6 +94,14 @@ FRAMES = ("empire", "latin")
 BIN_AD250 = int(np.searchsorted(BIN_EDGES, 250, side="right") - 1)
 BIN_AD325 = int(np.searchsorted(BIN_EDGES, 325, side="right") - 1)
 
+# Key bins (indices on the 25y grid) for the PRIMARY relative-to-empire
+# diagnostic. Labelled by bin-centre year; the empire-common component g peaks
+# at bin 9 (centre AD 187.5, Obs 97).
+KEY_BINS = {
+    "AD12_augustan": 2, "AD112_early_antonine": 6, "AD187_empire_common_peak": 9,
+    "AD262_third_century": 12, "AD337_late": 15,
+}
+
 
 def _sha256(path: Path) -> str:
     """Hex SHA-256 of a file (streamed; provenance record)."""
@@ -255,11 +263,17 @@ def save_nc(frame, cities, N, reliable, res_uv, res_v):
 
 
 def plot_residual_vs_raw(cities, reliable, res_uv, raw_shape_med, raw_cities):
-    """Headline: the spurious post-AD-250 collapse vanishes once g is removed.
+    """Headline (corpus level): the apparent universal collapse dissolves.
 
-    For a sample of reliable cities, overlay the raw Layer B relative-shape
-    (peak=1, which collapses to ~0 post-AD-250) against the residual q
-    (peak-normalised for visual comparability) — the residual tail lifts.
+    Two panels on a shared time axis, NOT mixed on one scale (they use
+    different — and clearly labelled — normalisations):
+
+    - LEFT: the raw Layer B corpus-median relative-shape (each city peak=1),
+      which dives to ~0 after AD 250 — the *apparent* universal collapse.
+    - RIGHT: the residual q corpus-median against the empire baseline (1.0),
+      with the inter-quartile band — a *moderate, heterogeneous* relative
+      decline (median ~0.3 at AD 250), not annihilation, once the empire-common
+      component g is removed.
     """
     import matplotlib
     matplotlib.use("Agg")
@@ -267,24 +281,32 @@ def plot_residual_vs_raw(cities, reliable, res_uv, raw_shape_med, raw_cities):
 
     rel = [i for i in range(len(cities))
            if reliable[i] and cities[i] in raw_cities]
-    pick = rel[:: max(1, len(rel) // 6)][:6]
-    fig, axes = plt.subplots(2, 3, figsize=(15, 8), squeeze=False)
-    for ax, i in zip(axes.ravel(), pick):
-        rj = raw_cities.index(cities[i])
-        q = res_uv["q_med"][i]
-        q_pknorm = q / max(q.max(), 1e-12)
-        ax.plot(BIN_CENTRES, raw_shape_med[rj], color="C3", lw=2,
-                label="raw Layer B (incl. g)")
-        ax.plot(BIN_CENTRES, q_pknorm, color="C0", lw=2,
-                label="residual q (g removed)")
-        ax.axvline(250, ls=":", color="grey", lw=1)
-        ax.set_title(f"{cities[i]} (AD250 frac-of-peak: "
-                     f"raw {raw_shape_med[rj][BIN_AD250]:.2f} / "
-                     f"resid {q_pknorm[BIN_AD250]:.2f})", fontsize=9)
-        ax.set_xlabel("year"); ax.set_ylabel("fraction of peak")
-    axes[0, 0].legend(fontsize=8)
-    fig.suptitle("Habit-removed residual vs raw Layer B — the post-AD-250 "
-                 "collapse is empire-common (in g), not city demography")
+    rj = [raw_cities.index(cities[i]) for i in rel]
+    raw_med = np.median(raw_shape_med[rj], axis=0)            # (T,) collapses
+    q = res_uv["q_med"][rel]                                  # (n_rel, T)
+    q_med = np.median(q, axis=0)
+    q25, q75 = np.percentile(q, 25, axis=0), np.percentile(q, 75, axis=0)
+
+    fig, (axL, axR) = plt.subplots(1, 2, figsize=(13, 5), sharex=True)
+    axL.plot(BIN_CENTRES, raw_med, color="C3", lw=2)
+    axL.axvline(250, ls=":", color="grey", lw=1)
+    axL.set_title("Raw Layer B (g included)\ncorpus-median relative-shape "
+                  "(each city peak = 1)")
+    axL.set_xlabel("year"); axL.set_ylabel("fraction of own peak")
+    axL.set_ylim(0, 1.05)
+
+    axR.fill_between(BIN_CENTRES, q25, q75, alpha=0.2, color="C0",
+                     label="inter-quartile (heterogeneity)")
+    axR.plot(BIN_CENTRES, q_med, color="C0", lw=2, label="corpus median q")
+    axR.axhline(1.0, color="grey", lw=0.8, ls="--", label="empire trend (1.0)")
+    axR.axvline(250, ls=":", color="grey", lw=1)
+    axR.set_title("Residual (g removed)\ncorpus-median q vs the empire baseline")
+    axR.set_xlabel("year"); axR.set_ylabel("pop relative to empire trend")
+    axR.legend(fontsize=8)
+
+    fig.suptitle("Removing the empire-common component dissolves the apparent "
+                 "universal collapse into city-level heterogeneity "
+                 f"(reliable cities, n={len(rel)})")
     fig.tight_layout()
     fig.savefig(OUT_DIR / "layerb-residual-vs-raw.png", dpi=130)
     plt.close(fig)
@@ -339,6 +361,41 @@ def plot_amplitude_overlay(cities, reliable, q_by_frame):
     plt.close(fig)
 
 
+def baseline_diagnostic(q_med, reliable):
+    """Per-bin corpus summary of q vs the empire baseline (1.0) — the PRIMARY
+    contrast for the residual.
+
+    For a geom-mean-1 quantity the right question is "where does the city sit
+    relative to the empire trend (1.0)", NOT "what fraction of its own peak"
+    (the latter is confounded by 1/β amplification + GRW endpoint variance —
+    see ``_edge_peak_count``). Returns, per key bin, the corpus median q,
+    inter-quartile range, and the share of cities below the empire trend,
+    over reliable cities.
+    """
+    qr = q_med[reliable]                                       # (n_rel, T)
+    out = []
+    for label, b in KEY_BINS.items():
+        col = qr[:, b]
+        out.append({
+            "label": label, "bin": b, "centre_year": float(BIN_CENTRES[b]),
+            "median_q": float(np.median(col)),
+            "q25": float(np.percentile(col, 25)),
+            "q75": float(np.percentile(col, 75)),
+            "frac_below_empire": float((col < 1.0).mean()),
+        })
+    return out
+
+
+def _edge_peak_count(peak_bin_mode, reliable):
+    """Reliable cities whose q-peak sits at an envelope-edge bin (first/last).
+
+    This is the GaussianRandomWalk-endpoint artefact (amplified by 1/β) that
+    makes 'fraction of own peak' a misleading contrast for the residual.
+    """
+    pk = peak_bin_mode[reliable]
+    return int(((pk == 0) | (pk == T_BINS - 1)).sum()), int(reliable.sum())
+
+
 def _corpus_frac(frac, reliable):
     """Median / IQR of a per-city fraction-of-peak, all cities and reliable-only."""
     finite = np.isfinite(frac)
@@ -380,10 +437,11 @@ def main():
             "uv": invert_residual(r_uv, beta, SEED),
             "v": invert_residual(r_v, beta, SEED),
         }
-        f250 = _corpus_frac(res[frame]["uv"]["frac_ad250"], reliable)
+        bd = baseline_diagnostic(res[frame]["uv"]["q_med"], reliable)
+        ad262 = next(d for d in bd if d["bin"] == BIN_AD250)
         print(f"  {frame}: β median {res[frame]['uv']['beta_median']:.3f}; "
-              f"u+v AD250 frac-of-peak median (reliable) "
-              f"{f250['median_reliable']:.2f}")
+              f"u+v median q at AD262 vs empire {ad262['median_q']:.2f} "
+              f"({ad262['frac_below_empire']:.0%} below empire)")
 
     # Foundation-terminus check on the relative-to-empire q (empire, u+v).
     foundation = h5.foundation_terminus(cities, res["empire"]["uv"]["q"])
@@ -419,19 +477,38 @@ def main():
         "quantity": ("q = exp((1/beta_within)*(u_shape+v_shape)); population "
                      "relative to the empire-wide common temporal component; "
                      "geom-mean 1 over t; NOT absolute population (Obs 98)."),
-        "collapse_contrast": {
-            "metric": "median-trajectory inscription/pop AD250 as fraction of peak",
+        # PRIMARY contrast — q vs the empire baseline (1.0), per key bin.
+        "relative_to_empire_diagnostic": {
+            "metric": ("corpus median q (and IQR, share below empire) per key "
+                       "bin, reliable cities; 1.0 = on the empire trend"),
+            "residual_uv": {f: baseline_diagnostic(res[f]["uv"]["q_med"], reliable)
+                            for f in FRAMES},
+            "residual_v_only": {f: baseline_diagnostic(res[f]["v"]["q_med"], reliable)
+                                for f in FRAMES},
+            "interpretation": (
+                "Removing the empire-common component dissolves the raw "
+                "inversion's apparent universal post-AD-250 collapse into city-"
+                "level heterogeneity: the median reliable city sits at ~0.32 of "
+                "its empire-relative baseline at AD 262 (a moderate relative "
+                "decline, not annihilation), and ~half the cities are at or "
+                "above the empire trend even late. The residual is not pure "
+                "demography (Obs 98)."),
+        },
+        # CONFOUNDED — kept only for transparency; do NOT read as a collapse.
+        "frac_of_peak_CONFOUNDED": {
+            "warning": ("'fraction of own peak' is confounded for the residual: "
+                        "1/β amplification + GRW endpoint variance push many "
+                        "cities' q-peak to the envelope edges, forcing the ratio "
+                        "to ~0 regardless of the actual late level. Use "
+                        "relative_to_empire_diagnostic instead."),
+            "edge_peak_reliable": dict(zip(
+                ("n_edge_peak", "n_reliable"),
+                _edge_peak_count(res["empire"]["uv"]["peak_bin_mode"], reliable))),
             "raw_layerB_empire_median_reliable": float(np.nanmedian(
                 raw_frac_ad250[[raw_cities.index(cities[i]) for i in range(C)
                                 if reliable[i] and cities[i] in raw_cities]])),
-            "residual_uv": {f: _corpus_frac(res[f]["uv"]["frac_ad250"], reliable)
-                            for f in FRAMES},
-            "residual_uv_ad325": {f: _corpus_frac(res[f]["uv"]["frac_ad325"], reliable)
+            "residual_uv_ad250": {f: _corpus_frac(res[f]["uv"]["frac_ad250"], reliable)
                                   for f in FRAMES},
-            "residual_v_only": {f: _corpus_frac(res[f]["v"]["frac_ad250"], reliable)
-                                for f in FRAMES},
-            "interpretation": ("raw ~0 (empire-common habit collapse in g, amplified "
-                               "by 1/β); residual lifts toward 1 once g is removed."),
         },
         "foundation_terminus_on_q": foundation,
         "beta_frames": {f: res[f]["uv"]["beta_median"] for f in FRAMES},
@@ -449,10 +526,18 @@ def main():
     with open(OUT_DIR / "layerb-residual-summary.json", "w") as fh:
         json.dump(summary, fh, indent=2, default=h5._json_default)
 
-    cc = summary["collapse_contrast"]
-    print(f"  COLLAPSE CONTRAST (AD250 frac-of-peak, reliable median): "
-          f"raw {cc['raw_layerB_empire_median_reliable']:.2f} -> "
-          f"residual u+v empire {cc['residual_uv']['empire']['median_reliable']:.2f}")
+    diag = summary["relative_to_empire_diagnostic"]["residual_uv"]["empire"]
+    by_bin = {d["label"]: d for d in diag}
+    print("  RELATIVE-TO-EMPIRE (median q vs 1.0, reliable cities):")
+    for lbl in ("AD112_early_antonine", "AD187_empire_common_peak",
+                "AD262_third_century", "AD337_late"):
+        d = by_bin[lbl]
+        print(f"    {lbl}: median q {d['median_q']:.2f} "
+              f"[IQR {d['q25']:.2f}–{d['q75']:.2f}], "
+              f"{d['frac_below_empire']:.0%} below empire")
+    ne, nr = summary["frac_of_peak_CONFOUNDED"]["edge_peak_reliable"].values()
+    print(f"  (frac-of-peak confounded: {ne}/{nr} reliable cities peak at an "
+          f"envelope edge — not a collapse)")
     print(f"  foundation-terminus on q: median pre-foundation frac "
           f"{foundation.get('median_pre_foundation_frac')}, "
           f"{foundation.get('n_within_envelope_matched')} cities checked")
