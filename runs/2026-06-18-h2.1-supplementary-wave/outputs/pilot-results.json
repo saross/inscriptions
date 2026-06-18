@@ -1,0 +1,431 @@
+{
+  "spec": "runs/2026-06-18-h2.1-supplementary-wave/SPEC.md \u00a79",
+  "mode": "PILOT",
+  "generated_utc": "2026-06-18T08:47:29+00:00",
+  "seed": 20260618,
+  "sampling_config": {
+    "draws": 2000,
+    "tune": 1000,
+    "chains": 4,
+    "cores": 1,
+    "target_accept": 0.95
+  },
+  "n_mc_pilot": 10,
+  "n_mc_production": 30,
+  "model_comparison": {
+    "empire-aggregate": {
+      "n_rows_eff": 151361,
+      "k_eff": 100336,
+      "n_rows_raw": 180609,
+      "primary": {
+        "alpha_median": 0.6804527811192327,
+        "alpha_ci_lo": 0.6652650635076519,
+        "alpha_ci_hi": 0.697514217528834,
+        "ci_width": 0.032249154021182114,
+        "secs": 288.0,
+        "convergence": {
+          "max_rhat": 1.0117460443785236,
+          "min_ess_bulk": 743.6884666740993,
+          "n_divergences": 0,
+          "convergence_pass": false,
+          "gate_vars": [
+            "alpha",
+            "tier_weights"
+          ]
+        },
+        "dispersion": {
+          "dispersion_ratio_aligned": 1.159181530092163,
+          "dispersion_ratio_nonaligned": 1.0312150079695963,
+          "n_aligned": 100336,
+          "n_nonaligned": 51025,
+          "interpretation": "\u22481 multinomial-adequate; >1 over-dispersed (DM-preferring)"
+        }
+      },
+      "dm": {
+        "alpha_median": 0.6805998288783728,
+        "alpha_ci_lo": 0.6563495991889541,
+        "alpha_ci_hi": 0.7072834196255368,
+        "ci_width": 0.05093382043658268,
+        "secs": 188.9,
+        "convergence": {
+          "max_rhat": 1.0014679565101168,
+          "min_ess_bulk": 6176.7322906768295,
+          "n_divergences": 0,
+          "convergence_pass": true,
+          "gate_vars": [
+            "alpha",
+            "tier_weights"
+          ]
+        },
+        "kappa_median": 5770.488812484125,
+        "kappa_ci_lo": 4532.945514239752,
+        "kappa_ci_hi": 7095.950559333738
+      },
+      "nb": {
+        "alpha_median": 0.6803561176613147,
+        "alpha_ci_lo": 0.6648025149720692,
+        "alpha_ci_hi": 0.6968695343996444,
+        "ci_width": 0.03206701942757517,
+        "secs": 384.6,
+        "convergence": {
+          "max_rhat": 1.0125974504424717,
+          "min_ess_bulk": 604.0979719292635,
+          "n_divergences": 0,
+          "convergence_pass": false,
+          "gate_vars": [
+            "alpha",
+            "tier_weights"
+          ]
+        },
+        "phi_median": 5635.177505698746
+      }
+    },
+    "Latium et Campania / Regio I": {
+      "n_rows_eff": 17037,
+      "k_eff": 7976,
+      "n_rows_raw": 18512,
+      "primary": {
+        "alpha_median": 0.6053511931158514,
+        "alpha_ci_lo": 0.5688200263929154,
+        "alpha_ci_hi": 0.632360368560235,
+        "ci_width": 0.06354034216731963,
+        "secs": 79.1,
+        "convergence": {
+          "max_rhat": 1.0015113088136731,
+          "min_ess_bulk": 3184.7468072664583,
+          "n_divergences": 0,
+          "convergence_pass": true,
+          "gate_vars": [
+            "alpha",
+            "tier_weights"
+          ]
+        },
+        "dispersion": {
+          "dispersion_ratio_aligned": 0.2994295113937938,
+          "dispersion_ratio_nonaligned": 0.8436668757404335,
+          "n_aligned": 7976,
+          "n_nonaligned": 9061,
+          "interpretation": "\u22481 multinomial-adequate; >1 over-dispersed (DM-preferring)"
+        }
+      },
+      "dm": {
+        "alpha_median": 0.6175092582458315,
+        "alpha_ci_lo": 0.5653507531836857,
+        "alpha_ci_hi": 0.6547156942854128,
+        "ci_width": 0.0893649411017271,
+        "secs": 66.8,
+        "convergence": {
+          "max_rhat": 1.0018242600829543,
+          "min_ess_bulk": 1572.8819851738265,
+          "n_divergences": 0,
+          "convergence_pass": true,
+          "gate_vars": [
+            "alpha",
+            "tier_weights"
+          ]
+        },
+        "kappa_median": 5224.716554803441,
+        "kappa_ci_lo": 4081.2492078260734,
+        "kappa_ci_hi": 6529.565635555171
+      },
+      "nb": {
+        "alpha_median": 0.6052254824687449,
+        "alpha_ci_lo": 0.5685386988405888,
+        "alpha_ci_hi": 0.6319117597331959,
+        "ci_width": 0.06337306089260708,
+        "secs": 106.2,
+        "convergence": {
+          "max_rhat": 1.0015390288756807,
+          "min_ess_bulk": 3690.3474656646404,
+          "n_divergences": 0,
+          "convergence_pass": true,
+          "gate_vars": [
+            "alpha",
+            "tier_weights"
+          ]
+        },
+        "phi_median": 4267.049517294008
+      }
+    }
+  },
+  "kappa_tuning": {
+    "candidates": [
+      {
+        "s_kappa": 100.0,
+        "frac_in_target_span": 0.91945,
+        "target_span": [
+          10.0,
+          10000.0
+        ],
+        "kappa_quantiles_5_25_50_75_95": [
+          6.201934481785599,
+          31.824977752078965,
+          67.17799311272793,
+          115.05149556796997,
+          198.9558013569377
+        ]
+      },
+      {
+        "s_kappa": 300.0,
+        "frac_in_target_span": 0.9727,
+        "target_span": [
+          10.0,
+          10000.0
+        ],
+        "kappa_quantiles_5_25_50_75_95": [
+          18.427966655653666,
+          94.6909516431628,
+          201.62311820555578,
+          346.9336267365077,
+          589.2452651402754
+        ]
+      },
+      {
+        "s_kappa": 1000.0,
+        "frac_in_target_span": 0.992,
+        "target_span": [
+          10.0,
+          10000.0
+        ],
+        "kappa_quantiles_5_25_50_75_95": [
+          62.059687930315704,
+          316.4535112280511,
+          669.1790052815429,
+          1156.5247824548637,
+          1957.9275805366099
+        ]
+      },
+      {
+        "s_kappa": 3000.0,
+        "frac_in_target_span": 0.9969,
+        "target_span": [
+          10.0,
+          10000.0
+        ],
+        "kappa_quantiles_5_25_50_75_95": [
+          187.69714268572633,
+          952.8722285143589,
+          2005.8958750663987,
+          3440.726165833624,
+          5834.950038341526
+        ]
+      },
+      {
+        "s_kappa": 10000.0,
+        "frac_in_target_span": 0.6857,
+        "target_span": [
+          10.0,
+          10000.0
+        ],
+        "kappa_quantiles_5_25_50_75_95": [
+          621.832967380469,
+          3122.6320134354023,
+          6653.016067920829,
+          11443.873437549242,
+          19602.473041186302
+        ]
+      }
+    ],
+    "chosen_s_kappa": 3000.0,
+    "rationale": "S_KAPPA chosen to maximise prior mass across \u03ba \u2208 ~[10, 1e4] (weakly informative, data-dominated; does not force overdispersion). Cross-checked against the empire DM \u03ba posterior above \u2014 if the \u03ba posterior sits well inside the prior bulk, the prior is data-dominated as required (SPEC \u00a73.3). Re-confirm on the figure before sign-off.",
+    "empire_dm_kappa_posterior": {
+      "alpha_median": 0.6805998288783728,
+      "alpha_ci_lo": 0.6563495991889541,
+      "alpha_ci_hi": 0.7072834196255368,
+      "ci_width": 0.05093382043658268,
+      "secs": 188.9,
+      "convergence": {
+        "max_rhat": 1.0014679565101168,
+        "min_ess_bulk": 6176.7322906768295,
+        "n_divergences": 0,
+        "convergence_pass": true,
+        "gate_vars": [
+          "alpha",
+          "tier_weights"
+        ]
+      },
+      "kappa_median": 5770.488812484125,
+      "kappa_ci_lo": 4532.945514239752,
+      "kappa_ci_hi": 7095.950559333738
+    }
+  },
+  "aoristic_mc": {
+    "unit": "empire-aggregate",
+    "n_mc_pilot": 10,
+    "k_cc": 120632,
+    "n_rows": 180609,
+    "per_realisation": [
+      {
+        "realisation": 0,
+        "secs": 278.8,
+        "alpha_median": 0.09900847662989046,
+        "convergence": {
+          "max_rhat": 1.0009938595058696,
+          "min_ess_bulk": 5165.294620556321,
+          "n_divergences": 0,
+          "convergence_pass": true,
+          "gate_vars": [
+            "alpha",
+            "tier_weights"
+          ]
+        }
+      },
+      {
+        "realisation": 1,
+        "secs": 282.3,
+        "alpha_median": 0.10167806079595892,
+        "convergence": {
+          "max_rhat": 1.0010698326576861,
+          "min_ess_bulk": 5463.667435527303,
+          "n_divergences": 0,
+          "convergence_pass": true,
+          "gate_vars": [
+            "alpha",
+            "tier_weights"
+          ]
+        }
+      },
+      {
+        "realisation": 2,
+        "secs": 278.6,
+        "alpha_median": 0.09794750623715376,
+        "convergence": {
+          "max_rhat": 1.0009030715202731,
+          "min_ess_bulk": 6320.344073881565,
+          "n_divergences": 0,
+          "convergence_pass": true,
+          "gate_vars": [
+            "alpha",
+            "tier_weights"
+          ]
+        }
+      },
+      {
+        "realisation": 3,
+        "secs": 279.9,
+        "alpha_median": 0.10162500044617931,
+        "convergence": {
+          "max_rhat": 1.0015041584903173,
+          "min_ess_bulk": 5530.275630626944,
+          "n_divergences": 0,
+          "convergence_pass": true,
+          "gate_vars": [
+            "alpha",
+            "tier_weights"
+          ]
+        }
+      },
+      {
+        "realisation": 4,
+        "secs": 280.7,
+        "alpha_median": 0.09931776337779746,
+        "convergence": {
+          "max_rhat": 1.0012792551758791,
+          "min_ess_bulk": 6168.055302843911,
+          "n_divergences": 0,
+          "convergence_pass": true,
+          "gate_vars": [
+            "alpha",
+            "tier_weights"
+          ]
+        }
+      },
+      {
+        "realisation": 5,
+        "secs": 276.0,
+        "alpha_median": 0.09818936519652133,
+        "convergence": {
+          "max_rhat": 1.0008840222622637,
+          "min_ess_bulk": 5875.589804957012,
+          "n_divergences": 0,
+          "convergence_pass": true,
+          "gate_vars": [
+            "alpha",
+            "tier_weights"
+          ]
+        }
+      },
+      {
+        "realisation": 6,
+        "secs": 267.4,
+        "alpha_median": 0.09886714523849831,
+        "convergence": {
+          "max_rhat": 1.001457126724935,
+          "min_ess_bulk": 5624.860922057512,
+          "n_divergences": 0,
+          "convergence_pass": true,
+          "gate_vars": [
+            "alpha",
+            "tier_weights"
+          ]
+        }
+      },
+      {
+        "realisation": 7,
+        "secs": 278.2,
+        "alpha_median": 0.09835494331435113,
+        "convergence": {
+          "max_rhat": 1.0009425859418994,
+          "min_ess_bulk": 5682.899154038416,
+          "n_divergences": 0,
+          "convergence_pass": true,
+          "gate_vars": [
+            "alpha",
+            "tier_weights"
+          ]
+        }
+      },
+      {
+        "realisation": 8,
+        "secs": 246.9,
+        "alpha_median": 0.10629289664320024,
+        "convergence": {
+          "max_rhat": 1.5286674022822195,
+          "min_ess_bulk": 7.107736874427898,
+          "n_divergences": 0,
+          "convergence_pass": false,
+          "gate_vars": [
+            "alpha",
+            "tier_weights"
+          ]
+        }
+      },
+      {
+        "realisation": 9,
+        "secs": 281.0,
+        "alpha_median": 0.09997726436964342,
+        "convergence": {
+          "max_rhat": 1.0010251009221511,
+          "min_ess_bulk": 5882.794890442851,
+          "n_divergences": 0,
+          "convergence_pass": true,
+          "gate_vars": [
+            "alpha",
+            "tier_weights"
+          ]
+        }
+      }
+    ],
+    "mean_secs_per_realisation": 275.0,
+    "cross_realisation_alpha_band_95": [
+      0.09067451686094856,
+      0.14626905873046706
+    ],
+    "cross_realisation_width": 0.055594541869518496,
+    "primary_single_spa_ci_width": 0.032249154021182114,
+    "divergence_flag": true,
+    "divergence_rule": "cross-realisation 95% \u03b1-range > 1.5\u00d7 primary 95% CI width",
+    "projection": {
+      "note": "PILOT N_MC=10 \u2192 projected to production N_MC=30 \u00d7 29 units",
+      "aomc_core_hours_full": 66.45,
+      "whole_wave_core_hours": 83.07,
+      "n_jobs_assumed": 10,
+      "whole_wave_wall_hours": 8.31,
+      "spec_budget_core_hours": 20,
+      "spec_budget_wall_hours": "3\u20135",
+      "wall_ceiling_hours": 8.0,
+      "exceeds_ceiling": true,
+      "halt_and_report": true
+    }
+  }
+}

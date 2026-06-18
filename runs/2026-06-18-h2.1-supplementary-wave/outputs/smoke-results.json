@@ -1,0 +1,110 @@
+{
+  "seed": 20260618,
+  "gates": {
+    "dm_reduction": {
+      "alpha_median": 0.788008578962291,
+      "delta_alpha": 0.000348656125686686,
+      "tol_alpha": 0.002,
+      "theta_conv_med": 0.9192126177521768,
+      "theta_gen_med": 0.015518621067723903,
+      "delta_theta_conv": 0.0003890250997676814,
+      "delta_theta_gen": 0.0004932262512994529,
+      "tol_theta": 0.005,
+      "pgen_max_abs_diff": 0.00024068169043256135,
+      "pgen_one_minus_pearson_r": 2.6942125449735954e-05,
+      "tol_pgen_bin": 0.02,
+      "tol_pgen_one_minus_r": 0.01,
+      "pgen_agreement": true,
+      "within_tol": true,
+      "status": "PASS",
+      "pass": true,
+      "secs": 43.9,
+      "convergence": {
+        "max_rhat": 1.0013036280736622,
+        "min_ess_bulk": 4070.9557587286904,
+        "n_divergences": 0,
+        "max_rhat_monitored": 1.001907447674881,
+        "min_ess_bulk_monitored": 3695.7804246270175,
+        "convergence_pass": true,
+        "gate_vars": [
+          "alpha",
+          "tier_weights"
+        ]
+      }
+    },
+    "negbin_largephi": {
+      "alpha_median": 0.7881251224849983,
+      "delta_alpha": 0.00046519964839397687,
+      "tol": 0.01,
+      "within_tol": true,
+      "status": "PASS",
+      "pass": true,
+      "secs": 45.0,
+      "convergence": {
+        "max_rhat": 1.0020394756506252,
+        "min_ess_bulk": 2911.3492381398937,
+        "n_divergences": 0,
+        "max_rhat_monitored": 1.0023008235837163,
+        "min_ess_bulk_monitored": 2911.3492381398937,
+        "convergence_pass": true,
+        "gate_vars": [
+          "alpha",
+          "tier_weights"
+        ]
+      },
+      "note": "non-nested cross-check, not a multinomial reduction (SPEC \u00a73.2): evidence the overdispersed family does not move the \u03b1 verdict"
+    },
+    "set_data_logp_parity": {
+      "method": "fresh-build(real) vs build(placeholder)+set_data(real); compiled logp at a single fixed point (model_A.initial_point()); NO sampling",
+      "builders": {
+        "primary": {
+          "logp_A_real_fresh": -996.5546158995711,
+          "logp_B_placeholder_then_setdata": -996.5546158995711,
+          "abs_delta_logp": 0.0,
+          "tol": 1e-08,
+          "pass": true
+        },
+        "dirichlet_multinomial": {
+          "logp_A_real_fresh": -996.2872853066042,
+          "logp_B_placeholder_then_setdata": -996.2872853066042,
+          "abs_delta_logp": 0.0,
+          "tol": 1e-08,
+          "pass": true
+        },
+        "negbin": {
+          "logp_A_real_fresh": -1004.9431234944781,
+          "logp_B_placeholder_then_setdata": -1004.9431234944781,
+          "abs_delta_logp": 0.0,
+          "tol": 1e-08,
+          "pass": true
+        }
+      },
+      "pass": true
+    }
+  },
+  "unit": {
+    "name": "Lusitania",
+    "n_rows_eff": 1577,
+    "k_eff": 1148,
+    "n_rows_raw": 1685
+  },
+  "primary": {
+    "alpha_median": 0.7876599228366044,
+    "theta_conv_med": 0.9188235926524091,
+    "theta_gen_med": 0.01502539481642445,
+    "secs": 33.2,
+    "convergence": {
+      "max_rhat": 1.0010052747995313,
+      "min_ess_bulk": 4428.920459962018,
+      "n_divergences": 0,
+      "max_rhat_monitored": 1.0019944432449686,
+      "min_ess_bulk_monitored": 3440.571700762624,
+      "convergence_pass": true,
+      "gate_vars": [
+        "alpha",
+        "tier_weights"
+      ]
+    }
+  },
+  "all_pass": true
+}
