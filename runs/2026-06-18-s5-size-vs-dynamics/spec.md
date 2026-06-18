@@ -1,7 +1,6 @@
 # §5 size-vs-dynamics probe — does city size predict city-specific temporal dynamics? (SPEC, pre-launch)
 
-- **Status:** DRAFT — awaiting Shawn's pre-launch sign-off. **Do not execute
-  until the sign-off checklist (§9) is ticked.**
+- **Status:** EXECUTED 2026-06-18 (signed off §9; results in `REPORT.md`).
 - **Author / date:** Claude (Opus 4.8, 1M context), 2026-06-18, on Shawn's brief.
 - **Run dir:** `runs/2026-06-18-s5-size-vs-dynamics/`.
 - **Type:** Exploratory (Decision 13; prereg §5). **No pre-committed thresholds;

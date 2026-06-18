@@ -1,0 +1,8 @@
+§5 size-vs-dynamics probe — seed=20260616 boot_seed=20260618
+  268 cities; 34 reliable; pop_est [1000, 153722] (2.19 decades, reliable)
+  q_v city-from-province, reliable (Spearman ρ; bootstrap CI | P-sign):
+    F1_late_level: ρ +0.09 CI [-0.26, +0.41] P(>0)=0.71
+    F2_volatility: ρ -0.05 CI [-0.39, +0.28] P(>0)=0.37
+    F3_tilt: ρ +0.31 CI [-0.06, +0.61] P(>0)=0.96 [secondary]
+    F4_peak_bin: ρ +0.04 CI [-0.34, +0.39] P(>0)=0.58 [secondary]
+  done. outputs in /home/shawn/Code/inscriptions/runs/2026-06-18-s5-size-vs-dynamics/outputs
