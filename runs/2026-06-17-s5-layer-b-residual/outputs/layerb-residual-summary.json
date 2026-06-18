@@ -1,0 +1,322 @@
+{
+  "analysis": "\u00a75 Layer B (residual) \u2014 habit-removed relative-to-empire \u03b2-inversion",
+  "type": "exploratory; illustrative comparative-shape only (prereg \u00a75; Decision 13)",
+  "seed": 20260616,
+  "n_cities": 268,
+  "n_reliable": 34,
+  "n_star": 300,
+  "self_test": {
+    "spot_city": "Cirta",
+    "max_abs_diff_vs_raw_shape": 5.551115123125783e-16,
+    "passed": true
+  },
+  "quantity": "q = exp((1/beta_within)*(u_shape+v_shape)); population relative to the empire-wide common temporal component; geom-mean 1 over t; NOT absolute population (Obs 98).",
+  "relative_to_empire_diagnostic": {
+    "metric": "corpus median q (and IQR, share below empire) per key bin, reliable cities; 1.0 = on the empire trend",
+    "residual_uv": {
+      "empire": [
+        {
+          "label": "AD12_augustan",
+          "bin": 2,
+          "centre_year": 12.5,
+          "median_q": 2.7387937624377936,
+          "q25": 0.2002180858190055,
+          "q75": 18.112205724700964,
+          "frac_below_empire": 0.4117647058823529
+        },
+        {
+          "label": "AD112_early_antonine",
+          "bin": 6,
+          "centre_year": 112.5,
+          "median_q": 0.4769250385271567,
+          "q25": 0.26994847486774715,
+          "q75": 1.7410143727719272,
+          "frac_below_empire": 0.6470588235294118
+        },
+        {
+          "label": "AD187_empire_common_peak",
+          "bin": 9,
+          "centre_year": 187.5,
+          "median_q": 1.0069803017432462,
+          "q25": 0.37792912829759306,
+          "q75": 4.355522652368544,
+          "frac_below_empire": 0.5
+        },
+        {
+          "label": "AD262_third_century",
+          "bin": 12,
+          "centre_year": 262.5,
+          "median_q": 0.3177997490611445,
+          "q25": 0.15848268196672238,
+          "q75": 1.2461137867729062,
+          "frac_below_empire": 0.6764705882352942
+        },
+        {
+          "label": "AD337_late",
+          "bin": 15,
+          "centre_year": 337.5,
+          "median_q": 0.6707700425553259,
+          "q25": 0.10382716864769972,
+          "q75": 5.2213028963701,
+          "frac_below_empire": 0.5294117647058824
+        }
+      ],
+      "latin": [
+        {
+          "label": "AD12_augustan",
+          "bin": 2,
+          "centre_year": 12.5,
+          "median_q": 2.2468531451711304,
+          "q25": 0.2730721713353136,
+          "q75": 10.180125250638902,
+          "frac_below_empire": 0.4117647058823529
+        },
+        {
+          "label": "AD112_early_antonine",
+          "bin": 6,
+          "centre_year": 112.5,
+          "median_q": 0.5526945043609194,
+          "q25": 0.35025135781901395,
+          "q75": 1.5558815943219961,
+          "frac_below_empire": 0.6470588235294118
+        },
+        {
+          "label": "AD187_empire_common_peak",
+          "bin": 9,
+          "centre_year": 187.5,
+          "median_q": 1.0053221200957598,
+          "q25": 0.4594532475385658,
+          "q75": 3.2567750243497047,
+          "frac_below_empire": 0.5
+        },
+        {
+          "label": "AD262_third_century",
+          "bin": 12,
+          "centre_year": 262.5,
+          "median_q": 0.3994706329853216,
+          "q25": 0.2283274799255519,
+          "q75": 1.1943571115794032,
+          "frac_below_empire": 0.6764705882352942
+        },
+        {
+          "label": "AD337_late",
+          "bin": 15,
+          "centre_year": 337.5,
+          "median_q": 0.718351200566381,
+          "q25": 0.16301410254945267,
+          "q75": 3.75025317432922,
+          "frac_below_empire": 0.5294117647058824
+        }
+      ]
+    },
+    "residual_v_only": {
+      "empire": [
+        {
+          "label": "AD12_augustan",
+          "bin": 2,
+          "centre_year": 12.5,
+          "median_q": 0.7927116475072522,
+          "q25": 0.3776281100943372,
+          "q75": 2.8240684967739274,
+          "frac_below_empire": 0.5588235294117647
+        },
+        {
+          "label": "AD112_early_antonine",
+          "bin": 6,
+          "centre_year": 112.5,
+          "median_q": 0.7548751803958756,
+          "q25": 0.3697326949326243,
+          "q75": 2.527846076488492,
+          "frac_below_empire": 0.5294117647058824
+        },
+        {
+          "label": "AD187_empire_common_peak",
+          "bin": 9,
+          "centre_year": 187.5,
+          "median_q": 1.3063825882324336,
+          "q25": 0.5067465211398509,
+          "q75": 2.5174349136074317,
+          "frac_below_empire": 0.4117647058823529
+        },
+        {
+          "label": "AD262_third_century",
+          "bin": 12,
+          "centre_year": 262.5,
+          "median_q": 0.7792505989359619,
+          "q25": 0.2899342076023237,
+          "q75": 1.691360651595095,
+          "frac_below_empire": 0.5882352941176471
+        },
+        {
+          "label": "AD337_late",
+          "bin": 15,
+          "centre_year": 337.5,
+          "median_q": 0.8002333892756169,
+          "q25": 0.18249615506699704,
+          "q75": 2.964336545283994,
+          "frac_below_empire": 0.5294117647058824
+        }
+      ],
+      "latin": [
+        {
+          "label": "AD12_augustan",
+          "bin": 2,
+          "centre_year": 12.5,
+          "median_q": 0.8288333054156798,
+          "q25": 0.455290647423016,
+          "q75": 2.3081224852457343,
+          "frac_below_empire": 0.5588235294117647
+        },
+        {
+          "label": "AD112_early_antonine",
+          "bin": 6,
+          "centre_year": 112.5,
+          "median_q": 0.7976439877797871,
+          "q25": 0.4511692541489688,
+          "q75": 2.105214637769285,
+          "frac_below_empire": 0.5294117647058824
+        },
+        {
+          "label": "AD187_empire_common_peak",
+          "bin": 9,
+          "centre_year": 187.5,
+          "median_q": 1.2397411693954024,
+          "q25": 0.5784187012818958,
+          "q75": 2.097566271227088,
+          "frac_below_empire": 0.4117647058823529
+        },
+        {
+          "label": "AD262_third_century",
+          "bin": 12,
+          "centre_year": 262.5,
+          "median_q": 0.8189875647301882,
+          "q25": 0.37198677702199184,
+          "q75": 1.5267981723889559,
+          "frac_below_empire": 0.5882352941176471
+        },
+        {
+          "label": "AD337_late",
+          "bin": 15,
+          "centre_year": 337.5,
+          "median_q": 0.8349523343910286,
+          "q25": 0.25460846661863157,
+          "q75": 2.3750226127867924,
+          "frac_below_empire": 0.5294117647058824
+        }
+      ]
+    },
+    "interpretation": "Removing the empire-common component dissolves the raw inversion's apparent universal post-AD-250 collapse into city-level heterogeneity: the median reliable city sits at ~0.32 of its empire-relative baseline at AD 262 (a moderate relative decline, not annihilation), and ~half the cities are at or above the empire trend even late. The residual is not pure demography (Obs 98)."
+  },
+  "frac_of_peak_CONFOUNDED": {
+    "warning": "'fraction of own peak' is confounded for the residual: 1/\u03b2 amplification + GRW endpoint variance push many cities' q-peak to the envelope edges, forcing the ratio to ~0 regardless of the actual late level. Use relative_to_empire_diagnostic instead.",
+    "edge_peak_reliable": {
+      "n_edge_peak": 11,
+      "n_reliable": 34
+    },
+    "raw_layerB_empire_median_reliable": 0.0014115470938771573,
+    "residual_uv_ad250": {
+      "empire": {
+        "median_all": 0.014643489796611335,
+        "median_reliable": 0.0036207420522761974,
+        "iqr_all": [
+          0.0013669051358897602,
+          0.08526774484611044
+        ],
+        "n_finite": 268,
+        "n_reliable_finite": 34
+      },
+      "latin": {
+        "median_all": 0.034114775605429234,
+        "median_reliable": 0.011107722683278917,
+        "iqr_all": [
+          0.005072988674013765,
+          0.13868300143555978
+        ],
+        "n_finite": 268,
+        "n_reliable_finite": 34
+      }
+    }
+  },
+  "foundation_terminus_on_q": {
+    "n_matched": 268,
+    "n_within_envelope_matched": 99,
+    "median_pre_foundation_frac": 0.0002,
+    "worst_offenders": [
+      {
+        "city": "Centumcellae",
+        "start_date": 106.0,
+        "pre_foundation_mass_frac": 0.4957
+      },
+      {
+        "city": "Corinium Dobunnorum",
+        "start_date": 100.0,
+        "pre_foundation_mass_frac": 0.4835
+      },
+      {
+        "city": "Corstopitum",
+        "start_date": 200.0,
+        "pre_foundation_mass_frac": 0.3541
+      },
+      {
+        "city": "Luguvalium",
+        "start_date": 100.0,
+        "pre_foundation_mass_frac": 0.3135
+      },
+      {
+        "city": "Argentoratum",
+        "start_date": 80.0,
+        "pre_foundation_mass_frac": 0.3014
+      },
+      {
+        "city": "Vindobona",
+        "start_date": 100.0,
+        "pre_foundation_mass_frac": 0.113
+      },
+      {
+        "city": "Augusta Praetoria",
+        "start_date": -25.0,
+        "pre_foundation_mass_frac": 0.1008
+      },
+      {
+        "city": "Tridentum",
+        "start_date": -23.0,
+        "pre_foundation_mass_frac": 0.0943
+      },
+      {
+        "city": "Lauriacum",
+        "start_date": 191.0,
+        "pre_foundation_mass_frac": 0.0612
+      },
+      {
+        "city": "Cemelenum",
+        "start_date": -25.0,
+        "pre_foundation_mass_frac": 0.046
+      }
+    ]
+  },
+  "beta_frames": {
+    "empire": 0.5875815819240894,
+    "latin": 0.7332066476039931
+  },
+  "provenance": {
+    "primary_nc": "/home/shawn/Code/inscriptions/runs/2026-05-30-s5-small-n-trajectories/code/production/monolithic-inscription-25y.nc",
+    "primary_nc_sha256": "21e9856693cbcd13d7c5d3ed7241020eebdfe09eff081b491c2185c983524f14",
+    "h3a_nc": {
+      "empire": "/home/shawn/Code/inscriptions/runs/2026-06-04-h3a-confirmatory/outputs/idata-primary.nc",
+      "latin": "/home/shawn/Code/inscriptions/runs/2026-06-04-h3a-confirmatory/outputs/idata-latin.nc"
+    },
+    "h3a_nc_sha256": {
+      "empire": "4a32ccbd0fdf5632c811022e3292f22feffb34685c815a4ea37c30c6988301cc",
+      "latin": "46599aeea273fc3351be3f1f688e3d85b67b8a94700445e9c2df6155c5b5befa"
+    },
+    "raw_layerB_nc": "/home/shawn/Code/inscriptions/runs/2026-06-16-s5-layer-b-beta-inversion/outputs/layerb-trajectories-empire.nc",
+    "reused_code": [
+      "/home/shawn/Code/inscriptions/runs/2026-06-17-s5-h5-habit-removed/code/h5_habit_removed.py",
+      "/home/shawn/Code/inscriptions/runs/2026-06-16-s5-layer-b-beta-inversion/code/layerb_invert.py"
+    ]
+  },
+  "trajectories_nc": {
+    "empire": "/home/shawn/Code/inscriptions/runs/2026-06-17-s5-layer-b-residual/outputs/layerb-residual-trajectories-empire.nc",
+    "latin": "/home/shawn/Code/inscriptions/runs/2026-06-17-s5-layer-b-residual/outputs/layerb-residual-trajectories-latin.nc"
+  }
+}
