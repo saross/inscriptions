@@ -1,0 +1,858 @@
+{
+  "analysis": "\u00a75 province-size regression \u2014 does province size predict province-from-empire (q_u) dynamics? (direct test of the Obs 104 province-mediation inference)",
+  "type": "exploratory; no thresholds (Decision 13); n\u224835 provinces (\u224820 reliable subset) VERY low power, a null is informative",
+  "question": "cross-province: does province size (sum/mean/max pop_est over ALL member cities in the full index) predict features of q_u = exp((1/\u03b2)\u00b7u_shape) \u2014 F1 late-level, F2 volatility, F3 tilt? 'more buffered' = F1\u2191 F2\u2193 F3\u2191.",
+  "verdict_logic": "F1+,F2-,F3+ clearing the binding bootstrap bound on \u22651 feature \u21d2 CONFIRMS province-mediation directly; coherent direction with CIs incl. 0 \u21d2 directionally corroborates (underpowered); null / sign-incoherent \u21d2 Obs 104 q_uv\u226bq_v inference NOT directly corroborated at province level (could be a city-membership channel).",
+  "non_circular": "\u00a75 Layer A has no population covariate (Obs 98); u_shape (hence q_u) Hanson-free; \u03b2 cosmetic for ranks",
+  "province_join": {
+    "u_shape_provs": 35,
+    "matched_in_full_index": 35,
+    "unmatched": [],
+    "full_index_n_cities": 1012,
+    "full_index_distinct_provinces": 56
+  },
+  "self_check": {
+    "q_u_constant_within_province": true,
+    "reproduces_residual_q_u_med": true,
+    "spot_province": "Achaia",
+    "spot_n_cities": 2,
+    "max_abs_diff_vs_residual_nc": 0.0
+  },
+  "predictor": {
+    "name": "province pop_est aggregated over ALL member cities (FULL 1012-city index)",
+    "transform": "log10",
+    "primary_aggregate": "sum",
+    "sensitivity_aggregates": [
+      "mean",
+      "max"
+    ],
+    "sum_range": [
+      10868.0,
+      645931.0
+    ],
+    "sum_log10_decades": 1.7740364982806032,
+    "member_cities_min_median_max": [
+      4,
+      19,
+      70
+    ]
+  },
+  "samples": {
+    "all_provinces": 35,
+    "reliable_subset": 20,
+    "reliable_subset_definition": "non-singleton provinces containing \u22651 reliable (N\u2265300) city. FLAG: province-tier reliability was NOT separately calibrated \u2014 N*=300 is a per-CITY floor (Obs 100); this is a coarse proxy."
+  },
+  "features": {
+    "F1_late_level": "q_u[AD262] (bin 12); higher = more buffered",
+    "F2_volatility": "SD_t(log q_u) over mid bins 2-13; lower = more buffered",
+    "F3_tilt": "log q_u[AD262]-log q_u[AD112] (bin 12 - bin 6); higher = more buffered"
+  },
+  "beta_frame_invariance": "draw-wise \u03c1 exactly \u03b2-frame-invariant (per-draw monotone province-constant rescale preserves across-province ranks); bootstrap \u03c1 uses empire-\u03b2 median features; slopes in empire-\u03b2 units (\u03b2 median 0.587)",
+  "seeds": {
+    "beta_resample": 20260616,
+    "bootstrap": 20260618,
+    "n_boot": 2000
+  },
+  "results": {
+    "sum": {
+      "F1_late_level": {
+        "all_provinces": {
+          "n": 35,
+          "spearman_rho": {
+            "point": -0.05182072829131653,
+            "boot_median": -0.05413194075558252,
+            "ci95": [
+              -0.3708004475194521,
+              0.27881260012872616
+            ],
+            "p_gt0": 0.384,
+            "p_lt0": 0.616
+          },
+          "ols_slope": {
+            "point": -0.47213240302545056,
+            "boot_median": -0.4844311901784749,
+            "ci95": [
+              -2.464982623962827,
+              0.9194681389062676
+            ],
+            "p_gt0": 0.261,
+            "p_lt0": 0.739
+          },
+          "theilsen_slope": {
+            "point": -0.08566902688733712,
+            "boot_median": -0.08884917604735722,
+            "ci95": [
+              -0.9540368143912227,
+              0.3121816653021523
+            ],
+            "p_gt0": 0.416,
+            "p_lt0": 0.584
+          },
+          "drawwise_rho": {
+            "median": -0.10084033613445378,
+            "ci95": [
+              -0.3389425770308123,
+              0.14397759103641455
+            ],
+            "p_gt0": 0.20975,
+            "p_lt0": 0.789625
+          }
+        },
+        "reliable_subset": {
+          "n": 20,
+          "spearman_rho": {
+            "point": 0.003007518796992481,
+            "boot_median": -0.007961919005982514,
+            "ci95": [
+              -0.4489089230924749,
+              0.4481736725777901
+            ],
+            "p_gt0": 0.4855,
+            "p_lt0": 0.5135
+          },
+          "ols_slope": {
+            "point": 0.19220056464330534,
+            "boot_median": 0.11991946516673324,
+            "ci95": [
+              -3.8982467221393176,
+              1.8899188120541315
+            ],
+            "p_gt0": 0.532,
+            "p_lt0": 0.468
+          },
+          "theilsen_slope": {
+            "point": 0.006337495699528078,
+            "boot_median": 0.0040553124986862565,
+            "ci95": [
+              -2.181775285208789,
+              1.561162352157213
+            ],
+            "p_gt0": 0.505,
+            "p_lt0": 0.495
+          },
+          "drawwise_rho": {
+            "median": -0.03308270676691729,
+            "ci95": [
+              -0.3218045112781955,
+              0.26165413533834586
+            ],
+            "p_gt0": 0.4085,
+            "p_lt0": 0.587125
+          }
+        }
+      },
+      "F2_volatility": {
+        "all_provinces": {
+          "n": 35,
+          "spearman_rho": {
+            "point": -0.23501400560224092,
+            "boot_median": -0.231471772734546,
+            "ci95": [
+              -0.5130235818659118,
+              0.09104659398619885
+            ],
+            "p_gt0": 0.083,
+            "p_lt0": 0.917
+          },
+          "ols_slope": {
+            "point": -0.2818380650548812,
+            "boot_median": -0.2812113036532595,
+            "ci95": [
+              -0.607993065547009,
+              -0.036680167082927116
+            ],
+            "p_gt0": 0.0105,
+            "p_lt0": 0.9895
+          },
+          "theilsen_slope": {
+            "point": -0.17335987874078268,
+            "boot_median": -0.17335987874078268,
+            "ci95": [
+              -0.476772856285896,
+              0.029339215177531745
+            ],
+            "p_gt0": 0.0895,
+            "p_lt0": 0.9105
+          },
+          "drawwise_rho": {
+            "median": -0.18515406162464987,
+            "ci95": [
+              -0.4523949579831933,
+              0.08935574229691877
+            ],
+            "p_gt0": 0.094625,
+            "p_lt0": 0.90475
+          }
+        },
+        "reliable_subset": {
+          "n": 20,
+          "spearman_rho": {
+            "point": -0.14736842105263157,
+            "boot_median": -0.14969613506904447,
+            "ci95": [
+              -0.6003949868779719,
+              0.3228300848911651
+            ],
+            "p_gt0": 0.271,
+            "p_lt0": 0.7275
+          },
+          "ols_slope": {
+            "point": -0.18537851695914437,
+            "boot_median": -0.18371077321214624,
+            "ci95": [
+              -0.9909724787771941,
+              0.1719842092100876
+            ],
+            "p_gt0": 0.183,
+            "p_lt0": 0.817
+          },
+          "theilsen_slope": {
+            "point": -0.13975751383543777,
+            "boot_median": -0.16133423429582733,
+            "ci95": [
+              -0.5936902139301782,
+              0.1607192750054586
+            ],
+            "p_gt0": 0.2605,
+            "p_lt0": 0.7395
+          },
+          "drawwise_rho": {
+            "median": -0.12180451127819548,
+            "ci95": [
+              -0.5022556390977444,
+              0.26018796992481147
+            ],
+            "p_gt0": 0.274,
+            "p_lt0": 0.7245
+          }
+        }
+      },
+      "F3_tilt": {
+        "all_provinces": {
+          "n": 35,
+          "spearman_rho": {
+            "point": -0.057703081232493,
+            "boot_median": -0.06279847979828962,
+            "ci95": [
+              -0.4125061026618779,
+              0.31966909978232394
+            ],
+            "p_gt0": 0.3595,
+            "p_lt0": 0.6395
+          },
+          "ols_slope": {
+            "point": 0.15475969536768408,
+            "boot_median": 0.09750900329731346,
+            "ci95": [
+              -1.2611205122891243,
+              1.376801841193403
+            ],
+            "p_gt0": 0.558,
+            "p_lt0": 0.442
+          },
+          "theilsen_slope": {
+            "point": -0.1318637278073274,
+            "boot_median": -0.19726533050405826,
+            "ci95": [
+              -1.4159881356593154,
+              1.5173493749281177
+            ],
+            "p_gt0": 0.3655,
+            "p_lt0": 0.6345
+          },
+          "drawwise_rho": {
+            "median": -0.009943977591036414,
+            "ci95": [
+              -0.26303921568627453,
+              0.2428641456582632
+            ],
+            "p_gt0": 0.469625,
+            "p_lt0": 0.529
+          }
+        },
+        "reliable_subset": {
+          "n": 20,
+          "spearman_rho": {
+            "point": 0.12330827067669171,
+            "boot_median": 0.1280303765096284,
+            "ci95": [
+              -0.3202853476398473,
+              0.5285551330798477
+            ],
+            "p_gt0": 0.714,
+            "p_lt0": 0.2845
+          },
+          "ols_slope": {
+            "point": 0.35618027978114,
+            "boot_median": 0.313195253436759,
+            "ci95": [
+              -1.1907111100721262,
+              2.00790982691396
+            ],
+            "p_gt0": 0.6705,
+            "p_lt0": 0.3295
+          },
+          "theilsen_slope": {
+            "point": 0.9034694841174118,
+            "boot_median": 0.8891998431619066,
+            "ci95": [
+              -1.2216789782772637,
+              3.176481339056465
+            ],
+            "p_gt0": 0.738,
+            "p_lt0": 0.262
+          },
+          "drawwise_rho": {
+            "median": 0.09323308270676692,
+            "ci95": [
+              -0.25263157894736843,
+              0.4345864661654135
+            ],
+            "p_gt0": 0.69925,
+            "p_lt0": 0.297375
+          }
+        }
+      }
+    },
+    "mean": {
+      "F1_late_level": {
+        "all_provinces": {
+          "n": 35,
+          "spearman_rho": {
+            "point": 0.20728291316526612,
+            "boot_median": 0.19848255223347344,
+            "ci95": [
+              -0.15950884745176083,
+              0.5338134461119209
+            ],
+            "p_gt0": 0.879,
+            "p_lt0": 0.121
+          },
+          "ols_slope": {
+            "point": -0.3688413118011872,
+            "boot_median": -0.2880905098122414,
+            "ci95": [
+              -3.1068998131649193,
+              2.4368667989912502
+            ],
+            "p_gt0": 0.417,
+            "p_lt0": 0.583
+          },
+          "theilsen_slope": {
+            "point": 0.29132229773493834,
+            "boot_median": 0.28632068940614547,
+            "ci95": [
+              -0.514713066106359,
+              1.084333836515314
+            ],
+            "p_gt0": 0.869,
+            "p_lt0": 0.131
+          },
+          "drawwise_rho": {
+            "median": 0.08991596638655462,
+            "ci95": [
+              -0.14874649859943978,
+              0.3204551820728291
+            ],
+            "p_gt0": 0.76025,
+            "p_lt0": 0.23875
+          }
+        },
+        "reliable_subset": {
+          "n": 20,
+          "spearman_rho": {
+            "point": 0.35037593984962395,
+            "boot_median": 0.3505311968407388,
+            "ci95": [
+              -0.12211232341860988,
+              0.75607903048613
+            ],
+            "p_gt0": 0.9285,
+            "p_lt0": 0.0715
+          },
+          "ols_slope": {
+            "point": 1.097880731120985,
+            "boot_median": 1.3329105239191446,
+            "ci95": [
+              -4.832191636847776,
+              6.211191282727552
+            ],
+            "p_gt0": 0.6755,
+            "p_lt0": 0.3245
+          },
+          "theilsen_slope": {
+            "point": 1.035329348372279,
+            "boot_median": 1.0442968137352595,
+            "ci95": [
+              -0.41313225027297346,
+              4.072447787469943
+            ],
+            "p_gt0": 0.9355,
+            "p_lt0": 0.0645
+          },
+          "drawwise_rho": {
+            "median": 0.24661654135338346,
+            "ci95": [
+              -0.03609022556390978,
+              0.48721804511278194
+            ],
+            "p_gt0": 0.9545,
+            "p_lt0": 0.04475
+          }
+        }
+      },
+      "F2_volatility": {
+        "all_provinces": {
+          "n": 35,
+          "spearman_rho": {
+            "point": -0.04761904761904762,
+            "boot_median": -0.04783318703594653,
+            "ci95": [
+              -0.3793476539689851,
+              0.2906231901503471
+            ],
+            "p_gt0": 0.403,
+            "p_lt0": 0.597
+          },
+          "ols_slope": {
+            "point": -0.11286023040157293,
+            "boot_median": -0.11721699566238433,
+            "ci95": [
+              -0.48216810574679814,
+              0.37555848065849035
+            ],
+            "p_gt0": 0.2755,
+            "p_lt0": 0.7245
+          },
+          "theilsen_slope": {
+            "point": -0.03676659988186819,
+            "boot_median": -0.03676659988186819,
+            "ci95": [
+              -0.577632582834107,
+              0.1926146539600185
+            ],
+            "p_gt0": 0.338,
+            "p_lt0": 0.662
+          },
+          "drawwise_rho": {
+            "median": -0.052100840336134456,
+            "ci95": [
+              -0.32017507002801116,
+              0.21820728291316527
+            ],
+            "p_gt0": 0.357125,
+            "p_lt0": 0.641875
+          }
+        },
+        "reliable_subset": {
+          "n": 20,
+          "spearman_rho": {
+            "point": 0.12030075187969923,
+            "boot_median": 0.11766902052044373,
+            "ci95": [
+              -0.4554599092284417,
+              0.6072596004732749
+            ],
+            "p_gt0": 0.6595,
+            "p_lt0": 0.339
+          },
+          "ols_slope": {
+            "point": 0.24889245927787645,
+            "boot_median": 0.21577247596284793,
+            "ci95": [
+              -0.4755429509382639,
+              1.654260807247792
+            ],
+            "p_gt0": 0.6855,
+            "p_lt0": 0.3145
+          },
+          "theilsen_slope": {
+            "point": 0.062305112280908626,
+            "boot_median": 0.06172441410366592,
+            "ci95": [
+              -0.6946577964623161,
+              0.5752157201522357
+            ],
+            "p_gt0": 0.6255,
+            "p_lt0": 0.3745
+          },
+          "drawwise_rho": {
+            "median": 0.05263157894736842,
+            "ci95": [
+              -0.2947744360902255,
+              0.4060526315789468
+            ],
+            "p_gt0": 0.61075,
+            "p_lt0": 0.386875
+          }
+        }
+      },
+      "F3_tilt": {
+        "all_provinces": {
+          "n": 35,
+          "spearman_rho": {
+            "point": 0.02829131652661065,
+            "boot_median": 0.016872813141180384,
+            "ci95": [
+              -0.33146454469975345,
+              0.4038207618581652
+            ],
+            "p_gt0": 0.5395,
+            "p_lt0": 0.4605
+          },
+          "ols_slope": {
+            "point": 0.21889922005651516,
+            "boot_median": 0.19914839677392132,
+            "ci95": [
+              -1.3456648436882868,
+              2.2859318998665366
+            ],
+            "p_gt0": 0.589,
+            "p_lt0": 0.411
+          },
+          "theilsen_slope": {
+            "point": 0.18433592634170415,
+            "boot_median": 0.15914635114431097,
+            "ci95": [
+              -1.8596208666899166,
+              2.997303269956355
+            ],
+            "p_gt0": 0.5495,
+            "p_lt0": 0.4505
+          },
+          "drawwise_rho": {
+            "median": 0.038795518207282914,
+            "ci95": [
+              -0.21598039215686274,
+              0.29244397759103635
+            ],
+            "p_gt0": 0.614375,
+            "p_lt0": 0.384875
+          }
+        },
+        "reliable_subset": {
+          "n": 20,
+          "spearman_rho": {
+            "point": 0.3142857142857143,
+            "boot_median": 0.3141122913505311,
+            "ci95": [
+              -0.1803857428610843,
+              0.8038282530789272
+            ],
+            "p_gt0": 0.881,
+            "p_lt0": 0.1185
+          },
+          "ols_slope": {
+            "point": 1.9179914295768685,
+            "boot_median": 1.9094786797871834,
+            "ci95": [
+              -0.806349440479402,
+              4.848076155772421
+            ],
+            "p_gt0": 0.929,
+            "p_lt0": 0.071
+          },
+          "theilsen_slope": {
+            "point": 2.961013642088303,
+            "boot_median": 3.0276720017722085,
+            "ci95": [
+              -0.778676943039328,
+              5.9183220643781995
+            ],
+            "p_gt0": 0.922,
+            "p_lt0": 0.078
+          },
+          "drawwise_rho": {
+            "median": 0.23909774436090225,
+            "ci95": [
+              -0.08421052631578947,
+              0.5368421052631579
+            ],
+            "p_gt0": 0.93125,
+            "p_lt0": 0.06825
+          }
+        }
+      }
+    },
+    "max": {
+      "F1_late_level": {
+        "all_provinces": {
+          "n": 35,
+          "spearman_rho": {
+            "point": 0.08040341863444184,
+            "boot_median": 0.07762694916719519,
+            "ci95": [
+              -0.2657771862182027,
+              0.41886091031526096
+            ],
+            "p_gt0": 0.6685,
+            "p_lt0": 0.3305
+          },
+          "ols_slope": {
+            "point": -0.11377260527113885,
+            "boot_median": -0.15772681788455012,
+            "ci95": [
+              -2.365923279208776,
+              1.5718002497946417
+            ],
+            "p_gt0": 0.4395,
+            "p_lt0": 0.5605
+          },
+          "theilsen_slope": {
+            "point": 0.10721543173111801,
+            "boot_median": 0.10259770892697426,
+            "ci95": [
+              -0.9827929214839166,
+              0.591463415486223
+            ],
+            "p_gt0": 0.6865,
+            "p_lt0": 0.3135
+          },
+          "drawwise_rho": {
+            "median": -0.00784423596433579,
+            "ci95": [
+              -0.23994957512334297,
+              0.23029135959225444
+            ],
+            "p_gt0": 0.473625,
+            "p_lt0": 0.5255
+          }
+        },
+        "reliable_subset": {
+          "n": 20,
+          "spearman_rho": {
+            "point": 0.2241444310448509,
+            "boot_median": 0.2216309387469585,
+            "ci95": [
+              -0.30195239636182925,
+              0.6627008723882359
+            ],
+            "p_gt0": 0.7995,
+            "p_lt0": 0.2005
+          },
+          "ols_slope": {
+            "point": 1.5191129047632663,
+            "boot_median": 1.4976436417865626,
+            "ci95": [
+              -2.8279797626054077,
+              3.638652786060265
+            ],
+            "p_gt0": 0.821,
+            "p_lt0": 0.179
+          },
+          "theilsen_slope": {
+            "point": 0.7026785437291129,
+            "boot_median": 0.6470709796076679,
+            "ci95": [
+              -2.2187023072852843,
+              3.059875746303778
+            ],
+            "p_gt0": 0.7935,
+            "p_lt0": 0.2065
+          },
+          "drawwise_rho": {
+            "median": 0.13915006625267587,
+            "ci95": [
+              -0.12937195348897432,
+              0.3926288355886314
+            ],
+            "p_gt0": 0.841375,
+            "p_lt0": 0.1575
+          }
+        }
+      },
+      "F2_volatility": {
+        "all_provinces": {
+          "n": 35,
+          "spearman_rho": {
+            "point": -0.25213615599650746,
+            "boot_median": -0.248894627597967,
+            "ci95": [
+              -0.5605055604576148,
+              0.08402954603688692
+            ],
+            "p_gt0": 0.0725,
+            "p_lt0": 0.9275
+          },
+          "ols_slope": {
+            "point": -0.35944075500294226,
+            "boot_median": -0.3584250367209284,
+            "ci95": [
+              -0.7432187248169959,
+              -0.0807188402630017
+            ],
+            "p_gt0": 0.0045,
+            "p_lt0": 0.9955
+          },
+          "theilsen_slope": {
+            "point": -0.24810656588157065,
+            "boot_median": -0.24810656588157065,
+            "ci95": [
+              -0.618266312378303,
+              0.02030700716989556
+            ],
+            "p_gt0": 0.062,
+            "p_lt0": 0.938
+          },
+          "drawwise_rho": {
+            "median": -0.19134332727290515,
+            "ci95": [
+              -0.44810548135373746,
+              0.07704510511221052
+            ],
+            "p_gt0": 0.077125,
+            "p_lt0": 0.922875
+          }
+        },
+        "reliable_subset": {
+          "n": 20,
+          "spearman_rho": {
+            "point": -0.1459195289352385,
+            "boot_median": -0.15685583261018074,
+            "ci95": [
+              -0.6278722532853734,
+              0.36560445075350323
+            ],
+            "p_gt0": 0.293,
+            "p_lt0": 0.706
+          },
+          "ols_slope": {
+            "point": -0.23728771219839243,
+            "boot_median": -0.2397987574229875,
+            "ci95": [
+              -1.2231566315811906,
+              0.24681489302843174
+            ],
+            "p_gt0": 0.1575,
+            "p_lt0": 0.8425
+          },
+          "theilsen_slope": {
+            "point": -0.18584114973477311,
+            "boot_median": -0.18584114973477311,
+            "ci95": [
+              -0.9912404008597909,
+              0.19259467108166123
+            ],
+            "p_gt0": 0.2755,
+            "p_lt0": 0.7245
+          },
+          "drawwise_rho": {
+            "median": -0.12937195348897432,
+            "ci95": [
+              -0.47687103786052165,
+              0.22865740616655927
+            ],
+            "p_gt0": 0.24225,
+            "p_lt0": 0.756625
+          }
+        }
+      },
+      "F3_tilt": {
+        "all_provinces": {
+          "n": 35,
+          "spearman_rho": {
+            "point": 0.06709623262351504,
+            "boot_median": 0.05573494698762485,
+            "ci95": [
+              -0.3089090143218197,
+              0.4489711130102152
+            ],
+            "p_gt0": 0.622,
+            "p_lt0": 0.378
+          },
+          "ols_slope": {
+            "point": 0.5144257857319221,
+            "boot_median": 0.4797178544040246,
+            "ci95": [
+              -0.9030739077333654,
+              1.8888994692556706
+            ],
+            "p_gt0": 0.765,
+            "p_lt0": 0.235
+          },
+          "theilsen_slope": {
+            "point": 0.45556692113499075,
+            "boot_median": 0.4227441236372975,
+            "ci95": [
+              -1.3530795228491193,
+              2.3173387115680537
+            ],
+            "p_gt0": 0.6405,
+            "p_lt0": 0.3595
+          },
+          "drawwise_rho": {
+            "median": 0.07276929613343647,
+            "ci95": [
+              -0.1786034476129705,
+              0.32554980008415707
+            ],
+            "p_gt0": 0.71525,
+            "p_lt0": 0.28425
+          }
+        },
+        "reliable_subset": {
+          "n": 20,
+          "spearman_rho": {
+            "point": 0.36705530989895047,
+            "boot_median": 0.36817239448285277,
+            "ci95": [
+              -0.10955636854760328,
+              0.7348366968516192
+            ],
+            "p_gt0": 0.936,
+            "p_lt0": 0.063
+          },
+          "ols_slope": {
+            "point": 1.5456887473165342,
+            "boot_median": 1.5661747206327397,
+            "ci95": [
+              -0.20193600616017016,
+              4.2049356137964695
+            ],
+            "p_gt0": 0.9585,
+            "p_lt0": 0.0415
+          },
+          "theilsen_slope": {
+            "point": 1.8824848978692592,
+            "boot_median": 1.8824848978692592,
+            "ci95": [
+              -0.21750121944835113,
+              5.984660543023413
+            ],
+            "p_gt0": 0.9365,
+            "p_lt0": 0.0635
+          },
+          "drawwise_rho": {
+            "median": 0.27002634478221965,
+            "ci95": [
+              -0.04212110113594513,
+              0.5701391903758287
+            ],
+            "p_gt0": 0.9545,
+            "p_lt0": 0.04475
+          }
+        }
+      }
+    }
+  },
+  "provenance": {
+    "primary_nc": "/home/shawn/Code/inscriptions/runs/2026-05-30-s5-small-n-trajectories/code/production/monolithic-inscription-25y.nc",
+    "primary_nc_sha256": "21e9856693cbcd13d7c5d3ed7241020eebdfe09eff081b491c2185c983524f14",
+    "h3a_empire_nc": "/home/shawn/Code/inscriptions/runs/2026-06-04-h3a-confirmatory/outputs/idata-primary.nc",
+    "city_index": "/home/shawn/Code/inscriptions/runs/2026-05-30-s5-small-n-trajectories/code/prepared/city-index.parquet",
+    "city_index_sha256": "6ac5a8d06e169813aff76dade48a958755603e2b6547d2ddd48e4be47540b4b4",
+    "residual_nc_selfcheck": "/home/shawn/Code/inscriptions/runs/2026-06-17-s5-layer-b-residual/outputs/layerb-residual-trajectories-empire.nc",
+    "reused_code": [
+      "/home/shawn/Code/inscriptions/runs/2026-06-18-s5-size-vs-dynamics/code/size_vs_dynamics.py",
+      "/home/shawn/Code/inscriptions/runs/2026-06-17-s5-layer-b-residual/code/layerb_residual_invert.py"
+    ]
+  },
+  "caveats": [
+    "n\u224835 provinces (\u224820 reliable) VERY low power (|\u03c1|\u22730.33 at n=35 / \u22730.44 at n=20)",
+    "province-tier reliability NOT calibrated; N*=300 is a per-CITY floor (Obs 100)",
+    "not pure demography (Obs 98) \u2014 u_shape carries provincial taphonomy/economy/habit",
+    "range restriction 1.77 log10 decades (province size)",
+    "multiple features\u00d7aggregates\u00d7samples \u2014 no cherry-pick, no threshold (Decision 13)",
+    "inversion cosmetic for rank stats; edge bins excluded (GRW endpoint variance)"
+  ]
+}

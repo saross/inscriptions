@@ -1,0 +1,12 @@
+§5 province-size regression — seed=20260616 boot_seed=20260618
+  loaded: S=8000 draws, P=35 non-singleton provinces, T=16 bins; β median 0.587
+  province join: 35/35 u_shape provs matched in full city-index (1012 cities); unmatched=[]
+  self-check guard 1 (q_u constant within province): PASS
+  self-check guard 2 (direct u_shape inversion reproduces residual q_u_med, province 'Achaia', 2 cities): max abs diff 0.00e+00 -> PASS
+  samples: all=35 provinces; reliable-subset=20 (contain ≥1 N≥300 city)
+  province size (sum pop_est): [10868, 645931], 1.77 decades; member cities 4/19/70
+  q_u (sum size, all provinces) — Spearman ρ; bootstrap CI | P-sign | drawwise ρ:
+    F1_late_level: ρ -0.05 CI [-0.37, +0.28] P(>0)=0.38 P(<0)=0.62 | drawwise -0.10 [-0.34, +0.14]
+    F2_volatility: ρ -0.24 CI [-0.51, +0.09] P(>0)=0.08 P(<0)=0.92 | drawwise -0.19 [-0.45, +0.09]
+    F3_tilt: ρ -0.06 CI [-0.41, +0.32] P(>0)=0.36 P(<0)=0.64 | drawwise -0.01 [-0.26, +0.24]
+  done. outputs in /home/shawn/Code/inscriptions/runs/2026-06-18-province-size-regression/outputs
