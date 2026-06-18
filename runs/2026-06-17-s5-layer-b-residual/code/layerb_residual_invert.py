@@ -35,7 +35,8 @@ comparative-shape outputs only — *not* quantitative population claims
 
 Design (Shawn sign-off 2026-06-18, spec §6):
   (i)   β frame: empire primary + Latin overlay.
-  (ii)  residual: u+v primary; v-only overlay (remove empire AND province).
+  (ii)  residual: the nested divergence triple — u+v (city-from-empire, primary),
+        v (city-from-province), u (province-from-empire); q_uv = q_u·q_v per draw.
   (iii) normalisation: relative-to-empire (geom-mean 1) primary; peak=1 overlay.
   (iv)  validation: descriptive; foundation-terminus (99 cities) +
         collapse-disappearance contrast; anchors NOT re-run (cannot be
@@ -121,14 +122,20 @@ def build_residuals(u, v, urows):
         urows: ``(C,)`` int — province row each city uses, or -1 if singleton.
 
     Returns:
-        ``(r_uv, r_v)`` each ``(S, C, T)``: the u+v residual (primary) and the
-        v-only residual (overlay; province removed too).
+        ``(r_uv, r_v, r_u)`` each ``(S, C, T)`` — the three nested divergence
+        residuals (log scale), which sum exactly ``r_uv = r_u + r_v``:
+          - ``r_uv = u+v`` — CITY divergence from empire (primary);
+          - ``r_v  = v``   — CITY divergence from its PROVINCE (overlay);
+          - ``r_u  = u``   — PROVINCE divergence from empire (broadcast to its
+            cities; identically 0, i.e. q_u≡1, for singleton-province cities,
+            which have no province tier).
     """
     S, _, T = v.shape
     u_pad = np.concatenate([u, np.zeros((S, 1, T))], axis=1)   # row -1 -> zeros
-    r_uv = v + u_pad[:, urows, :]                              # u+v  (S, C, T)
-    r_v = v.copy()                                             # v-only (S, C, T)
-    return r_uv, r_v
+    r_u = u_pad[:, urows, :]                                   # province-from-empire
+    r_uv = v + r_u                                             # city-from-empire
+    r_v = v.copy()                                             # city-from-province
+    return r_uv, r_v, r_u
 
 
 def invert_residual(r, beta_draws, seed):
@@ -224,27 +231,38 @@ def self_test(g, u, v, urows, cities, reliable):
     return name, max_abs
 
 
-def save_nc(frame, cities, N, reliable, res_uv, res_v):
-    """Persist per-frame relative-to-empire trajectories (u+v primary; v-only)."""
+def save_nc(frame, cities, N, reliable, has_prov, res_uv, res_v, res_u):
+    """Persist per-frame relative-to-empire trajectories — the nested triple.
+
+    ``q_uv`` (city-from-empire, primary), ``q_v`` (city-from-province), and
+    ``q_u`` (province-from-empire). They nest per draw: ``q_uv = q_u · q_v``.
+    """
     import xarray as xr
 
     ds = xr.Dataset(
         {
-            # primary: u+v residual, relative-to-empire (geom-mean 1)
+            # primary: u+v residual = CITY divergence from empire (geom-mean 1)
             "q_uv_med": (("city", "bin"), res_uv["q_med"]),
             "q_uv_lo": (("city", "bin"), res_uv["q_lo"]),
             "q_uv_hi": (("city", "bin"), res_uv["q_hi"]),
             "q_uv_peak_bin": (("city",), res_uv["peak_bin_mode"]),
             "q_uv_frac_ad250": (("city",), res_uv["frac_ad250"]),
             "q_uv_frac_ad325": (("city",), res_uv["frac_ad325"]),
-            # overlay: v-only residual (province removed too)
+            # overlay: v-only residual = CITY divergence from its PROVINCE
             "q_v_med": (("city", "bin"), res_v["q_med"]),
             "q_v_lo": (("city", "bin"), res_v["q_lo"]),
             "q_v_hi": (("city", "bin"), res_v["q_hi"]),
             "q_v_peak_bin": (("city",), res_v["peak_bin_mode"]),
             "q_v_frac_ad250": (("city",), res_v["frac_ad250"]),
+            # tier: u-only residual = PROVINCE divergence from empire
+            # (constant within province; q_u≡1 for singleton-province cities)
+            "q_u_med": (("city", "bin"), res_u["q_med"]),
+            "q_u_lo": (("city", "bin"), res_u["q_lo"]),
+            "q_u_hi": (("city", "bin"), res_u["q_hi"]),
+            "q_u_peak_bin": (("city",), res_u["peak_bin_mode"]),
             "N": (("city",), N),
             "reliable": (("city",), reliable),
+            "has_province_tier": (("city",), has_prov),
         },
         coords={"city": cities, "bin": np.arange(T_BINS),
                 "bin_centre_year": ("bin", BIN_CENTRES)},
@@ -361,6 +379,38 @@ def plot_amplitude_overlay(cities, reliable, q_by_frame):
     plt.close(fig)
 
 
+def plot_nested_decomposition(cities, rel_prov, res_uv, res_v, res_u):
+    """The nested triple for sample reliable province-tier cities.
+
+    Per city: province-from-empire (q_u), city-from-province (q_v), and
+    city-from-empire (q_uv = q_u·q_v median-shown), all against the empire
+    baseline (1.0). Shows how much of a city's divergence is provincial.
+    """
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+
+    rel = [i for i in range(len(cities)) if rel_prov[i]]
+    pick = rel[:: max(1, len(rel) // 6)][:6]
+    fig, axes = plt.subplots(2, 3, figsize=(15, 8), squeeze=False)
+    for ax, i in zip(axes.ravel(), pick):
+        ax.plot(BIN_CENTRES, res_u["q_med"][i], color="C1", lw=1.8,
+                label="province ← empire (q_u)")
+        ax.plot(BIN_CENTRES, res_v["q_med"][i], color="C2", lw=1.8, ls="--",
+                label="city ← province (q_v)")
+        ax.plot(BIN_CENTRES, res_uv["q_med"][i], color="C0", lw=2,
+                label="city ← empire (q_uv)")
+        ax.axhline(1.0, color="grey", lw=0.6)
+        ax.set_title(cities[i]); ax.set_xlabel("year")
+        ax.set_ylabel("relative to empire / province")
+    axes[0, 0].legend(fontsize=7)
+    fig.suptitle("Nested divergence decomposition (median q vs 1.0): "
+                 "province-from-empire × city-from-province = city-from-empire")
+    fig.tight_layout()
+    fig.savefig(OUT_DIR / "layerb-residual-nested-tiers.png", dpi=130)
+    plt.close(fig)
+
+
 def baseline_diagnostic(q_med, reliable):
     """Per-bin corpus summary of q vs the empire baseline (1.0) — the PRIMARY
     contrast for the residual.
@@ -424,33 +474,54 @@ def main():
     print(f"  loaded: S={S} draws, C={C} cities, T={T} bins; "
           f"{int(reliable.sum())}/{C} reliable (N>={N_STAR})")
 
-    r_uv, r_v = build_residuals(u, v, urows)
+    r_uv, r_v, r_u = build_residuals(u, v, urows)
+    has_prov = urows >= 0                          # cities with a province tier
+    rel_prov = reliable & has_prov                 # reliable + province-tier subset
 
     # Regression guard before producing any deliverable.
     spot_name, spot_diff = self_test(g, u, v, urows, cities, reliable)
 
-    # Invert per frame (u+v primary; v-only overlay), seeded identically.
+    # Invert per frame — the nested triple, all seeded identically so that
+    # q_uv = q_u · q_v holds per draw.
     res = {}
     for frame in FRAMES:
         beta = lb.load_beta_draws(frame)
         res[frame] = {
-            "uv": invert_residual(r_uv, beta, SEED),
-            "v": invert_residual(r_v, beta, SEED),
+            "uv": invert_residual(r_uv, beta, SEED),   # city-from-empire
+            "v": invert_residual(r_v, beta, SEED),     # city-from-province
+            "u": invert_residual(r_u, beta, SEED),     # province-from-empire
         }
-        bd = baseline_diagnostic(res[frame]["uv"]["q_med"], reliable)
-        ad262 = next(d for d in bd if d["bin"] == BIN_AD250)
+        ad262 = next(d for d in baseline_diagnostic(res[frame]["uv"]["q_med"],
+                                                    reliable) if d["bin"] == BIN_AD250)
+        ad262u = next(d for d in baseline_diagnostic(res[frame]["u"]["q_med"],
+                                                     rel_prov) if d["bin"] == BIN_AD250)
         print(f"  {frame}: β median {res[frame]['uv']['beta_median']:.3f}; "
-              f"u+v median q at AD262 vs empire {ad262['median_q']:.2f} "
-              f"({ad262['frac_below_empire']:.0%} below empire)")
+              f"AD262 median q vs empire — city {ad262['median_q']:.2f} "
+              f"({ad262['frac_below_empire']:.0%} below) | "
+              f"province {ad262u['median_q']:.2f}")
+
+    # Nested-identity guard: q_uv == q_u · q_v per draw (same β seed). Holds to
+    # floating point because r_uv = r_u + r_v exactly; use a relative tolerance
+    # (q spans several orders of magnitude). A wiring error fails it by a factor.
+    e = res["empire"]
+    prod = e["u"]["q"] * e["v"]["q"]
+    ident = float(np.max(np.abs(e["uv"]["q"] - prod)))
+    ok = np.allclose(e["uv"]["q"], prod, rtol=1e-9, atol=1e-12)
+    print(f"  nested-identity check  max|q_uv − q_u·q_v| = {ident:.2e} "
+          f"-> {'PASS' if ok else 'FAIL'}")
+    if not ok:
+        raise AssertionError("nested identity q_uv = q_u·q_v violated "
+                             f"(max abs {ident:.2e}); decomposition wiring wrong.")
 
     # Foundation-terminus check on the relative-to-empire q (empire, u+v).
     foundation = h5.foundation_terminus(cities, res["empire"]["uv"]["q"])
 
-    # Persist trajectories.
+    # Persist trajectories (the nested triple).
     nc_paths = {}
     for frame in FRAMES:
-        nc_paths[frame] = str(save_nc(frame, cities, N, reliable,
-                                      res[frame]["uv"], res[frame]["v"]))
+        nc_paths[frame] = str(save_nc(frame, cities, N, reliable, has_prov,
+                                      res[frame]["uv"], res[frame]["v"],
+                                      res[frame]["u"]))
 
     # Figures.
     import arviz as az
@@ -462,6 +533,8 @@ def main():
     plot_residual_samples(cities, reliable, res["empire"]["uv"], res["empire"]["v"])
     plot_amplitude_overlay(cities, reliable,
                            {f: res[f]["uv"] for f in FRAMES})
+    plot_nested_decomposition(cities, rel_prov, res["empire"]["uv"],
+                              res["empire"]["v"], res["empire"]["u"])
 
     # Raw Layer B contrast: its median-city AD250 fraction-of-peak (the collapse).
     raw_frac_ad250 = raw_shape_med[:, BIN_AD250] / np.where(
@@ -478,21 +551,31 @@ def main():
                      "relative to the empire-wide common temporal component; "
                      "geom-mean 1 over t; NOT absolute population (Obs 98)."),
         # PRIMARY contrast — q vs the empire baseline (1.0), per key bin.
+        # The nested triple: city-from-empire (u+v) = province-from-empire (u)
+        # × city-from-province (v), per draw (see nested_identity below).
         "relative_to_empire_diagnostic": {
             "metric": ("corpus median q (and IQR, share below empire) per key "
-                       "bin, reliable cities; 1.0 = on the empire trend"),
-            "residual_uv": {f: baseline_diagnostic(res[f]["uv"]["q_med"], reliable)
-                            for f in FRAMES},
-            "residual_v_only": {f: baseline_diagnostic(res[f]["v"]["q_med"], reliable)
-                                for f in FRAMES},
+                       "bin; 1.0 = on the empire trend. city/province over "
+                       "reliable cities; province over reliable province-tier "
+                       "cities (singletons have q_u≡1 and are excluded there)."),
+            "nested_identity": "q_uv (city-from-empire) = q_u (province-from-empire) · q_v (city-from-province), per draw",
+            "city_from_empire_uv": {f: baseline_diagnostic(res[f]["uv"]["q_med"], reliable)
+                                    for f in FRAMES},
+            "city_from_province_v": {f: baseline_diagnostic(res[f]["v"]["q_med"], reliable)
+                                     for f in FRAMES},
+            "province_from_empire_u": {f: baseline_diagnostic(res[f]["u"]["q_med"], rel_prov)
+                                       for f in FRAMES},
+            "n_reliable_province_tier": int(rel_prov.sum()),
             "interpretation": (
                 "Removing the empire-common component dissolves the raw "
                 "inversion's apparent universal post-AD-250 collapse into city-"
                 "level heterogeneity: the median reliable city sits at ~0.32 of "
                 "its empire-relative baseline at AD 262 (a moderate relative "
                 "decline, not annihilation), and ~half the cities are at or "
-                "above the empire trend even late. The residual is not pure "
-                "demography (Obs 98)."),
+                "above the empire trend even late. Decomposing the nested triple "
+                "shows the decline is largely PROVINCIAL-tier: province-from-"
+                "empire (q_u) carries most of it, while city-from-province (q_v) "
+                "is much flatter. The residual is not pure demography (Obs 98)."),
         },
         # CONFOUNDED — kept only for transparency; do NOT read as a collapse.
         "frac_of_peak_CONFOUNDED": {
@@ -526,15 +609,17 @@ def main():
     with open(OUT_DIR / "layerb-residual-summary.json", "w") as fh:
         json.dump(summary, fh, indent=2, default=h5._json_default)
 
-    diag = summary["relative_to_empire_diagnostic"]["residual_uv"]["empire"]
-    by_bin = {d["label"]: d for d in diag}
-    print("  RELATIVE-TO-EMPIRE (median q vs 1.0, reliable cities):")
+    rdiag = summary["relative_to_empire_diagnostic"]
+    uv_bin = {d["label"]: d for d in rdiag["city_from_empire_uv"]["empire"]}
+    u_bin = {d["label"]: d for d in rdiag["province_from_empire_u"]["empire"]}
+    v_bin = {d["label"]: d for d in rdiag["city_from_province_v"]["empire"]}
+    print("  RELATIVE-TO-EMPIRE (median q vs 1.0; city=u+v, prov=u, city/prov=v):")
     for lbl in ("AD112_early_antonine", "AD187_empire_common_peak",
                 "AD262_third_century", "AD337_late"):
-        d = by_bin[lbl]
-        print(f"    {lbl}: median q {d['median_q']:.2f} "
-              f"[IQR {d['q25']:.2f}–{d['q75']:.2f}], "
-              f"{d['frac_below_empire']:.0%} below empire")
+        print(f"    {lbl}: city {uv_bin[lbl]['median_q']:.2f} "
+              f"({uv_bin[lbl]['frac_below_empire']:.0%} below) | "
+              f"province {u_bin[lbl]['median_q']:.2f} | "
+              f"city/province {v_bin[lbl]['median_q']:.2f}")
     ne, nr = summary["frac_of_peak_CONFOUNDED"]["edge_peak_reliable"].values()
     print(f"  (frac-of-peak confounded: {ne}/{nr} reliable cities peak at an "
           f"envelope edge — not a collapse)")
