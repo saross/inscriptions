@@ -103,7 +103,7 @@ flatter** trajectory than `u+v`:
 
 | bin (centre) | `u+v` median `q` | `v`-only median `q` |
 |---|---|---|
-| AD 112 | 0.48 | 0.76 |
+| AD 112 | 0.48 | 0.75 |
 | AD 188 | 1.01 | 1.31 |
 | AD 262 | **0.32** | **0.78** |
 | AD 338 | 0.67 | 0.80 |
