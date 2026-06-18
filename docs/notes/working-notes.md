@@ -5052,3 +5052,151 @@ apparent collapse; right: residual `q` vs 1.0 baseline with IQR band);
 `q-uv-primary`, `q-v-city-from-province`, `q-u-province-from-empire-pending`,
 `nested-triple-pending`, `reuses-u-shape`,
 `obs-96`, `obs-97`, `obs-98`, `obs-101`, `obs-102`
+
+## Obs 104 — 2026-06-18 [RESULT / METHODOLOGY]: §5 size-vs-dynamics probe — city size does NOT predict purely city-specific dynamics (q_v null), but DOES track the province-inclusive trajectory (q_uv): the size–buffering gradient is mostly province-mediated
+
+### The finding
+
+The §5 size-vs-dynamics probe asks cross-city whether Hanson `pop_est` predicts
+features of the residual trajectories. Origin: the user-obs 43 well-posed reframe of
+"can we compare the isolated city-level effect to Hanson?" (a direct `q_v`-vs-Hanson
+overlay is a category mismatch; this asks instead whether size predicts features of the
+city-specific trajectory shape).
+
+**Design.** Features extracted from mid-bins (edges excluded): F1 late-level `q[AD 262]`
+(headline), F2 volatility `SD_t(log q)` (headline), F3 tilt `log q[AD 262] − log q[AD 112]`
+(secondary), F4 peak-bin (secondary). Two trajectory tiers: primary `q_v`
+(city-from-province; province AND empire removed), secondary `q_uv` (city-from-empire).
+34 reliable cities (N ≥ 300), `pop_est` ∈ [1,000, 153,722], **2.19 log₁₀ decades**, 19
+provinces. Spearman ρ (rank-based, robust; Obs 94 leverage lesson) with a city-bootstrap
+95 % CI (sampling uncertainty, binding at n = 34) AND a draw-wise ρ posterior (trajectory
+uncertainty). Non-circular: §5 Layer A has no population covariate (Obs 98); ρ is exactly
+β-frame-invariant per draw (monotone city-constant rescale). Slopes in empire-β units.
+
+---
+
+**PRIMARY TIER — `q_v` (city-from-province) — HEADLINE NULL:**
+
+| feature | Spearman ρ | bootstrap 95 % CI | P(ρ > 0) | draw-wise ρ | draw-wise 95 % CI |
+|---|---|---|---|---|---|
+| **F1 late-level** *(headline)* | **+0.09** | [−0.26, +0.41] | 0.71 | +0.07 | [−0.18, +0.32] |
+| **F2 volatility** *(headline)* | **−0.05** | [−0.39, +0.28] | 0.37 | −0.09 | [−0.30, +0.13] |
+| F3 tilt *(secondary)* | +0.31 | [−0.06, +0.61] | 0.96 | +0.21 | [−0.02, +0.43] |
+| F4 peak-bin *(secondary)* | +0.04 | [−0.34, +0.39] | 0.58 | +0.02 | [−0.23, +0.29] |
+
+City size does **not** predict where the purely city-specific trajectory sits late, nor
+its volatility. F1's OLS slope (+0.284) is inflated by a leverage point relative to
+Theil-Sen (+0.130); the rank ρ (+0.09) is the robust read — the Obs 94 leverage check
+working. F3 tilt is suggestive (ρ +0.31, P(ρ > 0) 0.96) but it is a *secondary* feature
+whose bootstrap CI [−0.06, +0.61] includes 0; the draw-wise ρ (+0.21) nearly excludes 0,
+so the binding limit is **sampling (n = 34)**, not the trajectory posterior.
+
+---
+
+**SECONDARY TIER — `q_uv` (city-from-empire) — A COHERENT, PROVINCE-MEDIATED GRADIENT
+(the meaningful outcome):**
+
+| feature | Spearman ρ | bootstrap 95 % CI | P-sign | draw-wise ρ | draw-wise 95 % CI |
+|---|---|---|---|---|---|
+| F1 late-level | **+0.28** | [−0.08, +0.58] | P(ρ>0) 0.93 | +0.21 | [+0.04, +0.37] |
+| F2 volatility | **−0.24** | [−0.58, +0.13] | P(ρ<0) 0.90 | −0.21 | [−0.35, −0.06] |
+| **F3 tilt** | **+0.38** | **[+0.05, +0.63]** | P(ρ>0) 0.99 | +0.32 | [+0.15, +0.48] |
+| F4 peak-bin | +0.12 | [−0.29, +0.47] | P(ρ>0) 0.72 | +0.05 | [−0.08, +0.19] |
+
+On `q_uv` the three magnitude features line up in one coherent direction — **bigger
+cities are more buffered relative to the empire**: sustained later (F1 +), less volatile
+(F2 −), shallower early-to-late decline (F3 +). F3 is leverage-clean (OLS +1.54 ≈
+Theil-Sen +1.60) and is the only feature whose bootstrap CI just clears 0; F1/F2 clear 0
+only on the (non-binding) draw-wise band.
+
+**The key structural read (Shawn's meaningful outcome):** the gradient is **much stronger
+on `q_uv` than on `q_v`** — F3: +0.38 vs +0.31; F1: +0.28 vs +0.09; F2: −0.24 vs −0.05.
+Since `q_uv = q_u × q_v` (i.e. province-from-empire × city-from-province), and removing
+the province (`q_v`) largely removes the signal, the size–buffering relationship operates
+**mainly at the province tier**: larger cities tend to sit in provinces that decline less
+relative to the empire.
+
+**Sensitivity.** On all 268 cities (234 below the N* = 300 floor) every ρ collapses
+toward 0 and some flip sign (q_v: F1 −0.10, F3 −0.04). Expected: below-floor
+trajectories are uncalibrated and partial-pool toward the common shape, adding noise and
+diluting any signal. The (suggestive) structure exists only in the reliable set — a
+coherence note, not a contradiction.
+
+### Why this matters
+
+1. **The provincial-tier dominance is the meaningful outcome.** This Obs is a second,
+   independent line of evidence for the provincial-tier story established in Obs 103.
+   Obs 103 showed the late-imperial decline is itself largely provincial-tier (q_v much
+   flatter than u + v); this Obs shows the **covariation of that decline with city size**
+   is also provincial-tier. Both the *level* of decline and its *size-correlation* live
+   more in the province than in the individual city — consistent with region-wide rather
+   than city-idiosyncratic drivers.
+2. **It answers the literal question cleanly.** City size does not predict purely
+   city-specific dynamics (null on `q_v` F1/F2), while surfacing the more interesting
+   structural result. A bounded, honest answer that converts the original (mis-posed)
+   question into a real — if underpowered — finding.
+3. **For the paper**, this points the interpretation toward province/region-scale drivers
+   of late-imperial epigraphic production rather than city-idiosyncratic ones.
+
+### Caveats / methodological notes
+
+- **Exploratory; no thresholds (Decision 13).** SUGGESTIVE, NOT ESTABLISHED: n = 34
+  (|ρ| ≳ 0.34 needed to clear a 95 % bootstrap bound); only `q_uv` F3 clears 0 on the
+  binding bootstrap CI.
+- **Not pure demography (Obs 98).** `v_shape`/`u_shape` carry taphonomy, economy, and
+  habit; "buffered" does not mean demographically buffered.
+- **Range restriction (Obs 100).** 2.19 log₁₀ decades among small-N targets.
+- **Multiple comparisons.** 4 features × 2 tiers × 2 samples reported together; no
+  cherry-pick, no threshold.
+- **Province-mediation is an inference** from the `q_uv` ≫ `q_v` gap, not a direct
+  province-size regression (a natural follow-up if pursued).
+- **β-frame.** Rank results β-frame-invariant; slopes in empire-β units.
+
+### Related observations and artefacts
+
+**Obs 103** (§5 Layer B (residual) — late-imperial decline largely provincial-tier; q_v
+much flatter than u + v): this Obs is a second, size-covariation line of evidence for the
+same provincial-tier dominance finding; together these two Obs frame the province as the
+structurally important tier.
+
+**Obs 100** (§5 peak-scaling / Hanson population — peak ≈ cumulative; smoothing neutral;
+identifies the N* = 300 reliable subset): establishes the 34-city reliable set used here;
+the 2.19-decade range restriction and the low-power framing originate here.
+
+**Obs 98** (empire-wide common temporal component conflates four drivers; residual
+inversion well-posed but not pure demography): the "buffered ≠ demographically buffered"
+caveat in this Obs traces directly to Obs 98.
+
+**Obs 94** (Theil-Sen / Spearman robustness — caught a Pompeii OLS leverage artefact;
+rank ρ is the preferred headline): the same check that flagged a prior leverage artefact
+is the motivation for preferring Spearman ρ over OLS here; F1's inflated OLS slope (+0.284
+vs Theil-Sen +0.130) is the recurrence of the Obs 94 pattern.
+
+**Artefacts**:
+`runs/2026-06-18-s5-size-vs-dynamics/REPORT.md` (source report; all numbers verified
+against JSON; commit `55b42bc`);
+`runs/2026-06-18-s5-size-vs-dynamics/outputs/size-vs-dynamics-summary.json`
+(full Spearman ρ / bootstrap 95 % CI / draw-wise ρ posterior / OLS + Theil-Sen slopes,
+per feature × tier × sample; provenance sha256; source for all numbers in this Obs);
+`runs/2026-06-18-s5-size-vs-dynamics/outputs/size-vs-dynamics-scatter.png`
+(F1/F2 vs log₁₀ pop, `q_v`, with Theil-Sen + ρ);
+`runs/2026-06-18-s5-size-vs-dynamics/outputs/size-vs-dynamics-rho-posterior.png`
+(draw-wise ρ posteriors).
+
+### Findable later
+
+`size-vs-dynamics`, `city-size-predicts-dynamics`, `province-mediated`,
+`provincial-tier-dominance`, `q-v-null`, `q-uv-gradient`,
+`bigger-cities-buffered`, `late-imperial-buffering`,
+`Hanson-pop-est`, `Spearman-rank-robust`, `city-bootstrap`,
+`drawwise-rho`, `beta-frame-invariant`,
+`n34-low-power`, `range-restriction-2-19-decades`,
+`not-pure-demography`, `Theil-Sen-leverage-check`,
+`OLS-inflated-leverage-F1`, `F1-rho-plus-0-09`, `F3-tilt-rho-plus-0-31`,
+`q-uv-F1-rho-plus-0-28`, `q-uv-F2-rho-minus-0-24`, `q-uv-F3-rho-plus-0-38`,
+`F3-bootstrap-CI-clears-0`, `OLS-1-54-Theil-Sen-1-60`,
+`q-uv-stronger-than-q-v`, `province-dominates-city`,
+`user-obs-43-reframe`, `Decision-13`, `exploratory-no-thresholds`,
+`multiple-features-no-cherry-pick`, `below-floor-noise-dilution`,
+`all-268-collapses`, `34-reliable-cities`, `19-provinces`,
+`obs-103`, `obs-100`, `obs-98`, `obs-94`
