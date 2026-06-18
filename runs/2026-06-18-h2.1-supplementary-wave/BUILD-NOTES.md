@@ -171,3 +171,29 @@ per-unit JSONs without fitting.)
   `empirical_spa_shape`) was modified — all are imported, never edited.
 - Nothing was run (no fit, no MCMC, no SSH). `py_compile` was used to syntax-check both
   driver files (allowed).
+
+## Round-2 re-audit corrections (2026-06-18, applied by the main thread)
+
+The focused re-audit of the round-1 fixes (commit `2cb1dfe`) found two defects; both fixed:
+
+- **C-1 (was Critical) — `az.waic` does not exist in the pinned arviz 1.1.0.** The round-1
+  within-family-IC helper called `az.waic`, which arviz 1.x removed from the public API, so
+  the IC would have been a uniform error string across all 29 units. Fixed: the helper now
+  calls **`az.loo`** (the supported within-family IC; Vehtari et al. 2017) and emits
+  `ic:loo` + `elpd_loo`/`p_loo`. The function/JSON-key name `within_family_waic` is retained
+  as a historical identifier (its sub-dict self-describes as LOO); user-facing report prose
+  now says "within-family LOO".
+- **M-1 (was Medium) — the C11 OUTPUT-level r was convention-confounded; it is now DROPPED.**
+  The round-1 `trapezoidal_spa_h2_convention` matched the interval/width/clip/drop but NOT
+  h2_lib's clip-retained-fraction mass weighting (it renormalised clipped intervals to mass
+  1.0), over-weighting the ~20 % of late-edge-clipped rows; a uniform-vs-uniform isolation
+  test gave r ≈ 0.64, not 1.0. Rather than add a fragile clip-fraction scaling for a
+  **non-preregistered** add-on, the output-level r is removed. **C11 now reports only the
+  input-level Pearson r on the SPAs — the preregistered Decision-4 measure — which is clean
+  and convention-matched.** `trapezoidal_spa_h2_convention` is retained in
+  `supp_production_lib.py` but unused; a clean output-level propagation check (matched-
+  convention DUAL refit) is deferred should the input-level r flag materiality (r < 0.95).
+
+Verification (main thread): both files `py_compile`; `grep` confirms no `az.waic` call and
+no `output_level` assignment or read remains. The previously-audit-passed paths (α
+side-by-side, PPC dispersion, C11 input-level r, H2.2, H2.3, H2.4, C16) are unchanged.

@@ -266,15 +266,20 @@ def _within_family_waic(idata) -> dict[str, Any]:
             continue
         try:
             with warnings.catch_warnings():
-                warnings.simplefilter("ignore")    # benign p_waic / scale notices
-                w = az.waic(idata, var_name=node, scale="log")
+                warnings.simplefilter("ignore")    # benign p_loo / Pareto-k notices
+                # arviz 1.x REMOVED WAIC from the public API (hasattr(az,"waic") is
+                # False on the pinned 1.1.0); LOO is the supported within-family IC and
+                # is the recommended replacement (Vehtari et al. 2017). Despite the
+                # historical "waic" identifiers below, the values reported are LOO.
+                w = az.loo(idata, var_name=node)
             # n_obs = pointwise log-lik element count per draw = total / (chain·draw);
             # 1 for a joint-multinomial node, N_BINS for a per-bin NegBin node.
             da = idata.log_likelihood[node]
             per_draw = int(da.size // (da.sizes["chain"] * da.sizes["draw"]))
             out[node] = {
-                "elpd_waic": float(getattr(w, "elpd_waic", float("nan"))),
-                "p_waic": float(getattr(w, "p_waic", float("nan"))),
+                "ic": "loo",
+                "elpd_loo": float(getattr(w, "elpd_loo", float("nan"))),
+                "p_loo": float(getattr(w, "p_loo", float("nan"))),
                 "n_obs": per_draw}
         except Exception as exc:  # noqa: BLE001
             out[node] = {"error": repr(exc)[:160]}
@@ -408,8 +413,8 @@ def fit_model_comparison(unit: dict, data: dict) -> dict[str, Any]:
                            "|Δα| says the α attribution is family-robust; the primary "
                            "multinomial PPC dispersion ratio (≈1 vs >1) adjudicates "
                            "whether the DM/NB overdispersed families are warranted at "
-                           "all. Each family's WAIC is within-family-only descriptive "
-                           "context, never cross-compared.")}
+                           "all. Each family's within-family LOO is descriptive "
+                           "context only, never cross-compared.")}
     return rec
 
 
@@ -448,32 +453,21 @@ def _dispersion_check(idata, obs_aligned: np.ndarray,
 # C11 — trapezoidal-aoristic sensitivity (input-level r + refit output r).      #
 # =========================================================================== #
 def trapezoidal_unit(unit: dict, sub, posterior_draws_dir: Path) -> dict[str, Any]:
-    """C11 for one unit: input-level r + trapezoidal-input refit output-level r.
+    """C11 for one unit: the preregistered input-level trapezoidal-vs-uniform r.
 
-    (a) INPUT-level: the trapezoidal SPA vs the matched-convention uniform SPA
-        (both built with the lodged 2026-05-17 apportionment on the h2_lib grid;
-        see ``supp_production_lib.trapezoidal_spa_on_h2_grid``) → Pearson r.
-    (b) OUTPUT-level: refit the PRIMARY cross-classified model on a TRAPEZOIDAL-input
-        observation (the two subset SPAs apportioned trapezoidally, largest-remainder
-        rounded), extract the deconvolved ``p_gen``, and correlate it against the
-        LODGED uniform-input ``p_gen`` (reused from the posterior-draws ``.npz`` — the
-        primary is NOT re-fit on the uniform input). Material if either r < 0.95.
+    INPUT-level (the prereg measure, Decision 4 — Pearson r on the SPAs): the
+    trapezoidal SPA vs the matched-convention uniform SPA, both built with the lodged
+    2026-05-17 apportionment on the h2_lib grid (see
+    ``supp_production_lib.trapezoidal_spa_on_h2_grid`` / ``uniform_spa_2026_05_17``),
+    so the only difference is the trapezoidal-vs-uniform mass SHAPE. Material (→ report
+    the trapezoidal alongside the uniform) if r < 0.95.
 
-    The trapezoidal subset SPAs are built per alignment subset (rule C) so the
-    cross-classified contrast is preserved; ``k`` and ``n_rows`` are the trapezoidal
-    largest-remainder totals (the model's Binomial / Multinomial ``n`` must match its
-    own observation, exactly as the uniform refit does).
-
-    Convention (audit fix M2): the output-level refit uses
-    ``SP.trapezoidal_spa_h2_convention`` — the lodged trapezoidal SHAPE on the EXACT
-    ``h2_lib.aoristic_spa`` width/clip/drop convention the lodged uniform-input
-    ``p_gen`` was fit under (interval ``[nb, na]``, width ``na − nb``, clipped to the
-    envelope, rows with width ≤ 0 dropped). This makes the trapezoidal arm
-    convention-matched to the uniform arm it is correlated against, so the output-level
-    r isolates the trapezoidal-SHAPE effect rather than confounding it with a
-    width/clip-convention change. (The INPUT-level r above is a separate, already-
-    convention-matched trapezoid-vs-uniform comparison under the 2026-05-17 convention
-    — left untouched.)
+    The previously-attempted OUTPUT-level r (a trapezoidal-input refit's ``p_gen`` vs
+    the lodged uniform ``p_gen``) was DROPPED (audit M-1): matching the deconvolution's
+    clip-retained-fraction mass convention for a fair shape-isolation proved
+    confound-prone (a uniform-vs-uniform isolation test gave r ≈ 0.64, not 1.0), and
+    the input-level r is the prereg-specified measure. See the body comment for the
+    rationale and the deferred matched-convention dual-refit option.
     """
     import empirical_spa_shape as T   # the lodged 2026-05-17 apportionment (on sys.path)
 
@@ -492,39 +486,19 @@ def trapezoidal_unit(unit: dict, sub, posterior_draws_dir: Path) -> dict[str, An
             "material": bool(np.isfinite(input_r) and input_r < SP.C11_R_THRESHOLD)},
     }
 
-    # (b) trapezoidal-input refit → output-level r vs the lodged uniform p_gen.
-    # M2: the OUTPUT-level trapezoidal arm uses the h2_lib width/clip convention
-    # (trapezoidal_spa_h2_convention) — the SAME convention the lodged uniform-input
-    # p_gen (the comparison arm) was fit under — so the output-level r isolates the
-    # trapezoidal-shape effect, not a width/clip-convention artefact.
-    amask = J.aligned_indicator(sub, rule=R.ALIGN_RULE)
-    al, non = sub.loc[amask], sub.loc[~amask]
-    ya = H.largest_remainder(SP.trapezoidal_spa_h2_convention(
-        al["nb"].to_numpy(), al["na"].to_numpy(), H, T))
-    yn = H.largest_remainder(SP.trapezoidal_spa_h2_convention(
-        non["nb"].to_numpy(), non["na"].to_numpy(), H, T))
-    k = int(ya.sum())
-    n_rows = int(k + int(yn.sum()))
-    n_bins = int(ya.size)
-
-    t0 = time.time()
-    model = J.build_model_cross_classified(
-        ya, yn, k, n_rows, LIBRARY_BASIS, THETA_CONV_AB, THETA_GEN_AB,
-        pconv_mode="library")
-    idata = _sample(model, PROD_BASE_SEED + unit["unit_index"], with_loglik=False)
-    pgen_trap = _pgen_median_norm(idata, n_bins)
-
-    pgen_uni = _load_lodged_pgen_median(unit["name"], posterior_draws_dir, n_bins)
-    out_r = SP.pearson_r(pgen_trap, pgen_uni) if pgen_uni is not None else float("nan")
-    rec["output_level"] = {
-        "pearson_r": out_r, "threshold": SP.C11_R_THRESHOLD,
-        "material": bool(np.isfinite(out_r) and out_r < SP.C11_R_THRESHOLD),
-        "uniform_pgen_source": ("lodged posterior-draws .npz (reused, not re-fit)"
-                                if pgen_uni is not None else "MISSING — caveat"),
-        "convergence": _convergence(idata), "secs": round(time.time() - t0, 1),
-        "k_eff_trap": k, "n_rows_eff_trap": n_rows}
-    rec["report_alongside"] = bool(rec["input_level"]["material"]
-                                   or rec["output_level"]["material"])
+    # OUTPUT-level r DROPPED (audit M-1). It compared a trapezoidal-input refit's
+    # p_gen against the lodged uniform-input p_gen, but the lodged p_gen was fit under
+    # h2_lib's clip-retained-fraction mass convention (a clipped interval deposits
+    # mass (na_c−nb_c)/(na−nb) < 1) while the lodged trapezoid renormalises every
+    # interval to mass 1.0 — over-weighting the ~20 % of late-edge-clipped rows and
+    # confounding the output-level r with a convention artefact (a uniform-vs-uniform
+    # isolation test gave r ≈ 0.64, not 1.0). The PREREGISTERED C11 measure
+    # (Decision 4) is the input-level Pearson r on the SPAs, computed above — which is
+    # clean and convention-matched — so we rely on it and do not report the confounded
+    # output-level r. A clean output-level propagation check would need a
+    # matched-convention DUAL refit (both arms on one convention); deferred as a
+    # follow-up should the input-level r flag materiality (r < 0.95) for any subset.
+    rec["report_alongside"] = bool(rec["input_level"]["material"])
     return rec
 
 
@@ -864,7 +838,7 @@ def _write_model_comparison(path: Path, recs: list[dict], stamp: str) -> None:
               "observation structures. The model-comparison verdict is the α "
               "side-by-side (does the family move α?) plus the primary multinomial "
               "posterior-predictive dispersion ratio (is overdispersion warranted?). "
-              "Each family's own WAIC is in the per-unit JSON, within-family-only.", "",
+              "Each family's own within-family LOO is in the per-unit JSON.", "",
               "## α side-by-side (median, 95 % CI) — does the family move α?", "",
               "| unit | primary (lodged) | DM | NB | |Δα| DM | |Δα| NB |",
               "|------|------------------|----|----|--------|--------|"]
@@ -909,43 +883,43 @@ def _write_model_comparison(path: Path, recs: list[dict], stamp: str) -> None:
               "(overdispersion NOT warranted); > 1 ⇒ DM/NB preferred. This is the "
               "prereg's stated DM/NB trigger (l.192) and the model-comparison "
               "adjudicator — NOT a cross-family information criterion (C1).",
-              "- Per-family within-family WAIC (descriptive, NOT cross-compared) is in "
+              "- Per-family within-family LOO (descriptive, NOT cross-compared) is in "
               "the per-unit JSON (outputs/units/, `*.model_comparison.{primary_refit,"
-              "dm,nb}.within_family_waic`).", ""]
+              "dm,nb}.within_family_waic`, whose sub-dict holds `ic:loo` + "
+              "`elpd_loo`/`p_loo` — arviz 1.x has no WAIC, so the historically-named "
+              "key carries LOO).", ""]
     path.write_text("\n".join(lines) + "\n")
 
 
 def _write_trapezoidal(path: Path, recs: list[dict], stamp: str) -> None:
-    """C11 deliverable — input-level + output-level trapezoidal r."""
+    """C11 deliverable — the preregistered input-level trapezoidal-vs-uniform r."""
     lines = _hdr("C11 — trapezoidal-aoristic sensitivity", stamp, "§4 (C11)")
-    lines += ["Material if either r < 0.95 (input-level uniform-vs-trapezoid SPA, OR "
-              "output-level deconvolved-p_gen r); reported alongside if so. Empire is "
-              "pre-triggered at the input level (r = 0.94, 2026-05-17).", "",
-              "| unit | input r | output r | report-alongside? |",
-              "|------|---------|----------|-------------------|"]
+    lines += ["Material if the input-level r < 0.95 (uniform-vs-trapezoid SPA — the "
+              "preregistered Decision-4 measure); the trapezoidal SPA is then reported "
+              "alongside the uniform. Empire is pre-triggered (r = 0.94, 2026-05-17).", "",
+              "| unit | input r | report-alongside? |",
+              "|------|---------|-------------------|"]
     n_material = 0
     for r in recs:
         t = r.get("trapezoidal", {})
         if not t:
             continue
         ir = t.get("input_level", {}).get("pearson_r")
-        orr = t.get("output_level", {}).get("pearson_r")
         ra = t.get("report_alongside")
         if ra:
             n_material += 1
-        lines.append(f"| {r['name']} | {_fmt(ir, 4)} | {_fmt(orr, 4)} | "
-                     f"{'YES' if ra else 'no'} |")
+        lines.append(f"| {r['name']} | {_fmt(ir, 4)} | {'YES' if ra else 'no'} |")
     lines += ["", f"- Units flagged report-alongside: {n_material} / {len(recs)}.",
               "- Trapezoidal apportionment reused from "
               "runs/2026-05-17-empirical-spa-shape/code/empirical_spa_shape.py "
               "(imported; original untouched).",
-              "- **Convention (M2):** the INPUT-level r matches trapezoid vs uniform "
-              "under the 2026-05-17 inclusive-Roman convention "
-              "(`trapezoidal_spa_on_h2_grid` vs `uniform_spa_2026_05_17`), isolating "
-              "the mass SHAPE. The OUTPUT-level r matches the trapezoidal refit to the "
-              "lodged uniform-input `p_gen` under the `h2_lib.aoristic_spa` width/clip "
-              "convention (`trapezoidal_spa_h2_convention`), so it too isolates the "
-              "shape effect rather than a width/clip artefact. See BUILD-NOTES.md (M2).",
+              "- **Convention:** the input-level r matches trapezoid vs uniform under "
+              "the 2026-05-17 inclusive-Roman convention (`trapezoidal_spa_on_h2_grid` "
+              "vs `uniform_spa_2026_05_17`), isolating the mass SHAPE.",
+              "- **Output-level r DROPPED (audit M-1):** matching the deconvolution's "
+              "clip-retained-fraction mass convention for a fair shape-isolation proved "
+              "confound-prone (uniform-vs-uniform isolation r ≈ 0.64); the input-level r "
+              "is the prereg measure and is clean. See BUILD-NOTES.md (M-1).",
               ""]
     path.write_text("\n".join(lines) + "\n")
 
