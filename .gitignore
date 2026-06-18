@@ -142,3 +142,7 @@ runs/**/grid-state.before-rerun-*.json
 
 # §5 H7-Latin per-period idata (regenerable; ~456 MB) — keep summary/parquet/png only
 runs/2026-06-18-h7-latin/outputs/*.nc
+
+# C10 validity test: InferenceData posteriors (regenerable from committed
+# seed + audited code). The small JSON gate records ARE the committed deliverable.
+runs/2026-06-18-c10-validity-test/outputs/*.nc
