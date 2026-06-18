@@ -4744,3 +4744,141 @@ that this decision extends).
 `beta-within-0-587`, `cumulative-H3a-results-section`,
 `reviewer-objection-preempted`, `MacMullen-connection-not-suppressed`,
 `obs-98`, `obs-97`, `obs-99`, `obs-100`
+
+## Obs 102 — 2026-06-18 [FRAMING / METHODOLOGY]: held-out validation anchors are a design strength — explain the hold-out; do not refit to include them
+
+### The finding
+
+A research-design and publication-framing decision (Shawn, 2026-06-18): the seven large,
+data-rich validation anchors (including Ostia, N = 2,380, and Pompeii, among others;
+C = 268 small-N target cities + 7 anchors = 275 cities in the dataprep cache at
+`runs/2026-05-30-s5-small-n-trajectories/code/prepared/`, comprising 275
+`aoristic-<city>.npz` files + `city-index.parquet`) are held out of the §5 Layer-A
+pooled small-N hierarchical fit BY DESIGN, in order to serve as an independent
+out-of-sample validation set. The paper EXPLAINS this hold-out as a strength; we
+do NOT re-run the monolithic fit to fold the anchors in.
+
+**Two substantive reasons not to refit:**
+
+**1. Re-running would destroy the independent validation.** The anchors' entire value is
+that they are NOT in the fit — which is what allows the paper to state that the model
+recovered Ostia's 2nd-century apogee and Pompeii's AD-79 terminus out-of-sample (raw
+Layer B anchor gate, Obs 96). Including the anchors in the pooled fit eliminates that
+out-of-sample claim entirely.
+
+**2. High-N anchors would dominate the shared component.** `g_shape` (the empire-wide
+common temporal component) is identified by data-weighted commonality across the pooled
+cities. A city with N ≈ 2,380 inscriptions alongside many cities below the N* = 300
+reliability floor would carry enormous weight and would CHANGE `g`, making the
+"empire-common trend" partly "what the few huge cities do" — a worse estimand for an
+analysis whose entire purpose is the data-poor cities.
+
+Therefore "include them later" is not a deferred improvement: it would cost the
+out-of-sample validation AND distort `g`. No version of including-the-anchors is
+strictly better than the current design.
+
+**Consequence for the residual Layer B**
+(`runs/2026-06-17-s5-layer-b-residual/spec.md`, §7): because the anchors are held out
+of the pooled fit, they have no empire-common `g`-decomposition — a standalone
+single-city fit has only one city, so there is no "shared across cities" tier to
+separate from the city-specific residual. Hence the anchors cannot be
+residual-decomposed (no u_shape + v_shape to invert) and are NOT re-run in the residual
+inversion. They are validated by the raw full-inversion upstream (Obs 96), and the
+residual inversion is validated WITHIN-SET via two checks: (a) the foundation-terminus
+check — 99 cities are founded within the envelope (Start Date > 50 BC), and median
+pre-foundation inscription mass on the residual q is a q-analogue of H5's lam-mass
+check (H5 found 0.07 % median pre-foundation mass on the raw trajectories); (b) the
+collapse-disappearance contrast — does removing `g` make the raw Layer B's spurious
+universal post-AD-250 "collapse" disappear?
+
+**Paper framing (companion to Obs 101's empirical-first structure):**
+
+- *Methods:* "the seven largest, data-rich cities are held out and reserved as
+  independent validation anchors."
+- *Results / raw Layer B:* out-of-sample anchor recovery presented as CREDIBILITY
+  EVIDENCE, not a caveat.
+- *Results / residual Layer B:* one honest within-set sentence (the anchors have no
+  empire-common decomposition; validated by the full inversion above plus foundation
+  termini).
+- The preregistration already casts these as validation cities ("Pompeii AD 79,
+  Ostia c. AD 250, etc."), so the framing is consistent with the registered design.
+
+**Parked future work (explicitly not now):** if a reviewer wants the RESIDUAL
+(habit-removed) trajectory for the famous cities — i.e., "did Ostia's apogee EXCEED
+the empire-wide tide, or merely RIDE it?" — answer it with a SEPARATE,
+clearly-labelled supplementary hierarchical fit that includes the anchors for that
+curiosity only, leaving the primary small-N fit untouched. Cheap, optional,
+supplementary — never a change to the primary deliverable.
+
+### Why this matters
+
+1. **Reviewers familiar with held-out validation will read the hold-out as rigour if
+   framed as design, or as an unexplained gap if framed as an exclusion.** The framing
+   choice is the whole point of this Obs.
+2. **It pre-empts the obvious reviewer question "why not just include Ostia and
+   Pompeii?"** with a principled answer: doing so loses the out-of-sample validation
+   claim and distorts `g`. The two-reason structure can go directly into a methods
+   footnote or response-to-reviewers letter.
+3. **It settles, before drafting, how the anchor story is told across Methods and both
+   Layer B results subsections.** Without this decision recorded, the three different
+   places where anchors appear (methods, raw Layer B, residual Layer B) risk
+   inconsistent framing.
+
+### Caveats / methodological notes
+
+- This is a framing and research-design decision, not a new empirical result — there is
+  no new run artefact associated with this Obs.
+- The within-set foundation-terminus check on the residual q is descriptive, with no
+  pre-committed threshold (consistent with Decision 13 / exploratory status throughout).
+  It is a q-analogue of H5's lam-mass check (Obs 97: 0.07 % median pre-foundation mass
+  on raw trajectories), not an identical test.
+- The "ride vs exceed" supplementary fit (parked future work above) is strictly optional;
+  it is recorded here so it is not lost, but it is not on the critical path.
+
+### Related observations and artefacts
+
+**Obs 96** (§5 Layer B β-inversion complete — gate validates against both independent
+anchors): the raw Layer B run that establishes the out-of-sample anchor recovery this
+Obs explains as a design strength. Ostia's 2nd-century apogee and Pompeii's AD-79
+terminus were recovered out-of-sample from the held-out standalone fits.
+
+**Obs 97** (§5 H5 — empire-wide common temporal component peaks AD 187.5; foundation-
+terminus check passes, 0.07 % median pre-foundation mass): the H5 lam-mass result
+whose q-analogue is used as within-set validation for the residual Layer B; also
+establishes the g_shape quantity that the anchors would distort if included in the
+pooled fit.
+
+**Obs 98** (the empire-wide common temporal component is NOT a clean epigraphic habit —
+it conflates four drivers): establishes why the anchors cannot be residual-decomposed
+via a standalone fit — the u_shape + v_shape separation requires a pooled multi-city
+model, not available for a standalone single-city run.
+
+**Obs 101** (empirical decomposition first, interpretation later; Hanson as the bridge;
+diagnostic unit = Latin-minus-Roma): companion framing decision; the anchor-treatment
+narrative in this Obs is the specific piece of the paper structure Obs 101 does not
+cover.
+
+**Artefacts**: no new run artefact (a research-design and framing decision). Source
+files anchoring the specifics:
+`runs/2026-06-16-s5-layer-b-beta-inversion/spec.md` (lines 17, 73, 77, 80, 197 — C =
+268 cities, 7 large anchors NOT in fit, 275 aoristic files, Ostia N = 2,380);
+`runs/2026-06-17-s5-h5-habit-removed/REPORT.md` (lines 69–70 — 99 within-envelope
+foundation cities, 0.07 % median pre-foundation mass);
+`runs/2026-06-17-s5-layer-b-residual/spec.md` §7 (anchors cannot be residual-decomposed;
+within-set validation design).
+
+### Findable later
+
+`held-out-anchors`, `validation-set-by-design`, `do-not-refit-to-include`,
+`out-of-sample-validation`, `g-shape-domination`, `high-N-cities-dominate-shared-component`,
+`residual-anchors-cannot-be-decomposed`, `residual-anchors-supplementary-fit`,
+`Ostia-Pompeii`, `Ostia-N-2380`, `ride-vs-exceed-empire-tide`,
+`anchor-hold-out-is-a-strength`, `paper-framing-anchors`, `validation-anchors`,
+`seven-large-anchors`, `foundation-terminus-within-set`, `q-analogue-lam-mass`,
+`collapse-disappearance-contrast`, `within-set-validation`, `99-within-envelope`,
+`268-target-cities`, `275-aoristic-files`, `dataprep-cache`,
+`standalone-fit-no-g-decomposition`, `no-u-shape-v-shape`,
+`ride-vs-exceed-supplementary`, `parked-future-work`, `supplementary-only`,
+`preregistration-validation-cities`, `two-reasons-not-to-refit`,
+`distort-g-shape`, `lose-out-of-sample`, `methods-footnote`,
+`response-to-reviewers`, `obs-96`, `obs-97`, `obs-98`, `obs-101`
