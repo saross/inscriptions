@@ -173,4 +173,4 @@ MCMC, **no API spend** (flagged for the API gate: CPU only). Reproducible
 - [x] Run script `code/size_vs_dynamics.py` written + focused-reviewed
   (2026-06-18: reuses the audited residual-B machinery; review tightened the
   β-invariance claim — exact for draw-wise ρ, near-invariant for the bootstrap).
-- [ ] Final sign-off to launch.
+- [x] Final sign-off to launch — Shawn, 2026-06-18. Running on sapphire.
