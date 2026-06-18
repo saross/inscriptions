@@ -276,10 +276,14 @@ def _within_family_waic(idata) -> dict[str, Any]:
             # 1 for a joint-multinomial node, N_BINS for a per-bin NegBin node.
             da = idata.log_likelihood[node]
             per_draw = int(da.size // (da.sizes["chain"] * da.sizes["draw"]))
+            # arviz 1.1.0 ELPDData exposes the values as `.elpd` / `.p` (the repr
+            # *prints* row labels "elpd_loo"/"p_loo", but those are NOT members —
+            # verified against the pinned env). The JSON keys stay descriptive
+            # (LOO's elpd/p ARE elpd_loo/p_loo).
             out[node] = {
                 "ic": "loo",
-                "elpd_loo": float(getattr(w, "elpd_loo", float("nan"))),
-                "p_loo": float(getattr(w, "p_loo", float("nan"))),
+                "elpd_loo": float(getattr(w, "elpd", float("nan"))),
+                "p_loo": float(getattr(w, "p", float("nan"))),
                 "n_obs": per_draw}
         except Exception as exc:  # noqa: BLE001
             out[node] = {"error": repr(exc)[:160]}
@@ -508,7 +512,7 @@ def _load_lodged_pgen_median(name: str, posterior_draws_dir: Path,
 
     Returns the per-draw-median, sum-1-normalised genuine SPA the lodged primary refit
     persisted (``p_gen`` group, shape (n_draws, n_bins)). ``None`` if the ``.npz`` is
-    absent (caveated downstream — the H2.2 / C11 output-level leg needs it).
+    absent (caveated downstream — the H2.2 and H2.4 read-offs need it).
     """
     if posterior_draws_dir is None:
         return None
