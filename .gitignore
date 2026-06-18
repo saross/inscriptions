@@ -139,3 +139,6 @@ runs/2026-06-09-joint-identifiability/outputs/gate2/
 # One-off pre-rerun grid-state snapshots (live orchestration state; the run record
 # is grid-state-final.json — retention rule near top). Regenerable/superseded.
 runs/**/grid-state.before-rerun-*.json
+
+# §5 H7-Latin per-period idata (regenerable; ~456 MB) — keep summary/parquet/png only
+runs/2026-06-18-h7-latin/outputs/*.nc

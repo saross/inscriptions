@@ -1,0 +1,14 @@
+Initializing NUTS using jitter+adapt_diag...
+Multiprocess sampling (4 chains in 4 jobs)
+NUTS: [alpha_0, sigma_prov, alpha_prov_raw, beta_within, beta_between, inv_dispersion]
+peak-scaling-Latin: 817 Latin cities / 39 provinces (Roma excluded). Cumulative Latin NBR comparator beta_within = 0.733 [0.648, 0.82].
+Building peak counts (full corpus; mapped onto Latin frame) ...
+Sampling 4 chains for 3_000 tune and 2_000 draw iterations (12_000 + 8_000 draws total) took 62 seconds.
+Initializing NUTS using jitter+adapt_diag...
+Multiprocess sampling (4 chains in 4 jobs)
+NUTS: [alpha_0, sigma_prov, alpha_prov_raw, beta_within, beta_between, inv_dispersion]
+  [raw_peak_50y_latin] beta_within=+0.700 [+0.618,+0.784] n=817 (R̂=1.0000)
+Sampling 4 chains for 3_000 tune and 2_000 draw iterations (12_000 + 8_000 draws total) took 62 seconds.
+  [raw_peak_25y_latin] beta_within=+0.693 [+0.612,+0.775] n=817 (R̂=1.0000)
+
+Done. Summary at outputs/peak-scaling-latin-summary.json

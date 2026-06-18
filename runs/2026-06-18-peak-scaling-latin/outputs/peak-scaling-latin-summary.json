@@ -1,0 +1,62 @@
+{
+  "frame": "latin (817 cities / 39 provinces; Roma excluded)",
+  "frame_provenance": "data/processed/city_level_for_h3a_latin.parquet (h3a_common.build_latin_frame; Sensitivity B; matches runs/2026-06-04-h3a-confirmatory/outputs/sample-counts.json)",
+  "scope_note": "Frame swap of Arm A (full-frame raw peak) only. The 268-city \u00a75 arms (Layer-A trajectory subset, a range-restriction probe in the all-provinces run) are orthogonal to the Latin-frame definition and intentionally out of scope here.",
+  "beta_cumulative_latin_reference": {
+    "median": 0.733,
+    "ci": [
+      0.648,
+      0.82
+    ]
+  },
+  "sampler": {
+    "tune": 3000,
+    "draws": 2000,
+    "chains": 4,
+    "target_accept": 0.95,
+    "seed": 20260617
+  },
+  "arms": {
+    "raw_peak_50y_latin": {
+      "label": "raw_peak_50y_latin",
+      "n_cities": 817,
+      "n_nonzero": 805,
+      "total_count": 24371,
+      "beta_within_median": 0.7004878294022893,
+      "beta_within_ci": [
+        0.6184817787254124,
+        0.7841496478607639
+      ],
+      "convergence": {
+        "max_rhat": 1.0,
+        "min_ess_bulk": 1589.0,
+        "n_divergences": 0
+      },
+      "gates_pass": true
+    },
+    "raw_peak_25y_latin": {
+      "label": "raw_peak_25y_latin",
+      "n_cities": 817,
+      "n_nonzero": 786,
+      "total_count": 14510,
+      "beta_within_median": 0.6925769685369934,
+      "beta_within_ci": [
+        0.6116829904589504,
+        0.7752762206436241
+      ],
+      "convergence": {
+        "max_rhat": 1.0,
+        "min_ess_bulk": 1392.0,
+        "n_divergences": 0
+      },
+      "gates_pass": true
+    }
+  },
+  "contrasts": {
+    "headline_peak50_vs_cumulative_latin": {
+      "beta_peak_raw_50y_latin": 0.7004878294022893,
+      "beta_cumulative_latin": 0.733
+    }
+  },
+  "note": "Exploratory / tertiary Latin-frame peak-scaling (frame swap of the signed-off all-provinces peak-scaling; not preregistered). Cross-refs: Obs 100, Obs 101, Amendment 02."
+}
