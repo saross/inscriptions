@@ -26,14 +26,19 @@ Model (prereg §3 / design artefact §1 / Amendment 01 §A6 priors unchanged):
 Prior-sanity gate (design artefact §2): median simulated per-city response must
 lie within [0.1, 1e4]; otherwise HARD-STOP.
 
-NOTE (carried to BUILD-NOTES.md): the design artefact's prior-sanity band
-[0.1, 1e4] was calibrated for inscription COUNTS. Letter mass is on a much
-larger numeric scale (per-city letter totals run into the thousands), so a
-prior with a0 ~ N(0,5) and unit-scale slopes may legitimately produce simulated
-medians near or above the upper sanity bound under the same priors. The gate is
-KEPT IDENTICAL to the H3a template (the priors are the lodged ones, unchanged by
-Amendment 01 §A6); whether the band needs a letter-mass-specific value is FLAGGED
-for the human to resolve at audit, NOT silently re-decided here.
+NOTE (carried to BUILD-NOTES.md; CORRECTED after the 2026-06-18 code audit):
+the design artefact's prior-sanity band [0.1, 1e4] was calibrated for inscription
+COUNTS, but this prior-predictive check is RESPONSE-AGNOSTIC by construction --
+it simulates from the priors and the predictor matrix only (no observed y), so the
+simulated-response scale is fixed by a0 ~ N(0,5) and the unit-scale slopes, NOT by
+whether the real response is counts or letter mass. It therefore behaves
+IDENTICALLY to the H3a count case (which passed) and is expected to PASS here too;
+it is a genuine prior sanity check, kept identical to the lodged template (priors
+unchanged by Amendment 01 §A6). The count -> letter-mass scale transfer does NOT
+bite here; it surfaces POST-FIT in PPC check #4 (tail_count_bound vs observed
+letter-mass q95; see 03-ppc.py), where it is expected to register as a MINOR caveat
+under the count-pinned bounds -- reported, not faulted, per the two-measure
+framework §A5.2. The HARD-STOP remains purely as a prior-absurdity backstop.
 
 Inputs
 ------

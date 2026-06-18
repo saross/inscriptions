@@ -182,20 +182,19 @@ inscription-count H3a frames.
    H9 pipeline is consistent with the lodged scope. If wanted, it is a follow-up
    (adapt `04-h3c.py` into this run dir).
 
-4. **Prior-sanity gate band may not transfer to the letter-mass scale — FLAG.**
+4. **Prior-sanity gate is response-agnostic — it will NOT trip on the letter-mass scale (CORRECTED after the 2026-06-18 audit).**
    The design-artefact prior-sanity gate `[0.1, 1e4]` on the median
    prior-predictive per-city response was calibrated for inscription **counts**.
-   Letter mass is on a much larger numeric scale (per-city totals run into the
-   thousands). Under the **same lodged priors** (`a0 ~ N(0,5)`, unit-scale
-   slopes; unchanged by Amendment 01 §A6) the simulated median could legitimately
-   sit near or above the upper bound. I kept the gate **identical** to the H3a
-   template (I did not silently change a lodged threshold) and made
-   `prior-predictive.py` **HALT for human adjudication** rather than auto-pass or
-   auto-revise if the band is breached, with an explicit note that this may be a
-   band-transfer issue rather than absurd priors. **Auditor: decide whether the
-   sanity band needs a letter-mass-specific value before the run, or whether a
-   breach should be read as informational only.** This is the single most likely
-   thing to trip on first run.
+   An earlier draft of this note worried that letter mass's larger scale might
+   breach it — that was **wrong**: the prior-predictive simulator draws from the
+   priors and the **predictor matrix only** (no observed `y`), so its scale is set
+   by `a0 ~ N(0,5)` and the unit-scale slopes, **identically** to the count case
+   (which passed). The gate is kept identical to the lodged template and is
+   expected to **pass**; the `HALT` is retained purely as a prior-absurdity
+   backstop. The genuine count → letter-mass scale transfer surfaces **post-fit**
+   in **PPC check #4** (`tail_count_bound` vs observed letter-mass q95,
+   `03-ppc.py`), where it is expected as a **minor** caveat under the count-pinned
+   bounds — reported, not faulted, per the two-measure framework §A5.2.
 
 5. **PPC bounds are reused verbatim — confirm they transfer.** The PPC suite's
    numeric bounds (mean ±10%, SD ±25%, q95 ±30%, mean-variance ratio [0.5×, 2×],
