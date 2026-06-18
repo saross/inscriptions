@@ -162,11 +162,15 @@ MCMC, **no API spend** (flagged for the API gate: CPU only). Reproducible
 
 ## 9. Pre-launch sign-off checklist (Shawn)
 
-- [ ] **(i)** Features: F1 late-level + F2 volatility headline; F3 tilt / F4 peak
-  secondary-flagged — confirm or adjust the set.
-- [ ] **(ii)** Tiers: `q_v` primary + `q_uv` secondary — confirm.
-- [ ] **(iii)** Method: Spearman primary (city-bootstrap CI) + draw-wise ρ
-  posterior + OLS/Theil-Sen slopes — confirm.
-- [ ] **(iv)** Sample: 34 reliable primary + 268 flagged sensitivity — confirm.
-- [ ] Run script `code/size_vs_dynamics.py` written + `/audit`-reviewed.
+- [x] **(i)** Features: F1 late-level + F2 volatility headline; F3 tilt / F4 peak
+  secondary-flagged — confirmed 2026-06-18.
+- [x] **(ii)** Tiers: `q_v` primary + `q_uv` secondary — confirmed 2026-06-18.
+- [x] **(iii)** Method: Spearman primary (city-bootstrap CI) + draw-wise ρ
+  posterior + OLS/Theil-Sen slopes — confirmed-by-default 2026-06-18 (methods
+  rigour; not a substantive fork).
+- [x] **(iv)** Sample: 34 reliable primary + 268 flagged sensitivity — confirmed
+  2026-06-18.
+- [x] Run script `code/size_vs_dynamics.py` written + focused-reviewed
+  (2026-06-18: reuses the audited residual-B machinery; review tightened the
+  β-invariance claim — exact for draw-wise ρ, near-invariant for the bootstrap).
 - [ ] Final sign-off to launch.
