@@ -1,0 +1,20 @@
+{
+  "status": "OK",
+  "s_pp": 1000,
+  "random_seed": 20260618,
+  "frame": "latin_primary",
+  "response": "letter_mass",
+  "n_cities": 817,
+  "n_provinces": 39,
+  "count_cap_p99": 669891968.81,
+  "tail_count_bound": 504768883025.78436,
+  "ppc_mean_ref": 1956657958.7145483,
+  "prior_predictive_median_per_city": 1.0,
+  "prior_predictive_max": 7363302064958.0,
+  "sanity_gate": [
+    0.1,
+    10000.0
+  ],
+  "sanity_pass": true,
+  "derivation": "count_cap_p99 = 99th pct of prior-predictive per-city LETTER MASS across all draws x cities; tail_count_bound = 99.9th pct; predictor-only (no observed y); committed before posterior fit."
+}

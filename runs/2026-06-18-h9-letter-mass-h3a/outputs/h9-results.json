@@ -1,0 +1,196 @@
+{
+  "measure": "letter_mass (Latin A-Z conservative; Amendment 01 \u00a7A5.1)",
+  "primary_frame": "latin_speaking_provinces (Decision 36 / Amendment 02)",
+  "sampling": {
+    "tune": 6000,
+    "draws": 3000,
+    "chains": 4,
+    "target_accept": 0.97,
+    "seed": 20260618
+  },
+  "primary_latin": {
+    "n_cities": 817,
+    "n_provinces": 39,
+    "convergence": {
+      "max_rhat": 1.0,
+      "min_ess_bulk": 1655.0,
+      "n_divergences": 0,
+      "rhat_argmax": "alpha_0",
+      "ess_argmin": "beta_between"
+    },
+    "f_within_unweighted": {
+      "median": 0.4477358061972523,
+      "ci_lo": 0.36422838642239735,
+      "ci_hi": 0.534912137832263,
+      "p_gt_005": 1.0,
+      "p_gt_010": 1.0,
+      "p_gt_020": 1.0,
+      "verdict": "supported"
+    },
+    "f_within_population_weighted": {
+      "median": 0.6262187340201322,
+      "ci_lo": 0.5096293088337905,
+      "ci_hi": 0.7439656717981074,
+      "p_gt_005": 1.0,
+      "p_gt_010": 1.0,
+      "p_gt_020": 1.0,
+      "verdict": "supported"
+    },
+    "f_within_letter_weighted": {
+      "median": 0.6070194646103331,
+      "ci_lo": 0.49545496727139066,
+      "ci_hi": 0.7202455428720722,
+      "p_gt_005": 1.0,
+      "p_gt_010": 1.0,
+      "p_gt_020": 1.0,
+      "verdict": "supported"
+    },
+    "betas": {
+      "beta_within": {
+        "median": 0.6808758388305487,
+        "ci_lo": 0.5950830228771463,
+        "ci_hi": 0.7685967497666323
+      },
+      "beta_between": {
+        "median": -0.01774477539886366,
+        "ci_lo": -0.5184948395036701,
+        "ci_hi": 0.4989306831534588
+      },
+      "sigma_prov": {
+        "median": 0.7545488107512677,
+        "ci_lo": 0.5744339231909908,
+        "ci_hi": 1.0019541568636332
+      },
+      "dispersion": {
+        "median": 0.6300662484485952,
+        "ci_lo": 0.579619155627319,
+        "ci_hi": 0.6850410659281783
+      },
+      "alpha_0": {
+        "median": 8.03333367763733,
+        "ci_lo": 3.958085237709373,
+        "ci_hi": 12.001700831353382
+      }
+    },
+    "bayes_r2": {
+      "response_scale": {
+        "median": 0.20599446533718568,
+        "ci_lo": 0.13337937405154035,
+        "ci_hi": 0.30659736281987854
+      },
+      "latent_scale": {
+        "median": 0.3818805739333077,
+        "ci_lo": 0.33282794694203865,
+        "ci_hi": 0.42926278465344636
+      }
+    },
+    "ols_loglog": {
+      "intercept": 3.236803655393103,
+      "slope": 0.47022620447310964,
+      "slope_se": 0.05811879544730585,
+      "slope_ci95": [
+        0.3563133653963902,
+        0.5841390435498292
+      ],
+      "r_squared": 0.07502993798124458,
+      "n": 809,
+      "n_zero_mass_dropped": 8,
+      "hanson_2021_beta": 0.672,
+      "note": "Hanson 2021 beta is the inscription-count comparator; under letter mass the slope is expected to differ (content vs acts)."
+    }
+  },
+  "sensitivity_standardised": {
+    "convergence": {
+      "max_rhat": 1.0,
+      "min_ess_bulk": 3473.0,
+      "n_divergences": 0
+    },
+    "f_within_unweighted": {
+      "median": 0.44570080739525025,
+      "ci_lo": 0.36339812221331874,
+      "ci_hi": 0.5320655238078056,
+      "p_gt_005": 1.0,
+      "p_gt_010": 1.0,
+      "p_gt_020": 1.0,
+      "verdict": "supported"
+    },
+    "betas_standardised": {
+      "beta_within": {
+        "median": 0.6602693936139654,
+        "ci_lo": 0.5763257953754171,
+        "ci_hi": 0.7451740433491372
+      },
+      "beta_between": {
+        "median": -0.10251651554872228,
+        "ci_lo": -0.3659808585783304,
+        "ci_hi": 0.14667931064169235
+      }
+    },
+    "predictor_sd": {
+      "within": 0.9724976340960336,
+      "between": 0.4243197480900037
+    },
+    "beta_within_implied_unstd": 0.6789419022368174
+  },
+  "sensitivity_interpretive_letter_mass": {
+    "convergence": {
+      "max_rhat": 1.0,
+      "min_ess_bulk": 1962.0,
+      "n_divergences": 0
+    },
+    "gate_met": true,
+    "f_within_unweighted": {
+      "median": 0.4439674864435812,
+      "ci_lo": 0.36059569559882093,
+      "ci_hi": 0.5300869063484792,
+      "p_gt_005": 1.0,
+      "p_gt_010": 1.0,
+      "p_gt_020": 1.0,
+      "verdict": "supported"
+    },
+    "betas": {
+      "beta_within": {
+        "median": 0.6759905834311091,
+        "ci_lo": 0.58947909169892,
+        "ci_hi": 0.7624537934231137
+      },
+      "beta_between": {
+        "median": 0.004129553557841116,
+        "ci_lo": -0.5067854514375324,
+        "ci_hi": 0.5479342820365058
+      }
+    }
+  },
+  "secondary_empire": {
+    "n_cities": 1044,
+    "n_provinces": 56,
+    "coverage_caveat": "empire-wide mixes well-covered Latin provinces with poorly-covered Greek ones; reported as secondary/context (Decision 36).",
+    "convergence": {
+      "max_rhat": 1.0,
+      "min_ess_bulk": 1745.0,
+      "n_divergences": 0
+    },
+    "gate_met": true,
+    "f_within_unweighted": {
+      "median": 0.3564824569833862,
+      "ci_lo": 0.27883069554217543,
+      "ci_hi": 0.44132397574690013,
+      "p_gt_005": 1.0,
+      "p_gt_010": 1.0,
+      "p_gt_020": 0.9999166666666667,
+      "verdict": "supported"
+    },
+    "betas": {
+      "beta_within": {
+        "median": 0.5781724209284664,
+        "ci_lo": 0.4996066478293147,
+        "ci_hi": 0.6580625227410174
+      },
+      "beta_between": {
+        "median": -0.2157176675244571,
+        "ci_lo": -0.6455132894900864,
+        "ci_hi": 0.22717164571424525
+      }
+    }
+  }
+}

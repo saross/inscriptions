@@ -1,0 +1,54 @@
+{
+  "filtered_rows": 180609,
+  "row_targets_observed": {
+    "total_filtered": 180609,
+    "rome_only": 65435,
+    "rome_excluded": 115174,
+    "hanson_city_assigned_filtered": 140575
+  },
+  "corpus_letters_conservative_latin_az": 7897409,
+  "corpus_letters_interpretive_latin_az": 12406459,
+  "primary_letter_col": "letter_count_conservative",
+  "frames": {
+    "latin_primary": {
+      "n_cities": 817,
+      "n_provinces": 39,
+      "letter_mass_conservative_summary": {
+        "min": 0,
+        "median": 1095.0,
+        "mean": 4165.0501835985315,
+        "max": 193665,
+        "total": 3402846,
+        "n_zero": 8
+      },
+      "letter_mass_interpretive_summary": {
+        "min": 0,
+        "median": 1756.0,
+        "mean": 6594.064871481029,
+        "max": 291546,
+        "total": 5387351,
+        "n_zero": 8
+      }
+    },
+    "empire_secondary": {
+      "n_cities": 1044,
+      "n_provinces": 56,
+      "letter_mass_conservative_summary": {
+        "min": 0,
+        "median": 770.0,
+        "mean": 3449.48754789272,
+        "max": 193665,
+        "total": 3601265,
+        "n_zero": 43
+      },
+      "letter_mass_interpretive_summary": {
+        "min": 0,
+        "median": 1235.0,
+        "mean": 5486.317049808429,
+        "max": 291546,
+        "total": 5727715,
+        "n_zero": 42
+      }
+    }
+  }
+}

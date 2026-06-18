@@ -1,0 +1,87 @@
+=== H9 RUN 2026-06-18T08:35:24Z on zbook-ubuntu HEAD=2d95f62 ===
+
+### 01-data-prep.py ###
+[01-data-prep] loading raw LIRE from /home/shawn/Code/inscriptions/archive/data-2026-04-22/LIRE_v3-0.parquet
+[01-data-prep] filtered corpus: 180,609 rows (+ Latin-A--Z letter counts attached)
+[01-data-prep] row-level sanity-check vs prereg targets:
+  [OK     ] total_filtered                     target=  180609 observed=  180609 (+0.0000%)
+  [OK     ] rome_only                          target=   65435 observed=   65435 (+0.0000%)
+  [OK     ] rome_excluded                      target=  115174 observed=  115174 (+0.0000%)
+  [OK     ] hanson_city_assigned_filtered      target=  140575 observed=  140575 (+0.0000%)
+[01-data-prep] corpus letters (conservative, Latin A-Z): 7,897,409
+[01-data-prep] corpus letters (interpretive, Latin A-Z): 12,406,459
+[01-data-prep] PRIMARY (Latin, conservative): 817 cities, 39 Latin provinces
+[01-data-prep]   -> /home/shawn/Code/inscriptions/runs/2026-06-18-h9-letter-mass-h3a/data/processed/city_level_for_h9_latin.parquet
+[01-data-prep] SECONDARY (empire, conservative): 1,044 cities, 56 provinces
+[01-data-prep]   -> /home/shawn/Code/inscriptions/runs/2026-06-18-h9-letter-mass-h3a/data/processed/city_level_for_h9_empire.parquet
+[01-data-prep]   -> /home/shawn/Code/inscriptions/runs/2026-06-18-h9-letter-mass-h3a/outputs/sample-counts.json
+[01-data-prep] DONE.
+
+### prior-predictive.py ###
+[prior-pred] PRIMARY (Latin) frame: 817 cities, 39 provinces (response = letter_mass)
+[prior-pred] simulated 1000 draws x 817 cities (predictor-only)
+[prior-pred] count_cap_p99      = 669891968.81 (99th pct)
+[prior-pred] tail_count_bound   = 504768883025.78 (99.9th pct)
+[prior-pred] ppc_mean_ref       = 1956657958.71
+[prior-pred] median per-city    = 1.0000 (sanity gate [0.1, 10000.0])
+[prior-pred]   -> /home/shawn/Code/inscriptions/runs/2026-06-18-h9-letter-mass-h3a/outputs/prior-predictive-thresholds.json
+[prior-pred] prior-sanity gate PASSED. Thresholds committed.
+EXIT_CODE=0
+
+### 02-h9-fit.py START 2026-06-18T08:35:49Z ###
+Initializing NUTS using jitter+adapt_diag...
+Multiprocess sampling (4 chains in 4 jobs)
+NUTS: [alpha_0, sigma_prov, alpha_prov_raw, beta_within, beta_between, inv_dispersion]
+[02-fit] PRIMARY (Latin): 817 cities, 39 provinces (response = letter_mass, conservative)
+[02-fit] sampling: tune=6000, draws=3000, chains=4, target_accept=0.97, seed=20260618
+Sampling 4 chains for 6_000 tune and 3_000 draw iterations (24_000 + 12_000 draws total) took 128 seconds.
+Initializing NUTS using jitter+adapt_diag...
+Multiprocess sampling (4 chains in 4 jobs)
+NUTS: [alpha_0, sigma_prov, alpha_prov_raw, beta_within, beta_between, inv_dispersion]
+[02-fit] convergence: max R-hat=1.0000, min ESS-bulk=1655, divergences=0
+[02-fit] f_within (PRIMARY/Latin unweighted): median=0.4477 95% CI [0.3642, 0.5349] verdict=supported
+[02-fit]   ladder: P(>0.05)=1.0000 P(>0.10)=1.0000 P(>0.20)=1.0000
+[02-fit] beta_within  median=0.6809 CI [0.5951, 0.7686]
+[02-fit] beta_between median=-0.0177
+[02-fit] Bayes R^2 response=0.2060 latent=0.3819
+[02-fit] OLS log-log slope=0.4702 (Hanson 2021 inscription beta=0.672), R^2=0.0750, zero-mass cities dropped=8
+
+[02-fit] SENSITIVITY: standardised predictors (Latin)
+Sampling 4 chains for 6_000 tune and 3_000 draw iterations (24_000 + 12_000 draws total) took 14 seconds.
+Initializing NUTS using jitter+adapt_diag...
+Multiprocess sampling (4 chains in 4 jobs)
+NUTS: [alpha_0, sigma_prov, alpha_prov_raw, beta_within, beta_between, inv_dispersion]
+[02-fit]   std convergence: max R-hat=1.0000, min ESS-bulk=3473, div=0 (gate met: True)
+[02-fit]   f_within (std) median=0.4457 (primary 0.4477) -- should match (scale-invariant)
+[02-fit]   beta_within(std)=0.6603; implied unstd = 0.6789 (primary 0.6809)
+
+[02-fit] SENSITIVITY: interpretive letter mass (Latin)
+Sampling 4 chains for 6_000 tune and 3_000 draw iterations (24_000 + 12_000 draws total) took 143 seconds.
+Initializing NUTS using jitter+adapt_diag...
+Multiprocess sampling (4 chains in 4 jobs)
+NUTS: [alpha_0, sigma_prov, alpha_prov_raw, beta_within, beta_between, inv_dispersion]
+[02-fit]   interpretive convergence: max R-hat=1.0000, min ESS-bulk=1962, div=0 (gate met: True)
+
+[02-fit] SECONDARY / context: empire-wide (conservative)
+[02-fit]   empire: 1,044 cities, 56 provinces
+Sampling 4 chains for 6_000 tune and 3_000 draw iterations (24_000 + 12_000 draws total) took 133 seconds.
+[02-fit]   empire convergence: max R-hat=1.0000, min ESS-bulk=1745, div=0 (gate met: True)
+
+[02-fit]   -> /home/shawn/Code/inscriptions/runs/2026-06-18-h9-letter-mass-h3a/outputs/h9-results.json
+[02-fit] DONE.
+
+### 03-ppc.py START 2026-06-18T08:43:57Z ###
+[03-ppc] posterior-predictive: 1000 draws x 817 cities (response = letter_mass)
+[03-ppc] severities: 0 critical, 0 grey, 2 minor, 8 pass
+   #1  proportion of zeros                    -> pass
+   #2  mean response                          -> pass
+   #3  SD of responses                        -> pass
+   #4  95th percentile                        -> pass
+   #5  mean-variance ratio                    -> pass
+   #6  Bayesian p-values (#2-#5)              -> minor
+   #7  residual-vs-fitted slope               -> pass
+   #8  residual-vs-within-logpop slope        -> pass
+   #9  province residual dispersion           -> minor
+   #10 posterior-predictive Moran's I (k=8)   -> pass
+[03-ppc]   -> /home/shawn/Code/inscriptions/runs/2026-06-18-h9-letter-mass-h3a/outputs/ppc-results.json
+[03-ppc] DONE (overall: MINOR).

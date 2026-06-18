@@ -1,0 +1,129 @@
+{
+  "frame": "latin_primary",
+  "response": "letter_mass",
+  "overall": "MINOR",
+  "n_critical": 0,
+  "n_grey": 0,
+  "n_minor": 2,
+  "checks": [
+    {
+      "id": 1,
+      "name": "proportion of zeros",
+      "observed": 0.009791921664626682,
+      "pp_mean": 0.00655079559363525,
+      "bound": "pp prop-zeros <= 0.02 (abs critical 0.10)",
+      "severity": "pass"
+    },
+    {
+      "id": 2,
+      "name": "mean response",
+      "observed": 4165.0501835985315,
+      "pp_mean": 4159.457095471236,
+      "rel_dev": 0.0013428621218827428,
+      "bound": "within +-10% of observed",
+      "severity": "pass",
+      "p_bayes": 0.467
+    },
+    {
+      "id": 3,
+      "name": "SD of responses",
+      "observed": 11864.694041724126,
+      "pp_mean": 9882.501742606886,
+      "rel_dev": 0.1670664487551502,
+      "bound": "within +-25% of observed",
+      "severity": "pass",
+      "p_bayes": 0.149
+    },
+    {
+      "id": 4,
+      "name": "95th percentile",
+      "observed": 13572.999999999969,
+      "pp_mean": 17153.99559999998,
+      "rel_dev": 0.2638322846828276,
+      "obs_under_tail_bound": true,
+      "tail_count_bound": 504768883025.78436,
+      "bound": "obs<=tail_count_bound AND pp within +-30%",
+      "severity": "pass",
+      "p_bayes": 0.969
+    },
+    {
+      "id": 5,
+      "name": "mean-variance ratio",
+      "observed": 2.9587423744410474e-05,
+      "pp_mean": 4.7108234240327686e-05,
+      "ratio_pp_over_obs": 1.5921708712211609,
+      "bound": "pp ratio within [0.5x, 2x] of observed",
+      "severity": "pass",
+      "p_bayes": 0.879
+    },
+    {
+      "id": 6,
+      "name": "Bayesian p-values (#2-#5)",
+      "bound": "0.05 <= p_B <= 0.95",
+      "details": [
+        {
+          "statistic": "mean response",
+          "p_bayes": 0.467,
+          "severity": "pass"
+        },
+        {
+          "statistic": "SD of responses",
+          "p_bayes": 0.149,
+          "severity": "pass"
+        },
+        {
+          "statistic": "95th percentile",
+          "p_bayes": 0.969,
+          "severity": "minor"
+        },
+        {
+          "statistic": "mean-variance ratio",
+          "p_bayes": 0.879,
+          "severity": "pass"
+        }
+      ],
+      "severity": "minor"
+    },
+    {
+      "id": 7,
+      "name": "residual-vs-fitted slope",
+      "slope": 0.04970761569178833,
+      "bound": "|slope| < 0.10",
+      "severity": "pass"
+    },
+    {
+      "id": 8,
+      "name": "residual-vs-within-logpop slope",
+      "slope": 0.0007252926030953798,
+      "bound": "|slope| < 0.10",
+      "severity": "pass"
+    },
+    {
+      "id": 9,
+      "name": "province residual dispersion",
+      "n_provinces_n5": 34,
+      "n_outside_band": 1,
+      "worst_ratio_high": 1.489547371728534,
+      "worst_ratio_low": 0.4573934567238125,
+      "bound": "per-province mean|r| in [0.5x, 2x] of overall (n>=5)",
+      "severity": "minor"
+    },
+    {
+      "id": 10,
+      "name": "posterior-predictive Moran's I (k=8)",
+      "observed_moran_I": 0.012500282734568978,
+      "pp_5pct": -0.02610548022917468,
+      "pp_95pct": 0.02605736308529954,
+      "pp_median": -0.0017088367913057987,
+      "bound": "obs Moran's I in 5th-95th pct of pp distribution",
+      "severity": "pass"
+    }
+  ],
+  "observed_summary": {
+    "mean": 4165.0501835985315,
+    "sd": 11864.694041724126,
+    "q95": 13572.999999999969,
+    "mean_var_ratio": 2.9587423744410474e-05,
+    "prop_zeros": 0.009791921664626682
+  }
+}
