@@ -319,4 +319,4 @@ step reserved for the discussion.
 - [x] Run script `code/layerb_residual_invert.py` written + `/audit`-reviewed
   (2026-06-18: no Critical/Medium; two Low fixes applied — StopIteration guard,
   dropped unused param; built-in exact self-test as a wiring regression guard).
-- [ ] Final sign-off to launch.
+- [x] Final sign-off to launch — Shawn, 2026-06-18. Running on sapphire.
