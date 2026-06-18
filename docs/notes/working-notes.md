@@ -5200,3 +5200,145 @@ per feature × tier × sample; provenance sha256; source for all numbers in this
 `multiple-features-no-cherry-pick`, `below-floor-noise-dilution`,
 `all-268-collapses`, `34-reliable-cities`, `19-provinces`,
 `obs-103`, `obs-100`, `obs-98`, `obs-94`
+
+## Obs 105 — 2026-06-18 [RESULT / METHODOLOGY]: province size does NOT drive province-from-empire (q_u) buffering — Obs 104's "province-mediation" is a decomposition fact, not a province-size effect; underpowered, with a tentative city-membership lean
+
+### The finding
+
+**What was tested.** Direct test of the province-mediation *inference* in Obs 104, which
+was drawn from `q_uv ≫ q_v` (a cross-tier gap, not a province-level regression). A
+background agent ran this on sapphire (2026-06-18); deterministic transform of the §5
+Layer-A posterior — no MCMC. Reuses the size-vs-dynamics machinery.
+
+**Unit = province** (35 non-singleton). `q_u[p,t] = exp((1/β)·u_shape[p,t])` computed
+directly from `u_shape` (S = 8,000, P = 35, T = 16) at empire β (median 0.587), one
+series per province. **Predictor = province size** = `pop_est` aggregated over all member
+cities in the full 1,012-city index: **sum** (primary), **mean**, **max** (sensitivities);
+log₁₀. Sum range [10,868; 645,931] = **1.77 log₁₀ decades**; member cities 4 / 19 / 70
+(min / median / max). Province join: 35/35 `u_shape` provinces matched the full-index
+province field, 0 unmatched. **Self-check (PASS):** `q_u` constant within province ✓;
+direct `u_shape` inversion reproduces the residual Layer B `q_u_med` to max abs diff 0.0
+(spot province Achaia, 2 cities) — bit-exact.
+
+**Features on `q_u`** (mid-bins; edges excluded): F1 late-level `q_u[AD 262]`, F2
+volatility `SD_t(log q_u)`, F3 tilt `log q_u[AD 262] − log q_u[AD 112]`; "more buffered" =
+F1↑, F2↓, F3↑. **Method:** Spearman ρ primary, province-bootstrap 95 % CI (binding),
+draw-wise ρ posterior, OLS + Theil-Sen. Non-circular (Layer A has no population covariate,
+Obs 98); ρ β-frame-invariant. **Samples:** all 35 (primary) + 20 with ≥1 reliable (N ≥ 300)
+city (sensitivity; province-tier reliability NOT separately calibrated — N* = 300 is a
+per-city floor).
+
+**Results — Spearman ρ (province-bootstrap 95 % CI), primary aggregate (sum), all 35:**
+
+| feature | ρ | bootstrap 95 % CI | buffered direction |
+|---|---|---|---|
+| F1 late-level | −0.05 | [−0.37, +0.28] | ✗ |
+| F2 volatility | −0.24 | [−0.51, +0.09] | ✓ |
+| F3 tilt | −0.06 | [−0.41, +0.32] | ✗ |
+
+**Nothing clears the 95 % bootstrap bound anywhere** (|ρ| ≳ 0.33 needed at n = 35;
+≳ 0.44 at n = 20). Sign is **incoherent** on the primary aggregate (sum): F1 and F3 —
+the features that carried the Obs 104 `q_uv` gradient — are flat-to-slightly-anti-buffered;
+only F2 leans buffered. The binding uncertainty is **sampling (n)**, not the posterior:
+draw-wise bands are uniformly narrower than the bootstrap CIs.
+
+**Sensitivity — mean and max aggregates (per-city scale), reliable-20 subset, lean buffered:**
+
+| aggregate | feature | ρ | bootstrap 95 % CI | P(ρ > 0) |
+|---|---|---|---|---|
+| mean | F1 late-level | +0.35 | [−0.12, +0.76] | 0.93 |
+| mean | F3 tilt | +0.31 | [−0.18, +0.80] | 0.88 |
+| max | F3 tilt | +0.37 | [−0.11, +0.73] | 0.94 |
+| max (all 35) | F2 volatility | −0.25 | [−0.56, +0.08] | — |
+
+Mean and max lean buffered (especially F1 and F3 on reliable-20), but every CI includes 0.
+OLS vs Theil-Sen diverges on sum F1/F3 (leverage; Obs 94) — rank ρ is the robust read.
+
+**Verdict.** The Obs 104 `q_uv ≫ q_v` province-mediation inference is **NOT directly
+corroborated** at province level. The city-level size–buffering gradient stands (it is a
+property of city-level ranks); this test cannot show its mechanism is "bigger provinces have
+more buffered `q_u`". The **sum-vs-mean/max split is the informative part**: the buffered
+hint attaches to per-city scale (mean/max) and NOT to total provincial mass (sum), which is
+mildly more consistent with a **city-membership channel** (large cities happen to sit in
+provinces whose `q_u` is buffered) than with province size driving the province trajectory.
+Reading: **ambiguous, leaning not-corroborated** — a directional hint at most.
+
+**Refinement of Obs 104 (explicit).** "Province-mediated" is a **decomposition statement**
+(the gradient's variance lives in the `u` tier), NOT evidence of a province-size effect. NOT
+in tension with Obs 103 (province tier carries the decline level) — a tier can hold the
+decline magnitude without province *size* predicting *which* provinces decline.
+
+### Why this matters
+
+1. **Disciplines the drafting.** Rules out the tempting "larger provinces buffer more /
+   decline less" reading of the province-tier dominance in Obs 103/104. The dominance is
+   real but is not a size story.
+2. **Keeps the `q_uv ≫ q_v` decomposition honestly scoped.** The decomposition result
+   locates variance in a tier; it does not identify a province-level driver. Flagging this
+   before drafting prevents a category error in the interpretation section.
+3. **The city-membership-channel hypothesis is a useful pointer.** Even as a directional
+   hint at n = 35, it orients any powered follow-up (e.g. province-composition rather than
+   province-size as the predictor).
+
+### Caveats / methodological notes
+
+- **n = 35 (≈ 20 reliable) — very low power.** Nothing clears the bound; null was
+  pre-framed as expected and informative (Obs 100). A powered test would require data beyond
+  this project's scope.
+- **Not pure demography (Obs 98).** `u_shape` carries province-level taphonomy, economy,
+  and habit; "buffered" ≠ demographically buffered.
+- **Province-tier reliability not separately calibrated.** N* = 300 is a per-city floor;
+  the reliable-20 subset is a heuristic proxy for province-level data quality.
+- **Range restriction.** 1.77 log₁₀ decades of province sum-size — attenuates any true
+  effect toward 0.
+- **Multiple comparisons.** 3 aggregates × 3 features × 2 samples reported together;
+  no cherry-pick, no threshold (Decision 13).
+- **City-membership-channel reading is speculative** at this n — a directional lean, not
+  a demonstrated mechanism.
+
+### Related observations and artefacts
+
+**Obs 104** (§5 size-vs-dynamics probe — `q_v` null, `q_uv` province-mediated gradient;
+the inference this Obs tests and explicitly refines): the `q_uv ≫ q_v` gap established
+there stands at city level; this Obs clarifies it is a decomposition fact, not a
+province-size effect.
+
+**Obs 103** (§5 Layer B residual — late-imperial decline largely provincial-tier; `q_v`
+much flatter than `u + v`): NOT in tension — that Obs establishes the decline *level* lives
+in the province tier; this Obs tests whether province *size* predicts *which* provinces
+decline (a different question).
+
+**Obs 100** (§5 peak-scaling / Hanson population — identifies N* = 300 reliable subset;
+low-power / range-restriction framing): explains the expected null and the pre-framing of
+"informative null".
+
+**Obs 98** (empire-wide common temporal component conflates four drivers; residual
+inversion not pure demography): the "buffered ≠ demographically buffered" caveat traces
+directly here.
+
+**Artefacts**:
+`runs/2026-06-18-province-size-regression/REPORT.md` (source report; all numbers verified;
+commit `8da7b16`);
+`runs/2026-06-18-province-size-regression/outputs/province-size-regression-summary.json`
+(full ρ / bootstrap / draw-wise / slopes per aggregate × feature × sample; province join;
+self-check; provenance sha256; source for all numbers in this Obs);
+`runs/2026-06-18-province-size-regression/outputs/province-size-regression-scatter.png`;
+`runs/2026-06-18-province-size-regression/outputs/province-size-regression-rho-posterior.png`.
+
+### Findable later
+
+`province-size-regression`, `province-mediation-not-confirmed`,
+`q-u-province-from-empire`, `decomposition-not-size-effect`,
+`city-membership-channel`, `sum-vs-mean-max-split`,
+`bigger-provinces-not-more-buffered`, `refines-obs-104`,
+`underpowered-null`, `n35`, `province-bootstrap`,
+`self-check-bit-exact`, `max-abs-diff-0-0`, `spot-province-Achaia`,
+`not-pure-demography`, `range-restriction-1-77-decades`,
+`sum-sign-incoherent`, `mean-reliable-20-F1-rho-plus-0-35`,
+`max-reliable-20-F3-rho-plus-0-37`, `mean-reliable-20-F3-rho-plus-0-31`,
+`binding-uncertainty-sampling`, `draw-wise-narrower`,
+`OLS-vs-Theil-Sen-diverges`, `leverage-sum-F1-F3`,
+`province-mediation-is-decomposition-statement`, `province-dominance-not-size-story`,
+`35-provinces`, `20-reliable`, `1012-city-index`,
+`Decision-13`, `exploratory-no-thresholds`, `multiple-features-no-cherry-pick`,
+`obs-104`, `obs-103`, `obs-100`, `obs-98`
