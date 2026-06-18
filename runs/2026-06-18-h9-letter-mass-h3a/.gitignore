@@ -1,0 +1,9 @@
+# InferenceData netCDF posteriors are regenerable from the committed code and
+# the LIRE v3.0 freeze; they are kept off-repo (regenerated on the run host)
+# per the H3a-confirmatory / H7-Latin / H2.1-wave precedent. The JSON / CSV /
+# Markdown summaries ARE committed.
+*.nc
+
+# Python bytecode cache (never tracked).
+__pycache__/
+*.pyc

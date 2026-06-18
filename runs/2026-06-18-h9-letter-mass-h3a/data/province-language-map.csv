@@ -1,0 +1,88 @@
+# province-language-map.csv
+#
+# Externalised province -> primary-language mapping for the H3a Sensitivity B
+# (Latin-only) sample. Source of the assignments: the manually-curated
+# `province_language_map` dictionary in the 2024 exploratory notebook
+# `archive/2026-04-22-inscriptions-spa.ipynb` cell 54 (see
+# `runs/2026-05-21-talk-prep/code/01-filter-and-prep.py` CITY_COUNT_NOTE).
+#
+# Reconstruction note (why this is a CSV, not a verbatim copy of cell 54):
+# the notebook's dict keys match the 2024 notebook's `province` field
+# spellings, which differ from LIRE v3.0's `province` column (casing,
+# `/ Regio` vs `(Regio)` separators, and a few synonym pairs:
+# Aquitani(c)a~Aquitania, Gallia Narbonensis~Narbonensis,
+# Lugudunensis~Lugdunensis, Pontus et Bithynia~Bithynia et Pontus,
+# Creta et Cyrenaica~Creta/Cyrene, Palaestina~Iudaea, Sicilia~Sicilia,Melita).
+# This file maps each *LIRE v3.0 `province` value* (the column the city frame
+# groups on) to the language cell 54 assigns to the corresponding province.
+# The two `Belgica | Germania ...` values are LIRE uncertainty markers; the
+# notebook deliberately left them unassigned ("excluded from analysis ...
+# they aren't a separate province but rather a marker of uncertainty"), so
+# they are recorded here as language=unassigned and dropped from both the
+# Latin and Greek strata.
+#
+# Realised counts on the 1,044-city primary frame (Hanson-matched,
+# Rome-excluded, >=1 date-window inscription): 817 Latin, 222 Greek,
+# 5 unassigned (= 1,044). The 817 Latin matches the prereg's "~815".
+#
+# Columns:
+#   lire_province          : verbatim LIRE v3.0 `province` column value
+#   notebook_province_key  : the cell-54 dict key it corresponds to ('' if none)
+#   language               : Latin | Greek | unassigned
+lire_province,notebook_province_key,language
+Achaia,Achaia,Greek
+Aegyptus,Aegyptus,Greek
+Aemilia / Regio VIII,Aemilia / Regio VIII,Latin
+Africa proconsularis,Africa Proconsularis,Latin
+Alpes Cottiae,Alpes Cottiae,Latin
+Alpes Maritimae,Alpes Maritimae,Latin
+Alpes Poeninae,Alpes Poeninae,Latin
+Apulia et Calabria / Regio II,Apulia et Calabria / Regio II,Latin
+Aquitani(c)a,Aquitani(c)a,Latin
+Arabia,Arabia,Greek
+Asia,Asia,Greek
+Baetica,Baetica,Latin
+Belgica,Belgica,Latin
+Belgica | Germania inferior,,unassigned
+Belgica | Germania superior,,unassigned
+Britannia,Britannia,Latin
+Bruttium et Lucania / Regio III,Bruttium et Lucania / Regio III,Latin
+Cappadocia,Cappadocia,Greek
+Cilicia,Cilicia,Greek
+Corsica,Corsica,Latin
+Creta et Cyrenaica,Creta et Cyrenaica,Greek
+Cyprus,Cyprus,Greek
+Dacia,Dacia,Latin
+Dalmatia,Dalmatia,Latin
+Etruria / Regio VII,Etruria / Regio VII,Latin
+Galatia,Galatia,Greek
+Gallia Narbonensis,Gallia Narbonensis,Latin
+Germania inferior,Germania Inferior,Latin
+Germania superior,Germania Superior,Latin
+Hispania citerior,Hispania Citerior,Latin
+Latium et Campania / Regio I,Latium et Campania / Regio I,Latin
+Liguria / Regio IX,Liguria / Regio IX,Latin
+Lugudunensis,Lugdunensis,Latin
+Lusitania,Lusitania,Latin
+Lycia et Pamphylia,Lycia et Pamphylia,Greek
+Macedonia,Macedonia,Greek
+Mauretania Caesariensis,Mauretania Caesariensis,Latin
+Mauretania Tingitana,Mauretania Tingitana,Latin
+Moesia inferior,Moesia Inferior,Latin
+Moesia superior,Moesia Superior,Latin
+Noricum,Noricum,Latin
+Numidia,Numidia,Latin
+Palaestina,Palaestina,Greek
+Pannonia inferior,Pannonia Inferior,Latin
+Pannonia superior,Pannonia Superior,Latin
+Picenum / Regio V,Picenum / Regio V,Latin
+Pontus et Bithynia,Bithynia et Pontus,Greek
+Raetia,Raetia,Latin
+Samnium / Regio IV,Samnium / Regio IV,Latin
+Sardinia,Sardinia,Latin
+Sicilia,Sicilia,Latin
+Syria,Syria,Greek
+Thracia,Thracia,Greek
+Transpadana / Regio XI,Transpadana / Regio XI,Latin
+Umbria / Regio VI,Umbria / Regio VI,Latin
+Venetia et Histria / Regio X,Venetia et Histria / Regio X,Latin
