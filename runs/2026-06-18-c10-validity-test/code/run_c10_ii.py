@@ -55,9 +55,12 @@ from __future__ import annotations
 
 import argparse
 import json
+import multiprocessing as mp
 import sys
 import time
 import warnings
+from concurrent.futures import ProcessPoolExecutor, as_completed
+from concurrent.futures.process import BrokenProcessPool
 from pathlib import Path
 from typing import Any
 
@@ -66,16 +69,69 @@ import numpy as np
 RUN_DIR = Path("/home/shawn/Code/inscriptions/runs/2026-06-18-c10-validity-test")
 CODE_DIR = RUN_DIR / "code"
 OUT_DIR = RUN_DIR / "outputs"
+
+# --------------------------------------------------------------------------- #
+# Module-level handles populated by ``_wire`` so spawn workers re-import        #
+# cleanly. The FIXED, NON-MCMC artefacts (library basis + slabs, adopted θ      #
+# priors + means, the empire p_gen, the real-empire width distribution) are     #
+# loaded ONCE PER WORKER by ``_wire`` and held here, so they are NOT pickled     #
+# per task — only the four small cell-identity scalars (variant, α, seed-index, #
+# α-index) cross the process boundary for each cell. This mirrors the proven    #
+# supplementary-wave driver's ``_wire`` init                                    #
+# (runs/2026-06-18-h2.1-supplementary-wave/code/run_supp_production.py).        #
+# --------------------------------------------------------------------------- #
+C2 = C = RC = H = J = R = None
+_BASIS = _SLABS = _TC_AB = _TG_AB = None
+_THETA_CONV = _THETA_GEN = _P_GEN = _PGEN_LABEL = _WIDTH_DIST = None
+
+
+def _wire() -> None:
+    """Import the shared modules + load the FIXED library / θ / p_gen / widths once.
+
+    Called at the top of every worker task (idempotent: skips the load if already
+    wired) and once in ``main``. Because the C10 modules live in ``CODE_DIR`` and
+    ``c10_lib`` itself inserts the lodged ``h2_lib`` / ``joint_lib`` / ``refit_lib``
+    directories onto ``sys.path``, a spawn worker only needs ``CODE_DIR`` on the path
+    before importing them. The artefacts loaded here are ALL deterministic, NON-MCMC
+    reads (the production library basis + slabs, the adopted θ priors + means, the
+    empire posterior ``p_gen``, and the real-empire recorded-width distribution); they
+    are the production identicals every cell shares, so they are loaded ONCE per worker
+    (not re-loaded per task) and held at module level rather than pickled per task.
+    """
+    global C2, C, RC, H, J, R
+    global _BASIS, _SLABS, _TC_AB, _TG_AB
+    global _THETA_CONV, _THETA_GEN, _P_GEN, _PGEN_LABEL, _WIDTH_DIST
+    if str(CODE_DIR) not in sys.path:
+        sys.path.insert(0, str(CODE_DIR))
+    import c10_ii_lib as _C2  # the new realism-graded generator
+    import c10_lib as _C      # count builders; wires h2_lib / joint_lib / refit_lib
+    import run_c10 as _RC      # REUSE the validated arm-fitters; no import side effects
+    import h2_lib as _H
+    import joint_lib as _J
+    import refit_lib as _R
+    C2, C, RC, H, J, R = _C2, _C, _RC, _H, _J, _R
+    if _BASIS is not None:
+        return  # already loaded once in this (worker) process — do not re-load
+    # Lodged production artefacts (read-only): basis, slabs, θ priors + means.
+    _BASIS, _SLABS = R.load_library_basis()
+    _TC_AB, _TG_AB, theta_fit = R.adopted_theta_priors()
+    _THETA_CONV = float(theta_fit["theta_conv"])   # ≈ 0.930
+    _THETA_GEN = float(theta_fit["theta_gen"])     # ≈ 0.025
+    _P_GEN, _PGEN_LABEL = C.resolve_pgen(GENUINE_PGEN)
+    # Real empire width distribution (for R1) — pure data profiling, NO MCMC.
+    _WIDTH_DIST = C2.real_empire_width_dist("empire-aggregate")
+
+# --------------------------------------------------------------------------- #
+# Module-level constants needed at argument-parse time (the variant tuple and    #
+# the R0 tight half-width). These come from two cheap, side-effect-free imports  #
+# of the in-tree libraries — pure Python constants, NO MCMC, NO artefact load.   #
+# The full library / θ / p_gen / width artefacts are loaded lazily by ``_wire``  #
+# (in the parent and, spawn-safely, in each worker), NOT here.                    #
+# --------------------------------------------------------------------------- #
 if str(CODE_DIR) not in sys.path:
     sys.path.insert(0, str(CODE_DIR))
-
-import c10_ii_lib as C2  # noqa: E402  (the new realism-graded generator)
-import c10_lib as C  # noqa: E402  (count builders; wires h2_lib / joint_lib / refit_lib)
-import run_c10 as RC  # noqa: E402  (REUSE the validated arm-fitters; no side effects at import)
-
-import h2_lib as H  # noqa: E402
-import joint_lib as J  # noqa: E402
-import refit_lib as R  # noqa: E402
+import c10_ii_lib as _C2_CONST  # noqa: E402  (the new realism-graded generator)
+import c10_lib as _C_CONST  # noqa: E402  (also wires h2_lib / joint_lib / refit_lib)
 
 # --------------------------------------------------------------------------- #
 # Test configuration (mirrors run_c10's pinned config; all fixed for the audit). #
@@ -86,8 +142,10 @@ N_SYNTH = 3000                                 # synthetic inscriptions per (var
 N_MC = 10                                      # production-pinned N_MC for the recovery test
 BASE_SEED = 20260619                           # this wave's base seed (distinct from run_c10's)
 GENUINE_PGEN = "empire"                        # empire posterior p_gen (matches the first wave)
-GENUINE_HALF_WIDTH = C.GENUINE_HALF_WIDTH_DEFAULT  # 2.5 y (R0 tight bracket)
-DEFAULT_VARIANTS = list(C2.VARIANTS)           # R0, R1, R2, R3, R1+R2
+GENUINE_HALF_WIDTH = _C_CONST.GENUINE_HALF_WIDTH_DEFAULT  # 2.5 y (R0 tight bracket)
+DEFAULT_VARIANTS = list(_C2_CONST.VARIANTS)    # R0, R1, R2, R3, R1+R2
+N_JOBS_DEFAULT = 10                            # cc-grid/SPEC convention (parallelise ACROSS cells)
+MAX_TASKS_PER_CHILD_DEFAULT = 4               # recycle workers to bound PyMC/PyTensor memory growth
 
 # Decision thresholds.
 RECOVERY_TOL = 0.1     # mass arm "recovers planted α" if max |mass − planted| <= this
@@ -152,6 +210,30 @@ def _fit_cell(variant: str, alpha: float, si: int, ai: int,
                            "secs": round(pt_secs, 1)},
         "arm_divergence": divergence,
     }
+
+
+# =========================================================================== #
+# Spawn-safe per-cell worker (parallelises ACROSS independent cells).           #
+# =========================================================================== #
+def _worker(variant: str, alpha: float, si: int, ai: int) -> dict[str, Any]:
+    """Fit ONE cell ``(variant, α, seed)`` in a worker process (spawn-safe).
+
+    Each cell is fully independent: it derives its own seeds collision-free from
+    ``BASE_SEED`` + the (variant, α-index, seed-index) — IDENTICALLY to the sequential
+    version, inside ``_fit_cell`` — generates its own synthetic frame, fits both arms,
+    and returns a self-contained result dict. The worker therefore reproduces the
+    sequential per-cell result bit-for-bit, independent of which order cells complete.
+
+    Only the four small cell-identity scalars are pickled across the process boundary;
+    the FIXED, shared library / θ / p_gen / width artefacts are (re-)loaded ONCE per
+    worker by ``_wire`` (re-imported under spawn, not passed as a pickled closure) and
+    read from module level. Each fit still runs cores = 1 (n_jobs parallelises ACROSS
+    cells, cores = 1 WITHIN each — no negotiate-down of the per-fit sampler config).
+    """
+    _wire()  # spawn-safe: re-import the modules + load the FIXED artefacts once/worker
+    return _fit_cell(
+        variant, alpha, si, ai, _SLABS, _BASIS, _TC_AB, _TG_AB,
+        _P_GEN, _WIDTH_DIST, _THETA_CONV, _THETA_GEN)
 
 
 # =========================================================================== #
@@ -297,33 +379,53 @@ def _write_report_md(path: Path, results: dict[str, Any]) -> None:
 def main() -> None:
     """Run the realism-graded recovery sweep and write results + report.
 
+    Dispatch is PARALLELISED across cells (one cell = one ``(variant, α, seed)``) with
+    a spawn-safe ``ProcessPoolExecutor`` (``--n-jobs`` worker processes, recycled every
+    ``--max-tasks-per-child`` tasks); each cell still runs cores = 1 WITHIN its fit.
+    Because every cell derives its own seeds from (variant, α-index, seed-index) inside
+    ``_fit_cell`` — exactly as the sequential version did — and the per-variant
+    aggregation is order-insensitive, the results are IDENTICAL to the sequential run
+    regardless of completion order. Collected cells are placed back into the exact
+    sequential enumeration order before aggregation, so the output JSON/MD is
+    byte-for-byte the same as the sequential version (only dispatch changed).
+
     POST-AUDIT RUN COMMAND (sapphire/zbook; do NOT run during build):
         cd /home/shawn/Code/inscriptions
-        .venv/bin/python runs/2026-06-18-c10-validity-test/code/run_c10_ii.py \\
-            --variants R0 R1 R2 R3 R1+R2
+        TMPDIR=$HOME/tmp_grid_scratch \\
+            .venv/bin/python runs/2026-06-18-c10-validity-test/code/run_c10_ii.py \\
+            --variants R0 R1 R2 R3 R1+R2 --n-jobs 10
     """
     ap = argparse.ArgumentParser(
         description="C10 follow-up (ii) realism-graded recovery test driver.")
     ap.add_argument("--variants", nargs="+", default=DEFAULT_VARIANTS,
-                    choices=list(C2.VARIANTS),
+                    choices=list(_C2_CONST.VARIANTS),
                     help=f"which variant(s) to run (default: {DEFAULT_VARIANTS})")
     ap.add_argument("--out-dir", type=Path, default=OUT_DIR,
                     help=f"output directory (default {OUT_DIR})")
     ap.add_argument("--out-prefix", type=str, default="followup-ii",
                     help="filename stem for results.json / report.md (default 'followup-ii')")
+    ap.add_argument("--n-jobs", type=int, default=N_JOBS_DEFAULT,
+                    help=f"parallel worker processes ACROSS cells (cores=1 within each "
+                         f"fit; cc-grid/SPEC convention, default {N_JOBS_DEFAULT}).")
+    ap.add_argument("--max-tasks-per-child", type=int, default=MAX_TASKS_PER_CHILD_DEFAULT,
+                    help=f"recycle a worker after this many cells, to bound PyMC / "
+                         f"PyTensor memory growth (default {MAX_TASKS_PER_CHILD_DEFAULT}).")
     args = ap.parse_args()
     args.out_dir.mkdir(parents=True, exist_ok=True)
 
-    # Lodged production artefacts (read-only): basis, slabs, θ priors.
-    basis, slabs = R.load_library_basis()
-    tc_ab, tg_ab, theta_fit = R.adopted_theta_priors()
-    # The production θ MEANS (for R2's contamination mix) — read from the artefact.
-    theta_conv = float(theta_fit["theta_conv"])   # ≈ 0.930
-    theta_gen = float(theta_fit["theta_gen"])      # ≈ 0.025
-    p_gen, pgen_label = C.resolve_pgen(GENUINE_PGEN)
+    # Load the FIXED artefacts ONCE in the parent (basis, slabs, θ priors + means,
+    # p_gen, real-empire widths) via the same spawn-safe ``_wire`` the workers use;
+    # the parent reads the config-block values straight off the module-level handles.
+    _wire()
 
-    # Real empire width distribution (for R1) — pure data profiling, NO MCMC.
-    width_dist = C2.real_empire_width_dist("empire-aggregate")
+    # Build the FLAT list of all cells (variant × α × seed) up front, IN THE SEQUENTIAL
+    # ENUMERATION ORDER. Each carries its position so the collected results can be
+    # placed back into that order regardless of completion order (order-independence).
+    cell_specs: list[tuple[int, str, float, int, int]] = []
+    for variant in args.variants:
+        for ai, alpha in enumerate(PLANTED_ALPHAS):
+            for si in range(N_SEEDS):
+                cell_specs.append((len(cell_specs), variant, float(alpha), si, ai))
 
     results: dict[str, Any] = {
         "spec": "runs/2026-06-18-c10-validity-test/SPEC.md (follow-up ii)",
@@ -332,27 +434,56 @@ def main() -> None:
             "variants": list(args.variants),
             "planted_alphas": list(PLANTED_ALPHAS), "n_seeds": N_SEEDS,
             "n_synth": N_SYNTH, "n_mc": N_MC, "base_seed": BASE_SEED,
-            "genuine_pgen": pgen_label, "genuine_half_width": GENUINE_HALF_WIDTH,
+            "genuine_pgen": _PGEN_LABEL, "genuine_half_width": GENUINE_HALF_WIDTH,
             "align_rule": R.ALIGN_RULE,
-            "theta_conv_mean": theta_conv, "theta_gen_mean": theta_gen,
-            "theta_conv_ab": list(tc_ab), "theta_gen_ab": list(tg_ab),
+            "theta_conv_mean": _THETA_CONV, "theta_gen_mean": _THETA_GEN,
+            "theta_conv_ab": list(_TC_AB), "theta_gen_ab": list(_TG_AB),
             "recovery_tol": RECOVERY_TOL, "divergence_tol": DIVERGENCE_TOL,
             "pilot_floor": PILOT_FLOOR,
             "width_dist_provenance": {
-                "n_aligned": width_dist.n_aligned,
-                "n_nonaligned": width_dist.n_nonaligned},
+                "n_aligned": _WIDTH_DIST.n_aligned,
+                "n_nonaligned": _WIDTH_DIST.n_nonaligned},
         },
         "cells": [],
         "per_variant_verdict": {},
     }
 
+    # Submit every cell to the spawn-safe pool; collect via as_completed (arrival
+    # order), but slot each result back at its ORIGINAL index so the assembled
+    # ``cells`` list is in the identical sequential order.
+    by_index: list[dict[str, Any] | None] = [None] * len(cell_specs)
+    t0 = time.time()
+    n_done = 0
+    print(f"C10 follow-up (ii): {len(cell_specs)} cells "
+          f"({len(args.variants)} variants × {len(PLANTED_ALPHAS)} α × {N_SEEDS} seeds); "
+          f"n_jobs {args.n_jobs}, max_tasks_per_child {args.max_tasks_per_child}.",
+          flush=True)
+    with ProcessPoolExecutor(max_workers=args.n_jobs,
+                             max_tasks_per_child=args.max_tasks_per_child,
+                             mp_context=mp.get_context("spawn")) as ex:
+        futs = {ex.submit(_worker, variant, alpha, si, ai): idx
+                for idx, variant, alpha, si, ai in cell_specs}
+        for fut in as_completed(futs):
+            idx = futs[fut]
+            try:
+                by_index[idx] = fut.result()
+                n_done += 1
+                cell = by_index[idx]
+                print(f"[{n_done}/{len(cell_specs)}] {cell['variant']} "
+                      f"α={cell['planted_alpha']:.2f} seed={cell['seed_index']} "
+                      f"(mass {cell['mass_arm']['alpha_median']:.3f} / "
+                      f"point-date {cell['point_date_arm']['alpha_median']:.3f})",
+                      flush=True)
+            except BrokenProcessPool:
+                print("FATAL: worker pool broken (OOM?) — nothing was written; "
+                      "re-run with a smaller --n-jobs.", flush=True)
+                raise
+    if any(c is None for c in by_index):  # defensive: a worker errored without breaking
+        missing = [cell_specs[i][1:] for i, c in enumerate(by_index) if c is None]
+        raise SystemExit(f"FATAL: {len(missing)} cell(s) returned no result: {missing}")
+
+    results["cells"] = list(by_index)  # already in sequential enumeration order
     for variant in args.variants:
-        for ai, alpha in enumerate(PLANTED_ALPHAS):
-            for si in range(N_SEEDS):
-                cell = _fit_cell(
-                    variant, alpha, si, ai, slabs, basis, tc_ab, tg_ab,
-                    p_gen, width_dist, theta_conv, theta_gen)
-                results["cells"].append(cell)
         v_cells = [c for c in results["cells"] if c["variant"] == variant]
         results["per_variant_verdict"][variant] = decide_variant(v_cells)
 
@@ -362,7 +493,8 @@ def main() -> None:
         json.dumps(results, indent=2, default=float), encoding="utf-8")
     _write_report_md(args.out_dir / f"{args.out_prefix}-report.md", results)
     print(f"Wrote {args.out_dir / (args.out_prefix + '-results.json')} and "
-          f"{args.out_dir / (args.out_prefix + '-report.md')}")
+          f"{args.out_dir / (args.out_prefix + '-report.md')} "
+          f"in {(time.time() - t0) / 60:.1f} min.")
 
 
 if __name__ == "__main__":

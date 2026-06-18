@@ -278,34 +278,81 @@ the controls are clean (R0 and R3 must NOT reproduce). **Verified on stubs:**
 | File | Role |
 |---|---|
 | `code/c10_ii_lib.py` | The **new** realism-graded generator (R0 delegates to `c10_lib`; R1/R2/R3/R1+R2 new), the real-empire width-distribution profiler, the recorded-interval placement helpers, and the realised-θ diagnostic. Imports `c10_lib` / `h2_lib` / `joint_lib` / `refit_lib`; performs NO MCMC. |
-| `code/run_c10_ii.py` | The per-variant recovery sweep + per-variant and overall verdicts + report writer. REUSES `run_c10`'s validated arm-fitters (`_fit_mass_arm`, `_fit_pointdate_arm`, `_alpha_stats`) and `c10_lib`'s count builders + `joint_lib.build_model_cross_classified`. Performs MCMC — runs only **after** audit sign-off. |
+| `code/run_c10_ii.py` | The per-variant recovery sweep + per-variant and overall verdicts + report writer. REUSES `run_c10`'s validated arm-fitters (`_fit_mass_arm`, `_fit_pointdate_arm`, `_alpha_stats`) and `c10_lib`'s count builders + `joint_lib.build_model_cross_classified`. The cell-dispatch loop is PARALLELISED across cells (spawn `ProcessPoolExecutor` + `_wire` worker init; see "Parallel dispatch" above) — cell logic, seeds, aggregation, verdicts, and output schema unchanged. Performs MCMC — runs only **after** audit sign-off. |
 
 Both pass `py_compile`. `idata` `.nc` are gitignored
 (`runs/2026-06-18-c10-validity-test/outputs/*.nc`, root `.gitignore` line 148); this
 wave writes only `outputs/followup-ii-results.json` + `outputs/followup-ii-report.md`
 (no `.nc` is persisted — α draws are pooled in-memory, as in the first wave).
 
+## Parallel dispatch (2026-06-19) — across cells, cores = 1 within each fit
+
+`run_c10_ii.py`'s cell-DISPATCH loop is PARALLELISED across the independent cells
+(one cell = one `(variant, α, seed)`), copying the proven supplementary-wave pattern
+(`runs/2026-06-18-h2.1-supplementary-wave/code/run_supp_production.py`). **Only the
+dispatch changed** — the per-cell logic (`c10_ii_lib`, `c10_lib`, `run_c10`'s
+arm-fitters, `joint_lib`), the seed derivation inside `_fit_cell`, the per-variant
+aggregation, the verdict logic, and the output JSON/MD schema are all UNCHANGED, so
+the results are identical to a sequential run.
+
+- **`ProcessPoolExecutor` + `as_completed`** over a `mp.get_context("spawn")` context,
+  `max_workers = --n-jobs` (default **10**, the cc-grid/SPEC convention),
+  `max_tasks_per_child = --max-tasks-per-child` (default **4**, recycling workers to
+  bound PyMC/PyTensor memory growth). `BrokenProcessPool` is caught and re-raised with
+  an OOM hint; nothing is written on a broken pool.
+- **Spawn-safe `_wire()` worker init.** Each worker re-imports the shared modules
+  (`c10_ii_lib`, `c10_lib`, `run_c10`, plus the lodged `h2_lib`/`joint_lib`/`refit_lib`
+  that `c10_lib` wires onto `sys.path`) and loads the FIXED, NON-MCMC artefacts ONCE
+  per worker — the library basis + slabs, the adopted θ priors + means, the empire
+  `p_gen`, and the real-empire recorded-width distribution — held at module level (not
+  pickled per task, not passed as closures). Only the four small cell-identity scalars
+  `(variant, α, seed-index, α-index)` cross the process boundary per task; `_fit_cell`
+  derives every seed from them exactly as the sequential version did.
+- **Determinism / order-independence.** The flat list of all cells is built up front in
+  the sequential `(variant, α-index, seed-index)` enumeration order; each carries its
+  position, and results are slotted back into `cells` by that index — so the assembled
+  output is byte-identical regardless of completion order. Per-variant aggregation is
+  itself order-insensitive (`np.all` / `.mean()` / `np.median`).
+- **Per-fit config unchanged.** `--n-jobs` parallelises ACROSS cells; each fit still
+  runs `cores = 1` WITHIN it (the reused `run_c10` arm-fitters' `pm.sample`), with the
+  production `N_DRAWS=2000` / `N_TUNE=1000` / `N_CHAINS=4` / `TARGET_ACCEPT=0.95`. No
+  negotiate-down.
+- **Verified (no MCMC):** a stubbed-`_fit_cell` dispatch dry-check through the REAL
+  spawn pool confirmed (i) the 24-cell list assembles in exact sequential order under
+  scrambled completion order, (ii) per-cell identity is slotted by index, (iii) the
+  per-variant + overall verdicts assemble, and (iv) the config block reads off the
+  `_wire`-loaded handles. `py_compile` clean.
+
 ### Post-audit run command (sapphire/zbook — do NOT run during build)
 
 ```bash
 cd /home/shawn/Code/inscriptions
-.venv/bin/python runs/2026-06-18-c10-validity-test/code/run_c10_ii.py \
-    --variants R0 R1 R2 R3 R1+R2
+TMPDIR=$HOME/tmp_grid_scratch \
+    .venv/bin/python runs/2026-06-18-c10-validity-test/code/run_c10_ii.py \
+    --variants R0 R1 R2 R3 R1+R2 --n-jobs 10
 ```
 
 (`--variants R0 R1` runs just the negative control + primary hypothesis if a quick
-cut is wanted first.) Writes `outputs/followup-ii-results.json` +
-`outputs/followup-ii-report.md`. Uses the production sampler config (no
-negotiate-down): `h2_lib.N_DRAWS=2000`, `N_TUNE=1000`, `N_CHAINS=4`,
-`TARGET_ACCEPT=0.95`, cores = 1 (via the reused `run_c10._sample_alpha`).
+cut is wanted first; tune `--n-jobs` / `--max-tasks-per-child` to the host's core +
+memory budget — 40 cells total at 5 variants × 4 α × 2 seeds.) Writes
+`outputs/followup-ii-results.json` + `outputs/followup-ii-report.md`. Uses the
+production sampler config (no negotiate-down): `h2_lib.N_DRAWS=2000`, `N_TUNE=1000`,
+`N_CHAINS=4`, `TARGET_ACCEPT=0.95`, cores = 1 per fit (via the reused
+`run_c10._sample_alpha`); `--n-jobs` parallelises ACROSS cells.
 
 ## Confirmations
 
 - **Nothing was run** (no fit/MCMC/diagnostic/SSH). Only `py_compile`, the non-MCMC
   generator / count-builder / decision-rule logic, the real-empire width profiling
-  (pure data load + numpy), and graph-build-only model construction were executed.
+  (pure data load + numpy), graph-build-only model construction, and — for the
+  parallel-dispatch change — a stubbed-`_fit_cell` dispatch dry-check (the REAL spawn
+  `ProcessPoolExecutor`, but `_fit_cell` replaced by a trivial deterministic stub, so
+  NO frame generation and NO MCMC ran) were executed.
 - **No lodged/shared module was modified** — `joint_lib`, `refit_lib`, `h2_lib`,
   `cell_lib`, and the slab library are imported/read only.
 - **The existing `c10_lib.py` / `run_c10.py` were NOT modified** — they are imported
   and extended in the NEW files `c10_ii_lib.py` / `run_c10_ii.py`.
+- **The parallelisation touched ONLY the cell-DISPATCH loop in `run_c10_ii.py`** — the
+  cell logic (`c10_ii_lib`, `c10_lib`, `run_c10`'s arm-fitters), the seed derivation,
+  the aggregation, the verdict logic, and the output schema are all unchanged.
 - Commit uses explicit pathspecs confined to `runs/2026-06-18-c10-validity-test/`.
