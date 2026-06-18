@@ -4882,3 +4882,173 @@ within-set validation design).
 `preregistration-validation-cities`, `two-reasons-not-to-refit`,
 `distort-g-shape`, `lose-out-of-sample`, `methods-footnote`,
 `response-to-reviewers`, `obs-96`, `obs-97`, `obs-98`, `obs-101`
+
+## Obs 103 — 2026-06-18 [RESULT / METHODOLOGY]: §5 Layer B (residual) — removing the empire-wide common temporal component dissolves the raw inversion's apparent universal post-AD-250 collapse into moderate, heterogeneous, provincial-tier relative decline
+
+### The finding
+
+The habit-removed (residual) Layer B inverts each city's residual log-trajectory
+`r[c,t] = u_shape[p(c),t] + v_shape[c,t]` (the empire-wide common temporal component
+`g_shape` **removed**) into a population trajectory **relative to the empire trend**:
+
+`q[c,t] = exp( (1/β_within) · r[c,t] )`
+
+Because `r` is zero-sum over `t`, `q` has geometric mean 1 by construction: `q = 1.0`
+means "on the empire trend"; `q = 0.5` means "half". Deterministic transform of the §5
+Layer-A posterior — **no MCMC**. β frames: empire `β_within = 0.588` primary; Latin
+`0.733` overlay (1/β exponents: 1.70 and 1.36 respectively). Scope: 268 small-N target
+cities; 34 meet the N* = 300 reliability floor.
+
+**Wiring guard (self-test) — PASS at machine precision.** Adding `g` back reconstructs
+`exp((1/β)·((g+u+v)−max))`, which must equal the raw Layer B relative-shape (within-city
+level offsets cancel under peak-normalisation): max abs diff vs the persisted raw
+`shape_med` = **5.6 × 10⁻¹⁶** (city Cirta). The *only* difference from the raw Layer B
+(Obs 96) is the removal of `g`.
+
+**PRIMARY RESULT — median q vs the empire baseline (1.0), reliable cities, empire β:**
+
+| bin (centre) | era | median `q` | IQR | share below empire |
+|---|---|---|---|---|
+| AD 112 | early-Antonine | **0.48** | [0.27, 1.74] | 0.65 |
+| AD 188 | empire-common peak (`g` peak) | **1.01** | [0.38, 4.36] | 0.50 |
+| AD 262 | 3rd century ("crisis") | **0.32** | [0.16, 1.25] | 0.68 |
+| AD 338 | late | **0.67** | [0.10, 5.22] | 0.53 |
+
+Removing `g` dissolves the raw inversion's apparent universal post-AD-250 collapse
+into city-level heterogeneity:
+
+- At the empire-common peak (AD 188) the median city sits **exactly on the empire trend**
+  (`q ≈ 1.01`) — as it must, since that is what `g` captures.
+- By the 3rd century the median city is at **≈ 0.32 of its empire-relative baseline** — a
+  *moderate* relative decline (factor of ~3), not the raw inversion's near-total collapse.
+  ~⅓ of reliable cities are still *at or above* the empire trend (`q ≥ 1`) at AD 262,
+  rising to approximately half by AD 338.
+- The Latin-β overlay is uniformly milder (1/β = 1.36 vs 1.70): median `q` at AD 262
+  = **0.40** (same 68 % below empire).
+
+**SECONDARY RESULT — v-only overlay (province removed too), empire β:**
+
+| bin (centre) | `u+v` median `q` | `v`-only median `q` |
+|---|---|---|
+| AD 112 | 0.48 | **0.75** |
+| AD 188 | 1.01 | **1.31** |
+| AD 262 | 0.32 | **0.78** |
+| AD 338 | 0.67 | **0.80** |
+
+The v-only trajectory is markedly flatter than u+v. A substantial part of a city's
+apparent divergence from the empire trend is its **province's shared deviation**
+(`u_shape`), not its own (`v_shape`): the purely city-specific 3rd-century position is
+a mild ≈ 0.78 of empire-relative baseline, against 0.32 once the province deviation is
+folded in. The late-imperial under-production of these small western cities is largely a
+**provincial-tier** phenomenon, not idiosyncratic to individual cities.
+
+**Pending enhancement (no re-fit required):** the current outputs give q_uv
+(city-from-empire) and q_v (city-from-province) but NOT q_u (province-from-empire).
+These three quantities are nested multiplicatively — `q_uv = q_u × q_v` (since
+log q_uv = (1/β)(u+v) = (1/β)u + (1/β)v) — so adding q_u is a small enhancement that
+reuses the loaded `u_shape` without any re-fit, and would complete the nested
+divergence-decomposition triple for the final-paper table.
+
+### Why this matters
+
+1. **This is the demography-isolating deliverable preregistered under Decision 13.** The
+   raw Layer B's dramatic post-AD-250 "collapse" is shown to be mostly the empire-wide
+   common component (`g`, Obs 97 — conflating habit, empire demography, taphonomy, and
+   dating-convention residual, Obs 98). The genuinely city/province-specific part is a
+   moderate, heterogeneous decline — a cleaner object than the raw inversion for the
+   discussion section.
+2. **The provincial-tier finding is structurally important for the paper.** The v-only
+   result reframes "small western cities decline" as largely "their provinces decline
+   relative to the empire", bearing on whether drivers are region-wide (provincial) or
+   city-idiosyncratic.
+3. **The wiring guard ties this Obs to the raw Layer B exactly.** The machine-precision
+   self-test (5.6 × 10⁻¹⁶ max abs diff at Cirta) means the residual result is not an
+   independent analysis but an algebraically certified transformation of Obs 96 — any
+   residual feature that is *not* in the raw result is entirely attributable to the
+   removal of `g`.
+
+### Caveats / methodological notes
+
+- **Metric correction (important).** The pre-specified contrast "fraction of own peak at
+  AD 250" is **confounded** for the residual: 1/β amplification + GaussianRandomWalk
+  endpoint variance push 11 of 34 reliable cities' q-peak to the envelope-edge bins,
+  forcing the ratio to ~0 regardless of the actual late level. The correct diagnostic for
+  a geom-mean-1 quantity is `q` vs the empire baseline (1.0). The confounded
+  frac-of-peak numbers are retained, flagged, in `summary.json → frac_of_peak_CONFOUNDED`
+  for transparency only.
+- **Edge-bin caveat.** For the same GRW-endpoint reason, the envelope-edge bins
+  (AD 12: median `q` 2.74, IQR up to ~18; AD 338: IQR up to ~5.2) have inflated variance
+  and are **not** interpreted; the narrative rests on the well-constrained mid-empire bins
+  (AD 112 / 188 / 262).
+- **Relative, not absolute, not pure demography (Obs 98).** `q` is population relative to
+  the empire trend, not absolute population; the residual still carries city/province-level
+  taphonomy, economy, and habit. The only clean claim is "free of the empire-common
+  confound".
+- **Validation.** Foundation-terminus on `q` clean: median pre-foundation mass fraction
+  = 0.02 % (99 within-envelope cities). Anchors (Ostia, Pompeii) NOT re-run by design
+  — held out, no `g`-decomposition available (Obs 102) — validated by the raw
+  full-inversion out-of-sample (Obs 96, clean pass).
+- **Exploratory; no thresholds** (Decision 13). N* = 300 floor (34/268 reliable);
+  within-sample empire shape (the 268-city `g` is a proxy for the true empire-common
+  component).
+
+### Related observations and artefacts
+
+**Obs 96** (§5 Layer B β-inversion complete — inverts the FULL `lam` including `g`;
+apparent universal post-AD-250 collapse; anchor gate passes): the raw Layer B of which
+this Obs is the habit-removed correction/complement; the wiring self-test ties the two
+at machine precision.
+
+**Obs 97** (§5 H5 — empire-wide common temporal component peaks AD 187.5; no systematic
+corpus lag; foundation-terminus check passes): identifies and characterises `g_shape`,
+the component removed here; the AD-188 peak in the primary result (median `q ≈ 1.01`)
+is the expected consequence of removing `g` at its own peak.
+
+**Obs 98** (the empire-wide common temporal component is NOT a clean epigraphic habit —
+conflates four drivers; the residual inversion is well-posed regardless): establishes
+why the residual `q` is better-posed than the raw `lam` for cross-city comparison,
+and why it is not pure demography.
+
+**Obs 101** (empirical decomposition first, interpretation later; naming discipline):
+the residual Layer B is presented in results as an empirical nested-unit decomposition
+using "empire-wide common temporal component" language; the four-driver interpretation
+of `g` is deferred to the discussion per this framing decision.
+
+**Obs 102** (held-out validation anchors are a design strength — do not refit): why
+Ostia and Pompeii are not re-run in the residual inversion; the within-set foundation-
+terminus check is the residual analogue of H5's lam-mass check.
+
+**Artefacts**:
+`runs/2026-06-17-s5-layer-b-residual/REPORT.md` (source report; all numbers verified);
+`runs/2026-06-17-s5-layer-b-residual/outputs/layerb-residual-summary.json`
+(primary-result tables, self-test, validation, beta frames, provenance; source for all
+numbers in this Obs; commit `a5c4699`);
+`runs/2026-06-17-s5-layer-b-residual/outputs/layerb-residual-vs-raw.png` (left: raw
+apparent collapse; right: residual `q` vs 1.0 baseline with IQR band);
+`runs/2026-06-17-s5-layer-b-residual/outputs/layerb-residual-trajectories-empire.nc`,
+`runs/2026-06-17-s5-layer-b-residual/outputs/layerb-residual-trajectories-latin.nc`
+(full per-city trajectory posteriors);
+`runs/2026-06-17-s5-layer-b-residual/code/` (reuses
+`runs/2026-06-17-s5-h5-habit-removed/code/h5_habit_removed.py` and
+`runs/2026-06-16-s5-layer-b-beta-inversion/code/layerb_invert.py`).
+
+### Findable later
+
+`residual-layer-b`, `habit-removed-inversion`, `relative-to-empire`,
+`q-vs-empire-baseline`, `collapse-dissolves`, `apparent-universal-collapse`,
+`city-level-heterogeneity`, `third-century-relative-decline`,
+`provincial-tier-decline`, `v-only-overlay`, `province-from-empire`,
+`city-from-province`, `nested-divergence-decomposition`, `multiplicative-decomposition`,
+`q-uv-equals-q-u-times-q-v`, `frac-of-peak-confounded`, `GRW-endpoint-artefact`,
+`envelope-edge-variance`, `self-test-machine-precision`, `5-6e-16`, `city-Cirta`,
+`geom-mean-1`, `not-pure-demography`, `relative-not-absolute`,
+`foundation-terminus`, `median-pre-foundation-0-02-percent`,
+`Latin-beta-overlay`, `1-over-beta-1-36`, `1-over-beta-1-70`,
+`q-at-AD-262-0-32`, `q-at-AD-262-v-only-0-75`,
+`q-at-AD-188-1-01`, `q-at-AD-338-0-67`,
+`11-of-34-edge-peak`, `268-target-cities`, `34-reliable`,
+`beta-within-0-588`, `beta-within-0-733`,
+`Decision-13`, `exploratory-no-thresholds`,
+`q-uv-primary`, `q-v-city-from-province`, `q-u-province-from-empire-pending`,
+`nested-triple-pending`, `reuses-u-shape`,
+`obs-96`, `obs-97`, `obs-98`, `obs-101`, `obs-102`
