@@ -1,0 +1,15 @@
+# D13 α-as-translator — large/regenerable artefacts kept OFF git.
+#
+# Per-city α posterior draw vectors — the Stage-2 multiple-imputation hand-off.
+# Regenerable (deterministic per-city seed = D13_BASE_SEED + unit_index); 163 ×
+# ~64 KB ≈ 10 MB, treated like the refit's posterior-draws hand-off and kept
+# local/sapphire-only. Stage 2 consumes them; the committed record is the
+# per-city summary JSONs + city-alpha-summary.json + the report + the figure.
+outputs/alpha-draws/
+
+# Run-state / scratch.
+outputs/city-alpha-STATUS.txt
+outputs/*.log
+
+# Stage-2 InferenceData netCDF artefacts (regenerable; sapphire/local only).
+outputs/*.nc
