@@ -1,7 +1,23 @@
-# H3a confirmatory result — REPORT (preliminary, pending Shawn's sign-off)
+# H3a confirmatory result — REPORT
 
-**Status:** PRELIMINARY — pending Shawn's sign-off. Nothing here is "final"; no
-confirmatory claim should leave the repository until signed off (launch spec §8).
+**Status:** CONFIRMATORY — signed off (Decision 37) and lodged via OSF Amendment
+02 (2026-06-06). This supersedes the original "PRELIMINARY — pending sign-off"
+stamp this file carried at the 2026-06-04 blind run.
+
+> **⚠ FRAME RELABELLING — Amendment 02 (2026-06-06), labels only, NO numbers
+> changed.** This report was written on 2026-06-04, *before* the Latin-primary
+> reframe. At that date the empire-wide (1,044-city) frame was the PRIMARY and
+> the Latin (817-city) frame was "Sensitivity B". **OSF Amendment 02 /
+> Decision 36 reframed the lodged primary hypothesis-testing frame to the
+> Latin-speaking provinces (817 cities, 39 provinces); the empire-wide frame is
+> now secondary / context** (with the LIRE-coverage caveat). Read every
+> "PRIMARY" label below that refers to the 1,044-city empire frame as
+> **secondary / context**, and the "Sensitivity B — Latin-only" frame as the
+> **lodged primary**. **All numbers are unchanged and both frames are
+> SUPPORTED** (empire f_within 0.299 [0.240, 0.365]; Latin f_within 0.480
+> [0.401, 0.566]); only the frame *labels* are re-cut here to match the lodged
+> Amendment 02. The relabelling is the D1/AM02 housekeeping fix flagged in
+> `planning/prereg-obligations-coverage-sweep-2026-06-20.md`.
 
 **Run:** `runs/2026-06-04-h3a-confirmatory/` · branch `main` · compute host
 `sapphire` · LIRE v3.0 · date window 50 BC – AD 350 (overlap).
@@ -36,7 +52,11 @@ estimand previously seen at exploratory talk-prep".
 
 ---
 
-## 1. Headline result — H3a `f_within` (PRIMARY)
+## 1. Headline result — H3a `f_within` (empire frame; secondary/context under Amendment 02)
+
+> *Amendment 02: the empire-wide 1,044-city frame below was the 2026-06-04
+> PRIMARY; it is now the **secondary / context** frame. The lodged primary is
+> the Latin frame in §2 ("Sensitivity B"). Numbers unchanged.*
 
 | Quantity | Value |
 |---|---|
@@ -87,7 +107,12 @@ the primary**, so it was not re-fit. This resolves the launch-spec open
 sub-question (§3a) empirically: under the realised data, options (i) and (ii)
 coincide.
 
-### Sensitivity B — Latin-only (817 cities)
+### Sensitivity B — Latin-only (817 cities) — *= the LODGED PRIMARY frame under Amendment 02*
+
+> *Amendment 02 / Decision 36: this Latin-only frame is the **lodged primary**
+> hypothesis-testing frame. It is labelled "Sensitivity B" here only because the
+> report predates the reframe; the numbers below are the lodged primary H3a
+> result. Numbers unchanged.*
 
 | Quantity | Value |
 |---|---|
@@ -99,7 +124,8 @@ coincide.
 Restricting to Latin-speaking provinces (the prereg's "~815"; realised 817 — see
 §4) *strengthens* the within-province population effect (f_within rises from
 0.299 to 0.480, β_within from 0.587 to 0.733). The conclusion is robust to the
-linguistic stratification.
+linguistic stratification. **Under Amendment 02 this Latin result is the lodged
+primary; the empire 0.299 in §1 is the secondary/context comparator.**
 
 ### Sensitivity C — standardisation
 
@@ -311,4 +337,9 @@ Hanson-assigned 140,575.
 - Posteriors (NetCDF, on sapphire, gitignored — regenerable from seed + code):
   `outputs/idata-{primary,standardised,latin}.nc`
 
-**Label:** all results above are **preliminary — pending Shawn's sign-off.**
+**Label:** all results above are **CONFIRMATORY — signed off (Decision 37) and
+lodged via OSF Amendment 02 (2026-06-06).** The original "preliminary — pending
+sign-off" stamp is superseded. Under Amendment 02 the **Latin (817-city) frame
+is the lodged primary** and the empire-wide (1,044-city) frame is secondary /
+context; see the relabelling banner at the top of this report. No numbers
+changed in the relabelling.

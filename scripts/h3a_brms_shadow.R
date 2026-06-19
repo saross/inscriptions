@@ -17,6 +17,27 @@
 #                provinces are the primary frame — run this shadow on whichever
 #                city-frame parquet defines the frame being reported).
 #
+# SCOPE / PROVENANCE NOTE (added 2026-06-20, pre-write-up uplift)
+# ---------------------------------------------------------------
+# This committed script fits the WITHIN-BETWEEN (Mundlak) confirmatory model —
+# NOT the pooled pre-Mundlak `count ~ log_pop` model. The pooled version was
+# RETIRED on 2026-06-05 and lives at
+#   archive/superseded-code/h3a_brms_shadow-pooled-pre-mundlak-2026-04-25.R
+# (do not use it for the confirmatory cross-check).
+#
+# Relationship to the run-local Mundlak shadow:
+#   runs/2026-06-04-h3a-confirmatory/code/h3a_brms_shadow_mundlak.R
+# is the run-local twin that produced the brms↔pymc cross-language agreement
+# recorded in the H3a confirmatory REPORT §6 ("No material disagreement";
+# beta_within / f_within match within Monte-Carlo noise — D9 amendment-trigger
+# NOT fired). The two scripts fit the SAME Mundlak formula
+# (`count ~ log_pop_within + log_pop_prov_mean + (1 | province)`, identical
+# priors and seed 20260604); this scripts/ copy is the project-level,
+# co-author-facing entry point, the run-local copy is the in-dir provenance
+# artefact. (NB: an earlier audit note claimed this committed script still fit
+# the pooled model — that was stale; the 2026-06-05 promotion already corrected
+# it. This note records the correction so the premise is not re-raised.)
+#
 # Purpose
 # -------
 # Refit the preregistered H3a model — whose PRIMARY implementation is in pymc
