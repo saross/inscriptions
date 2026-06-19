@@ -1,0 +1,1151 @@
+{
+ "n_cities": 163,
+ "all_reconcile": true,
+ "n_fail": 0,
+ "window": "-50 .. 350 (50 BC \u2013 AD 350)",
+ "note": "mixture_subset_n is the plain city filter df[urban_context_city==name]; it must equal the H3a inscription_count. aoristic_eff_n is lower (zero/neg-width drop + envelope clip; same convention as the lodged primary p_gen) and is EXPECTED, not a mismatch.",
+ "failures": [],
+ "triples": [
+  {
+   "name": "Pompeii",
+   "h3a_count": 4508,
+   "mixture_subset_n": 4508,
+   "aoristic_eff_n": 4247,
+   "reconciles": true
+  },
+  {
+   "name": "Salona",
+   "h3a_count": 3465,
+   "mixture_subset_n": 3465,
+   "aoristic_eff_n": 2890,
+   "reconciles": true
+  },
+  {
+   "name": "Ostia",
+   "h3a_count": 2644,
+   "mixture_subset_n": 2644,
+   "aoristic_eff_n": 2316,
+   "reconciles": true
+  },
+  {
+   "name": "Mogontiacum",
+   "h3a_count": 2398,
+   "mixture_subset_n": 2398,
+   "aoristic_eff_n": 2325,
+   "reconciles": true
+  },
+  {
+   "name": "Aquileia",
+   "h3a_count": 2034,
+   "mixture_subset_n": 2034,
+   "aoristic_eff_n": 1885,
+   "reconciles": true
+  },
+  {
+   "name": "Puteoli",
+   "h3a_count": 1780,
+   "mixture_subset_n": 1780,
+   "aoristic_eff_n": 1714,
+   "reconciles": true
+  },
+  {
+   "name": "Carnuntum (1)",
+   "h3a_count": 1641,
+   "mixture_subset_n": 1641,
+   "aoristic_eff_n": 1568,
+   "reconciles": true
+  },
+  {
+   "name": "Cirta",
+   "h3a_count": 1020,
+   "mixture_subset_n": 1020,
+   "aoristic_eff_n": 1013,
+   "reconciles": true
+  },
+  {
+   "name": "Porolissum",
+   "h3a_count": 967,
+   "mixture_subset_n": 967,
+   "aoristic_eff_n": 964,
+   "reconciles": true
+  },
+  {
+   "name": "Capua",
+   "h3a_count": 929,
+   "mixture_subset_n": 929,
+   "aoristic_eff_n": 853,
+   "reconciles": true
+  },
+  {
+   "name": "Apulum (2)",
+   "h3a_count": 853,
+   "mixture_subset_n": 853,
+   "aoristic_eff_n": 835,
+   "reconciles": true
+  },
+  {
+   "name": "Sarmizegetusa",
+   "h3a_count": 697,
+   "mixture_subset_n": 697,
+   "aoristic_eff_n": 685,
+   "reconciles": true
+  },
+  {
+   "name": "Mediolanum (Italia (XI Transpadana))",
+   "h3a_count": 639,
+   "mixture_subset_n": 639,
+   "aoristic_eff_n": 485,
+   "reconciles": true
+  },
+  {
+   "name": "Misenum",
+   "h3a_count": 593,
+   "mixture_subset_n": 593,
+   "aoristic_eff_n": 578,
+   "reconciles": true
+  },
+  {
+   "name": "Segobriga",
+   "h3a_count": 593,
+   "mixture_subset_n": 593,
+   "aoristic_eff_n": 586,
+   "reconciles": true
+  },
+  {
+   "name": "Augusta Emerita",
+   "h3a_count": 557,
+   "mixture_subset_n": 557,
+   "aoristic_eff_n": 525,
+   "reconciles": true
+  },
+  {
+   "name": "Herculaneum",
+   "h3a_count": 525,
+   "mixture_subset_n": 525,
+   "aoristic_eff_n": 483,
+   "reconciles": true
+  },
+  {
+   "name": "Corduba",
+   "h3a_count": 510,
+   "mixture_subset_n": 510,
+   "aoristic_eff_n": 481,
+   "reconciles": true
+  },
+  {
+   "name": "Brundisium",
+   "h3a_count": 456,
+   "mixture_subset_n": 456,
+   "aoristic_eff_n": 449,
+   "reconciles": true
+  },
+  {
+   "name": "Ammaedara",
+   "h3a_count": 451,
+   "mixture_subset_n": 451,
+   "aoristic_eff_n": 444,
+   "reconciles": true
+  },
+  {
+   "name": "Colonia Augusta Treverorum",
+   "h3a_count": 447,
+   "mixture_subset_n": 447,
+   "aoristic_eff_n": 275,
+   "reconciles": true
+  },
+  {
+   "name": "Brigetio",
+   "h3a_count": 445,
+   "mixture_subset_n": 445,
+   "aoristic_eff_n": 417,
+   "reconciles": true
+  },
+  {
+   "name": "Carthago",
+   "h3a_count": 442,
+   "mixture_subset_n": 442,
+   "aoristic_eff_n": 407,
+   "reconciles": true
+  },
+  {
+   "name": "Lepcis Magna",
+   "h3a_count": 425,
+   "mixture_subset_n": 425,
+   "aoristic_eff_n": 345,
+   "reconciles": true
+  },
+  {
+   "name": "Neapolis (Italia (I Latium and Campania))",
+   "h3a_count": 403,
+   "mixture_subset_n": 403,
+   "aoristic_eff_n": 298,
+   "reconciles": true
+  },
+  {
+   "name": "Aricia",
+   "h3a_count": 395,
+   "mixture_subset_n": 395,
+   "aoristic_eff_n": 375,
+   "reconciles": true
+  },
+  {
+   "name": "Caralis",
+   "h3a_count": 395,
+   "mixture_subset_n": 395,
+   "aoristic_eff_n": 357,
+   "reconciles": true
+  },
+  {
+   "name": "Venusia",
+   "h3a_count": 382,
+   "mixture_subset_n": 382,
+   "aoristic_eff_n": 363,
+   "reconciles": true
+  },
+  {
+   "name": "Aventicum",
+   "h3a_count": 380,
+   "mixture_subset_n": 380,
+   "aoristic_eff_n": 377,
+   "reconciles": true
+  },
+  {
+   "name": "Lambaesis",
+   "h3a_count": 379,
+   "mixture_subset_n": 379,
+   "aoristic_eff_n": 219,
+   "reconciles": true
+  },
+  {
+   "name": "Poetovio",
+   "h3a_count": 378,
+   "mixture_subset_n": 378,
+   "aoristic_eff_n": 361,
+   "reconciles": true
+  },
+  {
+   "name": "Celeia",
+   "h3a_count": 373,
+   "mixture_subset_n": 373,
+   "aoristic_eff_n": 344,
+   "reconciles": true
+  },
+  {
+   "name": "Saguntum",
+   "h3a_count": 372,
+   "mixture_subset_n": 372,
+   "aoristic_eff_n": 365,
+   "reconciles": true
+  },
+  {
+   "name": "Verona",
+   "h3a_count": 372,
+   "mixture_subset_n": 372,
+   "aoristic_eff_n": 363,
+   "reconciles": true
+  },
+  {
+   "name": "Patavium",
+   "h3a_count": 351,
+   "mixture_subset_n": 351,
+   "aoristic_eff_n": 343,
+   "reconciles": true
+  },
+  {
+   "name": "Praeneste",
+   "h3a_count": 346,
+   "mixture_subset_n": 346,
+   "aoristic_eff_n": 313,
+   "reconciles": true
+  },
+  {
+   "name": "Tergestum",
+   "h3a_count": 346,
+   "mixture_subset_n": 346,
+   "aoristic_eff_n": 338,
+   "reconciles": true
+  },
+  {
+   "name": "Burdigala",
+   "h3a_count": 333,
+   "mixture_subset_n": 333,
+   "aoristic_eff_n": 325,
+   "reconciles": true
+  },
+  {
+   "name": "Asisium",
+   "h3a_count": 332,
+   "mixture_subset_n": 332,
+   "aoristic_eff_n": 310,
+   "reconciles": true
+  },
+  {
+   "name": "Clusium",
+   "h3a_count": 332,
+   "mixture_subset_n": 332,
+   "aoristic_eff_n": 273,
+   "reconciles": true
+  },
+  {
+   "name": "Alba Fucentia",
+   "h3a_count": 317,
+   "mixture_subset_n": 317,
+   "aoristic_eff_n": 303,
+   "reconciles": true
+  },
+  {
+   "name": "Thugga",
+   "h3a_count": 307,
+   "mixture_subset_n": 307,
+   "aoristic_eff_n": 289,
+   "reconciles": true
+  },
+  {
+   "name": "Corfinium",
+   "h3a_count": 306,
+   "mixture_subset_n": 306,
+   "aoristic_eff_n": 275,
+   "reconciles": true
+  },
+  {
+   "name": "Viminacium (1)",
+   "h3a_count": 303,
+   "mixture_subset_n": 303,
+   "aoristic_eff_n": 278,
+   "reconciles": true
+  },
+  {
+   "name": "Aeclanum",
+   "h3a_count": 301,
+   "mixture_subset_n": 301,
+   "aoristic_eff_n": 292,
+   "reconciles": true
+  },
+  {
+   "name": "Clunia",
+   "h3a_count": 291,
+   "mixture_subset_n": 291,
+   "aoristic_eff_n": 287,
+   "reconciles": true
+  },
+  {
+   "name": "Theveste",
+   "h3a_count": 287,
+   "mixture_subset_n": 287,
+   "aoristic_eff_n": 277,
+   "reconciles": true
+  },
+  {
+   "name": "Narona",
+   "h3a_count": 284,
+   "mixture_subset_n": 284,
+   "aoristic_eff_n": 264,
+   "reconciles": true
+  },
+  {
+   "name": "Sirmium",
+   "h3a_count": 278,
+   "mixture_subset_n": 278,
+   "aoristic_eff_n": 200,
+   "reconciles": true
+  },
+  {
+   "name": "Venafrum",
+   "h3a_count": 274,
+   "mixture_subset_n": 274,
+   "aoristic_eff_n": 270,
+   "reconciles": true
+  },
+  {
+   "name": "Beneventum",
+   "h3a_count": 272,
+   "mixture_subset_n": 272,
+   "aoristic_eff_n": 245,
+   "reconciles": true
+  },
+  {
+   "name": "Amiternum",
+   "h3a_count": 270,
+   "mixture_subset_n": 270,
+   "aoristic_eff_n": 244,
+   "reconciles": true
+  },
+  {
+   "name": "Tibur",
+   "h3a_count": 266,
+   "mixture_subset_n": 266,
+   "aoristic_eff_n": 218,
+   "reconciles": true
+  },
+  {
+   "name": "Altinum",
+   "h3a_count": 264,
+   "mixture_subset_n": 264,
+   "aoristic_eff_n": 254,
+   "reconciles": true
+  },
+  {
+   "name": "Tarracina",
+   "h3a_count": 259,
+   "mixture_subset_n": 259,
+   "aoristic_eff_n": 242,
+   "reconciles": true
+  },
+  {
+   "name": "Concordia",
+   "h3a_count": 258,
+   "mixture_subset_n": 258,
+   "aoristic_eff_n": 252,
+   "reconciles": true
+  },
+  {
+   "name": "Comum",
+   "h3a_count": 255,
+   "mixture_subset_n": 255,
+   "aoristic_eff_n": 243,
+   "reconciles": true
+  },
+  {
+   "name": "Novae (Moesia Inferior)",
+   "h3a_count": 251,
+   "mixture_subset_n": 251,
+   "aoristic_eff_n": 230,
+   "reconciles": true
+  },
+  {
+   "name": "Perusia",
+   "h3a_count": 247,
+   "mixture_subset_n": 247,
+   "aoristic_eff_n": 214,
+   "reconciles": true
+  },
+  {
+   "name": "Durocortorum",
+   "h3a_count": 241,
+   "mixture_subset_n": 241,
+   "aoristic_eff_n": 240,
+   "reconciles": true
+  },
+  {
+   "name": "Cemelenum",
+   "h3a_count": 240,
+   "mixture_subset_n": 240,
+   "aoristic_eff_n": 223,
+   "reconciles": true
+  },
+  {
+   "name": "Tusculum",
+   "h3a_count": 238,
+   "mixture_subset_n": 238,
+   "aoristic_eff_n": 196,
+   "reconciles": true
+  },
+  {
+   "name": "Canusium",
+   "h3a_count": 236,
+   "mixture_subset_n": 236,
+   "aoristic_eff_n": 231,
+   "reconciles": true
+  },
+  {
+   "name": "Cumae",
+   "h3a_count": 236,
+   "mixture_subset_n": 236,
+   "aoristic_eff_n": 225,
+   "reconciles": true
+  },
+  {
+   "name": "Carthago Nova",
+   "h3a_count": 228,
+   "mixture_subset_n": 228,
+   "aoristic_eff_n": 222,
+   "reconciles": true
+  },
+  {
+   "name": "Londinium",
+   "h3a_count": 228,
+   "mixture_subset_n": 228,
+   "aoristic_eff_n": 221,
+   "reconciles": true
+  },
+  {
+   "name": "Colonia Ulpia Traiana",
+   "h3a_count": 227,
+   "mixture_subset_n": 227,
+   "aoristic_eff_n": 218,
+   "reconciles": true
+  },
+  {
+   "name": "Vindonissa",
+   "h3a_count": 224,
+   "mixture_subset_n": 224,
+   "aoristic_eff_n": 214,
+   "reconciles": true
+  },
+  {
+   "name": "Tarraco",
+   "h3a_count": 222,
+   "mixture_subset_n": 222,
+   "aoristic_eff_n": 197,
+   "reconciles": true
+  },
+  {
+   "name": "Aesernia",
+   "h3a_count": 221,
+   "mixture_subset_n": 221,
+   "aoristic_eff_n": 215,
+   "reconciles": true
+  },
+  {
+   "name": "Ameria",
+   "h3a_count": 221,
+   "mixture_subset_n": 221,
+   "aoristic_eff_n": 216,
+   "reconciles": true
+  },
+  {
+   "name": "Luna",
+   "h3a_count": 218,
+   "mixture_subset_n": 218,
+   "aoristic_eff_n": 201,
+   "reconciles": true
+  },
+  {
+   "name": "Marruvium",
+   "h3a_count": 207,
+   "mixture_subset_n": 207,
+   "aoristic_eff_n": 203,
+   "reconciles": true
+  },
+  {
+   "name": "Luceria",
+   "h3a_count": 206,
+   "mixture_subset_n": 206,
+   "aoristic_eff_n": 201,
+   "reconciles": true
+  },
+  {
+   "name": "Salernum",
+   "h3a_count": 204,
+   "mixture_subset_n": 204,
+   "aoristic_eff_n": 195,
+   "reconciles": true
+  },
+  {
+   "name": "Tomis",
+   "h3a_count": 203,
+   "mixture_subset_n": 203,
+   "aoristic_eff_n": 182,
+   "reconciles": true
+  },
+  {
+   "name": "Augusta Vindelicum",
+   "h3a_count": 202,
+   "mixture_subset_n": 202,
+   "aoristic_eff_n": 193,
+   "reconciles": true
+  },
+  {
+   "name": "Formiae",
+   "h3a_count": 202,
+   "mixture_subset_n": 202,
+   "aoristic_eff_n": 181,
+   "reconciles": true
+  },
+  {
+   "name": "Scupi",
+   "h3a_count": 201,
+   "mixture_subset_n": 201,
+   "aoristic_eff_n": 191,
+   "reconciles": true
+  },
+  {
+   "name": "Pola",
+   "h3a_count": 200,
+   "mixture_subset_n": 200,
+   "aoristic_eff_n": 187,
+   "reconciles": true
+  },
+  {
+   "name": "Saepinum",
+   "h3a_count": 198,
+   "mixture_subset_n": 198,
+   "aoristic_eff_n": 195,
+   "reconciles": true
+  },
+  {
+   "name": "Fulginiae",
+   "h3a_count": 196,
+   "mixture_subset_n": 196,
+   "aoristic_eff_n": 187,
+   "reconciles": true
+  },
+  {
+   "name": "Mutina",
+   "h3a_count": 194,
+   "mixture_subset_n": 194,
+   "aoristic_eff_n": 185,
+   "reconciles": true
+  },
+  {
+   "name": "Augustodunum",
+   "h3a_count": 190,
+   "mixture_subset_n": 190,
+   "aoristic_eff_n": 189,
+   "reconciles": true
+  },
+  {
+   "name": "Ariminum",
+   "h3a_count": 181,
+   "mixture_subset_n": 181,
+   "aoristic_eff_n": 171,
+   "reconciles": true
+  },
+  {
+   "name": "Micia",
+   "h3a_count": 181,
+   "mixture_subset_n": 181,
+   "aoristic_eff_n": 175,
+   "reconciles": true
+  },
+  {
+   "name": "Telesia",
+   "h3a_count": 180,
+   "mixture_subset_n": 180,
+   "aoristic_eff_n": 175,
+   "reconciles": true
+  },
+  {
+   "name": "Mevania",
+   "h3a_count": 176,
+   "mixture_subset_n": 176,
+   "aoristic_eff_n": 172,
+   "reconciles": true
+  },
+  {
+   "name": "Nursia",
+   "h3a_count": 176,
+   "mixture_subset_n": 176,
+   "aoristic_eff_n": 160,
+   "reconciles": true
+  },
+  {
+   "name": "Narbo Martius",
+   "h3a_count": 175,
+   "mixture_subset_n": 175,
+   "aoristic_eff_n": 165,
+   "reconciles": true
+  },
+  {
+   "name": "Potaissa",
+   "h3a_count": 173,
+   "mixture_subset_n": 173,
+   "aoristic_eff_n": 169,
+   "reconciles": true
+  },
+  {
+   "name": "Astigi",
+   "h3a_count": 172,
+   "mixture_subset_n": 172,
+   "aoristic_eff_n": 170,
+   "reconciles": true
+  },
+  {
+   "name": "Emona",
+   "h3a_count": 167,
+   "mixture_subset_n": 167,
+   "aoristic_eff_n": 160,
+   "reconciles": true
+  },
+  {
+   "name": "Lugdunum",
+   "h3a_count": 163,
+   "mixture_subset_n": 163,
+   "aoristic_eff_n": 150,
+   "reconciles": true
+  },
+  {
+   "name": "Tarentum",
+   "h3a_count": 163,
+   "mixture_subset_n": 163,
+   "aoristic_eff_n": 157,
+   "reconciles": true
+  },
+  {
+   "name": "Antium",
+   "h3a_count": 161,
+   "mixture_subset_n": 161,
+   "aoristic_eff_n": 152,
+   "reconciles": true
+  },
+  {
+   "name": "Nomentum",
+   "h3a_count": 160,
+   "mixture_subset_n": 160,
+   "aoristic_eff_n": 156,
+   "reconciles": true
+  },
+  {
+   "name": "Spoletium",
+   "h3a_count": 160,
+   "mixture_subset_n": 160,
+   "aoristic_eff_n": 145,
+   "reconciles": true
+  },
+  {
+   "name": "Sulmo",
+   "h3a_count": 159,
+   "mixture_subset_n": 159,
+   "aoristic_eff_n": 151,
+   "reconciles": true
+  },
+  {
+   "name": "Noviomagus (Germania Inferior)",
+   "h3a_count": 158,
+   "mixture_subset_n": 158,
+   "aoristic_eff_n": 151,
+   "reconciles": true
+  },
+  {
+   "name": "Sabratha",
+   "h3a_count": 158,
+   "mixture_subset_n": 158,
+   "aoristic_eff_n": 103,
+   "reconciles": true
+  },
+  {
+   "name": "Paestum",
+   "h3a_count": 156,
+   "mixture_subset_n": 156,
+   "aoristic_eff_n": 135,
+   "reconciles": true
+  },
+  {
+   "name": "Pisaurum",
+   "h3a_count": 155,
+   "mixture_subset_n": 155,
+   "aoristic_eff_n": 141,
+   "reconciles": true
+  },
+  {
+   "name": "Augusta Taurinorum",
+   "h3a_count": 153,
+   "mixture_subset_n": 153,
+   "aoristic_eff_n": 144,
+   "reconciles": true
+  },
+  {
+   "name": "Castrimoenium",
+   "h3a_count": 152,
+   "mixture_subset_n": 152,
+   "aoristic_eff_n": 123,
+   "reconciles": true
+  },
+  {
+   "name": "Segusio",
+   "h3a_count": 152,
+   "mixture_subset_n": 152,
+   "aoristic_eff_n": 148,
+   "reconciles": true
+  },
+  {
+   "name": "Valentia (Hispania Tarraconensis) (1)",
+   "h3a_count": 152,
+   "mixture_subset_n": 152,
+   "aoristic_eff_n": 145,
+   "reconciles": true
+  },
+  {
+   "name": "Velitrae",
+   "h3a_count": 151,
+   "mixture_subset_n": 151,
+   "aoristic_eff_n": 123,
+   "reconciles": true
+  },
+  {
+   "name": "Scarbantia",
+   "h3a_count": 150,
+   "mixture_subset_n": 150,
+   "aoristic_eff_n": 148,
+   "reconciles": true
+  },
+  {
+   "name": "Burnum",
+   "h3a_count": 147,
+   "mixture_subset_n": 147,
+   "aoristic_eff_n": 141,
+   "reconciles": true
+  },
+  {
+   "name": "Catania",
+   "h3a_count": 147,
+   "mixture_subset_n": 147,
+   "aoristic_eff_n": 132,
+   "reconciles": true
+  },
+  {
+   "name": "Peltuinum",
+   "h3a_count": 146,
+   "mixture_subset_n": 146,
+   "aoristic_eff_n": 141,
+   "reconciles": true
+  },
+  {
+   "name": "Colonia Agrippinensis",
+   "h3a_count": 145,
+   "mixture_subset_n": 145,
+   "aoristic_eff_n": 141,
+   "reconciles": true
+  },
+  {
+   "name": "Nola",
+   "h3a_count": 144,
+   "mixture_subset_n": 144,
+   "aoristic_eff_n": 138,
+   "reconciles": true
+  },
+  {
+   "name": "Surrentum",
+   "h3a_count": 143,
+   "mixture_subset_n": 143,
+   "aoristic_eff_n": 142,
+   "reconciles": true
+  },
+  {
+   "name": "Allifae",
+   "h3a_count": 140,
+   "mixture_subset_n": 140,
+   "aoristic_eff_n": 139,
+   "reconciles": true
+  },
+  {
+   "name": "Interamna Nahars",
+   "h3a_count": 139,
+   "mixture_subset_n": 139,
+   "aoristic_eff_n": 131,
+   "reconciles": true
+  },
+  {
+   "name": "Aquae Sulis",
+   "h3a_count": 138,
+   "mixture_subset_n": 138,
+   "aoristic_eff_n": 127,
+   "reconciles": true
+  },
+  {
+   "name": "Brixia",
+   "h3a_count": 137,
+   "mixture_subset_n": 137,
+   "aoristic_eff_n": 123,
+   "reconciles": true
+  },
+  {
+   "name": "Capena",
+   "h3a_count": 137,
+   "mixture_subset_n": 137,
+   "aoristic_eff_n": 77,
+   "reconciles": true
+  },
+  {
+   "name": "Luguvalium",
+   "h3a_count": 137,
+   "mixture_subset_n": 137,
+   "aoristic_eff_n": 133,
+   "reconciles": true
+  },
+  {
+   "name": "Iol",
+   "h3a_count": 136,
+   "mixture_subset_n": 136,
+   "aoristic_eff_n": 109,
+   "reconciles": true
+  },
+  {
+   "name": "Aquinum",
+   "h3a_count": 135,
+   "mixture_subset_n": 135,
+   "aoristic_eff_n": 128,
+   "reconciles": true
+  },
+  {
+   "name": "Asseria",
+   "h3a_count": 135,
+   "mixture_subset_n": 135,
+   "aoristic_eff_n": 132,
+   "reconciles": true
+  },
+  {
+   "name": "Turris Libisonis",
+   "h3a_count": 135,
+   "mixture_subset_n": 135,
+   "aoristic_eff_n": 121,
+   "reconciles": true
+  },
+  {
+   "name": "Histonium",
+   "h3a_count": 134,
+   "mixture_subset_n": 134,
+   "aoristic_eff_n": 133,
+   "reconciles": true
+  },
+  {
+   "name": "Augusta Raurica",
+   "h3a_count": 133,
+   "mixture_subset_n": 133,
+   "aoristic_eff_n": 126,
+   "reconciles": true
+  },
+  {
+   "name": "Corstopitum",
+   "h3a_count": 133,
+   "mixture_subset_n": 133,
+   "aoristic_eff_n": 129,
+   "reconciles": true
+  },
+  {
+   "name": "Lanuvium",
+   "h3a_count": 131,
+   "mixture_subset_n": 131,
+   "aoristic_eff_n": 115,
+   "reconciles": true
+  },
+  {
+   "name": "Tarquinii",
+   "h3a_count": 130,
+   "mixture_subset_n": 130,
+   "aoristic_eff_n": 117,
+   "reconciles": true
+  },
+  {
+   "name": "Lauriacum",
+   "h3a_count": 128,
+   "mixture_subset_n": 128,
+   "aoristic_eff_n": 120,
+   "reconciles": true
+  },
+  {
+   "name": "Vindobona",
+   "h3a_count": 128,
+   "mixture_subset_n": 128,
+   "aoristic_eff_n": 118,
+   "reconciles": true
+  },
+  {
+   "name": "Oescus",
+   "h3a_count": 127,
+   "mixture_subset_n": 127,
+   "aoristic_eff_n": 120,
+   "reconciles": true
+  },
+  {
+   "name": "Siscia",
+   "h3a_count": 126,
+   "mixture_subset_n": 126,
+   "aoristic_eff_n": 110,
+   "reconciles": true
+  },
+  {
+   "name": "Ateste",
+   "h3a_count": 123,
+   "mixture_subset_n": 123,
+   "aoristic_eff_n": 123,
+   "reconciles": true
+  },
+  {
+   "name": "Minturnae",
+   "h3a_count": 123,
+   "mixture_subset_n": 123,
+   "aoristic_eff_n": 112,
+   "reconciles": true
+  },
+  {
+   "name": "Reate",
+   "h3a_count": 120,
+   "mixture_subset_n": 120,
+   "aoristic_eff_n": 112,
+   "reconciles": true
+  },
+  {
+   "name": "Caere",
+   "h3a_count": 118,
+   "mixture_subset_n": 118,
+   "aoristic_eff_n": 81,
+   "reconciles": true
+  },
+  {
+   "name": "Emporiae",
+   "h3a_count": 118,
+   "mixture_subset_n": 118,
+   "aoristic_eff_n": 112,
+   "reconciles": true
+  },
+  {
+   "name": "Ferentinum",
+   "h3a_count": 117,
+   "mixture_subset_n": 117,
+   "aoristic_eff_n": 109,
+   "reconciles": true
+  },
+  {
+   "name": "Ampelum",
+   "h3a_count": 116,
+   "mixture_subset_n": 116,
+   "aoristic_eff_n": 114,
+   "reconciles": true
+  },
+  {
+   "name": "Mursa",
+   "h3a_count": 115,
+   "mixture_subset_n": 115,
+   "aoristic_eff_n": 107,
+   "reconciles": true
+  },
+  {
+   "name": "Rider",
+   "h3a_count": 115,
+   "mixture_subset_n": 115,
+   "aoristic_eff_n": 114,
+   "reconciles": true
+  },
+  {
+   "name": "Ticinum",
+   "h3a_count": 115,
+   "mixture_subset_n": 115,
+   "aoristic_eff_n": 111,
+   "reconciles": true
+  },
+  {
+   "name": "Casinum",
+   "h3a_count": 114,
+   "mixture_subset_n": 114,
+   "aoristic_eff_n": 93,
+   "reconciles": true
+  },
+  {
+   "name": "Asculum",
+   "h3a_count": 113,
+   "mixture_subset_n": 113,
+   "aoristic_eff_n": 109,
+   "reconciles": true
+  },
+  {
+   "name": "Bononia",
+   "h3a_count": 113,
+   "mixture_subset_n": 113,
+   "aoristic_eff_n": 99,
+   "reconciles": true
+  },
+  {
+   "name": "Raetinium",
+   "h3a_count": 113,
+   "mixture_subset_n": 113,
+   "aoristic_eff_n": 108,
+   "reconciles": true
+  },
+  {
+   "name": "Simitthus",
+   "h3a_count": 113,
+   "mixture_subset_n": 113,
+   "aoristic_eff_n": 86,
+   "reconciles": true
+  },
+  {
+   "name": "Argentoratum",
+   "h3a_count": 111,
+   "mixture_subset_n": 111,
+   "aoristic_eff_n": 110,
+   "reconciles": true
+  },
+  {
+   "name": "Drobeta",
+   "h3a_count": 111,
+   "mixture_subset_n": 111,
+   "aoristic_eff_n": 105,
+   "reconciles": true
+  },
+  {
+   "name": "Ratiaria",
+   "h3a_count": 110,
+   "mixture_subset_n": 110,
+   "aoristic_eff_n": 102,
+   "reconciles": true
+  },
+  {
+   "name": "Rusellae",
+   "h3a_count": 110,
+   "mixture_subset_n": 110,
+   "aoristic_eff_n": 106,
+   "reconciles": true
+  },
+  {
+   "name": "Singidunum",
+   "h3a_count": 110,
+   "mixture_subset_n": 110,
+   "aoristic_eff_n": 102,
+   "reconciles": true
+  },
+  {
+   "name": "Iguvium",
+   "h3a_count": 109,
+   "mixture_subset_n": 109,
+   "aoristic_eff_n": 108,
+   "reconciles": true
+  },
+  {
+   "name": "Valeria",
+   "h3a_count": 106,
+   "mixture_subset_n": 106,
+   "aoristic_eff_n": 106,
+   "reconciles": true
+  },
+  {
+   "name": "Malvesia",
+   "h3a_count": 105,
+   "mixture_subset_n": 105,
+   "aoristic_eff_n": 97,
+   "reconciles": true
+  },
+  {
+   "name": "Teanum Sidicinum",
+   "h3a_count": 104,
+   "mixture_subset_n": 104,
+   "aoristic_eff_n": 95,
+   "reconciles": true
+  },
+  {
+   "name": "Augusta Bagiennorum",
+   "h3a_count": 103,
+   "mixture_subset_n": 103,
+   "aoristic_eff_n": 102,
+   "reconciles": true
+  },
+  {
+   "name": "Anderitum",
+   "h3a_count": 102,
+   "mixture_subset_n": 102,
+   "aoristic_eff_n": 101,
+   "reconciles": true
+  },
+  {
+   "name": "Bergomum",
+   "h3a_count": 101,
+   "mixture_subset_n": 101,
+   "aoristic_eff_n": 100,
+   "reconciles": true
+  },
+  {
+   "name": "Doclea",
+   "h3a_count": 101,
+   "mixture_subset_n": 101,
+   "aoristic_eff_n": 95,
+   "reconciles": true
+  },
+  {
+   "name": "Eburacum",
+   "h3a_count": 101,
+   "mixture_subset_n": 101,
+   "aoristic_eff_n": 97,
+   "reconciles": true
+  }
+ ]
+}
