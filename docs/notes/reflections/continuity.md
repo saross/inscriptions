@@ -19,13 +19,13 @@ last-updated: 2026-06-19 SESSION CLOSE (**CONSOLIDATION TAIL CLEARED — H2.1 su
 
 ---
 
-## Remaining work — definitive inventory (updated 2026-06-19 session close, the consolidation tail)
+## Remaining work — definitive inventory (updated 2026-06-20 — ANALYTICAL PROGRAMME COMPLETE; only the write-up remains)
 
 **Provenance:** distilled from `planning/prereg-obligations-audit-2026-06-18.md` §4, updated
-through the 2026-06-19 session close. The session-close beacon (frontmatter `last-updated`)
-carries the full run results; this is the durable forward plan.
+through 2026-06-20. The session-close beacon (frontmatter `last-updated`) carries the full run
+results; this is the durable forward plan.
 
-**Completed this session (2026-06-18 → 2026-06-19):**
+**Completed 2026-06-18 → 2026-06-19 (the consolidation tail):**
 
 - **H2.1 supplementary wave — all 29 units** (`1a4a9b1`): C5/C6 (DM/NegBin do not move α;
   multinomial adequate), C11 (input-level r; 2/29 flag), H2.2 (15/29), H2.3 (8/29), H2.4, C16.
@@ -39,44 +39,64 @@ carries the full run results; this is the durable forward plan.
 - **Lit-scout** (`423832a`): the bias is documented (three-step plug-in + aoristic
   pointwise-vs-mass); the conjunction is novel; 13 papers staged to Zotero.
 
+**Completed / decided 2026-06-19 → 2026-06-20 (the analytical close):**
+
+- **D13 α-as-translator — DISCHARGED** (the last preregistered obligation). Run
+  `runs/2026-06-19-d13-alpha-as-translator/` (commits `549c3a1`→`be91a65`; Obs 107
+  `f326854`). Option A: standalone per-city mixture α for the 163 Latin cities with N ≥ 100
+  (162/163 converge), added as a covariate to the H3a Mundlak NBR. **Clean null on β_within**
+  (+0.431 → +0.422; 0.14 posterior SD), **robust under multiple imputation** (M=50, FMI 0.5 %,
+  between-imputation variance ≈ 0) — so the reachability-driven per-city α unreliability does
+  not bite. The H3a within-province population–epigraphy scaling is **not confounded by
+  per-city editorial-convention intensity**; city-level confirmation of Obs 94 (Spearman
+  −0.107 vs −0.11). The lodged raw-count H3a primary is vindicated on the evidence.
+- **H4 province-scale Layer B — CLOSED by adopting q_u** (Shawn 2026-06-20). The
+  province-from-empire residual trajectory `q_u` (nested triple, `63e90ce`/`bc824c8`; Obs 103)
+  **is** the province-scale Layer B deliverable for this paper — validated-by-inheritance from
+  the city fit (5.6 × 10⁻¹⁶ wiring guard), consistent exponent, already analysed (Obs 103/104/
+  105). A **standalone province-as-unit inversion is DEFERRED to the follow-up paper** (prereg
+  §"Province-scale extension"): it would need a province-level scaling exponent (not the
+  within-province β) and has no validation anchor (no province-apogee analogue).
+- **H6 baorista cross-check — DEFERRED to the follow-up paper** (Shawn 2026-06-20; Decision 3
+  Option D). Infra installed + smoke-tested (`runs/2026-05-03-baorista-install/`). It validates
+  the aoristic substrate, **not** the deconvolution (the paper's novelty); the flexible-null
+  annex already worked the Bayesian-null robustness question (Obs 93, NO-GO); baorista is the
+  HMM follow-up's natural emission layer.
+- **B′ hierarchical city-α map — PARKED** (Shawn 2026-06-20). Not needed for D13: A's MI shows
+  the per-city α unreliability did not inflate β_within (FMI 0.5 %), so B′ adds nothing to the
+  confound question (and its shrinkage would suppress the within-province α variation the test
+  targets). Its only live rationale is the **descriptive city-level convention-intensity map**
+  (all 817 cities) — a paper-scope want, deferrable. Decide post-travel under supervision
+  (multi-day; do NOT start as an unattended run); candidate for the re-application / follow-up.
+
 **REMAINING (excluding unforeseen follow-ups):**
-
-*Preregistered obligations (must-do):*
-
-1. **D13 α-as-translator** for H3a — per-**city** mixture α as an NBR covariate (N ≥ 100
-   cities). NOT delivered by the supplementary wave (unit-level: 29 provinces/aggregates);
-   needs a separate per-city mixture, feasibility gated by how many cities clear the
-   reachability floor (worst-case N ≈ 2,000; Decision 34 / A01 §A5.7).
-
-*Optional robustness / exploratory (not gating):*
-
-2. **H6 — Decision-3 baorista cross-check** (forward-fit vs Bayesian-aoristic; infra installed
-   + smoke-tested on sapphire; ~1 day; needs design + full-LIRE-width revalidation first).
-3. **H4 — province-scale Layer B + diagnostic** (Layer A covers 45 provinces; Layer
-   B/diagnostic partial). **Needs a Shawn decision first:** distinct from the q_u
-   nested-triple province tier already computed (Obs 102/103)? and what anchors a
-   province-scale validation gate (no city-apogee analogue)?
-4. **Lit-scout deeper chaining** (optional): forward-chain Bakk 2013 / Xia 2020 for a
-   magnitude-matching simulation + novelty-positioning.
-
-*Code-quality (Shawn's standardisation point — slated, not for now):*
-
-5. **A reusable sapphire-parallel-run module** — so each run script stops reinventing the
-   `ProcessPoolExecutor` / spawn / cgroup / `n_jobs` infra (the C10 scripts had to be
-   retrofitted this session; the cc-grid and supp-wave already carry their own copies).
 
 *The main remaining body of work:*
 
-6. **The write-up** — empirical-first / interpretation-later structure (Obs 101); not started.
+1. **The write-up** — empirical-first / interpretation-later structure (Obs 101); not started.
+   This is now the only substantive task. The gate Shawn set ("start the write-up once all
+   analyses are complete") is **met**.
 
-**Done — NOT remaining:** the H2.1 supplementary wave; H9 confirmatory letter-mass H3a; the
-C10 aoristic-MC question (resolved — method artefact); the lit-scout + Zotero staging; Latin
-variants (Obs 106); province-size regression (Obs 105); the full §5 suite; D11 / D12 / B4;
+*Optional / slated (not gating, not for now):*
+
+2. **Lit-scout deeper chaining** — forward-chain Bakk 2013 / Xia 2020 for a magnitude-matching
+   simulation + novelty-positioning.
+3. **A reusable sapphire-parallel-run module** — so each run script stops reinventing the
+   `ProcessPoolExecutor` / spawn / cgroup / `n_jobs` infra.
+
+*Carried to the follow-up paper:* standalone province-scale Layer B (H4), baorista (H6),
+and — optionally — the B′ city-α convention-intensity map.
+
+**Done — NOT remaining:** **D13 α-as-translator (discharged, Obs 107)**; the H2.1
+supplementary wave; H9 confirmatory letter-mass H3a; the C10 aoristic-MC question (resolved —
+method artefact); the lit-scout + Zotero staging; Latin variants (Obs 106); province-size
+regression (Obs 105); the full §5 suite (incl. q_u province tier, Obs 103); D11 / D12 / B4;
 H3a / H3b / H3c; **all four OSF amendments lodged** (no preregistration lodgement outstanding).
 
-**Status (2026-06-19):** the methodological core and the confirmatory programme are **done**.
-What remains is the **write-up** (the main body) plus a couple of bounded, mostly infra-ready
-sensitivities (D13; optional H6 / H4) and the slated parallel-run-module standardisation.
+**Status (2026-06-20):** the methodological core, the confirmatory programme, **and every
+preregistered obligation are DONE** — D13, the last one, is discharged. H4 is closed (q_u),
+H6 and B′ are deferred/parked. **The only remaining substantive work is the write-up**
+(plus optional lit-chaining and the slated parallel-run module).
 
 ---
 
