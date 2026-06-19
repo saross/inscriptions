@@ -5798,3 +5798,266 @@ definition).
 `Amendment-01`, `Amendment-02-latin-frame`,
 `obs-94`, `obs-95`, `4b73137`,
 `runs-2026-06-20-a01-content-residual`, `content-residual-results-json`
+
+## Obs 109 — 2026-06-18 [RESULT]: H9 letter-mass H3a confirmatory — within-province population–epigraphy scaling is SUPPORTED on the content measure too (both acts and content corroborate H3a)
+
+### The finding
+
+The H9 cross-sectional **confirmatory** H3a within-between (Mundlak) negative-binomial
+regression with **per-city letter-count mass** as the response (in place of inscription
+count) — promoted from exploratory H9 to a confirmatory letter-mass H3a by OSF
+Amendment 01 §A5.2 — was **run on 2026-06-18** (zbook-ubuntu, HEAD `2d95f62`) and is
+**SUPPORTED on every frame**. The verdict previously lived only in commit `ec99343`
+("results(h9): letter-mass H3a confirmatory — f_within supported (all frames)") with
+the dir's BUILD-NOTES still stamped "CODE BUILT, NOT RUN"; this Obs and the new
+`REPORT.md` surface it (the documentation-uplift Tier-1 item 1).
+
+**Measure (lodged, A01 §A5.1):** per-city letter mass = summed Latin-A–Z
+`letter_count_conservative` (Greek excluded), over the city's date-window-filtered,
+Hanson-matched, Rome-excluded inscriptions.
+
+**Headline — PRIMARY = Latin-speaking provinces (Amendment 02), 817 cities / 39 provinces:**
+
+| Quantity | Value |
+|---|---|
+| f_within (unweighted) | **median 0.448, 95 % CI [0.364, 0.535]** — SUPPORTED |
+| P(f_within > 0.05 / 0.10 / 0.20) | 1.000 / 1.000 / 1.000 |
+| β_within | 0.681 [0.595, 0.769] |
+| β_between | −0.018 [−0.518, 0.499] (crosses 0; descriptive) |
+| convergence | R̂ 1.0000, min ESS-bulk 1,655, 0 divergences |
+
+**Weighted variants (Decision 32 analogue):** population-weighted 0.626 [0.510, 0.744]
+SUPPORTED; letter-weighted 0.607 [0.495, 0.720] SUPPORTED. **Sensitivities:**
+standardised f_within 0.446 (scale-invariant ✓); interpretive letter mass 0.444
+SUPPORTED; **secondary/context empire frame** (1,044 cities) f_within 0.356
+[0.279, 0.441] SUPPORTED. **Bayesian R²:** response 0.206 [0.133, 0.307], latent 0.382
+[0.333, 0.429]. **OLS log-log slope (SR1 content variant):** 0.470 (SE 0.058; CI
+[0.356, 0.584]), R² 0.075, n 809 (8 zero-mass dropped). **PPC:** 10-check suite, 0
+critical / 0 grey / 2 minor / 8 pass; #10 posterior-predictive Moran's I (k=8) PASS.
+
+### Why this matters
+
+1. **Both measures corroborate H3a.** Inscription count (the 2026-06-04 H3a run) and
+   letter-mass content both return a SUPPORTED within-province population effect; the
+   two-measure framework's confirmatory leg is discharged on the content side.
+2. **Scoped correctly.** The letter-mass *confirmatory* family is bounded to the
+   cross-section; letter-mass *temporal/detection* stays exploratory (Grid B FAIL +
+   corpus-wide unreachable, A01 §A5.2). No over-claim.
+3. **Closes the documentation gap.** The result was real but invisible to the Obs
+   register and contradicted by its own BUILD-NOTES banner; now lodged.
+
+### Caveats / methodological notes
+
+- **Cross-section only** (A01 §A5.2/§A5.5); no letter-mass temporal claim.
+- **8 zero-mass cities** carry `letter_mass = 0` in the NBR frame, dropped from the OLS
+  comparator (log undefined).
+- **PPC minors** (#6 Bayesian p-values, #9 province residual dispersion) are expected
+  for the heavier-tailed letter response under count-pinned bounds; reported, not faulted.
+- **No brms shadow / no standalone H3c** for H9 (the confirmatory H9 is the
+  cross-sectional NBR; PPC Moran's I #10 is the spatial check carried).
+
+### Related observations and artefacts
+
+**Obs 108** (A01 §A5.4 content residual): uses the same H9 letter-mass frame builder;
+shows the content over-production channel is orthogonal to the scaling channel.
+
+**Artefacts**:
+`runs/2026-06-18-h9-letter-mass-h3a/REPORT.md` (source report; numbers verified against
+JSON; added in commit `755e76d`);
+`runs/2026-06-18-h9-letter-mass-h3a/outputs/h9-results.json` (seed 20260618; primary
+Latin + standardised/interpretive sensitivities + empire secondary; source for all
+numbers in this Obs);
+`runs/2026-06-18-h9-letter-mass-h3a/outputs/ppc-results.json` (10-check suite);
+`runs/2026-06-18-h9-letter-mass-h3a/run.log` (full run trace; 2026-06-18T08:35:24Z);
+`runs/2026-06-18-h9-letter-mass-h3a/BUILD-NOTES.md` (build-decision record);
+commit `ec99343` (the run's results commit, where the verdict previously lived only).
+
+### Findable later
+
+`H9`, `letter-mass-H3a`, `letter-mass-confirmatory`, `content-measure-H3a`,
+`two-measure-framework`, `A01-A5.2`, `A01-A5.1`, `letter-count-conservative`,
+`f-within-supported-letter-mass`, `f-within-0-448`, `CI-0-364-0-535`,
+`beta-within-0-681`, `pop-weighted-0-626`, `letter-weighted-0-607`,
+`empire-secondary-0-356`, `standardised-0-446`, `interpretive-0-444`,
+`bayes-r2-response-0-206`, `bayes-r2-latent-0-382`, `OLS-loglog-0-470`,
+`PPC-minor-2-of-10`, `PP-Morans-I-pass`, `0-divergences`, `R-hat-1-0`,
+`817-cities`, `39-provinces`, `latin-primary`, `Amendment-02`,
+`both-measures-corroborate-H3a`, `acts-and-content`, `cross-section-only`,
+`grid-B-fail-scope`, `ec99343`, `verdict-only-in-commit`,
+`BUILD-NOTES-flipped`, `documentation-uplift-tier-1`,
+`obs-108`, `2d95f62`, `seed-20260618`,
+`runs-2026-06-18-h9-letter-mass-h3a`, `h9-results-json`
+
+## Obs 110 — 2026-06-18 [METHODOLOGY / RESULT]: C10 aoristic-MC validity — point-date aoristic-MC recovers planted α on synthetic (C10 stands); the real-empire point-collapse is a METHOD ARTEFACT driven by θ-contamination (R2), not interval width (R1)
+
+### The finding
+
+The preregistered C10 aoristic-Monte-Carlo supplementary on the real-data primary
+(prereg §3/§4/§6; Decision 28) ran in **two waves** (first wave 2026-06-18; realism-graded
+follow-up "(ii)" 2026-06-19; base_seed 20260618). Both waves were complete but the dir's
+BUILD-NOTES said "BUILT, NOT RUN" with 0 Obs; this Obs and the new top-level `REPORT.md`
+surface the verdict (documentation-uplift Tier-1 item 2).
+
+**Wave 1 — verdict "(a) SUPPORTED — point-date aoristic-MC tracks planted α; C10 stands"**
+(SPEC §3b decision rule). On synthetic ground truth (planted α ∈ {0.30, 0.50, 0.68, 0.80};
+N_synth 3000; N_MC 10; 3 seeds; p_gen = empire-posterior-median) **both arms recover the
+planted α within tolerance**: mass arm max |Δα| = **0.043**, point-date arm max |Δα| =
+**0.046**. The point-date arm is NOT flat in true α (spread 0.523, slope 1.053) and is NOT
+near the pilot floor — i.e. it works in the controlled setting.
+
+**Wave 2 — the real-empire point-collapse is a method artefact, decomposed.** On the real
+empire the point-date arm collapses (point-collapse α ≈ 0.10 vs mass-preserving α ≈ 0.62,
+first-wave 1c reference). The realism-graded follow-up isolates the cause across variants
+R0–R3 and R1+R2:
+
+| variant | mass recovers | mean arm divergence | point-date median α | reproduces collapse |
+|---|---|---|---|---|
+| R0 (control) | True | 0.003 | 0.622 | False |
+| R1 (interval width) | False | 0.206 | 0.438 | False |
+| R2 (θ-contamination) | True | 0.224 | 0.301 | **True** |
+| R3 (control) | True | 0.004 | 0.614 | False |
+| R1+R2 | True | 0.197 | 0.318 | **True** |
+
+**The collapse is REPRODUCED by R2 and R1+R2, NOT by R0/R3/R1 alone** — i.e. it is driven
+by **θ-contamination (R2): the three-step classify-then-analyse plug-in bias**, NOT by
+interval width (R1). Controls (R0, R3) stay clean.
+
+### Why this matters
+
+1. **C10 stands as a supplementary.** The aoristic-MC recovers the deconvolution's α when
+   the ground truth is known; the method is validated in the controlled setting.
+2. **The real-empire collapse is correctly classified as a method limitation, not an
+   α-sensitivity.** By the prereg rule the aoristic-MC divergence flag is explicitly NOT an
+   amendment trigger; the point-collapse is the footprint of the plug-in estimator's
+   θ-contamination, so the mass-preserving aoristic-MC is the sound read. No amendment fired.
+3. **Pinpoints the mechanism.** Distinguishing R2 (θ-contamination) from R1 (width) tells
+   the write-up exactly why naive point-date aoristic analysis under-attributes α — the
+   classify-then-analyse pipeline, not the date-interval widths.
+
+### Caveats / methodological notes
+
+- **N_MC = 10 in the validity waves** (the C10 SPEC pins N_MC and the 1.5× divergence flag
+  for the production aoristic-MC; the validity test uses N_MC 10 for the synthetic recovery).
+- **The point-collapse is real on the empire** — it is the artefact being explained, not a
+  bug; the mass-preserving arm is the reportable quantity.
+- **Synthetic recovery uses p_gen = empire-posterior-median** as the planted genuine shape.
+
+### Related observations and artefacts
+
+**Obs 91** (θ_gen calibration corrected 0.155 → 0.025): the θ parameterisation whose
+contamination (R2) drives the C10 point-collapse is the same θ machinery re-derived there.
+
+**Artefacts**:
+`runs/2026-06-18-c10-validity-test/REPORT.md` (top-level report; numbers verified against
+the two outputs reports; added in commit `755e76d`);
+`runs/2026-06-18-c10-validity-test/outputs/VALIDITY-REPORT.md` (wave 1 — synthetic recovery,
+slab-concentration diagnostic, decision-rule verdict);
+`runs/2026-06-18-c10-validity-test/outputs/followup-ii-report.md` (wave 2 — R0–R3/R1+R2
+decomposition);
+`runs/2026-06-18-c10-validity-test/outputs/results.json` +
+`followup-ii-results.json` (persisted numbers; base_seed 20260618; source for all numbers);
+`runs/2026-06-18-c10-validity-test/outputs/run-c10-full.log` (run trace);
+`runs/2026-06-18-c10-validity-test/SPEC.md` (decision rule + N_MC/1.5× pins).
+
+### Findable later
+
+`C10`, `aoristic-MC`, `aoristic-monte-carlo`, `point-date-collapse`,
+`method-artefact`, `theta-contamination`, `R2-theta-contamination`,
+`R1-interval-width`, `three-step-plug-in-bias`, `classify-then-analyse`,
+`C10-stands`, `verdict-a-supported`, `synthetic-recovery`,
+`max-delta-alpha-0-046`, `mass-arm-0-043`, `point-collapse-0-10`,
+`mass-preserving-0-62`, `R0-control-clean`, `R3-control-clean`,
+`R1-plus-R2-reproduces`, `R2-reproduces`, `not-an-amendment-trigger`,
+`mass-preserving-is-sound-read`, `Decision-28`, `prereg-supplementary`,
+`N-MC-10`, `1-5x-divergence-flag`, `base-seed-20260618`,
+`two-result-waves`, `BUILD-NOTES-flipped`, `documentation-uplift-tier-1`,
+`obs-91`, `theta-gen`,
+`runs-2026-06-18-c10-validity-test`, `VALIDITY-REPORT`, `followup-ii-report`
+
+## Obs 111 — 2026-06-18 [RESULT]: H2.1 supplementary wave — the canonical all-29-unit production read-off; DM/NB do not move α, the multinomial primary is adequate, and the H2.x supplementaries are discharged
+
+### The finding
+
+The H2.1 supplementary wave — the **canonical all-29-unit production run** for the H2.1
+supplementaries (C5/C6/C11/C13/C14/C16) under the lodged + Amendment-04 cross-classified
+likelihood — was **executed 2026-06-18** (generated 2026-06-18T13:30 UTC). The dir's SPEC
+said "DRAFT — pre-launch sign-off pending", the BUILD-NOTES said "Nothing has been run",
+the REPORT lacked a Status/Verdict banner, and there were 0 Obs; this Obs and the flipped
+banners surface it (documentation-uplift Tier-1 item 3). Numbers below re-read from the
+dir's own `outputs/` reports.
+
+**C5/C6 — model comparison (does the observation family move α?).** Across all 29 units the
+**Dirichlet-multinomial (DM) and rescaled-negative-binomial (NB) supplementaries do NOT
+move α** — the |Δα| column is 0.0 for every unit in `model-comparison.md`. Multinomial PPC
+dispersion ratio ≈ 1 for almost all units; **overdispersion is warranted in only 4/29**
+(empire-aggregate, latin-aggregate, Numidia, Pompeii). The multinomial primary is adequate;
+cross-family PSIS-LOO is correctly dropped (inapplicable across the joint-multinomial vs
+per-bin-NB structures).
+
+**C11 — trapezoidal-aoristic (input-level r, Decision-4 measure).** **2/29 flag
+report-alongside** (r < 0.95): empire-aggregate 0.9402, Aquileia 0.9269.
+
+**C13 — boundary-step reduction.** **15/29 (52 %)** meet the ≥50 % mean reduction target.
+
+**C14 — threshold convergence.** **8/29** meet r ≥ 0.9 on all threshold pairs; the rest are
+below the N < 2,000 reachability floor at tight T and are explicitly caveated, not failed.
+
+**C16 — α descriptive read-off (all 29 units).** empire-aggregate α 0.6798 [0.6649, 0.6970];
+latin-aggregate α 0.7387 [0.6596, 0.7893]; per-unit table spans Pompeii 0.0156 (lowest) to
+Salona 0.9893 (highest). **empire-aggregate is the single per-fit convergence FAIL** (NB arm
+R̂ = 1.0126, ESS 610) — reported as a known limitation, not amended.
+
+### Why this matters
+
+1. **The multinomial primary is vindicated.** The pre-stated DM/NB trigger (does the family
+   move α?) returns a clean no across all 29 units; the supplementary-likelihood obligation
+   (C5/C6) is discharged in favour of the lodged primary.
+2. **The H2.x supplementaries are all accounted for.** C11/C13/C14/C16 each return a
+   reported result with its caveats; nothing is a gate failure (the boundary-step and
+   threshold-convergence shortfalls are below-floor caveats, the known empire-aggregate
+   behaviour).
+3. **Closes the documentation gap on a production result.** The canonical α read-off for all
+   29 units was real but invisible (DRAFT banners, 0 Obs); now lodged.
+
+### Caveats / methodological notes
+
+- **empire-aggregate under-converges** (NB arm R̂ 1.0126) — the known aggregate behaviour,
+  reported as a limitation, not amended.
+- **C14 / C13 shortfalls are reachability-floor caveats** (N < 2,000 at tight T), not
+  failures.
+- **|Δα| reported to 1 dp as 0.0** in `model-comparison.md`; the per-unit JSONs carry the
+  finer differences (the largest raw shift is Pompeii, primary 0.0156 vs DM 0.0006 / NB
+  0.0003 — a near-zero-α unit).
+- **C10 EXCLUDED (held)** from this wave (run separately; Obs 110).
+
+### Related observations and artefacts
+
+**Obs 110** (C10 aoristic-MC validity): the C10 supplementary held out of this wave and run
+separately.
+
+**Artefacts**:
+`runs/2026-06-18-h2.1-supplementary-wave/outputs/REPORT.md` (canonical all-29 read-off;
+Status/Verdict banner added in commit `755e76d`; source numbers);
+`runs/2026-06-18-h2.1-supplementary-wave/outputs/model-comparison.md` (C5/C6 — |Δα| 0.0
+all units; overdispersion 4/29);
+`runs/2026-06-18-h2.1-supplementary-wave/outputs/trapezoidal.md` (C11 — 2/29 flag);
+`runs/2026-06-18-h2.1-supplementary-wave/outputs/h2.2-boundary-steps.md` (C13 — 15/29);
+`runs/2026-06-18-h2.1-supplementary-wave/outputs/h2.3-threshold-convergence.md` (C14 — 8/29);
+`runs/2026-06-18-h2.1-supplementary-wave/outputs/h2.4-stratified.md` (C15 internal-consistency);
+`runs/2026-06-18-h2.1-supplementary-wave/SPEC.md` (the executed production spec).
+
+### Findable later
+
+`H2.1-supplementary-wave`, `supp-wave`, `all-29-units`, `production-readoff`,
+`canonical-all-29`, `C5-C6`, `model-comparison`, `DM-does-not-move-alpha`,
+`NB-does-not-move-alpha`, `delta-alpha-0-0`, `multinomial-primary-adequate`,
+`overdispersion-4-of-29`, `empire-latin-numidia-pompeii`,
+`C11-trapezoidal`, `2-of-29-flag`, `empire-0-9402`, `aquileia-0-9269`,
+`C13-boundary-steps`, `15-of-29`, `52-percent`,
+`C14-threshold-convergence`, `8-of-29`, `reachability-floor-caveat`,
+`C16-alpha-readoff`, `empire-alpha-0-6798`, `latin-agg-0-7387`,
+`pompeii-0-0156`, `salona-0-9893`, `empire-aggregate-converge-fail`,
+`R-hat-1-0126`, `known-limitation-not-amended`, `cross-classified-likelihood`,
+`Amendment-04`, `C10-excluded-held`, `DRAFT-banner-flipped`,
+`SPEC-executed`, `documentation-uplift-tier-1`, `obs-110`,
+`runs-2026-06-18-h2.1-supplementary-wave`, `model-comparison-md`
