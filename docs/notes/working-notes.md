@@ -5668,3 +5668,133 @@ commits `549c3a1` / `19653c6` / `35cda38` / `a0fc81c` / `be91a65`.
 `obs-94`, `obs-95`, `obs-90`,
 `549c3a1`, `19653c6`, `35cda38`, `a0fc81c`, `be91a65`,
 `runs-2026-06-19-d13-alpha-as-translator`, `h3a-alpha-translator-results-json`
+
+## Obs 108 — 2026-06-20 [RESULT / METHODOLOGY]: Amendment 01 §A5.4 content residual — the content (letters-per-act) and scaling (acts-per-population) over-production channels are statistically orthogonal; the two measures index different things
+
+### The finding
+
+The pre-specified, exploratory **content residual** of OSF Amendment 01 §A5.4 —
+the project's single outstanding *analytical* preregistration item (AM01-d in the
+`planning/prereg-obligations-coverage-sweep-2026-06-20.md` sweep; previously only
+narratively mentioned, never computed) — is now computed and reported
+descriptively. **Descriptive only: A01 §A5.4 pre-commits to no threshold and no
+verdict; this changes nothing confirmatory.**
+
+**Content residual (A01 §A5.4 definition, verbatim).** OLS `log(letter_mass) ~
+log(inscription_count)` across the cross-sectional cities; the per-city residual
+is the content residual (positive = more content per act than the corpus norm).
+On the **Latin primary frame** (817 cities, 39 provinces; Amendment 02): slope
+**0.971** (SE 0.015), **R² 0.841**, n = 809 (8 zero-mass cities dropped —
+inscriptions present, no readable Latin A–Z letters). The slope ≈ 1 ⇒ content
+scales **near-linearly** with act count (letters-per-act roughly constant
+corpus-wide); the content residual is the small per-city departure. Residual SD
+0.729 (log units), range [−3.91, +3.65].
+
+**Scaling residual (D12 SAMOC, recomputed on the Latin frame).** Pooled NBR
+power-law `insc ~ NB(exp(a + β·log_pop), φ)`, then `r_c = log(insc_c) − (â +
+β̂·log_pop_c)`. Latin pooled **β 0.687** (R̂ 1.0000, min ESS-bulk 5,422, 0
+divergences).
+
+**Self-check — D12 reproduction (PASS).** The same construction on the **empire**
+all-provinces frame gives pooled **β 0.5656**, reproducing the persisted D12
+all-provinces fit (`d12-scaling-residual-results.json`,
+`stage1_pooled_scaling.beta_median` = **0.5654**) to within MCMC noise (Δ ≈
+0.0002) — confirming the scaling-residual construction here is the canonical D12
+estimator.
+
+**Two-dimensional residual space — cross-tab (Latin, n = 809):**
+
+| quadrant | meaning | count |
+|---|---|---|
+| Q1 | hi scaling, hi content | 116 |
+| Q2 | lo scaling, hi content | 298 |
+| Q3 | lo scaling, lo content | 289 |
+| Q4 | hi scaling, lo content | 106 |
+
+**Association between the two residuals:** Latin Spearman ρ **+0.004** (p =
+0.913), Pearson r +0.008; empire Spearman ρ **+0.006** (p = 0.859). **The two
+residual axes are statistically orthogonal on both frames** — a centred,
+structureless cloud (`content-residual-space-map.png`).
+
+**Read (descriptive).** The two over-production channels are **independent**: a
+city's tendency to produce more inscriptions than its population predicts (the
+scaling residual — the H3a/Hanson signal) carries no information about whether it
+produces more letters per inscription than the corpus norm (the content
+residual). "Epigraphically prolific for its size" and "verbose per act" are
+separate city properties.
+
+### Why this matters
+
+1. **Closes the last outstanding analytical preregistration item.** AM01-d was
+   the single ✗ not-covered analysis in the 2026-06-20 coverage sweep (every
+   confirmatory obligation was already covered). With this run, every
+   pre-specified *analysis* is discharged; the only remaining outstanding items
+   are write-up-time reporting and explicitly deferred follow-ups.
+2. **Justifies reporting both measures.** The content measure is **not** a
+   rescaling of the act measure — if it were, the two residuals would be
+   collinear. The orthogonality shows the two-measure framework (acts + content)
+   is not redundant: each indexes a different thing.
+3. **Adds a clean descriptive axis.** The content residual is a new
+   characterisation axis for city epigraphic behaviour, orthogonal to the
+   population-scaling axis the confirmatory spine sits on — useful for the §5
+   descriptive write-up without entangling the confirmatory results.
+
+### Caveats / methodological notes
+
+- **Descriptive only** — no threshold, no verdict (A01 §A5.4). Cannot move any
+  confirmatory result.
+- **8 zero-mass Latin cities dropped** from the content-residual fit (43 on the
+  empire frame); reported, not imputed.
+- **Scaling residual recomputed per frame** for residual-space coherence; the
+  persisted D12 is the all-provinces aggregate fit (the cross-check, not the
+  source).
+- **Near-linear content–act slope (≈ 0.97)** ⇒ the content residual is a *small*
+  departure from constant letters-per-act; the orthogonality is the substantive
+  point, not the slope magnitude.
+- **Orthogonality is on the cross-section** — silent on temporal behaviour
+  (letter-mass temporal analyses remain exploratory and corpus-wide unreachable,
+  A01 §A5.2).
+
+### Related observations and artefacts
+
+**Obs 94** (deconvolution does NOT change H3a; raw-count scaling robust): the
+scaling residual here is the same Hanson over/under-production signal that Obs 94
+established is robust; this Obs shows the content channel is orthogonal to it.
+
+**Obs 95** (§5 sensitivity batch incl. D12 scaling residual): the D12 SAMOC
+construction reused (and reproduced as a self-check) here is the one Obs 95
+records.
+
+**Artefacts**:
+`runs/2026-06-20-a01-content-residual/REPORT.md` (source report; all numbers
+verified against JSON; commit `4b73137`);
+`runs/2026-06-20-a01-content-residual/outputs/content-residual-results.json`
+(OLS fit, per-frame residual summaries, cross-tab, seed, input sha256,
+provenance; source for all numbers in this Obs);
+`runs/2026-06-20-a01-content-residual/outputs/content-residual-per-city.csv`
+(per-city Latin-frame residual pair + quadrant);
+`runs/2026-06-20-a01-content-residual/outputs/content-residual-space-map.png`
+(the 2-D residual-space map);
+`runs/2026-06-20-a01-content-residual/spec.md` (the pre-specified spec);
+`planning/osf-amendment-2026-05-29-two-measure-framework.md` §A5.4 (the lodged
+definition).
+
+### Findable later
+
+`content-residual`, `A01-A5.4`, `AM01-d`, `inter-measure-delta`,
+`two-measure-framework`, `letters-per-act`, `acts-per-population`,
+`two-dimensional-residual-space`, `residual-space-map`, `scaling-residual`,
+`D12-scaling-residual`, `SAMOC-log-residual`, `pooled-NBR-power-law`,
+`content-residual-orthogonal`, `residuals-orthogonal`, `spearman-rho-0-004`,
+`spearman-p-0-913`, `pearson-r-0-008`, `near-zero-correlation`,
+`content-OLS-slope-0-971`, `content-OLS-R2-0-841`, `content-residual-SD-0-729`,
+`latin-pooled-beta-0-687`, `empire-pooled-beta-0-5656`,
+`D12-reproduction-self-check`, `D12-beta-0-5654`, `self-check-pass`,
+`8-zero-mass-cities-dropped`, `817-cities`, `39-provinces`, `n-809`,
+`quadrant-cross-tab`, `Q1-116`, `Q2-298`, `Q3-289`, `Q4-106`,
+`descriptive-no-verdict`, `exploratory-no-threshold`,
+`two-measures-not-redundant`, `prolific-vs-verbose-independent`,
+`last-analytical-prereg-item-closed`, `prereg-coverage-sweep-2026-06-20`,
+`Amendment-01`, `Amendment-02-latin-frame`,
+`obs-94`, `obs-95`, `4b73137`,
+`runs-2026-06-20-a01-content-residual`, `content-residual-results-json`
