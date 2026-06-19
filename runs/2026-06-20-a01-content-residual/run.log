@@ -1,0 +1,33 @@
+Initializing NUTS using jitter+adapt_diag...
+Multiprocess sampling (4 chains in 4 jobs)
+NUTS: [a_c, beta, inv_dispersion]
+[content-residual] A01 §A5.4 — DESCRIPTIVE (no verdict). seed=20260620
+[content-residual] row-level sanity vs prereg targets:
+  [OK     ] total_filtered                     target=  180609 observed=  180609 (+0.0000%)
+  [OK     ] rome_only                          target=   65435 observed=   65435 (+0.0000%)
+  [OK     ] rome_excluded                      target=  115174 observed=  115174 (+0.0000%)
+  [OK     ] hanson_city_assigned_filtered      target=  140575 observed=  140575 (+0.0000%)
+[content-residual] Latin (primary): 817 cities, 39 provinces
+[content-residual] empire (context): 1044 cities, 56 provinces
+[content-residual] OLS log(letter_mass) ~ log(inscription_count) ...
+  Latin : slope 0.971 R² 0.841 (n 809, dropped 8)
+  empire: slope 0.955 R² 0.816 (n 1001, dropped 43)
+[content-residual] D12 SAMOC scaling residual (Latin frame) ...
+/home/shawn/Code/inscriptions/.venv/lib/python3.13/site-packages/pymc/step_methods/hmc/quadpotential.py:321: RuntimeWarning: overflow encountered in dot
+  return 0.5 * np.dot(x, v_out)
+Sampling 4 chains for 2_000 tune and 1_500 draw iterations (8_000 + 6_000 draws total) took 2 seconds.
+Initializing NUTS using jitter+adapt_diag...
+Multiprocess sampling (4 chains in 4 jobs)
+NUTS: [a_c, beta, inv_dispersion]
+  Latin pooled β 0.687 (R̂ 1.0000, div 0)
+[content-residual] D12 SAMOC scaling residual (empire frame) ...
+/home/shawn/Code/inscriptions/.venv/lib/python3.13/site-packages/pymc/step_methods/hmc/quadpotential.py:321: RuntimeWarning: overflow encountered in dot
+  return 0.5 * np.dot(x, v_out)
+Sampling 4 chains for 2_000 tune and 1_500 draw iterations (8_000 + 6_000 draws total) took 3 seconds.
+  empire pooled β 0.566 (R̂ 1.0000, div 0)
+[content-residual] Latin cross-tab: Spearman ρ +0.004 (p 0.913); quadrants {'Q2: lo-scaling, hi-content': 298, 'Q3: lo-scaling, lo-content': 289, 'Q1: hi-scaling, hi-content': 116, 'Q4: hi-scaling, lo-content': 106}
+[content-residual] empire cross-tab: Spearman ρ +0.006 (p 0.859)
+[content-residual] wrote content-residual-space-map.png
+[content-residual] wrote content-residual-per-city.csv
+[content-residual] wrote content-residual-results.json  (13.3s)
+[content-residual] DONE (descriptive; no verdict).

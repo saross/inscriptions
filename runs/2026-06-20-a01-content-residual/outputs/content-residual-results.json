@@ -1,0 +1,104 @@
+{
+ "analysis": "Amendment 01 \u00a7A5.4 content residual (inter-measure delta)",
+ "status": "DESCRIPTIVE \u2014 exploratory; no threshold, no verdict (A01 \u00a7A5.4)",
+ "seed": 20260620,
+ "host": "local (zbook-ubuntu)",
+ "frames": {
+  "latin_primary": {
+   "n_cities": 817,
+   "n_provinces": 39,
+   "content_residual_ols": {
+    "model": "OLS log(letter_mass) ~ log(inscription_count)",
+    "slope": 0.9707800051395786,
+    "intercept": 3.940745195686564,
+    "slope_se": 0.014883193964341082,
+    "r_squared": 0.8405613558599242,
+    "n_fitted": 809,
+    "n_zero_mass_dropped": 8,
+    "residual_summary": {
+     "mean": -7.432593203176573e-16,
+     "sd": 0.7292329330678728,
+     "min": -3.9086437502580855,
+     "p05": -1.158040327191333,
+     "median": 0.008452028210618856,
+     "p95": 1.0786513770715738,
+     "max": 3.6531326489185543
+    }
+   },
+   "scaling_residual_fit": {
+    "model": "pooled NBR power-law insc ~ NB(exp(a + beta*log_pop), phi); SAMOC log residual (D12 construction)",
+    "beta_median": 0.6874873846110323,
+    "a_median": -1.1876907691320069,
+    "max_rhat": 1.0,
+    "min_ess_bulk": 5422.0,
+    "n_divergences": 0
+   },
+   "crosstab": {
+    "n": 809,
+    "quadrant_counts": {
+     "Q2: lo-scaling, hi-content": 298,
+     "Q3: lo-scaling, lo-content": 289,
+     "Q1: hi-scaling, hi-content": 116,
+     "Q4: hi-scaling, lo-content": 106
+    },
+    "spearman_rho": 0.0038271299993629195,
+    "spearman_p": 0.9134508661884996,
+    "pearson_r": 0.0077913382673528864,
+    "pearson_p": 0.824882864671954,
+    "note": "DESCRIPTIVE \u2014 no threshold, no verdict (A01 \u00a7A5.4). Association reported to characterise the residual space, not to test a hypothesis."
+   }
+  },
+  "empire_context": {
+   "n_cities": 1044,
+   "n_provinces": 56,
+   "content_residual_ols": {
+    "model": "OLS log(letter_mass) ~ log(inscription_count)",
+    "slope": 0.9549375878136979,
+    "intercept": 4.011863462476887,
+    "slope_se": 0.014333165241779928,
+    "r_squared": 0.8162860613938028,
+    "n_fitted": 1001,
+    "n_zero_mass_dropped": 43,
+    "residual_summary": {
+     "mean": -2.9990440145718514e-16,
+     "sd": 0.7955519269437976,
+     "min": -4.011863462476887,
+     "p05": -1.2392747402371058,
+     "median": 0.0028519113001426177,
+     "p95": 1.137365233896034,
+     "max": 3.817766926673306
+    }
+   },
+   "scaling_residual_fit": {
+    "model": "pooled NBR power-law insc ~ NB(exp(a + beta*log_pop), phi); SAMOC log residual (D12 construction)",
+    "beta_median": 0.5656476090521709,
+    "a_median": -0.4244474661276447,
+    "max_rhat": 1.0,
+    "min_ess_bulk": 5170.0,
+    "n_divergences": 0
+   },
+   "crosstab": {
+    "n": 1001,
+    "quadrant_counts": {
+     "Q2: lo-scaling, hi-content": 369,
+     "Q3: lo-scaling, lo-content": 368,
+     "Q1: hi-scaling, hi-content": 136,
+     "Q4: hi-scaling, lo-content": 128
+    },
+    "spearman_rho": 0.0056069306666309245,
+    "spearman_p": 0.8593708616597167,
+    "pearson_r": 0.00668132482382488,
+    "pearson_p": 0.8327890375069898,
+    "note": "DESCRIPTIVE \u2014 no threshold, no verdict (A01 \u00a7A5.4). Association reported to characterise the residual space, not to test a hypothesis."
+   }
+  }
+ },
+ "provenance": {
+  "raw_lire": "archive/data-2026-04-22/LIRE_v3-0.parquet",
+  "raw_lire_sha256": "1e4b67e8f06898064f823bb25047496e5fc247718723b22da2805bec34d940ce",
+  "letter_mass_builder": "runs/2026-06-18-h9-letter-mass-h3a/code/h9_common.py",
+  "letter_measure": "letter_count_conservative (Latin A\u2013Z; A01 \u00a7A5.1)",
+  "scaling_residual_construction": "D12 SAMOC pooled-NBR log residual (runs/2026-06-16-s5-sensitivities/code/d12_scaling_residual.py); recomputed on the Latin and empire frames so the residual space is internally coherent per frame. The persisted D12 artefact (d12-scaling-residual-results.json) is the all-provinces aggregate fit."
+ },
+ "secs": 13.3
+}
