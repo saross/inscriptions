@@ -1,5 +1,15 @@
 # Cross-classified grid — VERDICT (arm: library)
 
+> **✅ THIS IS THE ADOPTED MODEL'S GATE VERDICT.** This file (arm: `library`) is
+> the cross-classified `library` model's recovery-grid GATE — **the one that
+> PASSED and was ADOPTED** as the production lead (A04; Obs 88/89;
+> `cross-classified-signoff.md`). All four adoption criteria
+> (cross-classified-spec.md §5) are met. The bracketed `[lead: …]` figures below
+> are the **predicted-to-FAIL `lead` comparator baseline** (the full lead verdict
+> is in the sibling file `grid-VERDICT.md`) — they are the baseline this adopted
+> model is judged *against*, **not** a competing gate. Do not read the `lead`
+> file's weaker numbers as a failure of this adopted model.
+
 Cells with usable data: 300 (210 identifiable, 90 confounded). Fully-failed cells (n_ok=0): **0**.
 
 ## C1 — do-no-harm (identifiable)

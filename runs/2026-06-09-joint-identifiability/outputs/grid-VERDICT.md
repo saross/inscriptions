@@ -1,5 +1,19 @@
 # Joint recovery grid — VERDICT
 
+> **⚠ READER / REVIEWER — DO NOT READ THIS AS A FAILING GATE.** This file is the
+> **`lead` arm** — the *predicted-to-FAIL comparator baseline* (the
+> estimated-basis "lead" model A04 expected to under-perform), NOT the adopted
+> model and NOT a gate. Its weaker numbers (C1 do-no-harm 37/210 = 18 %; mean
+> coverage 0.374) are the **baseline against which the adopted model is judged**,
+> exactly as designed. **The adopted cross-classified model's GATE verdict is in
+> the sibling file `cc-VERDICT-library.md`** (arm: `library`), which PASSES all
+> four adoption criteria (cross-classified-spec.md §5) — bias flattens 0.075 →
+> 0.021, C1 coverage 0.374 → 0.627, C2 bias 0.362 → 0.009, convergence 84 % →
+> 96 %. The bracketed `[lead: …]` figures in `cc-VERDICT-library.md` are exactly
+> the numbers in this file. Reading this `lead` baseline's weaker numbers as a
+> failure of the adopted model is the reviewer trap; see Obs 88/89 and
+> `cross-classified-signoff.md`.
+
 Cells with usable data: 300 (210 identifiable, 90 confounded). Fully-failed cells (n_ok=0): **0**.
 
 ## C1 — do-no-harm (identifiable)
