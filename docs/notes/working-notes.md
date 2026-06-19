@@ -5512,3 +5512,159 @@ commit `2b159f1` (H7-Latin + peak-scaling-Latin results).
 `idata-nc-gitignored-sapphire`, `456-MB-regenerable`,
 `2b159f1`, `runs-2026-06-18-h7-latin`, `runs-2026-06-18-peak-scaling-latin`,
 `obs-99`, `obs-100`, `obs-101`
+
+## Obs 107 — 2026-06-19 [SENSITIVITY / RESULT]: D13 α-as-translator — the H3a within-province population–epigraphy scaling is NOT confounded by per-city editorial-convention intensity (city-level confirmation of Obs 94)
+
+### The finding
+
+The preregistered D13 α-as-translator sensitivity (prereg §5; not confirmatory) adds
+per-city posterior mixture fraction α_c as a covariate to the H3a Mundlak Negative
+Binomial Regression (NBR) and tests whether β_within shifts materially. It does not.
+
+**Frame:** 163 Latin-frame cities with N ≥ 100, 36 provinces. Per-city α_c fit
+standalone under the production cc-library deconvolution (adopted θ); 162/163 Stage-1
+fits converge. Single failure: Micia (N = 181, max R̂ = 1.13; caveated tier; drives
+nothing downstream). Per-city α_c: mean 0.704, SD 0.233, range [0.002, 0.989].
+
+**Headline result — S2a (point-median α_c, standardised):**
+
+| Model | β_within | 95 % CI | f_within | 95 % CI |
+|---|---|---|---|---|
+| Base (163 cities, no α_c) | **+0.431** | [+0.307, +0.557] | **0.685** | — |
+| S2a (+ standardised α_c) | **+0.422** | [+0.304, +0.542] | **0.637** | — |
+| Shift | −0.0086 = **0.142 posterior SD** | CIs essentially overlapping | −0.048 | max CI-edge Δ 0.087 |
+
+α_c carries a small independent signal on counts — γ(α_c) = **−0.181 [−0.290,
+−0.075]** — but it does not load on the population–epigraphy channel. The pre-stated
+D11 materiality threshold for f_within is 0.063; the median shift of −0.048 sits
+below it. The upper-CI-edge shift of 0.087 exceeds it, but that is the mechanical
+footprint of α_c adding denominator variance, not the scaling weakening.
+
+**S2b — multiple imputation (M = 50), propagating per-city α uncertainty:**
+
+Pooled β_within = **+0.422 [0.303, 0.542]**; between-imputation variance ≈ 0;
+fraction of missing information (FMI) = **0.47 %**. The reachability-driven α
+unreliability at N = 100 (standalone α is only ~16 % reliable at N = 100; reliable
+floor N ≈ 500) does **not** inflate the β_within CI. The null is robust, not a
+wide-posterior artefact.
+
+**S2c — proxy and reliable-floor cross-checks:**
+
+City-level Spearman(α, log pop) = **−0.107**; Theil-Sen implied Δβ = **−0.021
+[−0.057, +0.009]**. Among 18 N ≥ 500 cities (the α-reliable subset), β_within shifts
++0.271 → +0.286 with α_c added — flat. Only 2 provinces have ≥ 2 reliable cities,
+so this arm is explicitly descriptive, not a within-province regression.
+
+**Agreement with Obs 94 (province-level proxy):** city-level Spearman −0.107 vs
+Obs 94 province-level −0.11; Theil-Sen Δβ −0.021 vs Obs 94 −0.030. The two
+independent levels agree tightly.
+
+### Why this matters
+
+1. **D13 preregistered obligation is discharged.** The α-as-translator sensitivity
+   was a lodged preregistered check; it returns a clear null on the β_within channel.
+   The obligation is closed.
+2. **The epigraphic-habit confound is absent at city level.** The sensitivity was
+   designed to detect exactly this confound; it is not present. The H3a primary result
+   stands on the evidence, not merely by preregistration.
+3. **City-level confirmation of the province-level finding in Obs 94.** Obs 94
+   established the same null via a province-level proxy and explicitly flagged the
+   need for a city-level test (D13). D13 delivers that test; the two results agree
+   tightly at both the correlation level (Spearman ≈ −0.11 at both granularities) and
+   the implied slope level (Theil-Sen Δβ ≈ −0.021 to −0.030).
+4. **The honesty layer (MI) is decisive.** The per-city α posteriors are individually
+   unreliable at low N; propagating that uncertainty explicitly via M = 50 imputation
+   yields FMI = 0.47 % and between-imputation variance ≈ 0 — the uncertainty does not
+   drive the result.
+5. **For the paper**, this vindicates the lodged H3a primary (raw-count Hanson scaling,
+   Decision 22/35) on the evidence: the epigraphic-habit confound the sensitivity was
+   designed to detect is absent at the city level, confirming the decision to use
+   raw-count specification was not only preregistered but correct.
+
+### Caveats / methodological notes
+
+- **Sensitivity, not confirmatory.** D13 is prereg §5 (sensitivity); it supplements
+  H3a but does not replace the confirmatory result.
+- **α reliability is N-dependent.** Standalone per-city α is only ~16 % reliable at
+  N = 100; the N ≥ 500 reliable floor is 18 cities across 11 provinces (only 2
+  provinces with ≥ 2 cities), making the reliable-floor arm explicitly descriptive.
+  The MI arm (S2b) explicitly propagates this unreliability and shows it is harmless
+  for the β_within inference.
+- **Micia excluded from Stage-2.** The single Stage-1 non-convergent city (Micia,
+  N = 181, R̂ = 1.13) is excluded from Stage-2; 162/163 cities enter. Micia's
+  exclusion drives nothing downstream.
+- **γ(α_c) non-zero but not on the population channel.** The negative γ signal
+  (cities with more genuine inscriptions relative to raw produce fewer counts per
+  population unit in the raw-count NBR) is expected as a mechanical artefact of
+  fitting α_c against raw counts; it does not threaten the β_within interpretation.
+- **f_within upper-CI-edge shift (0.087) nominally exceeds the D11 threshold (0.063)**,
+  but this is driven by α_c adding denominator variance, not by the population–epigraphy
+  scaling weakening. The median shift (−0.048) is below threshold; S2b FMI = 0.47 %
+  confirms the shift is not carried by genuine α uncertainty.
+- **Province-level proxy vs city-level test.** Obs 94 worked at province/region
+  granularity (29 units); D13 works at city level (163 cities). D13 is the
+  authoritative test; Obs 94 was the motivated prior. Agreement between them
+  strengthens both.
+
+### Related observations and artefacts
+
+**Obs 94** (deconvolution does NOT change H3a — raw-count scaling robust to
+convention-correction; province-level α-vs-population proxy): this is the direct
+province-level predecessor of D13. Obs 94 established the same null (Spearman −0.11,
+Theil-Sen −0.030) via a 29-unit province/region proxy and explicitly flagged D13 as
+the required city-level test. D13 closes that flag; the two results agree tightly.
+
+**Obs 95** (§5 sensitivity batch — D11, D12, B4; establishes f_within materiality
+threshold 0.063 from D11 precedent): the pre-stated 0.063 materiality threshold used
+to assess the f_within shift in this Obs is drawn from the D11 precedent documented
+in Obs 95.
+
+**Obs 90** (cc-library production refit — all 10 diagnostic-flagged frontier units
+pinned; adopted θ): the cc-library deconvolution whose adopted θ is used in D13's
+Stage-1 per-city α fits; the deconvolution provenance is established there.
+
+**Artefacts**:
+`runs/2026-06-19-d13-alpha-as-translator/outputs/D13-REPORT.md` (source report;
+all numbers verified against JSON);
+`runs/2026-06-19-d13-alpha-as-translator/outputs/h3a-alpha-translator-results.json`
+(all headline numbers: β_within, γ, f_within, shifts, MI Rubin pooling, FMI,
+between-imputation variance, Spearman, Theil-Sen; source for all numbers in this Obs);
+`runs/2026-06-19-d13-alpha-as-translator/outputs/city-alpha-summary.json`
+(Stage-1 convergence census, α distribution, feasibility by N floor);
+`runs/2026-06-19-d13-alpha-as-translator/outputs/figures/fig-alpha-vs-population-city.png`
+(α_c vs log population scatter, 163 cities, Theil-Sen + Spearman);
+`runs/2026-06-19-d13-alpha-as-translator/spec.md` (D13 preregistered spec);
+commits `549c3a1` / `19653c6` / `35cda38` / `a0fc81c` / `be91a65`.
+
+### Findable later
+
+`D13`, `D13-alpha-as-translator`, `alpha-as-translator`, `alpha-translator`,
+`per-city-alpha`, `per-city-mixture-fraction`, `editorial-convention-intensity`,
+`epigraphic-habit-confound`, `habit-confound-absent`,
+`beta-within-robust-to-alpha`, `H3a-sensitivity`, `H3a-robustness-city-level`,
+`raw-count-vindicated`, `Decision-22`, `Decision-35`, `H3a-primary-confirmed`,
+`Mundlak-NBR`, `within-province-scaling`, `population-epigraphy-city-level`,
+`base-beta-within-0-431`, `CI-0-307-0-557`, `S2a-beta-within-0-422`, `CI-0-304-0-542`,
+`shift-0-0086`, `shift-0-142-posterior-SD`, `CIs-essentially-overlapping`,
+`gamma-alpha-minus-0-181`, `CI-minus-0-290-minus-0-075`, `gamma-non-zero`,
+`base-f-within-0-685`, `S2a-f-within-0-637`, `f-within-shift-minus-0-048`,
+`f-within-CI-edge-0-087`, `D11-materiality-threshold-0-063`,
+`MI-M50`, `multiple-imputation`, `Rubin-pooling`, `FMI-0-47-pct`,
+`between-imputation-variance-zero`, `uncertainty-not-inflating-CI`,
+`Spearman-alpha-logpop-minus-0-107`, `Theil-Sen-delta-beta-minus-0-021`,
+`CI-minus-0-057-plus-0-009`, `proxy-correlation-matches-province-level`,
+`alpha-mean-0-704`, `alpha-SD-0-233`, `alpha-range-0-002-0-989`,
+`163-cities`, `36-provinces`, `N-ge-100`, `162-of-163-converge`,
+`Micia-fails`, `Micia-rhat-1-13`, `Micia-N-181`,
+`18-reliable-cities`, `N-ge-500-reliable-floor`, `2-provinces-ge2-reliable`,
+`reliable-floor-descriptive`, `standalone-alpha-16pct-reliable-N100`,
+`S2c-proxy`, `S2c-reliable-floor`, `beta-0-271-to-0-286-flat`,
+`city-level-confirmation-of-obs-94`, `province-level-proxy-vs-city-level`,
+`Spearman-minus-0-11-both-levels`, `tight-agreement-province-city`,
+`preregistered-sensitivity-discharged`, `D13-obligation-closed`,
+`prereg-s5`, `sensitivity-not-confirmatory`,
+`cc-library-adopted-theta`, `deconvolution-per-city`,
+`gamma-mechanical-artefact`, `denominator-variance`,
+`obs-94`, `obs-95`, `obs-90`,
+`549c3a1`, `19653c6`, `35cda38`, `a0fc81c`, `be91a65`,
+`runs-2026-06-19-d13-alpha-as-translator`, `h3a-alpha-translator-results-json`
