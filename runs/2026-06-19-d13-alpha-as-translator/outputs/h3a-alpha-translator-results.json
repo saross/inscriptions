@@ -1,0 +1,205 @@
+{
+  "yardstick": {
+    "f_within_material_shift": 0.063,
+    "note": "PRE-STATED (spec \u00a74, D11 precedent): a f_within posterior-median/CI shift \u2265 0.063 is material; \u03b2_within shift also reported vs its posterior SD + CI overlap."
+  },
+  "frame": {
+    "n_cities": 163,
+    "n_provinces": 36,
+    "n_reliable_ge500": 18,
+    "seed_base": 20260604,
+    "mi_seed": 20260619
+  },
+  "base_163": {
+    "beta_within": {
+      "median": 0.4309969610178357,
+      "ci_lo": 0.30702890264394445,
+      "ci_hi": 0.5567049965063869
+    },
+    "f_within": {
+      "median": 0.6849162787152617,
+      "ci_lo": 0.398828060807841,
+      "ci_hi": 0.9502407947355918,
+      "p_gt_005": 1.0,
+      "p_gt_010": 1.0,
+      "p_gt_020": 0.9996666666666667,
+      "verdict": "supported"
+    },
+    "betas": {
+      "beta_within": {
+        "median": 0.4309969610178357,
+        "ci_lo": 0.30702890264394445,
+        "ci_hi": 0.5567049965063869
+      },
+      "beta_between": {
+        "median": 0.02339917529306179,
+        "ci_lo": -0.1793389664185731,
+        "ci_hi": 0.22783527761036007
+      },
+      "alpha_0": {
+        "median": 5.464758627393634,
+        "ci_lo": 3.7170285324544334,
+        "ci_hi": 7.197181157737314
+      },
+      "sigma_prov": {
+        "median": 0.2536796504289498,
+        "ci_lo": 0.06755774666801123,
+        "ci_hi": 0.4473442434712877
+      },
+      "dispersion": {
+        "median": 1.8812055978668416,
+        "ci_lo": 1.5107786198837931,
+        "ci_hi": 2.32057638016838
+      }
+    },
+    "convergence": {
+      "max_rhat": 1.0,
+      "min_ess_bulk": 2715.0,
+      "n_divergences": 0
+    }
+  },
+  "S2a_point_median": {
+    "beta_within": {
+      "median": 0.4223775823661343,
+      "ci_lo": 0.3036182903988683,
+      "ci_hi": 0.5420701918976808
+    },
+    "beta_within_shift_vs_base": -0.00861937865170137,
+    "beta_within_post_sd": 0.06066457677324621,
+    "beta_within_shift_in_post_sd": 0.1420825646557979,
+    "gamma_alpha": {
+      "median": -0.18074153891461758,
+      "ci_lo": -0.2894936365521881,
+      "ci_hi": -0.07505327558443244
+    },
+    "f_within": {
+      "median": 0.6370326449412114,
+      "ci_lo": 0.3735218056614027,
+      "ci_hi": 0.8633222491820358,
+      "p_gt_005": 1.0,
+      "p_gt_010": 1.0,
+      "p_gt_020": 0.9999166666666667,
+      "verdict": "supported"
+    },
+    "f_within_shift_median": -0.04788363377405036,
+    "f_within_shift_ci_max": 0.08691854555355594,
+    "f_within_material": true,
+    "convergence": {
+      "max_rhat": 1.0,
+      "min_ess_bulk": 3353.0,
+      "n_divergences": 0
+    }
+  },
+  "S2b_multiple_imputation": {
+    "m": 50,
+    "beta_within": {
+      "pooled": 0.4224218631834812,
+      "se": 0.0610299963923371,
+      "ci_lo": 0.3028030702545005,
+      "ci_hi": 0.5420406561124619,
+      "within_var": 0.0037070597442819286,
+      "between_var": 1.7255603300736693e-05,
+      "total_var": 0.00372466045964868,
+      "fraction_missing_info": 0.0047254549931275,
+      "m": 50
+    },
+    "gamma_alpha": {
+      "pooled": -0.17965623570038844,
+      "se": 0.05561801029380505,
+      "ci_lo": -0.28866753587624633,
+      "ci_hi": -0.07064493552453054,
+      "within_var": 0.0029364084194246683,
+      "between_var": 0.00015387710746778084,
+      "total_var": 0.003093363069041805,
+      "fraction_missing_info": 0.050739161913429864,
+      "m": 50
+    },
+    "f_within": {
+      "pooled": 0.6372706698529429,
+      "se": 0.1270894872592047,
+      "ci_lo": 0.3881752748249017,
+      "ci_hi": 0.8863660648809841,
+      "within_var": 0.015942223607975356,
+      "between_var": 0.00020540604297273878,
+      "total_var": 0.01615173777180755,
+      "fraction_missing_info": 0.012971617468796158,
+      "m": 50
+    },
+    "f_within_shift_vs_base": -0.04764560886231883,
+    "beta_within_shift_vs_base": -0.008575097834354506
+  },
+  "S2c_reliable_n500": {
+    "n_cities": 18,
+    "n_provinces": 11,
+    "n_provinces_ge2_cities": 2,
+    "flag": "within-province-leverage-thin: only 2 provinces have \u22652 reliable cities; treat as DESCRIPTIVE, not a within-province regression",
+    "base": {
+      "beta_within": {
+        "median": 0.2707100154054521,
+        "ci_lo": -0.21233620217228197,
+        "ci_hi": 0.7230957219946605
+      },
+      "f_within": {
+        "median": 0.2939774125132793,
+        "ci_lo": 0.001212478283891117,
+        "ci_hi": 0.9231255824532512,
+        "p_gt_005": 0.8269166666666666,
+        "p_gt_010": 0.74625,
+        "p_gt_020": 0.61,
+        "verdict": "inconclusive"
+      },
+      "convergence": {
+        "max_rhat": 1.0,
+        "min_ess_bulk": 4934.0,
+        "n_divergences": 0
+      }
+    },
+    "augmented": {
+      "beta_within": {
+        "median": 0.285473294748378,
+        "ci_lo": -0.21592824335940225,
+        "ci_hi": 0.7333850039982587
+      },
+      "gamma_alpha": {
+        "median": -0.10265241427372784,
+        "ci_lo": -0.5113228309546656,
+        "ci_hi": 0.2825543188509029
+      },
+      "f_within": {
+        "median": 0.25581039938950434,
+        "ci_lo": 0.001049907789754664,
+        "ci_hi": 0.8733160171228851,
+        "p_gt_005": 0.8145833333333333,
+        "p_gt_010": 0.7213333333333334,
+        "p_gt_020": 0.5730833333333333,
+        "verdict": "inconclusive"
+      },
+      "convergence": {
+        "max_rhat": 1.0,
+        "min_ess_bulk": 3193.0,
+        "n_divergences": 0
+      }
+    }
+  },
+  "S2c_proxy_alpha_vs_population": {
+    "n_cities": 163,
+    "spearman_alpha_vs_logpop": -0.10700357421847363,
+    "pearson_alpha_vs_logpop": -0.05979581789675911,
+    "implied_delta_beta_ols": -0.03643461808497025,
+    "implied_delta_beta_ols_ci95": [
+      -0.14731890889041882,
+      0.060888533723912376
+    ],
+    "implied_delta_beta_theilsen": -0.020931080994079445,
+    "implied_delta_beta_theilsen_ci95": [
+      -0.05719120850052189,
+      0.009096996382014045
+    ],
+    "alpha_median_range": [
+      0.002190671306729169,
+      0.9889934626317778
+    ],
+    "alpha_median_mean": 0.7036166878398536,
+    "alpha_median_sd": 0.23347908213463678
+  }
+}
