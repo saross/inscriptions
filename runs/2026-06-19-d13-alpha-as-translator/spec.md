@@ -1,7 +1,9 @@
 # D13 α-as-translator — implementation spec (Option A)
 
-**Status:** DRAFT for Shawn's pre-launch sign-off (2026-06-19). Do NOT launch compute
-until signed off (standing rule: spec before launching; sign-off on novel work).
+**Status:** ✅ EXECUTED 2026-06-19 — signed off and run; results in
+`outputs/D13-REPORT.md` and lodged as **Obs 107** (β_within +0.431 → +0.422, clean
+null; H3a NOT confounded by per-city convention intensity). The original "DRAFT …
+Do NOT launch compute until signed off" stamp is superseded.
 **Author:** Claude Code (Opus 4.8) on Shawn's brief, 2026-06-19. UK/Australian English.
 **Route chosen by Shawn (2026-06-19):** Option A (prereg-literal, standalone per-city α at
 N ≥ 100, with uncertainty propagation). Option B (hierarchical partial-pooling) to be

@@ -1,5 +1,16 @@
 # H2.1 production — FINAL SUMMARY (identifiability flag + two-bound alpha)
 
+> **⚠ STALE α's — SUPERSEDED BY THE cc-PRODUCTION REFIT.** This was the *executed*
+> H2.1 production run (the "launch-prep" folder name is misleading), but its
+> per-unit α's were **refit and superseded** by the cross-classified `library`
+> production refit (A04) at `runs/2026-06-13-cc-production-refit/`
+> (`outputs/REFIT-VERDICT.md`; 28/29 converge; the 10 diagnostic-flagged frontier
+> units re-pinned; Obs 89/90). The identifiability flags + two-bound [shared,
+> per-unit] α framing below were the *input* to that refit, not the final α's. For
+> the canonical per-unit α's use the cc-production-refit (and the all-29
+> read-off in `runs/2026-06-18-h2.1-supplementary-wave/outputs/REPORT.md`, Obs
+> 111). Do not cite the α's below as the production result.
+
 Units: 29 (incl. Italia). Final tiers: {'confirmatory': 16, 'caveated-high-alpha': 4, 'under-identified': 9}.
 Confirmatory-eligible (H3b set): 16 — empire-aggregate, Latium et Campania / Regio I, Hispania citerior, Germania superior, Dacia, Africa proconsularis, Germania inferior, Apulia et Calabria / Regio II, Etruria / Regio VII, Baetica, Transpadana / Regio XI, Pompeii, Mogontiacum, Aquileia, Lusitania, Italia (excl. Rome).
 

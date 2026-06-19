@@ -2,8 +2,11 @@
      code/benchmark-results.json after the reduced-cost timing run. -->
 # §5 Layer A — PRODUCTION-READY
 
-- **Status:** PRODUCTION INFRASTRUCTURE BUILT + BENCHMARKED. The production run
-  has **NOT** been launched (per the hard stop in the brief). Awaiting Shawn's go.
+- **Status:** ✅ EXECUTED — the production run **was launched 2026-05-31 23:00
+  (zbook-local) and COMPLETED** (Steps 1–2 finished 04:43; see `RESULTS.md`,
+  Status COMPLETE). The original "PRODUCTION INFRASTRUCTURE BUILT + BENCHMARKED …
+  NOT launched … Awaiting Shawn's go" stamp reflects the pre-launch state and is
+  superseded. This file is retained as the production-readiness / benchmark record.
 - **Date:** 2026-05-31.
 - **Host:** zbook (`AMD Ryzen AI MAX+ PRO 395`, 16 physical cores / 32 threads,
   94 GB RAM, idle). pymc 6.0.1, pytensor 3.0.3, arviz 1.1.0 (sapphire parity).

@@ -1,7 +1,9 @@
 # Full recovery-validation grid — spec (for Shawn sign-off)
 
-**Status:** PROPOSED — needs Shawn sign-off before the sapphire grid (novel work +
-reverses a lodged design decision + substantial compute). **Date:** 2026-06-09.
+**Status:** ✅ EXECUTED — signed off (`cross-classified-signoff.md`) and run; the
+grid produced the verdicts adopted under A04 (`outputs/grid-VERDICT.md` lead +
+`outputs/cc-VERDICT-library.md` adopted library; Obs 88/89). The original
+"PROPOSED — needs Shawn sign-off" stamp is superseded. **Date:** 2026-06-09.
 **Author:** Claude Code (Opus 4.8). Supersedes the lead design in `spec.md` §4 per the
 POC (`outputs/POC-REPORT.md`). UK/Aus English.
 

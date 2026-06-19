@@ -1,9 +1,12 @@
 # Cross-classified time × alignment model — spec (D-B contamination fix)
 
-**Status:** PROPOSED — needs sign-off before implementation (novel model + feeds the OSF
-amendment). **Date drafted:** 2026-06-11. **Author:** Claude Code (Opus 4.8), at the close
-of the session that ran the 300-cell lead grid. **Supersedes:** nothing yet; this is the
-spec for the D-B arm flagged outstanding in `full-grid-spec.md` §1/§7. UK/Aus English.
+**Status:** ✅ EXECUTED / ADOPTED — signed off (`cross-classified-signoff.md`),
+implemented, run, and **adopted as the production lead** (the cross-classified
+`library` model is the A04 governing temporal deconvolution; `outputs/cc-VERDICT-library.md`
+passes all four adoption criteria; Obs 88/89; production refit
+`runs/2026-06-13-cc-production-refit/`). The original "PROPOSED — needs sign-off"
+stamp is superseded. **Date drafted:** 2026-06-11. **Author:** Claude Code (Opus
+4.8), at the close of the session that ran the 300-cell lead grid. UK/Aus English.
 
 ## 0. Why (the motivating result — now measured, not just predicted)
 

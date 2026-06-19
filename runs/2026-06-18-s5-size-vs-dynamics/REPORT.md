@@ -1,9 +1,15 @@
 # §5 size-vs-dynamics probe — does city size predict city-specific dynamics? — RESULTS
 
-- **Status:** COMPLETE (exploratory; Decision 13 / prereg §5; **no thresholds** —
-  descriptive). Run on sapphire, 2026-06-18; `code/size_vs_dynamics.py`
-  (deterministic read of the §5 Layer-A posterior + bootstrap; no MCMC). Log
-  `run.log`.
+> **➡ FORWARD POINTER — the "province-mediation" inference here was tested and
+> walked back.** This report infers (from `q_uv ≫ q_v`) that the size–buffering
+> gradient is province-mediated. The **direct** province-level test
+> (`runs/2026-06-18-province-size-regression/`, **Obs 105**) found province
+> *size* does NOT predict province-from-empire (`q_u`) buffering: the
+> "province-mediation" reading is a **decomposition fact** (the variance lives in
+> the `u` tier), **not** a province-size effect (underpowered, with a tentative
+> city-membership lean). Read the province-mediation inference below as refined by
+> Obs 105 — the city-level gradient stands, but its province-size mechanism is not
+> confirmed.
 - **Origin:** the well-posed reframe (user-obs 43) of "can we compare the
   isolated city-level effect to Hanson?" — a direct `q_v`-vs-Hanson overlay is a
   category mismatch (level-free shape vs static level), so this asks instead

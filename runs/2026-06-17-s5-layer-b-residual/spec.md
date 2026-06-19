@@ -1,7 +1,10 @@
 # §5 Layer B (RESIDUAL) — habit-removed β-inversion to a *relative* population trajectory (SPEC, pre-launch)
 
-- **Status:** DRAFT — awaiting Shawn's pre-launch sign-off. **Do not execute
-  until the sign-off checklist (§11) is ticked.**
+- **Status:** ✅ EXECUTED — signed off (§12 checklist ticked) and run; results in
+  `REPORT.md` (COMPLETE) and lodged as **Obs 102/103** (the q_u nested triple;
+  removing the empire-wide common temporal component dissolves the apparent
+  universal post-AD-250 collapse into moderate, heterogeneous provincial-tier
+  decline). The original "DRAFT — Do not execute" stamp is superseded.
 - **Author / date:** Claude (Opus 4.8, 1M context), 2026-06-17, on Shawn's brief.
 - **Run dir:** `runs/2026-06-17-s5-layer-b-residual/`.
 - **Type:** Exploratory (Decision 13; preregistration §5). Illustrative

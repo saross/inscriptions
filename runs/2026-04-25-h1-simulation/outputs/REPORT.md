@@ -1,5 +1,17 @@
 # H1 Simulation Report
 
+> **⚠ SUPERSEDED — THIS IS THE v1 RESULT; ITS FP RATES ARE A METHOD ARTEFACT. DO
+> NOT CITE.** This v1 run drew the "observed" data by row-bootstrap from the real
+> LIRE corpus and then tested for departure from a fitted null — so under the true
+> H0 (no injected effect) the "observed" still carried real-corpus features
+> (editorial spikes, Severan surges, plague dips), inflating the false-positive
+> rate to **1.000** (§4). **Obs 19** identifies this as the bug: a power
+> simulation must draw "observed" from the **null** data-generating process, not
+> from the empirical corpus. The corrected, canonical Phase-1 result is the **v2**
+> run: `runs/2026-04-25-h1-simulation/outputs/h1-v2/REPORT-v2-final.md` (FP
+> control [0.007, 0.049] across 96 zero-effect cells). A cold reader must take the
+> v2-final report, not this v1, as the H1 simulation result.
+
 **Run:** 2026-04-25 (commit 982fec9)
 
 **Total iteration records:** 512,000 rows across 256 cells

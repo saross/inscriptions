@@ -1,7 +1,9 @@
 # §5 Layer B — β-inversion to time-varying population (SPEC, pre-launch)
 
-- **Status:** DRAFT — awaiting Shawn's pre-launch sign-off. **Do not execute
-  until the sign-off checklist (§11) is ticked.**
+- **Status:** ✅ EXECUTED — signed off and run; results in `REPORT.md` (COMPLETE;
+  the validation gate passes against both independent anchors, Ostia + Pompeii)
+  and lodged as **Obs 96**. The original "DRAFT — Do not execute" stamp is
+  superseded.
 - **Author / date:** Claude (Opus 4.8, 1M context), 2026-06-16, on Shawn's brief.
 - **Run dir:** `runs/2026-06-16-s5-layer-b-beta-inversion/`
 - **Type:** Exploratory (Decision 13; preregistration §5 "Extension (Layer B)").

@@ -1,5 +1,17 @@
 # Recovery-grid design artefact (H2.1) — narrative spec
 
+> **➡ FORWARD OUTCOME (what happened after this design pin).** This design bound
+> the first recovery validation (`runs/2026-05-22-recovery-grid-validation/`),
+> which initially **FAILed** under the lodged zero-tolerance criterion — but that
+> FAIL was a metric/gate artefact and was **overturned to PASS** under the
+> corrected, field-standard criterion (Obs 67/70; Decision 33 / OSF Amendment 01
+> §A5.5.1; the validation REPORT now carries a SUPERSEDE banner). The grid was
+> then rebuilt as the **two-unit, empirical-Bayes** grid
+> (`runs/2026-05-26-recovery-grid-two-unit/`), the **canonical** recovery result
+> (Grid A inscription-mass PASS 98.6 %; Grid B letter-mass FAIL on R̂/ESS). This
+> design artefact is the historical pin; the canonical recovery outcome lives in
+> those two later dirs.
+
 **Run directory:** `runs/2026-05-22-recovery-grid-design/`
 **Status:** pre-Phase-2 design pin; committed before any recovery-simulation
 production run.

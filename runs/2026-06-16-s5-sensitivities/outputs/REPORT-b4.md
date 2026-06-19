@@ -1,5 +1,18 @@
 # §5 B4 — stratified-sampling sensitivity (v2-faithful) — DRAFT
 
+> **⚠ FORWARD POINTER — the "MATERIAL — re-run warranted" verdict below WAS
+> resolved.** The §"Verdict — MATERIAL" call (that the balanced width pool could
+> shift the thresholds, so a targeted re-run was warranted) was acted on: the
+> re-run is in the sibling `REPORT-b4-rerun.md`, whose "Bottom line for B4" finds
+> scheme (b) moves the thresholds **modestly and in the expected direction**
+> (balanced → narrower → lower; median Δ −7 inscriptions / −0.4 %), with **no
+> reachability classification changed** and the committed full-precision v2
+> thresholds (`runs/2026-04-25-h1-simulation/outputs/h1-v2/`) remaining the
+> primary. So the B4 sensitivity is **robust**, not material to the committed
+> thresholds — read the "MATERIAL" verdict below as "flagged, then re-run and
+> found non-material" (Obs 95). Do not cite the MATERIAL call as a standing
+> threshold risk.
+
 > **Key finding first:** the preregistered B4 (stratified *bootstrap* of LIRE) is
 > **architecturally moot for the committed v2 Phase-1 thresholds** — Decision 8 replaced
 > the LIRE bootstrap with synthetic data from a parametric null (`h1_sim_v2.py`). The only
