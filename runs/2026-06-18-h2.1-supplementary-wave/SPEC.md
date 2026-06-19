@@ -3,8 +3,10 @@ title: "H2.1 supplementary wave — launch spec"
 run-dir: "runs/2026-06-18-h2.1-supplementary-wave/"
 author: "Claude (Opus 4.8, 1M context), on Shawn's request"
 date: 2026-06-18
-status: "DRAFT — pre-launch sign-off pending (gate at §10). Build + smoke + pilot may
-  proceed on sign-off of §§3–4; the full production run gates on the pilot (§9)."
+status: "EXECUTED 2026-06-18 — the full all-29-unit production run completed; this
+  is the canonical all-29 production result. See outputs/REPORT.md for the verdict
+  and the per-unit α read-off. (Original status: 'DRAFT — pre-launch sign-off
+  pending'; superseded after the §10 gate was cleared and the run completed.)"
 supersedes-status-of: "the 'staged, not run' note in runs/2026-06-07-h2.1-launch-prep/outputs/production/SUMMARY.md"
 prereg-authority: "osf-lodgement-2026-05-20 (original supplementary, lines cited per item) as
   amended by osf-amendment-04-2026-06-14 (cross-classified likelihood)"

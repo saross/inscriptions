@@ -1,5 +1,22 @@
 # H2.1 supplementary wave — production REPORT
 
+- **Status:** ✅ COMPLETE / EXECUTED 2026-06-18 — **the canonical all-29-unit
+  production read-off** for the H2.1 supplementaries (Status/Verdict banner added
+  2026-06-20 in the pre-write-up uplift; the result itself was generated
+  2026-06-18T13:30 UTC).
+- **Verdict (per supplementary; all discharged — see the sections below; numbers
+  re-read from this dir's own `outputs/` reports):**
+  C5/C6 the Dirichlet-multinomial and rescaled-negative-binomial supplementaries
+  **do NOT move α** (|Δα| reported as 0.0 across all 29 units in
+  `model-comparison.md`; the multinomial primary is adequate — overdispersion
+  warranted in only **4/29** units: empire-aggregate, latin-aggregate, Numidia,
+  Pompeii); C11 trapezoidal-aoristic **2/29 flag report-alongside** (empire
+  0.9402, Aquileia 0.9269); C13 boundary-step reduction **15/29 (52 %) meet
+  ≥50 %**; C14 threshold convergence **8/29 meet r ≥ 0.9 on all pairs** (the rest
+  below the N < 2,000 reachability floor, caveated, not failed); C16 α read-off
+  for all 29 units (empire-aggregate 0.6798, latin-aggregate 0.7387).
+  empire-aggregate is the single per-fit convergence FAIL (R̂ = 1.0126, NB arm),
+  reported as a known limitation, not amended.
 - Generated (UTC): 2026-06-18T13:30:18+00:00
 - Spec: runs/2026-06-18-h2.1-supplementary-wave/SPEC.md §§4, 6, 7, 11
 - Scope: 28 + Italia-excl-Rome = 29 production units; C10 EXCLUDED (held).

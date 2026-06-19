@@ -7,6 +7,11 @@
 - **Author / Date:** Claude Code (Opus 4.8, 1M context) on Shawn Ross's brief,
   2026-06-18. UK/Australian English; Oxford comma.
 
+> **✅ STATUS UPDATE (2026-06-20): EXECUTED.** The "Nothing has been run" line
+> below reflects the build-time state; the all-29-unit production run has since
+> COMPLETED (2026-06-18; canonical all-29 result in `outputs/REPORT.md`). These
+> notes are retained as the production-driver audit record.
+
 These notes document the audit fixes applied to the **production driver only** (the
 two files above; no lodged/shared module — `supp_lib`, `joint_lib`, `refit_lib`,
 `h2_lib`, `cell_lib` — was touched). The driver is **BUILD-ONLY** and will be

@@ -1,5 +1,23 @@
 # H2.1 Recovery Grid — Final Report
 
+> **⚠ SUPERSEDED — THIS "FAIL" WAS OVERTURNED. DO NOT CITE THE FAIL VERDICT
+> BELOW.** The "Validation verdict: FAIL" (63.6 % / 286 cells) in §1 was scored
+> under a **zero-tolerance divergence convergence gate that was later found
+> non-standard** (Stan/Betancourt; Obs 70). Re-scored under the corrected,
+> field-standard criterion (Decision 33 / OSF Amendment 01 §A5.5.1: hybrid shape
+> gate Pearson r ≥ 0.95 non-flat / Wasserstein-1 ≤ 10 y for the flat shape;
+> α demoted to a quantified diagnostic; operating envelope α ≤ 0.70), **the grid
+> PASSES** — **91.9 %** in the operating envelope on the first re-score, then
+> **98.6 % (355/360)** once the harness re-derived convergence from the stored
+> per-replicate R̂ / bulk-ESS (no re-fit). **See Obs 67** (the metric-artefact
+> correction) and **Obs 70** (the gate artefact). The current, canonical
+> recovery-grid result lives at
+> `runs/2026-05-26-recovery-grid-two-unit/inscription-mass/outputs/REPORT.md`
+> (Grid A inscription-mass PASS; Grid B letter-mass FAIL on genuine R̂/ESS
+> non-convergence). A cold reader must not take the FAIL below as the model's
+> recovery verdict — it is a discredited, zero-tolerance-gate scoring of a
+> grid that passes under the lodged criterion.
+
 Bayesian deconvolution-mixture model validation via the H2.1 recovery simulation.
 See `runs/2026-05-22-recovery-grid-design/spec.md` for the binding grid axes and decision rule.
 

@@ -1,8 +1,10 @@
 # C10 validity test — BUILD-NOTES (pre-audit)
 
-Status: **BUILT, NOT RUN.** No fit, MCMC, diagnostic, or SSH was executed. This
-note is for the standing pre-run audit; the synthetic generator's faithfulness to
-SPEC §2 is the key audit target.
+Status: **✅ EXECUTED 2026-06-18 (first wave) + 2026-06-19 (follow-up ii).** The
+original "BUILT, NOT RUN" banner is superseded — both result waves ran. See
+`REPORT.md` (top-level), `outputs/VALIDITY-REPORT.md` ("(a) SUPPORTED — C10
+stands"), `outputs/followup-ii-report.md`, and `outputs/run-c10-full.log`. This
+file is retained as the build-decision / pre-run-audit record.
 
 Author: Claude (Opus 4.8, 1M context) on Shawn's brief, 2026-06-18. UK/Aus English.
 

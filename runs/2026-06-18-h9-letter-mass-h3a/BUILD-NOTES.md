@@ -1,8 +1,12 @@
 # H9 letter-mass H3a — BUILD-NOTES
 
-**Status:** CODE BUILT, NOT RUN. No fit, smoke test, or MCMC has been executed.
-This run directory must be AUDITED before it is run (standing project rule:
-audit before running). The exact run command for the post-audit run is in §6.
+**Status:** ✅ EXECUTED 2026-06-18 (run on zbook-ubuntu, HEAD `2d95f62`; see
+`run.log` and `REPORT.md`). The original "CODE BUILT, NOT RUN" banner is
+superseded — the audit-before-run gate was cleared and all four steps
+(01-data-prep → prior-predictive → 02-h9-fit → 03-ppc) completed. **Verdict:
+letter-mass H3a f_within SUPPORTED on every frame** (Latin primary 0.448
+[0.364, 0.535]). The verdict and numbers are in `REPORT.md`; this file is
+retained as the build-decision record (the design choices made before the run).
 
 **What H9 is.** The cross-sectional confirmatory H3a within-between (Mundlak)
 negative-binomial regression, with **per-city letter-count mass** as the

@@ -1,10 +1,12 @@
 # C10 follow-up "(ii)" — realism-graded ground-truth recovery (BUILD-NOTES, pre-audit)
 
-Status: **BUILT, NOT RUN.** No fit, MCMC, diagnostic, or SSH was executed. Only
-`py_compile`, the non-MCMC generator / count-builder / decision-rule logic, and
-graph-build-only model construction were exercised. This note is for the standing
-pre-run audit; the realism-graded generator's faithfulness to the mechanism (below)
-is the key audit target.
+Status: **✅ EXECUTED 2026-06-19.** The original "BUILT, NOT RUN" banner is
+superseded — the realism-graded follow-up (ii) ran; see
+`outputs/followup-ii-report.md` and `outputs/followup-ii-results.json`. **Result:
+the real-empire point-date collapse is REPRODUCED by variants R2 and R1+R2 —
+i.e. θ-contamination (R2; the three-step classify-then-analyse plug-in bias)
+drives it, NOT width (R1); controls R0 + R3 stay clean.** This file is retained
+as the build-decision / pre-run-audit record.
 
 Author: Claude (Opus 4.8, 1M context) on Shawn's brief, 2026-06-19. UK/Aus English.
 
