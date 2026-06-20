@@ -5,16 +5,30 @@
 statistical term is explained in plain language the first time it appears, and every number is tagged
 with the Observation ("Obs N") or run REPORT it came from.
 
+> **⚠ CORRECTION (2026-06-21 — flag for Shawn's re-review).** An earlier draft of this summary had the
+> **α direction inverted**: it called α the *genuine* fraction. **α is the CONVENTION fraction.** The
+> model is `p_mix = α·p_conv + (1−α)·p_gen` (p_conv = the round-slab convention component); confirmed
+> three independent ways — the model code, the `pi_align` identity, and **Pompeii's α = 0.016** (= 1.6 %
+> convention / 98.4 % genuine, correct for a precisely-dated sealed site; the genuine reading would make
+> Pompeii 98 % convention, absurd). This matches the **lodged preregistration** and every other project
+> document, all of which define α = the convention fraction; only this summary had it backwards. **So
+> empire α = 0.68 = two-thirds CONVENTION / one-third genuine** (not the reverse), and Latin α = 0.74 =
+> three-quarters convention. The body below is corrected and the figure captions were already correct.
+> The corrected direction *strengthens* the motivation — most of the *apparent* Roman epigraphic
+> chronology is editorial artefact — but the **headline framing is Shawn's editorial call: please
+> re-review.**
+
 > **A note on traceability and on two things that look alike but aren't.** Every figure below is tagged
 > with the Observation ("Obs N") in `docs/notes/working-notes.md` or the run REPORT it came from, all
 > re-read at source for this draft. Two recurring traps for the reader, flagged here once:
 >
-> 1. **There are two different quantities both written "α" (alpha).** The **genuine-fraction α** is the
->    share of a place's dated inscriptions that carry a *real* date signal rather than an editorial
->    round-number dating convention — this is the main output of our de-fogging method. The **dispersion
->    α** is a completely unrelated nuisance knob inside the count regression (it just tells the model how
->    "lumpy" the counts are). Where confusion is possible I write "genuine-fraction α" or "mixture α".
->    They are not the same number and never interact.
+> 1. **There are two different quantities both written "α" (alpha).** The **convention-fraction α**
+>    (a.k.a. the **mixture α**) is the share of a place's dated inscriptions whose dating is an editorial
+>    round-number *convention* rather than a *real* date signal — estimating it (and the genuine share,
+>    which is 1 − α) is the core of our de-fogging method. The **dispersion α** is a completely unrelated
+>    nuisance knob inside the count regression (it just tells the model how "lumpy" the counts are). Where
+>    confusion is possible I write "convention-fraction α" or "mixture α". They are not the same number
+>    and never interact.
 > 2. **Which set of provinces a number describes matters.** The project's lodged **primary** analytical
 >    unit is the **Latin-speaking provinces with the city of Rome excluded** ("Latin-minus-Roma";
 >    Amendment 02 / Decision 36). The **empire-wide / all-provinces** frame is reported as *context* only.
@@ -36,21 +50,21 @@ we built a **Bayesian deconvolution-mixture model**. Two plain-language glosses 
 machinery, used throughout: a **posterior** is simply the model's probability distribution for a
 quantity *after* it has seen the data (its full considered opinion, not a single guess); a **95% credible
 interval** is the Bayesian "we are 95% sure the true value lies in this range". For each unit the model
-estimates a **genuine fraction α** — the proportion of that unit's dated inscriptions whose dating is a
-real signal rather than a round-slab convention — and it separates the genuine dating signal from the
-convention artefact. (Mechanically it does this by detecting **θ (theta)**, the rate at which a unit's
-dates "snap to" round-number calendar slabs; high snapping means low genuine fraction.) The production
+estimates a **convention fraction α** — the proportion of that unit's dated inscriptions whose dating is
+editorial round-slab convention rather than a real date signal — and it separates the convention artefact
+from the genuine dating signal. (Mechanically it does this by detecting **θ (theta)**, the rate at which a
+unit's dates "snap to" round-number calendar slabs; high snapping means high convention fraction.) The production
 model is the **cross-classified ("library") likelihood**, adopted after an earlier design was shown to
 add a spurious upward bias; the adopted version is recovery-validated. In a full simulation where the
 right answer was planted and known — 300 parameter cells × 100 repeats — it passed all four pre-set
-adoption criteria cleanly: it recovered the planted genuine fraction with essentially no bias (mean
+adoption criteria cleanly: it recovered the planted convention fraction with essentially no bias (mean
 absolute error ≈ 0.021, i.e. on average it lands within ~2 percentage points of the truth) without
 harming the cases it should leave alone (Obs 89, `cc-VERDICT-library.md`). A separate validity test (C10)
 plants a known α in synthetic data and confirms the recovery works in the controlled setting (Obs 110).
-On the **whole empire pooled together**, the estimated genuine fraction is **α = 0.6798, 95% credible
-interval [0.6649, 0.6970]** — i.e. roughly **two-thirds** of empire-wide dated inscriptions carry a
-genuine date signal and about one-third are round-slab convention (Obs 111, supp-wave REPORT;
-Latin-speaking provinces pooled: α = 0.7387 [0.6596, 0.7893]). All results below are
+On the **whole empire pooled together**, the estimated convention fraction is **α = 0.6798, 95% credible
+interval [0.6649, 0.6970]** — i.e. roughly **two-thirds** of empire-wide dated inscriptions are editorial
+round-slab convention and only about one-third carry a genuine date signal (Obs 111, supp-wave REPORT;
+Latin-speaking provinces pooled: α = 0.7387 [0.6596, 0.7893] — three-quarters convention). All results below are
 **model-conditional**: they hold *given* this aoristic mixture plus hierarchical (partial-pooling) model.
 
 **Why go to all this trouble?** The point is not the empire number itself but the *instrument*. De-fogging
@@ -60,7 +74,7 @@ a thematic class of inscriptions — "beyond eyeballing histograms", with honest
 of a shape that is half cataloguing artefact. Crucially it comes with a **reachability map** (its "spec
 sheet"): a validated rule for *when* it works — recovers the genuine trajectory from roughly N ≈ 500
 inscriptions for the easiest subsets, rising to a worst-case floor of N ≈ 2,000 inside the operating
-envelope (genuine fraction α ≤ ~0.70), and is unreliable above that. The motivating re-application is a
+envelope (convention fraction α ≤ ~0.70), and is unreliable above that. The motivating re-application is a
 collaborator's corpus of mother–daughter / marriage-age inscriptions, which wants a temporal dimension on
 "when did this commemorative practice rise and fall?" — exactly what subset-specific de-fogging supplies,
 and which sits right at the measured worst-case floor (`paper-significance-and-applications-2026-06-03.md`;
@@ -75,9 +89,9 @@ instrument's reachability envelope (its spec sheet) → **F12** (`fig12-reachabi
 **Key results**
 
 - The corpus is LIRE v3.0: 182,853 inscriptions × 63 columns (`summary.md`, corrected).
-- About **two-thirds** of empire-wide dated inscriptions carry a genuine date signal; one-third is
-  editorial round-slab convention (pooled α = 0.6798 [0.6649, 0.6970]; Obs 111).
-- The de-fogging model is **recovery-validated** — it recovers a planted genuine fraction with
+- About **two-thirds** of empire-wide dated inscriptions are editorial round-slab convention; only
+  one-third carry a genuine date signal (pooled convention fraction α = 0.6798 [0.6649, 0.6970]; Obs 111).
+- The de-fogging model is **recovery-validated** — it recovers a planted convention fraction with
   near-zero bias (~2 percentage points) and does no harm to cases it should leave alone (Obs 89, 110).
 - The deliverable is a **reusable instrument with a known reachability envelope** (works from N ≈ 500 for
   easy subsets, worst-case floor N ≈ 2,000, requires α ≤ ~0.70), for putting a temporal dimension on
@@ -390,9 +404,10 @@ U-shape over time are F6 and F10, referenced in §2.)]
 
 ## 5. Headline takeaways
 
-1. **About two-thirds of empire-wide dated inscriptions carry a genuine date signal** (pooled
-   genuine-fraction α = 0.6798 [0.6649, 0.6970]); the rest is editorial round-slab convention that the
-   de-fogging method separates out. The model is recovery-validated (Obs 89, 110, 111).
+1. **About two-thirds of empire-wide dated inscriptions are editorial round-slab convention, not a
+   genuine date signal** (pooled convention-fraction α = 0.6798 [0.6649, 0.6970]); only the remaining
+   third is genuine, and the de-fogging method separates the two. That convention dominates the *apparent*
+   chronology is precisely why de-fogging matters. The model is recovery-validated (Obs 89, 110, 111).
 
 2. **The population–epigraphy association is real, sub-linear, within-province, and robust.** Among cities
    in the same province, inscription output rises with size but less than proportionally — about **48%** of
