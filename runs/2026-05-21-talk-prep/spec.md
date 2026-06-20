@@ -2,7 +2,7 @@
 title: "Run spec — RAC-TRAC 2026 talk-prep analysis"
 date: 2026-05-21
 audience: "Adela (delivering Friday 14:20 Aarhus); session organisers (LIRE creators); TRAC7 audience"
-status: "in flight (Block 1 in progress)"
+status: "complete (Blocks 1–6 done; the talk was delivered 2026-05-22). Block 7 reproducibility-check all green except the final commit/push housekeeping item. See plan.md for the block-by-block log. Status corrected 2026-06-20 from the stale 'in flight (Block 1 in progress)' stamp (results-documentation uplift, Tier-2 item 6)."
 preregistration:
   url: https://osf.io/uycs6/
   lodgement-tag: osf-lodgement-2026-05-20
@@ -55,7 +55,14 @@ slide.
   copied to `planning/conference-talk-rac-trac-2026/figures/`).
 - `outputs/tables/` — per-block summary CSVs (filter counts, NBR coefficients
   + bootstrap CI, mixture-recovery diagnostics, H3a posterior summaries).
-- `outputs/REPORT.md` — narrative summary at end of run.
+- ~~`outputs/REPORT.md` — narrative summary at end of run.~~ **Not produced**
+  (noted 2026-06-20). This was a prep run for a conference talk, not a
+  finding-bearing analysis run; the block-by-block narrative lives in `plan.md`,
+  and the load-bearing numbers (Hanson β = 0.566, f_within ≈ 29.95 %) were
+  carried forward into and re-derived by `runs/2026-05-26-letter-count-probe/REPORT.md`
+  (which reproduces the f_within = 29.95 % slide-6 punchline) and the Obs
+  register. The promised standalone REPORT was superseded by that downstream
+  write-up rather than written here.
 
 ## Filter (prereg-canonical)
 

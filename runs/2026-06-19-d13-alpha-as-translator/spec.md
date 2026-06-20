@@ -4,6 +4,12 @@
 `outputs/D13-REPORT.md` and lodged as **Obs 107** (β_within +0.431 → +0.422, clean
 null; H3a NOT confounded by per-city convention intensity). The original "DRAFT …
 Do NOT launch compute until signed off" stamp is superseded.
+
+**➡ RESULTS REPORT:** [`outputs/D13-REPORT.md`](outputs/D13-REPORT.md) — the full
+results write-up is placed under `outputs/` (next to the artefacts it derives
+from), which hides it from a root directory listing. This root-level pointer was
+added 2026-06-20 (results-documentation uplift, Tier-2 item 8) so the REPORT is
+discoverable from the run root.
 **Author:** Claude Code (Opus 4.8) on Shawn's brief, 2026-06-19. UK/Australian English.
 **Route chosen by Shawn (2026-06-19):** Option A (prereg-literal, standalone per-city α at
 N ≥ 100, with uncertainty propagation). Option B (hierarchical partial-pooling) to be
