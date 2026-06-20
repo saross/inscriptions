@@ -29,17 +29,21 @@ construction (driver: `code/run_roma_italia.py`; reuses `run_refit.fit_one`).
 | **Roma** | 65,457 | **0.799** | [0.790, 0.807] | 1.004 | 0 | yes |
 | capitals-empire-62 | 16,123 | 0.561 | [0.515, 0.601] | 1.002 | 3 | yes |
 | capitals-latin-41 | 15,557 | 0.561 | [0.519, 0.595] | 1.002 | 8 | yes |
-| Italia-incl-Rome | 109,172 | 0.733 | [0.722, 0.743] | 1.009 | 0 | yes |
+| Italia-incl-Rome | 109,172 | 0.733 | [0.722, 0.743] | 1.009 | 0 | **ESS-marg.** |
 | provinces-non-Italian-Latin | 65,931 | 0.713 | [0.644, 0.762] | 1.003 | 9 | yes |
 | *Italia (excl. Rome)* — production | 43,715 | 0.787 | [0.753, 0.806] | — | — | — |
 | *empire-aggregate* — production | 180,609 | 0.680 | [0.665, 0.697] | — | — | — |
 | *latin-aggregate* — production | 109,646 | 0.739 | [0.660, 0.789] | — | — | — |
 
-Convergence: all five new fits pass the field-standard gate (R̂ < 1.01, bulk ESS
-≥ 400). Three units carry **3–9 benign divergences** out of 8 000 draws
-(capitals-latin-41, provinces-non-Italian-Latin, capitals-empire-62) — well within
-the field-standard benign-tolerant gate the project adopted (cf. the 2026-06-04
-divergence-gate decision); R̂/ESS are clean. Reported honestly; not a concern.
+Convergence: **four of the five** pass the gate (R̂ < 1.01, bulk ESS ≥ 400).
+**Italia-incl-Rome is ESS-marginal** — bulk ESS **397.4**, a hair under the 400
+gate (R̂ 1.009, 0 divergences); it is a secondary, Rome-dominated unit (Rome is
+60 % of it) and is **not** used in the headline Italia figures (F18/F19 use
+Italia-*excl*.-Rome, ESS-clean), so this is a minor caveat — flagged, not a
+result-bearing failure. Three other units carry **3–9 benign divergences** out of
+8 000 draws (capitals-latin-41, provinces-non-Italian-Latin, capitals-empire-62) —
+well within the field-standard benign-tolerant gate the project adopted (cf. the
+2026-06-04 divergence-gate decision); R̂ clean throughout. All reported honestly.
 
 ## 3. The capital comparison (§§1–7)
 

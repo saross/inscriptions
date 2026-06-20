@@ -176,6 +176,43 @@ lit-chaining, the parallel-run module, the sha256 enhancement.
 
 ---
 
+## 2026-06-21 session — α-inversion fix + Roma/Italia + women Stage-1 (autonomous block)
+
+Big autonomous build while Shawn AFK. **THREE things the next session must know:**
+
+1. **α-DIRECTION CORRECTION (important).** The key-findings summary had α **inverted**
+   — it called α the *genuine* fraction. **α is the CONVENTION fraction** (1 − α =
+   genuine; model `p_mix = α·p_conv + (1−α)·p_gen`). Confirmed 3 ways: model code,
+   the `pi_align` identity, and **Pompeii α = 0.016** (= 1.6 % convention, correct
+   for a sealed precisely-dated site). The **lodged prereg + every other doc define
+   α = convention correctly**; only the summary was inverted. So **empire α = 0.68 =
+   two-thirds CONVENTION / one-third genuine** (Latin 0.74 = ¾ convention). Summary
+   body + callout corrected + dated banner (`1fffc72`); figure captions were already
+   correct. **The headline FRAMING is Shawn's editorial call — pending his
+   re-review.** (This is a *stronger* motivation: most apparent Roman epigraphic
+   dating is editorial artefact.)
+2. **ROMA + ITALIA analyses — DONE** (`runs/2026-06-21-rome-capital-comparison/`;
+   driver reuses production `fit_one` verbatim, one universal cc-library basis, so
+   the 5 new units are comparable to the 29 production units). **Rome α = 0.80** (the
+   most convention-dated unit); **provincial capitals 0.56** (less than the provinces,
+   0.71 — capitals more *genuinely* dated than their hinterland); **Italian
+   exceptionalism**: Rome + Italian municipia (0.80 / 0.79) the empire's most
+   convention-dated; **Severan crossover** (F19: Italy peaks ~AD 80, provinces at AD
+   212). Figures F15/F16/F17/F18/F19; `REPORT.md`; summary §4b; Obs 114. Descriptive/
+   exploratory; Rome stays excluded (Decision 36). *Caveat:* Italia-incl-Rome is
+   ESS-marginal (397.4 < 400; secondary, not in the headline figures); Rome's genuine
+   *shape* weakly constrained (high α; convention *fraction* is the robust result).
+3. **WOMEN Stage-1 feasibility — DONE** (`runs/2026-06-20-women-corpus-feasibility/`).
+   Data confirmed: **504-daughter `women.csv` IS canonical** (the "813" extras were
+   spurious hits). Verdict: corpus is **~90 % convention** (α 0.90 / 0.84 daughters)
+   + **below/at the reachability floor** (daughters 453 < 500) → **NOT in the reliable
+   de-fogging regime**. Collaborator `MEMO.md` (for Adela); women figure; Obs 115.
+   Operational datable/conjugal filters ours (flag for Adela). **Stage 2 is UNDEFINED
+   in the repo — HELD pending Shawn's definition; Stage 3 deferred (EJA companion).**
+
+All committed/pushed; sapphire ran both jobs clean. **OPEN for Shawn: (a) the α
+headline framing; (b) the women Stage-2 definition.**
+
 ## Write-up parameters (LOCKED 2026-06-20 — full brief: `planning/paper-writing-brief.md`)
 
 The governing parameters for the write-up phase (Shawn 2026-06-20). The full brief carries the main-text
