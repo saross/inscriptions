@@ -1,6 +1,6 @@
 # Dataset-level profile
 
-- Rows: **182,853**; Columns: 65
+- Rows: **182,853**; Columns: 63 [corrected 2026-06-20, accuracy audit: was 65; primary `archive/data-2026-04-22/LIRE_v3-0.parquet` — pandas shape (182853, 63); the 64th pyarrow field is `__index_level_0__`, materialised by pandas as the index, not a column]
 - LIST-ID unique: **True**
 - Date range: not_before ∈ [-430, 350]; not_after ∈ [-50, 2230]
 - Median date_range: 100 yr; mean: 102.3 yr
