@@ -6222,3 +6222,186 @@ channel and finds no effect.
 `obs-108`, `obs-109`, `obs-74`, `obs-99`, `obs-106`,
 `runs-2026-06-20-a01-content-residual`, `content-residual-per-city-csv`,
 `provincial-capitals-csv`
+
+## Obs 113 — 2026-06-20 [RESULT / METHODOLOGY]: §5 exact covariance-attributed temporal-variance partition — empire-common 38 % / province 29 % / city 33 % (SUPERSEDES the indicative 54/24/22 proportional-remainder split from Obs 97)
+
+### The finding
+
+**Source posterior:** `runs/2026-05-30-s5-small-n-trajectories/code/production/monolithic-inscription-25y.nc`
+(268 cities, 8,000 draws, 16 × 25 y bins, 50 BC–AD 350; the same §5 Layer-A
+posterior used throughout Obs 97–112). No new MCMC.
+
+**The computation** (`runs/2026-06-20-figures/code/compute_temporal_split.py`,
+commit `1c1e6b3`) draws the per-city, per-draw temporal variance for each of the
+three tiers g (empire-common), u (province), v (city-specific), plus all three
+cross-tier covariance terms, then attributes the covariances proportionally to
+produce a clean three-way partition that sums to exactly 1. A regression guard
+inside the same script independently reproduces the published
+`median_common_share_of_temporal_var` from `h5-decomposition.json` to < 1 × 10⁻⁶
+— confirming the computation is working on the correct posterior slice.
+
+All numbers below are read directly from
+`runs/2026-06-20-figures/outputs/temporal-three-way-split.json` (the
+`method_c_cov_attributed_mean` block, labelled "THE clean three-way partition
+(empire/province/city); sums to exactly 1").
+
+---
+
+**Clean partition (covariance-attributed mean; Method C mean):**
+
+| Frame | n cities | empire-common g | province u | city-unique v | sum |
+|---|---|---|---|---|---|
+| All-provinces | 268 | **38.1 %** | **29.2 %** | **32.7 %** | 100.0 % |
+| Latin-minus-Roma | 257 | **37.4 %** | **29.7 %** | **32.9 %** | 100.0 % |
+
+(Exact values from JSON: all-provinces common_g 0.38056, province_u 0.29227,
+city_v_unique 0.32717; Latin-minus-Roma common_g 0.37371, province_u 0.29718,
+city_v_unique 0.32910.)
+
+The two frames are essentially identical — the §5 set is 96 % Latin-West
+(consistent with Obs 97 Finding 4).
+
+---
+
+**Why a covariance-attributed partition is needed — the marginal (standalone) shares:**
+
+| Frame | common g (standalone) | province u | city v | sum | covariance remainder |
+|---|---|---|---|---|---|
+| All-provinces | 54.0 % | 42.1 % | 35.3 % | 131.4 % | **−31.4 %** |
+| Latin-minus-Roma | 54.0 % | 43.4 % | 35.1 % | 132.5 % | **−32.5 %** |
+
+(Exact values from JSON `method_a_marginal` block: all-provinces sum 1.31444,
+covariance_remainder −0.31444; Latin-minus-Roma sum 1.32528,
+covariance_remainder −0.32528.)
+
+The three tiers are **negatively correlated over time** — when the empire-common
+component rises, province and city components tend to run low, and vice versa.
+This negative cross-tier covariance means the standalone marginal Var_t(tier) /
+Var_t(total) shares over-count: they add to ≈ 131–133 %, not 100 %.
+
+The **54 % standalone common share** (Obs 97 Finding 4; `h5-decomposition.json`
+`median_common_share_of_temporal_var`) is correct as a *marginal* quantity —
+the empire-common temporal swing really does account for 54 % of a typical city's
+temporal variance on its own. But it is not a partition share; it over-counts
+relative to the clean-partition 38 % precisely because of the negative
+covariance with u and v.
+
+**Superseded indicative split (proportional-remainder method, Obs 97):**
+The earlier 54 / 24 / 22 reading (Obs 97 Finding 4, method B in the JSON:
+`method_b_proportional_remainder`) silently assumed the three tiers contribute
+independently, then distributed the remainder proportionally to force a sum of 1.
+That assumption is invalid here because the tiers are *negatively* correlated.
+The proportional-remainder method over-states the common share and under-states
+province and city shares relative to the covariance-attributed partition.
+
+---
+
+**Reporting decision (Shawn, 2026-06-20):** report the clean 38 / 29 / 33
+partition (all-provinces, Method C mean) as the top-line description of how
+temporal variance is shared across the three tiers. The 54 % standalone common
+share is retained as a footnote — it answers a different, legitimate question
+("how much does g alone explain?") but should not be presented as a partition.
+Applied in figure F9, the key-findings summary, and `figure-captions.md`.
+
+### Why this matters
+
+1. **Corrects the partition arithmetic for the paper.** The published 54/24/22
+   split (Obs 97) was the best available estimate at the time (the proportional-
+   remainder method is a standard fast approximation), but the negative
+   cross-tier covariance invalidates the proportionality assumption. The
+   covariance-attributed 38/29/33 is the defensible partition; it is what the
+   paper should cite when saying how temporal variance is shared across tiers.
+2. **The three tiers are not independent over time — that is itself a result.**
+   Negative cross-tier covariance means that cities which diverge from the
+   empire-common trajectory (large u or v) do so *against* the empire trend, not
+   in addition to it. This is the mechanistic signature of buffering / divergence:
+   some cities maintain or increase production during the empire-wide peak, while
+   the empire-wide component is the ceiling for the others.
+3. **The 54 % standalone share remains valid in context.** The regression guard
+   confirms it is reproducible from the same posterior, so there is no error in
+   Obs 97 — the issue is interpretation (marginal share vs partition share). The
+   two numbers answer different questions and can coexist in the paper.
+4. **F9 now has a correctly partitioned variance decomposition chart.** The figure
+   was waiting on this computation; with the 38/29/33 clean numbers the figure
+   has defensible quantities.
+
+### Caveats / methodological notes
+
+- **Method C mean vs median-of-medians.** The JSON also contains
+  `method_c_cov_attributed` (median-of-medians, all-provinces: 39.1 / 29.1 /
+  33.1 % summing to ≈ 101.3 % — medians don't add exactly). The
+  `method_c_cov_attributed_mean` (mean over cities and draws) is the canonical
+  partition because medians of ratios don't partition; the median-of-medians is
+  provided as a robustness check. The two are close (within 1 pp per tier).
+- **Covariance attribution is not unique.** Distributing the cross-tier
+  covariance proportionally to Var_t(tier) is one defensible choice (analogous
+  to Shapley-value attribution); others exist. The qualitative conclusion —
+  that province and city shares are larger than the proportional-remainder
+  method implied — is robust to the attribution choice.
+- **Negative covariance is a model property, not a pre-committed test result.**
+  It falls out of the hierarchical structure: by construction, g, u, v are
+  additively independent *conditional on the data*, but their marginal temporal
+  variances are not constrained to be independent. The negative sign is an
+  empirical finding from this posterior.
+- **No CIs reported for the partition shares** in the JSON (Method C mean is a
+  point estimate averaged over draws and cities). Draw-level spread is implicitly
+  propagated in the averaging; formal HDIs would require a separate per-draw
+  partition calculation that was not run. Treat the one-decimal-place rounding
+  as the operative precision.
+
+### Related observations and artefacts
+
+**Obs 97** (§5 H5 — empire-wide common temporal component peaks AD 188; magnitude
+decomposition; `median_common_share_of_temporal_var` ≈ 54 %): the parent result
+this Obs refines. The 54 % standalone common share (Finding 4) is a marginal
+quantity, not a partition share; the 38 % clean-partition share here supersedes
+the indicative 54/24/22 split from Obs 97's proportional-remainder method (Method B).
+
+**Obs 98** (the empire-wide common temporal component conflates four drivers —
+NOT a clean epigraphic habit proxy): the interpretive caution that applies to all
+three tiers in the decomposition; g is not pure habit, u and v are not pure
+population signal.
+
+**Obs 103** (§5 Layer B residual — removing g dissolves the raw inversion):
+Layer B operates on the u + v residual; the correct interpretation of Layer B
+requires knowing that u and v together account for 29 + 33 = 62 % of temporal
+variance in the clean partition (not the 46 % the proportional-remainder method
+implied).
+
+**Obs 104** (§5 size-vs-dynamics probe — size tracks the province-inclusive
+trajectory q_uv): the province-mediated buffering gradient operates on u; with
+province u at 29 % in the clean partition (up from the indicative 24 %), the
+province tier carries more weight than previously indicated.
+
+**Artefacts**:
+`runs/2026-06-20-figures/code/compute_temporal_split.py` (the computation; includes
+regression guard reproducing the published 54 % standalone share to < 1 × 10⁻⁶);
+`runs/2026-06-20-figures/outputs/temporal-three-way-split.json` (all numbers in
+this Obs read directly from here; commit `1c1e6b3`);
+`runs/2026-05-30-s5-small-n-trajectories/code/production/monolithic-inscription-25y.nc`
+(the §5 Layer-A posterior; primary input);
+commit `1c1e6b3` (clean-partition computation).
+
+### Findable later
+
+`temporal-variance-partition`, `three-way-split`, `covariance-attributed-partition`,
+`clean-partition`, `method-C-mean`, `empire-common-38-pct`, `province-29-pct`,
+`city-unique-33-pct`, `empire-38`, `province-29`, `city-33`,
+`all-provinces-38-1-29-2-32-7`, `latin-minus-roma-37-4-29-7-32-9`,
+`common-g-0-38056`, `province-u-0-29227`, `city-v-0-32717`,
+`common-g-0-37371`, `province-u-0-29718`, `city-v-0-32910`,
+`standalone-share-54-pct`, `marginal-share-54`, `common-share-54`,
+`median-common-share-of-temporal-var`, `h5-decomposition-json`,
+`proportional-remainder-superseded`, `method-B-superseded`, `indicative-54-24-22`,
+`negative-cross-tier-covariance`, `covariance-remainder-neg-31-pct`,
+`marginal-sum-131-pct`, `tiers-negatively-correlated`,
+`method-c-cov-attributed-mean`, `method-c-median-of-medians`,
+`shapley-attribution`, `covariance-distribution`,
+`g-shape`, `u-shape`, `v-shape`, `g-u-v-partition`,
+`reporting-decision-2026-06-20`, `F9-figure`, `figure-F9`,
+`key-findings-summary`, `figure-captions-md`,
+`regression-guard`, `reproduce-54-pct-to-1e-6`,
+`monolithic-inscription-25y-nc`, `268-cities`, `257-cities`,
+`obs-97`, `obs-98`, `obs-103`, `obs-104`,
+`compute-temporal-split-py`, `temporal-three-way-split-json`, `1c1e6b3`,
+`runs-2026-06-20-figures`
