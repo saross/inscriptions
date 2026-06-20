@@ -178,7 +178,7 @@ def main() -> int:
         "base_seed": R.REFIT_BASE_SEED,
         "units": [{
             "name": r["name"], "track": r.get("track"), "n_rows_raw": r.get("n_rows_raw"),
-            "n_eff": r["n_eff"], "alpha_median": r["alpha_median"],
+            "n_eff": r["n_rows_eff"], "alpha_median": r["alpha_median"],
             "alpha_ci": [r["alpha_ci_lo"], r["alpha_ci_hi"]],
             "max_rhat": r["max_rhat"], "min_ess_bulk": r["min_ess_bulk"],
             "n_divergences": r["n_divergences"],
