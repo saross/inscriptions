@@ -100,12 +100,16 @@ def main() -> None:
 
         # --- method (c): covariance-attributed shares Cov_t(tier,total)/Var ---
         # The principled ANOVA-style partition: each tier is credited its
-        # variance plus its covariances with the others; sums to EXACTLY 1.
+        # variance plus its covariances with the others. Per city/draw the three
+        # shares sum to EXACTLY 1; the median-of-medians (agg) does not quite,
+        # so we also report a MEAN aggregation, which sums to exactly 1 (means
+        # are linear) — the clean "X / Y / Z" top-line partition.
         cov = lambda a: ((a - a.mean(axis=2, keepdims=True))
                          * (tot - tot.mean(axis=2, keepdims=True))).mean(axis=2)
-        mc_g = agg(cov(gs) / var_tot)
-        mc_u = agg(cov(us) / var_tot)
-        mc_v = agg(cov(vs) / var_tot)
+        sg, su, sv = cov(gs) / var_tot, cov(us) / var_tot, cov(vs) / var_tot
+        mc_g, mc_u, mc_v = agg(sg), agg(su), agg(sv)            # median-of-medians
+        amean = lambda fr: float(fr.mean())                     # over draws AND cities
+        me_g, me_u, me_v = amean(sg), amean(su), amean(sv)      # sums to exactly 1
 
         # --- method (b): common, then residual split proportional to var -----
         # The summary's indicative construction (sum-to-1 by fiat).
@@ -120,9 +124,15 @@ def main() -> None:
                 "common_g": ma_g, "province_u": ma_u, "city_v": ma_v,
                 "sum": ma_g + ma_u + ma_v,
                 "covariance_remainder": 1.0 - (ma_g + ma_u + ma_v)},
-            "method_c_cov_attributed": {  # Cov(tier,total)/Var(total); sums to 1
+            "method_c_cov_attributed": {  # Cov(tier,total)/Var(total)
                 "common_g": mc_g, "province_u": mc_u, "city_v": mc_v,
-                "sum": mc_g + mc_u + mc_v},
+                "sum": mc_g + mc_u + mc_v,
+                "note": "median-of-medians; ~1% off 1 (medians don't add)"},
+            "method_c_cov_attributed_mean": {  # MEAN aggregation -> sums to 1
+                "common_g": me_g, "province_u": me_u, "city_v_unique": me_v,
+                "sum": me_g + me_u + me_v,
+                "note": "THE clean three-way partition (empire/province/city); "
+                        "sums to exactly 1"},
             "method_b_proportional_remainder": {  # summary's indicative
                 "common_g": ma_g, "province_u": mb_u, "city_v": mb_v,
                 "sum": ma_g + mb_u + mb_v},

@@ -12,7 +12,15 @@
       "common_g": 0.3907906470233595,
       "province_u": 0.29142644387027894,
       "city_v": 0.33115694654559524,
-      "sum": 1.0133740374392337
+      "sum": 1.0133740374392337,
+      "note": "median-of-medians; ~1% off 1 (medians don't add)"
+    },
+    "method_c_cov_attributed_mean": {
+      "common_g": 0.38056280590412384,
+      "province_u": 0.292267252978961,
+      "city_v_unique": 0.3271699411169151,
+      "sum": 1.0,
+      "note": "THE clean three-way partition (empire/province/city); sums to exactly 1"
     },
     "method_b_proportional_remainder": {
       "common_g": 0.539742595738415,
@@ -34,7 +42,15 @@
       "common_g": 0.38384802999233314,
       "province_u": 0.29634811389175897,
       "city_v": 0.3324374274235944,
-      "sum": 1.0126335713076866
+      "sum": 1.0126335713076866,
+      "note": "median-of-medians; ~1% off 1 (medians don't add)"
+    },
+    "method_c_cov_attributed_mean": {
+      "common_g": 0.3737123184803235,
+      "province_u": 0.29718498608242555,
+      "city_v_unique": 0.32910269543725096,
+      "sum": 1.0,
+      "note": "THE clean three-way partition (empire/province/city); sums to exactly 1"
     },
     "method_b_proportional_remainder": {
       "common_g": 0.5402948621421158,
