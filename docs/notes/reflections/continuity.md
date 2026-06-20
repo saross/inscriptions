@@ -19,7 +19,7 @@ last-updated: 2026-06-19 SESSION CLOSE (**CONSOLIDATION TAIL CLEARED — H2.1 su
 
 ---
 
-## Remaining work — definitive inventory (updated 2026-06-20 — ANALYTICAL PROGRAMME COMPLETE; only the write-up remains)
+## Remaining work — definitive inventory (updated 2026-06-20 — ANALYTICAL PROGRAMME COMPLETE + DOCUMENTATION TIED UP; the write-up + the women.csv companion thread remain)
 
 **Provenance:** distilled from `planning/prereg-obligations-audit-2026-06-18.md` §4, updated
 through 2026-06-20. The session-close beacon (frontmatter `last-updated`) carries the full run
@@ -68,35 +68,85 @@ results; this is the durable forward plan.
   targets). Its only live rationale is the **descriptive city-level convention-intensity map**
   (all 817 cities) — a paper-scope want, deferrable. Decide post-travel under supervision
   (multi-day; do NOT start as an unattended run); candidate for the re-application / follow-up.
+- **Documentation tied up for the write-up** (2026-06-20). Two read-only assurance sweeps +
+  a cleanup: (a) **prereg obligations-coverage sweep**
+  (`planning/prereg-obligations-coverage-sweep-2026-06-20.md`, `f633e99`) — 54/63 covered,
+  every confirmatory verdict recorded; the one real gap, **Amendment-01 §A5.4
+  content-residual, is now DISCHARGED** (Obs 108, `4b73137`/`b0c69a5`; the content and
+  scaling over-production channels are statistically orthogonal, ρ +0.004) → **the
+  preregistration is UNCONDITIONALLY complete**. (b) **results-documentation uplift**
+  (`planning/results-documentation-uplift-2026-06-20.md`, `591354e`): Tier-1 surfaced the
+  recent done-but-undocumented results as **Obs 109 (H9), 110 (C10), 111 (supp-wave)**,
+  flipped stale "NOT RUN/DRAFT" banners, and disambiguated the cc-VERDICT-library vs
+  grid-VERDICT reviewer-trap; Tier-2/3 fixed Obs cross-links, the broken
+  `reflections/working-notes.md` path, and a 65→63 column typo. The H3a **brms
+  cross-language shadow is complete and PASSES** (h3a-confirmatory REPORT §6; bayes_R2 0.133
+  vs 0.136, R̂ 1.0013, 0 div — not a gap; `scripts/h3a_brms_shadow.R` kept as-is). Remaining
+  doc items are non-blocking (sha256 / Reproduce-block enhancement).
+- **C5/C6 |Δα| pinned** (`63f910c`): max raw shift **0.0156 (latin-aggregate DM)**, not a
+  literal 0.0 (the `model-comparison.md` column rounds to 1 dp); conclusion unchanged (DM/NB
+  do not move α). **Write-up directive — ~31 %, Option 1** (`a4416e4`): cite the reproducing
+  figures **~36 % (F1+F3) / 24.96 % (full pool)** with a footnote noting lodged Amendment
+  03's rounded "~31 %"; the lodged amendment stands unedited (no clarifying amendment).
+- **women.csv re-application thread STARTED** (Adela Sobotkova, Aarhus; co-author on this
+  paper). Her TRAC talk "From Graveyard to Time Series" (Drive) extends Shaw's crossover-age
+  marriage proxy to a *time series* (wife/daughter ages-at-death; `tempun` Monte Carlo;
+  crossover drops ~23 → ~15 from C1 to mid-C3, the trough between the Antonine and Cyprian
+  plagues, an urban-size gradient, a Life-History-Theory frame). **Our contribution =
+  convention-deconvolution of her time axis** — she has aoristic MC but NOT convention
+  de-fogging, and her trough sits in the high-α late-imperial window where it matters most.
+  **Worked-example boundary (Shawn 2026-06-20):** a method vignette in the JAMT paper; the
+  substantive crossover history reserved for a **companion (European Journal of Archaeology)
+  paper**. Feasibility study **spec'd** (`runs/2026-06-20-women-corpus-feasibility/spec.md`,
+  `074e8bc`) — deconvolve the datable corpus + a per-subset reachability verdict; explicitly
+  NO crossover trajectory. **Awaiting Adela's canonical dataset** (the 813-daughter version;
+  the repo's `data/women.csv` is stale at 504 daughters) + her datable/conjugal filter
+  definitions, expected 2026-06-20 evening; then a quick single-fit run for a Denmark
+  proof-of-feasibility memo (Shawn sees her while travelling).
 
 **REMAINING (excluding unforeseen follow-ups):**
 
+*Near-term (this week):*
+
+1. **women.csv feasibility run** — once Adela's canonical dataset arrives: run the spec'd
+   deconvolution feasibility (`runs/2026-06-20-women-corpus-feasibility/`) and produce the
+   Denmark proof-of-feasibility memo. Single fits, minutes on sapphire; needs her dataset +
+   filter definitions first.
+
 *The main remaining body of work:*
 
-1. **The write-up** — empirical-first / interpretation-later structure (Obs 101); not started.
-   This is now the only substantive task. The gate Shawn set ("start the write-up once all
-   analyses are complete") is **met**.
+2. **The write-up** — empirical-first / interpretation-later structure (Obs 101); not
+   started. Both gates Shawn set are now **met**: all analyses complete AND the results
+   documentation is tied up (the write-up is based on it).
 
 *Optional / slated (not gating, not for now):*
 
-2. **Lit-scout deeper chaining** — forward-chain Bakk 2013 / Xia 2020 for a magnitude-matching
+3. **Lit-scout deeper chaining** — forward-chain Bakk 2013 / Xia 2020 for a magnitude-matching
    simulation + novelty-positioning.
-3. **A reusable sapphire-parallel-run module** — so each run script stops reinventing the
+4. **A reusable sapphire-parallel-run module** — so each run script stops reinventing the
    `ProcessPoolExecutor` / spawn / cgroup / `n_jobs` infra.
+5. **sha256 + explicit Reproduce blocks** across runs — a documentation enhancement (runs
+   already carry seeds); audit-flagged lowest-priority, non-blocking.
 
-*Carried to the follow-up paper:* standalone province-scale Layer B (H4), baorista (H6),
-and — optionally — the B′ city-α convention-intensity map.
+*Carried to the follow-up paper(s):* standalone province-scale Layer B (H4), baorista (H6),
+the B′ city-α convention-intensity map, and the women.csv **substantive crossover-age
+history** (the EJA companion).
 
-**Done — NOT remaining:** **D13 α-as-translator (discharged, Obs 107)**; the H2.1
-supplementary wave; H9 confirmatory letter-mass H3a; the C10 aoristic-MC question (resolved —
-method artefact); the lit-scout + Zotero staging; Latin variants (Obs 106); province-size
-regression (Obs 105); the full §5 suite (incl. q_u province tier, Obs 103); D11 / D12 / B4;
-H3a / H3b / H3c; **all four OSF amendments lodged** (no preregistration lodgement outstanding).
+**Done — NOT remaining:** **D13 α-as-translator (Obs 107)**; **Amendment-01 §A5.4
+content-residual (Obs 108)**; **the two pre-write-up audit sweeps + the Tier-1/2/3
+documentation cleanup** (Obs 109–111 added; banners / cross-links / typos fixed; |Δα| pinned;
+~31 % resolved); the H2.1 supplementary wave; H9 confirmatory letter-mass H3a; the C10
+aoristic-MC question (resolved — method artefact); the H3a brms cross-language check; the
+lit-scout + Zotero staging; Latin variants (Obs 106); province-size regression (Obs 105); the
+full §5 suite (incl. q_u province tier, Obs 103); D11 / D12 / B4; H3a / H3b / H3c; **all four
+OSF amendments lodged** (no preregistration lodgement outstanding).
 
-**Status (2026-06-20):** the methodological core, the confirmatory programme, **and every
-preregistered obligation are DONE** — D13, the last one, is discharged. H4 is closed (q_u),
-H6 and B′ are deferred/parked. **The only remaining substantive work is the write-up**
-(plus optional lit-chaining and the slated parallel-run module).
+**Status (2026-06-20):** the methodological core, the confirmatory programme, **every
+preregistered obligation (now incl. A01 §A5.4), and the results documentation are all DONE**
+— the documentation is tied up and write-up-ready. The two remaining threads are **(1) the
+write-up** (the main body) and **(2) the women.csv companion** (feasibility run pending
+Adela's dataset; substantive history → EJA companion paper). Optional: lit-chaining, the
+parallel-run module, the sha256 enhancement.
 
 ---
 
