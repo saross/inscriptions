@@ -113,7 +113,7 @@ blocking Friday / Saturday.
   accept any aoristically-dated inscription frame, not LIRE-specific
   conventions, so the Week-1 swap is mechanical.
 - The feasibility doc's *data artefacts* section lists the EDH/EDCS
-  upstream issues (see `docs/notes/reflections/working-notes.md`
+  upstream issues (see `docs/notes/working-notes.md`
   Obs 7) that apply equally to both datasets.
 
 ### Revisit triggers
@@ -3611,6 +3611,28 @@ verified lit-scout on epigraphic dating practice (report
   corpus-wide is `[301, 500]`, 8.8 %); reign templates are only ~2.7 %. The
   recovery grid (Grid A 98.6 %) ran on **synthetic proxy** tier weights over the
   curated basis — no real-LIRE three-tier mixture has ever been fit.
+  > **Reconciliation note (added 2026-06-20, results-documentation uplift).** The
+  > "~31 %" above does **not** reproduce from either cited artefact. The
+  > template-dictionary scan
+  > (`runs/2026-06-05-template-dictionary/outputs/tables/category-mass.csv`) gives
+  > **24.96 %** for the *full* empire convention pool (`multi_century` group), and
+  > the empirical-pconv Stage-1 decomposition
+  > (`runs/2026-05-24-empirical-pconv/outputs/tables/slab-type-weights.csv`) gives
+  > **35.93 %** for the *F1+F3* pool specifically (two_century 23.69 % +
+  > one_and_a_half_century 7.29 % + three_century 4.95 %). "~31 %" is neither; it
+  > reads as a rough split-the-difference across the two framings. The
+  > load-bearing values are **24.96 % (full pool)** and **~36 % (F1+F3 pool)**.
+  > Full reconciliation: **Obs 76** (`docs/notes/working-notes.md`).
+  > **Write-up flag — DO NOT silently edit here:** the "~31 %" wording was carried
+  > into **lodged OSF Amendment 03** (`planning/osf-amendment-03-justification.txt`,
+  > `planning/osf-amendment-03-summary-addendum.md`,
+  > `planning/osf-amendment-2026-06-07-convention-basis.md`), so this is not a
+  > purely-internal figure. The lodged amendment text is left **unaltered** (its
+  > "~31 %" is the historical lodged record). Whether to footnote the corrected
+  > 24.96 % / ~36 % in the paper, lodge a clarifying amendment, or leave the
+  > rounded approximation as-is in the lodged record is **Shawn's decision** — the
+  > directional argument (multi-century mass is a large, previously-unmodelled
+  > share; reigns are small) is robust under either exact value.
 - **What the production model actually is.** `cell_lib.build_model_f1_f3` learns
   `tier_weights ~ Dirichlet` over a fixed `tier_basis`; it does **not** use the
   family classifier, and Decision 35 retired the empirical-Bayes fixed-`p_conv`
