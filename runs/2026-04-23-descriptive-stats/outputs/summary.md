@@ -2,7 +2,7 @@
 
 ## Headline findings
 
-1. The LIRE v3.0 parquet at `archive/data-2026-04-22/LIRE_v3-0.parquet` contains 182,853 rows × 65 columns and is consistent with the first run's 182,853 count.
+1. The LIRE v3.0 parquet at `archive/data-2026-04-22/LIRE_v3-0.parquet` contains 182,853 rows × 63 columns and is consistent with the first run's 182,853 count. [Corrected 2026-06-20 from "65 columns": the run's own `run.log`, `verifier.log`, and the profile script all report 63 columns under `pandas.read_parquet` — the parquet carries a 64th physical column, `__index_level_0__`, which pandas materialises as the DataFrame index, not a column. The schema arithmetic (66 schema rows − 3 schema-only columns = 63) is consistent with 63. The earlier "65" was a typo in this summary only.]
 2. `negative-date-range` = **0** — this matches the LIRE v3.0 release-note claim of zero negative ranges; previous LIRE versions had transposed endpoints that Shawn reported to the maintainers.
 3. Midpoint-inflation at century boundaries (AD 50/150/250/350) shows observed/expected ratios of 22.83, 41.50, 18.82, 39.70 under the aoristic-probability null; Westfall-Young adjusted p-values: 0, 0, 0, 0.
 4. Editorial-spikes at year AD 97: the two endpoint variants confirm the first-run finding that year 97 is a dip, not a spike, under the aoristic null. Direction and adjusted p-values in `artefacts.md`.
@@ -24,7 +24,7 @@ The AD 2230 placeholder values are a known upstream bug reported to the LIRE tea
 
 ## Schema check
 
-- Schema rows: 66; parquet columns: 65.
+- Schema rows: 66; parquet columns: 63. [Corrected 2026-06-20 from "65" — see headline finding 1. 66 − 3 schema-only columns = 63, matching `run.log`/`verifier.log`.]
 - Schema-only (absent from parquet): ['is_geotemporal', 'is_within_RE', 'material_EDCS'].
 - Parquet-only (absent from schema): none.
 - The two artefact checks dependent on schema-only columns (`is_within_RE-rate`, `is_geotemporal-rate`) are marked NOT RUN in `artefacts.md`. A derived geolocated × has-date rate is reported in artefacts.md at 1.000.
