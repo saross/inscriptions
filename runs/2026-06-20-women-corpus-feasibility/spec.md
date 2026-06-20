@@ -1,13 +1,21 @@
 # Women-corpus deconvolution — feasibility study (spec)
 
-**Status:** DRAFT for Shawn's sign-off (2026-06-20). Proof-of-feasibility for the
-"From Graveyard to Time Series" collaboration (Adela Sobotkova, Aarhus University;
-co-author on the current JAMT paper). To be **run after her canonical dataset
-arrives** (the 813-daughter version, requested, expected this evening). The repo's
+**Status:** APPROVED TO RUN as "Stage 1" (Shawn 2026-06-21). Proof-of-feasibility
+for the "From Graveyard to Time Series" collaboration (Adela Sobotkova, Aarhus
+University; co-author on the current JAMT paper).
+
+**DATA CORRECTION (Shawn 2026-06-21, after speaking with Adela):** the repo's
 `data/women.csv` (1,397 rows / 504 daughters, gzip-compressed despite the `.csv`
-name) is **STALE — for a pipeline dry-run only**, never for a number shown to Adela.
-**Author:** Claude Code (Opus 4.8, 1M context) on Shawn's brief, 2026-06-20.
-UK/Australian English; Oxford comma.
+name) **IS the canonical, cleaner dataset** — the earlier-supposed "813-daughter"
+version was an artefact of spurious hits during her initial search; those extra
+records were false positives and have been removed. So the **504-daughter file is
+correct and runnable now** (this reverses the 2026-06-20 "STALE / 813 canonical"
+note). Operational `datable` / `conjugal` filters are defined in §4 from the file's
+own columns and flagged for confirmation against Adela's exact definitions before
+any number is shown to her.
+
+**Author:** Claude Code (Opus 4.8, 1M context) on Shawn's brief, 2026-06-20;
+data-correction + run-approval 2026-06-21. UK/Australian English; Oxford comma.
 
 ---
 
@@ -64,11 +72,23 @@ Mapping to the two papers:
 
 ## 4. Data and adapter
 
-- **Input:** Adela's canonical dataset (813-daughter version). **Confirm her exact
-  `datable` + `conjugal` filters** so our subset matches her ~850 datable conjugal
-  (and her 50–349 CE window). Do not infer them — ask.
+- **Input:** the canonical `data/women.csv` (1,397 rows / 504 daughters; the cleaner
+  dataset — see DATA CORRECTION above). Columns present and used: `role`
+  ∈ {wife, daughter}, `type` = familial, `not_before` / `not_after` (date interval),
+  `province`, `total_age` / `age`, `link_status`, `confidence`, `urban_context`,
+  Lat/Long. So the conjugal/datable structure is in the file's own columns — no need
+  to infer hidden filters.
+- **Operational filter definitions (MINE — flag for Adela's confirmation before any
+  number is shown to her):**
+  - `conjugal` = `role` ∈ {wife, daughter} ∧ `type` = "familial" (the whole file is
+    this corpus; report the wife/daughter split).
+  - `datable` = `not_before` and `not_after` both present and valid
+    (`not_before ≤ not_after`) and the interval overlaps the analysis window.
+  - These are reasonable reconstructions from the columns; **confirm against Adela's
+    exact `datable` + `conjugal` definitions** (and whether she applies a
+    `link_status` / `confidence` quality gate) before citing a figure to her.
 - **Required fields:** role (wife/daughter), date interval (`not_before`/`not_after`),
-  the conjugal/datable flags.
+  present as columns above.
 - **Adapter:** map her corpus into the format the production deconvolution machinery
   expects — `h2_lib`/`refit_lib` consume `nb`/`na` + the LIRE structure; her file has
   `not_before`/`not_after`. A thin adapter builds the aoristic SPA + cross-classified
@@ -122,14 +142,22 @@ root-fs TMPDIR / per-unit seed; base seed `20260620`).
 reachability table), `MEMO.md` (the one-pager for Denmark). Conform to the exemplar
 template (`runs/2026-06-18-province-size-regression/`).
 
-## 9. Open items for sign-off
+## 9. Open items / status (updated 2026-06-21)
 
 1. Scope boundary (no crossover trajectory) — **CONFIRMED** (Shawn 2026-06-20).
 2. Worked-example boundary (method vignette in JAMT; substantive history in companion)
    — **CONFIRMED** (Shawn 2026-06-20).
-3. **Need from Adela:** the canonical 813-daughter dataset **and her exact
-   datable/conjugal filter definitions** (+ ideally her `tempun` SPA output to overlay).
-   Requested; expected this evening.
-4. Date window 50–349 CE — confirm matches her analysis.
-5. Per-subset fits (overall + wives + daughters) for reachability — confirm scope is
-   acceptable within the boundary.
+3. Canonical dataset — **RESOLVED:** `data/women.csv` (504 daughters) IS canonical
+   (Shawn 2026-06-21). **Still to confirm with Adela** (post-hoc, before any number
+   reaches her): her exact `datable`/`conjugal` definitions + any quality gate, and
+   ideally her `tempun` SPA output to overlay. We proceed with the operational
+   definitions in §4 and label all outputs accordingly.
+4. Date window 50–349 CE — used as the primary window (matches the C2–C3 interest);
+   the corpus's own range is reported alongside. Confirm with Adela post-hoc.
+5. Per-subset fits (overall + wives + daughters) for reachability — **in scope** as
+   "Stage 1" (Shawn 2026-06-21).
+6. **"Stage 2" — UNDEFINED in the repo.** Shawn asked to "consider Stage 2, not
+   Stage 3 yet". No Stage-2 definition exists in the project docs; rather than invent
+   analyses on collaboration data, Stage 2 is **HELD pending Shawn's definition**.
+   Stage 3 (the substantive crossover-age trajectory) remains deferred to the EJA
+   companion per §2.

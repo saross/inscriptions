@@ -1,4 +1,8 @@
-# Spec — Rome capital-comparison (de-fogged unit)
+# Spec — Roma + Italia analyses (de-fogged units)
+
+*(Covers the Rome capital-comparison §§1–7 AND the Italia-exceptionalism thread §8.
+One driver, one library basis, all units comparable. Originally "Rome
+capital-comparison"; broadened 2026-06-21 on Shawn's brief.)*
 
 **Status:** Design decisions SETTLED (Shawn 2026-06-21; §3). Remaining gate before
 a run: write + `/audit` the driver script (reuse `h2_lib`, no new model code), then
@@ -49,42 +53,67 @@ unit and a comparison; it changes **no** confirmatory result.
 
 ## 2. What to compute
 
-Reuse the cross-classified ("library") production machinery verbatim
-(`runs/2026-06-07-h2.1-launch-prep/code/h2_lib.py` `fit_unit`; the same model the
-29 production units used). **Two new units**, both fit exactly as the production
-units were:
+**Machinery — the PRODUCTION cross-classified "library" deconvolution, verbatim**
+(`runs/2026-06-13-cc-production-refit/code/refit_lib.py` + `joint_lib`;
+`build_model_cross_classified(pconv_mode="library")` under `adopted_theta_priors`
+θ_conv ≈ 0.930 / θ_gen ≈ 0.025, κ=40). This is the **same model and the same
+fixed corpus-wide slab library** that all 29 production units used — including the
+empire-aggregate and latin-aggregate we compare against. Each new unit is just a
+corpus subset → `build_unit_cc_data` → `fit_one(..., emit_draws_dir=...)`, exactly
+as the production refit did. NOTE: this corrects an earlier draft that referenced
+`h2_lib.fit_unit` — that is the *superseded* per-frame-basis model, NOT production.
 
-- **Unit A — `Roma`.** `subset_corpus` on `province == "Roma"` (the 65,435-row
-  unit). Build the aoristic-SPA count vector (`build_unit_y`), fit `fit_unit` with
-  the **empire basis** (see §3 design decision), extract: genuine-SPD posterior
-  draws (`Roma-pgen.npz`, 8 000 × 80), α posterior (median + 95 % CI),
-  convergence, PPC.
-- **Unit B — `provincial-capitals-aggregate`.** `subset_corpus` to the **empire-62
-  capital city list** (the `empire.capital_cities` array in
-  `runs/2026-06-04-h3a-confirmatory/outputs/h3c-i-results-oxrep-primary.json`),
-  pooled into one unit, fit with the **empire basis** (§3.1/3.2). This is the
-  *comparison target* that makes it a "capital comparison" rather than a bare
-  reference SPD. (Latin-41 / Latin-basis = optional sensitivity panel only.)
+**IMPORTANT consequence (supersedes the old §3.1):** the cc-library model has a
+**single universal slab basis** shared by every unit; each unit only learns its own
+`tier_weights` from it. So there is **no "empire basis vs Latin basis" choice** —
+Rome, the capital composites, the Italia units, and the aggregates are **all fit on
+the identical basis**, and every comparison below is apples-to-apples *by
+construction*. The only thing that varies across units is **membership** (which
+rows are pooled). Seeds: assign fresh `unit_index` values (≥ 100) so per-unit seeds
+(`REFIT_BASE_SEED + unit_index`) never collide with the 0–28 production set.
 
-Already in hand (no re-fit): `empire-aggregate` and `latin-aggregate` genuine
-draws (`runs/2026-06-13-cc-production-refit/outputs/posterior-draws/`).
+### New units to fit (all same machinery, one library basis)
+
+**Capital comparison — two tracks (Shawn 2026-06-21; membership differs, basis does not):**
+- **Track 1 (empire frame, Rome-inclusive):**
+  - `Roma` — `subset_for` on `province == "Roma"` (~65,457 rows).
+  - `capitals-empire-62` — the 62 `empire.capital_cities` (match on
+    `urban_context_city`) from
+    `runs/2026-06-04-h3a-confirmatory/outputs/h3c-i-results-oxrep-primary.json`.
+  - Compared against `empire-aggregate` (existing draws).
+- **Track 2 (Latin frame, Rome-free — clean standalone, no caveat):**
+  - `capitals-latin-41` — the 41 `latin.capital_cities` from the same JSON.
+  - Compared against `latin-aggregate` (existing draws).
+  - This completes the Latin-primary transition: a self-consistent Latin-frame
+    capital-vs-province comparison that never touches Rome.
+  - *Do not over-claim a direct empire-62-vs-Latin-41 contrast:* they differ in
+    membership (the ~21 eastern capitals); read each within its own frame.
+
+**Italia thread (Shawn 2026-06-21; see §8):**
+- `Italia-incl-Rome` — `province_in` (Italian "/ Regio" provinces ∪ "Roma").
+- `provinces-non-Italian-Latin` — Latin provinces minus the Italian regions
+  (the clean "provinces" comparator for the Italia contrast).
+- `Italia (excl. Rome)` — **already fitted** (production unit; load its draws).
+
+### Already in hand (no re-fit) — load from `…/cc-production-refit/outputs/posterior-draws/`
+`empire-aggregate`, `latin-aggregate`, `Italia (excl. Rome)`.
 
 ---
 
 ## 3. Design decisions — SETTLED (Shawn 2026-06-21)
 
-1. **Convention basis → EMPIRE basis, throughout.** Rome, the provincial-capitals
-   composite, and the empire-aggregate baseline all use the corpus-wide empire
-   basis (`tier_basis_empirical`; `h2_lib.select_basis(design, "empire")`). The
-   point is that the units being compared then differ ONLY in capital status, not
-   in the basis used to deconvolve them — basis is not a confound. (The Latin
-   basis deliberately excludes Rome, so using it for Rome would be a mismatch.)
-2. **Capital set → the EMPIRE-62 provincial capitals**, deconvolved with the same
-   empire basis, as the comparison composite (Unit B). This is the natural home
-   for a Rome-inclusive comparison: Rome is an empire-level outlier, not a
-   within-Latin unit. The Latin-41 / Latin-basis version is kept only as a
-   secondary sensitivity panel (and carries Rome's basis caveat, so it is not the
-   primary).
+1. **Convention basis → DISSOLVED (single universal library basis).** The
+   production cc-library model uses one fixed corpus-wide slab basis for *every*
+   unit (§2); there is no per-frame basis to choose, so the comparison is clean by
+   construction. *(This supersedes the original "empire basis throughout" decision,
+   which was framed around the superseded `h2_lib` per-frame model.)*
+2. **Capital comparison → TWO tracks (membership only).** Track 1 empire-frame
+   (Rome + empire-62 capitals vs empire-aggregate) AND Track 2 Latin-frame
+   (Latin-41 capitals vs latin-aggregate). Because the basis is universal, Track 2
+   is a **clean standalone Latin-primary comparison, not a caveated sensitivity** —
+   it completes the make-Latin-primary transition (Shawn 2026-06-21). Read each
+   track within its own frame; do not force a direct empire-62-vs-Latin-41 contrast
+   (they differ in membership).
 3. **Scope guard → descriptive comparison PLUS one illustrative "why Rome breaks
    the regression" exhibit.** Rome stays out of all *confirmatory* regressions
    (H3a/H3c/§5; Decision 36 stands). In addition, we add ONE clearly-labelled
@@ -102,16 +131,17 @@ draws (`runs/2026-06-13-cc-production-refit/outputs/posterior-draws/`).
 
 ## 4. Deliverables
 
-- `outputs/Roma-pgen.npz` + `outputs/provincial-capitals-aggregate-pgen.npz`
-  (genuine-SPD draws), and a small `outputs/capital-comparison-summary.json`
-  (per-unit α median/CI, n_eff, convergence, peak-bin).
+- Per-unit genuine-SPD draws (`outputs/<unit>-pgen.npz`) for: `Roma`,
+  `capitals-empire-62`, `capitals-latin-41`, `Italia-incl-Rome`,
+  `provinces-non-Italian-Latin`; plus per-unit JSON (α median/CI, n_eff,
+  convergence, aligned/mass fractions, PPC) and a `roma-italia-summary.json`.
 - **Figure F15 — Rome before/after** (single-column): Rome's raw aoristic SPD vs
   its de-fogged genuine SPD + 95 % band + convention component, in the F1 idiom
   (reuse `figtheme`/`figdata`). The "capital de-fogged" exhibit.
-- **Figure F16 — capital comparison** (single- or full-width): genuine SPDs
-  overlaid — Rome vs provincial-capitals-aggregate vs empire-aggregate vs
-  latin-aggregate (densities, shared axis) — plus a small α-comparison inset
-  (Rome vs provincial capitals vs aggregates, medians + CIs).
+- **Figure F16 — capital comparison, TWO panels** (full-width): (a) Track 1
+  empire frame — Rome vs capitals-empire-62 vs empire-aggregate; (b) Track 2 Latin
+  frame — capitals-latin-41 vs latin-aggregate. Genuine SPD densities, shared axis;
+  plus an α-comparison strip (all units, medians + CIs).
 - **Figure F17 — "why Rome is excluded" (illustrative, §3.3).** A pooled scaling
   scatter (log inscription count vs log Hanson population, all cities) with Rome
   plotted as the extreme high-leverage point, and the fitted scaling line shown
@@ -147,6 +177,64 @@ draws (`runs/2026-06-13-cc-production-refit/outputs/posterior-draws/`).
 Plus the **F17 illustrative demo** (§3.3): a scatter + a pooled OLS/NBR line with
 vs without Rome — negligible compute (no MCMC), local; needs Rome's Hanson
 population + count.
+
+Across the whole programme (capital comparison + Italia §8): **~5 new cc-library
+fits** (Roma, capitals-empire-62, capitals-latin-41, Italia-incl-Rome,
+provinces-non-Italian-Latin), each minutes on sapphire — all the most reachable
+units in the corpus (large N). A single short sapphire session. Existing units
+(empire-aggregate, latin-aggregate, Italia excl. Rome) load from draws.
+
+---
+
+## 8. Italia-exceptionalism thread (Shawn 2026-06-21)
+
+**Motivation.** Secondary literature treats Italia as a special case in the empire
+— privileged status up to roughly the Severan period, eroding through the Antonine
+Constitution (AD 212) and the Diocletianic provincialisation. Does the de-fogged
+epigraphic record carry a distinctive "Italian" signature, and does it fade across
+that watershed?
+
+**Key data fact (shapes the design).** Rome is ~65 k of ~109 k Italian-region rows
+— so "Italia incl. Rome" is ~60 % Rome. Lumping Rome into Italia just yields a
+Rome-dominated unit. The discriminating question is therefore **three-way**:
+**Rome vs Italia-excl-Rome (Italian *municipal* epigraphy, ~43.7 k rows) vs the
+non-Italian provinces** — does Italian municipal epigraphy pattern with the capital
+or with the provinces?
+
+**Analyses (all descriptive / exploratory; not preregistered):**
+1. **α (genuine-fraction / convention-intensity) comparison** — Rome vs
+   Italia-excl-Rome vs provinces-non-Italian-Latin vs the empire/Latin aggregates.
+   Is Italian convention behaviour distinctive?
+2. **Genuine-SPD shape comparison** — the three de-fogged chronologies overlaid:
+   does Italian municipal epigraphy track Rome or the provinces in *shape*?
+3. **Temporal / Severan-watershed read (the historical hook).** Compare the
+   **full-window genuine-SPD trajectories** of Italia-excl-Rome vs the non-Italian
+   provinces and locate **when** they diverge/converge — is Italian
+   distinctiveness concentrated *before* the Severan period and does it fade
+   after? **Method choice (critical-friend):** use the full-window de-fogged
+   trajectories, **NOT** per-50-year-period deconvolution fits — within a single
+   50 y period the 50–300 y convention slabs are not separable from genuine (the
+   identifiability needs the full envelope), so per-period α would be unsound. The
+   full-window genuine trajectories already carry the temporal divergence
+   descriptively.
+   - *Optional future extension (NOT in this run):* a per-period H7-style scaling
+     premium (Italian cities vs provincial cities, Mundlak NBR × periods) would
+     test whether the Italian *scaling* premium fades — heavier, model-different,
+     and companion-paper-adjacent; flag, do not run blind.
+
+**Deliverables (Italia):**
+- **Figure F18 — Italia exceptionalism:** the three-way genuine-SPD overlay (Rome
+  vs Italia-excl-Rome vs non-Italian provinces) + an α-comparison strip.
+- **Figure F19 — Italia temporal/Severan read:** Italia-excl-Rome vs non-Italian
+  provinces genuine-SPD trajectories with the divergence window highlighted; an AD
+  212 / Severan marker for orientation.
+- An **Obs** entry; a short summary paragraph (new mini-section or §2/§4 addition).
+
+**Italia scope guard.** Descriptive/exploratory, not preregistered; the Italian
+regions stay as defined by `refit_lib._italian_provinces()` ("/ Regio" rule). No
+confirmatory claim; the Severan-watershed reading is descriptive and explicitly
+framed as a first-order result to calibrate the historical debate, not to resolve
+it.
 
 ## 6. Pre-launch checklist
 
