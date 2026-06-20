@@ -127,6 +127,11 @@ def _subset(name: str) -> pd.DataFrame:
     return H.subset_corpus(corpus(), unit_by_name(name), set(latin_set()))
 
 
+def unit_n_rows(name: str) -> int:
+    """Number of inscription rows in a named unit's corpus subset."""
+    return int(len(_subset(name)))
+
+
 def raw_aoristic_mass(name: str) -> np.ndarray:
     """Raw (uncorrected) aoristic SPD for a unit, in MASS units (sums to N_eff).
 
