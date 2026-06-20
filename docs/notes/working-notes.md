@@ -2086,7 +2086,7 @@ H3c(i) — the binding provincial-capital residual contrast (Decision 23: `P(con
 
 ## Obs 75 — 2026-06-05 [RESULT]: the Latin-province frame strengthens the population signal vs empire-wide — a coverage-confound corroboration
 
-Restricting the cross-sectional analyses to Latin-speaking provinces (Decision 36; the coverage rationale — LIRE = "Latin Inscriptions of the Roman Empire" under-covers Greek-speaking provinces, where Latin inscriptions are a minority) **strengthens the within-province population effect**: H3a `f_within` **0.299 [0.240, 0.365]** (empire, 1,044 cities) → **0.480 [0.401, 0.566]** (Latin, 817 cities); the SR1 OLS log-log slope **0.284** (empire) → **0.505 [0.398, 0.611]** (Latin), markedly closer to Hanson 2021's β = 0.672 (though the 95 % CI still excludes 0.672). A telling corroboration of the coverage argument: of all **65 provinces only 20 clear N ≥ 2,000, and just 1 of those is non-Latin** — Greek provinces are sparsely covered in LIRE. Both `f_within` verdicts SUPPORTED. Preliminary; Latin frame amendment-gated. **Artefacts**: `runs/2026-06-04-h3a-confirmatory/outputs/REPORT.md` + `REPORT-latin-h3c-sr1.md`; Decision 36. Cross-ref: Obs 74 (same-frame H3c(i)/H3c(ii)); Decision 36.
+Restricting the cross-sectional analyses to Latin-speaking provinces (Decision 36; the coverage rationale — LIRE = "Latin Inscriptions of the Roman Empire" under-covers Greek-speaking provinces, where Latin inscriptions are a minority) **strengthens the within-province population effect**: H3a `f_within` **0.299 [0.240, 0.365]** (empire, 1,044 cities) → **0.480 [0.401, 0.566]** (Latin, 817 cities); the SR1 OLS log-log slope **0.284** (empire) → **0.505 [0.398, 0.611]** (Latin), markedly closer to Hanson 2021's β = 0.672 (though the 95 % CI still excludes 0.672). A telling corroboration of the coverage argument: of all **65 provinces only 20 clear N ≥ 2,000, and 0 of those is genuinely non-Latin** — Greek provinces are sparsely covered in LIRE. [Corrected 2026-06-20, accuracy audit: was "just 1 of those is non-Latin". Recomputed from `runs/2026-05-21-talk-prep/data/lire-filtered.parquet` against `runs/2026-06-04-h3a-confirmatory/data/province-language-map.csv`: of the 20 provinces with N ≥ 2,000, the only one not mapped "Latin" is Roma (the city of Rome — Latin, but Rome-excluded/unmapped in the language dictionary), not a Greek/non-Latin province. No genuinely non-Latin (e.g. Greek) province clears N ≥ 2,000.] Both `f_within` verdicts SUPPORTED. Preliminary; Latin frame amendment-gated. **Artefacts**: `runs/2026-06-04-h3a-confirmatory/outputs/REPORT.md` + `REPORT-latin-h3c-sr1.md`; Decision 36. Cross-ref: Obs 74 (same-frame H3c(i)/H3c(ii)); Decision 36.
 
 ### Findable later
 
@@ -3212,7 +3212,9 @@ results, commit `35f7c71`; first-pass preserved at `48cb5d5`);
 The uncertainty-propagating H3b deviation test pushes 8,000 genuine-SPA posterior draws
 per unit (from the cc-library adopted-θ refit, Obs 90–91) through a featureless-null
 permutation envelope built once per unit. The global Timpson marginal-p is **0 (exponential
-null) / ≤ 0.04 (CPL-3 null)** for all **29/29** units under both nulls. This is not a
+null) / ≤ 0.0405 (CPL-3 null)** for all **29/29** units under both nulls. [Corrected
+2026-06-20, accuracy audit: CPL-3 bound was "≤ 0.04"; the exact max is 0.0405 (Noricum)
+— the bound is ≤ 0.0405 / < 0.05. Primary: `runs/2026-06-09-h3b/outputs/drawwise/deviations-table.csv` (29 CPL-3 rows, max marginal_p).] This is not a
 bug: a faithfulness self-test confirms the draw-wise engine reproduces the library
 `forward_envelope_test` / `permutation_envelope_test` bit-for-bit (both nulls), and the
 2026-06-09 median-based draft (`REPORT.md`) reached the identical conclusion independently.
@@ -3428,9 +3430,14 @@ Antonine P(deficit) 1.00 at edf 5 → 0.83 at spline edf 20) without ever cleari
 **Leg 2 — de-powered (simultaneous-coverage) statistic.** The max-studentised-
 deviation simultaneous-band global *p* at the named scopes never exceeds 0.001.
 Family-wise coverage across the 80 bins does not rescue the high-N scopes. Only
-2/29 small-N units (n_eff ≲ 2,600) ever de-saturate under either the simultaneous
+3/29 small-N units (n_eff ≤ 2,812) ever de-saturate under either the simultaneous
 statistic or the wiggliest GP (edf 20); none of those de-saturated units is a sweet
-spot (no event signal).
+spot (no event signal). [Corrected 2026-06-20, accuracy audit: was "Only 2/29 …
+(n_eff ≲ 2,600)". The two de-saturation criteria are *separate* 2/29 counts —
+CPL-3 simultaneous statistic de-saturates {Pannonia inferior, Noricum}; GP edf 20
+de-saturates {Noricum, Ostia}. Their union is 3 units {Pannonia inferior, Noricum,
+Ostia}, and the n_eff envelope must reach 2,812 (Pannonia inferior), not 2,600.
+Primary: `runs/2026-06-09-h3b/outputs/flexnull/flexnull-sweep.json`; ANNEX-REPORT.md §4.]
 
 **Leg 3 — effective-N thinning (CPL-3 null).** Rescaling to N′ ∈ {1,500, 3,000,
 6,000, 12,000, 25,000}:
@@ -5896,7 +5903,8 @@ commit `ec99343` (the run's results commit, where the verdict previously lived o
 
 The preregistered C10 aoristic-Monte-Carlo supplementary on the real-data primary
 (prereg §3/§4/§6; Decision 28) ran in **two waves** (first wave 2026-06-18; realism-graded
-follow-up "(ii)" 2026-06-19; base_seed 20260618). Both waves were complete but the dir's
+follow-up "(ii)" 2026-06-18; base_seed 20260618 wave 1, 20260619 wave 2). Both waves were complete but the dir's
+[corrected 2026-06-20, accuracy audit: was "follow-up '(ii)' 2026-06-19; base_seed 20260618". The follow-up (ii) run/results are stamped 2026-06-18 22:55:39 (`runs/2026-06-18-c10-validity-test/outputs/followup-ii-results.json` `generated`); only the report stamp (followup-ii-report.md:3) crosses to 2026-06-19 00:01. And wave-2 `config.base_seed` is 20260619, not 20260618 (wave 1 = 20260618 is correct).]
 BUILD-NOTES said "BUILT, NOT RUN" with 0 Obs; this Obs and the new top-level `REPORT.md`
 surface the verdict (documentation-uplift Tier-1 item 2).
 
@@ -5957,7 +5965,7 @@ slab-concentration diagnostic, decision-rule verdict);
 `runs/2026-06-18-c10-validity-test/outputs/followup-ii-report.md` (wave 2 — R0–R3/R1+R2
 decomposition);
 `runs/2026-06-18-c10-validity-test/outputs/results.json` +
-`followup-ii-results.json` (persisted numbers; base_seed 20260618; source for all numbers);
+`followup-ii-results.json` (persisted numbers; base_seed 20260619 [corrected 2026-06-20, accuracy audit: was 20260618; wave-2 `config.base_seed` is 20260619]; source for all numbers);
 `runs/2026-06-18-c10-validity-test/outputs/run-c10-full.log` (run trace);
 `runs/2026-06-18-c10-validity-test/SPEC.md` (decision rule + N_MC/1.5× pins).
 
