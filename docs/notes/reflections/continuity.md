@@ -167,10 +167,36 @@ OSF amendments lodged** (no preregistration lodgement outstanding).
 COMPLETE.** Every preregistered obligation (incl. A01 §A5.4) and confirmatory result is done; the
 results documentation is **accuracy-certified** (multi-agent audit workflow, 677 specifics checked,
 17 corrections applied + re-verified) and **write-up-ready**, with a non-specialist collaborator
-key-findings summary (v2) drafted. The remaining threads are **(1) the figures build** (spec ready,
-next session), **(2) the write-up** (main body; the summary is the on-ramp), and **(3) the women.csv
-companion** (feasibility run pending Adela's dataset → substantive crossover-age history → EJA
-companion). Optional: lit-chaining, the parallel-run module, the sha256 enhancement.
+key-findings summary (v2) drafted. The remaining threads are **(1) the figures build — DONE** (14
+figures built/committed, `runs/2026-06-20-figures/`; F1–F14 incl. province + city atlases, plain-language
+captions, the exact 38/29/33 temporal partition), **(2) the write-up** (main body; the summary is the
+on-ramp; **brief now locked — see "Write-up parameters" below**), and **(3) the women.csv companion**
+(feasibility run pending Adela's dataset → substantive crossover-age history → EJA companion). Optional:
+lit-chaining, the parallel-run module, the sha256 enhancement.
+
+---
+
+## Write-up parameters (LOCKED 2026-06-20 — full brief: `planning/paper-writing-brief.md`)
+
+The governing parameters for the write-up phase (Shawn 2026-06-20). The full brief carries the main-text
+vs supplement split and the assets list; these are the headline constraints:
+
+- **Target journal:** *Journal of Archaeological Method and Theory* (JAMT, Springer). **Aim ~10,000 words**
+  (no hard limit, but self-imposed for accessibility; overflow → supplement).
+- **Dual readership — design every paragraph for both:** (a) the *primary reader* is a typical
+  classicist / epigrapher / ancient-historian / archaeology postgrad with **only rudimentary statistics**
+  — explain everything in **plain English first/alongside** the maths, define every term on first use;
+  (b) the *reviewer* is assumed to be **Crema, Bevan, or a peer of that calibre** — the statistical core
+  must be **tight and bulletproof**.
+- **Statistical detail/support/argumentation → the SUPPLEMENT.** This serves both goals at once: keeps the
+  main text accessible AND makes the work review-proof (full derivations, recovery grids, validation,
+  sensitivities, prereg all reachable there). Main text = result + plain-English why; supplement = proof.
+- **Empirical-first / interpretation-later** (Obs 101); honesty framing baked into the figures.
+- **Style exemplar:** *Eftimoski, Ross & Sobotkova 2017* — Kazanlak burial-mounds ordered-logit paper
+  (Zotero `ENPYIZQF`): Shawn's own model of a domain expert explaining a non-trivial statistical method
+  to archaeologists clearly, without dumbing it down. Re-read before drafting the methods.
+- **Assets already at target accessibility:** `reports/key-findings-summary-2026-06-20.md` (on-ramp);
+  `runs/2026-06-20-figures/outputs/figure-captions.md` (what/what-it-means/why captions); the 14-figure set.
 
 ---
 
