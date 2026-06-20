@@ -112,11 +112,16 @@ the open-science ethos and pre-empts reviewer concern. It is a *strength* to be
 candid here, not a liability. Draft content (the author knows the project; this is
 the LLM's own honest account of what it did, for the authors to verify and edit):
 
-- **Tools / models.** Claude Code (Anthropic) as the primary agent — principally
-  **Claude Opus 4.8 (1M-context)**, with at least one analysis session run under
-  **Fable 5**, plus task-specific subagents (literature scout, code auditor,
-  adversarial verifiers). State the models, the period of use, and that it was an
-  agentic coding/analysis tool, not a text generator for the prose.
+- **Tools / models (quantified from the session archive).** Claude Code
+  (Anthropic) as the primary agent across **30 captured sessions, 2026-04-22 →
+  2026-06-19**, with a recorded model progression: **Claude Opus 4.7 (11
+  sessions) → Opus 4.8 (18 sessions)**, plus **one Fable 5 session**, plus **~260
+  task-specific subagent invocations** (literature scout, code auditor,
+  adversarial verifiers, data-profilers). It was an agentic coding/analysis tool
+  (writing and running code), not a text generator for the prose. These figures
+  come from `~/cc-archives/inscriptions/` (per-session `session.meta.json` `model`
+  block + the root `~/cc-archives/CATALOG.json`) — exact per-session model IDs,
+  dates, durations, and subagent counts/costs are tabulable for the supplement.
 - **Role — the "lab, not dev team" model.** The agent operated as a senior
   research-software-engineer / data analyst *under the PI's direction*. It
   implemented the analysis pipeline (the editorial-convention mixture

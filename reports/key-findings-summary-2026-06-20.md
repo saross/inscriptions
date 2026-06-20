@@ -66,6 +66,12 @@ collaborator's corpus of mother–daughter / marriage-age inscriptions, which wa
 and which sits right at the measured worst-case floor (`paper-significance-and-applications-2026-06-03.md`;
 Decision 34: subsets get their own fit and are *not* de-fogged with the empire-wide convention shape).
 
+[FIGURE: the method (deconvolution before/after, with 95% bands) → **F1** (empire hero, convention
+component highlighted), **F2** (empire + Latin two-panel), **F3** (six-province small-multiple), **F4**
+(five anchor cities — Pompeii's genuine mass collapses to ~0 after AD 79, the external check). The
+instrument's reachability envelope (its spec sheet) → **F12** (`fig12-reachability-map`). All in
+`runs/2026-06-20-figures/outputs/`.]
+
 **Key results**
 
 - The corpus is LIRE v3.0: 182,853 inscriptions × 63 columns (`summary.md`, corrected).
@@ -163,6 +169,12 @@ null result on the city-specific axis), but larger cities do tend to sit in less
 size–buffering gradient is mostly province-mediated. (Whether *province size itself* drives this is not
 supported and is underpowered — Obs 105.)
 
+[FIGURE: the relative-trajectory shape → **F8** (`fig08-relative-trajectory-fan`): median city q vs the
+empire trend with the inter-quartile fan, the Antonine peak (AD 188) and AD 262 trough marked, **labelled
+"illustrative relative shape, NOT a population estimate"** (anchors held out). The per-unit chronologies
+behind the decomposition → **F13** (`fig13-province-atlas`, 25 provinces) and **F14** (`fig14-city-atlas`,
+34 reliable cities) — both from the §5 hierarchical model.]
+
 **Scaling-over-time (H7).** "Scaling" here means the **β (beta) scaling exponent** — how steeply
 inscription output rises with population on a log-log plot. (β = 1 would be exactly proportional; β < 1
 means less than proportional — a city ten times larger produces fewer than ten times the inscriptions.)
@@ -182,6 +194,11 @@ cells, e.g. empire median contrast +0.96 [0.74, 1.21], Latin +1.08 [0.81, 1.41];
 *clustering* is NOT supported — the province intercepts absorb it; Obs 74.) Residual spatial clustering,
 where present, is an **early-empire-only** phenomenon (significant only in the earliest period; Obs
 99/106).
+
+[FIGURE: the β scaling exponent over time → **F10** (`fig10-beta-over-time`): the shallow U-shape across
+eight periods on both frames, sublinear throughout, ~0.58 high-empire plateau. Capital over-production →
+**F6** (`fig06-capital-overproduction`): the overall empire/Latin contrasts with 95% CIs (panel a) and
+the per-period medians, positive in every period (panel b).]
 
 **Key results**
 
@@ -259,6 +276,12 @@ a genuinely new lens, or just a re-labelling of "acts"?
   inscription — that is independent of its size-scaling, but it does **not** give the population signal any
   extra explanatory power. Content is a **complement, not an upgrade**: a second, orthogonal trait worth
   reporting, not a stronger version of the acts result.
+
+[FIGURE: content vs acts → **F5** (`fig05-letter-content-spd`): the empire letter-mass SPD tracks the
+inscription-count SPD. **Caveat — these are *raw* aoristic SPDs (deterministic), so F5 carries *no*
+credible band**: there is no deconvolved-letter posterior, and the inferential content result is the H9
+scaling (above), not an SPD. **F11** (`fig11-orthogonality-scatter`): scaling-residual vs
+content-residual, Spearman ρ ≈ 0 — "prolific for size" and "verbose per act" are orthogonal.]
 
 (One scope limit: letter-mass *temporal* detection is out of reach — the letter-mass detection grid fails
 recovery and is corpus-wide unreachable, so all letter-mass *confirmatory* claims are bounded to the
@@ -345,8 +368,10 @@ causal force.
   intervals overlap heavily. Bigger cities have proportionally higher peaks *and* higher totals by the
   same exponent.
 
-[FIGURE: within- vs between-province scaling — a two-panel log-log scatter (cities coloured by province),
-showing the steep within-province slope against the flat/uncertain between-province one.]
+[FIGURE: within- vs between-province scaling → **F7** (`fig07-pop-epigraphy-within-between`): a two-panel
+log-log scatter — the steep, supported within-province slope (β_within 0.73, capitals highlighted as
+triangles) against the flat, zero-crossing between-province slope. (Capital over-production and the β
+U-shape over time are F6 and F10, referenced in §2.)]
 
 **Key results**
 
