@@ -248,11 +248,16 @@ model + prior**, not a sampler-effort or sampler-geometry artefact.
 ## Reproducibility
 
 ```bash
-# On sapphire, cores 6-11, with the project venv active:
-cd /home/shawn/cc-scratch/inscriptions-recovery-grid/runs/2026-05-24-followup-noncentred-grw
+# Repo-relative reproduce path; the original execution was on sapphire,
+# cores 6-11, under /home/shawn/cc-scratch/inscriptions-recovery-grid/
+# with a scratch venv and disk-backed TMPDIR. Repointed to the repo path
+# 2026-06-20 (results-documentation uplift, Tier-3 item 14). Activate the
+# project venv (repo root .venv) first, then cd into the run dir and point
+# TMPDIR at any disk-backed scratch dir:
+source .venv/bin/activate                 # from the repo root
+cd runs/2026-05-24-followup-noncentred-grw
 
-source /home/shawn/cc-scratch/inscriptions-talk-prep/venv/bin/activate
-export TMPDIR=/home/shawn/cc-scratch/inscriptions-recovery-grid/pytensor-tmp
+export TMPDIR="${TMPDIR:-/tmp}/pytensor-tmp" && mkdir -p "$TMPDIR"
 export PYTENSOR_FLAGS="mode=FAST_RUN,allow_gc=False"
 export OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 \
        VECLIB_MAXIMUM_THREADS=1 NUMEXPR_NUM_THREADS=1 NUMBA_NUM_THREADS=1

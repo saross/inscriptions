@@ -1,5 +1,10 @@
 # Joint recovery-grid — memory incident, fixes, and overnight run status
 
+> **Retained as run provenance (marked 2026-06-20, results-documentation uplift,
+> Tier-3 item 15).** This is not throwaway scratch: it is the load-bearing record
+> of the OOM incident, the two resource fixes, and the memory-capped resume that
+> produced the full grid this run reports. Kept in the run root deliberately.
+
 **Date:** 2026-06-10 (overnight, autonomous session). **Author:** Claude Code (Opus 4.8).
 **Status at writing:** full grid resumed and running on sapphire under a memory cap.
 UK/Aus English.

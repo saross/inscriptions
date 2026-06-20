@@ -256,9 +256,12 @@ following updates anchored on this follow-up:
 ## Reproducibility
 
 ```bash
-# On sapphire, with the project venv active and the env-var block from
-# the brief exported, re-run from this directory:
-cd /home/shawn/cc-scratch/inscriptions-recovery-grid/runs/2026-05-24-followup-alpha-prior
+# With the project venv active and the env-var block from the brief
+# exported, re-run from this run directory (repo-relative path; the
+# original execution was on sapphire under
+# /home/shawn/cc-scratch/inscriptions-recovery-grid/, repointed to the
+# repo path 2026-06-20, results-documentation uplift, Tier-3 item 14):
+cd runs/2026-05-24-followup-alpha-prior
 taskset -c 0-5 python code/run-experiment-followup-alpha-prior.py \
     --output-root $PWD \
     --validation-root ../2026-05-22-recovery-grid-validation \
