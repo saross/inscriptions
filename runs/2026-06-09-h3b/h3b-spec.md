@@ -415,10 +415,14 @@ Written to `runs/2026-06-09-h3b/outputs/`:
   status, and that the backlog wording is stale.
 - **OQ-2 — Identifiability criterion.** Gap rule (`f1f3 − α < 0.20` → 17 units, the
   brief's rule, matches the prereg-note narrative) vs basis-swing rule (`> 0.2` →
-  9 units, the committed `identifiability-table.json`). They disagree on 8 units
-  (Dalmatia, Hispania citerior, Dacia, Africa proconsularis, Baetica, Etruria,
+  10 identifiable / 19 under-identified, the committed `identifiability-table.json`).
+  They disagree on 7 units (Dalmatia, Dacia, Africa proconsularis, Baetica, Etruria,
   Transpadana, and Italia). I used the **gap** rule. **Confirm which is canonical**
-  for the confirmatory set.
+  for the confirmatory set. [Corrected 2026-06-20, accuracy audit: was "basis-swing
+  → 9 units" and "disagree on 8 units (… Hispania citerior …)". Swing ≤ 0.20 gives
+  10 identifiable / 19 under-identified (the "9" is the gap>0.25 SUMMARY-FINAL tier);
+  Hispania citerior is identifiable under BOTH rules (gap 0.057, swing 0.156), so the
+  disagreement set is 7. Primary: `runs/2026-06-09-h3b/outputs/identifiability-split.json`.]
 - **OQ-3 — Reachability edge cases.** Lusitania (N=1,578) is below the province
   cpl-3-Gaussian 1,618 threshold (flag its CPL result); confirm the exp-null
   province threshold (~1,869) vs the cpl-3 (1,618) governs eligibility (the prereg

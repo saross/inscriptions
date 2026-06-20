@@ -64,11 +64,18 @@ Mogontiacum, Transpadana / Regio XI.
 Britannia, Umbria / Regio VI, Ostia, Aquileia, Germania inferior, Lusitania.
 
 > **⚠ Criterion conflict (OQ-2).** The committed `identifiability-table.json` uses a
-> *different* rule (basis-swing > 0.2) marking only **9** units identifiable. The
-> gap rule (used here, per the brief) matches the prereg-note's own narrative
-> example set; the swing rule is stricter. Seven of my 17 (Dalmatia, Hispania
-> citerior, Dacia, Africa proconsularis, Baetica, Etruria, Transpadana) plus Italia
-> flip under the swing rule. **The human must confirm which rule is canonical.**
+> *different* rule (basis-swing > 0.2) marking **10** units identifiable and **19**
+> under-identified. [Corrected 2026-06-20, accuracy audit: was "marking only 9 units
+> identifiable" — swing ≤ 0.20 gives 10 identifiable / 19 under-identified; the "9"
+> is the gap>0.25 SUMMARY-FINAL tier count, a different criterion. Primary:
+> `runs/2026-06-09-h3b/outputs/identifiability-split.json` (`identifiable_swing`).]
+> The gap rule (used here, per the brief) matches the prereg-note's own narrative
+> example set; the swing rule is stricter. **Seven** of my 17 (Dalmatia, Dacia,
+> Africa proconsularis, Baetica, Etruria, Transpadana, and Italia) flip under the
+> swing rule. [Corrected 2026-06-20, accuracy audit: was "Seven … (Dalmatia, Hispania
+> citerior, …) plus Italia" — Hispania citerior is identifiable under BOTH rules
+> (gap 0.057, swing 0.156); the disagreement set is 7 units. Primary:
+> `identifiability-split.json`.] **The human must confirm which rule is canonical.**
 > Italia is gap-identifiable (0.089) and the prereg-note §4 presents Italia precisely
 > as the identifiability *fix* for the Italian regiones.
 

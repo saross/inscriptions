@@ -2249,7 +2249,7 @@ Diagnostic signature: the shared-basis α falls far below the unit's F1+F3 (grid
 |---|---:|---|
 | confirmatory | 16 | gap ≤ ~0.20; α basis-stable |
 | caveated-high-α | 4 | Dalmatia, latin-aggregate, Pannonia superior, Noricum |
-| under-identified | 9 | gap > ~0.25 confirmed by swing > 0.20 |
+| under-identified | 9 | gap > ~0.25 (SUMMARY-FINAL tier) [corrected 2026-06-20, accuracy audit: flag was "gap > ~0.25 confirmed by swing > 0.20"; the 9 is the gap>0.25 SUMMARY-FINAL tier count — the swing > 0.20 rule is a *separate* criterion giving 19 under-identified, not a confirmation of the 9; primary `runs/2026-06-09-h3b/outputs/identifiability-split.json`] |
 
 The confirmatory-eligible set (16 units): empire-aggregate, Latium et Campania, Hispania citerior, Germania superior, Dacia, Africa proconsularis, Germania inferior, Apulia et Calabria, Etruria, Baetica, Transpadana, Pompeii, Mogontiacum, Aquileia, Lusitania, Italia (excl. Rome).
 
@@ -2263,7 +2263,7 @@ This is a structural identifiability limit, not a fitting artefact: the shared-b
 
 ### Caveats / methodological notes
 
-The H3b identifiable set in the companion draft run (Obs 82) uses the gap criterion (gap < 0.20 → 17 units), which differs from the swing criterion used to populate `identifiability-table.json` (swing > 0.20 → 9 units flagged as under-identified in the production SUMMARY-FINAL). The two criteria disagree on 8 borderline units (Dalmatia, Hispania citerior, Dacia, Africa proconsularis, Baetica, Etruria, Transpadana, Italia). This is an open question (OQ-2 in the H3b spec) that must be resolved before any confirmatory reading.
+The H3b identifiable set in the companion draft run (Obs 82) uses the gap criterion (gap < 0.20 → 17 units), which differs from the swing criterion used to populate `identifiability-table.json` (swing > 0.20 → 19 units flagged as under-identified). The two criteria disagree on 7 borderline units (Dalmatia, Dacia, Africa proconsularis, Baetica, Etruria, Transpadana, Italia). This is an open question (OQ-2 in the H3b spec) that must be resolved before any confirmatory reading. [Corrected 2026-06-20, accuracy audit: was "swing > 0.20 → 9 units flagged as under-identified in the production SUMMARY-FINAL" and "disagree on 8 borderline units (… Hispania citerior …)". Swing > 0.20 → 19 under-identified (swing ≤ 0.20 → 10 identifiable); the "9" is the *gap* > 0.25 SUMMARY-FINAL tier, a different criterion. Hispania citerior is identifiable under BOTH (gap 0.057, swing 0.156), so the disagreement set is 7. Primary: `runs/2026-06-09-h3b/outputs/identifiability-split.json`.]
 
 ### Related observations and artefacts
 
