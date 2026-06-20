@@ -256,11 +256,23 @@ def bc_ad_label(year: float) -> str:
 def year_axis(ax, ticks=(-50, 0, 100, 200, 300), xlabel: str = "Year") -> None:
     """Apply the shared BC/AD x-axis to an SPD figure (F1–F4, F13).
 
-    Sets tick positions on the astronomical-year grid and labels them BC/AD so
-    every time-series figure reads identically.
+    The "AD" prefix appears only ONCE — on the first AD tick (the BC/AD
+    boundary) — to avoid repeating "AD" across the axis (Shawn 2026-06-20). BC
+    ticks keep their "BC" suffix; later AD ticks are bare numbers. Assumes ticks
+    are in ascending order.
     """
-    ax.set_xticks(list(ticks))
-    ax.set_xticklabels([bc_ad_label(t) for t in ticks])
+    ticks = list(ticks)
+    labels, first_ad = [], True
+    for t in ticks:
+        y = int(round(t))
+        if y < 0:
+            labels.append(f"{-y} BC")
+        else:
+            yy = 1 if y == 0 else y          # the boundary tick reads "AD 1"
+            labels.append(f"AD {yy}" if first_ad else f"{yy}")
+            first_ad = False
+    ax.set_xticks(ticks)
+    ax.set_xticklabels(labels)
     ax.set_xlabel(xlabel)
 
 
