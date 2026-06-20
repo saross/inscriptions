@@ -1,6 +1,8 @@
 # Spec — Rome capital-comparison (de-fogged unit)
 
-**Status:** DRAFT for pre-launch sign-off (Shawn). Do NOT run until signed off.
+**Status:** Design decisions SETTLED (Shawn 2026-06-21; §3). Remaining gate before
+a run: write + `/audit` the driver script (reuse `h2_lib`, no new model code), then
+launch on sapphire. Do NOT run until the driver is audited.
 **Created:** 2026-06-21 (Claude Code, Opus 4.8, on Shawn's brief).
 **Provenance of the idea:** recovered from the session archive — first raised as a
 peer-review flag (2026-04-23: "exclude Roma … *or run them separately*?"),
@@ -57,39 +59,44 @@ units were:
   the **empire basis** (see §3 design decision), extract: genuine-SPD posterior
   draws (`Roma-pgen.npz`, 8 000 × 80), α posterior (median + 95 % CI),
   convergence, PPC.
-- **Unit B — `provincial-capitals-aggregate`.** `subset_corpus` to the capital
-  city list (from
-  `runs/2026-06-04-h3a-confirmatory/outputs/h3c-i-results-oxrep-primary.json`;
-  62 empire capitals / 41 Latin capitals — pick per the frame decision in §3),
-  pooled into one unit, same fit. This is the *comparison target* that makes it a
-  "capital comparison" rather than a bare reference SPD.
+- **Unit B — `provincial-capitals-aggregate`.** `subset_corpus` to the **empire-62
+  capital city list** (the `empire.capital_cities` array in
+  `runs/2026-06-04-h3a-confirmatory/outputs/h3c-i-results-oxrep-primary.json`),
+  pooled into one unit, fit with the **empire basis** (§3.1/3.2). This is the
+  *comparison target* that makes it a "capital comparison" rather than a bare
+  reference SPD. (Latin-41 / Latin-basis = optional sensitivity panel only.)
 
 Already in hand (no re-fit): `empire-aggregate` and `latin-aggregate` genuine
 draws (`runs/2026-06-13-cc-production-refit/outputs/posterior-draws/`).
 
 ---
 
-## 3. Design decisions for sign-off
+## 3. Design decisions — SETTLED (Shawn 2026-06-21)
 
-1. **Convention basis for Rome (and the capitals).** The cc machinery selects a
-   fixed per-frame basis: `tier_basis_empirical` (empire) vs
-   `tier_basis_empirical_latin` (Latin) (`h2_lib.select_basis`). Rome is in
-   neither aggregate (the empire basis was built across the whole corpus *incl.*
-   Rome; the Latin basis *excludes* Rome). **Proposed primary: the empire basis**
-   (Rome is sui generis, and the empire basis already "saw" it), with the Latin
-   basis as a one-line sensitivity. **Decision needed:** confirm empire basis as
-   primary.
-2. **Capital frame for Unit B.** Empire capitals (62) or Latin capitals (41)? To
-   keep the comparison clean against the *Latin* diagnostic frame, the Latin-41
-   composite is the natural primary, with the empire-62 as context. **Decision
-   needed.**
-3. **Scope guard — Rome stays out of all regressions.** Confirm this is a
-   descriptive reference + comparison ONLY; it is **not** added to H3a/H3c/§5, and
-   it is labelled exploratory/non-preregistered. (Recommended: yes.)
-4. **α reporting.** Report Rome's α descriptively (with CI) and *expect it may be
-   low/distinctive* (heavy convention dating) — that is the finding, not a
-   problem. Confirm we report it as a descriptive reference, not against the 0.70
-   confirmatory envelope.
+1. **Convention basis → EMPIRE basis, throughout.** Rome, the provincial-capitals
+   composite, and the empire-aggregate baseline all use the corpus-wide empire
+   basis (`tier_basis_empirical`; `h2_lib.select_basis(design, "empire")`). The
+   point is that the units being compared then differ ONLY in capital status, not
+   in the basis used to deconvolve them — basis is not a confound. (The Latin
+   basis deliberately excludes Rome, so using it for Rome would be a mismatch.)
+2. **Capital set → the EMPIRE-62 provincial capitals**, deconvolved with the same
+   empire basis, as the comparison composite (Unit B). This is the natural home
+   for a Rome-inclusive comparison: Rome is an empire-level outlier, not a
+   within-Latin unit. The Latin-41 / Latin-basis version is kept only as a
+   secondary sensitivity panel (and carries Rome's basis caveat, so it is not the
+   primary).
+3. **Scope guard → descriptive comparison PLUS one illustrative "why Rome breaks
+   the regression" exhibit.** Rome stays out of all *confirmatory* regressions
+   (H3a/H3c/§5; Decision 36 stands). In addition, we add ONE clearly-labelled
+   illustrative scaling fit/scatter *with Rome included*, shown only to
+   demonstrate how the capital dominates/distorts the fit — a methods-section
+   exhibit for *why* the exclusion is justified (see §4, F17). It changes no
+   confirmatory result.
+4. **α reporting → descriptive reference.** Report Rome's α as median + 95 % CI,
+   read as a reference value ("the capital carries ~X % genuine date signal"). We
+   expect it distinctive (Rome is heavily convention-dated) — that is the finding.
+   No pass/fail against the 0.70 confirmatory envelope (Rome is the most
+   data-rich/reachable unit of all, so reachability is not in question).
 
 ---
 
@@ -105,6 +112,19 @@ draws (`runs/2026-06-13-cc-production-refit/outputs/posterior-draws/`).
   overlaid — Rome vs provincial-capitals-aggregate vs empire-aggregate vs
   latin-aggregate (densities, shared axis) — plus a small α-comparison inset
   (Rome vs provincial capitals vs aggregates, medians + CIs).
+- **Figure F17 — "why Rome is excluded" (illustrative, §3.3).** A pooled scaling
+  scatter (log inscription count vs log Hanson population, all cities) with Rome
+  plotted as the extreme high-leverage point, and the fitted scaling line shown
+  **with vs without Rome** — making Hanson 2021's Fig. 7.4 exclusion point
+  visually concrete (Rome's residual dwarfs every other city). **Framing note:**
+  use the *pooled / between-city* scaling for this, NOT the within-province
+  Mundlak — Rome is alone in its own province ("Roma"), so it carries no
+  within-province contrast and would not distort β_within; the distortion Hanson
+  documents (and that we illustrate) is the high-leverage outlier in the pooled
+  count-vs-population fit. **Data requirement:** Rome's Hanson population estimate
+  (Hanson 2016, ~1 M — confirm it is present in the source population table before
+  building) + Rome's filtered inscription count (65,435). Clearly labelled
+  illustrative; not a confirmatory fit.
 - An **Obs** entry (working-notes) recording the result + the descriptive/
   exploratory status, cross-referencing Obs 74/99/106 (capital over-production)
   and the Rome-exclusion rationale (Decision 36).
@@ -124,14 +144,22 @@ draws (`runs/2026-06-13-cc-production-refit/outputs/posterior-draws/`).
 - Figures are local, code-based (no compute). Total: a single short sapphire
   session + two figure scripts.
 
+Plus the **F17 illustrative demo** (§3.3): a scatter + a pooled OLS/NBR line with
+vs without Rome — negligible compute (no MCMC), local; needs Rome's Hanson
+population + count.
+
 ## 6. Pre-launch checklist
 
-- [ ] Shawn signs off §3 design decisions (basis; capital frame; scope guard; α
-      reporting).
+- [x] Shawn signs off §3 design decisions — **SETTLED 2026-06-21** (empire basis +
+      empire-62 capitals; descriptive + the F17 "why Rome breaks it" demo;
+      α as a descriptive reference).
 - [ ] Driver script written + `/audit`-reviewed before the fit (reuse `h2_lib`;
       no new model code — assembly + fit + extract only).
-- [ ] Run on sapphire under the standard thread-pinned + cgroup-capped wrapper.
-- [ ] Results → Obs + figures; commit per stage.
+- [ ] Confirm Rome's Hanson population is present in the source table (for F17).
+- [ ] Run the two fits on sapphire under the standard thread-pinned +
+      cgroup-capped wrapper.
+- [ ] Results → Obs (cross-ref Obs 74/99/106 + Decision 36) + figures F15/F16/F17;
+      commit per stage.
 
 ## 7. Caveats to carry into the write-up
 
