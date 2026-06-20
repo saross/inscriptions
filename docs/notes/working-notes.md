@@ -6076,3 +6076,149 @@ all units; overdispersion 4/29);
 `Amendment-04`, `C10-excluded-held`, `DRAFT-banner-flipped`,
 `SPEC-executed`, `documentation-uplift-tier-1`, `obs-110`,
 `runs-2026-06-18-h2.1-supplementary-wave`, `model-comparison-md`
+
+## Obs 112 — 2026-06-20 [RESULT / EXPLORATORY]: Per-inscription verbosity (the content residual) is idiosyncratic — not associated with capital status, city size, or output volume; reinforces the content/scaling orthogonality (Obs 108)
+
+### The finding
+
+**Descriptive/exploratory post-hoc check (2026-06-20).** This Obs profiles
+*which* cities are verbose (i.e. have high content residuals, per Obs 108's
+§A5.4 definition) and tests three candidate explanations: provincial-capital
+status, city size (log population), and output volume (log inscription count).
+All three are null. Verbosity is idiosyncratic.
+
+**Inputs:**
+- `runs/2026-06-20-a01-content-residual/outputs/content-residual-per-city.csv`
+  (cols: `city`, `content_residual`, `log_pop`, `log_inscription_count`; 817
+  cities, Latin primary frame)
+- `data/processed/provincial-capitals.csv` (cols: `city`, `is_provincial_capital`;
+  62 matched cities)
+
+Numbers below are recomputed fresh from these files (2026-06-20); all checked
+against source before writing.
+
+**Verbosity vs city size — Spearman(content\_residual, log\_pop):**
+ρ = **−0.016** (p = 0.659), n = **809 finite pairs** (8 dropped: zero letter-mass,
+log undefined). Effectively zero correlation — city size carries no information
+about verbosity.
+
+**Verbosity vs output volume — Spearman(content\_residual,
+log\_inscription\_count):** ρ = **+0.003** (p = 0.926), n = 809. Exactly null
+— prolific cities are not verbose cities.
+
+**Capital vs non-capital verbosity:**
+
+| group | n | mean content residual | median content residual |
+|---|---|---|---|
+| Provincial capitals | 41 | −0.055 | −0.062 |
+| Non-capitals | 768 | +0.003 | +0.015 |
+| All | 809 | — | — |
+
+**Mann–Whitney U = 14,947, p = 0.585 (two-sided)** — no significant difference.
+Capitals, if anything, run marginally *lower* verbosity than non-capitals, but
+the difference is indistinguishable from noise.
+
+**Most verbose cities (top 10 by content residual, all non-capitals):**
+
+| rank | city | content residual | capital? |
+|---|---|---|---|
+| 1 | Aregenua | +3.653 | No |
+| 2 | Faventia | +3.092 | No |
+| 3 | Cillium | +2.981 | No |
+| 4 | Veleia | +2.955 | No |
+| 5 | Malaca | +2.909 | No |
+| 6 | Siarum | +2.619 | No |
+| 7 | Abbir Maius | +2.510 | No |
+| 8 | Urso | +2.261 | No |
+| 9 | Heba | +1.970 | No |
+| 10 | Banasa | +1.877 | No |
+
+Zero of the ten most verbose cities are provincial capitals — and none are among
+the empire's largest cities.
+
+**Read:** verbosity is a genuinely idiosyncratic urban trait. It is not a proxy
+for administrative rank, demographic scale, or epigraphic productivity. The city
+that generates more letters per inscription than the corpus norm is not the city
+that generates more inscriptions than its population predicts.
+
+### Why this matters
+
+1. **Reinforces the orthogonality result (Obs 108).** Obs 108 showed that the
+   content-residual axis and the scaling-residual axis are statistically
+   orthogonal (Spearman ρ ≈ 0). This Obs adds a third dimension: verbosity is
+   also orthogonal to status and size. Together, they establish content verbosity
+   as a structurally independent urban trait, not an artefact of any of the usual
+   stratifiers.
+2. **Pre-empts a confound check the paper write-up needs.** A referee could
+   plausibly ask: "Are your verbose cities just your big cities / your capitals?"
+   This analysis pre-answers: no. Both tests are now quantified and reportable
+   (§5 descriptive write-up).
+3. **Supports the two-measure framing.** If verbosity tracked status or size, the
+   content measure would partly duplicate the scaling analysis. The null results
+   here confirm the two measures capture genuinely different things.
+
+### Caveats / methodological notes
+
+- **Descriptive/exploratory only** — no preregistered threshold, no verdict.
+  Consistent with A01 §A5.4's scope; cannot move any confirmatory result.
+- **Capital matching is by exact ancient toponym** (Hanson 2016 OXREP cities
+  database; 62 matched cities, 41 present in the Latin-primary content set).
+  Cities in the content CSV not found in `provincial-capitals.csv` are treated as
+  non-capitals — this is the safe direction (an unmatched capital would be
+  miscoded as non-capital, which if anything would *shrink* the observed
+  capital–non-capital gap).
+- **8 zero-mass cities** are excluded from the Spearman tests (log undefined);
+  they are not excluded from the capital comparison (their content residuals are
+  NaN, so they drop automatically). All counts above are the same 809 finite
+  cities from Obs 108.
+- **Not a formal test of capital status as a causal driver** — this is a
+  cross-sectional descriptive sweep. The Mann–Whitney p = 0.585 is informative
+  (large, clean null) but the design is post-hoc.
+
+### Related observations and artefacts
+
+**Obs 108** (A01 §A5.4 content residual — content/scaling orthogonality): the
+parent result this Obs profiles; the content-residual measure and the 809-city
+Latin frame are defined there.
+
+**Obs 109** (H9 letter-mass H3a confirmatory): the H3a scaling result on the
+content measure; Obs 112 confirms that content-residual verbosity is not a
+re-run of the scaling signal.
+
+**Obs 74** (H3c(i) capitals over-produce in acts): capitals over-produce on the
+*act-count* dimension (the scaling residual); Obs 112 shows they do not
+over-produce on the *content* (verbosity) dimension — the two capital effects are
+dissociated.
+
+**Obs 99** (§5 H7 — time-resolved H3c; β\_within U-shape): the time-resolved
+capital production analysis; Obs 112's null on verbosity is a cross-sectional
+complement.
+
+**Obs 106** (§5 H7-Latin + peak-scaling-Latin — capital over-production in the
+Latin-primary frame): Obs 112 extends the capital-status tests to the verbosity
+channel and finds no effect.
+
+**Artefacts**:
+`runs/2026-06-20-a01-content-residual/outputs/content-residual-per-city.csv`
+(primary input; per-city content residual + log\_pop + log\_inscription\_count);
+`data/processed/provincial-capitals.csv` (capital-status join);
+`reports/key-findings-summary-2026-06-20.md` §3 (descriptive note).
+
+### Findable later
+
+`content-residual-verbosity`, `per-inscription-verbosity`, `idiosyncratic-verbosity`,
+`verbosity-not-capital`, `verbosity-not-size`, `verbosity-not-volume`,
+`content-residual-vs-log-pop`, `spearman-rho-neg-0-016`, `spearman-p-0-659`,
+`content-residual-vs-log-insc`, `spearman-rho-0-003`, `spearman-p-0-926`,
+`capital-verbosity-null`, `mann-whitney-p-0-585`, `mann-whitney-14947`,
+`41-capitals`, `768-non-capitals`, `capital-mean-neg-0-055`,
+`capital-median-neg-0-062`, `noncap-mean-0-003`, `noncap-median-0-015`,
+`most-verbose-cities`, `Aregenua`, `Faventia`, `Cillium`, `Veleia`, `Malaca`,
+`Siarum`, `Abbir-Maius`, `Urso`, `Heba`, `Banasa`,
+`zero-of-ten-capitals`, `809-finite-pairs`, `8-zero-mass-dropped`,
+`two-measure-framing`, `content-scaling-orthogonal`, `verbosity-independent`,
+`status-size-volume-all-null`, `descriptive-exploratory`, `A01-A5.4`,
+`cross-sectional-only`, `OXREP-capital-match`, `exact-toponym-match`,
+`obs-108`, `obs-109`, `obs-74`, `obs-99`, `obs-106`,
+`runs-2026-06-20-a01-content-residual`, `content-residual-per-city-csv`,
+`provincial-capitals-csv`
