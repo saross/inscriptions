@@ -6405,3 +6405,353 @@ commit `1c1e6b3` (clean-partition computation).
 `obs-97`, `obs-98`, `obs-103`, `obs-104`,
 `compute-temporal-split-py`, `temporal-three-way-split-json`, `1c1e6b3`,
 `runs-2026-06-20-figures`
+
+## Obs 114 — 2026-06-21 [RESULT / EXPLORATORY]: Roma + Italia capital comparison — Rome is the most convention-dated unit in the corpus (α = 0.799) and Italian epigraphy leads the empire in editorial-convention dating; provincial capitals carry a HIGHER genuine share than non-capital provinces
+
+### The finding
+
+**Descriptive / exploratory (2026-06-21); NOT preregistered. Rome remains
+excluded from all confirmatory regressions (Decision 36) — this run adds
+reference units and comparisons only.**
+
+Five new units fitted with the **production cc-library deconvolution
+verbatim** (`refit_lib` + `joint_lib`, `build_model_cross_classified(
+pconv_mode="library")`, adopted θ prior θ\_conv ≈ 0.930 / θ\_gen ≈ 0.025,
+κ = 40) on the same single universal slab basis used for the 29 production
+units. Because all units share one basis, these five are directly comparable
+to the production aggregates by construction.
+
+**α is the CONVENTION fraction** (1 − α = genuine). `p_mix = α·p_conv +
+(1−α)·p_gen`; higher α = more editorial round-slab convention dating. See
+the 2026-06-21 direction-correction in `reports/key-findings-summary-2026-06-20.md`
+(commit `1fffc72`).
+
+All numbers below read directly from
+`runs/2026-06-21-rome-capital-comparison/outputs/roma-italia-summary.json`
+and `runs/2026-06-21-rome-capital-comparison/REPORT.md` (2026-06-21).
+
+---
+
+**New units — convention fraction α (cc-library, direct comparisons):**
+
+| unit | N rows | α (convention) | 95 % CI | R̂ | divergences | gate |
+|---|---|---|---|---|---|---|
+| **Roma** | 65,457 | **0.799** | [0.790, 0.807] | 1.004 | 0 | pass |
+| capitals-empire-62 | 16,123 | 0.561 | [0.515, 0.601] | 1.002 | 3 (benign) | pass |
+| capitals-latin-41 | 15,557 | 0.561 | [0.519, 0.595] | 1.002 | 8 (benign) | pass |
+| Italia-incl-Rome | 109,172 | 0.733 | [0.722, 0.743] | 1.009 | 0 | ESS marginal† |
+| provinces-non-Italian-Latin | 65,931 | 0.713 | [0.644, 0.762] | 1.003 | 9 (benign) | pass |
+
+*† `Italia-incl-Rome` has min ESS bulk = 397.4 (below the 400 gate); the JSON
+records `convergence_pass: false`. The REPORT.md prose says "all five pass" —
+the JSON is the canonical source. R̂ = 1.009 is clean; the ESS shortfall is
+marginal and the α estimate is well-constrained by N = 109,172. Treat as
+approximate rather than confirmed-convergent.*
+
+**Production-unit comparisons (from the 29-unit production run):**
+
+| production unit | α | 95 % CI |
+|---|---|---|
+| Italia (excl. Rome) | 0.787 | [0.753, 0.806] |
+| empire-aggregate | 0.680 | [0.665, 0.697] |
+| latin-aggregate | 0.739 | [0.660, 0.789] |
+
+---
+
+**Finding 1 — Roma is the most convention-dated unit in the corpus (α = 0.799).**
+Four-fifths of the imperial capital's apparent dating is editorial round-slab
+convention — the highest α of any unit. This is consistent with Rome's raw
+aligned fractions: 81.6 % (by row count), 79.3 % (by mass).
+
+**Finding 2 — Provincial capitals carry a HIGHER genuine-dating share than
+non-capital provinces.** Capitals-empire-62 and capitals-latin-41 are
+essentially identical at α = 0.561 — markedly lower convention than the
+general non-Italian provinces (0.713) and the aggregates (empire 0.680, Latin
+0.739). Capital epigraphy is less dominated by editorial convention, not more,
+despite capitals over-producing inscriptions in absolute terms (Obs 74/99/106).
+
+**Finding 3 — Italian exceptionalism.** Both Roma (0.799) and the Italian
+municipal corpus (Italia-excl-Rome, a production unit at 0.787) sit well above
+the non-Italian provinces (0.713), making Italian epigraphy — Rome and the
+Italian *municipia* together — the most convention-dated epigraphy in the empire.
+Italia-incl-Rome at 0.733 lies between the two because Rome accounts for
+roughly 60 % of its rows (109,172 total: Roma 65,457 / Italian municipal ≈
+43,715). (Figure F18, `fig18-italia-exceptionalism`.)
+
+**Finding 4 — Severan-watershed temporal crossover (Figure F19).** De-fogged
+genuine chronologies cross over: Italian municipal epigraphy dominates the
+early empire (genuine peak ~AD 80), then collapses; the non-Italian provinces
+rise through the 1st–2nd century to a peak around the Severan period (AD 212
+marked). Italy leads early; the provinces overtake. Trajectories are
+full-window (not per-period fits — within-period slab identifiability fails).
+The sharp AD-80 Italian spike may be partly a deconvolution artefact; the broad
+crossover is robust.
+
+**Convergence:** three units carry 3–9 benign divergences out of 8,000 draws
+(capitals-latin-41, capitals-empire-62, provinces-non-Italian-Latin), within the
+project's adopted benign-tolerant gate. Italia-incl-Rome is ESS-marginal as noted.
+
+### Why this matters
+
+1. **The capital paradox is now quantified.** Capitals produce more inscriptions
+   than their populations predict (Obs 74/99/106 — the over-production result),
+   but their epigraphy is *less* convention-dominated (α ≈ 0.56 vs 0.71 for
+   the general provinces). The two signals are dissociated: prolific production
+   ≠ convention-dominated dating. Capital communities apparently used more
+   specific, real date-ranges.
+2. **Italian exceptionalism is visible at two levels.** Both Rome (the city)
+   and the Italian *municipia* are outliers on α — the dense, early, formulaic
+   Italian epigraphic culture is distinctively round-number in its dating,
+   independently of whether Rome itself is in the sample.
+3. **The Severan temporal crossover is the companion visual result to the
+   provincial α pattern.** The crossover in genuine chronologies maps directly
+   onto the α difference: the higher-α Italian corpus was already fading when
+   the lower-α provincial corpus was peaking. F19 makes this historically legible.
+4. **Roma's genuine SPD is weakly constrained.** With α = 0.799, the genuine
+   component (20 % of the signal) is a small residual; the late-envelope spike
+   (~AD 300–340) is most likely a high-α edge artefact. The convention *fraction*
+   is the robust deliverable from the Rome fit; the genuine *shape* should not
+   be cited as a temporal claim.
+5. **Cross-reference anchor for Decision 36.** Rome stays excluded from
+   confirmatory regressions; Figure F17 (`fig17-why-rome-excluded`) illustrates
+   the leverage argument. This Obs supplies the α number that explains *why*
+   Rome's date distribution is unreliable as a temporal signal.
+
+### Caveats / methodological notes
+
+- **Descriptive / exploratory only.** No preregistered threshold; cannot move any
+  confirmatory result. Rome stays excluded from regressions per Decision 36.
+- **Model-conditional comparisons.** All α are from the cc-library deconvolution
+  on one universal slab basis; membership (which rows are in the unit), not basis
+  differences, drives the variation in α.
+- **Italia-incl-Rome convergence caveat** — ESS marginal (397.4 < 400 gate);
+  JSON records `convergence_pass: false`. α is indicative; the unit should not be
+  cited as a fully confirmed production-quality fit.
+- **High-α shape unreliability.** At α ≥ ~0.79, the genuine component is ~20 %
+  or less of the mix; the SPD shape is highly sensitive to small errors in the
+  conventional slab. Read shapes descriptively for Roma and Italia-excl-Rome.
+- **5 new units, one run** (driver `code/run_roma_italia.py`, commit `259663d`).
+  No alternative specifications tested; robustness analyses not run for these
+  descriptive units.
+- **Italy = ~60 % of Latin inscriptions in the corpus.** The Latin-aggregate
+  production unit is substantially Italy-weighted; the capital comparison using
+  `provinces-non-Italian-Latin` is the cleanest non-Italian contrast.
+
+### Related observations and artefacts
+
+**Obs 74** (H3c(i) — provincial capitals over-produce in acts): the act-count
+over-production result this Obs shows is NOT matched by convention-fraction
+over-representation; the two capital signals are dissociated.
+
+**Obs 99** (§5 H7 — time-resolved capital analysis; β\_within U-shape): the
+time-resolved over-production analysis; Obs 114 adds the α dimension showing
+capitals are *less* convention-dominated than non-capitals.
+
+**Obs 106** (§5 H7-Latin + peak-scaling-Latin — capital over-production in
+the Latin-primary frame): the confirmatory capital over-production result;
+Obs 114 extends the capital characterisation to the convention-fraction axis.
+
+**Obs 113** (§5 exact covariance-attributed temporal-variance partition —
+empire-common 38 % / province 29 % / city 33 %): the most recent prior
+production result; Obs 114's new units are comparable to the same production
+posterior.
+
+**Obs 115** (women-corpus de-fogging feasibility — α ≈ 0.84–0.90, below the
+reliable envelope): the companion new entry; shares the same cc-library model
+and directly compares to the α values established here.
+
+**Decision 36** (Rome excluded from confirmatory regressions): the
+decision this Obs supplies the α justification for. Figure F17 is the
+leverage exhibit.
+
+**Artefacts**:
+`runs/2026-06-21-rome-capital-comparison/REPORT.md` (primary narrative);
+`runs/2026-06-21-rome-capital-comparison/outputs/roma-italia-summary.json`
+(all α, CI, R̂, ESS, divergence counts read from here — **canonical source**);
+`runs/2026-06-21-rome-capital-comparison/outputs/units/Roma.json`,
+`capitals-empire-62.json`, `capitals-latin-41.json`, `Italia-incl-Rome.json`,
+`provinces-non-Italian-Latin.json` (per-unit posteriors);
+`runs/2026-06-21-rome-capital-comparison/code/run_roma_italia.py` (driver,
+commit `259663d`);
+`runs/2026-06-20-figures/outputs/fig15_rome_before_after.*`,
+`fig16_capital_comparison.*`, `fig17_why_rome_excluded.*`,
+`fig18_italia_exceptionalism.*`, `fig19_italia_temporal.*` (Figures F15–F19);
+commit `259663d` (driver); commit `5a993de` (REPORT.md).
+
+### Findable later
+
+`roma-alpha`, `rome-convention-fraction`, `roma-0-799`, `roma-alpha-0-799`,
+`roma-alpha-ci-0-790-0-807`, `rome-most-convention-dated`,
+`capitals-empire-62-alpha-0-561`, `capitals-latin-41-alpha-0-561`,
+`provincial-capitals-alpha-0-561`, `capital-alpha-lower-than-provinces`,
+`capital-genuine-share-higher`, `capitals-less-convention-dominated`,
+`Italia-incl-Rome-alpha-0-733`, `provinces-non-Italian-Latin-alpha-0-713`,
+`italia-excl-rome-alpha-0-787`, `empire-aggregate-alpha-0-680`,
+`latin-aggregate-alpha-0-739`,
+`italian-exceptionalism`, `italia-convention-dominated`, `italia-highest-alpha`,
+`rome-plus-italian-municipal-most-convention`,
+`severan-watershed`, `AD-212`, `italia-genuine-peak-AD-80`, `temporal-crossover`,
+`italy-leads-early-provinces-overtake`, `fig19-italia-temporal`,
+`fig18-italia-exceptionalism`, `fig17-why-rome-excluded`,
+`fig16-capital-comparison`, `fig15-rome-before-after`,
+`rome-high-alpha-edge-artefact`, `late-envelope-spike-AD-300-340`,
+`genuine-shape-weakly-constrained`, `roma-genuine-SPD-uncertain`,
+`capital-paradox`, `over-production-not-convention-dominated`,
+`benign-divergences`, `capitals-latin-41-8-divergences`,
+`capitals-empire-62-3-divergences`, `provinces-non-italian-9-divergences`,
+`italia-incl-rome-ESS-marginal`, `ESS-397`, `convergence-pass-false`,
+`cc-library-five-new-units`, `universal-slab-basis`, `direct-comparable`,
+`descriptive-exploratory`, `not-preregistered`, `decision-36-rome-excluded`,
+`obs-74`, `obs-99`, `obs-106`, `obs-113`, `obs-115`,
+`runs-2026-06-21-rome-capital-comparison`, `roma-italia-summary-json`,
+`run-roma-italia-py`, `259663d`, `5a993de`, `1fffc72`
+
+## Obs 115 — 2026-06-21 [METHODOLOGY / EXPLORATORY]: Women-corpus (datable conjugal) convention de-fogging feasibility — α ≈ 0.84–0.90, well above the reliable envelope; de-fogging cannot sharpen the timing of the crossover trough
+
+### The finding
+
+**Stage-1 feasibility only (2026-06-21). Methodological verdict, not a
+substantive claim. Scope: can the cc-library convention de-fogging sharpen the
+*timing* of the datable conjugal corpus? The crossover-age trajectory is
+reserved for the companion EJA paper (Adela Sobotkova PI). Operational
+`datable`/`conjugal` filters need Adela's confirmation before any figure is
+quoted to a third party.**
+
+**α is the CONVENTION fraction** (1 − α = genuine). Source: canonical
+`data/women.csv` (504 daughters confirmed by Shawn, 2026-06-21; earlier "813
+extras" were spurious search hits). Fitted with the production cc-library
+deconvolution (same model and θ prior as the 29 JAMT production units).
+
+All numbers below read directly from
+`runs/2026-06-20-women-corpus-feasibility/outputs/women-feasibility-summary.json`
+(2026-06-21).
+
+---
+
+**Results — datable conjugal corpus (N = 1,291; wives 838, daughters 453):**
+
+| subset | N | α (convention) | 95 % CI | R̂ | ESS bulk | divergences | gate |
+|---|---|---|---|---|---|---|---|
+| women-overall | 1,291 | **0.904** | [0.813, 0.988] | 1.005 | 984 | 0 | pass |
+| women-wives | 838 | **0.902** | [0.803, 0.995] | 1.003 | 1,310 | 0 | pass |
+| women-daughters | 453 | **0.840** | [0.747, 0.985] | 1.003 | 1,497 | 0 | pass |
+
+All three fit cleanly (clean R̂, ESS well above 400, zero divergences). The
+convergence is not in doubt; the *reachability* is.
+
+---
+
+**Feasibility verdict: NOT reliably applicable. Two independent reasons:**
+
+1. **Too convention-dominated.** The project's validated operating envelope is
+   α ≤ ~0.70. All three subsets are α = 0.84–0.90 — far above the reliable
+   ceiling. At these α values the genuine component (10–16 % of the mix) is
+   too weakly constrained to yield trustworthy temporal shapes.
+
+2. **Corpus too small for the high-α regime.** The reachability floor is N ≈ 500
+   for easy (low-α) subsets, rising to N ≈ 2,000 for hard (high-α) ones. This
+   corpus is high-α, so the stricter floor applies: overall (1,291) and wives
+   (838) are *marginal*; daughters (453) is below even the easy-regime floor.
+
+**Read:** the datable conjugal corpus is ~90 % editorial artefact. The cc-library
+deconvolution can fit it, but cannot reliably sharpen its time-resolution.
+
+### Why this matters
+
+1. **The crossover-trough timing rests on an ~90 % editorial artefact.** The C2–C3
+   inflection (~AD 150–275) in the wives/daughters temporal distribution is read
+   off a date distribution that is overwhelmingly editorial convention. Convention
+   de-fogging cannot rescue time-resolution here; timing claims should be hedged
+   accordingly. (This does not touch Adela's `tempun` pipeline or the crossover-age
+   result — those operate on ages, not inscription dates.)
+2. **The verdict is itself useful.** A "not reliably applicable" feasibility outcome
+   is informative: it tells the EJA companion paper that the dating axis is not a
+   reliable timing anchor for this corpus, which is a legitimate scope-bounding
+   result for the methods section.
+3. **The contrast with the JAMT corpus is striking.** JAMT production units span
+   α ≈ 0.56–0.80 (Obs 114); the women's corpus at α ≈ 0.84–0.90 is at or beyond
+   the high end of the JAMT range. Conjugal epigraphy is apparently even more
+   formulaic in its dating than the most convention-dominated regional aggregate.
+4. **The 504-daughters data question.** The canonical `data/women.csv` contains
+   504 daughters; the "813" figure in the spec (user's paraphrase) was a spurious
+   search-hit count, not the canonical file count. The JSON records the correct
+   provenance. Adela's confirmation of the operational `datable`/`conjugal` filters
+   is still outstanding.
+
+### Caveats / methodological notes
+
+- **Operational filter confirmation needed.** Our `conjugal` = role ∈ {wife,
+  daughter} ∧ type = familial; `datable` = valid `not_before`/`not_after`
+  overlapping AD −50 to 350. These must be confirmed against Adela's exact
+  definitions (and any `link_status` / `confidence` gate she applies) before
+  any figure from this run is quoted to a third party.
+- **Collaboration data.** `data/women.csv` is Adela Sobotkova's dataset;
+  not for publication without her involvement.
+- **Convergence vs reachability.** All three units converged (R̂, ESS, zero div).
+  The feasibility failure is a *reachability* verdict — the model is too
+  data-starved and convention-dominated to constrain the genuine shape reliably,
+  not that the sampler failed.
+- **No temporal trajectory reported.** Figure `fig-women-genuine-vs-raw` shows
+  the very wide 95 % band (qualitative illustration of the constraint problem);
+  no specific genuine-SPD peak or trough timing is asserted in this Obs.
+- **Wives and overall CIs near 1.00.** Women-wives CI upper bound = 0.995,
+  women-overall = 0.988 — both near the α = 1.00 boundary. This is not a
+  sampling artefact; it reflects the true posterior uncertainty when the genuine
+  component is this weakly constrained.
+- **Median interval width 99 years** for all three subsets (from JSON
+  `women_date_span`). Wide intervals compound the identifiability problem.
+
+### Related observations and artefacts
+
+**Obs 113** (§5 exact covariance-attributed temporal-variance partition — empire-
+common 38 % / province 29 % / city 33 %): the most recent production result;
+context for the JAMT cc-library model that is applied here.
+
+**Obs 114** (Roma + Italia capital comparison — Roma α = 0.799, provincial
+capitals α = 0.561): the companion new entry; establishes the α range for JAMT
+production units (0.56–0.80) against which the women's corpus (0.84–0.90) is
+contrasted.
+
+**Decision 34** (subset de-fogging / reachability gate): the project decision
+that defines the α ≤ ~0.70 reliable envelope and the N ≈ 500 / 2,000 floor;
+the basis for the feasibility verdict here.
+
+**Artefacts**:
+`runs/2026-06-20-women-corpus-feasibility/MEMO.md` (primary narrative, addressed
+to Adela Sobotkova);
+`runs/2026-06-20-women-corpus-feasibility/outputs/women-feasibility-summary.json`
+(all α, CI, R̂, ESS values read from here — **canonical source**);
+`runs/2026-06-20-women-corpus-feasibility/outputs/units/women-overall.json`,
+`women-wives.json`, `women-daughters.json` (per-unit posteriors);
+`runs/2026-06-20-women-corpus-feasibility/outputs/fig-women-genuine-vs-raw.png`
+(wide-band SPD illustration);
+`runs/2026-06-20-women-corpus-feasibility/code/run_women_feasibility.py`
+(driver, commit `79318d3`);
+`data/women.csv` (canonical input; 504 daughters, per Shawn 2026-06-21);
+commit `79318d3` (driver); commit `5a993de` (MEMO.md).
+
+### Findable later
+
+`women-corpus`, `datable-conjugal`, `wives-daughters-corpus`, `women-feasibility`,
+`conjugal-alpha`, `women-overall-alpha-0-904`, `women-wives-alpha-0-902`,
+`women-daughters-alpha-0-840`, `alpha-0-904`, `alpha-0-902`, `alpha-0-840`,
+`women-CI-0-813-0-988`, `women-CI-0-803-0-995`, `daughters-CI-0-747-0-985`,
+`90-pct-editorial-convention`, `women-corpus-90-pct-convention`,
+`not-reliably-applicable`, `de-fogging-not-applicable`, `reachability-verdict`,
+`alpha-above-envelope`, `alpha-above-0-70`, `above-reliable-ceiling`,
+`n-1291-datable-conjugal`, `wives-838`, `daughters-453`,
+`daughters-below-500-floor`, `wives-marginal`, `overall-marginal`,
+`high-alpha-small-n`, `reachability-floor-2000`,
+`504-daughters-canonical`, `813-spurious`, `women-csv`,
+`crossover-trough-timing`, `C2-C3-inflection`, `AD-150-275`,
+`date-distribution-editorial-artefact`, `timing-hedged`,
+`convention-de-fogging-scope-bound`, `not-preregistered-feasibility-only`,
+`adela-sobotkova`, `EJA-companion`, `tempun-pipeline`, `ages-untouched`,
+`operational-filter-confirmation-needed`, `conjugal-filter`, `datable-filter`,
+`link-status-confirmation`, `collaboration-data`, `not-for-publication`,
+`median-interval-width-99`, `rhat-1-003-1-005`, `ESS-984-1310-1497`,
+`zero-divergences`, `convergence-not-the-problem`, `reachability-not-convergence`,
+`wide-CI-near-1`, `fig-women-genuine-vs-raw`, `wide-95-pct-band`,
+`obs-113`, `obs-114`, `decision-34`,
+`runs-2026-06-20-women-corpus-feasibility`, `women-feasibility-summary-json`,
+`run-women-feasibility-py`, `79318d3`, `5a993de`
