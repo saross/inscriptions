@@ -3633,6 +3633,14 @@ verified lit-scout on epigraphic dating practice (report
   > rounded approximation as-is in the lodged record is **Shawn's decision** — the
   > directional argument (multi-century mass is a large, previously-unmodelled
   > share; reigns are small) is robust under either exact value.
+  >
+  > **RESOLVED 2026-06-20 (Shawn) — Option 1.** The paper will cite the
+  > *reproducing* figures — **~36 % (F1+F3 pool) / 24.96 % (full convention
+  > pool)** — wherever this is load-bearing, with a footnote noting that lodged
+  > Amendment 03 gave a rounded "~31 %". The lodged amendment text stands
+  > **unedited** (it is the timestamped historical record); **no clarifying OSF
+  > amendment is lodged** — the conclusion is unchanged and the accurate ~36 %
+  > only strengthens it. This is a standing **write-up directive**.
 - **What the production model actually is.** `cell_lib.build_model_f1_f3` learns
   `tier_weights ~ Dirichlet` over a fixed `tier_basis`; it does **not** use the
   family classifier, and Decision 35 retired the empirical-Bayes fixed-`p_conv`
