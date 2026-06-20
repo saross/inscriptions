@@ -41,6 +41,8 @@
 | Lusitania | 0.7879 [0.7353, 0.8427] | 0.7878 [0.7350, 0.8455] | 0.7888 [0.7354, 0.8473] | 0.0 | 0.0 |
 | Italia (excl. Rome) | 0.7872 [0.7532, 0.8064] | 0.7848 [0.7430, 0.8087] | 0.7866 [0.7529, 0.8059] | 0.0 | 0.0 |
 
+> **|Δα| rounding note (added 2026-06-20).** The two `|Δα|` columns are rounded to 1 dp, so every unit prints 0.0. The underlying median shifts are nonzero but negligible; the **largest raw shift is latin-aggregate DM, |Δα| = |0.7387 − 0.7543| = 0.0156**, with Pompeii close behind (NB 0.0153, DM 0.0150 — a near-zero-α unit). The "family does not move α" verdict holds: max raw shift ≈ 0.016, well within MCMC noise. (This is the figure to cite at write-up — not a literal 0.0.)
+
 ## DM κ / NB φ posteriors + multinomial PPC dispersion (overdispersion warranted?)
 
 | unit | κ median [95% CI] | φ median | disp. aligned | disp. non-al | overdisp.? |

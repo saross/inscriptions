@@ -5988,7 +5988,8 @@ dir's own `outputs/` reports.
 
 **C5/C6 — model comparison (does the observation family move α?).** Across all 29 units the
 **Dirichlet-multinomial (DM) and rescaled-negative-binomial (NB) supplementaries do NOT
-move α** — the |Δα| column is 0.0 for every unit in `model-comparison.md`. Multinomial PPC
+move α** — the |Δα| column rounds to 0.0 for every unit in `model-comparison.md` (1 dp; the
+largest raw median shift is latin-aggregate DM, |Δα| = 0.0156 — see caveats). Multinomial PPC
 dispersion ratio ≈ 1 for almost all units; **overdispersion is warranted in only 4/29**
 (empire-aggregate, latin-aggregate, Numidia, Pompeii). The multinomial primary is adequate;
 cross-family PSIS-LOO is correctly dropped (inapplicable across the joint-multinomial vs
@@ -6025,9 +6026,13 @@ R̂ = 1.0126, ESS 610) — reported as a known limitation, not amended.
   reported as a limitation, not amended.
 - **C14 / C13 shortfalls are reachability-floor caveats** (N < 2,000 at tight T), not
   failures.
-- **|Δα| reported to 1 dp as 0.0** in `model-comparison.md`; the per-unit JSONs carry the
-  finer differences (the largest raw shift is Pompeii, primary 0.0156 vs DM 0.0006 / NB
-  0.0003 — a near-zero-α unit).
+- **|Δα| reported to 1 dp as 0.0** in `model-comparison.md` (the column rounds every unit
+  to 0.0); the underlying median shifts are nonzero but negligible — **the largest is
+  latin-aggregate DM, |Δα| = 0.0156**, with Pompeii close behind (NB 0.0153 / DM 0.0150, a
+  near-zero-α unit: primary 0.0156 vs DM 0.0006 / NB 0.0003). The "DM/NB do not move α"
+  verdict stands (max raw shift ≈ 0.016, within MCMC noise). [Precision fix 2026-06-20:
+  the canonical |Δα| figure for write-up is 0.016, not a literal 0.0; corrects the prior
+  "largest is Pompeii" — latin-aggregate DM is marginally larger.]
 - **C10 EXCLUDED (held)** from this wave (run separately; Obs 110).
 
 ### Related observations and artefacts

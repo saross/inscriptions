@@ -7,8 +7,9 @@
 - **Verdict (per supplementary; all discharged — see the sections below; numbers
   re-read from this dir's own `outputs/` reports):**
   C5/C6 the Dirichlet-multinomial and rescaled-negative-binomial supplementaries
-  **do NOT move α** (|Δα| reported as 0.0 across all 29 units in
-  `model-comparison.md`; the multinomial primary is adequate — overdispersion
+  **do NOT move α** (|Δα| rounds to 0.0 (1 dp) across all 29 units in
+  `model-comparison.md`; the largest raw median shift is latin-aggregate
+  DM, |Δα| = 0.0156 — negligible, within MCMC noise; the multinomial primary is adequate — overdispersion
   warranted in only **4/29** units: empire-aggregate, latin-aggregate, Numidia,
   Pompeii); C11 trapezoidal-aoristic **2/29 flag report-alongside** (empire
   0.9402, Aquileia 0.9269); C13 boundary-step reduction **15/29 (52 %) meet
