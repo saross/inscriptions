@@ -2,8 +2,9 @@
 
 - **Date:** 2026-06-20
 - **Auditor:** Claude (Opus 4.8, 1M context), read-only audit on Shawn's brief.
-- **Scope:** all 58 run directories under `runs/` (enumerated with `ls runs/`),
-  plus a check of `planning/` for de-facto write-ups.
+- **Scope:** all 60 run directories under `runs/` (enumerated with `ls runs/`),
+  plus a check of `planning/` for de-facto write-ups. [Count updated 2026-06-20
+  from "58": `ls -d runs/*/ | wc -l` = 60.]
 - **Mode:** READ-ONLY. No analysis, code, data, or compute was modified, run, or
   committed. The only file created is this report.
 - **Status of this document:** working note, not committed; for the team's pre-write-up
@@ -44,7 +45,8 @@ run has:
    command in the spec or the code docstring counts.
 6. A **`run.log`** capturing the actual run (sampler trace, convergence, timings).
 7. A **link to the Obs register** — the run's result is recorded as an `Obs N` entry in
-   `docs/notes/working-notes.md` (107 numbered observations as of this audit, each
+   `docs/notes/working-notes.md` (111 numbered observations [updated 2026-06-20 from
+   "107": `grep -cE '^## Obs' docs/notes/working-notes.md` = 111, max Obs = 111], each
    citing the source run dir + persisted artefacts).
 8. **Supersede / stale banners** where a result was later overturned or rebuilt
    (the project uses `⚠ SUPERSEDED` / `RESOLVED` / "superseded by Decision N").
@@ -297,6 +299,6 @@ solid-and-consistent and could be written from today; the problems are concentra
 - **Tier 3 is cosmetic** and can follow the write-up.
 
 The good news for the team: the project already has an excellent, repeatable template (the
-province-size-regression / s5 cohort) and a rich, well-anchored Obs register (107 entries).
+province-size-regression / s5 cohort) and a rich, well-anchored Obs register (111 entries [updated 2026-06-20 from "107"]).
 The uplift is bringing the five HIGH dirs and the stale-banner set up to that template, not
 inventing one.

@@ -204,7 +204,7 @@ confirmatory family — no Holm-corrected family). Governed for mechanics by
 | AM01-a | Two-measure framework: letter mass = co-registered parallel **confirmatory** measure for H3a (each unit its own family; no cross-unit correction) | A01 §A5.2/§A5.3 | ✅ | H9 (above) — letter-mass H3a SUPPORTED every frame | confirmatory letter-mass family bounded to the cross-section (principled). |
 | AM01-b | Recovery-grid binding-criterion clarification (recoverability map; α≤0.70 envelope; flat-shape W1 patch; α demoted to diagnostic) | A01 §A5.5.1 | ✅ | recovery-grid two-unit REPORT (binding criterion applied; Grid A PASS / Grid B FAIL) | — |
 | AM01-c | Subset-specific deconvolution + measured reachability floor (worst-case N≈2,000) | A01 §A5.7; Dec 34 | ✅ | reachability `runs/2026-06-03-small-n-reachability/`; supp-wave caveats units below N<2,000; H2.3 floor applied | subset SPAs de-fogged by subset-specific fit, not the empire-wide convention shape. |
-| AM01-d | **Content-residual (inter-measure delta)** — pre-specified derived quantity; descriptive map + cross-tab vs scaling residual | A01 §A5.4 | **✗ not-covered (descriptive)** | no run computes `log(letter_mass) ~ log(inscription_count)` per-city residual or the 2-D residual-space cross-tab; only narrative mentions (`docs/notes/working-notes.md:1447`) | **GAP (exploratory/descriptive).** A01 explicitly: "no pre-committed threshold and no confirmatory verdict" — so it cannot change any verdict, but it is a pre-specified A01 reporting item. Cheap; a write-up-time deliverable (fit + map + cross-tabulate against the scaling residual). |
+| AM01-d | **Content-residual (inter-measure delta)** — pre-specified derived quantity; descriptive map + cross-tab vs scaling residual | A01 §A5.4 | **✅ covered (descriptive)** [updated 2026-06-20: was "✗ not-covered"; this sweep predated the A01 run] | `runs/2026-06-20-a01-content-residual/outputs/content-residual-results.json` computes the per-city `log(letter_mass) ~ log(inscription_count)` content residual and its cross-tab vs the scaling residual; lodged as Obs 108 (`docs/notes/working-notes.md:5681`) | **DISCHARGED (exploratory/descriptive).** A01 explicitly: "no pre-committed threshold and no confirmatory verdict" — so it changes nothing confirmatory, but the pre-specified A01 reporting item is now computed and reported (Obs 108). |
 | AM02 | Latin-speaking provinces = primary frame (H3a/H3b/H3c/SR1); empire = secondary; 41→39-province reconciliation | A02 | ✅ | H3a Latin frame SUPPORTED; H3c(i) Latin SUPPORTED; H9 Latin primary; H3b latin-aggregate; D13 Latin frame; reconciliation in A02 | **Latin frame is the lodged primary — NOT amendment-gated.** Housekeeping: the H3a REPORT.md headings still label empire "PRIMARY"/Latin "Sensitivity B" (predate A02); flip at write-up (D1 caveat). |
 | AM03 | Convention = empirical calendar-slab basis (no reign tier); reigns/events genuine-but-aoristic; grid-quantisation reframe; recovery re-validation gate | A03 | ✅ (partly ⊘ by A04) | re-validation PASS (96.4 %, `runs/2026-06-06-convention-basis-redesign/revalidation/FULL-GRID-REPORT.md`) | **A03's shared-basis choice is REVERSED by A04; A03's grid-quantisation reframe + reigns-as-genuine reclassification RETAINED.** |
 | AM04 | Cross-classified time × alignment model (reverses A03 shared basis); fixed corpus-wide slab library; classification likelihood sharing α; recovery grid + production refit gate; H3b uncertainty propagation replaces the α-identifiability restriction | A04 | ✅ | 300-cell grid PASS (`cc-VERDICT-library.md`); refit 28/29 converge (`REFIT-VERDICT.md`); θ re-derived (θ_gen 0.025) + θ-sweep robust 27/29; H3b drawwise propagation done (E1–E5) | **GOVERNING version of the temporal deconvolution.** empire-aggregate is the single non-converger (R̂≈1.013), reported as a known limitation. Two-bound [shared, per-unit] α retained as fallback disclosure for high-residual units; Moesia inf / Britannia soft-annotated. |
@@ -236,11 +236,19 @@ construct/scope/basis changes, each properly recovery-validated before adoption.
 SR1/SR2 = 2; H1–H10 = 10; I/amendment-added = AM01-a..d, AM02, AM03, AM04 = 7;
 J amendment-triggers tracked separately, not counted as obligations).
 
+> [Note added 2026-06-20, accuracy audit: the "63" is internally inconsistent and
+> matches neither cross-check. The component groups enumerated on the line above sum
+> to **76** (9+4+17+14+6+7+2+10+7), and the by-status tally below sums to **62**
+> (covered + partial + not-covered + deferred). "63" is therefore an artefact, not a
+> reconciled total; left as written rather than substituting an invented figure. The
+> *substantive* coverage picture is in the by-status counts (now 55 covered / 0
+> not-covered after AM01-d was discharged via Obs 108) and the per-row table above.]
+
 **Counts by status:**
 
-- ✅ covered: **54**
+- ✅ covered: **55** [updated 2026-06-20 from "54": AM01-d discharged via Obs 108 / `runs/2026-06-20-a01-content-residual/`]
 - ◐ partial: **1** (E1)
-- ✗ not-covered: **1** (AM01-d content-residual)
+- ✗ not-covered: **0** [updated 2026-06-20 from "1": AM01-d content-residual is now covered — see the AM01-d row and Obs 108]
 - ⤴ deferred-to-follow-up / write-up / optional: **6** (A8, D14, F6, H4-standalone, H6, H8)
 - ⊘ superseded (and re-covered under the governing version): C7 (→A04), and the A03 shared-basis within AM04 (recorded, not double-counted)
 
