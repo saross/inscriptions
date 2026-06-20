@@ -133,6 +133,13 @@ results; this is the durable forward plan.
 3. **The write-up** — empirical-first / interpretation-later structure (Obs 101); not started. Both
    gates Shawn set are now **met**: all analyses complete AND the results documentation is tied up and
    accuracy-certified (the write-up is based on it). The key-findings summary is the on-ramp.
+   **Writing brief LOCKED** (`planning/paper-writing-brief.md`, Shawn 2026-06-20): target **JAMT**
+   (Springer), **~10k words**; dual readership — a typical classicist/epigrapher postgrad with only
+   rudimentary statistics (plain English first/alongside, define every term) AND a Crema/Bevan-calibre
+   reviewer (tight + bulletproof); **push statistical detail/argumentation to the supplement** (keeps the
+   main text accessible AND review-proof); style exemplar = **Eftimoski, Ross & Sobotkova 2017** Kazanlak
+   ordered-logit paper (Zotero `ENPYIZQF`). The 14-figure set + plain-language captions are the visual
+   backbone, already at target accessibility.
 
 *Optional / slated (not gating, not for now):*
 
