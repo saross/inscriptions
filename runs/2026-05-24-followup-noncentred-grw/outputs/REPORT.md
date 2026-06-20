@@ -295,3 +295,13 @@ runs/2026-05-24-followup-noncentred-grw/
         ├── compare-noncentred-vs-centred-regnal.png
         └── compare-noncentred-vs-centred-smooth.png
 ```
+
+## Observations register cross-reference
+
+This F3 non-centred-GRW follow-up to Experiment A is lodged in the register at
+**Obs 52** (the sampler-effort / geometry / structural-identifiability triage — the
+non-centred reparameterisation is the *geometry* negative result) and **Obs 57**
+(a diagnostic that banks structural improvements without moving the headline). See
+`docs/notes/working-notes.md`. Parent: `runs/2026-05-24-validation-investigation/`
+(Experiment A). Back-reference added 2026-06-20 (results-documentation uplift,
+Tier-2 item 10) to close the one-directional Obs link.

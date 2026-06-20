@@ -263,4 +263,12 @@ art (SCUBIDO, BUMPER, Christophe et al. 2018) gives us the formulation.
 The recovery-grid diagnostic (Stage 4) will tell us whether the
 modified model breaks the identifiability ridge.
 
+## Observations register cross-reference
+
+This Stage-2 empirical p_gen prior is lodged at **Obs 55** (the empirical-Bayes
+calibration-cohort pivot; this report is the cited Stage-2 *Source*). See
+`docs/notes/working-notes.md`. Companion: `runs/2026-05-24-empirical-pconv/`
+(Stage 1). Back-reference added 2026-06-20 (results-documentation uplift,
+Tier-2 item 10) to close the one-directional Obs link.
+
 End of report.

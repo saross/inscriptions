@@ -197,4 +197,25 @@ follow-on (in flight). Once Stage 2 is also complete, the building
 blocks for the modified mixture-model implementation (Stage 3) are
 both available.
 
+## Observations register cross-reference
+
+This Stage-1 9-slab decomposition is the **anchor for the multi-century
+convention-pool percentages** used downstream. It is lodged at **Obs 55**
+(empirical-Bayes calibration-cohort pivot; this report is the cited Stage-1
+*Source*) and revisited at **Obs 76** (template-dictionary scan firing
+Decision 20's revisit trigger). See `docs/notes/working-notes.md`.
+
+**Load-bearing convention-pool figures (this report's `slab-type-weights.csv`).**
+The multi-century share of the **F1+F3 convention pool** is
+two_century (23.69 %) + one_and_a_half_century (7.29 %) + three_century (4.95 %)
+= **35.93 %**. The companion template-dictionary scan
+(`runs/2026-06-05-template-dictionary/outputs/tables/category-mass.csv`) gives
+**24.96 %** for the *full* empire convention pool (which additionally includes
+the `other`/residual category). The "~31 %" figure that appears in Decision 38's
+context text and the lodged OSF Amendment 03 reproduces from **neither** source;
+the load-bearing values are 24.96 % (full pool) and ~36 % (F1+F3 pool). See the
+reconciliation in Obs 76 (`docs/notes/working-notes.md`) and the dated note in
+Decision 38 (`planning/decision-log.md`). Back-reference and figure note added
+2026-06-20 (results-documentation uplift, Tier-2 item 10 / Tier-3 item 13).
+
 End of report.

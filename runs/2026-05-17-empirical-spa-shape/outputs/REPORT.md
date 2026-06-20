@@ -99,3 +99,7 @@ What changes meaningfully is the *plateau level*. The wide-template-removed plat
   (ii) **A century-slab plateau component is still warranted**, but its effect on the SPA is gentler than the previous diagnostic's `int()`-based statistic suggested. Plateau-edge step magnitudes at mid-envelope century boundaries are modest (tens of mass units, compared to plateau levels of 2,000-3,000). The dominant step transition is at year 0 (BC -> AD), which is partly an envelope-edge effect and partly a real `[1, X]` template concentration.
 
 Suggested revisions to Decision 17 before committing the Bayesian deconvolution: (a) replace the half-century anchor tier with a regnal-template tier (or augment it); (b) keep a century-slab plateau tier, but tune its expected magnitude against A4 here, not against the previous `int()`-spike statistic; (c) the aoristic-distribution choice (uniform vs trapezoidal) is consequential but can be settled after the tier structure.
+
+## Observations register cross-reference
+
+This is Diagnostic 2 (empirical SPA shape) of the 2026-05-17 triplet written up substantively in **Obs 40** (`docs/notes/working-notes.md` — "the 2026-05-17 diagnostic triplet"); the lesson trail is **Obs 35 → Obs 36** (the midpoint-inflation framing was a derivative-then-test-statistic artefact). Sister diagnostics: `runs/2026-05-17-interval-width-diagnostic/` and `runs/2026-05-17-date-range-filtered-spas/`. Back-reference added 2026-06-20 (results-documentation uplift, Tier-2 item 10) to close the one-directional Obs link.

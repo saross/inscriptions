@@ -211,4 +211,8 @@ threshold-analysis findings.
   are an under-estimate of effective temporal uncertainty. They are
   comparable across cutoffs, which is what we need them for here.
 
+## Observations register cross-reference
+
+Lodged in the register at **Obs 54** (interval *structure* not width is the right partition — this threshold sweep is the negative result that motivated the family classifier) and **Obs 55** (the empirical-Bayes calibration-cohort pivot; this report is cited as a *Source*). See `docs/notes/working-notes.md`. Sibling: `runs/2026-05-24-type-stratified-narrow-spas/`. Back-reference added 2026-06-20 (results-documentation uplift, Tier-2 item 10) to close the one-directional Obs link.
+
 End of report.

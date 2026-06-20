@@ -272,3 +272,12 @@ python code/plot-followup-alpha-prior.py \
 
 Outputs land in `outputs/diagnostic-fits/<cell_id>/replicate_000_effort=<level>-posterior.json`,
 `outputs/figures/`, and `outputs/followup-results.json`.
+
+## Observations register cross-reference
+
+This F1 follow-up to Experiment A is lodged in the register at **Obs 52** (the
+sampler-effort / geometry / structural-identifiability triage; this report cited as
+a *Source*). See `docs/notes/working-notes.md`. Parent:
+`runs/2026-05-24-validation-investigation/` (Experiment A). Back-reference added
+2026-06-20 (results-documentation uplift, Tier-2 item 10) to close the
+one-directional Obs link.

@@ -259,4 +259,14 @@ Tables (`outputs/tables/`):
   classifier-confident types and accept that the unknown type may
   contribute a biased shape; report this honestly).
 
+## Observations register cross-reference
+
+Lodged in the register at **Obs 54** (interval *structure* not width — this is the
+family-classifier run; cited as a *Source*) and **Obs 77** (grid-snapping as the
+convention/genuine discriminator — cites this run's `code/analyse-cohorts.py`
+`classify_family` / `round_aligned`, lines 108–142). See
+`docs/notes/working-notes.md`. Sibling: `runs/2026-05-24-date-range-threshold-analysis/`.
+Back-reference added 2026-06-20 (results-documentation uplift, Tier-2 item 10) to
+close the one-directional Obs link.
+
 End of report.

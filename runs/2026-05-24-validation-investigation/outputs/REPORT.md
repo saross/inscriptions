@@ -364,3 +364,13 @@ python code/plot-experiment-a.py \
     --validation-root ../2026-05-22-recovery-grid-validation \
     --design-json ../2026-05-22-recovery-grid-design/design.json
 ```
+
+## Observations register cross-reference
+
+Lodged in the register at **Obs 52** (sampler-effort / geometry / structural-
+identifiability triage — Experiment A; cross-references Obs 28 and Obs 24) and
+**Obs 53** (Pearson-r-against-zero-variance binding-criterion bug — Experiment B;
+cross-references Obs 38). See `docs/notes/working-notes.md`. Companions:
+`runs/2026-05-24-followup-alpha-prior/` (F1), `runs/2026-05-24-followup-noncentred-grw/`
+(F3), `runs/2026-05-24-followup-systematics/` (F0b). Back-reference added 2026-06-20
+(results-documentation uplift, Tier-2 item 10) to close the one-directional Obs link.

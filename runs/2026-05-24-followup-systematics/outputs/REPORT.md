@@ -187,3 +187,12 @@ Three new empirical observations to strengthen the existing investigation questi
 - Tables (CSV): `outputs/tables/*.csv`
 - Figures (150 dpi PNG): `outputs/figures/*.png`
 - Code: `code/analyse-systematics.py`
+
+## Observations register cross-reference
+
+Lodged in the register at **Obs 51** (the α-bias is bidirectional and saturates by
+α = 0.70 — §F0a overturns the "corner pathology" read) and **Obs 53** (the W-1
+binding-criterion fix — §F0b; cross-references **Obs 38**). See
+`docs/notes/working-notes.md`. Companion: `runs/2026-05-24-validation-investigation/`
+(Experiment B). Back-reference added 2026-06-20 (results-documentation uplift,
+Tier-2 item 10) to close the one-directional Obs link.

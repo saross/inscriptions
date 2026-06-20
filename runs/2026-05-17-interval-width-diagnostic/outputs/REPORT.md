@@ -104,3 +104,7 @@ Two structural changes therefore look warranted for the convention component:
   1. **Add a century-slab layer** (mechanism a). Wide intervals exactly matching `[1, 100]`, `[101, 200]`, `[201, 300]`, `[301, 400]` (and `[-99, 0]`, `[-199, -100]`) deposit a flat plateau of mass over their century. The mixture should include a component that places mass *uniformly over the century slab*, weighted by the empirical share of exact-100-year intervals.
 
   2. **Re-examine the spike statistic itself.** The 22.8x / 41.5x / 18.8x ratios are an artefact of the `int()`-truncation in the test, not of an underlying SPA-mass spike at the round years. Under the 5-year aoristic-mass statistic (Q3a), wide slabs deposit flat mass; the *visual* SPA curve has plateau edges, not spikes. The preregistration's narrative around 'midpoint spikes' may need rewording to distinguish: (i) plateau-edge step artefacts from century slabs, (ii) genuine narrow-anchor spikes at round years.
+
+## Observations register cross-reference
+
+This is Diagnostic 1 (interval-width) of the 2026-05-17 triplet written up substantively in **Obs 40** (`docs/notes/working-notes.md` — "the 2026-05-17 diagnostic triplet"); the lesson trail is **Obs 35 → Obs 36** (the midpoint-inflation framing was a derivative-then-test-statistic artefact). Sister diagnostics: `runs/2026-05-17-empirical-spa-shape/` and `runs/2026-05-17-date-range-filtered-spas/`. Back-reference added 2026-06-20 (results-documentation uplift, Tier-2 item 10) to close the one-directional Obs link.

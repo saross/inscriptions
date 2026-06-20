@@ -94,3 +94,7 @@ Spike-to-local-plateau ratio at AD 77.5 (Flavian) and AD 122.5 (Hadrianic) per t
   (iii) **The half-century anchor tier (AD 50 / 150 / 250) is not rescued by precision filtering.** The narrow subsets do *not* reveal spikes at the half-century anchor years; the spikes are at regnal dates, full stop. The preregistration's half-century anchor tier should be replaced by (or supplemented with) a regnal-template tier.
 
   (iv) **No new tier is needed.** The wide-template / regnal-template distinction is exhaustive at this resolution -- the narrow-precision SPA shows only the regnal spikes plus a low baseline; the wide-precision SPA shows only the stepped plateau. A two-tier convention component (century-slab plateau + regnal-template spikes) cleanly covers both observed artefact mechanisms.
+
+## Observations register cross-reference
+
+This is Diagnostic 3 (date-range-filtered SPAs) of the 2026-05-17 triplet written up substantively in **Obs 40** (`docs/notes/working-notes.md` — "the 2026-05-17 diagnostic triplet"); the lesson trail is **Obs 35 → Obs 36** (the midpoint-inflation framing was a derivative-then-test-statistic artefact). Sister diagnostics: `runs/2026-05-17-interval-width-diagnostic/` and `runs/2026-05-17-empirical-spa-shape/`. Back-reference added 2026-06-20 (results-documentation uplift, Tier-2 item 10) to close the one-directional Obs link.
