@@ -170,6 +170,22 @@ def genuine_draws(name: str) -> np.ndarray:
         return np.asarray(d["p_gen"], dtype=float)
 
 
+def genuine_draws_npz(path) -> np.ndarray:
+    """Genuine-SPD draws ``(n_draws, 80)`` from an arbitrary ``*-pgen.npz`` —
+    for the new Roma/Italia/women units that live outside the production refit's
+    draws dir. Each draw is a simplex over the 80 bins (sums to 1)."""
+    from pathlib import Path as _P
+    with np.load(_P(path)) as d:
+        return np.asarray(d["p_gen"], dtype=float)
+
+
+def raw_aoristic_rows(nb, na) -> np.ndarray:
+    """Raw aoristic SPD (mass; sums to N_eff) for explicit ``nb``/``na`` arrays —
+    so a figure can build the raw curve for any corpus subset (Roma, the capital
+    composites, the Italia units) via ``h2_lib.aoristic_spa`` directly."""
+    return H.aoristic_spa(np.asarray(nb), np.asarray(na))
+
+
 # --------------------------------------------------------------------------- #
 # Distribution + band helpers.                                                 #
 # --------------------------------------------------------------------------- #
