@@ -197,6 +197,11 @@ vs supplement split and the assets list; these are the headline constraints:
   to archaeologists clearly, without dumbing it down. Re-read before drafting the methods.
 - **Assets already at target accessibility:** `reports/key-findings-summary-2026-06-20.md` (on-ramp);
   `runs/2026-06-20-figures/outputs/figure-captions.md` (what/what-it-means/why captions); the 14-figure set.
+- **LLM-use disclosure REQUIRED in methods** (JAMT/Springer; verify exact wording). Brief §8 carries a
+  draft, grounded in the project's auditable apparatus — the observations registers (`working-notes.md`
+  through Obs 112; `claude-observations.md`), the decisions register (through Decision 38), the reflection
+  logs, the OSF prereg + 4 amendments, the multi-agent accuracy audit (~677 specifics), and git history.
+  Lean into candour: it is a model of transparent human–AI collaboration, not a caveat to bury.
 
 ---
 
