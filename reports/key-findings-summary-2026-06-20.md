@@ -402,6 +402,51 @@ U-shape over time are F6 and F10, referenced in §2.)]
 
 ---
 
+## 4b. Rome and Italy de-fogged — a capital and Italia comparison (descriptive)
+
+*Added 2026-06-21; exploratory / not preregistered. Rome stays excluded from all
+the regressions above (Decision 36); this section adds reference units and
+comparisons only, fitted with the same production deconvolution. Reminder: **α is
+the convention fraction** — higher α = more editorial dating.*
+
+- **Rome is the most convention-dated unit in the empire (convention fraction
+  α ≈ 0.80).** About four-fifths of the imperial capital's *apparent* chronology
+  is editorial round-number dating — the highest of any unit (F15, F16). The
+  de-fogged genuine curve is correspondingly a small, uncertain residual (read its
+  shape with caution), but the *fraction* is robust.
+- **Provincial capitals are markedly *less* convention-dated (α ≈ 0.56)** — and,
+  strikingly, *less* than ordinary provincial towns (α ≈ 0.71). So despite
+  over-producing inscriptions for their size (§4), provincial capitals carry a
+  *higher* share of genuine dating than their hinterlands. The result is identical
+  on the empire-62 and Latin-41 capital sets (F16).
+- **Italian exceptionalism shows up in the *dating*.** Rome (0.80) *and* Italian
+  *municipal* epigraphy (Italia excl. Rome, α ≈ 0.79) are the empire's most
+  convention-dated material, well above the non-Italian provinces (0.71). Italy —
+  capital and towns alike — has the most editorial/formulaic dating culture (F18).
+- **The Severan watershed, made visual.** The de-fogged chronologies cross over:
+  Italian municipal epigraphy dominates the early empire (genuine peak ~AD 80),
+  then falls away as the provinces rise to peak around the Severan period (the
+  AD 212 Antonine Constitution). Italy leads early; the provinces overtake by the
+  time citizenship is universalised (F19). Descriptive — the broad crossover is
+  robust, the sharp early-Italian spike may be partly a correction artefact.
+- **Why Rome is excluded (F17).** Rome (≈ 923,000 people, ≈ 65,000 inscriptions) is
+  ~2.3× the next-largest population and ~14× the next count — the only site meeting
+  Hanson's outlier rule. It is excluded to stop one out-of-range, high-leverage
+  point dominating the scaling fits, not because it flips the slope.
+
+**Key results**
+
+- **Rome is the most convention-dated unit (α ≈ 0.80 convention)**; provincial
+  capitals far less (≈ 0.56), and *less* than the provinces (≈ 0.71) — capital
+  epigraphy is *more* genuinely dated than its hinterland (Roma/Italia run, F15/F16).
+- **Italian epigraphy (Rome + municipia, ≈ 0.80 / 0.79) is the empire's most
+  convention-dated**; the de-fogged record shows Italy peaking early and the
+  provinces at the Severan watershed (F18/F19).
+- All descriptive/exploratory; Rome remains excluded from every confirmatory
+  regression (Decision 36; F17 illustrates why).
+
+---
+
 ## 5. Headline takeaways
 
 1. **About two-thirds of empire-wide dated inscriptions are editorial round-slab convention, not a

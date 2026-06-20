@@ -331,3 +331,118 @@ habit.
 > Note: F14, like F13, uses the §5 hierarchical trajectory model (a different
 > correction from the F1–F4 deconvolution), and the large anchor cities are held
 > out of it.
+
+---
+
+> **Terminology for F15–F19 (important):** these figures report the **convention
+> fraction α** — the share of a place's apparent dating that is editorial
+> round-number *convention* rather than a real date signal (so the genuine share
+> is 1 − α). A *higher* α means *more* editorial convention. (An earlier draft of
+> the key-findings summary had this backwards; it is corrected.)
+
+## F15 — Rome de-fogged (the most convention-dated unit)
+
+**What is this?** Rome's raw inscription-date curve (grey dashed) against its
+de-fogged "genuine" curve (red), with the editorial-convention component shaded
+orange — the before/after of F1, for the imperial capital.
+
+**What does it mean?** Rome's convention fraction is **α ≈ 0.80** — about
+four-fifths of the capital's *apparent* chronology is editorial round-number
+dating, the highest of any unit we measured. Because so little is genuine, the red
+"genuine" curve is a small, uncertain residual (the late spike near AD 300–340 is
+most likely an artefact of correcting such a convention-dominated curve, not a
+real surge) — read its *shape* cautiously; the solid result is the *fraction*.
+
+**Why does it matter?** It puts a number on something epigraphers have long
+sensed: the dating of Rome's vast inscribed record is dominated by cataloguing
+convention. Any chronological claim about the capital that doesn't correct for
+this is largely reading editorial habit.
+
+## F16 — Capital comparison (Rome vs provincial capitals)
+
+**What is this?** Two panels of de-fogged "genuine" chronologies — (a) Rome, the
+provincial capitals, and the whole empire; (b) the Latin capitals and the Latin
+provinces — plus (c) a strip showing each one's **convention fraction α** with its
+uncertainty and the reliable-method envelope (α ≤ 0.70).
+
+**What does it mean?** **Rome (α ≈ 0.80) is far more convention-dated than the
+provincial capitals (α ≈ 0.56)** — and the provincial capitals are actually
+*less* convention-dated than ordinary provincial towns. The empire-wide and
+Latin-only capital results are identical, so this isn't a quirk of one sample.
+
+**Why does it matter?** It separates "being the capital" from "being heavily
+convention-dated". The imperial capital is a special case; provincial capitals,
+despite over-producing inscriptions (F6), actually carry a *higher* share of
+genuine dating than their hinterlands.
+
+## F17 — Why Rome is excluded from the scaling regressions
+
+**What is this?** A scatter of every city's inscription count against its
+population (both on log scales), with Rome marked as the lone star far outside the
+cloud, and the fitted trend shown with and without Rome.
+
+**What does it mean?** Rome (≈ 923,000 people, ≈ 65,000 inscriptions) sits about
+2.3× the next-largest population and 14× the next-largest inscription count — the
+only site that meets Hanson's statistical outlier rule. Including it barely moves
+the fitted slope (it's extreme on *both* axes), but it is a massive,
+out-of-range, high-leverage point.
+
+**Why does it matter?** It makes concrete *why* the population–epigraphy
+regressions (and Hanson 2021) exclude Rome: not because it flips the result, but
+because one city so far outside the data range would dominate the fit and force an
+extrapolation. (This is the pooled city-vs-city scaling, shown for illustration —
+it is a *different* quantity from the paper's headline within-province slope.)
+
+## F18 — Italian exceptionalism (Rome, Italian towns, the provinces)
+
+**What is this?** A three-way comparison — (a) the convention fraction α of Rome,
+Italian *municipal* epigraphy (Italy minus Rome), and the non-Italian provinces;
+(b) their de-fogged genuine chronologies.
+
+**What does it mean?** Both Rome (α ≈ 0.80) *and* Italian towns (α ≈ 0.79) are the
+empire's **most convention-dated** epigraphy, well above the provinces (α ≈ 0.71).
+Italian epigraphic culture — capital and towns alike — is distinctively
+editorial/formulaic in how it is dated. In timing, Italian epigraphy peaks early
+while the provinces peak later.
+
+**Why does it matter?** "Italy is special" is a commonplace of Roman history; here
+it shows up quantitatively in the *dating* of the epigraphic record — Italian
+inscriptions are the most convention-bound in the empire, which both says
+something about Italian epigraphic culture and means Italian chronologies most need
+de-fogging.
+
+## F19 — Italian vs provincial chronology over time (the Severan watershed)
+
+**What is this?** The de-fogged "genuine" chronologies of Italian municipal
+epigraphy and the non-Italian provinces, side by side through time, with the
+Severan-era watershed (the AD 212 Antonine Constitution) marked.
+
+**What does it mean?** A clear crossover: **Italian municipal epigraphy dominates
+the early empire (a genuine peak around AD 80), then falls away, while the
+provinces rise through the 1st–2nd century to peak around the Severan period.**
+Italy leads early; the provinces overtake it by the time citizenship is
+universalised.
+
+**Why does it matter?** It connects the epigraphic record to the big story of
+Italy's changing place in the empire — early Italian primacy giving way to
+provincial florescence across the 2nd–3rd century — as a first-order, de-fogged
+result a historian can weigh. (Descriptive; the sharp early-Italian peak may be
+partly a correction artefact, but the broad crossover is robust.)
+
+## Women corpus — de-fogging feasibility (`fig-women-genuine-vs-raw`)
+
+**What is this?** The raw vs de-fogged date curve of a collaborator's corpus of
+wives' and daughters' commemorations, with the method's honest verdict boxed on
+the figure.
+
+**What does it mean?** The corpus is **~90 % editorial convention** (α ≈ 0.90) and
+too small for that hard regime (below the method's reliability floor for the
+daughters). So the de-fogged "genuine" curve is highly uncertain (the wide band),
+and de-fogging **cannot reliably sharpen the timing** of this corpus.
+
+**Why does it matter?** It's an honest feasibility result for the companion
+("Graveyard to Time Series") project: the *timing* of the wife/daughter crossover
+rests on a date distribution that is mostly cataloguing convention, so timing
+claims should be hedged — while the *ages* themselves (the collaborator's own
+method) are untouched by this. A clear, useful "not reliably applicable here"
+verdict, which is itself worth knowing.

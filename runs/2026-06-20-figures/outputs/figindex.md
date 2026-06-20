@@ -32,6 +32,16 @@ does it mean? / why does it matter?") are in **`figure-captions.md`**.
 | F12 | `fig12-reachability-map` | 1-col | N × α reachability heatmap + operating envelope | `reachability-by-cell.csv` (small-n-reachability) | `fig12_reachability_map.py` |
 | F13 | `fig13-province-atlas` | full | Per-province genuine-SPD atlas (25 provinces, §5 hierarchical model) | `monolithic-inscription-25y.nc` + `city-index.parquet` | `fig13_province_atlas.py` |
 | F14 | `fig14-city-atlas` | full | Per-city genuine-SPD atlas (34 reliable cities, §5 hierarchical model) | `monolithic-inscription-25y.nc` + `layerb-residual-trajectories-empire.nc` | `fig14_city_atlas.py` |
+| F15 | `fig15-rome-before-after` | 1-col | Rome de-fogged; the most convention-dated unit (α≈0.80) | Roma cc fit + LIRE corpus | `fig15_rome_before_after.py` |
+| F16 | `fig16-capital-comparison` | full | Capital comparison (Rome vs prov. capitals vs aggregates) + α-convention strip | Roma/Italia + production draws | `fig16_capital_comparison.py` |
+| F17 | `fig17-why-rome-excluded` | 1-col | Why Rome is excluded (leverage scatter, with/without Rome) | `city_level_for_h3a.parquet` + LIRE | `fig17_why_rome_excluded.py` |
+| F18 | `fig18-italia-exceptionalism` | full | Italian exceptionalism (Rome + municipia most convention-dated) | Roma/Italia + production draws | `fig18_italia_exceptionalism.py` |
+| F19 | `fig19-italia-temporal` | full | Italian vs provincial chronology over time (Severan watershed) | Italia + provinces draws | `fig19_italia_temporal.py` |
+| W1 | `fig-women-genuine-vs-raw` | full | Women corpus de-fogging feasibility + verdict (in the women run's outputs/) | women cc fits | `fig_women_genuine_vs_raw.py` |
+
+**F15–F19 + W1 use α = the CONVENTION fraction** (1 − α = genuine; higher α = more
+editorial dating). Reports: `runs/2026-06-21-rome-capital-comparison/REPORT.md`
+and `runs/2026-06-20-women-corpus-feasibility/MEMO.md`.
 
 ## Summary `[FIGURE]` placeholders (spec §intro)
 
