@@ -100,6 +100,28 @@ What verifiers could not access, per the `coverage_notes`:
 - **NetCDF / arviz InferenceData (`.nc`) files are gitignored / on sapphire** (regenerable). Posterior summaries across H3a/H3b/s5 were verified against committed JSON/CSV summaries rather than re-sampled from idata. Per-period NBR betas and Moran permutations were trusted as persisted JSON outputs of converged fits, not recomputed from raw idata.
 - **Out-of-scope run dirs not re-read by the assigned clusters:** talk-prep (`runs/2026-05-21-talk-prep/outputs/tables/h3a-summary.csv`, seed 20260521) and letter-count-probe (`runs/2026-05-26-letter-count-probe/…`) — these own Obs 46 and Obs 59 respectively (see Unresolved 1-2).
 - **`data/women.csv`** — binary/gzip-encoded collaborator corpus, not readable as a project primary (Unresolved 6).
+
+---
+
+## 8. Resolution (2026-06-20)
+
+**All 17 confirmed corrections APPLIED and re-verified at source** (commits `af4d527`,
+`ceb071c`, `c6a175c`, `8bcd146`, `fb8a333`, `1079098`); none halted — every primary
+re-read supported the certificate's correct value. Observation corrections carry in-place
+`[corrected 2026-06-20, accuracy audit: …]` annotations that preserve the original wording
+and the audit trail. The Antonine false alarm (Obs 82, §5) and the seven unresolved items
+(§6) were left untouched.
+
+**Scope gap closed.** The two out-of-scope clusters flagged in §6/§7 — `talk-prep` (Obs 46)
+and `letter-count-probe` (Obs 59, which the paper will cite) — were verified in a follow-up
+read-only pass: **64 checkable claims, 64 matches, 0 corrections.** One cosmetic write-up
+note: talk-prep f_within rounds to 29.95 % vs the probe's 29.94 % (same result, two seeds —
+`20260521` vs `20260526`); describe as a cross-seed reproduction, not identical-to-2-dp.
+
+**VERDICT: the results documentation is accuracy-certified and write-up-ready.** Every
+load-bearing number reproduces from its primary artefact, and the headline inferential
+quantities (β_within, α, Decision-38 shares, |Δα|) are internally consistent across
+documents.
 - **`size-vs-dynamics` `.nc`** would not open with plain `xr.open_dataset` (arviz group file); the "19 provinces" count needs the city-index parquet whose stored provenance path was absolute and absent at the relative location tried (Unresolved 4).
 - **Lodged preregistration and amendments** were treated as authoritative per instructions and NOT re-verified in any cluster — including the lodged Decision-38 "~31%" (which is independently known not to reproduce from either CSV and is handled by an explicit write-up directive, not a correction).
 - **Figure captions:** confirmed low-risk across all clusters — caption numbers are f-string-computed from data variables (not hand-edited), so no caption-vs-data drift was found; the only literal caption numbers are conceptual axis annotations (AD 79, AD 250, the 0.95 sampler threshold).
