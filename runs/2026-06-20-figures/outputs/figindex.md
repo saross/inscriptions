@@ -13,6 +13,9 @@ component via `h2_lib`, genuine `p_gen` draws, quantile bands).
 
 All figures reproducible: `cd code && ../../../.venv/bin/python figNN_*.py`.
 
+**Plain-language captions** (for non-statistician readers — "what is this? / what
+does it mean? / why does it matter?") are in **`figure-captions.md`**.
+
 | Fig | File stem | Width | What it shows | Data source(s) | Build script |
 |-----|-----------|-------|---------------|----------------|--------------|
 | F1 | `fig01-deconvolution-before-after` | 1-col | Empire deconvolution before/after (hero); convention component highlighted | cc `empire-aggregate-pgen.npz` + raw aoristic (`h2_lib`) | `fig01_deconvolution_before_after.py` |
@@ -22,7 +25,7 @@ All figures reproducible: `cd code && ../../../.venv/bin/python figNN_*.py`.
 | F5 | `fig05-letter-content-spd` | 1-col | Letter-mass (content) SPD tracks the inscription SPD (raw) | `empire-spa-three-ways.csv` (letter-count-probe) | `fig05_letter_content_spd.py` |
 | F6 | `fig06-capital-overproduction` | full | Capital over-production: overall forest (95 % CI) + per-period medians | `h3c-i-results-oxrep-primary.json`; `h7-summary.json` + `h7-latin-summary.json` | `fig06_capital_overproduction.py` |
 | F7 | `fig07-pop-epigraphy-within-between` | 1-col | **Within vs between scaling** (β_within 0.73 steep; β_between 0.04 crosses 0) | `city_level_for_h3a_latin.parquet` + `h3a-results.json` (Latin) + capital list | `fig07_pop_epigraphy_scatter.py` |
-| F8 | `fig08-relative-trajectory-fan` | 1-col | Relative city trajectory fan; "illustrative shape, NOT a population estimate" | `layerb-residual-trajectories-empire.nc` | `fig08_relative_trajectory_fan.py` |
+| F8 | `fig08-relative-trajectory-fan` | full | Relative city trajectory; "illustrative shape, NOT a population estimate" | `layerb-residual-trajectories-empire.nc` | `fig08_relative_trajectory_fan.py` |
 | F9 | `fig09-variance-partition` | 1-col | **Magnitude of nested log-rate components** + ~54 % common share | `h5-decomposition.json` | `fig09_variance_partition.py` |
 | F10 | `fig10-beta-over-time` | 1-col | β_within over 8 periods (U-shape, ~0.58 plateau, sublinear) | `h7-summary.json` + `h7-latin-summary.json` | `fig10_beta_over_time.py` |
 | F11 | `fig11-orthogonality-scatter` | 1-col | Scaling vs content over-production are orthogonal (Spearman ρ +0.004) | `content-residual-per-city.csv` | `fig11_orthogonality_scatter.py` |
