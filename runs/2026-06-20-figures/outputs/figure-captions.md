@@ -186,28 +186,44 @@ deliberately excluded so they cannot flatter the result.
 
 ---
 
-## F9 — The size of each ingredient
+## F9 — Where a city's chronology comes from
 
-**What is this?** A city's inscription rate through time is built from four
-ingredients: a shared empire-wide rhythm, a province-specific wobble, a city-
-specific wobble, and a steady level (how prolific the city is overall, regardless
-of timing). The bars show how *big* each ingredient is, on a common scale.
+**What is this?** A city's inscription record is built from four ingredients. Three
+are about *timing* — how the city's output rises and falls through the centuries:
+a **shared empire-wide rhythm** (everyone moving together), a **province-specific
+wobble** (the city's region pulling away from the empire trend), and a **city-
+specific wobble** (the city's own quirks on top of that). The top bar shows how
+these three split a typical city's timing, as percentages that add to 100. The
+bottom bars add a fourth ingredient and show all four as sizes.
 
-**What does it mean?** The shared empire-wide rhythm is the largest single
-ingredient — on its own it accounts for roughly **54 %** of the ups and downs in a
-typical city's timeline. Province and city wobbles are smaller but real; the
-overall "how prolific" level is the smallest.
+**What is "between-city level"?** This fourth ingredient is *not* about timing at
+all — it is about *amount*. Two cities can have the very same temporal shape (both
+peak in the 2nd century, say) yet one produces ten times as many inscriptions as
+the other across its whole history. That difference — how prolific a city is
+overall, irrespective of *when* — is the "between-city level". It is the dimension
+on which **population** matters (bigger cities sit higher; this is the scaling
+relationship of F7), and it is deliberately kept separate from timing so the two
+are never confused. *Caveat:* it looks smaller than it really is here because this
+mid-sized sample leaves out the biggest and smallest cities.
 
-**Why does it matter?** It tells us that most of *when* inscriptions appear is
-driven by something common to the whole empire (a shared habit, demography, and
-economy moving together), with regional and local character layered on top. It
-locates where the action is before we start interpreting it.
+**What does it mean?** Timing is a genuine three-way partnership: roughly
+**38 %** empire-wide, **29 %** province, **33 %** city-unique. No single layer
+runs the show — a city's own idiosyncratic timing is fully a third of the story,
+as much as the shared imperial tide.
 
-> Note for the statistically minded: the three time-varying ingredients are
-> *negatively correlated* (when one is high, the others tend low), so their shares
-> do not add tidily to 100 %. The exact partition is recorded separately
-> (`temporal-three-way-split.json`); the bars deliberately show magnitudes, which
-> are unambiguous.
+**Why does it matter?** It locates where the action is before we interpret it. A
+naïve reading might assume one big empire-wide "epigraphic habit" drives
+everything; in fact regional and purely local rhythms matter just as much. And by
+separating *timing* (the three temporal bars) from *amount* (the level bar), the
+figure keeps the chronological question and the population question from being
+muddled together.
+
+> Note on the 54 %: the empire-wide component on its *own* explains about 54 % of a
+> city's temporal ups and downs — a larger number than its 38 % partition share.
+> The two differ because the three timing ingredients are *negatively correlated*
+> (when one is high the others tend low, partly cancelling), so their standalone
+> shares overlap and overshoot 100 %. The 38 / 29 / 33 partition shares each tier
+> its fair, non-overlapping slice; the 54 % is the common tier's standalone reach.
 
 ---
 
@@ -288,3 +304,30 @@ urbanisation, military presence, and provincial administration.
 > across small cities), a *different* correction from the F1–F4 deconvolution. The
 > two are complementary views of the same provinces; the anchor cities are held
 > out of this model.
+
+---
+
+## F14 — A chronological atlas of individual cities
+
+**What is this?** The same idea as the province atlas (F13), but one panel per
+*city* rather than per province — the 34 cities with enough inscriptions (about
+300 or more) for the model to be dependable, ordered from most to least prolific.
+Each shows that city's genuine inscription curve through time, with its
+uncertainty band. This is a far broader city view than the five anchor cities of
+F4.
+
+**What does it mean?** Cities, like provinces, do not share one chronology. The
+old Italian towns (Capua, Herculaneum, Aricia, Praeneste) peak early; cities on
+the Danube and Dacian frontier (Porolissum, Apulum, Sarmizegetusa, Brigetio) peak
+sharply *later*, after Rome reached and settled them. Each curve is, in effect, a
+small biography of when that community most actively inscribed.
+
+**Why does it matter?** It lets a reader or a specialist in any one region check
+the empire-wide story against the cities they know, and it shows the method
+working city by city — including for places with no independent dating to lean on.
+It is the city-scale counterpart to F13's provincial geography of the epigraphic
+habit.
+
+> Note: F14, like F13, uses the §5 hierarchical trajectory model (a different
+> correction from the F1–F4 deconvolution), and the large anchor cities are held
+> out of it.

@@ -105,26 +105,24 @@ numbers (Obs 97, H5 `h5-decomposition.json`):
 | City-specific temporal component | **0.98** | 2.7× |
 | Between-city *level* spread (cross-sectional / population axis) | **0.78** | 2.2× |
 
-[FIGURE: variance partition — stacked-bar of the four component sizes; cf.
-`runs/2026-05-26-letter-count-probe/outputs/figures/fig-05-variance-partition-bars.png`. A clean stacked
-bar conveys the relative shares far better than the table.]
+[FIGURE: variance partition → **F9** (`runs/2026-06-20-figures/outputs/fig09-variance-partition.{pdf,png}`):
+a top stacked bar of the clean three-way temporal partition over the four component-magnitude bars.]
 
 **So the typical province and the typical city…** The three *temporal* components are very nearly the
 same size (1.11, 1.02, 0.98) — say so plainly: when it comes to *how inscription output changes over
 time*, the empire-wide trend, the province's own trend, and the city's own quirks each contribute roughly
-comparable amounts of swing. The empire-wide component is the single largest, but only modestly so: it
-accounts for about **54% of a typical city's temporal variance** (`h5-decomposition.json`
-`median_common_share_of_temporal_var` 0.540; Obs 97). In words: a little over half of how a typical
-city's inscribing rises and falls over time is the empire-wide tide that lifts and drops everyone
-together; the remaining ~46% is split, in roughly equal measure, between its province's shared deviation
-(**≈24%**) and its own city-intrinsic idiosyncrasy (**≈22%**). So the three-way reading of a typical
-city's temporal variation is **≈54% empire-wide common · ≈24% province-contributed · ≈22% city-intrinsic**
-— no single layer dominates timing, but the empire-wide tide is first among near-equals. (The 54% is the
-sourced per-city common share; the province/city sub-split is apportioned by the near-equal component
-variances, SD 1.02 vs 0.98, so treat ≈24 / ≈22 as indicative — the exact per-city three-way decomposition
-will be pinned from the §5 idata when it is regenerated for the figures.) (The fourth row,
-the level/population axis at 0.78, is a *different axis entirely* — it is about overall output, not timing
-— and is read in §4.)
+comparable amounts of swing. Pinned from the §5 posterior, the **clean three-way partition** of a typical
+city's temporal variation is **≈38% empire-wide common · ≈29% province-contributed · ≈33% city-unique**
+(`runs/2026-06-20-figures/outputs/temporal-three-way-split.json`, covariance-attributed, sums to 100%;
+the Latin-minus-Roma frame is ≈37 / 30 / 33). No single layer dominates timing — the three are genuinely
+near-equal partners, with the city's own idiosyncrasy fully a third of the story. (Footnote for the
+careful reader: the empire-wide component's *standalone* share — how much it explains on its own — is the
+larger **54%** [`h5-decomposition.json` `median_common_share_of_temporal_var` 0.540; Obs 97]; it exceeds
+its 38% partition share because the three temporal tiers are **negatively correlated** and partly offset
+one another, so their standalone shares overlap and sum to >100%. The earlier indicative ≈54 / 24 / 22
+reading assumed the tiers were independent; the covariance-attributed partition above supersedes it.) (The
+fourth row, the level/population axis at 0.78, is a *different axis entirely* — it is about overall output,
+not timing — and is read in §4.)
 
 **Important caveat to state plainly:** the level/population axis (0.78) is *understated here* because this
 mid-sized set excludes the size extremes, so this is **not** "timing beats population" in the full corpus
@@ -189,8 +187,10 @@ where present, is an **early-empire-only** phenomenon (significant only in the e
 
 - The three *temporal* drivers are near-equal in size — empire-wide common (SD **1.11**), province (SD
   **1.02**), city-specific (SD **0.98**) — each a roughly 2.7–3.0× multiplicative swing in rate (Obs 97).
-- The empire-wide common component is the single largest, at **~54% of a typical city's temporal
-  variance**, and peaks at **AD 187.5** (Obs 97).
+- A typical city's temporal variation partitions cleanly into **≈38% empire-wide common · ≈29%
+  province · ≈33% city-unique** (covariance-attributed, sums to 100%); the empire-wide component peaks
+  at **AD 187.5** (Obs 97). Its *standalone* share is 54% — larger than its 38% partition share because
+  the tiers are anti-correlated and partly offset.
 - The "post-AD-250 collapse" is mostly the empire-wide component falling away; once removed it is a
   **moderate, provincial-tier relative decline** (median city ≈ ⅓ of its empire baseline in the 3rd
   century), not depopulation (Obs 96, 103).
