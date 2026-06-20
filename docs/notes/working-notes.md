@@ -4391,13 +4391,13 @@ divergences (ESS-bulk range: 688–2,369 across periods).
 | 50 BC – AD 0 | 434 | 4,714 | **0.701** [0.596, 0.809] | 1.00 | **+0.029** | **0.021** |
 | AD 0–50 | 624 | 12,633 | 0.667 [0.572, 0.768] | 1.00 | +0.016 | 0.111 |
 | AD 50–100 | 696 | 14,031 | 0.629 [0.537, 0.727] | 1.00 | +0.005 | 0.292 |
-| AD 100–150 | 735 | 11,636 | 0.582 [0.496, 0.670] | 1.00 | −0.014 | 0.187 |
+| AD 100–150 | 735 | 11,636 | 0.582 [0.496, 0.670] | 1.00 | −0.013 | 0.187 |
 | AD 150–200 | 779 | 12,793 | 0.580 [0.497, 0.667] | 1.00 | −0.005 | 0.459 |
 | AD 200–250 | 717 | 10,229 | 0.587 [0.500, 0.674] | 1.00 | −0.003 | 0.466 |
 | AD 250–300 | 623 | 5,077 | 0.581 [0.488, 0.674] | 1.00 | −0.014 | 0.155 |
 | AD 300–350 | 518 | 3,948 | 0.659 [0.551, 0.770] | 1.00 | −0.012 | 0.219 |
 
-**All numbers verified against `h7-summary.json` and REPORT.md.**
+**All numbers verified against `h7-summary.json` and REPORT.md.** [AD 100–150 Moran's I corrected 2026-06-20, accuracy audit: was −0.014; raw value is −0.013478, rounds to −0.013. Primary: `runs/2026-06-17-s5-h7-perperiod-h3c/outputs/h7-summary.json` per_period['100..150'].moran.per_k['8'].moran_I. AD 150–200 (−0.005) was already correct here; the same correction was applied to REPORT.md (which additionally had AD 150–200 wrong as −0.004).]
 
 **Three headline findings:**
 
