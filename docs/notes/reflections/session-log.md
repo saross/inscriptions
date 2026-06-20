@@ -955,3 +955,19 @@ A marathon orchestration session (Shawn travelling, working from zbook): spec'd 
 - **Parallelisation oversight + fix:** the C10 scripts ran sequentially (unlike the cc-grid/supp-wave norm); fixed via the supp-wave ProcessPoolExecutor pattern. A reusable sapphire-parallel-run module is **slated** (Shawn's standardisation point), not built.
 - **Debugging note:** ~15 min lost to misdiagnosing a `pkill -f` self-match as SSH rate-limiting; fixed with the `[r]` pattern (also explains an earlier non-firing Monitor).
 - **Machines:** amd-tower / sapphire / zbook synced (zbook prepared for the train); gitignored idata `.nc` regenerable, kept on the compute hosts.
+
+## Session 2026-06-19 → 2026-06-20 — D13 close → H4/H6/B′ resolved → documentation accuracy-certified (Workflow) → collaborator key-findings summary → figures spec
+
+**Done:**
+- **D13 α-as-translator DISCHARGED** (the last preregistered obligation): Option A, standalone per-city α (163 Latin cities N≥100, 162/163 converge) as an H3a NBR covariate; clean β_within null (+0.431→+0.422, 0.14 SD), robust under M=50 multiple imputation (FMI 0.5%). City-level confirmation of Obs 94. → Obs 107.
+- **H4 closed** by adopting q_u (province-from-empire; standalone province inversion → follow-up). **H6 baorista deferred** to follow-up. **B′ city-α map parked** (post-travel/follow-up).
+- **Two read-only assurance sweeps:** prereg-obligations-coverage (`planning/prereg-obligations-coverage-sweep-2026-06-20.md`, 54/63 covered) + results-documentation-uplift (`planning/results-documentation-uplift-2026-06-20.md`).
+- **A01 §A5.4 content-residual DISCHARGED** (Obs 108; content/scaling channels orthogonal, ρ +0.004) → prereg unconditionally complete. **Tier-1/2/3 documentation cleanup** (Obs 109–111 for H9/C10/supp-wave; banners, cross-links, broken path, 65→63 typo).
+- **|Δα| pinned** to 0.0156 (latin-agg DM) across REPORT/model-comparison/Obs 111. **~31% Option 1** (cite ~36%/24.96%, footnote lodged rounding, lodged text unedited; `a4416e4`).
+- **Documentation-accuracy audit WORKFLOW** (first in-anger Workflow use): 7 clusters, 677 specifics, 97.5% matched, 17 corrections **applied + re-verified at source** (`af4d527`..`1079098`, `63f910c`), 1 false alarm overturned; cross-document consistency confirmed. Certificate `planning/doc-accuracy-audit-2026-06-20.md`. → **documentation accuracy-certified, write-up-ready.**
+- **Collaborator key-findings summary** v1 → v2 → refinements (`reports/key-findings-summary-2026-06-20.md`, `4061a0b`→`a84511d`): non-specialist explanations, per-section results, ≈54/24/22 temporal split, population bottom line (within-province ~48%; between-province weak), verbosity-is-idiosyncratic descriptive add.
+- **Figures spec** (`runs/2026-06-20-figures/spec.md`): 13 figures, code-based (matplotlib), 12/13 from local data, atlas needs §5 `.nc` regen; Claude Design ruled out for data figures.
+- **women.csv thread started:** read Adela Sobotkova's TRAC "Graveyard→Time-Series" talk; set the worked-example boundary (method vignette here, substantive crossover-age history → EJA companion); feasibility spec (`runs/2026-06-20-women-corpus-feasibility/spec.md`).
+- **Sync:** all machines (amd-tower/sapphire/zbook) + origin to HEAD; diagnosed + explained a VS Code stale-buffer (not a git fault).
+
+**Contextual assumptions:** Shawn travelling within days (no unattended multi-day sapphire runs started); the documentation is now treated as the *foundation the write-up is built on*, which is why the accuracy bar was raised to value-level verification; first session to use the Workflow tool in anger. **MILESTONE: the entire analytical programme + its documentation are complete; next session = figures.**
