@@ -2732,7 +2732,9 @@ and `cc-summary-library.json` (commit `abe0b20`).
 | cells passing C1 (|bias|<0.12 AND coverage≥0.90) | **76/210 (36%)** | 37/210 (18%) |
 | mean \|median bias\| | **0.021** | 0.075 |
 | mean coverage (all ident) | **0.627** | 0.374 |
-| coverage on α>0 cells only (n=168) | **0.784** | 0.456 |
+| coverage on α>0 cells only (n=168) | **0.784** | 0.467 |
+
+[Lead α>0 coverage corrected 2026-06-20, accuracy audit: was 0.456; that is the PILOT n=14 value (`runs/2026-06-09-joint-identifiability/outputs/cc-PILOT-REPORT.md:22`). The full lead grid (n=168) value is 0.467 — mean of the `identifiable`, α>0 cells in `runs/2026-06-09-joint-identifiability/outputs/grid-summary.json` (the lead arm; that file reproduces the lead VERDICT's 0.374 all-cell coverage and 0.075 |bias|). The other lead figures in this row's column are already the full-grid values.]
 
 The lead's near-uniform +0.06–+0.08 estimated-basis contamination surface (Obs 87) is
 eliminated. The cc `library` bias surface is flat at +0.00–+0.03 across the whole

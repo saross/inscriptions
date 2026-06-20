@@ -267,12 +267,18 @@ fixed-estimated-basis lead, scored on `full-grid-spec.md` §3 + this spec's §5 
 |---|---|---|---|
 | C1 do-no-harm (ident): |median bias| | 0.075 | **0.021** | ✓ ≪ 0.12 gate |
 | C1 coverage (ident, all cells) | 0.374 | **0.627** | improved 1.7× |
-| C1 coverage (ident, α>0 only) | 0.456 | **0.784** | improved (boundary cells excluded) |
+| C1 coverage (ident, α>0 only) | 0.467 | **0.784** | improved (boundary cells excluded) |
 | C2 pulled-to-truth (conf): pass-rate | 64/90 | **72/90 (80%)** | ✓ improved |
 | C2 confounded |median bias| | 0.066 | **0.009** | ✓ vs baseline 0.362 (~40×) |
 | C2 coverage (conf, α>0) | — | **0.953** | ✓ ≈ nominal |
 | C4 convergence: cell pass-rate | 84% | **96%** | ✓ improved |
 | Bias surface (max cell) | +0.08 | **+0.03** | ✓ the +0.07 surface is GONE |
+
+> [Corrected 2026-06-20, accuracy audit: the lead "C1 coverage (ident, α>0 only)" cell
+> was 0.456 — that is the **pilot n=14** value (`outputs/cc-PILOT-REPORT.md:22`). The
+> full lead grid (n=168) value is **0.467** (mean of `identifiable`, α>0 cells in
+> `outputs/grid-summary.json`, the lead arm — confirmed by that file reproducing the
+> lead VERDICT's 0.374 all-cell coverage and 0.075 |bias|).]
 
 **The +0.07 estimated-basis contamination bias is eliminated** — the bias surface is flat at
 +0.00…+0.03 across the whole %win × α plane (vs the lead's near-uniform +0.06…+0.08).
