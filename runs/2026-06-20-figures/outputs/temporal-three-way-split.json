@@ -1,0 +1,51 @@
+{
+  "all_provinces": {
+    "n_cities": 268,
+    "method_a_marginal": {
+      "common_g": 0.539742595738415,
+      "province_u": 0.4212300603144901,
+      "city_v": 0.35346848589151747,
+      "sum": 1.3144411419444224,
+      "covariance_remainder": -0.3144411419444224
+    },
+    "method_c_cov_attributed": {
+      "common_g": 0.3907906470233595,
+      "province_u": 0.29142644387027894,
+      "city_v": 0.33115694654559524,
+      "sum": 1.0133740374392337
+    },
+    "method_b_proportional_remainder": {
+      "common_g": 0.539742595738415,
+      "province_u": 0.2502576713313505,
+      "city_v": 0.20999973293023447,
+      "sum": 0.9999999999999999
+    }
+  },
+  "latin_minus_roma": {
+    "n_cities": 257,
+    "method_a_marginal": {
+      "common_g": 0.5402948621421158,
+      "province_u": 0.4335454817762097,
+      "city_v": 0.35143593271858803,
+      "sum": 1.3252762766369135,
+      "covariance_remainder": -0.3252762766369135
+    },
+    "method_c_cov_attributed": {
+      "common_g": 0.38384802999233314,
+      "province_u": 0.29634811389175897,
+      "city_v": 0.3324374274235944,
+      "sum": 1.0126335713076866
+    },
+    "method_b_proportional_remainder": {
+      "common_g": 0.5402948621421158,
+      "province_u": 0.25389529202530714,
+      "city_v": 0.2058098458325771,
+      "sum": 1.0
+    }
+  },
+  "_guard": "common_share_g reproduces h5-decomposition.json to <1e-6",
+  "_provenance": {
+    "primary_nc": "/home/shawn/Code/inscriptions/runs/2026-05-30-s5-small-n-trajectories/code/production/monolithic-inscription-25y.nc",
+    "method": "Var_t(tier)/Var_t(g+u+v) per city/draw, median over cities then draws"
+  }
+}
