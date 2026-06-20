@@ -116,8 +116,13 @@ comparable amounts of swing. The empire-wide component is the single largest, bu
 accounts for about **54% of a typical city's temporal variance** (`h5-decomposition.json`
 `median_common_share_of_temporal_var` 0.540; Obs 97). In words: a little over half of how a typical
 city's inscribing rises and falls over time is the empire-wide tide that lifts and drops everyone
-together; the remaining ~46% is split between its province's shared deviation and its own idiosyncrasy. So
-no single layer dominates timing — but the empire-wide tide is first among near-equals. (The fourth row,
+together; the remaining ~46% is split, in roughly equal measure, between its province's shared deviation
+(**≈24%**) and its own city-intrinsic idiosyncrasy (**≈22%**). So the three-way reading of a typical
+city's temporal variation is **≈54% empire-wide common · ≈24% province-contributed · ≈22% city-intrinsic**
+— no single layer dominates timing, but the empire-wide tide is first among near-equals. (The 54% is the
+sourced per-city common share; the province/city sub-split is apportioned by the near-equal component
+variances, SD 1.02 vs 0.98, so treat ≈24 / ≈22 as indicative — the exact per-city three-way decomposition
+will be pinned from the §5 idata when it is regenerated for the figures.) (The fourth row,
 the level/population axis at 0.78, is a *different axis entirely* — it is about overall output, not timing
 — and is read in §4.)
 
@@ -227,6 +232,18 @@ a genuinely new lens, or just a re-labelling of "acts"?
   of acts. If verbosity were just a stand-in for prolificness, the two residuals would move together; they
   do not, so reporting both measures is not redundant — each indexes a genuinely different urban trait.
 
+- **And *which* cities are verbose? Not the obvious ones.** A quick descriptive check (2026-06-20) of the
+  per-city content residual against city type finds that high verbosity (more letters per inscription than
+  the corpus norm) is **not** a marker of status or scale: it is **no higher in provincial capitals** than
+  elsewhere (capitals are if anything marginally *lower*; Mann–Whitney p = 0.59, n = 41 capitals), is
+  essentially **uncorrelated with city population** (Spearman −0.02), and is uncorrelated with output
+  volume (vs act-count ρ ≈ 0.00). The most letter-rich-per-inscription cities are smaller provincial towns
+  (e.g. Aregenua, Cillium, Veleia, Malaca), not the great centres. Verbosity is, in short, **idiosyncratic**
+  — which *reinforces* the orthogonality result above: per-inscription wordiness is genuinely its own axis,
+  not a stand-in for a city's importance, size, or prolificness. (Descriptive/exploratory; computed from
+  `runs/2026-06-20-a01-content-residual/outputs/content-residual-per-city.csv` ×
+  `data/processed/provincial-capitals.csv`.)
+
 - **The "too-good-to-be-true" R², explained and set aside.** R² (R-squared) is the **fraction of
   variation in one quantity explained by another**, from 0 (explains nothing) to 1 (explains everything).
   If you regress a city's total letter-mass directly on its inscription *count*, you get a slope of about
@@ -254,6 +271,9 @@ cross-section; Obs 109.)
   [0.364, 0.535], SUPPORTED; Obs 109).
 - "Prolific for its size" and "verbose per act" are **statistically orthogonal** city traits (ρ ≈ 0;
   Obs 108) — content is not a rescaling of acts.
+- **Verbosity is idiosyncratic** — *not* associated with capital status (Mann–Whitney p = 0.59), city
+  size (ρ −0.02), or output (ρ ≈ 0); the most verbose cities are smaller provincial towns, not capitals
+  (descriptive check, 2026-06-20) — reinforcing that content is genuinely its own axis.
 - The eye-catching R² = 0.841 of letters-on-inscription-count is **near-mechanical, not a finding**
   (more inscriptions trivially means more letters; Obs 108).
 - Content adds a distinct **verbosity axis** but **no extra population-signal power** — a complement, not
