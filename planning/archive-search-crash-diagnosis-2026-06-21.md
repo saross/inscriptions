@@ -5,6 +5,29 @@
 **Status:** Diagnosis + design recommendation. **NOT an implementation.** Hand this
 to the infra session that will build the "search the archives" skill/agent.
 
+> **RESOLVED 2026-06-21** — built in the personal-assistant repo. The §4 safety
+> invariants (a–d) were all implemented; two recommendations changed on contact
+> with the wider infrastructure:
+>
+> 1. **Index backend: PostgreSQL, not standalone SQLite FTS5.** This machine
+>    already runs a `claude_memories` Postgres DB with `pg_trgm` + `pgvector` and
+>    a synced `sessions` table; a fresh SQLite index would have duplicated that
+>    query layer. Built a `session_chunks` table (per-turn prose, GENERATED
+>    tsvector GIN + trigram) instead — integrated with the memory MCP. 470
+>    sessions / 44,639 chunks indexed.
+> 2. **Engine: pure-Python line scanner, not `rg -z`.** `rg` and `grep` on this
+>    machine are shell *functions* routing to the Claude Code executable, not
+>    standalone binaries — the §5 stopgap could not have run from a script, and
+>    that harness ripgrep was itself the OOM-killed process in R1. The safe
+>    fallback (`search-archives-safe.sh` → `_scan_archives.py`) keeps every §4
+>    limit (nice/ionice/timeout/cgroup/flock) but does the scan in Python.
+>
+> Implemented: `scripts/{search-archives-safe.sh,_scan_archives.py,
+> index-session-content.py,search-sessions.py}`, the `search_sessions` MCP tool,
+> and the `/search-sessions` skill. See
+> `personal-assistant/global-claude-md/infrastructure-reference.md`
+> ("Searching past sessions — the escalation ladder").
+
 > **Safety note for whoever reads this next:** the pattern diagnosed below crashed
 > the machine once (mouse froze, all fans to maximum, hard lockup). The dangerous
 > command was **not re-run** to produce this document — every number here was
