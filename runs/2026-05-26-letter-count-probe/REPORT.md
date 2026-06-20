@@ -6,8 +6,8 @@ date: 2026-05-26
 related-artefacts:
   - runs/2026-05-26-letter-count-probe/spec.md   (the binding spec)
   - runs/2026-05-26-letter-count-probe/RUN-LOG-06.md   (sapphire Mundlak log)
-  - docs/notes/reflections/working-notes.md Obs 58 (commit dd326dc) — "acts vs content" reframe
-  - docs/notes/reflections/working-notes.md Obs 59 (commit de8fa8f) — Mundlak f_within shift
+  - docs/notes/working-notes.md Obs 58 (commit dd326dc) — "acts vs content" reframe
+  - docs/notes/working-notes.md Obs 59 (commit de8fa8f) — Mundlak f_within shift
   - docs/notes/reflections/continuity.md §"Martin Eftimoski consultation outcome — recalibration (2026-05-26)"
   - runs/2026-05-26-recovery-grid-two-unit/spec.md   (downstream Stage 3 gate)
 ---

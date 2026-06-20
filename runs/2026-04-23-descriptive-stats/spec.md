@@ -102,5 +102,5 @@ Verifier adds:
 
 - Backlog entry: `planning/backlog-2026-04-22.md` §1 Thursday actionables.
 - Decision 1 (LIRE-first): `planning/decision-log.md`.
-- Working-notes observations on LIST/LIRE schema and data-quality artefacts: `docs/notes/reflections/working-notes.md` Obs 1–9.
+- Working-notes observations on LIST/LIRE schema and data-quality artefacts: `docs/notes/working-notes.md` Obs 1–9.
 - Agent definitions: `~/personal-assistant/agents/data-profile-scout.md`, `~/personal-assistant/agents/data-profile-verifier.md`.

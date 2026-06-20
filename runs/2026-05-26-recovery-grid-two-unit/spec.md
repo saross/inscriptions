@@ -194,7 +194,7 @@ If any gate fails, HALT and report. Do not silently relax.
 - `runs/2026-05-26-letter-count-probe/` — the probe that surfaced the two-measure framework.
 - `runs/2026-05-26-letter-count-probe/spec.md` — the binary-verdict spec being reframed.
 - `planning/h2.1-stage-3-implementation-plan-2026-05-25.md` — downstream consumer; updated to reflect two-unit parallel after this run completes.
-- `docs/notes/reflections/working-notes.md` Obs 58 — the "acts vs content" reframe (commit `dd326dc`).
+- `docs/notes/working-notes.md` Obs 58 — the "acts vs content" reframe (commit `dd326dc`).
 - `docs/notes/reflections/continuity.md` §"Martin Eftimoski consultation outcome — recalibration (2026-05-26)" — the Martin nudge.
 - Memory `2026-05-26-40ce5927fddc` — amendment-gate standing rule.
 - Decision 21 (recovery-grid procedural pre-commitment) — the prereg authority over recovery-grid design.
