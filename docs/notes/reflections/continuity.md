@@ -103,29 +103,44 @@ results; this is the durable forward plan.
   the repo's `data/women.csv` is stale at 504 daughters) + her datable/conjugal filter
   definitions, expected 2026-06-20 evening; then a quick single-fit run for a Denmark
   proof-of-feasibility memo (Shawn sees her while travelling).
+- **Documentation ACCURACY-CERTIFIED + collaborator summary written** (2026-06-20). A comprehensive
+  multi-agent accuracy-audit **workflow** (`planning/doc-accuracy-audit-2026-06-20.md`; 7 clusters,
+  677 specifics, 97.5 % matched) found 17 corrections — **all applied + re-verified at source**
+  (`af4d527`..`1079098`, `63f910c`); 1 false alarm overturned; headline inferential numbers internally
+  consistent → **the results documentation is write-up-ready.** Collaborator-facing **key-findings
+  summary** drafted → v2 → refined (`reports/key-findings-summary-2026-06-20.md`, `4c14352`→`a84511d`):
+  non-specialist explanations, per-section results, the ≈54/24/22 temporal split, the population
+  bottom line, and a verbosity-is-idiosyncratic descriptive add (content-residual not tied to capital
+  status / size / output).
+- **Figures spec READY for a fresh-session build** (`runs/2026-06-20-figures/spec.md`, `583fd10`):
+  code-based (matplotlib), 13 figures, verified numbers + data paths frozen; **12/13 buildable from
+  local data**, only the per-province SPD atlas needs a §5 monolithic-`.nc` regen on sapphire. Claude
+  Design ruled out for data figures.
 
 **REMAINING (excluding unforeseen follow-ups):**
 
-*Near-term (this week):*
+*Near-term (next sessions):*
 
-1. **women.csv feasibility run** — once Adela's canonical dataset arrives: run the spec'd
-   deconvolution feasibility (`runs/2026-06-20-women-corpus-feasibility/`) and produce the
-   Denmark proof-of-feasibility memo. Single fits, minutes on sapphire; needs her dataset +
-   filter definitions first.
+1. **Figures build** — execute the 13-figure set in `runs/2026-06-20-figures/spec.md` (code-based,
+   matplotlib; 12/13 from local data; regen the §5 `.nc` on sapphire for the per-province atlas). **The
+   next session's focus** ("see you next session to make the charts").
+2. **women.csv feasibility run** — once Adela's canonical dataset arrives (expected 2026-06-20 evening):
+   run `runs/2026-06-20-women-corpus-feasibility/` and produce the Denmark proof-of-feasibility memo.
+   Single fits, minutes on sapphire; needs her dataset + filter definitions first.
 
 *The main remaining body of work:*
 
-2. **The write-up** — empirical-first / interpretation-later structure (Obs 101); not
-   started. Both gates Shawn set are now **met**: all analyses complete AND the results
-   documentation is tied up (the write-up is based on it).
+3. **The write-up** — empirical-first / interpretation-later structure (Obs 101); not started. Both
+   gates Shawn set are now **met**: all analyses complete AND the results documentation is tied up and
+   accuracy-certified (the write-up is based on it). The key-findings summary is the on-ramp.
 
 *Optional / slated (not gating, not for now):*
 
-3. **Lit-scout deeper chaining** — forward-chain Bakk 2013 / Xia 2020 for a magnitude-matching
+4. **Lit-scout deeper chaining** — forward-chain Bakk 2013 / Xia 2020 for a magnitude-matching
    simulation + novelty-positioning.
-4. **A reusable sapphire-parallel-run module** — so each run script stops reinventing the
+5. **A reusable sapphire-parallel-run module** — so each run script stops reinventing the
    `ProcessPoolExecutor` / spawn / cgroup / `n_jobs` infra.
-5. **sha256 + explicit Reproduce blocks** across runs — a documentation enhancement (runs
+6. **sha256 + explicit Reproduce blocks** across runs — a documentation enhancement (runs
    already carry seeds); audit-flagged lowest-priority, non-blocking.
 
 *Carried to the follow-up paper(s):* standalone province-scale Layer B (H4), baorista (H6),
@@ -141,12 +156,14 @@ lit-scout + Zotero staging; Latin variants (Obs 106); province-size regression (
 full §5 suite (incl. q_u province tier, Obs 103); D11 / D12 / B4; H3a / H3b / H3c; **all four
 OSF amendments lodged** (no preregistration lodgement outstanding).
 
-**Status (2026-06-20):** the methodological core, the confirmatory programme, **every
-preregistered obligation (now incl. A01 §A5.4), and the results documentation are all DONE**
-— the documentation is tied up and write-up-ready. The two remaining threads are **(1) the
-write-up** (the main body) and **(2) the women.csv companion** (feasibility run pending
-Adela's dataset; substantive history → EJA companion paper). Optional: lit-chaining, the
-parallel-run module, the sha256 enhancement.
+**Status (2026-06-20) — MILESTONE: the entire analytical programme AND its documentation are
+COMPLETE.** Every preregistered obligation (incl. A01 §A5.4) and confirmatory result is done; the
+results documentation is **accuracy-certified** (multi-agent audit workflow, 677 specifics checked,
+17 corrections applied + re-verified) and **write-up-ready**, with a non-specialist collaborator
+key-findings summary (v2) drafted. The remaining threads are **(1) the figures build** (spec ready,
+next session), **(2) the write-up** (main body; the summary is the on-ramp), and **(3) the women.csv
+companion** (feasibility run pending Adela's dataset → substantive crossover-age history → EJA
+companion). Optional: lit-chaining, the parallel-run module, the sha256 enhancement.
 
 ---
 
