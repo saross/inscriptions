@@ -1,0 +1,92 @@
+{
+  "model": "cc-library (joint_lib.build_model_cross_classified, pconv_mode=library)",
+  "theta_prior": "adopted (theta_conv~0.930, theta_gen~0.025, kappa=40)",
+  "base_seed": 20260613,
+  "units": [
+    {
+      "name": "Roma",
+      "track": "capital-empire",
+      "n_rows_raw": 65457,
+      "n_eff": 45678,
+      "alpha_median": 0.7993000322045795,
+      "alpha_ci": [
+        0.7903844842195794,
+        0.8072067748891536
+      ],
+      "max_rhat": 1.004397261924722,
+      "min_ess_bulk": 781.2300289978723,
+      "n_divergences": 0,
+      "convergence_pass": true,
+      "row_aligned_frac": 0.8161999480575034,
+      "mass_aligned_frac": 0.7928186245724324
+    },
+    {
+      "name": "capitals-empire-62",
+      "track": "capital-empire",
+      "n_rows_raw": 16123,
+      "n_eff": 14704,
+      "alpha_median": 0.5612146524870552,
+      "alpha_ci": [
+        0.5151261098885929,
+        0.6014632440115648
+      ],
+      "max_rhat": 1.0021388366206274,
+      "min_ess_bulk": 2143.773905226569,
+      "n_divergences": 3,
+      "convergence_pass": true,
+      "row_aligned_frac": 0.5012094523351733,
+      "mass_aligned_frac": 0.4988987465998836
+    },
+    {
+      "name": "capitals-latin-41",
+      "track": "capital-latin",
+      "n_rows_raw": 15557,
+      "n_eff": 14250,
+      "alpha_median": 0.5612053797596721,
+      "alpha_ci": [
+        0.5187984655190558,
+        0.5949231364655382
+      ],
+      "max_rhat": 1.002241695222901,
+      "min_ess_bulk": 2649.9152312523743,
+      "n_divergences": 8,
+      "convergence_pass": true,
+      "row_aligned_frac": 0.5079385485633476,
+      "mass_aligned_frac": 0.5028330751397141
+    },
+    {
+      "name": "Italia-incl-Rome",
+      "track": "italia",
+      "n_rows_raw": 109172,
+      "n_eff": 86176,
+      "alpha_median": 0.7330110418317504,
+      "alpha_ci": [
+        0.7219315649221099,
+        0.7429472322423533
+      ],
+      "max_rhat": 1.008501751416998,
+      "min_ess_bulk": 397.3927576710947,
+      "n_divergences": 0,
+      "convergence_pass": false,
+      "row_aligned_frac": 0.7385318579855641,
+      "mass_aligned_frac": 0.7211488712429215
+    },
+    {
+      "name": "provinces-non-Italian-Latin",
+      "track": "italia",
+      "n_rows_raw": 65931,
+      "n_eff": 60567,
+      "alpha_median": 0.7134190661872595,
+      "alpha_ci": [
+        0.6443018806537472,
+        0.7616328285426285
+      ],
+      "max_rhat": 1.0025936241064977,
+      "min_ess_bulk": 2394.9836482596497,
+      "n_divergences": 9,
+      "convergence_pass": true,
+      "row_aligned_frac": 0.5720222657020219,
+      "mass_aligned_frac": 0.5939837059685618
+    }
+  ]
+}

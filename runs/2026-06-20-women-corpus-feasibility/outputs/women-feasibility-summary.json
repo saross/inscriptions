@@ -1,0 +1,85 @@
+{
+  "model": "cc-library (joint_lib.build_model_cross_classified, pconv_mode=library)",
+  "data": "data/women.csv (504 daughters, canonical per Shawn 2026-06-21)",
+  "operational_filters": {
+    "conjugal": "role in {wife, daughter} and type==familial",
+    "datable": "not_before & not_after present, nb<=na, interval overlaps [-50,350]",
+    "note": "operational; confirm against Adela's exact definitions before citing"
+  },
+  "envelope": [
+    -50,
+    350
+  ],
+  "bin_size": 5,
+  "units": [
+    {
+      "name": "women-overall",
+      "n_rows_raw": 1291,
+      "n_eff": 1256,
+      "alpha_median": 0.9040407992561779,
+      "alpha_ci": [
+        0.813442935990466,
+        0.9877283288933234
+      ],
+      "max_rhat": 1.0045547871099227,
+      "min_ess_bulk": 983.7761379663762,
+      "n_divergences": 0,
+      "convergence_pass": true,
+      "row_aligned_frac": 0.756003098373354,
+      "mass_aligned_frac": 0.7594857045976098,
+      "women_date_span": {
+        "nb_min": -30,
+        "nb_max": 334,
+        "na_min": 30,
+        "na_max": 600,
+        "median_interval_width": 99.0
+      }
+    },
+    {
+      "name": "women-wives",
+      "n_rows_raw": 838,
+      "n_eff": 819,
+      "alpha_median": 0.9020829221588986,
+      "alpha_ci": [
+        0.8032547139137155,
+        0.9951346055534545
+      ],
+      "max_rhat": 1.0025358671533584,
+      "min_ess_bulk": 1309.5842272829586,
+      "n_divergences": 0,
+      "convergence_pass": true,
+      "row_aligned_frac": 0.7601431980906921,
+      "mass_aligned_frac": 0.7644939099847522,
+      "women_date_span": {
+        "nb_min": -30,
+        "nb_max": 331,
+        "na_min": 30,
+        "na_max": 600,
+        "median_interval_width": 99.0
+      }
+    },
+    {
+      "name": "women-daughters",
+      "n_rows_raw": 453,
+      "n_eff": 436,
+      "alpha_median": 0.8399374529794936,
+      "alpha_ci": [
+        0.7474723056653761,
+        0.9846887652565044
+      ],
+      "max_rhat": 1.0033199283297465,
+      "min_ess_bulk": 1497.2630765234976,
+      "n_divergences": 0,
+      "convergence_pass": true,
+      "row_aligned_frac": 0.7483443708609272,
+      "mass_aligned_frac": 0.7500834447201042,
+      "women_date_span": {
+        "nb_min": -30,
+        "nb_max": 334,
+        "na_min": 50,
+        "na_max": 600,
+        "median_interval_width": 99.0
+      }
+    }
+  ]
+}
