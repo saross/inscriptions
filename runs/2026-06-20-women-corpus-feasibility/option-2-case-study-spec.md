@@ -80,8 +80,16 @@ Built on the Option-1 fits (3 converged cc-library fits; `outputs/`):
   convention is not just ~90 % in aggregate but pervasive and structural, with no
   clean well-dated core. The crossover-trough *timing* cannot be put on solid
   ground by de-fogging at any scale (a definite, useful answer for Adela).
-- Still to do: confirm Adela's exact `datable`/`conjugal` definitions; the
-  optional `tempun` overlay; the case-study subsection draft (with her).
+- Filter confirmation — **RESOLVED (Shawn 2026-06-21):** same date window, no
+  quality gate, so our 1,291-row subset *is* Adela's analysis set (we dropped only
+  106 undated/out-of-window rows). Numbers are directly comparable to hers
+  (double-check with Adela at co-author stage, but not a blocker).
+- Still to do: install + run `tempun` ourselves for the §6 comparison (Shawn
+  greenlit; keep as a reusable cross-check); the case-study subsection draft (with
+  Adela). Conceptual approach + section outline now agreed:
+  **`option-2-case-study-outline.md`** — spine = the deconvolution as a *diagnostic
+  + hypothesis generator* on a "limits" corpus (hypothesis-generating, not
+  hypothesis-confirming).
 - Confirm Adela's exact `datable` / `conjugal` definitions + any quality gate
   (`link_status` / `confidence`); re-run on her definitions if they differ.
 - (Optional) the `tempun` overlay, pending her output.
