@@ -46,8 +46,9 @@ unit and a comparison; it changes **no** confirmatory result.
    capitals?** Compare Rome's genuine SPD *shape* and peak timing against the
    provincial-capitals composite and the aggregates.
 3. **Is the capital's convention-contamination distinctive?** Compare Rome's
-   genuine fraction α against the provincial capitals' and the aggregates' α —
-   does the centre carry more (or less) round-slab dating than the provinces?
+   convention fraction α against the provincial capitals' and the aggregates' α
+   (α = convention fraction; higher = more round-slab dating) — does the centre
+   carry more (or less) round-slab dating than the provinces?
 
 ---
 
