@@ -89,3 +89,69 @@ Marking a genuine inflection point is part of how he sustains a long project, no
 **How to apply.** At genuine milestones (programme complete, lodgement, a hard problem cracked), *name
 them and mark them* — a brief, specific acknowledgement of what was accomplished, grounded in the
 actual achievement. Don't manufacture celebration for routine steps, but don't roll past a real one.
+
+---
+
+## claude-obs 4 — 2026-06-21: Shawn's archaeological prior is a reliable sanity-check on statistical output
+
+**Pattern.** When I surfaced the α-inversion — a correction that flips the paper's headline ("two-thirds
+genuine" → "two-thirds convention") — he was entirely unfazed: *"I'm OK with the '2/3 is editorial
+convention' framing... I knew it would be something like that given the median date range for an
+inscription is ca. 100 years."* His domain intuition had already anticipated the corrected magnitude, so
+the "shocking" correction was, to him, just the number landing where it should.
+
+**Lesson.** His archaeological/epigraphic prior is a fast, trustworthy plausibility check on quantitative
+results. A result that violates it is worth re-deriving; one that matches it is genuine reassurance. The
+α-inversion is the case in point — his prior was *right* and the documented number had been *labelled*
+wrong.
+
+**How to apply.** When a statistical result has a domain-interpretable magnitude, state it in domain terms
+("~two-thirds of the apparent dating is editorial convention; the median date range is ~100 years") and
+invite his gut-check. Treat a clash with his prior as a reason to re-examine, not to defend the output.
+(Complements claude-obs 1: he wants the mechanism *and* the domain meaning.)
+
+## claude-obs 5 — 2026-06-21: seemingly-stylistic choices often rest on a principled, statable reason
+
+**Pattern.** His BC/AD-not-BCE/CE preference looked like a style nit until he gave the reason — keeping the
+Christian calendar's structure while masking its origin is *historically dishonest*; either name it as it
+was named for centuries or build a genuinely new calendar. The "preference" was a values position with an
+argument behind it.
+
+**Lesson.** What reads as an arbitrary formatting/style choice from him frequently has a considered
+rationale (intellectual honesty, reproducibility, scholarly convention) underneath. Implementing the
+surface rule without the reason risks missing where it generalises.
+
+**How to apply.** When he states a stylistic preference, capture the *reason* if he gives one (and it's
+fine to ask), and apply the principle, not just the instance. Saved the BC/AD rule + rationale to memory
+this session for exactly this reason.
+
+## claude-obs 6 — 2026-06-21: he holds his own memory loosely and accepts a well-reasoned reconstruction
+
+**Pattern.** He was sure we'd defined a *three*-option plan for the women corpus; the records only held the
+two endpoints. Rather than insist, he said *"I may be misremembering, but your inferred (2) is the right
+step I think — please do record it."* He weighed the reconstruction on its merits, not on whether it
+matched his recollection.
+
+**Lesson.** When the record and his memory diverge, he wants the honest finding (here: "the middle rung was
+never written down") plus a reasoned reconstruction — not a fabricated "recall" that flatters the memory.
+He's comfortable being wrong about what was said if the reconstructed substance is sound.
+
+**How to apply.** If asked to recall something that isn't in the record, say so plainly, search thoroughly
+(memory + docs + transcripts), and offer a clearly-labelled reconstruction-from-structure as a *separate*
+thing from a genuine recall. He'll judge it on quality.
+
+## claude-obs 7 — 2026-06-21 [self-critique]: I over-flagged a non-issue as a blocking "open item"
+
+**Pattern.** I repeatedly raised "confirm the datable/conjugal *filters* with Adela" as an open dependency
+for the women analysis. When I finally walked Shawn through it, he replied *"I'm not sure what you are
+asking here — Adela provided a dataset, I'm not sure what we're filtering on?"* — and he was right: I'd
+dropped only 106 undated rows (a mechanical necessity), kept everyone else, and the only real question was
+a one-line date-window/quality-gate check. I'd inflated a near-non-issue into a recurring caveat.
+
+**Lesson.** Honest caveating is good, but *manufacturing* an open item where the data already answers the
+question wastes his attention and reads as false caution. Check what the data actually constrains before
+elevating something to a "needs sign-off / pending" flag.
+
+**How to apply.** Before flagging an external dependency, do the cheap check that might dissolve it (here:
+inspect the columns + count what a gate would actually drop). Flag what genuinely remains open; resolve in
+place what doesn't.
