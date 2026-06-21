@@ -56,11 +56,16 @@ Two framing commitments (Shawn 2026-06-21):
    editorial-convention artefact.** But the genuine credible intervals are very wide
    (daughters [0.35, 0.88]); this is explicitly a *hypothesis*, never a result.
 
-6. **De-fogging vs `tempun` (KEEP — Shawn 2026-06-21).** Adela's `tempun` Monte-Carlo
-   handles *aoristic dating uncertainty*; our deconvolution removes *editorial
-   convention*. They are **complementary, not redundant** — they correct different
-   artefacts. Show genuine-vs-raw-vs-`tempun` to make the point concrete. (Requires
-   her `tempun` output, or we run `tempun` ourselves — see "Open / pending" below.)
+6. **De-fogging vs `tempun` (KEEP — Shawn 2026-06-21; figure DONE).** Adela's group's
+   `tempun` Monte-Carlo handles *aoristic dating uncertainty*; our deconvolution
+   removes *editorial convention*. They correct **different** artefacts —
+   complementary, not redundant. **We ran `tempun` ourselves** (`run_tempun.py`,
+   `tempun-women.json`; `fig-women-tempun-comparison`): tempun's mean **overlays the
+   raw aoristic shape** (both peak ~AD 188) — it adds uncertainty bands but is
+   **blind to the convention**, and would report the AD-188 peak as if genuine. The
+   de-fogged genuine SPD is a *different* (if uncertain) curve. So tempun cannot
+   diagnose the ~90 % convention problem; our method is what does. (`tempun` is also
+   kept installed as a reusable cross-check tool.)
 
 7. **Implications — the diagnostic as a hypothesis engine.** For inscription-based
    Roman demography: convention de-fogging is a **necessary first diagnostic** —
@@ -73,9 +78,10 @@ Two framing commitments (Shawn 2026-06-21):
 
 ## Open / pending (not blocking the conceptual agreement)
 
-- **`tempun`** — install + run ourselves over the women corpus for §6 (and keep as a
-  reusable cross-check tool); or use Adela's output if she shares her repo. (Shawn
-  greenlit installing it 2026-06-21.)
+- **`tempun`** — **DONE 2026-06-21**: installed (`tempun==0.2.6`, in `pyproject.toml`)
+  and run over the women corpus (`run_tempun.py`); §6 figure built. Kept as a
+  reusable cross-check tool. (If Adela shares her own `tempun` output later, we can
+  confirm our run matches hers.)
 - **Adela's co-author input** on the substantive framing + the §7 genre claim.
 - **Placement** — short section in JAMT; final placement held (Shawn 2026-06-21).
 
