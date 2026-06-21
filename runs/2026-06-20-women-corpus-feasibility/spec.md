@@ -47,13 +47,29 @@ of Archaeology-style) paper. Per-role *temporal-SPA* fits (below) are for
 **reachability assessment**, not crossover inputs; we report temporal distributions and
 de-fogging, never the age-crossover.
 
-Mapping to the two papers:
-- **Current JAMT paper** — the instrument demonstrated on a real subset (genuine-vs-raw
-  temporal de-fogging); a methodological vignette, interpretation deferred + cited to
-  the in-prep companion.
-- **Companion (EJA)** — the substantive marriage-age history (the crossover trajectory,
-  Life History Theory reading, plague/economy correlation); Adela's, we contribute the
-  temporal method.
+### The three options for the women corpus (a ladder of ambition; recorded 2026-06-21)
+
+Shawn recalled three things we could do with Adela's corpus, ranging from "do now
+as an example in this paper" to "what a new paper could be based on". Only the two
+endpoints had been written down; the middle rung was reconstructed and confirmed
+2026-06-21. The canonical record:
+
+- **Option 1 — feasibility vignette (THIS spec; DONE 2026-06-21).** Demonstrate the
+  instrument on a real subset: genuine-vs-raw temporal de-fogging + a per-subset
+  reachability verdict. Methodological; *no* substantive claim. (Verdict: ~90 %
+  convention, below floor → not in the reliable regime.)
+- **Option 2 — in-paper, co-authored CASE-STUDY with a real, caveated de-fogged
+  result** (`option-2-case-study-spec.md`; spec'd 2026-06-21, not yet executed).
+  More than "the method runs": an actual bounded substantive result for the women
+  corpus — the de-fogged temporal distribution, the source-critical
+  ~90 %-convention finding, and the indicative C2–C3 trough read — presented as a
+  co-authored section in the JAMT paper. Still **NOT** the crossover-age trajectory.
+- **Option 3 — EJA companion paper (deferred).** The full substantive marriage-age
+  history: the wife-vs-daughter crossover trajectory, Life History Theory reading,
+  plague/economy correlation. Adela's; we contribute the temporal de-fogging method.
+
+This Option-1 spec's scope boundary (no crossover trajectory) holds for Options 1
+AND 2; only Option 3 computes the crossover.
 
 ## 3. Deliverables (for the Denmark conversation)
 

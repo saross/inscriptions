@@ -207,8 +207,14 @@ Big autonomous build while Shawn AFK. **THREE things the next session must know:
    spurious hits). Verdict: corpus is **~90 % convention** (α 0.90 / 0.84 daughters)
    + **below/at the reachability floor** (daughters 453 < 500) → **NOT in the reliable
    de-fogging regime**. Collaborator `MEMO.md` (for Adela); women figure; Obs 115.
-   Operational datable/conjugal filters ours (flag for Adela). **Stage 2 is UNDEFINED
-   in the repo — HELD pending Shawn's definition; Stage 3 deferred (EJA companion).**
+   Operational datable/conjugal filters ours (flag for Adela). **THREE-OPTION LADDER now
+   recorded** (`spec.md` §2; the earlier "Stage 1/2/3" = these Options): Option 1
+   feasibility = DONE; **Option 2 = in-paper co-authored CASE-STUDY with a real caveated
+   de-fogged result — now SPEC'D** (`option-2-case-study-spec.md`; key new analysis = a
+   "better-dated subset" probe testing whether a narrow-interval sub-corpus reaches the
+   reliable envelope; awaits sign-off); Option 3 = EJA companion (full crossover-age
+   history, deferred). The earlier-undefined middle rung was reconstructed + Shawn-confirmed
+   2026-06-21.
 
 All committed/pushed; sapphire ran both jobs clean. **OPEN for Shawn: (a) the α
 headline framing; (b) the women Stage-2 definition.**
