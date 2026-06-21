@@ -210,11 +210,17 @@ Big autonomous build while Shawn AFK. **THREE things the next session must know:
    Operational datable/conjugal filters ours (flag for Adela). **THREE-OPTION LADDER now
    recorded** (`spec.md` §2; the earlier "Stage 1/2/3" = these Options): Option 1
    feasibility = DONE; **Option 2 = in-paper co-authored CASE-STUDY with a real caveated
-   de-fogged result — now SPEC'D** (`option-2-case-study-spec.md`; key new analysis = a
-   "better-dated subset" probe testing whether a narrow-interval sub-corpus reaches the
-   reliable envelope; awaits sign-off); Option 3 = EJA companion (full crossover-age
-   history, deferred). The earlier-undefined middle rung was reconstructed + Shawn-confirmed
-   2026-06-21.
+   de-fogged result — SPEC'D + the key analysis RUN** (`option-2-case-study-spec.md`).
+   The **"better-dated subset" probe is DONE (Obs 117): verdict NO** — no
+   width-restricted sub-corpus reaches the reliable envelope (fitted α 0.74–0.97 across
+   width ≤ 50/75/100/150y, all > 0.70; convention is *structural* — F1_round 25y slabs =
+   68 % of rows, so the ≤50y band is the MOST convention-dated at 0.97; genuine core N=6,
+   non-aligned class N=315, below floor). Strengthens the source-critical claim. Remaining
+   Option-2 work is collaborative (confirm filters with Adela, optional tempun overlay,
+   draft the case-study subsection). Option 3 = EJA companion (full crossover-age history,
+   deferred). The earlier-undefined middle rung was reconstructed + Shawn-confirmed
+   2026-06-21. **α-inversion correction = Obs 116** (α is the convention fraction; summary
+   was inverted; now corrected everywhere).
 
 All committed/pushed; sapphire ran both jobs clean. **OPEN for Shawn: (a) the α
 headline framing; (b) the women Stage-2 definition.**
