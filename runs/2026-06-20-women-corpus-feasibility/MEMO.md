@@ -65,6 +65,30 @@ the 95 % band is very wide — the genuine temporal shape is highly uncertain.
   or a securely-dated sub-corpus) could move into the reliable envelope — worth
   exploring if the timing claim is load-bearing.
 
+## An indicative read (heavily caveated — *not* a result)
+
+Despite the corpus being outside the reliable regime, the fit is worth showing as
+*suggestive*. In the C2–C3 trough window (~AD 150–275, where your crossover
+inflection sits), de-fogging **shifts temporal mass *into* the window**, not out
+of it:
+
+| subset | raw trough mass | genuine (de-fogged) | shift |
+|---|---|---|---|
+| overall | 0.57 | 0.64 [0.46, 0.91] | **+0.07** |
+| wives | 0.61 | 0.62 [0.17, 0.90] | +0.01 |
+| daughters | 0.50 | 0.60 [0.35, 0.88] | **+0.10** |
+
+So convention-correction *tentatively* concentrates **more** genuine activity in
+the trough window than the raw curve implies — i.e. the apparent "thinness" of the
+record there may be partly an editorial-convention artefact. **But the genuine
+credible intervals are very wide** (e.g. daughters [0.35, 0.88]) and span the raw
+value, so this is **indicative only — read it as a hypothesis to test on a
+better-dated subset, not a finding.** (Figure `fig-women-genuine-vs-raw`, panel b
+shows the per-role genuine medians; both roles peak ~AD 190 and decline through the
+window.) The point for the crossover paper: de-fogging does not *erase* the trough
+window's signal — if anything it firms it up — but the uncertainty here is too
+large to lean on.
+
 ## §4 — confirm before we quote any figure to anyone
 
 - Our operational **`conjugal`** = role ∈ {wife, daughter} ∧ type = familial (the

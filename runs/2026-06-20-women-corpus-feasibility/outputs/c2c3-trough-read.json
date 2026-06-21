@@ -1,0 +1,29 @@
+{
+  "women-overall": {
+    "raw_trough_frac": 0.57,
+    "genuine_trough_frac_med": 0.643,
+    "genuine_trough_ci": [
+      0.458,
+      0.912
+    ],
+    "shift": 0.073
+  },
+  "women-wives": {
+    "raw_trough_frac": 0.608,
+    "genuine_trough_frac_med": 0.621,
+    "genuine_trough_ci": [
+      0.173,
+      0.904
+    ],
+    "shift": 0.013
+  },
+  "women-daughters": {
+    "raw_trough_frac": 0.498,
+    "genuine_trough_frac_med": 0.597,
+    "genuine_trough_ci": [
+      0.348,
+      0.878
+    ],
+    "shift": 0.099
+  }
+}

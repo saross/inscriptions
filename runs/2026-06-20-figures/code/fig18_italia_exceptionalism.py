@@ -65,18 +65,25 @@ def build():
     fig, (axc, axs) = T.figure_2col(height_ratio=0.42, ncols=2,
                                     gridspec_kw={"width_ratios": [1.0, 1.4]})
 
-    # (a) convention-fraction alpha
-    for i, (label, colour, _) in enumerate(UNITS):
-        med, lo, hi = a[amap[label]]
+    # (a) convention-fraction alpha — all FOUR Italia/Rome units (incl. the pooled
+    #     Italia-incl-Rome, for completeness).
+    alpha_rows = [
+        ("Roma", T.LATIN, "Roma"),
+        ("Italia (excl. Rome)", T.OKABE_ITO["orange"], "Italia (excl. Rome)"),
+        ("Italia (incl. Rome) *", T.OKABE_ITO["purple"], "Italia-incl-Rome"),
+        ("non-Italian provinces", T.EMPIRE, "provinces-non-Italian-Latin"),
+    ]
+    for i, (label, colour, key) in enumerate(alpha_rows):
+        med, lo, hi = a[key]
         axc.plot([lo, hi], [i, i], color=colour, lw=2.2, solid_capstyle="round")
         axc.plot([med], [i], "o", color=colour, ms=6)
         axc.text(hi + 0.012, i, f"{med:.2f}", va="center", fontsize=7)
     axc.axvline(0.70, color=T.NEUTRAL, ls=":", lw=0.9)
     axc.text(0.70, -0.45, "α≤0.70\nenvelope", fontsize=6, color=T.NEUTRAL,
              ha="center", va="bottom")
-    axc.set_yticks(range(len(UNITS)))
-    axc.set_yticklabels([u[0] for u in UNITS], fontsize=7.5)
-    axc.set_ylim(-0.6, len(UNITS) - 0.4)
+    axc.set_yticks(range(len(alpha_rows)))
+    axc.set_yticklabels([u[0] for u in alpha_rows], fontsize=7.0)
+    axc.set_ylim(-0.6, len(alpha_rows) - 0.4)
     axc.set_xlim(0.4, 0.95)
     axc.invert_yaxis()
     axc.set_xlabel("convention fraction α\n(→ more editorial convention)", fontsize=7.2)
@@ -99,6 +106,11 @@ def build():
 
     fig.suptitle("Italian exceptionalism — Rome and Italian municipia are the "
                  "empire's most convention-dated epigraphy", fontsize=8.8)
+    fig.text(0.5, -0.02, "* Italia (incl. Rome) pools Rome + municipia; its α (0.73) "
+             "is lower than either component — pooling two differently-shaped genuine "
+             "signals makes them more separable from the slab basis (and this fit is "
+             "ESS-marginal). Read as secondary.", ha="center", fontsize=5.2,
+             color=T.NEUTRAL)
     return fig
 
 
