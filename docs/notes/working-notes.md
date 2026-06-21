@@ -6755,3 +6755,311 @@ commit `79318d3` (driver); commit `5a993de` (MEMO.md).
 `obs-113`, `obs-114`, `decision-34`,
 `runs-2026-06-20-women-corpus-feasibility`, `women-feasibility-summary-json`,
 `run-women-feasibility-py`, `79318d3`, `5a993de`
+
+## Obs 116 — 2026-06-21 [CORRECTION / METHODOLOGY]: α-direction correction — the collaborator-facing key-findings summary had α inverted; α is the CONVENTION fraction; corrected empire α = 0.6798 = two-thirds convention
+
+### The finding
+
+**Correction to a single document (2026-06-21). The preregistration, joint_lib
+docstring, all other project documents, and all Obs entries already define α
+correctly — only `reports/key-findings-summary-2026-06-20.md` had it backwards.
+Summarised here so the inversion and its resolution are permanently on the record.**
+
+**α is the CONVENTION fraction** (1 − α = genuine). `p_mix = α·p_conv +
+(1−α)·p_gen`, where p_conv is the round-slab convention component. Higher α =
+more editorial round-slab convention dating; lower α = more genuine date signal.
+
+The inverted summary called α the "genuine fraction" and stated "two-thirds
+genuine." The correction reverses every α-direction claim:
+
+| quantity | inverted (wrong) | corrected (right) |
+|---|---|---|
+| empire α = 0.6798 | two-thirds **genuine** | two-thirds **CONVENTION** |
+| Latin α = 0.7387 | three-quarters **genuine** | three-quarters **CONVENTION** |
+| Pompeii α = 0.0156 | 1.6 % **convention** | 1.6 % **convention** (unchanged — correct either way) |
+
+All numbers above are read directly from
+`runs/2026-06-13-cc-production-refit/outputs/refit-summary.json`:
+empire-aggregate α_median = 0.6797720726693276, 95 % CI [0.6648679537901504,
+0.6969588030884555]; latin-aggregate α_median = 0.7386558975436434, 95 % CI
+[0.6595853788595216, 0.7893008531832907]; Pompeii α_median =
+0.015578318388242317, 95 % CI [0.010188241619696729, 0.022278686487304470].
+
+The inversion was confirmed wrong by **three independent checks**:
+
+1. **Model code** (`runs/2026-06-09-joint-identifiability/code/joint_lib.py`,
+   line 325): `p_mix = alpha * p_conv + (1.0 - alpha) * p_gen` — alpha
+   multiplies the *convention* component p_conv, not the genuine one.
+
+2. **π_align identity** (joint_lib.py line 337):
+   `pi_align = alpha * theta_conv + (1.0 - alpha) * theta_gen`,
+   with θ_conv ≈ 0.930 and θ_gen ≈ 0.025 (from the cc-production-refit adopted
+   priors). The observed aligned fraction can only be reproduced when alpha =
+   convention. Under the inverted reading, the identity breaks.
+
+3. **Pompeii sanity check**: Pompeii α = 0.0156. That is 1.6 % convention /
+   98.4 % genuine — exactly right for a sealed, precisely-dated site buried AD
+   79. Under the inverted reading, Pompeii would be 98.4 % *convention*, which
+   is physically absurd.
+
+**Scope of the inversion.** The lodged preregistration, all amendements, the
+OSF amendments, the joint_lib module docstring, the plain-language explainer,
+and all Obs entries (including Obs 111–115) already have α = convention. Only
+`reports/key-findings-summary-2026-06-20.md` was inverted. Two correction
+commits were made: `1fffc72` (body + "two quantities both called α" callout +
+dated correction banner) and `f4a93b2` (one residual spec line in a Roma/Italia
+passage). The figure captions were already correct and required no change.
+
+**Interpretive effect.** The correction *strengthens* the paper's central
+motivation: rather than "two-thirds of Roman epigraphy carries a genuine date
+signal," the paper now correctly asserts "two-thirds of Roman epigraphy is
+editorial-convention artefact, only one-third genuine." The headline framing is
+flagged for Shawn's editorial re-review before circulation to co-authors.
+
+### Why this matters
+
+1. **The inversion touched the paper's key headline.** "Two-thirds genuine" vs
+   "two-thirds convention" are opposite claims — each materially changes what
+   the paper is selling to readers. Only one external-facing document had this
+   wrong, but it was the collaborator summary, making the correction urgent.
+2. **The corrected direction is stronger, not weaker.** Most of the *apparent*
+   Roman epigraphic chronology is editorial artefact — that is a stronger
+   motivation for the de-fogging project than the inverted reading.
+3. **Pompeii is the decisive sanity-check.** Future readers who are unsure of
+   the α direction should always check Pompeii first: a sealed, independently
+   dated site buried AD 79 must return near-zero α (convention). The JSON
+   records 0.0156. Any model run or document where Pompeii returns α ≈ 0.98
+   has the direction inverted.
+4. **All Obs entries (111–115 and later) were already correct.** No working-
+   notes entries need to be amended; the canonical project record is clean.
+
+### Caveats / methodological notes
+
+- **Single-document correction only.** No model was re-run; no data changed;
+  no numbers changed. The only change is the interpretive direction label in
+  the key-findings summary and one spec line.
+- **Figure captions were already correct** — they were drafted after the
+  model code was read directly. The inversion was introduced in prose
+  paraphrase, not in code output.
+- **Headline framing for Shawn's re-review.** The correction banner (commit
+  `1fffc72`) explicitly flags this. The "two-thirds convention" framing is the
+  correct substantive claim; whether the paper foregrounds the convention share
+  or the genuine share is an editorial judgement.
+
+### Related observations and artefacts
+
+**Obs 111** (H2.1 supplementary wave — all-29-unit production read-off; empire
+α context): the first Obs to report empire-aggregate α = 0.6798 in the correct
+direction; the corrected summary now agrees with it.
+
+**Obs 113** (exact covariance-attributed temporal-variance partition): cites
+the same production α values, also already direction-correct.
+
+**Obs 114** (Roma + Italia capital comparison): the session entry that introduced
+the "α is the CONVENTION fraction" reminder in its finding block (line 6424–6427
+of working-notes.md), cross-referencing commit `1fffc72` for the first time.
+
+**Obs 115** (women-corpus de-fogging feasibility): uses α = convention
+throughout; unaffected by this correction.
+
+**Obs 117** (women better-dated-subset reachability probe): see the companion
+entry immediately below; cites this Obs for the α-direction canonical statement.
+
+**Artefacts**:
+`reports/key-findings-summary-2026-06-20.md` (corrected file — canonical
+reader-facing summary; correction banner at lines 8–19);
+`runs/2026-06-09-joint-identifiability/code/joint_lib.py` (model code, line
+325: `p_mix = alpha * p_conv + (1.0 - alpha) * p_gen`; line 337: π_align
+identity — **primary direction authority**);
+`runs/2026-06-13-cc-production-refit/outputs/refit-summary.json`
+(empire-aggregate, latin-aggregate, Pompeii α values — **canonical numerical
+source**);
+commit `1fffc72` (main summary correction: body + banner + callout);
+commit `f4a93b2` (last residual spec line).
+
+### Findable later
+
+`alpha-direction-correction`, `alpha-inverted`, `alpha-direction-inverted`,
+`convention-fraction-alpha`, `alpha-is-convention`, `alpha-not-genuine`,
+`genuine-fraction-wrong`, `two-thirds-convention`, `two-thirds-genuine-wrong`,
+`corrected-headline`, `headline-correction`,
+`empire-alpha-0-6798`, `empire-aggregate-alpha-0-6798`,
+`latin-alpha-0-7387`, `latin-aggregate-alpha-0-7387`,
+`pompeii-alpha-0-0156`, `pompeii-sanity-check`, `pompeii-direction-check`,
+`pompeii-1-6-pct-convention`, `pompeii-98-4-pct-genuine`,
+`pi-align-identity`, `theta-conv-0-930`, `theta-gen-0-025`,
+`p-mix-alpha-p-conv`, `joint-lib-line-325`, `joint-lib-line-337`,
+`model-code-direction`, `three-independent-checks`,
+`key-findings-summary`, `collaborator-summary-correction`,
+`correction-banner`, `figure-captions-already-correct`,
+`preregistration-already-correct`, `osf-amendments-already-correct`,
+`working-notes-already-correct`, `obs-111-correct`, `obs-113-correct`,
+`obs-114-correct`, `obs-115-correct`,
+`1fffc72`, `f4a93b2`,
+`obs-111`, `obs-113`, `obs-114`, `obs-115`, `obs-117`,
+`runs-2026-06-13-cc-production-refit`, `refit-summary-json`,
+`joint-identifiability`, `joint-lib-py`
+
+## Obs 117 — 2026-06-21 [RESULT / METHODOLOGY / EXPLORATORY]: Women better-dated-subset reachability probe (Option 2) — NO width-restricted subset reaches the reliable de-fogging envelope; narrowing interval width RAISES the convention fraction
+
+### The finding
+
+**Exploratory / feasibility (2026-06-21). Collaboration data (Adela Sobotkova,
+Aarhus); scope = feasibility and case-study only. NO crossover-age trajectory
+is reported or implied. Operational `datable`/`conjugal` filters need Adela's
+confirmation before any figure is quoted to a third party. NOT preregistered.**
+
+**α is the CONVENTION fraction** (1 − α = genuine); see Obs 116 for the
+canonical direction statement. The reliable de-fogging envelope is α ≤ 0.70
+AND N ≥ the reachability floor (Decision 34).
+
+This Obs records the decisive Option-2 test: does restricting the datable
+conjugal corpus to narrow date-range widths produce a subset that reaches the
+reliable de-fogging envelope?
+
+All numbers read directly from
+`runs/2026-06-20-women-corpus-feasibility/outputs/better-dated-probe-summary.json`
+(2026-06-21) and
+`runs/2026-06-20-women-corpus-feasibility/code/probe_better_dated.py` (driver).
+
+---
+
+**Fitted α by width threshold (all 4 fits: 0 divergences, clean R̂):**
+
+| threshold | N | α (convention) | 95 % CI | R̂ | ESS bulk | reachable? |
+|---|---|---|---|---|---|---|
+| ≤ 50 y | 287 | **0.965** | [0.915, 0.998] | 1.002 | 1,457 | NO (α 0.97 > 0.70 envelope) |
+| ≤ 75 y | 390 | **0.744** | [0.661, 0.915] | 1.002 | 2,391 | NO (α 0.74 > 0.70 envelope) |
+| ≤ 100 y | 792 | **0.820** | [0.754, 0.903] | 1.002 | 2,709 | NO (α 0.82 > 0.70 envelope) |
+| ≤ 150 y | 1,123 | **0.854** | [0.765, 0.952] | 1.002 | 2,041 | NO (α 0.85 > 0.70 envelope) |
+
+*All four fits converge cleanly: R̂ ≤ 1.003, ESS bulk ≥ 1,457, zero divergences.
+The feasibility failure is a reachability verdict, not a sampler failure.*
+
+**Verdict: NO width-restricted subset reaches the envelope.**
+
+---
+
+**Why narrowing width RAISES α (the mechanism):**
+
+The editorial convention in this corpus lives at *round* widths. The JSON
+records that F1_round 25-year slabs account for **68 % of rows** (widths
+49/99/149 y are the canonical round half-century, full-century, and
+sesquicentury slabs). Consequently:
+
+- Restricting to ≤ 50 y selects *into* the round half-century slabs
+  (width = 49 y is one of the most common) — the most convention-dominated
+  band. Hence α = 0.965, the highest of all four thresholds.
+- The genuinely precise core (Tight family, width ≤ 4 y) has N = 6 — far too
+  small to fit.
+- The non-aligned "genuine class" totals N = 315, below the easy-regime
+  reachability floor of 500.
+
+Width is the wrong filtering axis: there is no genuine-dominant sub-corpus
+reachable by date-range width, because the convention is structural at round
+widths, not identifiable by range size.
+
+### Why this matters
+
+1. **The negative result is decisive.** The Option-2 decisive question —
+   "is there a better-dated subset of the women's corpus large enough for
+   reliable de-fogging?" — is answered unambiguously: no. This is a stronger
+   conclusion than Obs 115's overall feasibility verdict because it closes
+   the natural mitigation (restrict to narrower dates) that a reader would
+   propose.
+2. **The mechanism strengthens the Option-2 case-study framing.** The
+   limitation is intrinsic to how conjugal epigraphy is dated in the LIRE
+   catalogue, not a sample-size issue that more data could fix. The editorial
+   convention lives at round widths; any width-based restriction selects
+   *more* conventional inscriptions, not fewer. This is a publishable
+   methodological observation in its own right.
+3. **The crossover-trough timing cannot be put on solid ground by de-fogging
+   at any width-based scale.** The genuine component of the women's corpus
+   is structurally too small and too poorly isolated for temporal inference
+   via this method. The Obs 115 overall feasibility verdict (α ≈ 0.84–0.90)
+   remains the headline; this Obs supplies the mechanism and confirms there
+   is no exit via sub-corpus restriction.
+4. **Direct comparison with JAMT production units (Obs 114/115).** Even the
+   closest threshold (≤ 75 y, α = 0.744) is above the envelope ceiling of
+   0.70, and the CI extends to 0.915 — far from the reliable zone. The
+   least-convention-dominated JAMT province (Britannia, α = 0.449) would
+   need the women's corpus to be about five times more genuine to reach
+   comparable reachability.
+
+### Caveats / methodological notes
+
+- **Width = interval duration, not precision.** A width-49y slab is not
+  "nearly as good as" a width-1y point date; it is an editorial round slab
+  (AD 1–50, 51–100, etc.). The probe tests whether width-selection escapes
+  the convention; it does not.
+- **Four thresholds, one run, no sensitivity analysis.** The thresholds
+  (50/75/100/150 y) were pre-specified in `option-2-case-study-spec.md` §4;
+  no post-hoc threshold shopping. No alternative model specifications tested
+  for these probe subsets.
+- **Collaboration data.** `data/women.csv` is Adela Sobotkova's dataset.
+  These numbers are for feasibility assessment only; not for publication
+  without her involvement.
+- **N values are after the standard `datable`/`conjugal` filter.** The
+  full `data/women.csv` has additional rows outside these filters; the probe
+  operates on the same input population as Obs 115.
+- **The ≤ 75y threshold technically passes the N floor** (N = 390 ≥ the
+  easy-regime 500 floor? No — 390 < 500; it misses even the easy-floor).
+  All four subsets are below the hard-regime floor of 2,000 that applies
+  at these high-α values, and the ≤ 50y and ≤ 75y subsets are below the
+  easy-regime 500 floor too.
+
+### Related observations and artefacts
+
+**Obs 115** (women-corpus de-fogging feasibility — α ≈ 0.84–0.90, overall
+verdict NOT reliably applicable): the Stage-1 feasibility Obs this probe
+extends; the overall-corpus fits provide context for the width-threshold
+series.
+
+**Obs 116** (α-direction correction — α is the CONVENTION fraction; empire
+α = 0.6798 = two-thirds convention): the companion correction Obs; supplies the
+canonical α-direction statement and the Pompeii direction-check for any reader
+who encounters the inverted reading.
+
+**Decision 34** (subset de-fogging / reachability gate): the project decision
+defining α ≤ 0.70 envelope and N ≈ 500 / 2,000 floors; the basis on which
+all four thresholds are classified as unreachable.
+
+**Obs 114** (Roma + Italia capital comparison): establishes the α range for
+JAMT production units (0.56–0.80); useful context for comparing the women's
+probe α values (0.744–0.965) against the production range.
+
+**Artefacts**:
+`runs/2026-06-20-women-corpus-feasibility/outputs/better-dated-probe-summary.json`
+(all α, CI, R̂, ESS, N values read from here — **canonical source**);
+`runs/2026-06-20-women-corpus-feasibility/code/probe_better_dated.py`
+(driver, commit `aca960b`);
+`option-2-case-study-spec.md` §4 (pre-specified thresholds and decisive
+question);
+commit `aca960b` (driver + JSON output — "Option-2 better-dated probe DONE").
+
+### Findable later
+
+`women-better-dated-probe`, `option-2-reachability-probe`, `option-2-decisive`,
+`width-restricted-subset`, `better-dated-subset`, `no-reachable-subset`,
+`reachability-verdict-no`, `width-raises-convention`,
+`women-width-le-50`, `women-width-le-75`, `women-width-le-100`, `women-width-le-150`,
+`probe-width-50-alpha-0-965`, `probe-width-75-alpha-0-744`,
+`probe-width-100-alpha-0-820`, `probe-width-150-alpha-0-854`,
+`alpha-0-965-width-50`, `alpha-0-744-width-75`, `alpha-0-820-width-100`, `alpha-0-854-width-150`,
+`CI-0-915-0-998`, `CI-0-661-0-915`, `CI-0-754-0-903`, `CI-0-765-0-952`,
+`n-287-width-50`, `n-390-width-75`, `n-792-width-100`, `n-1123-width-150`,
+`four-converged-zero-divergences`, `clean-rhat-all-four`,
+`f1-round-68-pct`, `round-widths-structural`, `widths-49-99-149`,
+`round-half-century-slabs`, `width-is-wrong-axis`, `convention-structural-at-round-widths`,
+`tight-family-n-6`, `genuine-core-n-6`, `non-aligned-genuine-n-315`,
+`n-315-below-500-floor`, `n-6-too-small`,
+`reachability-floor-500`, `reachability-floor-2000`, `n-390-below-500`,
+`crossover-trough-cannot-be-placed`, `no-temporal-inference`,
+`intrinsic-limitation`, `not-sample-size-issue`, `structural-not-fixable`,
+`conjugal-epigraphy-round-dated`, `lire-dating-convention-structural`,
+`width-selection-selects-convention`, `narrowing-raises-alpha`,
+`not-preregistered-exploratory`, `collaboration-data-adela`, `feasibility-only`,
+`option-2-case-study-spec`,
+`obs-115`, `obs-116`, `obs-114`, `decision-34`,
+`runs-2026-06-20-women-corpus-feasibility`, `better-dated-probe-summary-json`,
+`probe-better-dated-py`, `aca960b`
