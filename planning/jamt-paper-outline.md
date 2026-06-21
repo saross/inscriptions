@@ -8,7 +8,7 @@ plain-language captions `figure-captions.md`.
 **Style exemplar to match:** Eftimoski, Ross & Sobotkova 2017 (Zotero `ENPYIZQF`) —
 re-read before drafting the methods.
 
-> **Two structural decisions locked with Shawn 2026-06-21:**
+> **Three structural decisions locked with Shawn 2026-06-21:**
 > 1. **Balanced two-act structure** — Act I (the instrument: method + validation +
 >    reachability envelope) and Act II (what it reveals: substantive findings), at
 >    roughly equal weight.
@@ -17,6 +17,12 @@ re-read before drafting the methods.
 >    (province/city/capital) subsetting that carries the rest of Act II. This gives
 >    Act II a single organising principle: **what de-fogging reveals when you point
 >    it at a coherent subset**, geographic first, then thematic.
+> 3. **The population–epigraphy comparison must feature prominently in Act II**
+>    (Shawn 2026-06-21) — it is the **headline substantive result**, not one finding
+>    among several. It leads Act II (§5), is the marquee Act II figure (F7), and is
+>    foregrounded in the Act II opener, the Introduction contribution preview, the
+>    Abstract, and the Discussion. The temporal, content, Rome/Italia, and women
+>    sections support and extend it; they do not crowd it.
 
 > **Anti-confabulation note.** Every number below is a pointer to its source
 > (Observation register `docs/notes/working-notes.md`, run REPORTs, or the figure
@@ -38,9 +44,11 @@ re-read before drafting the methods.
   the author list and order with Shawn before drafting front matter.
 - **Abstract** (~250 words) — write last. Must carry, in plain English: the
   convention-contamination problem; the deconvolution instrument + its validated
-  reachability envelope as the headline method contribution; the substantive
-  findings (within-province sublinear scaling, capital over-production, the
-  near-equal three-tier temporal decomposition); and the diagnostic case study.
+  reachability envelope as the headline *method* contribution; and — as the headline
+  *substantive* result — the **population–epigraphy comparison** (within-province
+  sublinear scaling, capitals over-producing), then the near-equal three-tier
+  temporal decomposition and the diagnostic case study. Give the population finding a
+  full sentence of its own; do not let it be a clause in a list.
 - **Keywords:** epigraphic habit; aoristic dating; summed probability
   distributions; Bayesian deconvolution; Roman urbanism; settlement scaling;
   source criticism. (Finalise against JAMT keyword conventions.)
@@ -70,9 +78,12 @@ empirical-first; set the open-science frame. Plain English throughout.
     deliverable that makes it usable — shipped with a **reachability envelope** (a
     validated rule for when it works).
   - *Act II:* what the instrument reveals when applied to coherent subsets of the
-    corpus — **geographically** (provinces, cities, capitals: the
-    population–epigraphy scaling, capital over-production, the temporal
-    decomposition) and **thematically** (a real demographic corpus, as a diagnostic).
+    corpus. The **headline result is the population–epigraphy comparison** — how
+    inscription output scales with city population (sublinear, within-province, with
+    capitals over-producing) — demonstrated **geographically** (provinces, cities,
+    capitals), then extended by the temporal decomposition, the content axis, the
+    Rome/Italia comparison, and **thematically** (a real demographic corpus, as a
+    diagnostic). Name the population finding here, in the contribution preview.
 - **Empirical-first promise + open science.** State that results are presented
   before interpretation (Obs 101), that the analysis is preregistered (OSF
   `https://osf.io/uycs6/`) with four amendments, and that the corpus is LIRE v3.0
@@ -163,11 +174,19 @@ to a real curve" exhibit, or hold F2 for Act II.
 
 *Act II opener (~150 words): the instrument is subset-agnostic. We demonstrate it on
 coherent subsets — first **geographic** (provinces, cities, capitals), then
-**thematic** (a demographic corpus). Empirical-first: patterns now, interpretation in
-the Discussion. Restate the frame rule: "association with population", "empire-wide
-common temporal component" (not "epigraphic habit") in results.*
+**thematic** (a demographic corpus). **Foreground the headline:** the central
+substantive result of the paper is the **population–epigraphy comparison** (§5) —
+state up front that Act II leads with it, with the temporal decomposition, content
+axis, Rome/Italia, and women case study supporting and extending it. Empirical-first:
+patterns now, interpretation in the Discussion. Restate the frame rule: "association
+with population", "empire-wide common temporal component" (not "epigraphic habit") in
+results.*
 
-## 5. Geographic subsetting I — population and epigraphic output (~1,300 words)
+## 5. Geographic subsetting I — population and epigraphic output (HEADLINE; ~1,400 words)
+
+*The centrepiece substantive result of the paper (Shawn 2026-06-21). Give it the
+fullest treatment in Act II and the marquee figure (F7). Everything that follows in
+Act II builds on or qualifies it.*
 
 - **Within vs between province (define both in plain English).** The within-province
   population effect is **SUPPORTED**: about **48 %** of between-city output variation
@@ -369,7 +388,7 @@ field.
 | 4 Reachability envelope | 800 |
 | **Act II** | |
 | Act II opener | 150 |
-| 5 Scaling | 1,300 |
+| 5 Scaling (HEADLINE) | 1,400 |
 | 6 Temporal decomposition | 1,300 |
 | 7 Content vs acts | 600 |
 | 8 Rome & Italy (exploratory) | 600 |
@@ -379,10 +398,10 @@ field.
 | 11 Limitations | 400 |
 | 12 Conclusion | 300 |
 | 13 Methods admin (+ LLM disclosure) | 400 |
-| **Total (main text)** | **≈ 11,850** |
+| **Total (main text)** | **≈ 11,950** |
 | Abstract (front matter) | 250 |
 
-**This is ~1.8k over the ~10k self-imposed aim.** JAMT sets no hard limit, but if
+**This is ~1.95k over the ~10k self-imposed aim.** JAMT sets no hard limit, but if
 we hold the line, the trim levers (in priority order) are: (a) compress §8 Rome &
 Italy to ~400 or move most of it to the supplement (it is exploratory); (b) fold §7
 content into the end of §5 (~−300); (c) tighten §6 (the post-AD-250 paragraph is the
