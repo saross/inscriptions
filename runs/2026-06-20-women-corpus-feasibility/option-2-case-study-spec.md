@@ -58,16 +58,30 @@ Built on the Option-1 fits (3 converged cc-library fits; `outputs/`):
    *different* artefact from aoristic uncertainty — the methodological point that
    her existing pipeline and ours are complementary, not redundant.
 
-## 4. New analytical work beyond Option 1 (the key piece)
+## 4. New analytical work beyond Option 1 (the key piece) — DONE 2026-06-21
 
-- **The "better-dated subset" probe (THE decisive new analysis).** Does restricting
-  to narrow-interval inscriptions (e.g. date-range width ≤ 50 y, or a securely-dated
-  sub-corpus) move a sub-corpus **into the reliable envelope** (α ≤ 0.70 AND
-  N ≥ ~500)? If **yes**, that sub-corpus can carry an *actual reliable* de-fogged
-  substantive read — materially strengthening Option 2 from "source-criticism +
-  indicative" to "a defensible temporal result on the well-dated core." If **no**,
-  Option 2 rests honestly on §3.1–3.3. Either outcome is reportable. *(A few more
-  cc-library fits on the width-filtered subset — minutes on sapphire.)*
+- **The "better-dated subset" probe — RUN, verdict NO** (`probe_better_dated.py`;
+  `better-dated-probe-summary.json`). Fitting the cc-library deconvolution to the
+  datable conjugal corpus restricted to date-range width ≤ {50, 75, 100, 150} y
+  (all converged, 0 div): **every subset stays above the α ≤ 0.70 envelope** —
+  width ≤ 50y **α = 0.97** (N 287), ≤ 75y **0.74** (N 390), ≤ 100y **0.82** (N 792),
+  ≤ 150y **0.85** (N 1123). **No width-restricted subset reaches the reliable
+  envelope.**
+- **Why (the finding that makes this a *stronger* source-criticism):** width is the
+  WRONG axis — the editorial convention is *structural*, sitting at *round* widths
+  (F1_round 25-year slabs = 68 % of rows; widths 49/99/149y), so narrowing the
+  interval *raises* the convention fraction (≤ 50y is the most convention-dated at
+  0.97, dominated by round half-century slabs). The genuinely-precise core (Tight,
+  width ≤ 4y) is **N = 6**; the non-aligned "genuine class" is **N = 315** — both
+  far below the 500 floor. So there is **no well-dated sub-corpus large enough to
+  rescue a reliable temporal read.**
+- **Consequence for Option 2:** it rests on §3.1–3.3 (source-criticism + the
+  reachability instance + the indicative C2–C3 read), now *strengthened* — the
+  convention is not just ~90 % in aggregate but pervasive and structural, with no
+  clean well-dated core. The crossover-trough *timing* cannot be put on solid
+  ground by de-fogging at any scale (a definite, useful answer for Adela).
+- Still to do: confirm Adela's exact `datable`/`conjugal` definitions; the
+  optional `tempun` overlay; the case-study subsection draft (with her).
 - Confirm Adela's exact `datable` / `conjugal` definitions + any quality gate
   (`link_status` / `confidence`); re-run on her definitions if they differ.
 - (Optional) the `tempun` overlay, pending her output.

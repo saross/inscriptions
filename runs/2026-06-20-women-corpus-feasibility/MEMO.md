@@ -65,6 +65,20 @@ the 95 % band is very wide — the genuine temporal shape is highly uncertain.
   or a securely-dated sub-corpus) could move into the reliable envelope — worth
   exploring if the timing claim is load-bearing.
 
+## Is there a better-dated subset that escapes the problem? (No)
+
+The obvious next question: could we restrict to the *well-dated* inscriptions —
+the narrow date intervals — and de-fog *those* reliably? We checked (fitting the
+corpus restricted to date-range width ≤ 50/75/100/150 years). **No subset
+escapes:** every one stays above the reliable envelope (α from 0.74 to 0.97), and
+the genuinely-precise core is tiny (N = 6 at width ≤ 4y). The reason is
+structural — the editorial convention in this corpus *is* round-number dating:
+68 % of records use round 25-year slabs, and the narrowest "tidy" intervals (the
+round half-centuries, AD 100–150 etc.) are the *most* convention-laden of all
+(width ≤ 50y is 97 % convention). So there is no well-dated core large enough to
+carry a reliable temporal read — the limitation is intrinsic to how this kind of
+corpus is dated, not a matter of sample size we could filter our way around.
+
 ## An indicative read (heavily caveated — *not* a result)
 
 Despite the corpus being outside the reliable regime, the fit is worth showing as

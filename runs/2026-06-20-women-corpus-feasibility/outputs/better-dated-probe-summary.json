@@ -1,0 +1,77 @@
+{
+  "probe": "Option-2 better-dated-subset reachability",
+  "envelope": {
+    "alpha_max": 0.7,
+    "floor_easy": 500,
+    "floor_hard": 2000
+  },
+  "context": {
+    "full_datable_conjugal_N": 1291,
+    "genuine_core_tight_width_le_4_N": 6,
+    "non_aligned_genuine_class_N": 315,
+    "f1_round_share": "68% of rows (convention is structural at round widths)"
+  },
+  "results": [
+    {
+      "threshold": 50,
+      "name": "women-width-le-50",
+      "n": 287,
+      "n_daughters": 99,
+      "alpha": 0.9654169192412076,
+      "alpha_ci": [
+        0.9147357570662217,
+        0.9982856413221622
+      ],
+      "max_rhat": 1.0023478649133724,
+      "min_ess_bulk": 1457.0546766770808,
+      "n_div": 0,
+      "reachable": "NO (\u03b1 0.97 > 0.7 envelope)"
+    },
+    {
+      "threshold": 75,
+      "name": "women-width-le-75",
+      "n": 390,
+      "n_daughters": 146,
+      "alpha": 0.7443603571987494,
+      "alpha_ci": [
+        0.6613509439173443,
+        0.9148542095832278
+      ],
+      "max_rhat": 1.0023208045740237,
+      "min_ess_bulk": 2391.3797556497057,
+      "n_div": 0,
+      "reachable": "NO (\u03b1 0.74 > 0.7 envelope)"
+    },
+    {
+      "threshold": 100,
+      "name": "women-width-le-100",
+      "n": 792,
+      "n_daughters": 268,
+      "alpha": 0.8196456500959084,
+      "alpha_ci": [
+        0.7538880970802504,
+        0.9033983227913517
+      ],
+      "max_rhat": 1.001597676506384,
+      "min_ess_bulk": 2708.7706477133297,
+      "n_div": 0,
+      "reachable": "NO (\u03b1 0.82 > 0.7 envelope)"
+    },
+    {
+      "threshold": 150,
+      "name": "women-width-le-150",
+      "n": 1123,
+      "n_daughters": 382,
+      "alpha": 0.8542582304745545,
+      "alpha_ci": [
+        0.7651142078971451,
+        0.9521787890038287
+      ],
+      "max_rhat": 1.0020324550837298,
+      "min_ess_bulk": 2041.0231917000149,
+      "n_div": 0,
+      "reachable": "NO (\u03b1 0.85 > 0.7 envelope)"
+    }
+  ],
+  "verdict": "NO width-restricted subset reaches the envelope"
+}
