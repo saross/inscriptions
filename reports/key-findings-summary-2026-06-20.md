@@ -447,6 +447,57 @@ the convention fraction** — higher α = more editorial dating.*
 
 ---
 
+## 4c. A real-corpus case study — Adela's wives and daughters (de-fogging as a diagnostic)
+
+*Added 2026-06-21; collaboration data (Adela Sobotkova, co-author) — descriptive,
+not for circulation beyond the author team without her involvement. This is the
+**Option-2 case-study** material (more than a method demo, short of the substantive
+marriage-age history, which is the planned EJA companion). The conceptual frame
+is deliberate: on a corpus like this, de-fogging is a **diagnostic + hypothesis
+generator**, not a prover.*
+
+We applied the same convention-deconvolution to a real, externally-sourced
+demographic corpus — Adela's wives-and-daughters inscriptions (the basis of her
+"From Graveyard to Time Series" marriage-age work; 1,291 datable records). The
+question behind the Shaw–Saller crossover-age tradition is whether the *temporal
+distribution* of dated familial inscriptions is trustworthy enough for
+time-resolved demographic claims. The honest answer, for this corpus, is **no — and
+structurally so**, which is itself the useful, transferable finding:
+
+- **The time axis is ~90 % editorial convention** (convention fraction α ≈ 0.90;
+  the median date range is ~100 years, and 68 % of records use round 25-year
+  slabs). Expected, given how such corpora are dated — but now quantified.
+- **There is no rescuable well-dated core.** Restricting to narrow date intervals
+  does *not* help: convention lives at *round* widths, so the tightest "tidy"
+  intervals are the *most* convention-laden (the ≤50-year band is 97 % convention).
+  The genuinely-precise core is a handful of records — far below the size the method
+  needs. So the limit is intrinsic to the dating, not a sample-size problem.
+- **Indicative only (a hypothesis, not a result):** de-fogging tentatively shifts
+  mass *into* the C2–C3 trough window — i.e. the apparent thinness of the record
+  there may be partly an editorial artefact — but the uncertainty is far too large
+  to lean on. A hypothesis to test on better-dated data.
+
+![Women corpus de-fogging — feasibility (genuine vs raw, with the verdict)](../runs/2026-06-20-women-corpus-feasibility/outputs/fig-women-genuine-vs-raw.png)
+
+**De-fogging vs `tempun`.** Adela's group's `tempun` tool models *dating
+uncertainty* (random dates within each interval); our method removes *editorial
+convention*. They correct **different** artefacts. Running `tempun` ourselves makes
+this concrete: its curve tracks the raw, convention-contaminated shape (both peak
+~AD 188) — `tempun` adds uncertainty bands but is *blind* to the convention, and
+would report that peak as if genuine. The de-fogging is what diagnoses that it is
+mostly round-slab artefact. Complementary, not redundant.
+
+![Women corpus — tempun (dating uncertainty) vs de-fogging (convention)](../runs/2026-06-20-women-corpus-feasibility/outputs/fig-women-tempun-comparison.png)
+
+**Bottom line:** convention de-fogging is a **necessary first diagnostic** for
+inscription-based Roman demography — it tells you whether a corpus's time axis can
+carry time-resolved claims, and when it can't (as here), it converts apparent
+patterns into *hypotheses for better-dated work* rather than conclusions. (Full
+detail: `runs/2026-06-20-women-corpus-feasibility/MEMO.md` + the Option-2 spec /
+outline; Obs 115, 117.)
+
+---
+
 ## 5. Headline takeaways
 
 1. **About two-thirds of empire-wide dated inscriptions are editorial round-slab convention, not a

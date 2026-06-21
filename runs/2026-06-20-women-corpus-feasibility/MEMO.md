@@ -103,6 +103,26 @@ window.) The point for the crossover paper: de-fogging does not *erase* the trou
 window's signal — if anything it firms it up — but the uncertainty here is too
 large to lean on.
 
+## The figures
+
+The de-fogged temporal distribution (with the verdict), and the per-role genuine
+medians — note the wide uncertainty band, which *is* the message:
+
+![Women corpus de-fogging — feasibility (genuine vs raw + verdict)](outputs/fig-women-genuine-vs-raw.png)
+
+## De-fogging vs `tempun` (they correct different things)
+
+Your `tempun` pipeline models *aoristic dating uncertainty*; our deconvolution
+removes *editorial convention*. They are complementary, not redundant. We ran
+`tempun` over the corpus ourselves: its curve tracks the raw (convention-laden)
+shape — both peak ~AD 188 — because `tempun` adds uncertainty bands but does not
+remove the round-slab convention. Our de-fogged curve is different. So `tempun`
+would report the AD-188 peak as if genuine; the de-fogging is what reveals it is
+mostly editorial. (If you share your own `tempun` output we can confirm ours
+matches.)
+
+![Women corpus — tempun (dating uncertainty) vs de-fogging (convention)](outputs/fig-women-tempun-comparison.png)
+
 ## §4 — confirm before we quote any figure to anyone
 
 - Our operational **`conjugal`** = role ∈ {wife, daughter} ∧ type = familial (the
