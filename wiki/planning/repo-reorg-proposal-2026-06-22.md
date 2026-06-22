@@ -3,7 +3,7 @@ title: "Inscriptions repo reorganisation — proposal"
 tags: [infrastructure, coding-practices]
 created: 2026-06-22
 updated: 2026-06-22
-status: PROPOSAL — awaiting Shawn; NO MOVES EXECUTED (read-only survey only)
+status: PROPOSAL — D1 resolved (2026-06-22); D2–D7 pending; NO MOVES EXECUTED
 ---
 
 # Inscriptions repo reorganisation — proposal
@@ -90,6 +90,7 @@ inscriptions/
 │   ├── decision-log.md        # ← planning/decision-log.md     (governance → wiki)
 │   ├── research-intent.md     # ← planning/research-intent.md  (governance → wiki)
 │   ├── reflections/           # ← docs/notes/reflections/ (4 meta-research logs)
+│   ├── prereg/                # OSF preregistration + amendments + compliance audits (D1)
 │   └── planning/              # ACTIVE plans only (see §3-C)
 ├── data/                      # unchanged (inputs: hanson2016/, processed/, women.csv)
 ├── scripts/                   # unchanged (7 analysis/build scripts)
@@ -142,7 +143,7 @@ inscriptions/
 | `archive/specs/` | 5 × `h2.1-*.md`; `h3a-confirmatory-launch-spec-2026-06-04.md`; `h3a-design-artefact-2026-06-04.md`; `spec-decision-33-harness-update-2026-06-03.md` |
 | `archive/scouts/` | `lit-scout-2026-05-25-pottery-aoristic-roman/`; `lit-scout-2026-06-19-aoristic-mc-misclassification-bias/`; `prior-art-scout-2026-04-25-aoristic-envelope.md`; `prior-art-scout-2026-05-19-hmm-aoristic.md`; `prior-art-scout-2026-05-25-ceramics-aoristic-techniques/`; `prior-art-scout-2026-06-02-recovery-validation-metrics.md`; `scout-2026-06-09-identifiability-remediation-SYNTHESIS.md` |
 | `archive/cross-model-review/` | `gemini-statistical-review.md`; `GPT55-statistical-review.md`; `chatgpt-review-triage.md`; `chatgpt-cross-model-review-prompt.md`; `prereg-saturation-check-gemini.md`; `prereg-saturation-check-GPT55.md`; `saturation-check-prompt-2026-05-17.md` |
-| `archive/audits/` | `doc-accuracy-audit-2026-06-20.md`; `prereg-obligations-audit-2026-06-05.md`; `prereg-obligations-audit-2026-06-18.md`; `prereg-obligations-coverage-sweep-2026-06-20.md`; `results-documentation-uplift-2026-06-20.md`; `recovery-grid-utility-review-2026-06-02.md` |
+| `archive/audits/` | `doc-accuracy-audit-2026-06-20.md`; `results-documentation-uplift-2026-06-20.md`; `recovery-grid-utility-review-2026-06-02.md` *(the 3 prereg-obligations audits move to `wiki/prereg/` instead — D1)* |
 | `archive/consultation/` | `martin.md`; `martin-consultation-pack-2026-05-17.md`; `martin-consultation-2026-05-25-followup.md`; `martin-review-statistical-grounds-2026-06-04.md`; `cc-briefing-2026-04-22.md`; `memos/2026-04-23-reflect-multi-invocation.md` |
 | `archive/conference-talk-rac-trac-2026/` | merge live `planning/conference-talk-rac-trac-2026/` (32 files) into the existing `archive/planning/conference-talk-rac-trac-2026/` (delivered 2026-05-22) |
 
@@ -150,12 +151,29 @@ inscriptions/
 knowledge. Phase 4 re-greps each for live references before moving (rule below); any that
 turns out live drops back to §3-C.
 
-### E. OSF / preregistration cluster — **DECISION D1 (see §4)**
+### E. OSF / preregistration cluster — **D1 RESOLVED (Shawn 2026-06-22): → `wiki/prereg/`**
 
-The 27 `osf-*` / `prereg*` / `preregistration*` / `cross-model-adversarial-review-preregistration.md`
-files. **Not auto-moved.** Proposed: consolidate into `wiki/planning/prereg/` (keeps the record
-together and discoverable), *conditional on* confirming nothing external links the in-repo
-paths (§4 D1). `preregistration-changelog.md` is live and travels with the cluster.
+No external link targets exist (Shawn confirmed — the only references are *internal*, e.g. the
+collaborator key-findings summary), so consolidation is safe. The cluster goes to a dedicated
+**`wiki/prereg/`** — a top-level wiki dir, sibling to `planning/` and `reflections/`, **not**
+under `planning/`: a *lodged* preregistration is a frozen, externally-registered record, not a
+mutable working plan (full reasoning in §4 D1). Members:
+
+- **the registered record + formal amendments:** `preregistration-draft.md`,
+  `preregistration-changelog.md`, all `osf-amendment-*` (numbered 01–04 justification/addendum
+  + dated `.md`/`.pdf`), `osf-supplementary-2026-05-20.{md,pdf}`,
+  `prereg-note-2026-06-09-alpha-identifiability.md`,
+  `cross-model-adversarial-review-preregistration.md`;
+- **the compliance record** (moved here from `archive/audits/` — it documents that the analysis
+  honoured the prereg, part of the open-science spine): `prereg-obligations-audit-2026-06-05.md`,
+  `prereg-obligations-audit-2026-06-18.md`, `prereg-obligations-coverage-sweep-2026-06-20.md`.
+
+*Pre-lodgement QA stays in archive:* `prereg-saturation-check-{gemini,GPT55}.md` and
+`saturation-check-prompt-2026-05-17.md` are completed *process* that fed lodgement, not the
+record itself → they remain in `archive/cross-model-review/` (§3-D). Optional sub-structure: a
+`wiki/prereg/amendments/` subdir if the amendment files want grouping (flat is fine for v1).
+Internal references (the collaborator summary etc.) are path-updated or carried by the
+concordance.
 
 ### F. future companion paper (aeneas / HMM) — **DECISION D2**
 
@@ -165,14 +183,16 @@ future paper. Proposed: group under `wiki/planning/future-papers/` (or leave; lo
 
 ## 4. Decision points (resolve before Phase 4)
 
-- **D1 — OSF/prereg cluster (the important one).** Move-with-care per spec rule 15. Git tags
-  (`osf-lodgement-2026-05-20`, `osf-amendment-01..04`) point to *commits*, not paths, so a
-  move is git-safe and tags still resolve. The risk is an **external link to an in-repo
-  path** (the OSF registration page or the lodged supplementary). OSF hosts its own uploaded
-  copies, so this is *likely* safe — but it needs your confirm. Options: **(a)** consolidate
-  into `wiki/planning/prereg/` after you confirm no external pointer; **(b)** leave the
-  cluster in a `planning/prereg/` subdir under the *old* path (minimal touch); **(c)** leave
-  entirely in place. *Recommend (a) if you can confirm; (b) as the safe default.*
+- **D1 — OSF/prereg cluster — RESOLVED (Shawn 2026-06-22).** Confirmed: **no external link
+  targets** — the only references are internal (e.g. the collaborator key-findings summary).
+  Git tags (`osf-lodgement-2026-05-20`, `osf-amendment-01..04`) point to *commits* not paths,
+  so they resolve regardless. **Home: `wiki/prereg/`** (a top-level wiki dir), *not*
+  `planning/`. **Reasoning** (Shawn's question — "isn't a prereg a plan?"): it *originates* as
+  a plan, but once **lodged** it changes character — a frozen, timestamped, externally-
+  registered commitment you can only alter through the formal amendment mechanism, never freely
+  edit. The real axis is *mutable working plan* (→ `planning/`) vs *frozen registered record*
+  (→ `prereg/`); the lodged prereg is the latter and earns a first-class category beside
+  `reflections/`. Membership + the compliance-audit vs pre-lodgement-QA split in §3-E.
 - **D2 — aeneas/HMM companion grouping** (§3-F): `wiki/planning/future-papers/` vs leave.
 - **D3 — `ai-contributions.md` home**: `reports/` (beside `llm-use-inventory.md`) vs `wiki/`
   vs archive (if superseded by the inventory). *Recommend `reports/`.*
@@ -213,7 +233,8 @@ the tree internally consistent.
    `archive/README.md` noting categories and that pre-reorg paths inside refer to the old
    layout; merge the split conference-talk dir.
 4. **active plans → wiki/planning** — `git mv` the §3-C set.
-5. **OSF cluster** — per D1 resolution (may be a no-op).
+5. **prereg cluster** — `git mv` the OSF/prereg record + compliance audits into `wiki/prereg/`
+   (§3-E); update the internal references (collaborator summary etc.) or carry via concordance.
 6. **documentation** — README rewrite; concordance finalised.
 
 ## 7. Verification checklist (gate before PR/push)
