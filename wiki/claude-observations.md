@@ -155,3 +155,49 @@ elevating something to a "needs sign-off / pending" flag.
 **How to apply.** Before flagging an external dependency, do the cheap check that might dissolve it (here:
 inspect the columns + count what a gate would actually drop). Flag what genuinely remains open; resolve in
 place what doesn't.
+
+## claude-obs 8 — 2026-06-23: Shawn audits the handoff artefact itself, not just the work
+
+**Pattern.** After I reported the session wrapped — continuity updated, machines synced — Shawn did not
+accept the report; he asked two pointed verification questions, both aimed at the *handoff* rather than the
+analysis: "is `continuity.md` a self-sufficient sole starting point?" and "check we're fully synced across
+amd-tower and zbook, and that sapphire has no untracked artefacts I might need." Both found real gaps (the
+stale cold-start sections; remotes 17–62 commits behind).
+
+**Lesson.** Shawn treats the continuity/handoff layer as a first-class deliverable with its own acceptance
+bar — because he lives downstream of it (a fresh machine in three weeks). A claim that "the handoff is done"
+invites, and should withstand, a cold-start audit.
+
+**How to apply.** At session close, pre-empt the check: verify the entry-point doc by reading it cold
+(reader-order — do the paths resolve? is the "start here" content current?) and verify sync by SHA across
+*every* machine, before reporting done — not after he asks.
+
+## claude-obs 9 — 2026-06-23: Shawn pushes on category boundaries, and scopes instructions surgically to protect prior work
+
+**Pattern.** Two instances this session. (1) On where the prereg cluster should live he pushed back on my
+"`planning/prereg/`" — *"I want planning for plans… I guess a prereg is a plan? what do you suggest?"* —
+forcing the plan-vs-frozen-record distinction that produced `wiki/prereg/`. (2) At wind-down: *"do the parts
+of /handoff that won't interfere with the continuity beacon you've just set up so carefully"* — a precise
+carve-out to avoid clobbering crafted work.
+
+**Lesson.** He thinks in clean conceptual categories and expects the file structure (and the rituals) to
+honour them; he will also hand me scoped instructions that protect specific artefacts. Both are invitations
+to reason about boundaries, not merely execute.
+
+**How to apply.** When he questions a placement, treat it as a real ontology question (how does this artefact
+*change* over time?), not a preference to accommodate. When he scopes a ritual to exclude something, respect
+the carve-out exactly — run the rest, leave the protected thing untouched.
+
+## claude-obs 10 — 2026-06-23 [self-critique]: I conflated "I updated it" with "it works for a cold reader"
+
+**Pattern.** I carefully updated continuity's beacon + remaining-work and declared it a good handoff — but
+the sections a cold reader enters through (the "read in this order" list, "if context feels cold") were
+untouched and stale in both content and paths. I'd audited the doc from my full-context editing position, not
+from a newcomer's blank-slate one. Shawn's question exposed it.
+
+**Lesson.** "Changed the document" and "the document now serves someone who has only it" are different claims
+needing different checks; the second requires reading in the reader's order from the reader's cold state.
+
+**How to apply.** Before calling a handoff/continuity doc done, read its *entry* sections cold and verify
+concretely — every cold-start path resolves, and the "start here" content reflects current state. (See
+session-reflection Entry 30 and abductive-reasoning Entry 34 for the fuller treatment.)
