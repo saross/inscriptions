@@ -1,0 +1,37 @@
+# Runs howfairis (https://fair-software.eu) against this repository to keep the
+# FAIR-compliance badge in the README honest. Informational only — never blocks
+# (the registry and core-infrastructures checks are not pursued for a research-
+# analysis repo; see README "FAIR & reproducibility").
+name: FAIR software check
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "CITATION.cff"
+      - "codemeta.json"
+      - ".zenodo.json"
+      - "README.md"
+  schedule:
+    # Monthly, on the 1st at 06:00 UTC — catch drift in linked resources.
+    - cron: "0 6 1 * *"
+
+permissions:
+  contents: read
+
+jobs:
+  howfairis:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run howfairis
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        continue-on-error: true
+        run: |
+          python -m pip install --upgrade pip
+          pip install howfairis
+          howfairis https://github.com/saross/inscriptions

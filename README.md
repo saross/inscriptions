@@ -2,6 +2,10 @@
 
 **Mixture-corrected SPAs of Latin inscriptions vs Hanson urban population: a preregistered three-phase analysis.**
 
+[![fair-software.eu](https://img.shields.io/badge/fair--software.eu-%E2%97%8F%20%20%E2%97%8F%20%20%E2%97%8B%20%20%E2%97%8F%20%20%E2%97%8B-orange)](https://fair-software.eu)
+[![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
+[![FAIR software check](https://github.com/saross/inscriptions/actions/workflows/fair-software.yml/badge.svg)](https://github.com/saross/inscriptions/actions/workflows/fair-software.yml)
+
 This repository hosts the code, decision log, run reports, and supplementary planning artefacts for an open-science project applying summed probability analysis (SPA) to the Latin Inscriptions of the Roman Empire (LIRE v3.0) corpus, together with a Bayesian deconvolution-mixture model that corrects for editorial-template dating artefacts in the source data.
 
 ## Preregistration
@@ -14,6 +18,19 @@ This repository hosts the code, decision log, run reports, and supplementary pla
 
 - Shawn Ross (Macquarie University) — author
 - Adela Sobotková (Aarhus University) — co-author
+
+## Citing this work
+
+If you use this software or analysis, please cite it via the metadata in
+[`CITATION.cff`](CITATION.cff) — GitHub's "Cite this repository" button reads it
+directly. Machine-readable metadata is also provided as
+[`codemeta.json`](codemeta.json) (CodeMeta) and [`.zenodo.json`](.zenodo.json)
+(for Zenodo deposition). A preferred citation pointing to the forthcoming JAMT
+article will be added on publication.
+
+Underlying data should be cited separately: LIRE v3.0 (Kaše, Heřmánková &
+Sobotková 2023, DOI `10.5281/zenodo.8431452`) and the Hanson (2016) OXREP Roman
+Cities Dataset (tDAR 448563).
 
 ## Methodology overview
 
@@ -44,6 +61,16 @@ The repository follows the canonical four-artefact `wiki/` layout (migrated from
 - **Data**: LIRE v3.0 (Kaše, Heřmánková & Sobotková 2023, Zenodo DOI `10.5281/zenodo.8431452`; CC-BY-4.0). Hanson (2016) OXREP Roman Cities Dataset (tDAR record 448563) for `urban_context_pop_est`.
 - **Seeds**: fixed random seed `20260425` for the Phase 1 simulation; per-stage seeds documented in each `runs/<date>-<name>/spec.md`.
 
+## FAIR4RS compliance
+
+This repository follows FAIR-for-Research-Software (FAIR4RS) practice for documentation and metadata:
+
+- **Citation/metadata:** `CITATION.cff`, `codemeta.json`, and `.zenodo.json` (see *Citing this work*).
+- **Self-assessment:** scores 3/5 on the [fair-software.eu](https://fair-software.eu) checklist (open repository ✓, licence ✓, citation ✓). The two unmet checks are deliberately not pursued for a research-*analysis* repository: a package **registry** entry (PyPI/RSD — this is analysis code, not a distributed package) and an OpenSSF best-practices **checklist** badge (disproportionate for a solo analysis repo). The check re-runs in CI (`.github/workflows/fair-software.yml`).
+- **Persistent identifier (at submission):** the analysis will be deposited to Zenodo via the GitHub–Zenodo integration to mint a DOI (and a Software Heritage SWHID), per Springer Nature's code-availability policy — done at manuscript submission, not before. `.zenodo.json` pre-stages the deposit metadata.
+
+Provenance and the FAIR4RS prior-art basis for these choices: `wiki/planning/prior-art-scout-2026-06-23-fair4rs-docs-uplift.md`.
+
 ## Licence
 
-Code: see `LICENSE` (default project licence). Data: as licensed by their respective sources (LIRE CC-BY-4.0; Hanson per OXREP terms).
+Code: Apache-2.0 (see `LICENSE`). Data: as licensed by their respective sources (LIRE CC-BY-4.0; Hanson per OXREP terms).
