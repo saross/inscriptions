@@ -98,7 +98,7 @@
 
 - Primary: Shawn Ross (TBD; depends on collaboration).
 - Adela Sobotková as co-author (standing arrangement on the inscription SPA work; she's been in the SDAM team's conceptual territory throughout).
-- AI contribution attribution (per `planning/ai-contributions.md`): the variance-based reframing was proposed by Claude during a critical-friend review on 2026-04-23; the research design and execution are Shawn's and collaborators'.
+- AI contribution attribution (per `wiki/ai-contributions.md`): the variance-based reframing was proposed by Claude during a critical-friend review on 2026-04-23; the research design and execution are Shawn's and collaborators'.
 
 ## 9. Related work to revisit before drafting
 

@@ -23,7 +23,7 @@ The reframing: use Aeneas's predictive **variance / distribution shape** (not me
 
 **Why this matters.** The partition depends on predictive variance, not predictive mean — variance reflects how diffusely the text content pins the date, a latent quantity independent of editorial label frequency. This sidesteps the training-data-circularity that afflicts re-dating uses of Aeneas.
 
-**Downstream impact.** Identified as the basis for a potential follow-up paper (`planning/paper-outlines/aeneas-partition.md`). Noted in `planning/future-studies.md` as FS-1. No paper in our Aeneas-cluster bibliography does this reframing, so the contribution appears to be genuinely novel.
+**Downstream impact.** Identified as the basis for a potential follow-up paper (`wiki/planning/future-papers/aeneas-partition.md`). Noted in `wiki/planning/future-studies.md` as FS-1. No paper in our Aeneas-cluster bibliography does this reframing, so the contribution appears to be genuinely novel.
 
 ---
 
@@ -41,7 +41,7 @@ with α estimated from the dataset (e.g., via the midpoint-inflation ratio or a 
 
 **Claude's recommendation.** Given the options, (iv) is the most novel and publishable methodology contribution. Recommended including it as headline methodology in the main SPA paper rather than a separate publication, because it strengthens the main paper without scope-creep.
 
-**Downstream impact.** Recorded in `planning/future-studies.md` as FS-2. After a critical-friend push-back on an earlier four-co-equal-methods plan, **elevated to the primary correction method in the main SPA paper** (per Decision 7 in `planning/decision-log.md`). Not co-equal; it's the headline. Stratification (the nearest-equivalent approach) demoted to appendix as cross-check. Thresholded SPAs (Shawn's 2024 practice) retained as in-body robustness. baorista Bayesian run on a subset and reported as comparative methodology in appendix. FS-0 captures the contingent methods/results split of the main paper with an end-of-Week-1-of-sprint (2026-05-03) commitment deadline — default single combined paper.
+**Downstream impact.** Recorded in `wiki/planning/future-studies.md` as FS-2. After a critical-friend push-back on an earlier four-co-equal-methods plan, **elevated to the primary correction method in the main SPA paper** (per Decision 7 in `wiki/decision-log.md`). Not co-equal; it's the headline. Stratification (the nearest-equivalent approach) demoted to appendix as cross-check. Thresholded SPAs (Shawn's 2024 practice) retained as in-body robustness. baorista Bayesian run on a subset and reported as comparative methodology in appendix. FS-0 captures the contingent methods/results split of the main paper with an end-of-Week-1-of-sprint (2026-05-03) commitment deadline — default single combined paper.
 
 ---
 

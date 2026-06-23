@@ -3,7 +3,7 @@
 **Date:** 2026-04-22
 **Source:** `lit-scout` proposer + `lit-scout-verifier` (serial proposer-verifier pattern per `notes/lit-scout-case-study.md`).
 **Verification:** 25 / 25 rows passed adversarial re-query against CrossRef + OpenAlex metadata. 0 corrections applied. Verifier specifically re-checked author orderings on 8-author rows (#11, #12), Czech diacritics on SDAM rows (#6, #7, #8, #23, #25), and non-CrossRef registries (Zenodo #23, arXiv #25) — all pass.
-**BibTeX file:** `planning/inscriptions-spa.bib` (generated from this DOI set via CrossRef content negotiation).
+**BibTeX file:** `sources/inscriptions-spa.bib` (generated from this DOI set via CrossRef content negotiation).
 
 ---
 
@@ -102,7 +102,7 @@ A robust SDAM/Aarhus–West Bohemia cluster exists around Kaše / Heřmánková 
 ## Zotero actions
 
 1. **Merge duplicate Meyer 1990 entries** (keys `SIUN4WXI`, `WNBSMYDZ`). Run as part of the planned cull pass.
-2. **Add 24 NEW entries** (all rows except #22) via the BibTeX file at `planning/inscriptions-spa.bib`. File-import into Zotero.
+2. **Add 24 NEW entries** (all rows except #22) via the BibTeX file at `sources/inscriptions-spa.bib`. File-import into Zotero.
 3. **Subcollection path**: `SDAM-AU > SPA > 2026 conference paper` (per proposed Zotero structure in the backlog).
 4. **Parallel**: run `/gaps` on the existing `SDAM-AU > SPA` collection to surface anything this bibliography missed.
 

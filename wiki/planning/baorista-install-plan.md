@@ -4,10 +4,10 @@ date: 2026-04-24
 author: "Shawn Ross (with Claude Code, Opus 4.7)"
 status: plan only — no installs executed
 preregistration cross-references:
-  - planning/decision-log.md Decision 3 (baorista as Bayesian sensitivity)
-  - planning/preregistration-draft.md §3 (aoristic sampling), §5 small-N city trajectory, §9 software stack
-  - planning/future-studies.md FS-4 (provincial prosperity reconstruction)
-  - planning/prior-art-scout-2026-04-25-aoristic-envelope.md §3 (baorista source review)
+  - wiki/decision-log.md Decision 3 (baorista as Bayesian sensitivity)
+  - wiki/prereg/preregistration-draft.md §3 (aoristic sampling), §5 small-N city trajectory, §9 software stack
+  - wiki/planning/future-studies.md FS-4 (provincial prosperity reconstruction)
+  - archive/scouts/prior-art-scout-2026-04-25-aoristic-envelope.md §3 (baorista source review)
   - scripts/h3a_brms_shadow.R + runs/2026-04-25-h3a-brms-shadow/{plan.md, README.md}
 ---
 
@@ -36,7 +36,7 @@ by the inscriptions project for three uses:
    preregistration explicitly notes "Implementation likely shares the
    baorista pipeline (Decision 3) — practical economy."
 3. **FS-4 follow-up paper** (provincial prosperity reconstruction,
-   `planning/future-studies.md`) — baorista is the **primary**
+   `wiki/planning/future-studies.md`) — baorista is the **primary**
    methodology for the follow-up paper, with provincial-scale
    trajectory estimation as the workhorse.
 

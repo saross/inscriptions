@@ -8,7 +8,7 @@ This repository hosts the code, decision log, run reports, and supplementary pla
 
 - **OSF preregistration**: <https://osf.io/uycs6/> — lodged 2026-05-20; currently under embargo pending publication review.
 - **Lodgement-state tag**: `osf-lodgement-2026-05-20` (commit `a2e40fd`) pins the repository state at lodgement. Readers verifying any claim in the preregistration should clone or browse at this tag, not at `main`.
-- **Source documents**: `planning/preregistration-draft.md` (working version, may have post-lodgement amendments); `planning/osf-supplementary-2026-05-20.md` + `.pdf` (lodged supplementary).
+- **Source documents**: `wiki/prereg/preregistration-draft.md` (working version, may have post-lodgement amendments); `wiki/prereg/osf-supplementary-2026-05-20.md` + `.pdf` (lodged supplementary). The full preregistration record — draft, changelog, the four OSF amendments, and the obligations/compliance audits — lives under `wiki/prereg/`.
 
 ## Authors
 
@@ -27,11 +27,15 @@ The interpretive question — what inscription production proxies (urban-informa
 
 ## Repository layout
 
-- `planning/` — the preregistration, decision log, changelog, OSF supplementary upload, conference-talk planning, and the prior-art scouts.
+The repository follows the canonical four-artefact `wiki/` layout (migrated from the legacy `docs/notes/` + `planning/` layout on 2026-06-23; `wiki/index.md` carries the full old→new path concordance).
+
+- `wiki/` — project memory: `continuity.md` (the living handoff doc), `working-notes.md` (research log), `reflections/` (meta-research logs), `decision-log.md`, `research-intent.md`, `ai-contributions.md`, the **preregistration record** (`wiki/prereg/` — lodged prereg, OSF amendments, compliance audits), and **active plans** (`wiki/planning/`, incl. `future-papers/`).
+- `sources/` — bibliographic inputs: BibTeX (`*.bib`) and annotated bibliographies.
+- `data/` — datasets (Hanson 2016, processed inputs, `women.csv`).
 - `runs/` — per-run artefacts (specification, code, outputs, REPORT.md) for each analysis stage.
 - `scripts/` — long-lived helper scripts. `h3a_brms_shadow.R` is the R/brms cross-language shadow of the H3a within-between (Mundlak) negative-binomial regression: it refits the preregistered model (priors matched to the pymc primary, including the `1/shape` Jacobian) and writes `beta_within`, `beta_between`, `f_within`, and Bayesian R² for a posterior-level agreement check against the pymc primary, plus R-native legibility for co-authors. Run as `Rscript scripts/h3a_brms_shadow.R [INPUT_PARQUET] [OUTPUT_DIR]`. (The earlier pooled-model shadow is retired to `archive/superseded-code/`.) Bespoke Zotero-staging one-offs have been retired to `archive/superseded-code/zotero-staging/`; for literature/citation/Zotero work, use the shared cross-project tooling in `~/personal-assistant/scripts/` (see `CLAUDE.md`).
-- `archive/` — superseded notebooks and historical materials; reference only.
-- `docs/notes/reflections/` — the living continuity document and working-notes log.
+- `reports/` — curated output reports (the key-findings summary; the LLM-use inventory).
+- `archive/` — completed history (superseded code/notebooks, archived plans, beacons, specs, scouts, cross-model reviews, audits, consultation, conference talk); reference only.
 
 ## Reproducibility
 

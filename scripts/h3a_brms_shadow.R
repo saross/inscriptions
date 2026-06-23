@@ -8,7 +8,7 @@
 #                2026-04-25 pooled shadow now in
 #                archive/superseded-code/h3a_brms_shadow-pooled-pre-mundlak-2026-04-25.R)
 # Licence:       MIT (see repository LICENCE)
-# Preregistration cross-reference: planning/preregistration-draft.md §3
+# Preregistration cross-reference: wiki/prereg/preregistration-draft.md §3
 #                (Bayesian NBR for H3a) + §9 (software stack).
 # Decision cross-reference: Decision 12 (within-between Mundlak rescope);
 #                Decision 22 (H3a uses date-window-filtered counts, NOT mixture-
