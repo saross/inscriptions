@@ -1,7 +1,7 @@
 # JAMT paper — paper-wide outline
 
 **Status:** OUTLINE for discussion → drafting. Built 2026-06-21 with Shawn.
-**Governing brief:** `planning/paper-writing-brief.md` (LOCKED 2026-06-20).
+**Governing brief:** `wiki/planning/paper-writing-brief.md` (LOCKED 2026-06-20).
 **On-ramp / results narrative:** `reports/key-findings-summary-2026-06-20.md`.
 **Figures:** `runs/2026-06-20-figures/outputs/` (F1–F19 + W1); index `figindex.md`,
 plain-language captions `figure-captions.md`.
@@ -25,7 +25,7 @@ re-read before drafting the methods.
 >    sections support and extend it; they do not crowd it.
 
 > **Anti-confabulation note.** Every number below is a pointer to its source
-> (Observation register `docs/notes/working-notes.md`, run REPORTs, or the figure
+> (Observation register `wiki/working-notes.md`, run REPORTs, or the figure
 > index), re-read at source for the key-findings summary on 2026-06-20. Re-verify
 > each at the source file when it lands in actual draft prose, per the standing rule.
 

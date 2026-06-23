@@ -4,9 +4,9 @@ status: placeholder; substantive work deferred until the current epigraphic-SPA 
 audience: "Martin Eftimoski (collaborator); Shawn (PI); future-CC continuing"
 date-created: 2026-05-26
 related-artefacts:
-  - docs/notes/reflections/continuity.md §"Martin Eftimoski consultation outcome — recalibration (2026-05-26)"
+  - wiki/continuity.md §"Martin Eftimoski consultation outcome — recalibration (2026-05-26)"
   - runs/2026-05-26-letter-count-probe/REPORT.md
-  - planning/h2.1-stage-3-implementation-plan-2026-05-25.md
+  - archive/specs/h2.1-stage-3-implementation-plan-2026-05-25.md
 ---
 
 # Hidden-Markov-model follow-up paper — stub
@@ -49,7 +49,7 @@ Until those conditions hold, the HMM track stays in this stub.
 
 - [x] **2026-05-26**: this stub created.
 - [ ] **Pre-trigger**: invite Martin to the GitHub repo at `https://github.com/saross/inscriptions` so he can read the codebase asynchronously. Martin is a Claude Code power user; he'll run his own analyses when ready.
-- [ ] **Pre-trigger**: a short prior-art scan on HMM / state-space / latent-population models applied to historical demographic data. Likely candidates from the 2026-05-19 HMM-aoristic prior-art scout at `planning/prior-art-scout-2026-05-19-hmm-aoristic.md` — that scout confirmed `baorista` (Crema 2025) as the natural emission-layer foundation, and identified that the inscription / latent-population combination is genuinely novel.
+- [ ] **Pre-trigger**: a short prior-art scan on HMM / state-space / latent-population models applied to historical demographic data. Likely candidates from the 2026-05-19 HMM-aoristic prior-art scout at `archive/scouts/prior-art-scout-2026-05-19-hmm-aoristic.md` — that scout confirmed `baorista` (Crema 2025) as the natural emission-layer foundation, and identified that the inscription / latent-population combination is genuinely novel.
 - [ ] **Pre-trigger**: a single-page methodological sketch that Martin can read in 5 minutes — emission distribution candidates (Negative Binomial for inscription counts; Negative Binomial again for letter mass with higher α dispersion; jointly with shared latent), state-space prior structures (rising-then-falling with structural-break detection), and what a result would look like.
 
 ## Authority and amendment
@@ -58,8 +58,8 @@ This stub is methodological development and pre-paper exploration. **No OSF amen
 
 ## Cross-references
 
-- `docs/notes/reflections/continuity.md` §"Martin Eftimoski consultation outcome — recalibration (2026-05-26)" — the consultation that triggered this stub.
-- `planning/prior-art-scout-2026-05-19-hmm-aoristic.md` — earlier HMM prior-art scout (predates Martin's letter-count nudge).
+- `wiki/continuity.md` §"Martin Eftimoski consultation outcome — recalibration (2026-05-26)" — the consultation that triggered this stub.
+- `archive/scouts/prior-art-scout-2026-05-19-hmm-aoristic.md` — earlier HMM prior-art scout (predates Martin's letter-count nudge).
 - `runs/2026-05-26-letter-count-probe/REPORT.md` — the probe whose results define the two-measure observation channel.
 - Memory `2026-05-26-214ce5ca1491` — Martin Eftimoski profile (statistician collaborator; comp-sci PhD; econometric training; weaker in Bayesian statistics).
 

@@ -85,7 +85,7 @@ Partition the corpus by predictive-variance quantile. Run stratified SPAs on eac
 
 **Why this sidesteps circularity.** The partition depends on predictive variance, not predictive mean. Aeneas learning "AD 150 is a common label" from training doesn't bias its *variance* estimate — variance reflects how diffusely the text content pins the date, which is a different latent quantity from how often editors chose a given label.
 
-**Standalone-paper potential.** Yes — this is genuinely novel (no paper in the computational-sibling bibliography does it). Target venues: NLP4DH or LaTeCH (ACL workshops), *Journal of Digital History*, *Digital Scholarship in the Humanities*. Length: 5–7k words. Outline at `planning/paper-outlines/aeneas-partition.md`.
+**Standalone-paper potential.** Yes — this is genuinely novel (no paper in the computational-sibling bibliography does it). Target venues: NLP4DH or LaTeCH (ACL workshops), *Journal of Digital History*, *Digital Scholarship in the Humanities*. Length: 5–7k words. Outline at `wiki/planning/future-papers/aeneas-partition.md`.
 
 **Prerequisites.**
 - Aeneas model weights available (via `google-deepmind/predictingthepast`).
@@ -159,4 +159,4 @@ Rationale for the architecture change: stratified and mixture answer largely the
 - Entries numbered FS-N.
 - Each entry includes origin (when/where), contributor attribution, current status, revisit trigger, and a clean framing of the idea.
 - When an entry is "graduated" (i.e., promoted to main-paper scope, started as separate paper, or explicitly abandoned), note the graduation with date and outcome; do not delete the entry.
-- When contributor attribution names Claude: the factual source of the idea matters for Shawn's research-record practice (see `planning/ai-contributions.md`).
+- When contributor attribution names Claude: the factual source of the idea matters for Shawn's research-record practice (see `wiki/ai-contributions.md`).

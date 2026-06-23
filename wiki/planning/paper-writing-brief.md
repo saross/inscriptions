@@ -154,20 +154,20 @@ every claim in the disclosure is *auditable* against artefacts the project alrea
 keeps, so the write-up can cite evidence rather than assert good practice (pull
 exact counts at drafting; these are current as of 2026-06-20):
 
-- **Observations registers** — `docs/notes/working-notes.md` (the research
-  observations log, through **Obs 112**) and `docs/notes/claude-observations.md`
+- **Observations registers** — `wiki/working-notes.md` (the research
+  observations log, through **Obs 112**) and `wiki/claude-observations.md`
   (a separate "Claude observing Shawn" register): a contemporaneous record of
   findings and methodological turns as they happened.
 - **Decisions register** — the logged design decisions (through **Decision 38**),
-  in `planning/` + the continuity doc: every methodological choice, dated, with
+  in `wiki/` + the continuity doc: every methodological choice, dated, with
   rationale.
-- **Reflection apparatus** — `docs/notes/reflections/` (`reasoning-log.md`,
+- **Reflection apparatus** — `wiki/reflections/` (`reasoning-log.md`,
   `session-reflection.md`, `abductive-reasoning.md`, `session-log.md`, and the
   `continuity.md` session-close beacons): the agent's own reasoning trail.
 - **Preregistration** — OSF `https://osf.io/uycs6/` (lodged 2026-05-20) + **four
   amendments** (git tags `osf-amendment-01..04`): the analysis was registered
   *before* it ran, and every deviation is tagged.
-- **Independent verification** — `planning/doc-accuracy-audit-2026-06-20.md` (the
+- **Independent verification** — `archive/audits/doc-accuracy-audit-2026-06-20.md` (the
   multi-agent audit, ~677 numerical specifics re-verified) and the lit-scout /
   prior-art verifier passes.
 - **Full git history** + the captured agent sessions (transcript location to

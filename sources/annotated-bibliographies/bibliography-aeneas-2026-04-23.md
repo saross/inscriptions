@@ -2,9 +2,9 @@
 
 **Date:** 2026-04-23
 **Source:** supplementary `lit-scout` + `lit-scout-verifier` run (proposer-verifier serial chain per `notes/lit-scout-case-study.md`).
-**Motivation:** the primary `lit-scout` run of 2026-04-22 chained through SDAM epigraphy + Crema/Bevan SPD methodology + Hanson urban demography and missed the computational-sibling cluster. This pass fills the gap. See `docs/notes/reflections/working-notes.md` Obs 10 for the methodological lesson (`[PATTERN]` tag).
+**Motivation:** the primary `lit-scout` run of 2026-04-22 chained through SDAM epigraphy + Crema/Bevan SPD methodology + Hanson urban demography and missed the computational-sibling cluster. This pass fills the gap. See `wiki/working-notes.md` Obs 10 for the methodological lesson (`[PATTERN]` tag).
 **Verification:** 15/15 rows passed adversarial re-query; 0 corrections to the findings table; Cullhed 2025 year resolved against CrossRef/OpenAlex mismatch (2025 canonical). Working draft and full narrative (landscape, reading tiers, venue analysis, gap analysis, direct answers) preserved at `/tmp/inscriptions-lit-scout-aeneas-draft-2026-04-23.md`.
-**BibTeX:** `planning/inscriptions-aeneas.bib` (14 CrossRef-grounded entries; Bamman & Burns 2020 arXiv-only, added manually via Zotero import).
+**BibTeX:** `sources/inscriptions-aeneas.bib` (14 CrossRef-grounded entries; Bamman & Burns 2020 arXiv-only, added manually via Zotero import).
 
 ---
 
@@ -60,7 +60,7 @@
 - NLP4DH / LaTeCH-CLfL / ML4AL / ALP (ACL workshops) — DH / ancient-language ML.
 - IEEE CH — Ceriotti 2025.
 
-**Recommendation if our paper turns out to need a computational-sibling venue**: *Digital Scholarship in the Humanities* for a critical audit; NLP4DH / LaTeCH for a positive ML contribution. Primary venues (JAMT, JAS) per `planning/bibliography-2026-04-22.md` unchanged.
+**Recommendation if our paper turns out to need a computational-sibling venue**: *Digital Scholarship in the Humanities* for a critical audit; NLP4DH / LaTeCH for a positive ML contribution. Primary venues (JAMT, JAS) per `sources/annotated-bibliographies/bibliography-2026-04-22.md` unchanged.
 
 ## Zotero actions (additions to Issue #1 scope)
 

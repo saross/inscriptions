@@ -17,7 +17,7 @@ House flags (reconstructed from the lodged supplementary build, commit a2e40fd):
 Usage::
 
     python scripts/build-amendment-pdf.py \
-        planning/osf-amendment-2026-05-29-two-measure-framework.md
+        wiki/prereg/osf-amendment-2026-05-29-two-measure-framework.md
 
 The output PDF is written alongside the input (``.md`` -> ``.pdf``). The PDF is a
 build artefact, not committed source; regenerate it whenever the markdown changes.
