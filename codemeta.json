@@ -1,0 +1,54 @@
+{
+  "@context": "https://w3id.org/codemeta/3.0",
+  "@type": "SoftwareSourceCode",
+  "name": "inscriptions",
+  "description": "Code, preregistered analysis, and figures for applying summed probability analysis (SPA) to the Latin Inscriptions of the Roman Empire (LIRE v3.0), with a Bayesian deconvolution-mixture model that separates editorial round-number dating convention from genuine temporal signal, and relates inscription production to Hanson urban-population estimates.",
+  "version": "0.1.0",
+  "dateModified": "2026-06-23",
+  "license": "https://spdx.org/licenses/Apache-2.0",
+  "codeRepository": "https://github.com/saross/inscriptions",
+  "programmingLanguage": [
+    "Python",
+    "R"
+  ],
+  "runtimePlatform": "Python 3.13",
+  "developmentStatus": "active",
+  "keywords": [
+    "Roman epigraphy",
+    "Latin inscriptions",
+    "summed probability analysis",
+    "aoristic dating",
+    "Bayesian deconvolution",
+    "epigraphic habit",
+    "settlement scaling",
+    "Roman urbanism",
+    "reproducible research"
+  ],
+  "author": [
+    {
+      "@type": "Person",
+      "@id": "https://orcid.org/0000-0002-6492-9025",
+      "givenName": "Shawn",
+      "familyName": "Ross",
+      "affiliation": {
+        "@type": "Organization",
+        "name": "Macquarie University"
+      }
+    },
+    {
+      "@type": "Person",
+      "@id": "https://orcid.org/0000-0002-4541-3963",
+      "givenName": "Adela",
+      "familyName": "Sobotková",
+      "affiliation": {
+        "@type": "Organization",
+        "name": "Aarhus University"
+      }
+    }
+  ],
+  "referencePublication": {
+    "@type": "CreativeWork",
+    "name": "OSF preregistration",
+    "url": "https://osf.io/uycs6/"
+  }
+}

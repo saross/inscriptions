@@ -1,0 +1,62 @@
+# Citation File Format (CFF) v1.2.0 — https://citation-file-format.github.io
+# Validate with: cffconvert --validate   (pip install cffconvert)
+# This describes how to cite the SOFTWARE/analysis. A preferred-citation
+# pointing to the published paper will be added once the JAMT article is out.
+cff-version: 1.2.0
+message: "If you use this software or analysis, please cite it using these metadata."
+title: "inscriptions: mixture-corrected summed probability analysis of Latin inscriptions and Roman urban population"
+abstract: >-
+  Code, preregistered analysis, and figures for applying summed probability
+  analysis (SPA) to the Latin Inscriptions of the Roman Empire (LIRE v3.0),
+  with a Bayesian deconvolution-mixture model that separates editorial
+  round-number dating convention from genuine temporal signal, and relates
+  inscription production to Hanson urban-population estimates.
+type: software
+authors:
+  - given-names: Shawn
+    family-names: Ross
+    orcid: "https://orcid.org/0000-0002-6492-9025"
+    affiliation: "Macquarie University"
+  - given-names: Adela
+    family-names: Sobotková
+    orcid: "https://orcid.org/0000-0002-4541-3963"
+    affiliation: "Aarhus University"
+version: "0.1.0"
+date-released: "2026-06-23"
+license: Apache-2.0
+repository-code: "https://github.com/saross/inscriptions"
+url: "https://github.com/saross/inscriptions"
+keywords:
+  - Roman epigraphy
+  - Latin inscriptions
+  - summed probability analysis
+  - aoristic dating
+  - Bayesian deconvolution
+  - epigraphic habit
+  - settlement scaling
+  - Roman urbanism
+  - reproducible research
+identifiers:
+  - type: url
+    value: "https://osf.io/uycs6/"
+    description: "OSF preregistration for this analysis"
+references:
+  - type: data
+    title: "Latin Inscriptions of the Roman Empire (LIRE), v3.0"
+    authors:
+      - family-names: Kaše
+        given-names: Vojtěch
+      - family-names: Heřmánková
+        given-names: Petra
+      - family-names: Sobotková
+        given-names: Adela
+    year: 2023
+    doi: "10.5281/zenodo.8431452"
+    license: CC-BY-4.0
+  - type: data
+    title: "Cities database (OXREP Roman cities)"
+    authors:
+      - family-names: Hanson
+        given-names: John W.
+    year: 2016
+    notes: "tDAR record 448563; used for urban-context population estimates."

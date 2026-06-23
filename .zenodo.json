@@ -1,0 +1,42 @@
+{
+  "title": "inscriptions: mixture-corrected summed probability analysis of Latin inscriptions and Roman urban population",
+  "description": "Code, preregistered analysis, and figures for applying summed probability analysis (SPA) to the Latin Inscriptions of the Roman Empire (LIRE v3.0), with a Bayesian deconvolution-mixture model that separates editorial round-number dating convention from genuine temporal signal, and relates inscription production to Hanson urban-population estimates.",
+  "upload_type": "software",
+  "access_right": "open",
+  "license": "Apache-2.0",
+  "creators": [
+    {
+      "name": "Ross, Shawn",
+      "orcid": "0000-0002-6492-9025",
+      "affiliation": "Macquarie University"
+    },
+    {
+      "name": "Sobotková, Adela",
+      "orcid": "0000-0002-4541-3963",
+      "affiliation": "Aarhus University"
+    }
+  ],
+  "keywords": [
+    "Roman epigraphy",
+    "Latin inscriptions",
+    "summed probability analysis",
+    "aoristic dating",
+    "Bayesian deconvolution",
+    "epigraphic habit",
+    "settlement scaling",
+    "Roman urbanism",
+    "reproducible research"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "https://osf.io/uycs6/",
+      "relation": "isSupplementedBy",
+      "scheme": "url"
+    },
+    {
+      "identifier": "10.5281/zenodo.8431452",
+      "relation": "references",
+      "scheme": "doi"
+    }
+  ]
+}
