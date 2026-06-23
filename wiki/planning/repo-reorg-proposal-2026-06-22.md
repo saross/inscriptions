@@ -3,7 +3,7 @@ title: "Inscriptions repo reorganisation — proposal"
 tags: [infrastructure, coding-practices]
 created: 2026-06-22
 updated: 2026-06-22
-status: PROPOSAL — D1 resolved (2026-06-22); D2–D7 pending; NO MOVES EXECUTED
+status: PROPOSAL — all decisions D1–D7 RESOLVED (2026-06-22/23); NO MOVES EXECUTED — ready for Phase 4
 ---
 
 # Inscriptions repo reorganisation — proposal
@@ -89,9 +89,14 @@ inscriptions/
 │   ├── claude-observations.md # ← docs/notes/claude-observations.md
 │   ├── decision-log.md        # ← planning/decision-log.md     (governance → wiki)
 │   ├── research-intent.md     # ← planning/research-intent.md  (governance → wiki)
+│   ├── ai-contributions.md    # ← planning/ai-contributions.md (AI-contribution log; D3)
 │   ├── reflections/           # ← docs/notes/reflections/ (4 meta-research logs)
 │   ├── prereg/                # OSF preregistration + amendments + compliance audits (D1)
-│   └── planning/              # ACTIVE plans only (see §3-C)
+│   └── planning/              # ACTIVE plans only; incl. future-papers/ (§3-C, D2)
+├── sources/                   # NEW — bibliographic inputs, LIVING not archived (D5)
+│   ├── inscriptions-spa.bib   # ← planning/ (this paper, 23 entries)
+│   ├── inscriptions-aeneas.bib  # ← planning/ (aeneas paper, 14 entries)
+│   └── annotated-bibliographies/  # ← planning/bibliography-*.md (Shawn continues to use these)
 ├── data/                      # unchanged (inputs: hanson2016/, processed/, women.csv)
 ├── scripts/                   # unchanged (7 analysis/build scripts)
 ├── reports/                   # unchanged (key-findings-summary, llm-use-inventory)
@@ -99,9 +104,10 @@ inscriptions/
 └── archive/                   # expanded, archive-don't-delete, categorical subdirs (§3-D)
 ```
 
-`docs/` ceases to exist (held only `notes/`). Top level becomes eight role-true entries:
-`wiki/` = project memory, `data/` = inputs, `scripts/` = code, `reports/` = curated outputs,
-`runs/` = run record/workspace, `archive/` = completed history, plus README + config.
+`docs/` ceases to exist (held only `notes/`). Top level becomes **nine** role-true entries:
+`wiki/` = project memory, `sources/` = bibliographic inputs, `data/` = datasets, `scripts/` =
+code, `reports/` = curated outputs, `runs/` = run record/workspace, `archive/` = completed
+history, plus README + config.
 
 ## 3. Classification — every current item → target
 
@@ -124,16 +130,25 @@ inscriptions/
 |---|---|
 | `planning/decision-log.md` | `wiki/decision-log.md` |
 | `planning/research-intent.md` | `wiki/research-intent.md` |
-| `planning/ai-contributions.md` | **D3** — `reports/` (beside `llm-use-inventory.md`) or `wiki/` or archive |
+| `planning/ai-contributions.md` | `wiki/ai-contributions.md` *(D3 resolved — living AI-contribution log; NOT standardised, see §4 D3)* |
 
 ### C. active plans (`planning/` → `wiki/planning/`)
 
 `jamt-paper-outline.md`, `paper-writing-brief.md`,
 `paper-significance-and-applications-2026-06-03.md`, `paper-subsection-reachability.md`,
 `archive-search-crash-diagnosis-2026-06-21.md`, `baorista-install-plan.md`,
-`future-studies.md`, and **this document** (already there). Bibliography
-(`inscriptions-spa.bib`, `bibliography-2026-04-22.md`) → `wiki/planning/` for now, or a new
-`sources/` (**D5**, low priority).
+`future-studies.md`, and **this document** (already there).
+
+**`wiki/planning/future-papers/` (D2 RESOLVED — all three future-paper plans live here, each
+cross-referencing its source material):**
+- `hmm-followup.md` ← `planning/hmm-paper-stub/README.md` (Martin's HMM pivot; baorista emission layer)
+- `aeneas-partition.md` ← `planning/paper-outlines/aeneas-partition.md` (Aeneas text/convention partition; JDH/NLP4DH)
+- `eja-women-crossover-age.md` — **NEW stub**, cross-referencing the women run
+  (`runs/2026-06-20-women-corpus-feasibility/`: `option-2-case-study-outline.md`, `MEMO.md`) —
+  the deferred EJA crossover-age companion (Option 3).
+
+The single-file `paper-outlines/` and `hmm-paper-stub/` dirs then dissolve. Bibliographies go to
+`sources/` (§3-G), not here.
 
 ### D. completed history (`planning/` → `archive/<category>/`)
 
@@ -175,11 +190,26 @@ record itself → they remain in `archive/cross-model-review/` (§3-D). Optional
 Internal references (the collaborator summary etc.) are path-updated or carried by the
 concordance.
 
-### F. future companion paper (aeneas / HMM) — **DECISION D2**
+### F. future-paper plans — **D2 RESOLVED → `wiki/planning/future-papers/`**
 
-`hmm-paper-stub/README.md`, `paper-outlines/aeneas-partition.md`,
-`bibliography-aeneas-2026-04-23.md`, `inscriptions-aeneas.bib` — material for a *separate*
-future paper. Proposed: group under `wiki/planning/future-papers/` (or leave; low urgency).
+All three future-paper plans live together (detail in §3-C): the HMM follow-up, the
+Aeneas-partition paper, and a **new EJA women-crossover-age stub** cross-referencing the women
+run. Their bibliographies go to `sources/` (§3-G), not here.
+
+### G. bibliographic sources — **D5 RESOLVED → new top-level `sources/`**
+
+Bibliographies are neither plans nor data, so they get their own role-true home. **These are
+LIVING reference material (Shawn continues to use them) — NOT archived.**
+
+| Current | Target |
+|---|---|
+| `planning/inscriptions-spa.bib` (23 entries) | `sources/inscriptions-spa.bib` |
+| `planning/inscriptions-aeneas.bib` (14 entries) | `sources/inscriptions-aeneas.bib` |
+| `planning/bibliography-2026-04-22.md` (annotated SPA bib) | `sources/annotated-bibliographies/` |
+| `planning/bibliography-aeneas-2026-04-23.md` (annotated aeneas bib) | `sources/annotated-bibliographies/` |
+
+(The `references.bib` inside the two `lit-scout-*` dirs are scoped to those runs and travel with
+them to `archive/scouts/` — §3-D.)
 
 ## 4. Decision points (resolve before Phase 4)
 
@@ -193,14 +223,32 @@ future paper. Proposed: group under `wiki/planning/future-papers/` (or leave; lo
   edit. The real axis is *mutable working plan* (→ `planning/`) vs *frozen registered record*
   (→ `prereg/`); the lodged prereg is the latter and earns a first-class category beside
   `reflections/`. Membership + the compliance-audit vs pre-lodgement-QA split in §3-E.
-- **D2 — aeneas/HMM companion grouping** (§3-F): `wiki/planning/future-papers/` vs leave.
-- **D3 — `ai-contributions.md` home**: `reports/` (beside `llm-use-inventory.md`) vs `wiki/`
-  vs archive (if superseded by the inventory). *Recommend `reports/`.*
-- **D4 — `continuity-2026-04-23.md`**: `archive/beacons/` (proposed) vs keep as historical in
-  `wiki/reflections/`.
-- **D5 — bibliography files**: `wiki/planning/` (proposed, minimal) vs a new `sources/` dir.
-- **D6 — `GPT55-*` rename** to lowercase (`gpt55-*`) to match `gemini-*`: yes/no (concorded).
-- **D7 — branch/PR**: `chore/repo-reorg` + PR (proposed, per Full-tier + global rule).
+- **D2 — future-paper plans — RESOLVED (Shawn 2026-06-23).** **All three** future-paper plans
+  group under `wiki/planning/future-papers/` (HMM follow-up, Aeneas-partition, + a **new EJA
+  women-crossover-age stub** that cross-references the women run). §3-C / §3-F.
+- **D3 — `ai-contributions.md` — RESOLVED → `wiki/`** (Shawn 2026-06-23). It is a *living
+  governance log* of substantive AI intellectual contributions (RDA AI-disclosure practice),
+  distinct from `reports/llm-use-inventory.md` (quantitative inventory) and
+  `wiki/claude-observations.md` (how-we-work). Lives at `wiki/` top-level beside `decision-log.md`
+  / `research-intent.md`. **Standardisation answer (Shawn asked):** it is **NOT** standardised —
+  it exists *only* in inscriptions, and is **not** named in the canonical wiki layout
+  (`~/personal-assistant/wiki/index.md`) nor the LLM-use disclosure standard
+  (`~/personal-assistant/data/notes/llm-use-disclosure-standard.md`, which standardises the
+  *quantitative* inventory + a governance narrative, not a contributions log). *Adjacent things
+  that ARE standardised:* the LLM-use disclosure (standard + `llm-use-inventory.py` →
+  `reports/llm-use-inventory.md`) and `claude-observations.md` (rolled out across repos).
+  **Open follow-up (out of this reorg's scope):** if you want a contributions log in every paper
+  repo, add it to the canonical layout and/or reference it from the disclosure standard — a small
+  separate infra task; flagged, not done here.
+- **D4 — `continuity-2026-04-23.md` — RESOLVED → `archive/beacons/`** (Shawn 2026-06-23):
+  archive-don't-delete a superseded dated snapshot (file + content preserved, per the standing
+  rule). Same class as the next-session-prompts / backlogs.
+- **D5 — bibliographies — RESOLVED → new top-level `sources/`** (Shawn 2026-06-23). `.bib` →
+  `sources/`; the annotated bibliographies (`bibliography-*.md`) → `sources/annotated-bibliographies/`
+  and are **kept living, NOT archived** (Shawn continues to use them). §3-G.
+- **D6 — rename `GPT55-*` → `gpt55-*` — RESOLVED: yes** (Shawn 2026-06-23). Rename-on-move into
+  `archive/cross-model-review/`, concorded.
+- **D7 — branch/PR — RESOLVED: yes** (Shawn 2026-06-23). Execute on `chore/repo-reorg` + PR.
 
 ## 5. Reference integrity
 
@@ -228,14 +276,18 @@ the tree internally consistent.
 
 1. **wiki migration** — `git mv` the `docs/notes/` artefacts; create `wiki/index.md` (with
    the old→new concordance); remove the empty `docs/`.
-2. **governance → wiki** — `git mv` `decision-log.md`, `research-intent.md`.
-3. **archive sweep** — create `archive/<category>/` subdirs (§3-D) + `git mv`; add/extend
-   `archive/README.md` noting categories and that pre-reorg paths inside refer to the old
-   layout; merge the split conference-talk dir.
-4. **active plans → wiki/planning** — `git mv` the §3-C set.
-5. **prereg cluster** — `git mv` the OSF/prereg record + compliance audits into `wiki/prereg/`
+2. **governance → wiki** — `git mv` `decision-log.md`, `research-intent.md`, `ai-contributions.md`.
+3. **archive sweep** — create `archive/<category>/` subdirs (§3-D) + `git mv`; **rename
+   `GPT55-*` → `gpt55-*` on the way in** (D6); add/extend `archive/README.md` noting categories
+   and that pre-reorg paths inside refer to the old layout; merge the split conference-talk dir.
+4. **active plans → wiki/planning** — `git mv` the §3-C set; create `wiki/planning/future-papers/`
+   (`git mv` HMM stub → `hmm-followup.md`, aeneas outline → `aeneas-partition.md`; **write the new
+   `eja-women-crossover-age.md` stub**); dissolve the emptied `paper-outlines/` & `hmm-paper-stub/`.
+5. **sources split** — create `sources/` + `sources/annotated-bibliographies/`; `git mv` the two
+   `.bib` and the two `bibliography-*.md` (D5); these are LIVING, not archived.
+6. **prereg cluster** — `git mv` the OSF/prereg record + compliance audits into `wiki/prereg/`
    (§3-E); update the internal references (collaborator summary etc.) or carry via concordance.
-6. **documentation** — README rewrite; concordance finalised.
+7. **documentation** — README rewrite; concordance finalised.
 
 ## 7. Verification checklist (gate before PR/push)
 
