@@ -16,6 +16,13 @@ last-updated: 2026-06-23 SESSION CLOSE (**JAMT OUTLINE + REPO CANONICALISED [wik
 - At **end of each session**: tick off items completed (`[x]`) with date, add new pending items, prune items that have become irrelevant.
 - Session-specific reflections (texture, patterns, surprises) go in `reasoning-log.md` and `working-notes.md`, not here.
 - Dated snapshot files (e.g., `continuity-2026-04-23.md`) are historical records — do not update them; use this file instead.
+- **Repository layout & path resolution.** The repo is on the canonical four-artefact `wiki/`
+  layout (since the 2026-06-23 reorg). **`wiki/index.md` is the map** — directory roles plus an
+  old→new path concordance. **Entries in this doc dated before 2026-06-23 use pre-reorg paths**
+  (`planning/…`, `docs/notes/…`); resolve them via that concordance. Current homes: continuity /
+  working-notes / reflections / decision-log / research-intent / ai-contributions / `prereg/` /
+  active `planning/` all under `wiki/`; run artefacts under `runs/`; datasets under `data/`;
+  bibliography under `sources/`; completed history under `archive/`.
 
 ---
 
@@ -303,7 +310,7 @@ Big autonomous build while Shawn AFK. **THREE things the next session must know:
 All committed/pushed; sapphire ran both jobs clean. **OPEN for Shawn: (a) the α
 headline framing; (b) the women Stage-2 definition.**
 
-## Write-up parameters (LOCKED 2026-06-20 — full brief: `planning/paper-writing-brief.md`)
+## Write-up parameters (LOCKED 2026-06-20 — full brief: `wiki/planning/paper-writing-brief.md`)
 
 The governing parameters for the write-up phase (Shawn 2026-06-20). The full brief carries the main-text
 vs supplement split and the assets list; these are the headline constraints:
@@ -544,6 +551,31 @@ Logged for later consideration. Not part of the 2026-05-19 OSF lodgement; would 
 
 ## Priority artefacts (read in this order if context is cold)
 
+**[REFRESHED 2026-06-23 — current reading list. The pre-reorg list further below is retained as
+a historical record; its paths are pre-reorg — resolve via the concordance in `wiki/index.md`.]**
+
+1. **The `last-updated` SESSION CLOSE beacon (frontmatter, top of this file) + the
+   "2026-06-23 session" block above** — current state + the full remaining-tasks forward plan.
+   **Start here.**
+2. `wiki/index.md` — the repo map: directory roles + the old→new path concordance.
+3. `reports/key-findings-summary-2026-06-20.md` — the non-specialist results narrative; the
+   **write-up on-ramp** (every headline number, per section, re-read at source).
+4. `wiki/planning/jamt-paper-outline.md` — the agreed two-act paper structure (the next deliverable).
+5. `wiki/planning/paper-writing-brief.md` — the LOCKED write-up parameters (JAMT, ~10k words,
+   dual readership, style exemplar Eftimoski-Ross-Sobotková 2017, Zotero `ENPYIZQF`).
+6. `wiki/working-notes.md` — the research Observations register (the empirical record behind
+   every claim).
+7. `wiki/prereg/preregistration-draft.md` + `wiki/prereg/preregistration-changelog.md` — the
+   lodged preregistration + its revision history (four amendments lodged, under `wiki/prereg/`).
+8. `wiki/decision-log.md` — the numbered design-decisions register (through Decision 38).
+9. `wiki/planning/prior-art-scout-2026-06-23-fair4rs-docs-uplift.md` — the FAIR4RS uplift basis
+   (for the documentation tasks D–F).
+
+Deeper context: run `REPORT.md`s under `runs/`; meta-research under `wiki/reflections/`; the OSF
+amendment trail under `wiki/prereg/`.
+
+### Historical reading list (pre-Phase-2; pre-reorg paths — resolve via `wiki/index.md`)
+
 1. `planning/preregistration-changelog.md` — full revision history through the 2026-05-16 rewrite, the citation audit corrections, the ChatGPT pass, the 2026-05-17 rewrite, the QA pass, and the round-3 saturation check. **Start here** for the most efficient orientation to current state.
 2. `planning/preregistration-draft.md` — current preregistration (post-round-3). Single most important document. ~451 lines.
 3. `planning/decision-log.md` — Decisions 1–26. **Most recent and highest-relevance: 18–26 (round-2-driven, 2026-05-17)**, especially the four Martin-flagged: 19 (multinomial likelihood primary + supplementaries), 21 (procedural recovery-grid + per-cell coverage rule + design artefact), 23 (Pearson residuals + asymmetric draw-wise / posterior-mean treatment), 25 (numerical PPC triggers). Also recent: **12 (within-between H3a + variance partition primary)**, **14 (Bayesian mixture + recovery sim)**, **15 (H3b exploratory)**, **16 (drop H3c regional pattern)**. **Decision 17 SUPERSEDED by Decision 20** (artefact reframed from anchor-year spikes to template-interval slab structure).
@@ -607,6 +639,17 @@ Raised during the talk-prep sensitivities and the Phase 2 recovery-grid launch; 
 ---
 
 ## If context feels cold
+
+**[REFRESHED 2026-06-23 — current quick-start. The pre-reorg version is retained below as historical.]**
+
+1. Read the `last-updated` beacon + the "2026-06-23 session" block (top of this file) — current state + remaining tasks (~3 min).
+2. Read `reports/key-findings-summary-2026-06-20.md` — what the project found, in plain language (~10 min).
+3. Skim `wiki/planning/jamt-paper-outline.md` + `wiki/planning/paper-writing-brief.md` — the next deliverable (the JAMT write-up) and its locked parameters (~5 min).
+4. Hit an old path in an older entry below? Resolve it via the concordance in `wiki/index.md`.
+
+That's enough to engage substantively. Deeper context (the lodged prereg under `wiki/prereg/`, the decisions register, working-notes, run `REPORT.md`s) reads in another 20–30 min.
+
+### (historical quick-start — pre-reorg paths)
 
 1. Read `planning/preregistration-draft.md` start to finish (~10 min).
 2. Read `planning/backlog-2026-05-03.md` for what's left to do + caveats (~5 min).
