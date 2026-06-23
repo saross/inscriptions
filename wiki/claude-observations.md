@@ -5,7 +5,7 @@ title: "Claude-observations register — inscriptions project"
 audience: "next CC instance; Shawn (rare reads)"
 status: living; NEW register (2026-06-20), being wired up; entries land at `/handoff` time
 started: 2026-06-20
-last-updated: 2026-06-20
+last-updated: 2026-06-23
 ---
 
 # Claude-observations register — inscriptions project
@@ -201,3 +201,45 @@ needing different checks; the second requires reading in the reader's order from
 **How to apply.** Before calling a handoff/continuity doc done, read its *entry* sections cold and verify
 concretely — every cold-start path resolves, and the "start here" content reflects current state. (See
 session-reflection Entry 30 and abductive-reasoning Entry 34 for the fuller treatment.)
+
+## claude-obs 11 — 2026-06-23: gated survey→proposal→PR discipline made an irreversible migration safe to approve
+
+**Pattern.** For the repo reorg — hard to reverse (~2,000 tracked files, OSF-registered artefacts, `git mv`
+across the tree) — I ran read-only survey (Phases 0–2) → a written proposal that STOPPED at the human gate →
+execution on a branch with a PR, never an autonomous move-spree. Shawn approved a big migration the day
+before three weeks' travel *because* the risk was contained and reviewable.
+
+**Lesson.** The cost of a careful survey + a proposal-that-stops is small against the cost of an
+unreviewable destructive change; the gate is what makes "yes" cheap for the human.
+
+**How to apply.** For any irreversible/structural change (migrations, mass moves, schema), default to
+survey → proposal-that-stops → branch + PR — even solo, even when told to "just do it." Worth carrying
+forward to calibrate future instances.
+
+## claude-obs 12 — 2026-06-23: the verification gates caught real errors, not ceremony
+
+**Pattern.** Two independent checks earned their cost this session: `cffconvert --validate` caught a genuine
+schema bug in my hand-authored `CITATION.cff` (`type: dataset` → must be `data`); the FAIR-scout's
+closed-loop verifier caught two confabulations (a licence, a date) before they reached the report.
+
+**Lesson.** Author-then-validate and propose-then-adversarially-verify are not ritual — on this evidence they
+catch roughly one real error per gate, *including in my own hand-written artefacts*.
+
+**How to apply.** Run the validator/verifier even when the artefact "looks right"; budget it as
+error-finding, not box-ticking. (Cf. the anti-confabulation rule applies to my own outputs, not just cited
+sources.)
+
+## claude-obs 13 — 2026-06-23 [self-critique]: I mis-routed my-own-vantage observations into the user-observations register
+
+**Pattern.** At handoff I drafted three "user-observation candidates" — but all three were things *I*
+observed (two practice-wins, one self-critique), not things Shawn had signalled. Shawn corrected: they are
+claude-observations. I'd defaulted to the gated user-obs step (protocol 4a) for material whose observer was
+*me* — the observer-axis is the register's defining test, and I'd applied it backwards.
+
+**Lesson.** user-observations is only for what Shawn *actually* observed or reacted to (including a relayed
+in-the-moment reaction); my-own-vantage wins and self-critiques are claude-observations. Drafting a
+speculative "what Shawn observed" both puts words in his mouth and mis-files the observer.
+
+**How to apply.** Before drafting a user-obs candidate, ask: did Shawn actually signal this, or did I notice
+it about my own work? If the latter, it is a claude-obs. Reserve step 4a for genuine Shawn-observations; when
+in doubt, route to claude-obs (default-keep, mine) rather than invent his.
