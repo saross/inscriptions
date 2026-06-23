@@ -19,7 +19,7 @@ with the Observation ("Obs N") or run REPORT it came from.
 > re-review.**
 
 > **A note on traceability and on two things that look alike but aren't.** Every figure below is tagged
-> with the Observation ("Obs N") in `docs/notes/working-notes.md` or the run REPORT it came from, all
+> with the Observation ("Obs N") in `wiki/working-notes.md` or the run REPORT it came from, all
 > re-read at source for this draft. Two recurring traps for the reader, flagged here once:
 >
 > 1. **There are two different quantities both written "α" (alpha).** The **convention-fraction α**
@@ -587,4 +587,4 @@ outline; Obs 115, 117.)
 
 *All figures re-read at source on 2026-06-20 against the working-notes Observation register and the run
 REPORTs. The documentation set was accuracy-certified on 2026-06-20
-(`planning/doc-accuracy-audit-2026-06-20.md`); corrected values are used throughout this draft.*
+(`archive/audits/doc-accuracy-audit-2026-06-20.md`); corrected values are used throughout this draft.*
