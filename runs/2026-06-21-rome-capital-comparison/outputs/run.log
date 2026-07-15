@@ -1,0 +1,45 @@
+Initializing NUTS using jitter+adapt_diag...
+Sequential sampling (4 chains in 1 job)
+NUTS: [alpha, tier_weights, sigma_smooth, z_pgen, theta_conv, theta_gen]
+Sampling 4 chains for 1_000 tune and 2_000 draw iterations (4_000 + 8_000 draws total) took 297 seconds.
+Chain 0 reached the maximum tree depth. Increase `max_treedepth`, increase `target_accept` or reparameterize.
+Chain 1 reached the maximum tree depth. Increase `max_treedepth`, increase `target_accept` or reparameterize.
+Chain 2 reached the maximum tree depth. Increase `max_treedepth`, increase `target_accept` or reparameterize.
+Chain 3 reached the maximum tree depth. Increase `max_treedepth`, increase `target_accept` or reparameterize.
+Sampling: [k_obs, y_al_obs, y_non_obs]
+Initializing NUTS using jitter+adapt_diag...
+Sequential sampling (4 chains in 1 job)
+NUTS: [alpha, tier_weights, sigma_smooth, z_pgen, theta_conv, theta_gen]
+Sampling 4 chains for 1_000 tune and 2_000 draw iterations (4_000 + 8_000 draws total) took 79 seconds.
+There were 3 divergences after tuning. Increase `target_accept` or reparameterize.
+Sampling: [k_obs, y_al_obs, y_non_obs]
+Initializing NUTS using jitter+adapt_diag...
+Sequential sampling (4 chains in 1 job)
+NUTS: [alpha, tier_weights, sigma_smooth, z_pgen, theta_conv, theta_gen]
+Sampling 4 chains for 1_000 tune and 2_000 draw iterations (4_000 + 8_000 draws total) took 80 seconds.
+There were 8 divergences after tuning. Increase `target_accept` or reparameterize.
+Sampling: [k_obs, y_al_obs, y_non_obs]
+Initializing NUTS using jitter+adapt_diag...
+Sequential sampling (4 chains in 1 job)
+NUTS: [alpha, tier_weights, sigma_smooth, z_pgen, theta_conv, theta_gen]
+Sampling 4 chains for 1_000 tune and 2_000 draw iterations (4_000 + 8_000 draws total) took 300 seconds.
+Chain 0 reached the maximum tree depth. Increase `max_treedepth`, increase `target_accept` or reparameterize.
+Chain 1 reached the maximum tree depth. Increase `max_treedepth`, increase `target_accept` or reparameterize.
+Chain 2 reached the maximum tree depth. Increase `max_treedepth`, increase `target_accept` or reparameterize.
+Chain 3 reached the maximum tree depth. Increase `max_treedepth`, increase `target_accept` or reparameterize.
+The effective sample size per chain is smaller than 100 for some parameters.  A higher number is needed for reliable rhat and ess computation. See https://arxiv.org/abs/1903.08008 for details
+Sampling: [k_obs, y_al_obs, y_non_obs]
+Initializing NUTS using jitter+adapt_diag...
+Sequential sampling (4 chains in 1 job)
+NUTS: [alpha, tier_weights, sigma_smooth, z_pgen, theta_conv, theta_gen]
+Sampling 4 chains for 1_000 tune and 2_000 draw iterations (4_000 + 8_000 draws total) took 150 seconds.
+There were 9 divergences after tuning. Increase `target_accept` or reparameterize.
+Sampling: [k_obs, y_al_obs, y_non_obs]
+Fitting 5 unit(s) with the production cc-library model (REFIT_BASE_SEED=20260613).
+  DONE Roma                         α=0.799 [0.790,0.807] R̂=1.0044 ESS=781 div=0 N=65457 (306s)
+  DONE capitals-empire-62           α=0.561 [0.515,0.601] R̂=1.0021 ESS=2144 div=3 N=16123 (87s)
+  DONE capitals-latin-41            α=0.561 [0.519,0.595] R̂=1.0022 ESS=2650 div=8 N=15557 (88s)
+  DONE Italia-incl-Rome             α=0.733 [0.722,0.743] R̂=1.0085 ESS=397 div=0 N=109172 (308s)
+  DONE provinces-non-Italian-Latin  α=0.713 [0.644,0.762] R̂=1.0026 ESS=2395 div=9 N=65931 (158s)
+
+Summary -> /home/shawn/Code/inscriptions/runs/2026-06-21-rome-capital-comparison/outputs/roma-italia-summary.json

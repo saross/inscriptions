@@ -1,0 +1,22 @@
+Initializing NUTS using jitter+adapt_diag...
+Sequential sampling (4 chains in 1 job)
+NUTS: [alpha, tier_weights, sigma_smooth, z_pgen, theta_conv, theta_gen]
+Sampling 4 chains for 1_000 tune and 2_000 draw iterations (4_000 + 8_000 draws total) took 22 seconds.
+Sampling: [k_obs, y_al_obs, y_non_obs]
+Initializing NUTS using jitter+adapt_diag...
+Sequential sampling (4 chains in 1 job)
+NUTS: [alpha, tier_weights, sigma_smooth, z_pgen, theta_conv, theta_gen]
+Sampling 4 chains for 1_000 tune and 2_000 draw iterations (4_000 + 8_000 draws total) took 22 seconds.
+Sampling: [k_obs, y_al_obs, y_non_obs]
+Initializing NUTS using jitter+adapt_diag...
+Sequential sampling (4 chains in 1 job)
+NUTS: [alpha, tier_weights, sigma_smooth, z_pgen, theta_conv, theta_gen]
+Sampling 4 chains for 1_000 tune and 2_000 draw iterations (4_000 + 8_000 draws total) took 21 seconds.
+Sampling: [k_obs, y_al_obs, y_non_obs]
+datable conjugal corpus: 1291 (wives=838, daughters=453)
+Fitting 3 unit(s), cc-library, base_seed=20260613.
+  DONE women-overall    α=0.904 [0.813,0.988] R̂=1.0046 ESS=984 div=0 N=1291 mass_align=0.759 (31s)
+  DONE women-wives      α=0.902 [0.803,0.995] R̂=1.0025 ESS=1310 div=0 N=838 mass_align=0.764 (30s)
+  DONE women-daughters  α=0.840 [0.747,0.985] R̂=1.0033 ESS=1497 div=0 N=453 mass_align=0.750 (29s)
+
+Summary -> /home/shawn/Code/inscriptions/runs/2026-06-20-women-corpus-feasibility/outputs/women-feasibility-summary.json

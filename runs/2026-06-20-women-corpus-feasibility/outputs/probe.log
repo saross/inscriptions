@@ -1,0 +1,27 @@
+Initializing NUTS using jitter+adapt_diag...
+Sequential sampling (4 chains in 1 job)
+NUTS: [alpha, tier_weights, sigma_smooth, z_pgen, theta_conv, theta_gen]
+Sampling 4 chains for 1_000 tune and 2_000 draw iterations (4_000 + 8_000 draws total) took 21 seconds.
+Sampling: [k_obs, y_al_obs, y_non_obs]
+Initializing NUTS using jitter+adapt_diag...
+Sequential sampling (4 chains in 1 job)
+NUTS: [alpha, tier_weights, sigma_smooth, z_pgen, theta_conv, theta_gen]
+Sampling 4 chains for 1_000 tune and 2_000 draw iterations (4_000 + 8_000 draws total) took 21 seconds.
+Sampling: [k_obs, y_al_obs, y_non_obs]
+Initializing NUTS using jitter+adapt_diag...
+Sequential sampling (4 chains in 1 job)
+NUTS: [alpha, tier_weights, sigma_smooth, z_pgen, theta_conv, theta_gen]
+Sampling 4 chains for 1_000 tune and 2_000 draw iterations (4_000 + 8_000 draws total) took 22 seconds.
+Sampling: [k_obs, y_al_obs, y_non_obs]
+Initializing NUTS using jitter+adapt_diag...
+Sequential sampling (4 chains in 1 job)
+NUTS: [alpha, tier_weights, sigma_smooth, z_pgen, theta_conv, theta_gen]
+Sampling 4 chains for 1_000 tune and 2_000 draw iterations (4_000 + 8_000 draws total) took 22 seconds.
+Sampling: [k_obs, y_al_obs, y_non_obs]
+  width≤ 50y  N= 287  α=0.965 [0.915,0.998]  R̂=1.0023 ESS=1457 div=0 → NO (α 0.97 > 0.7 envelope)  (29s)
+  width≤ 75y  N= 390  α=0.744 [0.661,0.915]  R̂=1.0023 ESS=2391 div=0 → NO (α 0.74 > 0.7 envelope)  (29s)
+  width≤100y  N= 792  α=0.820 [0.754,0.903]  R̂=1.0016 ESS=2709 div=0 → NO (α 0.82 > 0.7 envelope)  (30s)
+  width≤150y  N=1123  α=0.854 [0.765,0.952]  R̂=1.0020 ESS=2041 div=0 → NO (α 0.85 > 0.7 envelope)  (30s)
+
+VERDICT: NO width-restricted subset reaches the envelope
+Summary -> /home/shawn/Code/inscriptions/runs/2026-06-20-women-corpus-feasibility/outputs/better-dated-probe-summary.json
