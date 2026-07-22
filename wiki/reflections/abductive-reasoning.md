@@ -25,6 +25,8 @@ Entries numbered sequentially and dated.
 
 ## Entry 1 — 2026-04-22: zero-correction verifier on a 25-row bibliography
 
+**Session anchor (retro-matched 2026-07-22):** `2026-04-22T07-57_establish-inscriptions-spa-pipeline-and` — session `91b1783e-e099-49c8-826e-d37026ca716b`, confidence: transcript-confirmed.
+
 ### Surprising fact
 
 The `lit-scout-verifier` returned **0 corrections on 25 rows**. Every
@@ -138,6 +140,8 @@ comparison: `~/personal-assistant/notes/lit-scout-case-study.md`.
 
 ## Entry 2 — 2026-04-23: editorial-convention hierarchy — one-factor explanation revised to distance-dependent hierarchy
 
+**Session anchor (retro-matched 2026-07-22):** `2026-04-22T07-57_establish-inscriptions-spa-pipeline-and` — session `91b1783e-e099-49c8-826e-d37026ca716b`, confidence: transcript-confirmed.
+
 ### Surprising fact
 
 The comprehensive profile rerun found what appeared to be a clean one-factor explanation for the AD 97 editorial-spikes dip: the Antonine-era editorial convention anchors on AD 100 (round century) rather than on the reign boundary (AD 96/98); round-century beats reign-boundary. I was ready to commit to this reading and move on.
@@ -197,6 +201,8 @@ Session discussion 2026-04-23 with Shawn after the comprehensive profile rerun r
 
 ## Entry 3 — 2026-04-24: Glomb, Kaše & Heřmánková (2022) is a null, not a template
 
+**Session anchor (retro-matched 2026-07-22):** `2026-04-23T08-18_establish-research-intent-and-osf` — session `15cf74c7-c735-453c-a613-d59b9ce8e212`, confidence: transcript-confirmed.
+
 ### Surprising fact
 
 I had scheduled a PDF re-read of Glomb, Kaše & Heřmánková (2022) "Popularity of the cult of Asclepius in the times of the Antonine Plague" to extract the empirical Antonine-Plague signature profile — magnitude, FWHM, onset character — for use as the fourth effect-size anchor (Antonine-anchored) in the preregistered H1 simulation. The expected artefact was a shape: "50 % dip, FWHM ≈ 25 y, smooth onset" or similar.
@@ -248,6 +254,8 @@ Explore-agent PDF extraction 2026-04-24 (`a7d8aa16d878e56a1`). Commit `c901aae` 
 
 ## Entry 4 — 2026-04-24: pyzotero `q=DOI` semantic trap creates silent duplicates
 
+**Session anchor (retro-matched 2026-07-22):** `2026-04-23T08-18_establish-research-intent-and-osf` — session `15cf74c7-c735-453c-a613-d59b9ce8e212`, confidence: transcript-confirmed.
+
 ### Surprising fact
 
 `scripts/zotero_batch_add.py` created a duplicate of Carleton, Campbell & Collard 2018 PLOS ONE in the SDAM Zotero group library despite an explicit idempotency-by-DOI check. Both item keys (`T95BHV43` from the test run; `GF82TVAB` from the full batch run) have the PDF correctly attached and are correctly linked to the SPA collection. The agent correctly logged the second run as `created` rather than `already_complete`, and the duplicate was only noticed in post-run verification.
@@ -292,6 +300,8 @@ Agent `a050742b9dd16db93` batch-add run 2026-04-24. Commits `e26278e` (initial s
 ---
 
 ## Entry 5 — 2026-05-03: `git clean -fd` removes gitignored files inside untracked directories
+
+**Session anchor (retro-matched 2026-07-22):** `2026-04-24T13-05_build-forward-fit-cpl-null-models-and` — session `d5dbd1fc-a64c-486e-b0ba-3674b6e9918b`, confidence: transcript-confirmed.
 
 ### Surprising fact
 
@@ -351,6 +361,8 @@ Sapphire git-state cleanup, 2026-05-03. Commits `3256744` (gitignore pattern bro
 
 ## Entry 6 — 2026-05-15: Hanson 2021's regional residual pattern is not in the paper
 
+**Session anchor (retro-matched 2026-07-22):** `2026-05-14T05-12_preregistration-review-and-documentation` — session `0b48f581-bdb4-43bb-933f-a7512938a795`, confidence: transcript-confirmed.
+
 **Surprising fact.** During bucket-(c) item 2 of the dual-review triage, working through the H3c "qualitative pattern matches Hanson's map" clause, I asked an Explore agent to verify against the PDF. The clause attributed to Hanson 2021 a specific regional pattern: "over-production concentrated in Italy and along the Rhine/Danube frontier; under-production scattered in Britannia, Gaul peripheries, and other western edges of the Empire." The clause had been in the prereg since the original 2026-04-24 draft. The verification agent returned, with page-anchored verbatim quotes, that Hanson explicitly states "there does not seem to be any obvious pattern" (p. 147) and that sites from different regions are "evenly scattered" (p. 148). The attribution was a confabulation.
 
 **Probe.** Three-stage check before changing anything substantive. (a) Second consolidated re-verification of every Hanson 2021 attribution in the prereg by a fresh-context agent — confirmed the regional-pattern absence with the same quotes and surfaced a second mischaracterisation (SR1's "polity × century resolution" wording — Hanson works at site level, not polity × century). All six other Hanson 2021 attributions verified exactly (β = 0.672 mean, Moran's I = 0.046 / z = 4.571 / p < 0.0001, etc.). (b) SDAM-AU library scan over all 8 Hanson items + 22 items in the `roman_demography` collection, with PDF abstracts read where Zotero metadata was empty, to look for any Hanson-corpus paper that *does* make a regional inscription-residual claim. None found. The relevant adjacent material (Hanson 2016 monograph's per-province urban analyses; Wilson 2012's North African temporal contrast; Hanson & Ortman 2020's civic-status residual patterning) addresses related but different objects. (c) The subsequent pre-lodgement citation audit caught a *third* confabulation (Duncan-Jones 2018 "~85 % step-down" — Duncan-Jones actually says complete cessation after AD 167 per Fig. 4 / Table 7.1). Three confabulations in one source, one document, surfaced by sequential adversarial reads.
@@ -365,6 +377,8 @@ Sapphire git-state cleanup, 2026-05-03. Commits `3256744` (gitignore pattern bro
 ---
 
 ## Entry 7 — 2026-05-17: the editorial-convention diagnostic's test statistic was wrong, and Decision 17 had to be superseded
+
+**Session anchor (retro-matched 2026-07-22):** `2026-05-16T23-25_preregistration-revision-cycle-with-cross` — session `96eaca37-860d-4c1e-99af-ffd2d2d3ed35`, confidence: transcript-confirmed.
 
 **Surprising fact.** ChatGPT's round-2 review finding B3 ("convention component appears inconsistent with the stated Uniform aoristic SPA") was a paper-thin technical observation that turned out to dismantle the prior session's headline conceptual finding. The observation: under pure Uniform aoristic, an interval like [1, 100] deposits flat mass uniformly across all 100 years, not preferentially on AD 50. So the preregistration's claim that "intervals like [1, 100] and [101, 200] place aoristic mass on midpoint years by construction" is wrong as stated. But the SPA *did* show pronounced O/E ratios of 22.8× / 41.5× / 18.8× / 39.7× at AD 50 / 150 / 250 / 350 — these were the empirical basis for Decision 17's three-tier anchor-year `convention_SPA` structure. If the mechanism story was wrong, what was producing the ratios?
 
@@ -393,6 +407,8 @@ Sapphire git-state cleanup, 2026-05-03. Commits `3256744` (gitignore pattern bro
 
 ## Entry 8 — 2026-05-17: late-stage adversarial review at saturation does not imply coverage; role-framing matters
 
+**Session anchor (retro-matched 2026-07-22):** `2026-05-17T03-27_incorporate-stand-in-statistical-review` — session `eae8427e-afb7-457d-80d4-71627feac3a8`, confidence: transcript-confirmed.
+
 **Surprising fact.** A consultation pack was drafted for an external statistician (Martin, applied econometrician). Before sending the pack, two stand-in cross-model statistical reviews were run as a hedge against Martin's potential delay: ChatGPT 5.5 and Gemini 3 Pro, both in an "applied econometrician / statistician giving a targeted review before the actual statistician sees it" role. Both reviewers independently flagged two items: (i) the prereg-binding floor of ≥ 50 replicates per cell for the H2.1 recovery-simulation coverage rule is thin — a Wilson 95 % interval at n = 50 for a true 90 % coverage rate is [0.79, 0.96], so the per-cell pass / fail boundary is brittle and propagates noise into the global ≥ 90 % cells-pass rule; (ii) Pearson r ≥ 0.95 between recovered and true genuine SPA is too forgiving as the binding shape-recovery metric — Pearson r is scale- and shift-invariant and can remain above 0.95 even when localised mass is mis-allocated, which is precisely the failure mode the recovery simulation exists to catch. Both are basic statistical-rigour points. **Both should have been caught by any of the three prior rounds of adversarial review across two model families (dual Claude Opus 4.7, ChatGPT 5.5, cross-model ChatGPT + Gemini 3 Pro).** None of them was.
 
 **Probe.** Compare the rubrics across the four review rounds.
@@ -417,6 +433,8 @@ None of the first three rubrics had "is this an applied statistician's recommend
 ---
 
 ## Entry 9 — 2026-05-20: pandoc-PDF URL overflow has two independent root causes; xurl-alone is necessary but not sufficient
+
+**Session anchor (retro-matched 2026-07-22):** `2026-05-21T03-40_complete-rac-trac-2026-conference-talk-slide` — session `76e4fbfd-3d9a-4499-a0d7-38cfa852279d`, confidence: transcript-confirmed.
 
 **Surprising fact.** During the fourth pre-lodgement fix cycle on the OSF supplementary PDF, long DOI URLs in the §13 references list overflowed the right page edge — examples included `https://doi.org/10.1371/journal.pone.0191055` (Carleton et al. 2018) and `https://doi.org/10.1080/00031305.2018.1549100` (Gelman et al. 2019), both truncated mid-character at the page boundary. The standard advice for this class of problem — and the advice I had committed v3 of the PDF on — is to add the `xurl` LaTeX package, which redefines `\url` to allow line breaks at any character. I added xurl via `--include-in-header=...`, confirmed it loaded (visible in the LaTeX intermediate at line 95), regenerated, surfaced the PDF to Shawn as "fixed." Shawn opened it and the URLs were still overflowing.
 
@@ -443,6 +461,8 @@ Working-notes Obs 42 carries the operational guidance for the specific issue. Th
 ---
 
 ## Entry 10 — 2026-05-22: f_within is materially weighting-sensitive; the unweighted 30 % is the conservative reading, not the full story
+
+**Session anchor (retro-matched 2026-07-22):** `2026-05-21T03-40_complete-rac-trac-2026-conference-talk-slide` — session `76e4fbfd-3d9a-4499-a0d7-38cfa852279d`, confidence: transcript-confirmed.
 
 **Surprising fact.** The preregistered §5 three-weighting sensitivity (Block 6 of the 2026-05-22 talk-prep work) returned material divergence in a direction I did not anticipate. The three variants:
 
@@ -484,6 +504,8 @@ Test not yet run — this is a session-close abductive note, not a completed inv
 ---
 
 ## Entry 11 — 2026-05-22: the SMT-saturation diagnosis is a one-layer-down lesson about benchmarking compute-bound workloads
+
+**Session anchor (retro-matched 2026-07-22):** `2026-05-22T03-05_complete-rac-trac-deck-rewrite-speaker` — session `b93ed93b-1455-4dc3-86c1-f1e32f1b929a`, confidence: transcript-confirmed.
 
 **Surprising fact.** A pymc/pytensor Bayesian mixture-recovery grid running on sapphire (Ryzen 9 7900, 12 physical / 24 SMT cores) was 3-4× slower than the standalone single-fit benchmark. The prior session's smoke-test had benchmarked three concurrency configurations:
 
@@ -536,6 +558,8 @@ The pattern generalises: research-side claims should similarly carry quantitativ
 
 ## Entry 12 — 2026-05-24: the α=0.95 bias was framed as a corner pathology; F0a revealed it as a likelihood ridge across the whole α axis
 
+**Session anchor (retro-matched 2026-07-22):** `2026-05-23T08-07_validate-h2-1-deconvolution-mixture-model` — session `d2a955e5-09fd-4fb7-8fa1-24b7b5a438fb`, confidence: transcript-confirmed.
+
 **The surprising fact.** The H2.1 recovery-grid FAIL verdict on 2026-05-23 had identified three failure modes: `flat_baseline` 0% shape-pass (turned out to be a metric bug — see Entry 13); α=0.95 shape-pass collapsing from 78-88% at lower α to 22%; `regnal_cluster` at α=0.05 with α-coverage 31%. The natural mental model after Experiment A (which fit three α=0.95 cells under three sampler-effort tiers and saw the posterior fail to shift) was that α=0.95 is the boundary of a parameter-space region the model can't handle — a corner pathology, the model becoming unidentifiable as α → 1 in the usual mixture-near-boundary way. The fix candidates that follow from "corner pathology" are: tighter α prior, stronger constraints near 1, or simply scoping out the α ≥ 0.95 regime.
 
 **The probe.** F0a (`runs/2026-05-24-followup-systematics/`) ran a different diagnostic: rather than re-fitting cells, walk through the existing 450 cells' summaries and compute mean α-bias by α_true marginalised over shape, tier_weights, N. No new compute beyond reading the summary JSONs. This is the cheapest possible probe — it asks "what does the bias look like across the whole grid, not just at α=0.95?" and answers from already-existing data.
@@ -557,6 +581,8 @@ The generalisation is broader than this project: any time a Bayesian model fails
 ---
 
 ## Entry 13 — 2026-05-24: three textbook fixes for the H2.1 bias all came back negative — the bias is structural identifiability, not implementation
+
+**Session anchor (retro-matched 2026-07-22):** `2026-05-23T08-07_validate-h2-1-deconvolution-mixture-model` — session `d2a955e5-09fd-4fb7-8fa1-24b7b5a438fb`, confidence: transcript-confirmed.
 
 **The surprising fact (cumulative across three probes).** After Entry 12 reframed the bias from "corner pathology" to "likelihood ridge", the next question was *what kind of ridge* — i.e., which of the model's implementation choices is the load-bearing source. Three textbook candidate fixes had natural diagnostic tests:
 
@@ -598,6 +624,8 @@ This is a stronger negative result than "the textbook fix didn't help much"; it'
 
 ## 2026-05-26 — Entry 15: the Mundlak f_within +9.89 pp shift; "modest" prior, "material" posterior; spec-binary encoded an unfounded assumption
 
+**Session anchor (retro-matched 2026-07-22):** `2026-05-25T05-30_establish-acts-vs-content-two-measure` — session `e81ce90c-2af2-4a31-ab76-8af49b9abd0c`, confidence: transcript-confirmed.
+
 The 2026-05-26 letter-count probe produced the cleanest belief-revision sequence in the project's recent history, with two intertwined surprising facts: (i) the within-province variance partition shifted +9.89 pp under letter-mass, well beyond Shawn's expected "modest"; (ii) the probe's own verdict-threshold structure had encoded an assumption — that the two units were rival operationalisations of one construct — that the data actively falsified. Both belief revisions matter; the second is the larger one because it reshapes how I should design sensitivity-probe specs going forward.
 
 **The surprising facts (in temporal order).**
@@ -632,6 +660,8 @@ For the spec-binary-encoding observation, the probe was Shawn's reframe itself: 
 
 ## Entry 16 — 2026-05-29 → 2026-06-01: a unit that "looks like more data" carries less — a compound-sum design effect reverses the expected direction; and a 5-hours-late crash exposes a verification-layer mismatch
 
+**Session anchor (retro-matched 2026-07-22):** `2026-05-29T06-54_complete-section-5-layer-a-city-trajectory` — session `084f6481-cc6b-446b-a83f-557785289e2d`, confidence: transcript-confirmed.
+
 **Surprising fact (1).** Letter mass vastly exceeds inscription count (≈ 8.2 M letters vs ≈ 180 k inscriptions), so the intuitive expectation — held by me at the outset, and implicit in the project's treatment of letter mass as the richer measure (the "acts vs content" reframe, Entry 15) — is that letter mass is the *stronger* unit for detecting temporal change: more data, more power.
 
 **Probe.** Shawn declined a convenience-scoped "letter-mass time-series is out of scope" and asked whether the reason was *principled* or just expedient. That forced a quantification: the Kish design effect of letter mass as the analysis unit (`scripts/letter-mass-design-effect.py`, `letter-mass-reachability.py`).
@@ -648,6 +678,8 @@ For the spec-binary-encoding observation, the probe was Shawn's reframe itself: 
 
 ## Entry 17 — 2026-06-02: a "clean" lockfile refresh yields an environment that imports everything yet cannot read the project's own data — and the fix reproduces the very gap it was built to close
 
+**Session anchor (retro-matched 2026-07-22):** `2026-06-02T00-15_standardise-dependency-stack-on-pymc-6-and` — session `4038b0af-a3e1-4a5a-8c53-7987f299a648`, confidence: transcript-confirmed.
+
 **Context / continuity.** This entry is, unusually, a direct test of the prior one. Entry 16 (2026-06-01) proposed a candidate generalisation for the cross-project investigation: *when confidence is high but derived from one layer, ask explicitly which layer the next failure would come from, and whether anything has checked that one* — coined after a 5.7 h run crashed on an environment-layer fault that four code-layer checks had missed. Task #9 this session was that remedy. The remedy bit.
 
 **Surprising fact.** Refreshing `uv.lock` to the pymc-6 stack produced an environment in which all 15 runtime packages imported successfully — and `arviz.from_netcdf()` on a §5 posterior would fail. A clean, fully-resolved, internally-consistent lock left the project unable to read its own primary artefacts.
@@ -662,6 +694,8 @@ For the spec-binary-encoding observation, the probe was Shawn's reframe itself: 
 
 ## Entry 18 — 2026-06-02 → 2026-06-03: a high shape-correlation certifies the recovered *curve* but is silent about its *uncertainty band* — the same layer-confusion, now living inside the validation metric
 
+**Session anchor (retro-matched 2026-07-22):** `2026-06-02T04-34_adjudicate-grid-a-formulate-corrected` — session `c2ad5ecc-af5b-495c-91e0-5256a6ad6962`, confidence: transcript-confirmed.
+
 **Context / continuity.** A third instalment of the running cross-project thread (Entries 16, 17): a measure taken at one layer treated as sufficient for a property governed by another. This time the layer-confusion was not in a packaging check or an environment check — it was in the *validation metric itself*, and I nearly shipped its conclusion before testing the property it left unmeasured.
 
 **Surprising fact.** The recovery grid validated the genuine-SPA reconstruction with posterior-median Pearson r ≈ 0.998 — excellent *shape* recovery — and I wrote "trust the timeline shape." But a re-fit band-calibration probe found the recovered *credible band* badly miscalibrated for sharply-peaked signals: pointwise 95% coverage falls from ~0.90 at N=2,000 to **0.23 at N=50,000** for the regnal-cluster shape. A near-perfect shape-correlation coexisted with a credible band that contained the truth less than a quarter of the time.
@@ -673,6 +707,8 @@ For the spec-binary-encoding observation, the probe was Shawn's reframe itself: 
 **Method-level lesson — the same move, a third domain.** Entries 16–17 were *imports-resolve* (proxy) vs *I/O-succeeds* (property), and *code-audited* vs *environment-checked*. Entry 18 is *shape-correlates* (proxy for "the reconstruction is trustworthy") vs *band-is-calibrated* (the property a reader will actually lean on). The discriminating question generalises cleanly across all three: **does the measure exercise the property the conclusion rests on, or a correlate that can pass while that property fails?** And the cure is identical each time — when in doubt, *measure the real property directly*. The one new wrinkle worth flagging for the investigation: here the proxy-gap was something I had *flagged in writing* ("honest-point-B: we validated the shape, not the band") and then almost left as a caveat. Flagging the gap is not closing it; running the measurement is. The reflex to upgrade from "I should note this is unvalidated" to "I will now validate it" is the cheap, decisive move — and it overturned a claim I had already put in front of the human.
 
 ## Entry 19 — 2026-06-03 → 2026-06-04: a "limitation" of the method was an artefact of a pass/fail threshold we wrote ourselves — the layer-confusion theme, applied to a criterion
+
+**Session anchor (retro-matched 2026-07-22):** `2026-06-03T06-50_finalise-two-unit-recovery-adjudication-and` — session `e97315fd-7608-4b17-b283-1d9ae27c4e64`, confidence: transcript-confirmed.
 
 **Surprising fact.** Adjudicating the recovery grid under the corrected criterion, Grid A produced a persistent gap: 91.9 % of in-envelope cells passed if non-converged cells counted as failures, 98.5 % among convergent cells only. The entire gap was 24 cells — and *all 24 were the flat-null shape*. A "limitation" (the flat null doesn't converge) that I documented at length and built a reporting decision (headline-B vs diagnostic-A) around.
 
@@ -686,6 +722,8 @@ For the spec-binary-encoding observation, the probe was Shawn's reframe itself: 
 
 ## Entry 20 — 2026-06-04 → 2026-06-05: a track asserted "nearly done" was missing a binding confirmatory test — the believed-state, not the world, was the error
 
+**Session anchor (retro-matched 2026-07-22):** `2026-06-04T04-48_finalise-cross-sectional-track-with-h3c-i` — session `b08bf9ea-5a9b-445d-85c5-065cfdb43faf`, confidence: transcript-confirmed.
+
 **Surprising fact.** After the H3a confirmatory blind run and the Latin H3c/SR1 rerun, I asserted the cross-sectional track was "nearly done." A systematic preregistration-obligations completeness audit (a fresh agent extracting every committed obligation and assigning a status) returned a verdict I did not expect: **H3c(i), the provincial-capital residual contrast — a *binding confirmatory* test (Decision 23) — had never been run**, and a *prerequisite* for the next phase (the H2.1 template-dictionary scan, Decision 20) did not exist. Both were UNACCOUNTED: pre-specified, no artefact, in no plan.
 
 **Probe.** Verified directly against the prereg rather than trusting the audit: §3 line 81 + §4 line 345 bind H3c(i) on `P(contrast>0) ≥ 0.95`; grep confirmed "capital" appeared nowhere in either done REPORT. The gap was real. Closed it with the authoritative source (Hanson's own OXREP civic-status flag) → SUPPORTED in all four cells.
@@ -697,6 +735,8 @@ For the spec-binary-encoding observation, the probe was Shawn's reframe itself: 
 **Counterfactual that didn't happen.** Had we moved to H2.1 without the audit, we would have (a) carried an *incomplete* cross-sectional track — a missing binding confirmatory test, surfacing only at write-up or review — and (b) hit the absent template-dictionary prerequisite mid-launch. The forcing function was Shawn asking for the audit; the lesson is that I should have wanted it myself before declaring near-completion.
 
 ## Entry 21 — 2026-06-05 → 2026-06-06: a recovery-validated model component was empirically mis-specified, and a tool I "needed to write" already existed — both believed-state-vs-world errors, both corrected by going to source
+
+**Session anchor (retro-matched 2026-07-22):** `2026-06-05T07-05_establish-empirical-calendar-slab-basis-and` — session `f44d6d24-2a9b-4bf4-8825-30989c2be90c`, confidence: transcript-confirmed.
 
 **Context / continuity.** Entry 20 (2026-06-04→05) framed its lesson as *the believed-state, not the world, was the error* — a track asserted "nearly done" was missing a binding test. This session produced two more instances of the same shape, which now looks less like coincidence and more like the dominant failure mode of a long, momentum-carrying project.
 
@@ -712,6 +752,8 @@ For the spec-binary-encoding observation, the probe was Shawn's reframe itself: 
 
 ## Entry 22 — 2026-06-06 → 2026-06-07: the believed-state-vs-world error, authored by me and ratified by the PI, caught only when the data tripped it — the corrective needs to move upstream of the result
 
+**Session anchor (retro-matched 2026-07-22):** `2026-06-06T02-49_build-decision-38-empirical-convention-basis` — session `652ea797-0ea7-4fda-af86-fa9862751fd0`, confidence: transcript-confirmed.
+
 **Context / continuity.** Entries 20 and 21 named this project's dominant failure mode: *the believed-state, not the world, is the error*, corrected by going to source. Entry 21 logged two instances and called the corrective "almost always cheap." This session produced a third instance with a worse provenance and a clean counter-example, which together sharpen the generalisation.
 
 **Surprising fact.** The recovery re-validation triage reported a gate failure. But the failing quantity — exact credible-interval coverage of the mixing weight α at large N — was one our *own lodged Amendment 01 §A5.5.1* had already established is unreliable (it collapses at large N under negligible bias) and had explicitly demoted from a gate to a diagnostic. I had written the re-validation spec's "α-coverage binding" gate three days *after* lodging the amendment that says α-coverage must not be a gate, and Shawn had signed it off.
@@ -726,6 +768,8 @@ For the spec-binary-encoding observation, the probe was Shawn's reframe itself: 
 
 ## Entry 23 — 2026-06-08 → 2026-06-09: a clean result that contradicted domain knowledge — a *sibling* of the believed-state error, caught not by reading the source but by confronting the world
 
+**Session anchor (retro-matched 2026-07-22):** `2026-06-07T00-12_evaluate-re-validation-grid-finalize-h2-1` — session `04d5ef93-f878-4fc3-90cc-a059bf9ff4ef`, confidence: transcript-confirmed.
+
 **Context / continuity.** Entries 20–22 named this project's dominant failure mode — *the believed state, not the world, is the error* — corrected by *reading the source*, with its value set by *when* you read (Entry 22: at spec-write time, not when a result trips the belief). This session produced a failure with a different structure, and naming the difference is the point.
 
 **Surprising fact.** The H2.1 production run was technically flawless (28/28 converged, 0 divergences, 0 failures) yet returned convention fractions that, for several provinces, contradicted what is known about them: Moesia inferior α = 0.05 despite ~60 % of its mass being round-period / grid-aligned; Dacia and Britannia α ≈ 0. The implausibility was not *internal* (no inconsistency with the lodged record) — it was *external*: the numbers did not match the corpus a domain expert knows. And it was the human, not any pipeline diagnostic, who asked the question.
@@ -737,6 +781,8 @@ For the spec-binary-encoding observation, the probe was Shawn's reframe itself: 
 **Note on the empirical–theory convergence.** The empirical probe (a prior cannot move the confounded α) and the formal literature (a prior over a non-identified region is unrevised by data) agreed exactly. When an independent empirical result and an independent theoretical result point to the same conclusion, the conclusion is about as well-supported as this project gets — and it is worth noticing the empirical route ran *first*, which is the cheaper insurance when you do not yet know the relevant theory exists. The prototype-before-build discipline both killed a wrong fix and earned the confidence to pursue the right one.
 
 ## Entry 24 — 2026-06-09: the remediation worked, but not the way it was designed — the recovery test invalidated the design that motivated it
+
+**Session anchor (retro-matched 2026-07-22):** `2026-06-09T04-14_design-and-build-joint-identifiability` — session `c052932b-7089-4c44-a00f-41fc705f25ac`, confidence: transcript-confirmed.
 
 **Context / continuity.** Entry 23 ended on an explicit open question: would the joint model *recover* the confounded units or only *bound* them, once recovery-validated on *realistic* (broad-slab, not narrow-Gaussian) synthetic convention? The plan carried into this session — written into the continuity doc and broadly endorsed — was specific: classification as a second likelihood term, with the **shared** convention basis (Decision 38 / Amendment 03), leading; the per-unit basis having been rejected for over-attribution.
 
@@ -750,6 +796,8 @@ For the spec-binary-encoding observation, the probe was Shawn's reframe itself: 
 
 ## Entry 25 — 2026-06-10/11: two predictions falsified by cheap experiments — a misattributed symptom and a "bit-identical" claim that was never achievable
 
+**Session anchor (retro-matched 2026-07-22):** `2026-06-09T10-05_resolve-sapphire-resource-exhaustions-and` — session `302ac294-945c-4b40-b3a2-f91e02acec2b`, confidence: transcript-confirmed.
+
 **Context / continuity.** This session opened to assess Entry 24's grid verdict but found the run dead; it became an infrastructure marathon. Two of its turns are textbook surprise→probe→revision, and both resolved by a *targeted experiment* rather than reasoning — which is the pattern worth logging.
 
 **Surprising fact #1 — a symptom that didn't fit its assumed cause.** The grid had clearly OOM'd, so when sapphire's SSH failed intermittently (`255`, "no banner"), the natural attribution was "the box is still thrashing from the OOM." But the OOM was over (the grid was dead, 57 GB free), yet SSH kept failing. *Probe:* ping (alive) → multi-port TCP sweep (both sshd and open-webui accept connections but can't answer → userspace-wide, not service-specific) → verbose SSH (`mkdtemp() failed: No space left on device`) → `df -h` (14 % blocks — *not* full) → `df -i` (**100 % inodes**). *Belief revision:* there were **two independent resource exhaustions**, not one — RAM (the OOM) and `/tmp` tmpfs inodes (~1.05 M leaked `tempfile` files from days-old work). The general point: "no banner + free disk" has a specific cause (inode exhaustion) distinct from the louder one (thrash), and a single big failure is a good place for a second, quieter failure to hide. The instinct to attribute a residual symptom to the dominant cause is exactly the trap; the `df -i` check is one keystroke and settles it.
@@ -759,6 +807,8 @@ For the spec-binary-encoding observation, the probe was Shawn's reframe itself: 
 **Where this connects to the running thread.** The session's terminal result extends the Entry 18/19/22/24 lineage one more turn. The 300-cell grid ran *flawlessly* — 0 failures, bit-reproducible — and its honest output is that the model **fails C1 (do-no-harm) on coverage** (0.374), because it carries the +0.07 estimated-basis contamination the spec predicted. Across the lineage: a validation can pass the believed-but-wrong model (18/22); a clean run can hide a wrong answer (19); a recovery test can falsify the design that motivated it (24); and here, a clean run *correctly reports* its own model's characterised flaw. The constant is that "it ran cleanly" is information about the apparatus, never about the truth of the answer — and the apparatus must be built so the answer can still come back "not good enough." It did.
 
 ## Entry 26 — 2026-06-14: a robustness check that failed as a vehicle but succeeded as a diagnostic — the calibrated θ was circularly biased
+
+**Session anchor (retro-matched 2026-07-22):** `2026-06-11T05-31_adopt-and-validate-cross-classified-temporal` — session `f7b94131-efb5-4daa-bb3d-603f3df3d5eb`, confidence: transcript-confirmed.
 
 **Context / continuity.** The cross-classified `library` model had passed its recovery grid and refit the 29 production units; the remaining step before lodging the amendment was the preregistered robustness check — a global-θ hybrid that estimates the alignment rates θ jointly (with a wide prior) rather than plugging in the calibrated values, then asks whether the per-unit α's survive.
 
@@ -772,6 +822,8 @@ For the spec-binary-encoding observation, the probe was Shawn's reframe itself: 
 
 ## Entry 27 — 2026-06-14 → 2026-06-15: a self-test-verified pipeline returned a degenerate result — the surprise that wasn't a bug, told apart from one by the test built to tell them apart
 
+**Session anchor (retro-matched 2026-07-22):** `2026-06-14T08-14_clean-sapphire-tempfiles-and-run-draw-wise` — session `886e813a-3efb-4ec6-96b4-bed258354a5c`, confidence: transcript-confirmed.
+
 **Context / continuity.** Implementing the H3b deviation test along the line Entry 22 had set up: emit the genuine-SPA posterior from the cc-library refit and propagate it draw-wise through the featureless-null envelope. Stage A verified (provenance gate: re-run reproduces the lodged fits to MCMC noise); the Stage-B engine carried a self-test asserting its inlined envelope matched the reused library test *bit-for-bit*; the headline statistic (marginal-p) had been deliberately chosen with Shawn over the alternative.
 
 **Surprising fact.** The global test returned p = 0 for **all 29 units under both nulls** — total saturation, the carefully-chosen marginal-p uniformly uninformative. And a second surprise nested inside the first: my OQ-5-confirmed construction (fit the CPL null to the *raw* corpus) saturated the *probe windows* too, where I had expected differentiation. A pipeline I had verified at every internal joint produced a result that, taken at face value, says nothing.
@@ -783,6 +835,8 @@ For the spec-binary-encoding observation, the probe was Shawn's reframe itself: 
 **Where this sits in the lineage.** Entries 24–26 had the apparatus contradict a *model* (the shared basis) or a *parameter* (the calibrated θ). Entry 27 is the apparatus contradicting the *test itself* — the instrument, not what it measures — and the new move is that the disambiguator (the self-test) was built *before* it was needed, so the contradiction arrived pre-sorted into "method, not code." The recurring constant deepens: not only must the apparatus be allowed to contradict the plan, the apparatus that lets a degenerate *result* be read as a finding rather than mistaken for a *failure* is one you have to construct in advance, while you still believe the result will be clean.
 
 ## Entry 28 — 2026-06-15 → 2026-06-16: the deconvolution that doesn't change the scaling but does change the peak — and a "material" headline that dissolved under one robustness check
+
+**Session anchor (retro-matched 2026-07-22):** `2026-06-15T04-45_execute-h3b-flexible-null-robustness-annex_2dc7fc5b` — session `2dc7fc5b-5967-4800-b31b-2222e5ffdc93`, confidence: transcript-confirmed.
 
 **Context / continuity.** Same cc-library deconvolution posterior as Entry 27 (the H3b saturation), turned on a different question Shawn posed: does the deconvolution we built actually *help* the Hanson population–inscription analyses, which currently use raw counts? The prior — his and mine — was that a model which visibly reshapes the temporal curve ought to change a downstream analysis that consumes it.
 
@@ -796,6 +850,8 @@ For the spec-binary-encoding observation, the probe was Shawn's reframe itself: 
 
 ## Entry 29 — 2026-06-16 → 2026-06-17: the quantity I'd named "the epigraphic habit" is not the habit — a label revised by the human's question, not a diagnostic
 
+**Session anchor (retro-matched 2026-07-22):** `2026-06-16T12-14_c0b6bf25` — session `c0b6bf25-6f2c-452c-b1ab-aa8fb27cf9ef`, confidence: transcript-confirmed.
+
 **Context / continuity.** §5 H5, the "habit-removed residual trajectory". The §5 Layer-A hierarchical model factors each city's log-rate into a global shape `g_shape`, province `u_shape`, and city `v_shape`. I had specced and reported H5 by *naming* `g_shape` "the empire-wide epigraphic habit" (the prereg's own term) and the residual `u+v` as "habit-removed" — and the run had produced a clean result (g peaks AD 188, matching MacMullen and the H3b hump; foundation-terminus check passes). The result felt finished.
 
 **Surprising fact.** Not an apparatus contradiction this time — a *question*. Shawn asked: "how are we extracting *habit* from the data, as distinct from population or other contributing factors?" The surprise was realising I could not cleanly answer it. The model has *no population covariate*; `g_shape` is simply the time-shape all cities share, identified by pooling. So calling it "habit" was an interpretive label I'd attached to a statistical common-component, and the decomposition does not separate habit from population at all — it separates *empire-common* from *city-specific*.
@@ -807,6 +863,8 @@ For the spec-binary-encoding observation, the probe was Shawn's reframe itself: 
 **Where this sits in the lineage.** Entries 27–28 had the *apparatus* contradict a test or a prediction; Entry 29 is the *human's question* contradicting my *label* — the reframe came from a domain question, not a diagnostic, and the corrective was conceptual (what does the quantity mean) rather than computational (does the lever move). It also closes a loop with the session's other thread: the obs-writer's refusal to record the magnitude numbers until they were persisted (write-side anti-confab) is the same discipline applied to a *number* that this entry applies to a *name* — don't ship a specific (a value, or a causal label) you cannot anchor in, respectively, a file or an identification argument.
 
 ## Entry 30 — 2026-06-17 → 2026-06-18: a follow-up built to confirm a claim disconfirmed its mechanism — and a summary statistic that mimicked the very phenomenon it measured
+
+**Session anchor (retro-matched 2026-07-22):** `2026-06-17T12-51_clear-residual-layer-b-inversion-and-latin` — session `401fe0a6-defd-4bb7-b350-79e5b9c999ea`, confidence: transcript-confirmed.
 
 **Context / continuity.** The habit-removed residual Layer B (Entry 29's reframe, now executed) and its descendants. Two beliefs were in play. (a) The residual inversion — invert the city residual `u+v` after removing the empire-common `g` — would *dissolve* the raw Layer B's apparent universal post-AD-250 collapse, because the empire-wide decline lives in `g`. (b) Having found (Obs 104) that the size–buffering gradient was stronger in `q_uv` (city-from-empire) than `q_v` (city-from-province), I inferred and reported, with some enthusiasm, that the buffering is "province-mediated".
 
@@ -820,6 +878,8 @@ For the spec-binary-encoding observation, the probe was Shawn's reframe itself: 
 
 ## Entry 31 — 2026-06-18 → 2026-06-19: a pre-registered verdict that refuted my hypothesis, a follow-up that refuted my next one, and an empirical artefact the literature had already named
 
+**Session anchor (retro-matched 2026-07-22):** `2026-06-18T06-55_deconvolve-temporal-epigraphic-patterns-and` — session `75389d70-58ce-404d-87ad-63a49002eb1b`, confidence: transcript-confirmed.
+
 **Context / continuity.** The H2.1 supplementary pilot found that the preregistered aoristic-MC (C10), re-mapped onto the Amendment-04 cross-classified model, collapses the convention share α from the deconvolution's ~0.68 to ~0.10 on the real empire data, while mass-apportionment holds. I framed the choice as reading (b) — "point-date sampling destroys the slab-concentration the cross-classified α detects" — and led Shawn toward it with some confidence; the pre-registered validity battery (1a diagnostic, 1b ground-truth recovery, 1c contrast) would adjudicate.
 
 **Surprising fact (two, in sequence).** First: the pre-registered 1b returned **(a)** — on synthetic ground-truth, the point-date arm *recovers* a planted α just as well as the mass arm (slope ~1.05). My (b) was refuted by the very test built to check it. Yet 1c showed the real-empire collapse is genuine (point-collapse 0.10 vs mass-preserving 0.62). The instrument said "point-date is fine" on synthetic and "point-date collapses" on real — a 1b/1c contradiction the clean (a) verdict papered over. Second: I then bet the difference was the interval-*width* distribution (the synthetic used idealised widths). The realism-graded follow-up (ii) showed it is **θ-contamination** (R2: realistic imperfect alignment separation, θ_conv 0.93/θ_gen 0.025) — *not* width (R1 didn't cleanly reproduce it; it biased the mass arm too). Wrong at both forks.
@@ -831,6 +891,8 @@ For the spec-binary-encoding observation, the probe was Shawn's reframe itself: 
 **Where this sits in the lineage.** Entries 27–30 were each the apparatus contradicting the analyst — a self-test, a prediction, the human's question, a self-built follow-up. Entry 31 is the apparatus contradicting me *twice in one arc* (the pre-registered verdict refuted my hypothesis; the realism test refuted my next one) with a third agency on top: the *literature* naming the mechanism I'd reconstructed empirically. The new move is the convergence of three independent confirmations — an empirical collapse, a planted-α recovery isolating its cause, and a 1083-cite keystone — on one answer I'd twice guessed wrong. The session's constant: build the disconfirmer and let it win; and when a clean pre-registered verdict sits oddly beside a real observation, the tension *is* the finding.
 
 ## Entry 32 — 2026-06-19 → 2026-06-20: two errors found by luck predicted a field of them — and a twice-"audited" documentation set turned out not to be accuracy-verified
+
+**Session anchor (retro-matched 2026-07-22):** `2026-06-19T07-48_complete-final-preregistered-analyses-and` — session `3d19e1a6-d9a4-42db-a45b-2c9ef27b7ae5`, confidence: transcript-confirmed.
 
 **The surprising fact.** Within one session, two number-level errors in the results documentation surfaced *by accident*: the supplementary-wave |Δα| had been over-rounded to "0.0 across all 29 units" (true max 0.0156), and the lodged Amendment-03 "~31%" multi-century share does not reproduce from either cited artefact (24.96% full pool / ~36% F1+F3). Both were caught only because something else made me look. And both surfaced *after* two dedicated audit sweeps (a prereg-coverage sweep and a results-documentation-uplift sweep) had run and pronounced the documentation solid.
 
@@ -846,6 +908,8 @@ For the spec-binary-encoding observation, the probe was Shawn's reframe itself: 
 
 ## Entry 33 — 2026-06-20 → 2026-06-21: a suspiciously high number exposed an inverted headline, and "narrower = more precise" failed because the convention hides at round widths
 
+**Session anchor (retro-matched 2026-07-22):** `2026-06-20T05-59_build-key-findings-figure-set-and-execute` — session `f5a79c7c-0715-47c6-9ca7-e3fc5efae771`, confidence: transcript-confirmed.
+
 **The surprising fact (primary).** The women corpus de-fogged to **α ≈ 0.90**. If α were the *genuine* fraction (as the collaborator summary stated), that would mean the corpus is 90% genuinely-dated — implausible for a corpus whose median date range is ~100 years and which is visibly dominated by round-number slabs. The number felt wrong by an order of plausibility.
 
 **The probe.** Instead of accepting it, I asked what α structurally *is*. Three independent lines: (1) the model — `p_mix = α·p_conv + (1−α)·p_gen`, with `p_conv` the round-slab convention component, so α weights *convention*; (2) the pi_align identity — the reported α reproduces the observed aligned fraction only if α=convention; (3) the decisive one, **Pompeii** — a sealed, precisely-dated site that must be ~all genuine, fitted α=0.016. Under "α=genuine," Pompeii would be 98% convention. Absurd.
@@ -857,6 +921,8 @@ For the spec-binary-encoding observation, the probe was Shawn's reframe itself: 
 **What both share.** Each began with a number that violated a domain prior (a 90%-genuine funerary corpus; a narrow-interval subset that got *more* contaminated), and in each the resolution came from asking what the quantity *mechanically is* rather than trusting its label or my intuition. The domain prior was the alarm; the mechanism was the answer.
 
 ## Entry 34 — 2026-06-23: "I updated the continuity doc" was not "the continuity doc is a self-sufficient entry point"
+
+**Session anchor (retro-matched 2026-07-22):** `2026-06-21T06-09_establish-jamt-paper-outline-and` — session `136a496d-2d33-414a-a7e9-83df6a258a18`, confidence: transcript-confirmed.
 
 **The surprising fact.** I had just spent real care building the new continuity beacon and remaining-tasks plan, re-synced all three machines, and reported the handoff as done. Shawn asked: *is `continuity.md` a self-sufficient sole starting point?* My immediate prior was "yes — I just updated it carefully." That confidence was the thing to distrust.
 
